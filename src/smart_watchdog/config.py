@@ -114,5 +114,36 @@ def status() -> list[dict[str, object]]:
     ]
 
 
+def aws_identity(timeout_s: float = 4.0) -> dict[str, object]:
+    """AWS 憑證**現在能不能用**——不是「有沒有設」。
+
+    `status()` 只看環境變數在不在，而黑客松發的是臨時憑證：過期之後變數還在，
+    每一次 Bedrock 呼叫卻都失敗。於是健康檢查顯示一切正常，台上一問話就爆。
+    實際發生過（2026-09-12）。所以這裡真的打一次 STS。
+
+    「打不通」與「憑證壞了」要分開講：會場斷網時回 `None`（無法確認），
+    不要謊稱憑證有問題——那會讓人去改一個沒有壞的東西。
+    """
+    load_env()
+    if not os.environ.get("AWS_ACCESS_KEY_ID"):
+        return {"usable": False, "detail": "沒有設定 AWS_ACCESS_KEY_ID"}
+    try:
+        import boto3
+        from botocore.config import Config
+
+        who = boto3.client("sts", config=Config(
+            connect_timeout=timeout_s, read_timeout=timeout_s,
+            retries={"total_max_attempts": 1},
+        )).get_caller_identity()
+    except Exception as exc:  # noqa: BLE001 - 任何失敗都要回報，不能讓 health 掛掉
+        text = f"{type(exc).__name__} {exc}"
+        if "ExpiredToken" in text:
+            return {"usable": False, "detail": "憑證已過期，請更新 .env 後重啟"}
+        if "InvalidClientTokenId" in text or "UnrecognizedClient" in text:
+            return {"usable": False, "detail": "憑證無效（可能已撤銷或貼漏一段）"}
+        return {"usable": None, "detail": f"無法確認：{type(exc).__name__}"}
+    return {"usable": True, "account": who.get("Account"), "detail": "可用"}
+
+
 def missing() -> list[dict[str, object]]:
     return [c for c in status() if not c["present"]]

@@ -429,6 +429,9 @@ def health() -> dict:
         "chat_planner": _chat_planner_kind(),
         # 缺的是授權不是資料——照實列出，並附上去哪裡申請。
         "credentials": config.status(),
+        # `credentials` 只回答「有沒有設」。臨時憑證過期之後變數還在，
+        # 所以另外真的驗一次——不然這支端點會在憑證死掉時回報一切正常。
+        "aws": config.aws_identity(),
     }
 
 

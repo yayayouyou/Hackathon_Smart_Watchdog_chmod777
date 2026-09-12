@@ -235,3 +235,104 @@ def test_limit_refuses_to_truncate_the_real_letter_index():
 def test_bedrock_check_smoke_test_writes_somewhere_disposable():
     src = (ROOT / "scripts" / "check_bedrock.py").read_text(encoding="utf-8")
     assert '"--out", "data/interim/letters_smoke"' in src
+
+
+# ── 憑證死掉時說了什麼 ───────────────────────────────────────────────
+#
+# 黑客松發的是臨時憑證，幾小時就過期。2026-09-12 實際發生：健康檢查回報一切
+# 正常（因為它只看環境變數在不在），助理則把 boto3 原文貼進對話框——
+# 「ExpiredTokenException … (reached max retries: 0)」。台上沒有人知道該做什麼。
+
+
+class _Boom:
+    """假的 bedrock-runtime client，呼叫就丟指定的錯。"""
+
+    def __init__(self, message: str) -> None:
+        self._message = message
+
+    def converse_stream(self, **_kw):
+        raise RuntimeError(self._message)
+
+
+def _stream_error(message: str) -> str:
+    from smart_watchdog.agent.backend import AgentError, BedrockAgentBackend
+
+    backend = BedrockAgentBackend.__new__(BedrockAgentBackend)
+    backend.model_id, backend.region = "m", "us-west-2"
+    backend.max_tokens, backend.timeout_s = 64, 45
+    backend._client = _Boom(message)
+    with pytest.raises(AgentError) as got:
+        list(backend.stream(system="s", messages=[], tools=[]))
+    return str(got.value)
+
+
+def test_an_expired_token_is_explained_as_something_to_go_and_fix() -> None:
+    """過期是最可能在示範中途發生的第二種失敗（第一種是逾時）。
+
+    使用者要看到的是「去改哪裡、然後重啟」，不是 botocore 的例外類別名稱。
+    """
+    said = _stream_error(
+        "An error occurred (ExpiredTokenException) when calling the ConverseStream "
+        "operation (reached max retries: 0): The security token ... is expired")
+    assert "過期" in said and ".env" in said and "重啟" in said
+    assert "ExpiredTokenException" not in said, "原文不該貼給使用者看"
+
+
+def test_an_invalid_token_is_not_reported_as_expired() -> None:
+    """兩者的處置不同：過期要換新的，無效多半是貼漏了一段。
+    講錯會讓人去做沒有用的事。"""
+    said = _stream_error(
+        "An error occurred (UnrecognizedClientException): The security token "
+        "included in the request is invalid")
+    assert "無效" in said and "過期" not in said
+
+
+def test_an_unknown_failure_still_carries_the_original_text() -> None:
+    """只有認得的失敗才翻譯。認不得的照原樣帶出來，否則就沒得查了。"""
+    assert "這是沒看過的錯" in _stream_error("這是沒看過的錯")
+
+
+def test_health_checks_whether_the_credentials_actually_work(monkeypatch) -> None:
+    """`status()` 只看環境變數在不在——過期的憑證變數還在，所以它會說一切正常。
+
+    這支測的是另一個問題：**現在打得通嗎**。三種結果要分得開，
+    尤其是「斷網」不可以被說成「憑證有問題」——那會讓人去改一個沒壞的東西。
+    """
+    import boto3
+
+    from smart_watchdog import config
+
+    monkeypatch.setenv("AWS_ACCESS_KEY_ID", "AKIAFAKE")
+
+    def _raise(message):
+        def _factory(*_a, **_kw):
+            raise RuntimeError(message)
+        return _factory
+
+    monkeypatch.setattr(boto3, "client", _raise(
+        "An error occurred (ExpiredTokenException): token is expired"))
+    assert config.aws_identity()["usable"] is False
+
+    monkeypatch.setattr(boto3, "client", _raise(
+        "An error occurred (InvalidClientTokenId): token is invalid"))
+    assert config.aws_identity()["usable"] is False
+
+    # 斷網：不知道，不是壞掉。None 與 False 必須分得開。
+    monkeypatch.setattr(boto3, "client", _raise("EndpointConnectionError: 連不上"))
+    assert config.aws_identity()["usable"] is None
+
+
+def test_missing_credentials_are_reported_without_calling_aws(monkeypatch) -> None:
+    """沒設就沒得打，不要白花四秒逾時去問 STS。"""
+    import boto3
+
+    from smart_watchdog import config
+
+    monkeypatch.delenv("AWS_ACCESS_KEY_ID", raising=False)
+    monkeypatch.setattr(config, "load_env", lambda: None)
+
+    def _boom(*_a, **_kw):
+        raise AssertionError("不該打 AWS")
+
+    monkeypatch.setattr(boto3, "client", _boom)
+    assert config.aws_identity()["usable"] is False

@@ -175,5 +175,19 @@ class BedrockAgentBackend(AgentBackend):
                 raise AgentError(
                     f"模型超過 {self.timeout_s} 秒沒有回應，這一步中止了。請再說一次。"
                 ) from exc
+            # 憑證問題要講成「照著做就能修」的一句話。黑客松發的是臨時憑證，
+            # 幾小時就過期，而 boto3 原文（ExpiredTokenException … reached max
+            # retries: 0）會被原樣貼到助理的對話框裡——台上看到那一串，沒有人
+            # 知道該做什麼。這是示範中途第二可能發生的失敗，僅次於逾時。
+            if "ExpiredToken" in str(exc):
+                raise AgentError(
+                    "AWS 憑證已過期。請更新 .env 裡的 AWS_ACCESS_KEY_ID／"
+                    "AWS_SECRET_ACCESS_KEY／AWS_SESSION_TOKEN，然後重啟伺服器。"
+                ) from exc
+            if "UnrecognizedClient" in str(exc) or "InvalidClientTokenId" in str(exc):
+                raise AgentError(
+                    "AWS 憑證無效——可能已被撤銷，或貼上時漏掉了一段。"
+                    "請重新取得一組完整的憑證寫進 .env，然後重啟伺服器。"
+                ) from exc
             raise AgentError(f"Bedrock converse_stream 失敗：{exc}") from exc
         yield from parse_stream(resp["stream"])
