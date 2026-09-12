@@ -48,15 +48,14 @@ $env:PYTHONPATH = "src"
 > 幾十秒就完成，結果一樣。
 
 開 <http://127.0.0.1:8000>。**不是 `dist/index.html`**——那是靜態單檔版，
-沒有圖磚地圖、沒有聊天查詢、沒有掃描主控台（Artifact 的 CSP 擋掉 fetch
+沒有圖磚地圖、沒有查詢、沒有助理、沒有掃描主控台（Artifact 的 CSP 擋掉 fetch
 與非白名單腳本，那些在靜態版做不到）。
 
 驗證（把 `.venv/bin/python` 換成 `.venv\Scripts\python` 即為 Windows 版）：
 
 ```bash
 PYTHONPATH=src .venv/bin/python -m pytest tests/ -q
-# 310 passed, 1 skipped   ← 那一條 skip 是正常的，見下方「資料」
-#                            （有 data/raw 時為 311 passed）
+# 367 passed, 1 skipped   ← 那一條 skip 是 POSIX 的 flock 沒有逾時可測，正常
 .venv/bin/ruff check src/ tests/ scripts/
 ```
 

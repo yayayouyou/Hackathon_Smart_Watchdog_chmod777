@@ -1,5 +1,11 @@
 # 部署手冊
 
+> **現況（2026-09-12）：雲端已縮到 0，專案跑在本機。**
+> ECR 映像、ECS 叢集、任務定義、IAM 角色、安全群組、log group 都還在，
+> 要重新上線只要 `aws ecs update-service --cluster watchdog --service watchdog
+> --desired-count 1 --region us-west-2`。
+> agent 仍走 Bedrock（競賽規定），其餘全部本地。
+
 **照著做，不是說明文。** 每一節都是可以貼上就跑的步驟。
 遇到不確定的地方，優先選「本機能動的那條路」，不要現場研究。
 

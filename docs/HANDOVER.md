@@ -10,7 +10,7 @@
 ## 30 秒上手
 
 ```bash
-python run.py setup          # 建 venv 裝相依（這個資料夾還沒有 venv）
+python run.py setup          # 建 venv 裝相依（已存在就跳過）
 cp .env.example .env         # 填憑證，見 docs/ENVIRONMENTS.md
 python run.py bedrock-check  # 決賽當天第一件事
 python run.py frontend
@@ -31,9 +31,13 @@ python run.py serve          # → http://127.0.0.1:8000
 | 時間軸回測（回測 → 即時監控） | ✅ | [OVERNIGHT_PLAN.md](OVERNIGHT_PLAN.md) §5 |
 | Bedrock 接通（三個 AI 落點） | ✅ | [ENVIRONMENTS.md](ENVIRONMENTS.md) §2 |
 | 會場斷網降級 | ✅ | [OVERNIGHT_PLAN.md](OVERNIGHT_PLAN.md) §6 |
+| **會操作網站的 agent**（12 tool、SSE、稽核軌跡） | ✅ | [MERGE_PLAN.md](MERGE_PLAN.md) |
+| **MCP**（同一組 tool 給外部客戶端） | ✅ | [MERGE_PLAN.md](MERGE_PLAN.md) §4 |
+| **帳號登入**（agent 回饋要記得是誰） | ✅ | [MERGE_PLAN.md](MERGE_PLAN.md) §1 |
+| 容器化與 ECS 部署（目前縮到 0） | ✅ | [DEPLOY.md](DEPLOY.md) |
 
-驗證狀態：`python run.py test` → **311 passed**（有 `data/raw` 時）／
-310 passed + 1 skipped（沒有時，那一條是 `test_every_statement_declares_its_source`）。
+驗證狀態：`python run.py test` → **367 passed, 1 skipped**。
+那一條 skip 是 POSIX 的 flock 沒有逾時可測，與資料無關。
 `python run.py lint` → 全過。
 
 ---
@@ -78,9 +82,11 @@ python run.py score-extraction               # 對 ground truth 逐格比對
 ### 4. 還沒做的（見各自文件）
 
 - 公校決算書頁內文字未進全文索引（[07](research/07-document-index.md) §6）
-- 問句理解層：`institution`／`year` 還要呼叫端給
-  （planner 本身已接上 Bedrock，`/api/health` 的 `chat_planner` 會說現在是哪一個；
-  見 [ENVIRONMENTS.md](ENVIRONMENTS.md) §2.6）
+- 查詢頁籤的 `institution`／`year` 仍要呼叫端給（planner 已接 Bedrock，
+  `/api/health` 的 `chat_planner` 會說現在是哪一個）
+- **agent 還操作不到的功能**：掃描主控台、地圖控制項（反灰／區名／著色依據／
+  群集／派工容量）、建議書清單瀏覽、單園排名軌跡、員工數、即時輿情。
+  盤點與估時見 [MERGE_PLAN.md](MERGE_PLAN.md) §9b
 - 跨年度比較視圖：「110 到 113 各差多少」要跑四次查詢
 - `pyproject.toml` 缺 `[project] name`／`version`，`pip install -e .` 會失敗
   （README 已改指向 `requirements.txt`；**決賽前不動封裝**）
@@ -98,15 +104,22 @@ python run.py score-extraction               # 對 ground truth 逐格比對
 
 ---
 
-## 兩個資料夾同時存在
+## 這台機器的現況（2026-09-12）
 
-| | `D:\Hackathon_Smart_Watchdog`（舊） | `D:\Hackathon_Smart_Watchdog_chmod777`（新） |
-|---|---|---|
-| `.venv` | 有 | 有（2026-09-12 建，Python 3.11.5） |
-| `data/raw`（1.8 GB） | 有 | 有（2026-09-12 由 `setup-raw` 還原，162 份 PDF；不得轉散布） |
-| git remote | 無 | `yayayouyou/Hackathon_Smart_Watchdog_chmod777`（private） |
+| | 狀態 |
+|---|---|
+| `.venv` | 有，Python 3.11 |
+| `data/raw`（1.8 GB） | 有，由 `run.py setup-raw` 從根目錄兩個 zip 還原；**不得轉散布** |
+| git remote | `yayayouyou/Hackathon_Smart_Watchdog_chmod777`（private） |
+| 本機服務 | `python run.py serve -- --port 8001` |
 
-**動手前先確認在哪一個。** 新的是主線。
+⚠️ **`data/raw`、`data/runtime`、`data/interim`、`dist` 都不進版控**，
+隊友 clone 後要自己跑 `setup` 與 `frontend`。沒有 `data/raw` 也能跑，
+只有證據頁截圖會 404（文字證據與頁碼不受影響）。
+
+⚠️ **`data/runtime/watchdog.sqlite` 是各機器獨立的**：帳號、agent 對話稽核
+軌跡、稽查員回饋都只存在本機。要跨機器共享得把 `DATABASE_URL` 指向 RDS
+（程式不用改）。
 
 ---
 

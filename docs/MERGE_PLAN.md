@@ -210,7 +210,9 @@ RDS／ECR／ECS／Amplify／S3／Lambda／CloudFormation | 建立權限都有；
 7 證據 | `data/raw` 還原（162 份）；隨用隨渲染，文字與原始頁面核對一致 |
 8 部署 | ECS Fargate 跑起來，雲端 agent 走 Bedrock 正常 |
 
-**329 passed, 1 skipped**（唯一的 skip 是 POSIX 沒有逾時可測的 flock）。
+**367 passed, 1 skipped**（唯一的 skip 是 POSIX 沒有逾時可測的 flock）。
+之後又與 main 合併（版面以 main 為準，助理與建議書加進上方功能列），
+並補了前端靜態健檢。
 
 ### 一個沒有補上的內容缺口
 
@@ -236,13 +238,22 @@ AUC 是 0.517（2023-12-31 快照），lift 0.60——比隨機還差**。那份
 
 ## 10. 待決事項
 
-1. **`pyproject.toml` 的 `target-version = "py39"` 與實際 venv（3.11）不符。**
-   註解寫「The venv runs the system Python 3.9」，但 `scipy==1.13.1` 等釘版在 3.9 裝不起來，
-   我建的是 3.11。要提到 `py311`，或把 `db/models.py` 的 `str | None` 改回 `Optional[...]`？
-   （`api/auth.py` 已先配合 py39 寫成 `Optional`。）
-2. **`set_filters` 要不要支援 `town`？** 需要在地圖加一個行政區控制項（§4 末）。
-3. 部署時前後端同源 vs Amplify 分離——到階段 8 再定，但同源可以一次消掉
-   CORS、SameSite、跨網域三個地雷。
+1. ~~`pyproject.toml` 的 `target-version = "py39"` 與 venv（3.11）不符~~
+   → **維持 py39**。實測提到 py311 會讓既有程式跳出 30 條 lint 錯誤，
+   那是去改沒被要求碰的檔案。改為把新檔加進 `per-file-ignores`。
+2. **agent 還操作不到的功能**（下一個分支）：
+
+   | 缺的 tool | 對應 | 估時 |
+   |---|---|---|
+   | `list_memos` | 建議書清單瀏覽 | 20min |
+   | `get_rank_track` | 單園排名軌跡 | 20min |
+   | `get_staffing` | 員工與師生比 | 20min |
+   | `get_realtime` | 即時輿情＋Google 評論 | 40min |
+   | 擴充 `set_filters` | 真的套用 town／flagged／cluster／cap，以及 main 新增的反灰／區名／著色依據 | 1.5h |
+   | 掃描那組 | **會花錢**，建議只給 `scan_estimate`（算錢不花錢） | 3h |
+
+3. **無前科子群的指標補不上**（見 §9b）。要重算時間軸加分子群維度，
+   不是搬程式。在那之前這一題要人回答，不要讓 agent 用整體 AUC 帶過。
 
 ---
 

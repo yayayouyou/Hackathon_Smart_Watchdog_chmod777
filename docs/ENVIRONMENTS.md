@@ -35,7 +35,7 @@ python run.py serve            # → http://127.0.0.1:8000
 
 ```bash
 python run.py setup
-python run.py test        # 294 passed（有 data/raw 時）
+python run.py test        # 367 passed, 1 skipped
 python run.py serve
 ```
 
