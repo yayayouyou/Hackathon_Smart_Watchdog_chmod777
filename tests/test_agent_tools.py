@@ -87,7 +87,7 @@ def test_every_screen_feature_has_a_tool(reg) -> None:
     是模型不夠聰明，不會想到是我們沒給它工具。
     """
     names = set(reg.names())
-    assert len(names) == 18
+    assert len(names) == 19
     for expected in (
         "list_institutions", "get_ranking",          # 派工提案
         "open_institution", "get_penalties", "get_findings",
@@ -96,6 +96,7 @@ def test_every_screen_feature_has_a_tool(reg) -> None:
         "set_time_machine", "get_model_card",        # 時間軸
         "search_documents",                          # 證據
         "set_map_view",                              # 地圖控制項
+        "get_peer_comparison",                       # 同儕財務比較
         "scan_estimate",                             # 掃描（只估算）
         "export_schedule", "record_feedback", "load_skill",
     ):
@@ -388,3 +389,56 @@ def test_scan_estimate_prices_without_spending(reg) -> None:
     assert "usd_max" in out.payload
     assert "不會發動掃描" in out.payload["note"]
     assert out.ui_action["tab"] == "scan"
+
+
+def test_peer_comparison_never_reads_as_a_probability(reg) -> None:
+    """百分位不是違規機率。面板只有 10 個正樣本，撐不起監督式模型。"""
+    listed = _run(reg, "list_institutions",
+                  {"has_compliance_failure": True, "limit": 5}).payload["items"]
+    if not listed:
+        pytest.skip("沒有財報法遵未通過的登記")
+    out = None
+    for r in listed:
+        cand = _run(reg, "get_peer_comparison", {"institution_id": r["id"]}).payload
+        if cand.get("available"):
+            out = cand
+            break
+    if out is None:
+        pytest.skip("這幾所都沒有同儕比較資料")
+    assert "不是分類器" in out["note"]
+    assert "不是違規機率" in out["note"]
+    assert isinstance(out["percentile"], (int, float))
+    assert out["peer_count"] > 0
+
+
+def test_contributions_and_anomalies_are_kept_apart(reg) -> None:
+    """contributions 是分數的組成，anomalies 才是越過門檻的科目。
+
+    混講的後果是把「這一所的分數由這幾項拉高」說成「查出這幾項有問題」，
+    而 132 園年裡有 97 個一項都沒越過門檻。
+    """
+    listed = _run(reg, "list_institutions", {"limit": 30}).payload["items"]
+    for r in listed:
+        out = _run(reg, "get_peer_comparison", {"institution_id": r["id"]}).payload
+        if not out.get("available"):
+            continue
+        assert "contributions" in out and "anomalies" in out
+        assert "不是發現" in out["note"]
+        return
+    pytest.skip("這批前 30 名都沒有同儕比較資料")
+
+
+def test_peer_comparison_absent_says_coverage_not_compliance(reg) -> None:
+    out = _run(reg, "get_peer_comparison", {"institution_id": "deadbeef"})
+    assert "查無機構" in out.payload["error"]
+
+
+def test_peer_scoring_excludes_the_things_it_is_checked_against(reg) -> None:
+    """法遵與裁罰刻意不進這個計算——訓練過的檢查不算檢查。"""
+    listed = _run(reg, "list_institutions", {"limit": 30}).payload["items"]
+    for r in listed:
+        out = _run(reg, "get_peer_comparison", {"institution_id": r["id"]}).payload
+        if out.get("available"):
+            assert "訓練過的檢查不算檢查" in out["note"]
+            return
+    pytest.skip("這批前 30 名都沒有同儕比較資料")

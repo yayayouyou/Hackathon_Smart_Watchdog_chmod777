@@ -749,6 +749,76 @@ def _scan_estimate(_ctx: ToolContext, a: ScanEstimateArgs) -> ToolOutcome:
     )
 
 
+# ── 19. get_peer_comparison ──────────────────────────────────────────
+
+
+class PeerArgs(BaseModel):
+    institution_id: str = Field(description="機構 id，8 碼十六進位")
+    year: Optional[int] = Field(default=None, description="學年度，例如 113。不給就是最新")
+
+
+def _get_peer_comparison(_ctx: ToolContext, a: PeerArgs) -> ToolOutcome:
+    """同儕財務比較：這一所在同年度、同類型的非營利園裡看起來多不一樣，以及為什麼。
+
+    **這不是分類器，回傳的百分位不是「違規機率」。** 整個面板只有 10 個正樣本，
+    低於 CLAUDE.md 設的監督式門檻——在那個數量上擬合出來的分數是「沒有內容的
+    數字被包裝成發現」。
+
+    `contributions` 與 `anomalies` **不是同一件事**，講的時候不可以混：
+    - `contributions` 是「這一所的分數由哪幾項拉高」，**本身不是發現**。
+      132 園年裡有 97 個沒有任何一項越過門檻，那是正常狀態。
+    - `anomalies` 才是越過 robust z = 3.5（Iglewicz-Hoaglin）的項目，
+      而那也只是「值得看一下的科目」，不是認定。
+
+    比較基礎是**同學年度、同類型、只用比率**：CLAUDE.md 記了兩個特徵分層後
+    效果腰斬，以及一個全市系統性下滑會誤標整個世代。只跟自己那一年的非營利
+    同儕比，這兩個問題都不必建模就消掉。
+    """
+    p = _point(a.institution_id)
+    if not p:
+        return _not_found(a.institution_id)
+    _code, dossier = _dossier_for(a.institution_id)
+    peer = (dossier or {}).get("peer")
+    if not peer:
+        return ToolOutcome(payload={
+            "institution": p["full"], "available": False,
+            "note": ("這一所沒有同儕財務比較——只有申報公開財報的非營利園才有。"
+                     "那是涵蓋範圍限制，不是合規證明。"),
+        })
+    hist = peer.get("history", [])
+    if a.year is not None:
+        hit = next((h for h in hist if h.get("y") == a.year), None)
+        if hit is None:
+            return ToolOutcome(payload={
+                "institution": p["full"],
+                "error": f"沒有 {a.year} 學年度的比較",
+                "available_years": [h.get("y") for h in hist],
+            })
+        peer = {**peer, **hit}
+    return ToolOutcome(
+        payload={
+            "institution": p["full"],
+            "available": True,
+            "academic_year": peer.get("y"),
+            "percentile": peer.get("pct"),
+            "rank_among_peers": peer.get("rank"),
+            "peer_count": peer.get("peers"),
+            "features_compared": peer.get("nfeat"),
+            # 先給貢獻、再給越門檻的，名稱不同、意義不同。
+            "contributions": peer.get("contributions", []),
+            "anomalies": peer.get("anomalies", []),
+            "history": hist,
+            "note": ("這是同年度、同類型非營利園之間的相對位置，只用比率不用金額，"
+                     "所以大園不會因為規模就顯得異常。**不是分類器、不是違規機率**——"
+                     "面板只有 10 個正樣本，撐不起監督式模型。contributions 是分數的"
+                     "組成，不是發現；anomalies 才是越過門檻的科目，而那也只代表"
+                     "值得看一下。法遵檢核與裁罰紀錄刻意不放進這個計算——那兩者是"
+                     "事後用來檢驗這個排序的，訓練過的檢查不算檢查。"),
+        },
+        ui_action={"type": "open_drawer", "institution_id": a.institution_id},
+    )
+
+
 # ── 註冊 ─────────────────────────────────────────────────────────────
 
 _SPECS = [
@@ -788,6 +858,10 @@ _SPECS = [
      SetMapViewArgs, _set_map_view, False),
     ("scan_estimate", "估算一次輿情掃描要花多少錢（算錢不花錢，不會發動掃描）",
      ScanEstimateArgs, _scan_estimate, False),
+    ("get_peer_comparison",
+     "同儕財務比較：這一所在同年度同類型非營利園中的相對位置與逐項原因"
+     "（相對位置，不是違規機率）",
+     PeerArgs, _get_peer_comparison, False),
 ]
 
 
