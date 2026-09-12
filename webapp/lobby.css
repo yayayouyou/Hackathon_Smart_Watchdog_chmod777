@@ -62,7 +62,11 @@
 /* 放大時整層牆與中庭收掉，只留目標那一間。
    用 visibility 而不是 opacity 過渡：它們在被縮放的子樹裡，
    對 opacity 做過渡會讓每一幀重新光柵化整張平面圖（實測掉 13/83 幀）。 */
-.lobby.zooming #planbg{visibility:hidden}
+/* 放大時整層退出繪製樹，不是只是看不見。中庭遊戲場讓這一層從十幾個元素
+   變成四十幾個，visibility:hidden 仍留在樹裡要參與合成，實測過渡從
+   0 幀掉幀變成 4 幀 33ms。display:none 之後回到 0。
+   （.room-hit 那邊不能這樣做——目標房要留著被放大。） */
+.lobby.zooming #planbg{display:none}
 .lobby.zooming .room-hit{visibility:hidden}
 .lobby.zooming .room-hit.target{visibility:visible}
 

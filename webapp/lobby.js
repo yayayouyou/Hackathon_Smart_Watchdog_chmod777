@@ -93,14 +93,17 @@
 
     el("rect", { x: 40, y: 30, width: 1360, height: 700, rx: 4,
       fill: cssv("--panel"), stroke: cssv("--edge"), "stroke-width": 3 }, rest);
-    el("rect", { ...ATRIUM, fill: cssv("--sunk"), opacity: .55 }, rest);
+    /* ⚠️ 不可寫成 el("rect", {...ATRIUM})。ATRIUM 的鍵是 w／h，而 SVG <rect>
+       要的是 width／height——那樣產出的是 w="350" h="700"、寬高都是 0 的空矩形，
+       中庭的地板從第一版起就沒有畫出來過（看起來一直是全白的走廊）。 */
+    yardArt(rest);
     el("line", { x1: 545, y1: 30, x2: 545, y2: 730, stroke: cssv("--edge"),
       "stroke-width": 2.2 }, rest);
     el("line", { x1: 895, y1: 30, x2: 895, y2: 730, stroke: cssv("--edge"),
       "stroke-width": 2.2 }, rest);
     const at = el("text", { x: 720, y: 62, "font-size": 11, fill: cssv("--ink-4"),
       "letter-spacing": 3.4, "text-anchor": "middle" }, rest);
-    at.textContent = "中庭";
+    at.textContent = "中庭遊戲場";
 
     ROOMS.forEach((r) => {
       // 每一室自己一個 g，進房時把它從 rest 提到 zoom 底下單獨留著
@@ -109,14 +112,14 @@
         "aria-label": `${r.no} ${r.name}，${r.desc}` }, roomLayer);
       r.g = g;
       el("rect", { x: r.x, y: r.y, width: r.w, height: r.h, class: "room-fill",
-        fill: cssv(r.accent), opacity: .09 }, g);
+        rx: 6, fill: cssv(r.accent), opacity: .15 }, g);
       /* 門楣：房間頂端一條實心色帶。五間室在平面圖上原本只差一層 7% 的淡底，
          遠看幾乎一樣；一條實心帶是最省版面又最分得開的識別。
          放大進房時它正好變成室頭那條線的延伸。 */
-      el("rect", { x: r.x, y: r.y, width: r.w, height: 8,
+      el("rect", { x: r.x, y: r.y, width: r.w, height: 8, rx: 4,
         fill: cssv(r.accent) }, g);
       el("rect", { x: r.x, y: r.y, width: r.w, height: r.h, fill: "none",
-        stroke: cssv(r.accent), "stroke-width": 2.2, opacity: .55,
+        rx: 6, stroke: cssv(r.accent), "stroke-width": 2.2, opacity: .62,
         // 放大時線寬不跟著長。沒有它，2.2px 在 2.8 倍下會變成 6px 的粗黑邊。
         "vector-effect": "non-scaling-stroke" }, g);
 
@@ -143,7 +146,11 @@
       const dx = r.door.x, dy = r.door.y;
       const inward = r.side === "L" ? 1 : -1;
       el("rect", { x: dx - 2, y: dy - 26, width: 4, height: 52,
-        fill: cssv("--paper") }, g);
+        fill: cssv("--yard") }, g);
+      /* 門墊：鋪在中庭那一側，顏色就是這一室的顏色。幼兒園每間教室門口
+         都有一塊自己的墊子，這裡它同時是「哪一間在哪裡」的第四個色點。 */
+      el("rect", { x: inward > 0 ? dx + 5 : dx - 27, y: dy - 19, width: 22,
+        height: 38, rx: 5, fill: cssv(r.accent), opacity: .55 }, g);
       el("path", { d: `M${dx} ${dy - 26} a26 26 0 0 ${inward > 0 ? 1 : 0} ${26 * inward} 26`,
         fill: "none", stroke: cssv(r.accent), "stroke-width": 1.6,
         "stroke-dasharray": "3 3", class: "room-door" }, g);
@@ -340,6 +347,68 @@
     }
   }
 
+
+
+  /* 中庭遊戲場。
+     這一室監理的對象就是幼兒園，所以中庭畫成園裡的中庭是最省力也最貼題的
+     幼兒園化——不必重畫五間房，也不必把平面圖換成插畫。
+
+     分寸拿捏：畫的是**場地裡真的會有的東西**（草皮、樹、跳房子、沙坑），
+     不是卡通角色或高彩度色塊。交給教育局的工具，幼兒園的辨識度要來自
+     「空間裡有什麼」，而不是把介面變成兒童頻道。
+
+     全部畫在 planbg 層：進房放大時整層 visibility:hidden，不參與過渡，
+     所以不會影響已經調到 0 丟幀的那段動畫。也都不是 .room-hit，不吃點擊。 */
+  function yardArt(parent) {
+    const g = el("g", { id: "yard" }, parent);
+    const cx = ATRIUM.x + ATRIUM.w / 2;   // 720
+
+    // 地面
+    el("rect", { x: ATRIUM.x, y: ATRIUM.y, width: ATRIUM.w, height: ATRIUM.h,
+      fill: cssv("--yard") }, g);
+    // 草皮：鋪在下半段，守護犬平常待的位置就在上面
+    el("rect", { x: ATRIUM.x + 21, y: 430, width: ATRIUM.w - 42, height: 272,
+      rx: 30, fill: cssv("--turf") }, g);
+    el("rect", { x: ATRIUM.x + 21, y: 430, width: ATRIUM.w - 42, height: 272,
+      rx: 30, fill: "none", stroke: cssv("--turf-2"), "stroke-width": 2 }, g);
+
+    // 跳房子：六格，單雙格交錯。地面標線，所以只有描邊沒有填色，
+    // 守護犬走過去不會被它蓋住。
+    const cell = 40, gap = 2;
+    let y = 142;
+    [[0], [0], [-1, 1], [0], [-1, 1], [0]].forEach((cols) => {
+      cols.forEach((c) => {
+        el("rect", { x: cx + c * (cell / 2 + gap) - cell / 2, y,
+          width: cell, height: cell, rx: 4, fill: "none",
+          stroke: cssv("--yard-line"), "stroke-width": 2.4 }, g);
+      });
+      y += cell + gap + 2;
+    });
+
+    // 兩棵樹：一棵在上、一棵在右下，把空的兩角收起來
+    const tree = (tx, ty, sc) => {
+      const t = el("g", { transform: `translate(${tx} ${ty}) scale(${sc})` }, g);
+      el("rect", { x: -4, y: 10, width: 8, height: 26, rx: 3,
+        fill: cssv("--bark") }, t);
+      el("circle", { cx: 0, cy: 0, r: 26, fill: cssv("--leaf"), opacity: .82 }, t);
+      el("circle", { cx: -17, cy: 9, r: 17, fill: cssv("--leaf"), opacity: .7 }, t);
+      el("circle", { cx: 17, cy: 8, r: 15, fill: cssv("--leaf"), opacity: .7 }, t);
+      return t;
+    };
+    tree(ATRIUM.x + 44, 104, 1);
+    tree(ATRIUM.x + ATRIUM.w - 46, 636, .8);
+
+    // 沙坑
+    const sb = el("g", {}, g);
+    el("rect", { x: ATRIUM.x + 26, y: 620, width: 92, height: 74, rx: 10,
+      fill: cssv("--yard-line"), opacity: .75 }, sb);
+    el("rect", { x: ATRIUM.x + 33, y: 627, width: 78, height: 60, rx: 7,
+      fill: cssv("--yard") }, sb);
+    [[22, 18], [46, 30], [62, 16], [34, 44], [60, 46]].forEach(([ox, oy]) => {
+      el("circle", { cx: ATRIUM.x + 33 + ox, cy: 627 + oy, r: 2,
+        fill: cssv("--yard-line") }, sb);
+    });
+  }
 
   /* 每一室左下角的狗窩。中庭看得到它，進房後守護犬就躺在對應的位置——
      牠是「跑進那一格」，不是「消失再出現」。 */
