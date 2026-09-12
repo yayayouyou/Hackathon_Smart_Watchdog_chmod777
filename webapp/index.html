@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>稽查派工台 · 小小守護員</title>
+<link rel="stylesheet" href="/static/vendor/leaflet.css">
+<link rel="stylesheet" href="/static/vendor/MarkerCluster.css">
+<link rel="stylesheet" href="/static/vendor/MarkerCluster.Default.css">
+<!-- 地圖函式庫已就地保存在 /static/vendor/（會場擋 CDN 時地圖仍可用）。
+     字型仍走 CDN：style.css 的 font-family 已列本機備援（PingFang TC／
+     Noto Sans TC／微軟正黑），斷線只會換字體，不會讓畫面壞掉。 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>稽查派工台<span>新北市教保機構 · 建議查核優先序</span></h1>
+    <div class="hstat">
+      <span>全市 <b id="s-all">—</b></span>
+      <span>有公開財報 <b id="s-fin">—</b></span>
+      <span>本批提案 <b id="s-sel">—</b></span>
+      <span>即時管道 <b id="s-ch">—</b></span>
+      <span title="本掃描週期已花費／自訂上限。撞自己的牆是不給跑，撞供應商的牆是跑到一半被砍、錢照付。"
+        >本期花費 <b id="s-budget">—</b></span>
+    </div>
+  </header>
+
+  <main>
+    <aside class="rail">
+      <div class="grp">
+        <h2>派工容量</h2>
+        <label class="capbox">本月可稽查
+          <input id="cap" type="number" min="1" max="200" value="20">家</label>
+        <input id="capr" type="range" min="5" max="120" value="20" aria-label="派工容量">
+      </div>
+
+      <div class="grp">
+        <h2>底圖</h2>
+        <div class="seg" id="basemaps">
+          <button data-b="osm" aria-pressed="true">OpenStreetMap</button>
+          <button data-b="carto">淺色地圖</button>
+          <button data-b="google" id="b-google">Google 地圖</button>
+        </div>
+        <p class="note" id="gnote">Google 底圖需金鑰；未設定時停用。</p>
+      </div>
+
+      <div class="grp">
+        <h2>圖層</h2>
+        <label class="opt"><input type="checkbox" id="f-cluster" checked>標記群集</label>
+        <label class="opt"><input type="checkbox" id="f-districts">行政區界線</label>
+        <label class="opt"><input type="checkbox" id="f-flagged">只顯示複查名單</label>
+      </div>
+
+      <div class="grp">
+        <h2>機構類別</h2>
+        <label class="opt"><input type="checkbox" class="ftype" value="0" checked>
+          <i class="sw" style="background:var(--pub)"></i>公立<span class="n" id="l0"></span></label>
+        <label class="opt"><input type="checkbox" class="ftype" value="1" checked>
+          <i class="sw" style="background:var(--np)"></i>非營利<span class="n" id="l1"></span></label>
+        <label class="opt"><input type="checkbox" class="ftype" value="2" checked>
+          <i class="sw" style="background:var(--prv)"></i>私立<span class="n" id="l2"></span></label>
+        <p class="note">顏色代表<b>機構類別</b>，不是風險高低。<br>
+          紅圈為本批建議查核。</p>
+      </div>
+    </aside>
+
+    <div class="mapwrap">
+      <div id="map"></div>
+      <div class="mapbadge" id="mapbadge">—</div>
+
+      <!-- 時間軸：把時鐘倒回去，看當時的排序後來對不對。
+           右設限的格子以虛線標出，不與完整觀察的格子連成同一條趨勢線。 -->
+      <div class="tlbar" id="tlbar">
+        <div class="tlhead">
+          <b>時間軸回測</b>
+          <span class="tlsub">每一格都重新訓練一次，只用當天看得到的資料</span>
+          <label class="tltopsel">前
+            <select id="tltop">
+              <option value="50">50</option>
+              <option value="100" selected>100</option>
+              <option value="200">200</option>
+            </select>名</label>
+          <button id="tloff" title="回到今天的派工提案">離開</button>
+        </div>
+        <div class="tlticks" id="tlticks"></div>
+        <input id="tlrange" type="range" min="0" max="6" value="6" step="1"
+               aria-label="時間軸">
+        <div class="tlmetrics" id="tlmetrics"></div>
+        <div class="tltrain" id="tltrain"></div>
+        <div class="tlkey">
+          <i class="tlpin tl-hit"></i>命中：當時排前 N、後來受罰
+          <i class="tlpin tl-miss"></i>落空：當時排前 N、後來未受罰
+          <i class="tlpin tl-live"></i>待觀察
+          <i class="tlpin tl-out"></i>未排入
+        </div>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="tabs">
+        <button data-t="list" aria-pressed="true">派工提案</button>
+        <button data-t="chat">查詢</button>
+        <button data-t="scan">掃描</button>
+        <button data-t="timeline">時間軸</button>
+      </div>
+
+      <div class="pane" id="pane-list">
+        <div class="list" id="list"></div>
+      </div>
+
+      <div class="pane" id="pane-chat" hidden>
+        <div class="chatlog" id="chatlog">
+          <div class="msg bot">
+            <p>可以這樣問：</p>
+            <div class="egs">
+              <button class="eg">三重區有哪些幼兒園財報法遵沒通過？</button>
+              <button class="eg">板橋區私立幼兒園有幾間有裁罰紀錄？</button>
+              <button class="eg">最近有新聞在講哪幾間？</button>
+              <button class="eg">哪些園沒有公開財報但排在前 20 名？</button>
+            </div>
+          </div>
+        </div>
+        <form class="chatbar" id="chatform">
+          <input id="q" placeholder="用中文問，例如：新莊區近兩年評鑑沒過的有哪些？"
+                 autocomplete="off">
+          <button type="submit">送出</button>
+        </form>
+      </div>
+
+      <div class="pane" id="pane-scan" hidden>
+        <div class="scanwrap" id="scanwrap">載入中…</div>
+      </div>
+
+      <div class="pane" id="pane-timeline" hidden>
+        <div class="tllist" id="tllist">
+          <div class="tlnote">拖動地圖下方的時間軸，看那一年的排序與事後結果。</div>
+        </div>
+      </div>
+
+      <div class="dossier" id="dossier" hidden></div>
+    </div>
+  </main>
+
+  <footer>
+    本表為<b>建議查核的優先序</b>，不是違法認定。時序切分逐年回測（2021–2024
+    四個完整觀察年度，每年各自重新訓練）平均 AUC 0.658，前 100 名命中率為隨機
+    抽查的 2.29 倍；詳見「時間軸」分頁。全市 94.8% 的園無公開財報，對這些園
+    而言那是涵蓋範圍限制，不是合規證明。
+  </footer>
+</div>
+
+<script src="/static/vendor/leaflet.js"></script>
+<script src="/static/vendor/leaflet.markercluster.js"></script>
+<script src="/static/app.js"></script>
+<script src="/static/scan.js"></script>
+<script src="/static/timeline.js"></script>
+</body>
+</html>

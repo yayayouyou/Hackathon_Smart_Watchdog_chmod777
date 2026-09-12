@@ -1,0 +1,241 @@
+{
+  "budgets": {
+    "aggregate_byte_cap": 35000000,
+    "deadline_seconds": 180,
+    "request_cap": 7,
+    "requests_used": 7,
+    "response_byte_cap": 15000000,
+    "response_bytes_used": 355396
+  },
+  "classification_summary": {
+    "corrective_order_followup": 2,
+    "neutral_enrollment_negative_control": 1,
+    "policy_eligibility_negative_control": 1,
+    "policy_revision": 1
+  },
+  "completed_at_utc": "2026-08-14T04:43:50Z",
+  "inputs": {
+    "inputs/institutions_ntpc.csv": {
+      "byte_length": 303417,
+      "record_count": 1213,
+      "sha256": "d486bb2290fa7e70d1c457722cec49a689265593290a1a6907564160f702781d",
+      "source_path": "data/processed/institutions_ntpc.csv"
+    },
+    "inputs/penalties_ntpc.csv": {
+      "byte_length": 431593,
+      "record_count": 1386,
+      "sha256": "73ae75165b7676d3f0b69687fc0675a5aa1650193f94d1dc775f7f1d0544680a",
+      "source_path": "data/processed/penalties_ntpc.csv"
+    }
+  },
+  "join_summary": {
+    "matched_exact_title": 82,
+    "unresolved_historical_institution": 16
+  },
+  "manifest_version": 1,
+  "official_origin": "https://kidedu.ntpc.edu.tw",
+  "outputs": {
+    "data/processed/education_bureau_actions_ntpc.csv": {
+      "byte_length": 169012,
+      "record_count": 98,
+      "sha256": "b07b521e8b30bdf1a15b4ba8c81a0e35a5c1ca0764a5a1b76b2fb641c99cde42",
+      "snapshot_file": "education_bureau_actions_ntpc.csv"
+    },
+    "data/processed/education_bureau_notices_ntpc.csv": {
+      "byte_length": 23540,
+      "record_count": 5,
+      "sha256": "82a17ca7dae1ab1d9eee38fbc8ce93a57e5b61f3846fd342f664a1132e156b7d",
+      "snapshot_file": "education_bureau_notices_ntpc.csv"
+    },
+    "parsed/actions.json": {
+      "byte_length": 251786,
+      "record_count": 98,
+      "sha256": "729ffd0bf37f7a904a1cc66670316765e49ffab6bb9967515c9469c6146d3e60"
+    },
+    "parsed/notices.json": {
+      "byte_length": 26278,
+      "record_count": 5,
+      "sha256": "a6a18754d806e7453464a332f3d981a62aec58225ce0aa4a1bf9c0f2db093ce7"
+    }
+  },
+  "parser_schema_version": "ntpc-education-announcements-v1",
+  "pilot_scope": {
+    "absence_semantics": "This five-notice bounded pilot is not a population census. Absence of an action, penalty candidate, or notice is never evidence of compliance, completion, or low risk.",
+    "detail_url_pattern": "https://kidedu.ntpc.edu.tw/p/404-1000-ID.php",
+    "full_population_claim": false,
+    "notices": [
+      {
+        "classification": "corrective_order_followup",
+        "download_first_pdf": true,
+        "expected_actions": 9,
+        "id": "6097",
+        "ordered_date": "2016-05-11",
+        "title_marker": "103學年度私立幼兒園追蹤評鑑",
+        "visit_year": 2016
+      },
+      {
+        "classification": "corrective_order_followup",
+        "download_first_pdf": true,
+        "expected_actions": 89,
+        "id": "6098",
+        "ordered_date": "2016-05-03",
+        "title_marker": "104學年度公私立幼兒園追蹤評鑑",
+        "visit_year": 2016
+      },
+      {
+        "classification": "policy_revision",
+        "download_first_pdf": false,
+        "expected_actions": 0,
+        "id": "7077",
+        "ordered_date": null,
+        "title_marker": "基礎評鑑暨追蹤評鑑實施計畫",
+        "visit_year": null
+      },
+      {
+        "classification": "policy_eligibility_negative_control",
+        "download_first_pdf": false,
+        "expected_actions": 0,
+        "id": "15015",
+        "ordered_date": null,
+        "title_marker": "準公共教保服務機構申請及審核作業",
+        "visit_year": null
+      },
+      {
+        "classification": "neutral_enrollment_negative_control",
+        "download_first_pdf": false,
+        "expected_actions": 0,
+        "id": "6787",
+        "ordered_date": null,
+        "title_marker": "昌平非營利幼兒園招生",
+        "visit_year": null
+      }
+    ],
+    "pdf_page_cap": 20,
+    "request_cap": 7
+  },
+  "requests": [
+    {
+      "attachment_order": null,
+      "byte_length": 37641,
+      "charset": "utf-8",
+      "content_type": "text/html",
+      "final_url": "https://kidedu.ntpc.edu.tw/p/404-1000-6097.php",
+      "method": "GET",
+      "notice_id": "6097",
+      "parser_schema_version": "ntpc-education-announcements-v1",
+      "raw_file": "raw/001_6097_detail.html",
+      "response_sha256": "b1394666606a4c14b803816fcba752e4ae6b59becd1f5cf3981e90e0a442db63",
+      "retrieved_at_utc": "2026-08-14T04:43:49Z",
+      "role": "detail",
+      "sequence": 1,
+      "source_url": "https://kidedu.ntpc.edu.tw/p/404-1000-6097.php",
+      "status": 200
+    },
+    {
+      "attachment_order": 1,
+      "byte_length": 51816,
+      "charset": null,
+      "content_type": "application/octet-stream",
+      "final_url": "https://kidedu.ntpc.edu.tw/app/index.php?Action=downloadfile&file=WVhSMFlXTm9Memd6TDNCMFlWODJNRGszWHpReU1ESXlPREpmTVRreE9ERXVjR1Jt&fname=WW54RPOKRKSS11HH50POJCHGMKDG25HGKLB0B114VXIDLK40KPNKGHFG0054B4SSWWTSVX05DG04MOHCQONKTSWWKL34XSICVXYTDCTSROB0CDUWFHA445FCRKPOOOYXDGA0EGGDVWSWGD24ST2404LK44QLB5TSNK30ECTWQOKKLK50RKPOB5050404QKSXQOOKA0KK20UWB1NOHD51NLRK",
+      "method": "GET",
+      "notice_id": "6097",
+      "parser_schema_version": "ntpc-education-announcements-v1",
+      "raw_file": "raw/002_6097_attachment_pdf.pdf",
+      "response_sha256": "2ccae4bf231ebc4876c1d40ff09c3e909840267209bb284a1a2ea9d1dffb331e",
+      "retrieved_at_utc": "2026-08-14T04:43:49Z",
+      "role": "attachment_pdf",
+      "sequence": 2,
+      "source_url": "https://kidedu.ntpc.edu.tw/app/index.php?Action=downloadfile&file=WVhSMFlXTm9Memd6TDNCMFlWODJNRGszWHpReU1ESXlPREpmTVRreE9ERXVjR1Jt&fname=WW54RPOKRKSS11HH50POJCHGMKDG25HGKLB0B114VXIDLK40KPNKGHFG0054B4SSWWTSVX05DG04MOHCQONKTSWWKL34XSICVXYTDCTSROB0CDUWFHA445FCRKPOOOYXDGA0EGGDVWSWGD24ST2404LK44QLB5TSNK30ECTWQOKKLK50RKPOB5050404QKSXQOOKA0KK20UWB1NOHD51NLRK",
+      "status": 200
+    },
+    {
+      "attachment_order": null,
+      "byte_length": 37674,
+      "charset": "utf-8",
+      "content_type": "text/html",
+      "final_url": "https://kidedu.ntpc.edu.tw/p/404-1000-6098.php",
+      "method": "GET",
+      "notice_id": "6098",
+      "parser_schema_version": "ntpc-education-announcements-v1",
+      "raw_file": "raw/003_6098_detail.html",
+      "response_sha256": "8989b6aa04479ae105bc72085dc181d9b8216b3d1a83da72c3ff95265b27d53f",
+      "retrieved_at_utc": "2026-08-14T04:43:49Z",
+      "role": "detail",
+      "sequence": 3,
+      "source_url": "https://kidedu.ntpc.edu.tw/p/404-1000-6098.php",
+      "status": 200
+    },
+    {
+      "attachment_order": 1,
+      "byte_length": 104967,
+      "charset": null,
+      "content_type": "application/octet-stream",
+      "final_url": "https://kidedu.ntpc.edu.tw/app/index.php?Action=downloadfile&file=WVhSMFlXTm9MemcwTDNCMFlWODJNRGs0WHpreE1qa3dPREJmTVRreE9ERXVjR1Jt&fname=WW54RPOKICSSA1MP50POJCHGMKDG25HGKLB0B114VXID0040QKA445B4WS10A0SSZTCCEH102004LKLOYW30TS24OPB035MKQP35NOTSYSZWVSB0SSGC45FCRKPOOOYXDGA0EGGDVWSWGD24ST2404LK44QLB5TSNK30ECTWQOKKLK50RKPOB5050404QKSXQOOKA0KK20UWB1NOHD51NLRK",
+      "method": "GET",
+      "notice_id": "6098",
+      "parser_schema_version": "ntpc-education-announcements-v1",
+      "raw_file": "raw/004_6098_attachment_pdf.pdf",
+      "response_sha256": "f39646ac937a239be1def5a80dc7596961a8c3f8d460720325e6b321c96ba94b",
+      "retrieved_at_utc": "2026-08-14T04:43:50Z",
+      "role": "attachment_pdf",
+      "sequence": 4,
+      "source_url": "https://kidedu.ntpc.edu.tw/app/index.php?Action=downloadfile&file=WVhSMFlXTm9MemcwTDNCMFlWODJNRGs0WHpreE1qa3dPREJmTVRreE9ERXVjR1Jt&fname=WW54RPOKICSSA1MP50POJCHGMKDG25HGKLB0B114VXID0040QKA445B4WS10A0SSZTCCEH102004LKLOYW30TS24OPB035MKQP35NOTSYSZWVSB0SSGC45FCRKPOOOYXDGA0EGGDVWSWGD24ST2404LK44QLB5TSNK30ECTWQOKKLK50RKPOB5050404QKSXQOOKA0KK20UWB1NOHD51NLRK",
+      "status": 200
+    },
+    {
+      "attachment_order": null,
+      "byte_length": 39238,
+      "charset": "utf-8",
+      "content_type": "text/html",
+      "final_url": "https://kidedu.ntpc.edu.tw/p/404-1000-7077.php",
+      "method": "GET",
+      "notice_id": "7077",
+      "parser_schema_version": "ntpc-education-announcements-v1",
+      "raw_file": "raw/005_7077_detail.html",
+      "response_sha256": "ccbff153a62a12433950bf34e71d714fd22fb9fbb0526977ca80e9d13170952b",
+      "retrieved_at_utc": "2026-08-14T04:43:50Z",
+      "role": "detail",
+      "sequence": 5,
+      "source_url": "https://kidedu.ntpc.edu.tw/p/404-1000-7077.php",
+      "status": 200
+    },
+    {
+      "attachment_order": null,
+      "byte_length": 42936,
+      "charset": "utf-8",
+      "content_type": "text/html",
+      "final_url": "https://kidedu.ntpc.edu.tw/p/404-1000-15015.php",
+      "method": "GET",
+      "notice_id": "15015",
+      "parser_schema_version": "ntpc-education-announcements-v1",
+      "raw_file": "raw/006_15015_detail.html",
+      "response_sha256": "bd459b99bcec020fea0248bdff03e29c972821170305f69d1948593718a459e3",
+      "retrieved_at_utc": "2026-08-14T04:43:50Z",
+      "role": "detail",
+      "sequence": 6,
+      "source_url": "https://kidedu.ntpc.edu.tw/p/404-1000-15015.php",
+      "status": 200
+    },
+    {
+      "attachment_order": null,
+      "byte_length": 41124,
+      "charset": "utf-8",
+      "content_type": "text/html",
+      "final_url": "https://kidedu.ntpc.edu.tw/p/404-1000-6787.php",
+      "method": "GET",
+      "notice_id": "6787",
+      "parser_schema_version": "ntpc-education-announcements-v1",
+      "raw_file": "raw/007_6787_detail.html",
+      "response_sha256": "e2ce9fa721ac973586cf6c5d7dd563229d71ec190b14e7a51bd2d5637d9bac8f",
+      "retrieved_at_utc": "2026-08-14T04:43:50Z",
+      "role": "detail",
+      "sequence": 7,
+      "source_url": "https://kidedu.ntpc.edu.tw/p/404-1000-6787.php",
+      "status": 200
+    }
+  ],
+  "session_cookies_persisted": false,
+  "snapshot_id": "ntpc-pilot-v1",
+  "started_at_utc": "2026-08-14T04:43:49Z",
+  "tls_verification": "system trust store; no bypass"
+}

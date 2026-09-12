@@ -1,0 +1,29 @@
+# --- PDF / document ingest ---
+pymupdf==1.26.5          # text layer + page rasterisation
+pdfplumber==0.11.7       # ruling-line based table extraction (cross-check)
+
+# --- data ---
+pandas==2.3.3
+numpy==2.0.2
+pyarrow==21.0.0
+openpyxl==3.1.5
+
+# --- AWS (Bedrock for extraction/RAG, Textract for OCR, S3 for the lake) ---
+boto3==1.40.32
+
+# --- scraping the public registries (labels + institution master data) ---
+httpx==0.28.1
+beautifulsoup4==4.13.5
+lxml==6.0.2
+
+# --- modelling ---
+scikit-learn==1.6.1      # IsolationForest / calibration
+scipy==1.13.1
+
+# --- demo ---
+streamlit==1.50.0
+plotly==6.3.0
+
+# --- dev ---
+pytest==8.4.2
+ruff==0.14.0

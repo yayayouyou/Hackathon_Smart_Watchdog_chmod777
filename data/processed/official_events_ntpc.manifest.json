@@ -1,0 +1,134 @@
+{
+  "absence_semantics": "The evaluation, procurement, and education-announcement sources are bounded pilots. Absence of an event is never evidence of compliance, completion, no contract, or low risk.",
+  "full_population_claim": false,
+  "inputs": {
+    "data/external/education_bureau_announcements/listing_observations/20260816T013500Z-bootstrap-v1/manifest.json": {
+      "byte_length": 37990,
+      "kind": "manifest",
+      "sha256": "f74d84a25b6573b5c948a22f12800a8de2c48eb3a41a03ad59c6bed66857f411"
+    },
+    "data/external/education_bureau_announcements/ntpc-pilot-v1/manifest.json": {
+      "byte_length": 9898,
+      "kind": "manifest",
+      "sha256": "8100f3c037456fc7bb9be77f1056c1d5277021bd17293eb5b40835ef0decf512"
+    },
+    "data/external/evaluation/ntpc-pilot-v1/manifest.json": {
+      "byte_length": 25970,
+      "kind": "manifest",
+      "sha256": "5c2150fa57f9d13d3a43922df6581a18303d1a8f0bc7b5f7723acc898df5f721"
+    },
+    "data/external/manifest.json": {
+      "byte_length": 3788,
+      "kind": "manifest",
+      "sha256": "786843aff597b6f819c31ccad90b0165b075c816dde219a53537d02e7b484aa3"
+    },
+    "data/external/observations/20260810T000000Z-adopted-v1/manifest.json": {
+      "byte_length": 2781,
+      "kind": "manifest",
+      "sha256": "f04b3d2c7605b5741b1ac246c981155a9c49643e797e470166c645642ea9bcd7"
+    },
+    "data/external/procurement/ntpc-pilot-v1/manifest.json": {
+      "byte_length": 11502,
+      "kind": "manifest",
+      "sha256": "4cd749f675950e92d2243e1cd90a31519a5fc76293ff98c4d03d10a791e3fe33"
+    },
+    "data/processed/education_bureau_actions_ntpc.csv": {
+      "byte_length": 169012,
+      "kind": "csv",
+      "record_count": 98,
+      "sha256": "b07b521e8b30bdf1a15b4ba8c81a0e35a5c1ca0764a5a1b76b2fb641c99cde42"
+    },
+    "data/processed/education_bureau_discovered_notices_ntpc.csv": {
+      "byte_length": 352,
+      "kind": "csv",
+      "record_count": 0,
+      "sha256": "9d1a4820a8cb735422a18630e0059eee931298082e19e40845a0c11484d57344"
+    },
+    "data/processed/education_bureau_notices_ntpc.csv": {
+      "byte_length": 23540,
+      "kind": "csv",
+      "record_count": 5,
+      "sha256": "82a17ca7dae1ab1d9eee38fbc8ce93a57e5b61f3846fd342f664a1132e156b7d"
+    },
+    "data/processed/evaluations_ntpc.csv": {
+      "byte_length": 14009,
+      "kind": "csv",
+      "record_count": 9,
+      "sha256": "6ccbe894fb9228f3ab49baf905ea66cd4489c729e37bb76db7262dd9aaaa968e"
+    },
+    "data/processed/institutions_ntpc.csv": {
+      "byte_length": 303417,
+      "kind": "csv",
+      "record_count": 1213,
+      "sha256": "d486bb2290fa7e70d1c457722cec49a689265593290a1a6907564160f702781d"
+    },
+    "data/processed/nonprofit_procurement_contracts.csv": {
+      "byte_length": 22070,
+      "kind": "csv",
+      "record_count": 12,
+      "sha256": "df7964d45bca8105e070a1bd1792944f4fd9106007c7f4e2ae97f12523282db7"
+    },
+    "data/processed/penalties_ntpc.csv": {
+      "byte_length": 431593,
+      "kind": "csv",
+      "record_count": 1386,
+      "sha256": "73ae75165b7676d3f0b69687fc0675a5aa1650193f94d1dc775f7f1d0544680a"
+    }
+  },
+  "knowledge_time": {
+    "adopted_baseline_time": null,
+    "education_listing_method": "row_level_listing_observation",
+    "education_listing_tip": "20260816T013500Z-bootstrap-v1",
+    "non_baseline_requires_observed_at": true,
+    "penalty_method": "first_observed_exact_source_record_version"
+  },
+  "manifest_version": 1,
+  "output": {
+    "byte_length": 2222964,
+    "family_counts": {
+      "corrective_action": 98,
+      "education_notice": 5,
+      "evaluation": 9,
+      "penalty": 1386,
+      "procurement_award": 3
+    },
+    "path": "data/processed/official_events_ntpc.csv",
+    "record_count": 1501,
+    "sha256": "b2b2b737a0e76c1fd2b9e316feee436e8e98fe588ab44265aebdf30eaa576d78",
+    "unresolved_corrective_actions": 16
+  },
+  "schema_version": "official-events-v1",
+  "semantic_guards": {
+    "corrective_order_implies_noncompletion": false,
+    "cross_source_deduplication": false,
+    "non_penalty_cross_source_severity": false,
+    "penalty_group_is_asserted_single_event": false,
+    "procurement_uncovered_implies_no_contract": false
+  },
+  "source_snapshots": {
+    "education": {
+      "observed_at": "2026-08-14T04:43:50Z",
+      "snapshot_id": "ntpc-pilot-v1",
+      "source_authority": "official",
+      "verification_status": "pinned_raw_rederived"
+    },
+    "evaluation": {
+      "observed_at": "2026-08-14T01:19:35Z",
+      "snapshot_id": "ntpc-pilot-v1",
+      "source_authority": "official",
+      "verification_status": "pinned_parsed_derived"
+    },
+    "penalty": {
+      "observed_at": null,
+      "snapshot_id": "20260810T000000Z-adopted-v1",
+      "source_authority": "official_mirror",
+      "verification_status": "immutable_observation_validated"
+    },
+    "procurement": {
+      "observed_at": "2026-08-14T02:39:50Z",
+      "snapshot_id": "ntpc-pilot-v1",
+      "source_authority": "official_mirror",
+      "verification_status": "pinned_raw_rederived"
+    }
+  }
+}

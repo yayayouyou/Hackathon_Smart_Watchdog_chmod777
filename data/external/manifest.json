@@ -1,0 +1,110 @@
+{
+  "manifest_version": 1,
+  "source_project": "https://github.com/kiang/ap.ece.moe.edu.tw",
+  "generated_at_utc": "2026-08-13T03:07:39Z",
+  "provenance_note": "Existing repository snapshots adopted without an HTTP request; the exact retrieval time and response headers were not retained.",
+  "files": {
+    "preschools.json": {
+      "source_url": "https://kiang.github.io/ap.ece.moe.edu.tw/preschools.json",
+      "final_url": "https://kiang.github.io/ap.ece.moe.edu.tw/preschools.json",
+      "retrieved_at_utc": null,
+      "retrieved_on": "2026-08-10",
+      "last_checked_at_utc": null,
+      "http_status": null,
+      "etag": null,
+      "last_modified": null,
+      "content_type": null,
+      "byte_length": 10383360,
+      "sha256": "e3b41a976f352f9e7d6ed9aa1676af063f1f76f33e75ce3b5eed4a68d87ae587",
+      "schema_version": "preschools-geojson-v1",
+      "record_count": 7664,
+      "previous_sha256": null,
+      "previous_record_count": null,
+      "count_delta": null,
+      "changed": null,
+      "quality": {
+        "unique_registry_ids": 7664
+      }
+    },
+    "punish_all.json": {
+      "source_url": "https://kiang.github.io/ap.ece.moe.edu.tw/punish_all.json",
+      "final_url": "https://kiang.github.io/ap.ece.moe.edu.tw/punish_all.json",
+      "retrieved_at_utc": null,
+      "retrieved_on": "2026-08-10",
+      "last_checked_at_utc": null,
+      "http_status": null,
+      "etag": null,
+      "last_modified": null,
+      "content_type": null,
+      "byte_length": 1749303,
+      "sha256": "298172fbca8df70681f3001dc80f0e6c9f0ce967cff2f899d1cce5612baa5d10",
+      "schema_version": "actor-keyed-penalties-v1",
+      "record_count": 6982,
+      "previous_sha256": null,
+      "previous_record_count": null,
+      "count_delta": null,
+      "changed": null,
+      "quality": {
+        "actor_keys": 2800,
+        "actor_role_record_counts": {
+          "行為人": 846,
+          "負責人": 6136
+        },
+        "max_penalty_date": "2026/08/05",
+        "orphan_registry_id_count": 0,
+        "orphan_registry_id_sample": []
+      }
+    },
+    "kids_vehicles.json": {
+      "source_url": "https://kiang.github.io/ap.ece.moe.edu.tw/kids_vehicles.json",
+      "final_url": "https://kiang.github.io/ap.ece.moe.edu.tw/kids_vehicles.json",
+      "retrieved_at_utc": null,
+      "retrieved_on": "2026-08-10",
+      "last_checked_at_utc": null,
+      "http_status": null,
+      "etag": null,
+      "last_modified": null,
+      "content_type": null,
+      "byte_length": 703745,
+      "sha256": "9c721651c5fe209d9a12f721822ed2ae1b6049e321464cae36b62d670a55e15f",
+      "schema_version": "preschool-keyed-vehicles-v1",
+      "record_count": 3360,
+      "previous_sha256": null,
+      "previous_record_count": null,
+      "count_delta": null,
+      "changed": null,
+      "quality": {
+        "institution_ids": 1900,
+        "transaction_status_counts": {
+          "一般報廢": 217,
+          "停用報停": 3,
+          "停駛轉報廢": 11,
+          "停駛轉繳銷": 4,
+          "執行條例處分吊扣": 2,
+          "外區新領": 687,
+          "外區移入-新領": 3,
+          "外站新領": 528,
+          "外站移入-新領": 4,
+          "本區新領": 1799,
+          "本區繳銷重領": 2,
+          "本區註銷重領": 1,
+          "環保回收轉報廢": 32,
+          "繳銷": 21,
+          "繳銷轉報廢": 22,
+          "註銷轉報廢": 20,
+          "逕行註銷執行": 2,
+          "逾檢註銷": 2
+        },
+        "status_class_counts": {
+          "active": 3024,
+          "inactive": 331,
+          "suspended": 5
+        },
+        "max_next_exam_dt": "20250426",
+        "next_exam_dt_is_risk_label": false,
+        "orphan_registry_id_count": 0,
+        "orphan_registry_id_sample": []
+      }
+    }
+  }
+}

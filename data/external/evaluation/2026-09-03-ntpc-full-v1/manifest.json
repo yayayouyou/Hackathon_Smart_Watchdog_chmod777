@@ -1,0 +1,1946 @@
+{
+  "manifest_version": 1,
+  "snapshot_id": "2026-09-03-ntpc-full-v1",
+  "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+  "manifest_built_from_pinned_responses": true,
+  "provenance_note": "111 頁全部取得並 pin 完成後，腳本因一致性檢查本身寫錯而中止；manifest 由該次已 pin 的位元組建立，未重新發出請求。",
+  "started_at_utc": "2026-09-03T05:19:11Z",
+  "completed_at_utc": "2026-09-03T05:22:26Z",
+  "tls_verification": "system trust store; no bypass",
+  "session_cookies_persisted": false,
+  "parser_schema_version": "eva-search-results-v1",
+  "scope": {
+    "city_label": "新北市",
+    "city_value": "03",
+    "evaluation_result_filter": "不拘",
+    "name_filter": "",
+    "declared_total": 1101,
+    "declared_pages": 111,
+    "institutions_parsed": 1101,
+    "institutions_without_record": 22,
+    "evaluation_records": 1191,
+    "request_delay_seconds": 1.5
+  },
+  "requests": [
+    {
+      "sequence": 1,
+      "role": "initial_get",
+      "method": "GET",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市"
+      },
+      "response_sha256": "56e6002ac6111cbfa249474afd1c06340b9c1f29d3a634d99beda0cf2ab66e18",
+      "byte_length": 25310,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:11Z",
+      "raw_file": "raw/001_initial.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 2,
+      "role": "city_search",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 1
+      },
+      "response_sha256": "7a15896aa64afb6f03f2d659df82355b388e5af651a62a2983fd790591bafd26",
+      "byte_length": 166829,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:11Z",
+      "raw_file": "raw/002_ntpc_page_001.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 3,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 2
+      },
+      "response_sha256": "eccaea7657a3dd5dbbd971b8e8b3241a91d1ca410328baba884afa75ee229b41",
+      "byte_length": 168331,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:13Z",
+      "raw_file": "raw/003_ntpc_page_002.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 4,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 3
+      },
+      "response_sha256": "b773367ce9b9403bc555f1f6cea8be2589a39c756ed5a6bf44ff246c28b60371",
+      "byte_length": 183547,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:15Z",
+      "raw_file": "raw/004_ntpc_page_003.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 5,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 4
+      },
+      "response_sha256": "17ea4a1a47a57f8d65a26656621526b692394b5df7c426a168e447c0e5505a6e",
+      "byte_length": 168036,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:17Z",
+      "raw_file": "raw/005_ntpc_page_004.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 6,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 5
+      },
+      "response_sha256": "0b12d418a7c6c1830c7df7214531ce73b49c1bea7e35cd0d9fdb28e34c7817bb",
+      "byte_length": 174746,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:18Z",
+      "raw_file": "raw/006_ntpc_page_005.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 7,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 6
+      },
+      "response_sha256": "519517aa7470bf1a365d74df712b6a21ce4c8992b53d143e6137608354298591",
+      "byte_length": 170932,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:20Z",
+      "raw_file": "raw/007_ntpc_page_006.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 8,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 7
+      },
+      "response_sha256": "908033a7ff48d89842bb80707121992140133467f8328679a3b1d12db5536268",
+      "byte_length": 174259,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:22Z",
+      "raw_file": "raw/008_ntpc_page_007.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 9,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 8
+      },
+      "response_sha256": "81aaf0d131444a78a8b9eb072046fd58da3ac43bc364d07fa253d2f4b06046d3",
+      "byte_length": 170568,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:24Z",
+      "raw_file": "raw/009_ntpc_page_008.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 10,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 9
+      },
+      "response_sha256": "08a09746896408be8563a83af494605a8e42f5d172a21457c9b9972f3e09db99",
+      "byte_length": 170604,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:26Z",
+      "raw_file": "raw/010_ntpc_page_009.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 11,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 10
+      },
+      "response_sha256": "067e657b9c90df47c225b2faea9620173801f8112f28ecd5f64c0e4c2ab449b7",
+      "byte_length": 171535,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:27Z",
+      "raw_file": "raw/011_ntpc_page_010.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 12,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 11
+      },
+      "response_sha256": "51524d874b658f68ab656bb1d373ee63d227c7bada1230cbb9a910bdb45cb7c9",
+      "byte_length": 170507,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:29Z",
+      "raw_file": "raw/012_ntpc_page_011.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 13,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 12
+      },
+      "response_sha256": "2804769670434349ba9b811daa046c3611bb36bba5cb760da915f2457100f306",
+      "byte_length": 175200,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:31Z",
+      "raw_file": "raw/013_ntpc_page_012.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 14,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 13
+      },
+      "response_sha256": "91779a41ca80433724481752c430ff777886a4c9200df257c39a5b39a26f975c",
+      "byte_length": 178522,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:33Z",
+      "raw_file": "raw/014_ntpc_page_013.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 15,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 14
+      },
+      "response_sha256": "efc8ca7aaa947ebea4928b390a19c9b2d1916d4b88145d918af171b1423ebaf6",
+      "byte_length": 170725,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:34Z",
+      "raw_file": "raw/015_ntpc_page_014.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 16,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 15
+      },
+      "response_sha256": "fc7a7e5baff0e47f533112b37934986ec7bbb431c7937189aed04356d712231a",
+      "byte_length": 187544,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:36Z",
+      "raw_file": "raw/016_ntpc_page_015.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 17,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 16
+      },
+      "response_sha256": "adada0559413caf49075720f3fce51c909ef734b0f6de44b4d887ec4fa57713c",
+      "byte_length": 169435,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:38Z",
+      "raw_file": "raw/017_ntpc_page_016.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 18,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 17
+      },
+      "response_sha256": "9dc9669cc159b81c882575449cf9c26629542f253a367b29cee5f6c9c80f0200",
+      "byte_length": 167269,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:40Z",
+      "raw_file": "raw/018_ntpc_page_017.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 19,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 18
+      },
+      "response_sha256": "c4f7d8eb9f2fee07d126763abce1c81e2baa1f63ff56d96876bf83b84d1169a6",
+      "byte_length": 171127,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:41Z",
+      "raw_file": "raw/019_ntpc_page_018.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 20,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 19
+      },
+      "response_sha256": "93f6bd971c2c36b53e4bbffd6e0ca950f3f54ccf15036deb241a4de7a51a1ba8",
+      "byte_length": 171246,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:43Z",
+      "raw_file": "raw/020_ntpc_page_019.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 21,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 20
+      },
+      "response_sha256": "536009a6bc2cc68ea3d69f43b855cdf79b6f443c42d463efae48c95e4ceba1ba",
+      "byte_length": 170490,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:45Z",
+      "raw_file": "raw/021_ntpc_page_020.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 22,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 21
+      },
+      "response_sha256": "d732e45a65cdf5ed6a276d06008a28d0c77c7332a02fba4b9be8fe501e635b2b",
+      "byte_length": 178100,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:47Z",
+      "raw_file": "raw/022_ntpc_page_021.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 23,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 22
+      },
+      "response_sha256": "6d82811d12a2818d8000a3245386b8689fc740b5902b5a83e665e0b2032a10e6",
+      "byte_length": 170196,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:48Z",
+      "raw_file": "raw/023_ntpc_page_022.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 24,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 23
+      },
+      "response_sha256": "23f756ed4b6ae040ae7fbe7cd7a24d913efe254a6f5355ad209f0c6391ba187b",
+      "byte_length": 162947,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:50Z",
+      "raw_file": "raw/024_ntpc_page_023.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 25,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 24
+      },
+      "response_sha256": "ab8d8df27d143e676c1570e5b9b5505680ba9e720d4ea5c5a18273ecfd7dceb4",
+      "byte_length": 164150,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:52Z",
+      "raw_file": "raw/025_ntpc_page_024.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 26,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 25
+      },
+      "response_sha256": "b636bbeb1a64c0d20af6f771a54ffbbebc546c5bb737b30a5fb9b2c8b86bfa19",
+      "byte_length": 174526,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:54Z",
+      "raw_file": "raw/026_ntpc_page_025.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 27,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 26
+      },
+      "response_sha256": "8ba3647f3a2b5343aa805eb33977ae3490582c15319c980eaf2ce8db8c7c3b2a",
+      "byte_length": 168090,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:56Z",
+      "raw_file": "raw/027_ntpc_page_026.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 28,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 27
+      },
+      "response_sha256": "378a370fd532eeeb460be6535f0e67d99aa46027e9f0950a66c425cd0c29cb5c",
+      "byte_length": 168587,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:57Z",
+      "raw_file": "raw/028_ntpc_page_027.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 29,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 28
+      },
+      "response_sha256": "1e7da88ed61f76bdbf42e8acb97709ef90d9fa9bb3b6ccaf4cfd23928028a466",
+      "byte_length": 162060,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:19:59Z",
+      "raw_file": "raw/029_ntpc_page_028.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 30,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 29
+      },
+      "response_sha256": "3b71aac07bc8b5b88d569e48760f0ee05d2edcd0004a7e4df88992c5d93fddc2",
+      "byte_length": 171502,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:01Z",
+      "raw_file": "raw/030_ntpc_page_029.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 31,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 30
+      },
+      "response_sha256": "f4201f3b3e46b161f4a2af1c7d0857fb737c4177242b436bf98a8ce474ec2b94",
+      "byte_length": 166843,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:03Z",
+      "raw_file": "raw/031_ntpc_page_030.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 32,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 31
+      },
+      "response_sha256": "ae08760935eab36a8ca26e48b3ea1881eed06698d5e586f5dc3683782c04c2dc",
+      "byte_length": 170828,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:04Z",
+      "raw_file": "raw/032_ntpc_page_031.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 33,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 32
+      },
+      "response_sha256": "9ca09d7797c06070fff9f58ab93a887d7ef4519a1e843acf3a68b981a0b8b40d",
+      "byte_length": 174304,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:06Z",
+      "raw_file": "raw/033_ntpc_page_032.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 34,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 33
+      },
+      "response_sha256": "371ad446f7aa48ca0e925bdddddb963059048675f39fdd647f9b92019faf411c",
+      "byte_length": 174706,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:08Z",
+      "raw_file": "raw/034_ntpc_page_033.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 35,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 34
+      },
+      "response_sha256": "713c90abe2ec9e6c90f708b281902cdfd142ae95e80e6a6c3731c9793de81958",
+      "byte_length": 156726,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:10Z",
+      "raw_file": "raw/035_ntpc_page_034.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 36,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 35
+      },
+      "response_sha256": "04c90f1883bc4a748f2157dcc4214a00b2d9571183a2251a3fa02726a85c60e9",
+      "byte_length": 168604,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:11Z",
+      "raw_file": "raw/036_ntpc_page_035.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 37,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 36
+      },
+      "response_sha256": "4b083da2147d24b77c238329e419bf6d8fdd7a5ae680254c5323a11ee03a7d57",
+      "byte_length": 170787,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:13Z",
+      "raw_file": "raw/037_ntpc_page_036.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 38,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 37
+      },
+      "response_sha256": "79e6d8bed172983991da7b0c684edb1cc8c63a67009d476f621ab905a109efa1",
+      "byte_length": 166527,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:15Z",
+      "raw_file": "raw/038_ntpc_page_037.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 39,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 38
+      },
+      "response_sha256": "d9140e3472124c712385736638f07b24163c585b8daa5512cfd580631e9cafc4",
+      "byte_length": 170838,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:17Z",
+      "raw_file": "raw/039_ntpc_page_038.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 40,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 39
+      },
+      "response_sha256": "105d98aa485788e5e441a25129388f10d26752f18c2fcb522cf42da0acb90e67",
+      "byte_length": 174745,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:18Z",
+      "raw_file": "raw/040_ntpc_page_039.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 41,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 40
+      },
+      "response_sha256": "d68aa3b76aa84696c11163aa334d9792856ca025f51a4c2bb3f85079208470c2",
+      "byte_length": 175003,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:20Z",
+      "raw_file": "raw/041_ntpc_page_040.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 42,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 41
+      },
+      "response_sha256": "a100f091a619d2880e0859d5342f46f8e1c45abf2513d59c43e580266bce1dc1",
+      "byte_length": 168513,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:22Z",
+      "raw_file": "raw/042_ntpc_page_041.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 43,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 42
+      },
+      "response_sha256": "94254c79389ab3552af0fa655873dc705018e9c0f9ff6300b9ba613babcc9626",
+      "byte_length": 167650,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:24Z",
+      "raw_file": "raw/043_ntpc_page_042.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 44,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 43
+      },
+      "response_sha256": "002eb264c3282ebffcb59fc9f9950ddcbe99b017566c376938b26c88c01a1838",
+      "byte_length": 175046,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:26Z",
+      "raw_file": "raw/044_ntpc_page_043.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 45,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 44
+      },
+      "response_sha256": "ab5e03650da3f76ebbb1630e604561b92c961c4bddee9a1cf0f6dbffa6bb2849",
+      "byte_length": 178408,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:27Z",
+      "raw_file": "raw/045_ntpc_page_044.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 46,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 45
+      },
+      "response_sha256": "3536714dc1b1065bf5911b0cf7f2c286ee846c3dcf47d22026d8841c4c4d52e3",
+      "byte_length": 170764,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:29Z",
+      "raw_file": "raw/046_ntpc_page_045.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 47,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 46
+      },
+      "response_sha256": "ef09cfe43b3b622b054b9534c120d5c5e98ad76e83640fe83b16b01cbfcc9d81",
+      "byte_length": 166547,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:31Z",
+      "raw_file": "raw/047_ntpc_page_046.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 48,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 47
+      },
+      "response_sha256": "41893babf3174f75524e42e35007b7735f4bb0c43237a3b5daad48f681489854",
+      "byte_length": 178334,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:33Z",
+      "raw_file": "raw/048_ntpc_page_047.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 49,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 48
+      },
+      "response_sha256": "8eb7538f77b2c71aef8aec33adc3d227630a14eb30fc85f7b0eaf96faa9f5af7",
+      "byte_length": 170214,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:34Z",
+      "raw_file": "raw/049_ntpc_page_048.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 50,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 49
+      },
+      "response_sha256": "6abc67c5da74d08adf2b00045ee5497208d84a4adfc85612478e657e74afff9b",
+      "byte_length": 171788,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:36Z",
+      "raw_file": "raw/050_ntpc_page_049.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 51,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 50
+      },
+      "response_sha256": "5582b86c5f148034a1b32d685ff36b7b3da1965544579ca02db42270dd8b5822",
+      "byte_length": 156913,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:38Z",
+      "raw_file": "raw/051_ntpc_page_050.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 52,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 51
+      },
+      "response_sha256": "ffc29f3ba5dd1c2958336fe9939d3bbac4e23ffab5e5aff31f5e9008bdc6e755",
+      "byte_length": 178381,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:40Z",
+      "raw_file": "raw/052_ntpc_page_051.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 53,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 52
+      },
+      "response_sha256": "50c015687176370a10bb5836a6fb663a097fc56ef486fc394c5f791c68d4f1f4",
+      "byte_length": 174862,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:42Z",
+      "raw_file": "raw/053_ntpc_page_052.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 54,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 53
+      },
+      "response_sha256": "668ce88e4f5b5fe91406f354fef5eb424f4adb680f99e14f545349c7a6c6317d",
+      "byte_length": 170419,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:43Z",
+      "raw_file": "raw/054_ntpc_page_053.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 55,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 54
+      },
+      "response_sha256": "04916e308c97aa8f4a2cb705a45282a6c4c40a94d61bf66611fdd7c2fc697473",
+      "byte_length": 174079,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:45Z",
+      "raw_file": "raw/055_ntpc_page_054.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 56,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 55
+      },
+      "response_sha256": "ad9a2e80a4c13a736c0012197f4ba19776cbb53a320efbd177efd18b289d1e48",
+      "byte_length": 156179,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:47Z",
+      "raw_file": "raw/056_ntpc_page_055.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 57,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 56
+      },
+      "response_sha256": "98fb73d712ffa795cfb08725ca14d2b950d7883047539f4a7872ea4c41d7a9ab",
+      "byte_length": 169033,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:49Z",
+      "raw_file": "raw/057_ntpc_page_056.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 58,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 57
+      },
+      "response_sha256": "63f17a5608423dfaf5dec203ef061b0914782a53d0640c7a4bb66e4bb8f29173",
+      "byte_length": 167660,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:50Z",
+      "raw_file": "raw/058_ntpc_page_057.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 59,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 58
+      },
+      "response_sha256": "113b329f005899f3831d9541fe7c6548bed1bf60e34ad2a4d2a66092b1d23375",
+      "byte_length": 167134,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:52Z",
+      "raw_file": "raw/059_ntpc_page_058.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 60,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 59
+      },
+      "response_sha256": "6da82db49d472b1307cedde71b763ebafdbbb70af4518d3739d6413232daee90",
+      "byte_length": 161851,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:54Z",
+      "raw_file": "raw/060_ntpc_page_059.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 61,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 60
+      },
+      "response_sha256": "6242fc51593b752470482ff583590191834cdaa92218d4a846e561e62b0a7f6b",
+      "byte_length": 168087,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:56Z",
+      "raw_file": "raw/061_ntpc_page_060.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 62,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 61
+      },
+      "response_sha256": "00de0aae8e1d2c20256472d36f8b1afcf3d4cadb223bf540ba873cc57780cd90",
+      "byte_length": 168555,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:58Z",
+      "raw_file": "raw/062_ntpc_page_061.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 63,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 62
+      },
+      "response_sha256": "e25833a499880476cdf7368c2043ed5781c78805614c1463afaaad1f6c07b309",
+      "byte_length": 166655,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:20:59Z",
+      "raw_file": "raw/063_ntpc_page_062.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 64,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 63
+      },
+      "response_sha256": "bf66407d6b037c3f0ea51d8d8db50d9a4d3d59ddc0a8631d0e509f8efa3a738f",
+      "byte_length": 167177,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:01Z",
+      "raw_file": "raw/064_ntpc_page_063.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 65,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 64
+      },
+      "response_sha256": "139f46ec409937935b390ce9ee9c714cf3e5e318d96f243e784d8eaec0036b16",
+      "byte_length": 174344,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:03Z",
+      "raw_file": "raw/065_ntpc_page_064.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 66,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 65
+      },
+      "response_sha256": "cfe86dcdae621d9f40cf0ac7890ab039efbb1968ab6eb565f35ea55b5a5d5093",
+      "byte_length": 171869,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:05Z",
+      "raw_file": "raw/066_ntpc_page_065.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 67,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 66
+      },
+      "response_sha256": "da639c384f753fb87f882bbce6db633bd9d49f213a18c690c10feb17a0d001d6",
+      "byte_length": 177882,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:06Z",
+      "raw_file": "raw/067_ntpc_page_066.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 68,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 67
+      },
+      "response_sha256": "2c25946d244a2fe621f30992c761053d73e6a61aae70235bdd6bd5cabd116f1b",
+      "byte_length": 168557,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:08Z",
+      "raw_file": "raw/068_ntpc_page_067.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 69,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 68
+      },
+      "response_sha256": "a12334757640ba15bbcacb3b6c330f9c900c55b58d962db2fd46d4478baabbd8",
+      "byte_length": 168100,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:10Z",
+      "raw_file": "raw/069_ntpc_page_068.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 70,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 69
+      },
+      "response_sha256": "c44e34eb5c8e1b31bb8a5e5f08adf756d0a8f988b4ac4a4032ec827d8f84a7ef",
+      "byte_length": 162529,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:12Z",
+      "raw_file": "raw/070_ntpc_page_069.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 71,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 70
+      },
+      "response_sha256": "9a164611461b2c4f45eb8d28c32b8eaa12eb5534cae20e659d54312ee23f76a3",
+      "byte_length": 166579,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:13Z",
+      "raw_file": "raw/071_ntpc_page_070.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 72,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 71
+      },
+      "response_sha256": "42f7e4b21f06d86624922d74bf6ce59f13a046ea12cfa698b286f0bfff2ad8a6",
+      "byte_length": 166771,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:15Z",
+      "raw_file": "raw/072_ntpc_page_071.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 73,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 72
+      },
+      "response_sha256": "90d0562ce010bcf5d9cfc61fb60e6174bddfae417578f18733880229532d1b0e",
+      "byte_length": 167032,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:17Z",
+      "raw_file": "raw/073_ntpc_page_072.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 74,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 73
+      },
+      "response_sha256": "8b0f1e65407a2de6c1b20a11685e30a6a873d75d94361cdb6ba4cb6013d67b48",
+      "byte_length": 166701,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:19Z",
+      "raw_file": "raw/074_ntpc_page_073.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 75,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 74
+      },
+      "response_sha256": "8e4898d7c77a83301837279123aeaedfd3db86f920c8ff46ef74eebe7e9b67bc",
+      "byte_length": 166884,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:21Z",
+      "raw_file": "raw/075_ntpc_page_074.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 76,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 75
+      },
+      "response_sha256": "09be03045608622d9399ceee8b2824ff0fef15b4c876c2fa3aafaa717e315b0d",
+      "byte_length": 166685,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:22Z",
+      "raw_file": "raw/076_ntpc_page_075.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 77,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 76
+      },
+      "response_sha256": "9e6b586ae993c82261952263c07150f487e5820bc59906a8df89ae02cb30973b",
+      "byte_length": 168730,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:24Z",
+      "raw_file": "raw/077_ntpc_page_076.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 78,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 77
+      },
+      "response_sha256": "1918c8979cfdf9d57f5ca75848ee46a81eb4b99a423f699db192ca53decb4592",
+      "byte_length": 170798,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:26Z",
+      "raw_file": "raw/078_ntpc_page_077.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 79,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 78
+      },
+      "response_sha256": "6808f704281b03068411fe6aa0ce30aca1764c2efd4741b3aa372baa9d3d64e8",
+      "byte_length": 167250,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:28Z",
+      "raw_file": "raw/079_ntpc_page_078.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 80,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 79
+      },
+      "response_sha256": "5364674ccf8a97fd29aa58473cfb0f6c698f39335b142c33f7907223eb16542d",
+      "byte_length": 167034,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:29Z",
+      "raw_file": "raw/080_ntpc_page_079.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 81,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 80
+      },
+      "response_sha256": "a42b99bb4559e3c6f434db994e0baf4e88a12d7a58d95bb60dd1bef26a9577ea",
+      "byte_length": 170462,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:31Z",
+      "raw_file": "raw/081_ntpc_page_080.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 82,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 81
+      },
+      "response_sha256": "62a2bc6ed431f52717ef41eaa3da09c56e00c665d1d23cface724bae0da848a0",
+      "byte_length": 170910,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:33Z",
+      "raw_file": "raw/082_ntpc_page_081.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 83,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 82
+      },
+      "response_sha256": "9636bd28db7c75f9f3c9c0d55c9f3cf258b77ad4cf868e082b028fd0844d7503",
+      "byte_length": 174784,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:35Z",
+      "raw_file": "raw/083_ntpc_page_082.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 84,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 83
+      },
+      "response_sha256": "9d0f3a159bf0c9836315f12e57e49baa78f7bfa00f24778b3604a275ce263fe8",
+      "byte_length": 167444,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:36Z",
+      "raw_file": "raw/084_ntpc_page_083.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 85,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 84
+      },
+      "response_sha256": "601ab287c39f9c561ce9aab141a838fa189928e45f68570547decea097073f5b",
+      "byte_length": 170277,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:38Z",
+      "raw_file": "raw/085_ntpc_page_084.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 86,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 85
+      },
+      "response_sha256": "ca7c57399b92e6f8f16ab25b40698806e5a926b4493677f8e95c4fb7ae9fa5a2",
+      "byte_length": 167605,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:40Z",
+      "raw_file": "raw/086_ntpc_page_085.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 87,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 86
+      },
+      "response_sha256": "8c32d9b5c153d9c845272fca6c027039cb2045f8515590e42ba26eae25e0a2b8",
+      "byte_length": 171884,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:42Z",
+      "raw_file": "raw/087_ntpc_page_086.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 88,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 87
+      },
+      "response_sha256": "7d767d3e7ac40fd2c823f16c66dd830cb574343e26c023e6f2800fd9989550ec",
+      "byte_length": 174640,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:43Z",
+      "raw_file": "raw/088_ntpc_page_087.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 89,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 88
+      },
+      "response_sha256": "14ab9dad0e514f0309d1c4ae5e9de956755e5ba233e7633d347b692a7e2aae67",
+      "byte_length": 171349,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:45Z",
+      "raw_file": "raw/089_ntpc_page_088.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 90,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 89
+      },
+      "response_sha256": "d5403b4d40dc3caa702e42d8a6dfd58bb73b8806fba77831f76f978910010acf",
+      "byte_length": 161907,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:47Z",
+      "raw_file": "raw/090_ntpc_page_089.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 91,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 90
+      },
+      "response_sha256": "5eb25df1d38463cb7fb493dc413b05dcaf5cb8d0769bff217be05b11bcb56f7c",
+      "byte_length": 174536,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:49Z",
+      "raw_file": "raw/091_ntpc_page_090.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 92,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 91
+      },
+      "response_sha256": "4693bd01cb46e2be7a9afe344962e98ff850802b07d8932821111804e6e07351",
+      "byte_length": 174747,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:50Z",
+      "raw_file": "raw/092_ntpc_page_091.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 93,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 92
+      },
+      "response_sha256": "4d12997135e7b7733b84d3f2bd1689666d6ff1b9e45a990ee41190fe9df37a8a",
+      "byte_length": 178512,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:52Z",
+      "raw_file": "raw/093_ntpc_page_092.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 94,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 93
+      },
+      "response_sha256": "3acbc2a5fa660dbb3e46998a789125249f5c6c90662447841f8f39a5b75131d6",
+      "byte_length": 177661,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:54Z",
+      "raw_file": "raw/094_ntpc_page_093.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 95,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 94
+      },
+      "response_sha256": "88c6fd426d02ece4816d1271a69b25708a2b4848cc408b22afab0f71c228b808",
+      "byte_length": 158440,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:56Z",
+      "raw_file": "raw/095_ntpc_page_094.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 96,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 95
+      },
+      "response_sha256": "109222d2123cd8030a1eb716111ca03ce3153e97d2dd8d393c47d70edef0b884",
+      "byte_length": 167036,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:58Z",
+      "raw_file": "raw/096_ntpc_page_095.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 97,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 96
+      },
+      "response_sha256": "2a33d1d5219e06ac574d8150f5c8b9059ce30cbd0aa06f80ca8fcbcc815d50b6",
+      "byte_length": 167478,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:21:59Z",
+      "raw_file": "raw/097_ntpc_page_096.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 98,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 97
+      },
+      "response_sha256": "64a0812d6db0a4bdf66623155338c2174e3c4875ab840711d82d0102db0ee935",
+      "byte_length": 166803,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:01Z",
+      "raw_file": "raw/098_ntpc_page_097.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 99,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 98
+      },
+      "response_sha256": "811ed08b9a10b9ef87309cf255c511e230e136ce6bbb6e0584d735ecea7131e6",
+      "byte_length": 167028,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:03Z",
+      "raw_file": "raw/099_ntpc_page_098.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 100,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 99
+      },
+      "response_sha256": "e778fd67114b492e0094e6628d952acd39060cd47c7bf384612e3f1382994ab3",
+      "byte_length": 166809,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:05Z",
+      "raw_file": "raw/100_ntpc_page_099.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 101,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 100
+      },
+      "response_sha256": "cb8eec187b8856419266e212946d9035ccd10e049d4c58b6cdadd28c628544ce",
+      "byte_length": 167649,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:06Z",
+      "raw_file": "raw/101_ntpc_page_100.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 102,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 101
+      },
+      "response_sha256": "2b904707c1e3e264320a95b494714429135b4fc16a3bdec8a93ff2da6d85ca2d",
+      "byte_length": 167282,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:08Z",
+      "raw_file": "raw/102_ntpc_page_101.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 103,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 102
+      },
+      "response_sha256": "5823f64b1b91adb05cb0452ecb09477b3e00b04dfa4423644173484eb5b0fb80",
+      "byte_length": 170207,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:10Z",
+      "raw_file": "raw/103_ntpc_page_102.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 104,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 103
+      },
+      "response_sha256": "b4a4cd05341b0314da52597304906c6c14defae42c8f8b193c202f1c77c431c7",
+      "byte_length": 167713,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:12Z",
+      "raw_file": "raw/104_ntpc_page_103.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 105,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 104
+      },
+      "response_sha256": "89a00cc3a016ebf7482eaffc98b80ca4672d61c90433346ceca4435a4e4e2e2e",
+      "byte_length": 170982,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:13Z",
+      "raw_file": "raw/105_ntpc_page_104.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 106,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 105
+      },
+      "response_sha256": "cb28b5a900a5e901a032be4dd3488d88f5ddff637ecf74f10f5c61add3c1a380",
+      "byte_length": 172685,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:15Z",
+      "raw_file": "raw/106_ntpc_page_105.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 107,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 106
+      },
+      "response_sha256": "f172d26fc5e853258ccba4f952071e6693450e25086e1029e64703aa888786fb",
+      "byte_length": 165820,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:17Z",
+      "raw_file": "raw/107_ntpc_page_106.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 108,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 107
+      },
+      "response_sha256": "4475c95489b8f74a0920aaada809c309d3d0837b305ff69222c6486789f52ef7",
+      "byte_length": 170827,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:19Z",
+      "raw_file": "raw/108_ntpc_page_107.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 109,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 108
+      },
+      "response_sha256": "d1476f1a8a906992817e30351d9b522bf53bee130c05b9db8e5e98e3fa71aced",
+      "byte_length": 178254,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:21Z",
+      "raw_file": "raw/109_ntpc_page_108.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 110,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 109
+      },
+      "response_sha256": "eff30d3b0943206ce808d670fe70942b5e95e94507c5405f9e9f202afc79195f",
+      "byte_length": 177773,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:22Z",
+      "raw_file": "raw/110_ntpc_page_109.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 111,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 110
+      },
+      "response_sha256": "f09c79aa38965c4f81db120214e3e344e1b178c8d152f45d8de8842214679cef",
+      "byte_length": 175196,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:24Z",
+      "raw_file": "raw/111_ntpc_page_110.html",
+      "parser_schema_version": "eva-search-results-v1"
+    },
+    {
+      "sequence": 112,
+      "role": "page_next",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "city_label": "新北市",
+        "page": 111
+      },
+      "response_sha256": "67b54a8f4144464b4ba1d789d1845357afcbd5793b22d9c41a19f272e8977b0b",
+      "byte_length": 46307,
+      "status": 200,
+      "retrieved_at_utc": "2026-09-03T05:22:26Z",
+      "raw_file": "raw/112_ntpc_page_111.html",
+      "parser_schema_version": "eva-search-results-v1"
+    }
+  ],
+  "outputs": {
+    "data/external/evaluation/2026-09-03-ntpc-full-v1/parsed/evaluation_results.json": {
+      "sha256": "d7681ec01d3f42d354229c8ef2b15624d612f44a031b52b084b4dac2d29063d8",
+      "byte_length": 818591,
+      "record_count": 1191
+    },
+    "data/processed/evaluations_ntpc_full.csv": {
+      "sha256": "53dc848d809b3960872743254f180b04a8c54f68370a001aa620a838d559c518",
+      "byte_length": 346079,
+      "record_count": 1191
+    },
+    "data/processed/evaluation_institutions_ntpc.csv": {
+      "sha256": "2bcad5e128f43bc1d44484a116880b9df2d9f76b41cff9e17e8b531c777a2e1b",
+      "byte_length": 294643,
+      "record_count": 1101
+    }
+  }
+}

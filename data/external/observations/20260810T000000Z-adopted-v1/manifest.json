@@ -1,0 +1,64 @@
+{
+  "changes": {
+    "byte_length": 139,
+    "change_type_counts": {},
+    "path": "changes.csv",
+    "record_count": 0,
+    "removal_semantics": "removed_from_source means only that a record present in the previous observation is absent now. It is not evidence of resolution, compliance, institution closure, vehicle inactivity, or low risk.",
+    "sha256": "5f9a7c42eeab1fec53ca812aee7cc64a84aba052123d5c865925bf61e15c008b",
+    "source_counts": {}
+  },
+  "manifest_version": 1,
+  "objects": {
+    "kids_vehicles.json": {
+      "byte_length": 703745,
+      "etag": null,
+      "final_url": "https://kiang.github.io/ap.ece.moe.edu.tw/kids_vehicles.json",
+      "http_status": null,
+      "last_checked_at_utc": null,
+      "last_modified": null,
+      "object_path": "objects/9c721651c5fe209d9a12f721822ed2ae1b6049e321464cae36b62d670a55e15f.json",
+      "record_count": 3360,
+      "record_schema_version": "institution-plate-occurrence-v1",
+      "retrieved_at_utc": null,
+      "retrieved_on": "2026-08-10",
+      "sha256": "9c721651c5fe209d9a12f721822ed2ae1b6049e321464cae36b62d670a55e15f",
+      "source_url": "https://kiang.github.io/ap.ece.moe.edu.tw/kids_vehicles.json"
+    },
+    "preschools.json": {
+      "byte_length": 10383360,
+      "etag": null,
+      "final_url": "https://kiang.github.io/ap.ece.moe.edu.tw/preschools.json",
+      "http_status": null,
+      "last_checked_at_utc": null,
+      "last_modified": null,
+      "object_path": "objects/e3b41a976f352f9e7d6ed9aa1676af063f1f76f33e75ce3b5eed4a68d87ae587.json",
+      "record_count": 7664,
+      "record_schema_version": "registry-uuid-record-v1",
+      "retrieved_at_utc": null,
+      "retrieved_on": "2026-08-10",
+      "sha256": "e3b41a976f352f9e7d6ed9aa1676af063f1f76f33e75ce3b5eed4a68d87ae587",
+      "source_url": "https://kiang.github.io/ap.ece.moe.edu.tw/preschools.json"
+    },
+    "punish_all.json": {
+      "byte_length": 1749303,
+      "etag": null,
+      "final_url": "https://kiang.github.io/ap.ece.moe.edu.tw/punish_all.json",
+      "http_status": null,
+      "last_checked_at_utc": null,
+      "last_modified": null,
+      "object_path": "objects/298172fbca8df70681f3001dc80f0e6c9f0ce967cff2f899d1cce5612baa5d10.json",
+      "record_count": 6982,
+      "record_schema_version": "conservative-penalty-occurrence-v1",
+      "retrieved_at_utc": null,
+      "retrieved_on": "2026-08-10",
+      "sha256": "298172fbca8df70681f3001dc80f0e6c9f0ce967cff2f899d1cce5612baa5d10",
+      "source_url": "https://kiang.github.io/ap.ece.moe.edu.tw/punish_all.json"
+    }
+  },
+  "observation_id": "20260810T000000Z-adopted-v1",
+  "observation_kind": "adopted_baseline_without_exact_observation_time",
+  "observed_at_utc": null,
+  "previous_observation_id": null,
+  "schema_version": "external-observation-v1"
+}

@@ -1,0 +1,46 @@
+# --- 不進版控：主辦方原始資料（1.8 GB） ---
+# 全隊都有主辦方的下載連結，且我們無權重新散布。
+# 用 scripts/setup_raw_data.py 從 zip 還原（Big5 檔名需特殊處理）。
+data/raw/
+
+# --- 不進版控：可重生的中間產物 ---
+# 渲染頁面影像 115 MB，由 data/raw/ 重生（見 scripts/render_pages.py）。
+data/interim/
+
+# --- 不進版控：可重生的大型明細表 ---
+# 46 萬列收費明細 45 MB，由 scripts/build_fee_table.py 從網路重抓。
+# 提交的是 data/processed/fee_summary_ntpc.csv（104 KB，模型實際消費的彙總）。
+data/processed/fees_ntpc.csv
+data/processed/fee_totals_ntpc.csv
+data/processed/*.parquet
+
+# 競賽原始壓縮檔
+*.zip
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Secrets / AWS
+.env
+.env.*
+!.env.example
+.aws/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Runtime snapshot updater coordination/recovery state
+data/external/.snapshot-update.lock
+data/external/.snapshot-update-transaction.json
+data/external/education_bureau_announcements/.snapshot-update.lock
+data/external/education_bureau_announcements/.listing-update-transaction.json
+
+# OS
+.DS_Store
+dist/
+data/runtime/

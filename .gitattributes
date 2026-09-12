@@ -1,0 +1,24 @@
+# 後面的規則覆蓋前面的，所以通則寫在最前面，例外寫在後面。
+
+# 一般文字檔：repo 內存 LF，checkout 時依平台轉換。
+* text=auto
+
+# ── 例外：行尾轉換與內容定址不能共存 ────────────────────────────────
+#
+# Windows 的 git 預設 core.autocrlf=true，checkout 時把 LF 換成 CRLF。對程式碼
+# 無害，對**用 SHA-256 釘住的資料快照是致命的**：data/external/kids_vehicles.json
+# 在 Windows 上被塞進 23,961 個 CR，檔案從 703,745 變成 727,706 bytes，
+# registry.verify_snapshot() 立刻以「snapshot integrity mismatch」擋下整條管線
+# ——load_vehicles() 一掛，baseline_model、eda_signal_strength、build_audit_priority
+# 與時間軸回測全部跑不動。每一台 Windows 機器都會踩到，而且錯誤訊息指向
+# 「完整性不符」，看起來像資料被竄改，不像是 git 設定問題。
+#
+# 這些快照的**位元組就是它們的身分**（見 data/external/README.md：上游裁罰紀錄
+# 有保存期限會下架，釘住時點是整個專案可重現的前提）。對它們做行尾轉換是類別
+# 錯誤，所以整個 data/ 樹一律不轉換。
+data/**  -text
+
+# 主辦方原始 PDF、索引檔與壓縮檔同理。
+*.pdf     binary
+*.sqlite  binary
+*.zip     binary

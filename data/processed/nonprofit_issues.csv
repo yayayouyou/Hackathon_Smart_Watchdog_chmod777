@@ -1,0 +1,209 @@
+code,short_name,academic_year,issue
+N01,安溪,111,p05/p06: 紅色關防 seal overlaps the report headers; resolved by isolating the red channel — headers fully legible (資產負債表 民國112年7月31日及民國111年7月31日; 收支餘絀表 民國111年8月1日至112年7月31日).
+N01,安溪,111,"收支餘絀表 prints 本期稅前餘絀 / 所得稅費用 / 本期稅後餘絀 instead of a single 本期餘絀 line; 本期稅後餘絀 決算 649,872 ties exactly to 資產負債表 本期餘絀."
+N01,安溪,111,"預算數 is a dash (no budget appropriated) for 教保費收入減項, 延後托育收入淨額, 利息收入, 其他收入, 業務發展費 (決算 1,300,000), 延後托育支出 (202,057), 其他支出 (801,623), 本期稅前餘絀, 所得稅費用, 本期稅後餘絀 — recorded as null, not 0. Unbudgeted 業務發展費 of 1,300,000 is the largest such item."
+N01,安溪,111,"執行率 cell is printed empty (not even a dash) for 收入合計, 支出合計, 本期稅前餘絀, 所得稅費用, 本期稅後餘絀 — recorded as null."
+N01,安溪,111,"所得稅費用 決算 is a dash (blank), recorded as null, not 0."
+N01,安溪,111,note_1 (九) states staffing in two-year form '員工人數分別為18人（含教保人員12人）及12人（含教保人員9人）'; the 112/7/31 (current-year) figures 18 / 12 were taken. Prior year (111/7/31) was 12 / 9.
+N01,安溪,111,"note_1 (六) states '核定及實際招收總人數：分別為136名及134名' — 核定 136, 實際 134."
+N01,安溪,111,"受託辦理期間 108/8/1–112/7/31 ends on the balance-sheet date, i.e. 111學年度 is the final (4th) contract year."
+N01,安溪,113,"【文件本身不一致，非判讀誤差】業務發展準備金（資產面，p5 非流動資產）13,699,844 元，低於業務發展準備（負債面，p5 非流動負債）15,899,844 元，相差 2,200,000 元。此差額經 p9 現金流量表『業務發展準備淨變動 2,200,000』獨立證實，係報表內部一致之呈現，非抽取誤差。比較期（113/7/31）兩邊均為 10,479,844 元、完全相符，故 2,200,000 元缺口為本學年度新增。同表其餘配對科目皆相符（資遣費準備金／準備 790,438；代管財產／應付代管財產 2,572,979；購置財產／應付購置財產 170,274）。附註二(四) 明訂資遣費準備金『基金數額應與非流動負債數額相符』，附註二(五) 明訂業務發展準備金『應於同意後一個月內，以專戶或定期存款方式儲存』；附註二(一) 另提及『未提撥足額業務發展準備金衍生之所得稅』。即報表自身顯示 114/7/31 業務發展準備金未提撥足額 2,200,000 元，建議人工查核專戶餘額。"
+N01,安溪,113,"【需人工判讀：提列上限與虧損年度限制】業務發展費決算數 5,420,000 元（預算數空白，即未編列預算），是 113 學年度由盈轉虧的唯一原因——扣除該筆後為餘 3,431,229 元，列計後為絀 1,988,771 元。附註二(五) 載明業務發展準備金限『未發生虧損之年度』提列且『至多提列收入總額之百分之二十』。113 學年度收入合計 20,155,978 元之 20% 為 4,031,196 元；112 學年度收入合計 18,995,020 元（p7）之 20% 為 3,799,004 元。無論以本期或前期收入為基礎，5,420,000 元均已超過 20% 上限（分別超出 1,388,804 元及 1,620,996 元）。前一學年度業務發展費為 2,388,000 元，未逾上限。此為報表數字與其自身附註規定之潛在牴觸，建議人工確認主管機關核准提列文件。"
+N01,安溪,113,"業務發展準備金之明細附註（附註三）不在本次提供之影像範圍內（僅有印刷頁碼 4–11），故無法就科目明細直接覆核上述 2,200,000 元缺口；改以 p9 現金流量表交叉證實。"
+N01,安溪,113,版面變異（非錯誤）：收支餘絀表無單一『本期餘絀』列，而分為『本期稅前餘絀』／『所得稅費用』／『本期稅後餘絀』三列，已照抄未合併。所得稅費用三欄均為破折號，預算數、決算數、差異數皆填 null。
+N01,安溪,113,"預算數空白（未編列預算，填 null 未填 0）之科目：支出面為業務發展費、延長照顧服務支出、其他支出；收入面為教保費收入減項、延長照顧服務收入淨額、利息收入、其他收入。其中支出面三項合計決算數 7,347,479 元係在無預算授權下執行，屬稽查關注點。"
+N01,安溪,113,"行政管理費預算數與決算數皆為 290,580 元、執行率 100%、差異數為破折號（0），為完全照預算執行；差異數欄之破折號已依規則視為空白，惟其算術值確為 0。"
+N02,山北,111,Note 1(六) prints a single combined figure — 「核定及實際招收總人數：90 名」 — not separate 核定/實際 values; both approved_capacity and actual_enrolment therefore recorded as 90 from that one statement.
+N02,山北,111,"The 收支餘絀表 has no line captioned 本期餘絀; it prints 本期稅前餘絀 and 本期稅後餘絀. 所得稅費用 is blank this year, so both equal 決算 413,861, which agrees with 資產負債表 本期餘絀 413,861."
+N02,山北,111,"預算數 is blank (dash) for 教保費收入減項, 延後托育收入淨額, 利息收入, 其他收入, 業務發展費, 延後托育支出, 其他支出 and 所得稅費用 — recorded as null (no appropriation), not 0. Notably 業務發展費 has 決算 620,000 against a blank 預算數."
+N02,山北,111,"執行率 is blank for 收入合計, 支出合計, 本期稅前餘絀, 所得稅費用 and 本期稅後餘絀 — recorded as null."
+N02,山北,111,"資產負債表 其他流動資產 (current column) and 應付票據 (printed 「$ -」) are blank, as is 預付款項 in the prior-year sense; treated as blank, not 0. (Not requested fields, noted for completeness.)"
+N02,山北,111,A 關防 red seal overlaps the title/date block on p05 and p06 and the column headers on p05. Red-channel separation rendered the black text fully legible; no figure cells were obscured by the seal.
+N02,山北,111,No unreadable digits. All figures were re-read at 4x magnification on the isolated current-period columns and cross-checked arithmetically.
+N02,山北,113,附註一（六）將核定與實際招收人數印成合併數字「核定及實際招收總人數：86 名」，未分列。approved_capacity 與 actual_enrolment 均填 86，屬合併陳述而非兩項各自查得之數；如需區分實際招收數，須另向主管機關調閱登記資料。
+N02,山北,113,收支餘絀表無單一「本期餘絀」列，改分為「本期稅前餘絀」／「所得稅費用」／「本期稅後餘絀」三列，已照抄未合併。所得稅費用該列預算數、決算數、差異數三欄皆為空白（—），故填 null。
+N02,山北,113,"稽查發現（文件本身如此，非判讀問題）：支出面「業務發展費」2,204,787 元、「延長照顧服務支出」106,755 元、「其他支出」1,652,090 元三個科目之預算數欄為空白，即未編列預算而有實際支出，其中業務發展費佔支出決算數 14.5%。此三欄依規範填 null 而非 0。"
+N02,山北,113,"稽查發現（文件本身如此）：「修繕購置費」預算 120,400 元、決算 288,508 元，報表自印執行率 240%，超支 168,108 元；「公共事務管理費」執行率僅 16%、「雜支」11%、「維護費」38%，預算與實際執行落差大。支出決算合計 15,191,842 元超出預算合計 12,947,537 元共 2,244,305 元（約 17%），而收入決算 15,866,725 元超出收入預算 1,792,309 元，主要來自未編列預算之「其他收入」1,652,090 元。"
+N02,山北,113,"觀察（疑似代收代付對沖，非矛盾）：「其他收入」與「其他支出」同為 1,652,090 元、「延長照顧服務收入淨額」與「延長照顧服務支出」同為 106,755 元，兩組收支金額完全相等，研判係代收代付性質；報表未就此加註說明，如需確認性質建議人工核對附註三。"
+N02,山北,113,收入合計、支出合計、本期稅前餘絀、所得稅費用、本期稅後餘絀等合計／小結列之執行率欄在表上均為空白（未印），故填 null，非漏抄。
+N02,山北,113,"已完成之交叉驗算全部通過：流動資產合計、非流動資產合計、資產總計、負債總額、餘絀總額、資產總計＝負債總額＋餘絀總額、收入合計、支出合計預算數與決算數、各科目執行率（四捨五入至整數）皆吻合；本期餘絀 674,883 元與 p08 淨值變動表 114/7/31 餘額（累積餘絀 1,838,209、本期餘絀 674,883、合計 2,513,092）一致；p09 現金流量表期末現金 6,615,258 元與資產負債表現金及銀行存款一致。資產面「資遣費準備金」413,891／「業務發展準備金」9,114,885 與負債面「資遣費準備」／「業務發展準備」金額完全相符，無兩面不符情形。"
+N02,山北,113,版面說明：本報告共 p04–p11，收支餘絀表有兩頁（p06 為本期 113.8.1~114.7.31、p07 為比較期 112.8.1~113.7.31），已取 p06；資產負債表 p05 取左側 114/7/31 本期欄。紅色關防壓住 p05、p06 表頭，經 max-of-RGB 色彩通道分離後表頭文字清晰可讀，無因關防而無法辨識之欄位。
+N03,龍埔成長,113,"收支餘絀表 has no line literally labelled 本期餘絀; it is split into 本期稅前餘絀 / 所得稅費用 / 本期稅後餘絀. All three are recorded verbatim, not merged. 本期稅後餘絀 決算數 -760,073 is the figure that matches 資產負債表 本期餘絀 (760,073)."
+N03,龍埔成長,113,"AUDIT FINDING — unbudgeted 業務發展費: 決算數 1,699,800 against a blank 預算數 (printed as a dash, recorded null not 0). This one unappropriated line exceeds the entire 760,073 deficit; without it the year would show a 939,727 surplus. It runs alongside an 837,653 underspend on the budgeted 人事費 (附註三 detail: 加班費 決算 346,009 vs 預算 716,832 = 48%; 代課費及代班費 決算 1,800 vs 預算 162,000 = 1%). A human should check whether budgeted personnel money was effectively redirected into the 業務發展準備 provision."
+N03,龍埔成長,113,"No 預算數 appropriated (printed as a dash, recorded null not 0) for: 教保費收入減項 (決算數 -306,130), 延長照顧服務收入淨額 (186,132), 利息收入 (85,197), 其他收入 (948,203), 業務發展費 (1,699,800), 延長照顧服務支出 (185,752), 其他支出 (948,203). 所得稅費用 is blank in both 預算數 and 決算數."
+N03,龍埔成長,113,"執行率 is printed blank on 收入合計, 支出合計, 本期稅前餘絀, 所得稅費用 and 本期稅後餘絀 (the table only rates individual 科目), and as a dash on every line with no 預算數 — all recorded null. Every printed 執行率 was recomputed from 決算數/預算數 and matches the table's rounding exactly; there is no 1-元 or 1-% rounding drift anywhere in this report."
+N03,龍埔成長,113,"附註一(六) prints 核定及實際招收總人數 as「分別為 72 名及 71 名」— two distinct figures, so this is NOT the merged single-figure variant; approved_capacity 72 and actual_enrolment 71 are separately stated in the document."
+N03,龍埔成長,113,"A red 關防 seal overlaps the title block of p05, p06, p08 and p09. Red-channel separation made the underlying black text fully legible: p05 left column = 114年7月31日 (right column 113年7月31日 is the comparative and was not used); p06 = 113.8.1~114.7.31 (the 本期 page; p07 is the 112.8.1~113.7.31 comparative). No residual ambiguity, no value recorded from a low-resolution read — every figure was confirmed from a 400-dpi re-render of the source PDF."
+N03,龍埔成長,113,"All self-verification arithmetic passes with zero tolerance. 流動資產合計 6,167,351 = sum of items; 資產總計 14,987,068 = 6,167,351 + 8,819,717 = 負債總額 12,850,465 + 餘絀總額 2,136,603; 餘絀總額 = 2,896,676 + (760,073); 流動負債合計 4,037,948 and 非流動負債合計 8,812,517 = sums of items; 收入合計 12,844,402 and 支出合計 13,604,475 = sums of 決算數; budget columns likewise (11,732,256 and 11,803,649)."
+N03,龍埔成長,113,"Cross-validated against four further sources inside the report, all consistent: 淨值變動表 (p08) 114年7月31日餘額 2,896,676 / (760,073) / 2,136,603; 現金流量表 (p09) 期末現金 6,149,763 = 資產負債表 現金及銀行存款, 期初 6,426,739, and the full operating reconciliation ties to the 元; 附註三 detail totals equal the 收支餘絀表 決算數 for 人事費, 業務費, 材料費, 維護費, 修繕購置費, 延長照顧服務收支 and 其他收入/其他支出, and 現金明細 (現金 16,650 + 活期存款 6,100,845 + 支票存款 32,268) = 6,149,763; 附註四 賸餘款餘額 2,136,603 = 餘絀總額."
+N03,龍埔成長,113,"No reserve-fund mismatch in this report: 資遣費準備金 (asset) = 資遣費準備 (liability) = 428,137, and 業務發展準備金 (asset) = 業務發展準備 (liability) = 7,629,301. Both agree with the 附註三 movement schedules (資遣費 374,643 + 53,494 提列 = 428,137; 業務發展 5,929,501 + 1,699,800 提列 = 7,629,301) and 附註三 confirms the 業務發展準備金 7,629,301 is held in a dedicated 專戶/定期存款."
+N03,龍埔成長,113,"balance_sheet.prepaid_receipts is the liability 預收款項 2,720,064. The asset side separately carries a similarly named 預付款項 (prepaid expenses) of 3,557 — not used for this field."
+N03,龍埔成長,113,"Document observation, not an extraction error, worth a human look: 附註五 related-party disclosure shows 行政管理費 paid to the operator 財團法人成長文教基金會 of 179,804 for 113.8.1~114.7.31, while 收支餘絀表 行政管理費 決算數 is 182,054 — a 2,250 gap. The note covers only related-party transactions so the two need not agree, but the residual 2,250 has no stated counterparty. Note also the operator's related-party 行政管理費 jumped from 36,682 (112學年度) to 179,804."
+N03,龍埔成長,113,"Overspend disclosures inside 附註三 worth a human look: 業務費 detail shows 水費 決算 40,857 vs 預算 26,000 (157%) and 電費 98,630 vs 預算 90,000 (110%). The report states the 水費 overspend of 14,857 was reported to and agreed by the 主管機關 on 114年9月26日 — i.e. the approval was obtained after the 114/7/31 year end."
+N03,龍埔成長,113,"Provenance check performed because a first low-resolution read of the p05/p06 title block misread the institution as 新北市北大非營利幼兒園 (N07's operator). That was a misread, not a mis-filed PDF: at 400 dpi the title block, the cover text layer, 目錄, and every statement and note page of N03龍埔成長_113學年度財務報告.pdf all read 新北市龍埔成長非營利幼兒園（委託財團法人成長文教基金會辦理）, and the rendered p04-p11 images hash-match a fresh render of that PDF. Pages were confirmed against 目錄 (p02): 資產負債表 5, 收支餘絀表 6, 淨值變動表 8, 現金流量表 9, 財務報表附註 / 一、一般概況 10."
+N04,海工,111,"收支餘絀表 has no line printed exactly as 「本期餘絀」; the report prints 「本期稅前餘絀」 and 「本期稅後餘絀」 (both 決算數 = 85,302, 所得稅費用 blank). Labels kept verbatim; 本期稅後餘絀 is the 本期餘絀 equivalent and ties to the balance sheet."
+N04,海工,111,"核定招收總人數 and 實際招收總人數 are not stated separately: Note 1 (六) prints a single combined line 「核定及實際招收總人數：60 名」, so both fields are recorded as 60 from that one statement."
+N04,海工,111,"Blank 預算數 (printed as a dash, recorded as null, NOT 0): 教保費收入減項, 延後托育收入淨額, 利息收入, 其他收入, 業務發展費, 延後托育支出, 其他支出, 所得稅費用. Notably 業務發展費 has 決算數 480,000 with no appropriated budget."
+N04,海工,111,"執行率 is blank (null) on all rows with no budget and on the total/surplus rows (收入合計, 支出合計, 本期稅前餘絀, 所得稅費用, 本期稅後餘絀)."
+N04,海工,111,"A red 關防 seal overlaps the heading block of pages 5-9; the black text under it was recovered by isolating the red colour channel, so no figure was lost. All headings and figures fully legible."
+N04,海工,111,Note 1 (九) states staffing for two dates (112/7/31: 6 人 / 教保 4 人; 111/7/31: 7 人 / 教保 5 人). The current-period values (112/7/31) were taken.
+N04,海工,113,附註一（六）將核定與實際招收人數印成合併陳述「核定及實際招收總人數：48 名」，故 approved_capacity 與 actual_enrolment 均填 48；文件未分別列示兩數。
+N04,海工,113,收支餘絀表無單一「本期餘絀」列，而分為「本期稅前餘絀」／「所得稅費用」／「本期稅後餘絀」三列，已照原樣分列不合併。所得稅費用預算數與決算數均為破折號（空白），填 null。
+N04,海工,113,"多項科目未編列預算（預算數為破折號）：收入面之教保費收入減項、延長照顧服務收入淨額、利息收入、其他收入；支出面之業務發展費、延長照顧服務支出、其他支出。其中業務發展費決算數 1,170,000 元完全未編列預算，為金額最大的無預算支出，建議人工複核。"
+N04,海工,113,"支出科目執行率偏離明顯：修繕購置費 348%（預算 67,200／決算 234,047）、雜支 38%、維護費 54%、業務費 72%。收入合計與支出合計列之執行率欄在表上為空白，填 null。"
+N04,海工,113,"資產負債表「其他流動負債」本期欄為破折號（113年比較欄為 13,904），非本作業輸出欄位，僅記錄。"
+N04,海工,113,"文件內部一致性檢查全部通過（非文件矛盾，僅供交叉驗證紀錄）：資產面準備金與負債面準備金金額完全相符（業務發展準備金／準備 5,024,000；資遣費準備金／準備 198,704）；業務發展準備金較 113/7/31 增加 1,170,000，與業務發展費決算數相符；淨值變動表（p08）114/7/31 餘額累積餘絀 1,569,931、本期餘絀 (520,068)、合計 1,049,863 與資產負債表相符；現金流量表（p09）期末現金 3,294,879 與資產負債表現金及銀行存款相符。"
+N04,海工,113,"觀察（非矛盾）：延長照顧服務收入淨額 85,540 與延長照顧服務支出 85,540 完全相等，其他收入 854,260 與其他支出 854,260 亦完全相等，呈代收代付性質，兩者皆未編列預算。"
+N04,海工,113,本表科目名稱為「業務發展準備金」（資產）／「業務發展準備」（負債），與規範所列名稱一致，無缺漏科目；本報表無「公共事務管理費」科目。
+N05,漢翔,113,附註一（六）將核定與實際招收人數印成合併陳述「核定及實際招收總人數：72 名」，故 approved_capacity 與 actual_enrolment 均填 72；文件未分別列示兩數。
+N05,漢翔,113,收支餘絀表無單一「本期餘絀」列，而分為「本期稅前餘絀」／「所得稅費用」／「本期稅後餘絀」三列，已照原樣分列不合併。所得稅費用預算數與決算數均為破折號（空白），填 null。
+N05,漢翔,113,收支餘絀表之「收入」、「支出」為分類標題列，表上無任何金額；未列入 lines，以避免被誤讀為「未編列預算之科目」。
+N05,漢翔,113,"多項科目未編列預算（預算數為破折號）：收入面之教保費收入減項、延長照顧服務收入淨額、利息收入、其他收入；支出面之業務發展費、延長照顧服務支出、其他支出。其中業務發展費決算數 2,575,405 元完全未編列預算，為金額最大的無預算支出（占支出合計約 22%），建議人工複核。"
+N05,漢翔,113,"稽查訊號（金額對應關係，非文件矛盾）：人事費預算 8,784,257／決算 6,363,884，執行率僅 72%，短支 2,420,373 元；同期未編列預算之業務發展費決算 2,575,405 元，兩者金額量級相近。且業務發展準備金（資產）由 113/7/31 之 8,191,619 增至 114/7/31 之 10,767,024，增加數 2,575,405 元與業務發展費決算數完全相等，顯示人事費結餘轉入業務發展準備。建議人工判讀人事費大幅短支之原因。"
+N05,漢翔,113,稽查訊號：附註一（九）員工人數由 113/7/31 之 11 人（含教保人員 8 人）降為 114/7/31 之 8 人（含教保人員 7 人），減少 3 人，而核定及實際招收總人數仍為 72 名不變。教保人員 7 人對 72 名幼兒之配置比例請人工核對法定師生比。
+N05,漢翔,113,"支出科目執行率偏離明顯：業務費 42%（預算 719,700／決算 298,788）、修繕購置費 55%、材料費 65%、人事費 72%、維護費 108%。收入合計、支出合計、本期稅前餘絀、所得稅費用、本期稅後餘絀各列之執行率欄在表上均為空白，填 null。"
+N05,漢翔,113,"觀察（非矛盾）：延長照顧服務收入淨額 127,995 與延長照顧服務支出 127,995 完全相等，其他收入 999,581 與其他支出 999,581 亦完全相等，呈代收代付性質，兩者皆未編列預算。"
+N05,漢翔,113,"資產負債表本期（114/7/31）欄之「應收帳款淨額」與「預付款項」為破折號（空白），填 null 而非 0；該兩科目 113/7/31 比較欄分別為 742 與 2,167。「其他流動資產」本期為 5,503，比較欄為破折號。"
+N05,漢翔,113,"文件內部一致性檢查全部通過（僅供交叉驗證紀錄）：資產面準備金與負債面準備金金額完全相符（業務發展準備金／準備 10,767,024；資遣費準備金／準備 354,784），與附註說明一致；淨值變動表（p08）114/7/31 餘額累積餘絀 1,957,533、本期餘絀 1,606,845、合計 3,564,378 與資產負債表相符；現金流量表（p09）期末現金及約當現金餘額 6,877,439 與資產負債表現金及銀行存款相符；收支餘絀表差異數欄各列均等於決算數減預算數，無四捨五入誤差。"
+N05,漢翔,113,本報表科目名稱為「業務發展準備金」（資產）／「業務發展準備」（負債），與規範所列名稱一致，無缺漏科目；本報表無「公共事務管理費」科目。
+N05,漢翔,113,"附記（不屬本作業輸出欄位）：附註一（八）載「4 年核定總營運成本（由家長與政府共同分攤）：45,522,523 元。（扣除前期餘絀處理之晉薪人事費計 44,124,016 元）」，兩數相差 1,398,507 元，文義為扣除後之金額，非計算錯誤，惟措辭易生歧義，如需引用請人工確認。"
+N06,昌平,111,"收支餘絀表 uses labels 本期稅前餘絀 / 本期稅後餘絀 rather than a single 本期餘絀 line; both are recorded verbatim. 本期稅後餘絀 決算數 (-67,044) is the figure that ties to 資產負債表 本期餘絀."
+N06,昌平,111,"業務發展費 決算數 1,382,600 has a blank (dash) 預算數 — no budget was appropriated, so 執行率 is also blank. Same pattern for 延後托育支出 and 其他支出 (each blank 預算數 with actual spend), and on the income side for 教保費收入減項 / 延後托育收入淨額 / 利息收入 / 其他收入. Recorded as null, not 0."
+N06,昌平,111,"執行率 cells for 收入合計, 支出合計, 本期稅前餘絀, 所得稅費用 and 本期稅後餘絀 are entirely empty (not even a dash) on the printed page — recorded as null."
+N06,昌平,111,"所得稅費用 shows a dash in both 預算數 and 決算數 for 111 學年度 — recorded as null/null (the comparative 110 學年度 page p07 shows 30,655 決算數)."
+N06,昌平,111,Note 1 item (六) states 核定及實際招收總人數 as a single combined figure '120 名' — it does not give approved and actual separately in the '分別為 X 名及 Y 名' form. Both fields are therefore set to 120 from that one printed statement.
+N06,昌平,111,Note 1 item (九) gives staffing jointly for both year-ends: '截至 112 年 7 月 31 日及 111 年 7 月 31 日止，員工人數均為 13 人（含教保人員 10 人）'.
+N06,昌平,111,The red 關防 seal overlaps the header block on p05/p06; the red channel was separated to confirm the column dates (LEFT = 112 年 7 月 31 日) and the period header (111.8.1~112.7.31). Table body figures were not obscured by the seal.
+N06,昌平,113,收支餘絀表（p06）無單一「本期餘絀」列，而分為「本期稅前餘絀」／「所得稅費用」／「本期稅後餘絀」三列，已照原樣分列不合併。所得稅費用之預算數、決算數、差異數均為破折號（空白），填 null。
+N06,昌平,113,"多項科目未編列預算（預算數欄為破折號）：收入面之教保費收入減項、延長照顧服務收入淨額、利息收入、其他收入；支出面之業務發展費（決算 1,783,086）、延長照顧服務支出（決算 85,320）、其他支出（決算 2,756,369）。無預算支出合計 4,624,775 元，佔支出合計決算數 15,234,973 的 30%，建議人工複核。"
+N06,昌平,113,"本期虧損之成因值得人工判讀：本期稅後餘絀 -602,513，但若排除完全未編列預算的業務發展費 1,783,086，本期即為正餘絀約 +1,180,573。該筆業務發展費 1,783,086 與業務發展準備由 7,699,279 增至 9,482,365 的增額完全相符，性質為提撥準備金而非實際營運支出，故帳面赤字主要係提撥業務發展準備所致。"
+N06,昌平,113,"支出科目執行率明顯偏低：雜支 17%（預算 49,164／決算 8,140）、維護費 50%（143,000／70,966）、業務費 61%（819,400／501,842）、材料費 84%、人事費 87%（預算 9,192,044／決算 7,955,962，短差 1,236,082 為金額最大之預算未執行項目）。收入合計、支出合計、本期稅前餘絀、所得稅費用、本期稅後餘絀等列之執行率欄在表上印為空白，填 null。"
+N06,昌平,113,"觀察（非矛盾）：其他收入 2,756,369 與其他支出 2,756,369 完全相等且兩者皆未編列預算，呈代收代付（總額列示）性質；該金額約當教保費收入的 23%，金額不小。表上此兩科目均註記附註「三」，但本次派工影像僅含 p04–p11（附註至「二、重大會計政策之彙總說明」為止），附註三內容不在影像範圍內，無法核對其組成，建議人工調閱後續附註頁。"
+N06,昌平,113,"觀察（非矛盾）：延長照顧服務收入淨額 92,310 與延長照顧服務支出 85,320 不相等，差額 6,990（收入大於支出）。此為文件所載，非判讀誤差。"
+N06,昌平,113,"受託辦理期間 110年8月1日至114年7月31日，結束日與本期資產負債表基準日 114/7/31 完全相同，即 113 學年度為本 4 年期委託契約之最後一年。附註一（八）另載「4 年核定總營運成本（由家長與政府共同分攤）：48,672,276 元。（扣除前期餘絀處理之晉薪人事費計 47,128,820 元）」。契約屆期年度之準備金與餘絀結算方式建議人工確認。"
+N06,昌平,113,招收人數為分別陳述而非合併陳述：附註一（六）印為「核定及實際招收總人數：分別為 112 名及 105 名」，故 approved_capacity=112、actual_enrolment=105，兩數各自明確；實際招收率 93.75%。
+N06,昌平,113,p05（資產負債表）與 p06（收支餘絀表）之紅色關防大面積壓住表頭與金額欄，已採紅色通道分離（取 R 通道）還原底層黑字，所有數字另以 3.4–3.6 倍放大裁切逐格確認，判讀無不確定處。
+N06,昌平,113,"文件內部一致性檢查全部通過（非文件矛盾，僅供交叉驗證紀錄）：流動資產各項合計 4,831,707；非流動資產合計 11,423,075；資產總計 16,254,782 = 流動 + 非流動 = 負債總額 14,917,899 + 餘絀總額 1,336,883；流動負債合計 3,506,324；非流動負債合計 11,411,575；餘絀總額 = 累積餘絀 1,939,396 + 本期餘絀 (602,513)；收入合計與支出合計之預算數、決算數均與各科目加總相符；所有已印執行率（99、87、61、84、50、100、17、100）與決算數／預算數四捨五入一致。資產面與負債面準備金金額完全相符（業務發展準備金／準備 9,482,365；資遣費準備金／準備 333,792），與附註說明無矛盾。淨值變動表（p08）114/7/31 餘額：累積餘絀 1,939,396、本期餘絀 (602,513)、合計 1,336,883，與資產負債表相符。現金流量表（p09）期末現金及約當現金餘額 4,822,001 與資產負債表現金及銀行存款相符。"
+N06,昌平,113,"本報表無「公共事務管理費」科目；資產負債表「其他應收款」、「預付款項」本期欄為破折號（113/7/31 比較欄分別為 158,950、49,950），流動負債「應付票據」本期欄為 $ -（比較欄 2,000），均依規則視為空白，非本作業輸出欄位，僅記錄。"
+N07,北大,111,"收支餘絀表 has no line literally labelled 本期餘絀; it is split into 本期稅前餘絀 / 所得稅費用 / 本期稅後餘絀. Both surplus lines are recorded verbatim; 本期稅後餘絀 決算數 522,638 is the figure matching 資產負債表 本期餘絀."
+N07,北大,111,"No 預算數 appropriated (printed as a dash, recorded null not 0) for: 教保費收入減項, 延後托育收入淨額, 利息收入, 其他收入, 業務發展費 (決算數 1,400,000), 延後托育支出 (291,910), 其他支出 (1,412,744), 呆帳損失 (1,714). 所得稅費用 is blank in both 預算數 and 決算數."
+N07,北大,111,A red 關防 seal overlaps the headers of p05 and p06; red-channel separation was used and both headers were read cleanly (p05 left column = 112年7月31日; p06 = 111.8.1~112.7.31). No residual ambiguity.
+N07,北大,111,"balance_sheet.prepaid_receipts is the liability 預收款項 4,416,875. Note the asset side also has a similarly named 預付款項 (prepaid expenses) of 42,920 — not used here."
+N07,北大,113,"終止契約年度（重大事項，非抽取問題）：附註三.(二).2（報表頁 N07-15）載明「因新北市政府不同意受託機構-社團法人中華音樂舞蹈暨表演藝術教育協會繼續辦理本幼兒園」，本園為辦理解約後續事宜及支付員工資遣費、不休假薪資，於 114 年 7 月 23 日報經主管機關同意動支業務發展準備金全額，轉列「其他收入-其它」7,029,239 元。受託辦理期間至 114 年 7 月 31 日止即為契約終點。113 學年度因此是清算性質年度，下列數字須以此理解，不宜與正常營運年度直接比較。"
+N07,北大,113,"收支餘絀表無「本期餘絀」單一列，而是拆成 本期稅前餘絀 / 所得稅費用 / 本期稅後餘絀 三列，已逐列照抄未合併。與資產負債表「本期餘絀」對應的是 本期稅後餘絀 決算數 2,625,967。"
+N07,北大,113,"四個準備金欄位（reserve_asset / reserve_liability / severance_asset / severance_liability）在 114/7/31 欄一律為破折號，故填 null（非 0）。這些列在表上存在、不是我漏抄：資遣費準備 449,139 於本期全額支付、業務發展準備 5,859,000 加本期提列 1,170,239 共 7,029,239 全額轉列其他收入-其它，附註三.(二) 的變動表與資產負債表完全相符，資產面與負債面金額亦一致（前一年度同為 449,139 與 5,859,000），無資產／負債面不符情形。"
+N07,北大,113,"prepaid_receipts（負債之預收款項）114/7/31 為破折號，填 null 而非 0；前一年度為 4,846,095。與契約終止、不再預收次年度費用一致。"
+N07,北大,113,"未編列預算（預算數為破折號，填 null 非 0）之支出科目：業務發展費 決算數 1,170,239、延長照顧服務支出 337,990、其他支出 2,652,139，合計 4,160,368 元（占核定預算 21,442,200 元之 19%）。所得稅費用亦無預算數而有決算數 1,109,813。收入面無預算之科目：教保費收入減項 -135,318、延長照顧服務收入淨額 337,990、利息收入 197,821、其他收入 2,652,139、其他收入-其它 7,029,239。"
+N07,北大,113,"文件本身的算術錯誤（現金流量表，報表頁 N07-9；屬交叉驗證來源，非本 JSON 欄位）：營業活動明細各列合計為 934,184，但表上印的「營業活動之淨現金流入」為 934,033，相差 151 元。差異來自兩列與資產負債表不符——應付帳款變動印 18,326（資產負債表 18,356 − 0 應為 18,356，差 30）、其他應付款變動印 2,256,779（資產負債表 4,594,993 − 2,338,395 應為 2,256,598，差 181）；−30 ＋ 181 ＝ −151 恰好補平。小計本身正確（期初 9,280,051 ＋ 934,033 ＝ 期末 10,214,084 ＝ 資產負債表現金及銀行存款），故是明細兩列印錯而非小計錯。兩個數字均已在 300 dpi 下確認，不是我看錯。（另註：18,326 恰等於附註三.(四).1 的「政府學費差額補助退費」金額，疑為誤植。）"
+N07,北大,113,"預算執行率型態值得注意：受託機構自身的行政管理費執行率恰為 100%（決算 355,553 ＝ 預算 355,553，差異數為 0），人事費 105% 超支，而直接用於幼兒與園舍的科目全部低於預算——業務費 61%、材料費 80%、維護費 79%、修繕購置費 76%、雜支 23%。教保費收入僅執行 93%。此為表內事實陳述，非文件矛盾。"
+N07,北大,113,跨年度觀察（非本文件內部矛盾，需人工核對官方登記資料）：本報告核定招收總人數 162 名、實際 137 名（附註以「分別為」明確分列兩個數字，非合併陳述），使用率 85%。本專案 data/extracted/nonprofit/N07_北大_111.json 記載 111 學年度為核定 182 名、實際 180 名，兩年間核定數少 20 名、實際招收數少 43 名。
+N07,北大,113,抽取方法與影像品質警告：data/interim/pages/113/N07_北大/ 的 170 dpi 整頁渲染解析度不足，第一次判讀曾把 p08–p11 的表頭誤讀成另一所幼兒園（昌平／三之三生命教育基金會），與 PDF 原檔比對後確認為誤讀，八頁全部屬北大（頁尾編號 N07-4 至 N07-11）。本檔所有數字改由原始 PDF 內嵌的 300 dpi 頁面影像（data/raw/資料集/非營利園財報/113學年度/N07北大_113學年度財務報告.pdf 第 4–11 頁，/Rotate 270）裁切放大判讀，並以 max-of-RGB 通道分離去除壓在表頭上的紅色關防。記錄之頁碼為報表印刷頁碼（資產負債表 N07-5、收支餘絀表本期 N07-6、附註一 N07-10）；收支餘絀表比較期在 N07-7，未採用。
+N07,北大,113,"已通過之驗算：流動資產合計 10,535,865 ＝各項之和；非流動資產合計 2,152,103；資產總計 12,687,968 ＝ 流動＋非流動 ＝ 負債總額 7,938,726 ＋ 餘絀總額 4,749,242；餘絀總額 ＝ 累積餘絀 2,123,275 ＋ 本期餘絀 2,625,967；收入合計 29,145,666 與支出合計 25,409,886 均等於各科目決算數之和（預算數同）；本期稅前餘絀 3,735,780 ＝ 收入合計 − 支出合計，減所得稅 1,109,813 得 2,625,967 與資產負債表相符；全部八個有預算之科目執行率四捨五入後與表上印製值一致。淨值變動表（N07-8）114/7/31 餘額 累積 2,123,275／本期 2,625,967／合計 4,749,242 與資產負債表相符；現金流量表期末現金 10,214,084 與現金及銀行存款相符。"
+N08,鷺江,111,"收支餘絀表(p06)無逐字標示為「本期餘絀」之列；印製標籤為「本期稅前餘絀」與「本期稅後餘絀」，兩者決算數均為 456,219（所得稅費用為空白），並與資產負債表「本期餘絀」456,219 相符。"
+N08,鷺江,111,"非流動資產「資遣費準備金」216,452 與非流動負債「資遣費準備」240,905 不相等，差額 24,453，與附註二(四)所稱基金數額應與非流動負債數額相符不一致。此非辨識錯誤：已用現金流量表(p09)「資遣費準備淨變動 24,453」及各項小計加總二次驗證。"
+N08,鷺江,111,"業務發展費 1,573,640、延後托育支出 134,092、其他支出 2,616,558 之預算數欄為破折號（空白），已記為 null 而非 0；收入端教保費收入減項、延後托育收入淨額、利息收入、其他收入之預算數亦為空白。"
+N08,鷺江,111,p05 與 p06 標題區有紅色關防套印遮蓋；以分離紅色通道方式判讀，標題與欄位日期（112年7月31日／111.8.1~112.7.31）完全清晰，無殘留不確定。表格數字區未受關防影響。
+N08,鷺江,113,"【111學年度資遣費準備差異已消失】113學年度非流動資產「資遣費準備金」342,271 與非流動負債「資遣費準備」342,271 完全相等，與附註二(四)（p11）所稱「基金數額應與非流動負債數額相符」一致。111學年度的 216,452 vs 240,905（差額 24,453）矛盾在本年度未持續。其餘成對科目亦均相符：業務發展準備金／業務發展準備 11,525,647、代管財產／應付代管財產 803,020、購置財產／應付購置財產 428,453。"
+N08,鷺江,113,"【需人工判讀】113學年度為虧損年度（本期餘絀 -765,660），且前一年度112學年度亦虧損（-81,275），但收支餘絀表仍列「業務發展費」決算數 2,245,150（預算數空白），且非流動負債「業務發展準備」由 9,280,497 增至 11,525,647，增額恰為 2,245,150。附註二(五)（p11）明載業務發展準備金限「未發生虧損之年度」提列並須報經主管機關同意。此為文件本身之政策／數字疑義，非辨識錯誤；惟提列所依據之年度與核准情形無法從所給影像確認（本次僅提供 p04–p11，附註三、附註五之明細頁不在影像範圍內）。"
+N08,鷺江,113,"【需人工判讀】「其他收入」決算數 3,739,546 與「其他支出」決算數 3,739,546 完全相等，兩者預算數均為空白，且分別索引附註三、五與附註三；該附註明細頁不在所給影像範圍（p04–p11），故其性質（是否為代收代付／準備金對轉）無法在此驗證。此金額佔決算收入 24%、決算支出 23%，建議人工調閱附註三確認。"
+N08,鷺江,113,"支出決算數 16,288,934 遠高於預算數 12,209,294（超支 4,079,640，約 133%）；未編列預算而有決算數之支出科目為：業務發展費 2,245,150、延長照顧服務支出 131,674、其他支出 3,739,546。收入端未編列預算者為：教保費收入減項 -102,267、延長照顧服務收入淨額 178,000、利息收入 178,840、其他收入 3,739,546。以上預算數欄均印為破折號，已記為 null 而非 0。所得稅費用之預算數與決算數均為空白。"
+N08,鷺江,113,"本表無單一「本期餘絀」列，而分列「本期稅前餘絀」／「所得稅費用」／「本期稅後餘絀」，已照抄未合併；稅前與稅後決算數均為 -765,660（所得稅費用空白），與資產負債表「本期餘絀」(765,660) 相符。收入合計、支出合計及三列餘絀之執行率欄均為空白，記為 null。"
+N08,鷺江,113,本表無「公共事務管理費」科目。科目更名須注意跨年度比較：111學年度之「延後托育支出」在113學年度印為「延長照顧服務支出」，並新增收入列「延長照顧服務收入淨額」。
+N08,鷺江,113,附註一(六)（p10）印為「核定及實際招收總人數：分別為 100 名及 96 名」，屬合併句但兩數明確可分，已分別填入。相較111學年度之核定 106 名／實際 105 名，本年度核定人數降為 100 名、實際 96 名（滿收率 96%），核定人數之調整依據不在附註內，建議與官方登記資料核對。
+N08,鷺江,113,"現金流量表(p09)「資遣費準備淨變動」113.8.1~114.7.31 欄印為破折號，但資產負債表資遣費準備(金)由 290,996 增至 342,271（+51,275）；因資產面與負債面同額增減、對現金無淨影響，現金流量表加總仍完全相符（期初 5,361,714 − 本期減少 1,005,215 = 期末 4,356,499 = 資產負債表現金及銀行存款）。業務發展準備金／準備之 2,245,150 同額增減亦未單獨列示。屬表達方式，非數字錯誤。"
+N08,鷺江,113,p05–p09 標題區有紅色關防套印遮蓋表頭與欄位日期。以分離紅色通道方式判讀後，標題、基準日（114年7月31日／113年7月31日）與期間（113.8.1~114.7.31）完全清晰，數字區未受影響，無殘留不確定。全部數字均以 3.0–3.6 倍放大裁切逐格複核。
+N08,鷺江,113,"跨年度連續性已驗證：淨值變動表(p08)「112年8月1日餘額」累積餘絀 1,746,758／本期餘絀 456,219／合計 2,202,977，與本專案111學年度抽取結果完全一致；「114年7月31日餘額」2,121,702／(765,660)／1,356,042 亦與資產負債表本期欄相符。"
+N09,安興,111,附註一(六) 以單一數字併列核定與實際招收人數：「核定及實際招收總人數：60 名」，未分別列示；approved_capacity 與 actual_enrolment 均採該 60 名，非分別讀取之兩個數字。
+N09,安興,111,"收支餘絀表未使用「本期餘絀」科目名稱，實際印製為「本期稅前餘絀」與「本期稅後餘絀」；因所得稅費用為空白（—），兩者決算數同為 241,652，與資產負債表本期餘絀一致。"
+N09,安興,111,"業務發展費（決算 1,375,000）、延後托育支出（345,177）、其他支出（1,475,690）之預算數欄為破折號，已記為 null（未編列預算），非 0。收入面之教保費收入減項、延後托育收入淨額、利息收入、其他收入預算數亦為空白。"
+N09,安興,111,p05/p06 之紅色關防僅疊在報表標題（園名／表名）上，未觸及任何數字欄位；經放大檢視全部數字清晰可辨，無不可讀處。
+N09,安興,113,"【文件本身的數字關係，非判讀疑義】業務發展準備金（資產面）與業務發展準備（負債面）在 114/7/31 欄均為空白（表上印「-」），而 113/7/31 欄兩側均為 5,305,000；資遣費準備金／資遣費準備亦同時由 150,459 歸零。四列在表上均存在，僅本期無數字，故填 null 而非 0。"
+N09,安興,113,"【文件本身的數字關係，建議人工複核】本期未編列預算之「其他收入-其它」6,724,000 元，恰等於前期業務發展準備 5,305,000 ＋ 本期業務發展費 1,419,000（5,305,000＋1,419,000＝6,724,000）。同期首次出現應付所得稅 1,278,682 與所得稅費用 1,278,682。業務發展準備金全額沖轉、大額未編列收入與所得稅一次認列三者的關聯性，建議人工調閱附註三、四確認。"
+N09,安興,113,"【稽查發現】支出科目預算數空白（未編列預算）者：業務發展費 1,419,000、延長照顧服務支出 214,470、其他支出 1,983,942、呆帳損失 7,617、所得稅費用 1,278,682，合計 4,903,711 元支出無預算依據。收入面未編列預算者：教保費收入減項、延長照顧服務收入淨額、利息收入、其他收入、其他收入-其它。"
+N09,安興,113,"【稽查發現】執行率超過 100% 之支出科目：維護費 126%（預算 93,000／決算 116,894）、修繕購置費 136%（預算 72,800／決算 98,986）。"
+N09,安興,113,"【稽查發現】本期稅後餘絀 3,913,614 元，為前一年度（112 學年度）76,573 元的 51 倍，餘絀總額由 1,767,061 增至 5,680,675。增幅幾乎全數來自未編列預算的其他收入-其它 6,724,000。"
+N09,安興,113,"本表無單一「本期餘絀」列，分列為本期稅前餘絀／所得稅費用／本期稅後餘絀三列，已照抄未合併。balance_sheet.current_surplus 取資產負債表「本期餘絀」3,913,614，與收支餘絀表本期稅後餘絀一致。"
+N09,安興,113,"資產負債表「預收款項」（流動負債）本期空白（前期 1,596,474），填 null。收入合計、支出合計、本期稅前餘絀、所得稅費用、本期稅後餘絀各列之執行率欄在表上為空白或「-」，均填 null。"
+N09,安興,113,附註（六）明確載明「核定及實際招收總人數：分別為 52 名及 45 名」，為分別陳述而非合併數字。實際招收 45 名為核定 52 名的 86.5%，與教保費收入執行率 91% 方向一致。
+N09,安興,113,"交叉驗證均通過：淨值變動表（p08）114/7/31 餘額 累積餘絀 1,767,061／本期餘絀 3,913,614／合計 5,680,675，與資產負債表完全一致；現金流量表（p09）期末現金及約當現金餘額 8,589,308，與資產負債表現金及銀行存款一致。收入合計、支出合計、流動資產合計、資產總計、負債總額、餘絀總額、各科目差異數與執行率之驗算全部相符，未發現 1 元四捨五入誤差。"
+N10,大觀,113,"收支餘絀表採「本期稅前餘絀／所得稅費用／本期稅後餘絀」三列格式，無單一「本期餘絀」列；依規範照抄未合併。本期稅後餘絀決算數 -523,367 與資產負債表「本期餘絀」-523,367 一致。"
+N10,大觀,113,"未編列預算卻有決算數之支出科目（預算數欄印破折號，故填 null 而非 0）：業務發展費 1,709,900、延長照顧服務支出 180,695、其他支出 4,052,931，合計 5,943,526 元未編列預算。支出決算 18,076,343 因此超出預算 13,213,905 共 4,862,438 元。收入面亦有三項未編列預算科目（延長照顧服務收入淨額、利息收入、其他收入）。此為稽查發現，非判讀問題。"
+N10,大觀,113,收入合計、支出合計、本期稅前餘絀、所得稅費用、本期稅後餘絀等列之「執行率(%)」欄在表上為完全空白（連破折號都沒有），故填 null。所得稅費用之預算數與決算數均為破折號，填 null。
+N10,大觀,113,"文件本身數字不一致（發生在比較期欄，非本次抽取欄位）：113年7月31日欄之資產面「資遣費準備金」242,493 與負債面「資遣費準備」298,187 不符（差 55,694）；資產面「業務發展準備金」3,686,000 與負債面「業務發展準備」3,862,650 不符（差 176,650）。本期 114年7月31日 欄兩面金額則完全相符（資遣費準備 335,006、業務發展準備 5,572,550）。此為報表自身的數字差異，已於 3.5 倍放大裁切反覆確認，非我可能看錯；提供給人工作為稽查線索。"
+N10,大觀,113,附註一（六）將核定與實際招收人數印為「核定及實際招收總人數：分別為 100 名及 99 名」——雖為合併標題，但「分別為」使兩數字明確可分，已分別填入核定 100 名、實際 99 名，非合併陳述。
+N10,大觀,113,p05（資產負債表）與 p06（收支餘絀表）表頭被紅色關防壓住，已依規範以 R 通道分離讀取，底層黑字清晰可辨，表頭基準日（114年7月31日）與期間（113.8.1~114.7.31）均確認無誤，無不確定之處。
+N11,新林,111,"收支餘絀表(p06)「行政管理費」執行率欄印為破折號（空白），非100；其預算數與決算數同為292,892、差異數亦印為破折號。依規則破折號視為空白記為 null，未自行填入100。"
+N11,新林,111,"收支餘絀表(p06)無單獨「本期餘絀」列，僅有「本期稅前餘絀」與「本期稅後餘絀」（所得稅費用空白，兩者同為決算58,993），已依原文逐字列出兩列。"
+N11,新林,111,收支餘絀表(p06)「教保費收入減項」等5項收入及「業務發展費」「延後托育支出」「其他支出」之預算數欄為空白（未編列預算），依規則記為 null 而非 0。
+N11,新林,111,資產負債表(p05)「預付款項」112/7/31欄為空白（破折號），記為 null。
+N11,新林,111,p05/p06 標題及欄位表頭有紅色關防重疊，經分離紅色通道後判讀清晰無疑義（p05 左欄 112年7月31日、右欄 111年7月31日；p06 欄頭 111.8.1~112.7.31）。
+N12,昌福,111,"收支餘絀表 prints no plain 本期餘絀 line; it prints 本期稅前餘絀 and 本期稅後餘絀. 所得稅費用 is blank (dash) so both equal 決算數 319,958, which agrees with 本期餘絀 on the 資產負債表."
+N12,昌福,111,"業務發展費 (決算數 1,900,000), 延後托育支出 (76,722) and 其他支出 (105,416) each have a blank (dash) 預算數 and a blank 執行率 — recorded as null, not 0; no budget was appropriated for these lines."
+N12,昌福,111,紅色關防 overlaps only the title block on p05 and p06; all column headers and figures are clear of it and fully legible. No illegible cells.
+N14,積穗,111,"資產負債表 (p05) header and the 現金及銀行存款 / 應收帳款淨額 / 其他應收款 / 預付款項 cells sit under the red 關防 seal. Read via red-channel separation: 現金及銀行存款 = 5,316,025, independently corroborated by 流動資產合計 arithmetic (5,867,623 − 5,403 − 494,504 − 51,691) and by 現金流量表 (p09) 期末現金及約當現金餘額 $5,316,025."
+N14,積穗,111,"收支餘絀表 (p06) title/period and the 教保費收入 budget+actual cells sit under the seal; read via red-channel separation (民國111年8月1日至112年7月31日; column header 111.8.1~112.7.31; $13,128,312 / $12,748,088)."
+N14,積穗,111,"業務發展費, 延後托育支出, 其他支出 have a blank (dash) 預算數 — no budget appropriated; recorded as null, not 0. Their 執行率 cells are likewise dashed."
+N14,積穗,111,"執行率 is blank for 收入合計, 支出合計, 本期稅前餘絀, 所得稅費用 and 本期稅後餘絀; recorded as null."
+N14,積穗,111,"所得稅費用 is dashed in both 預算數 and 決算數 (null, not 0); consequently 本期稅前餘絀 = 本期稅後餘絀 = 177,139."
+N14,積穗,111,"No row is literally labelled 本期餘絀 on the current-period 收支餘絀表; the printed rows 本期稅前餘絀 / 本期稅後餘絀 are both reported verbatim. 本期稅後餘絀 177,139 is the figure that ties to 資產負債表 本期餘絀."
+N14,積穗,111,"Revenue detail rows (教保費收入 13,128,312 / 12,748,088; 教保費收入減項 null / (106,513); 延後托育收入淨額 null / 497,275; 利息收入 null / 35,946; 其他收入 null / 2,126,999) were read and used to verify 收入合計 but are not listed in `lines`, which follows the requested row set."
+N14,積穗,111,"Note 1 item (六) prints a single combined figure '核定及實際招收總人數： 106 名' rather than the '分別為 X 名及 Y 名' form, so approved_capacity and actual_enrolment are both 106 from that one statement."
+N14,積穗,111,"p07 is the comparative 收支餘絀表 (110.8.1~111.7.31) and was not used; it contains an extra expense line 公共事務管理費 that does not appear on the current-period statement (p06) — confirmed by the p06 budget column summing exactly to 支出合計 12,801,666 without it."
+N15,新月,111,"TASK-BRIEF CONFLICT: the brief describes N15 as the largest 園 in the cohort with 484 approved places, but 附註一(六) on p10 reads '核定及實際招收總人數： 182 名。' (verified at 4x magnification). 182 is used. It is corroborated by the note-1 4-year approved operating cost of 87,409,414 元 (=21,852,354/yr, matching the 預算數 收入合計 exactly), i.e. about 120,068 元 per child-year at 182 places, and by a 17-educator staff. 484 places is not supported anywhere in pp.4-11; do not substitute it."
+N15,新月,111,"附註一(六) states a single combined figure for 核定 and 實際 ('核定及實際招收總人數：182 名'), not the '分別為 X 名及 Y 名' pattern, so approved_capacity and actual_enrolment are both 182 as printed."
+N15,新月,111,"SOURCE-DOCUMENT ARITHMETIC ERROR (差異數 column only, p06): printed 收入合計 差異數 = 2,223,265 but 24,075,618 - 21,852,354 = 2,223,264; printed 本期稅前餘絀 差異數 = 38,843 but 607,647 - 568,805 = 38,842. The 差異數 column is internally consistent with itself (2,223,265 - 2,184,422 = 38,843), so the 1-元 gap is a source rounding artifact, most likely because 預算 was shown as 21,852,354 while the variance used the unrounded 87,409,414/4 = 21,852,353.5. The extracted 預算數 and 決算數 columns are unaffected and both tie out exactly."
+N15,新月,111,"REGULATORY FINDING (not an extraction defect): 業務發展費 3,653,150, 延後托育支出 303,491 and 其他支出 2,560,244 were incurred with a blank (dash) 預算數 — no appropriation — hence budget=null and execution_pct=null for those three lines. Same for the 收入 lines other than 教保費收入."
+N15,新月,111,"prepaid_receipts is mapped to 預收款項 (liability) = 4,397,976. The similarly named asset 預付款項 is blank (dash) in the 112/7/31 column, i.e. null not 0; the 現金流量表 on p09 confirms it by showing a +9,647 movement that clears the prior-year 9,647 balance to nil."
+N15,新月,111,"本期餘絀: p06 has no line literally labelled 本期餘絀; it prints 本期稅前餘絀 and 本期稅後餘絀, both 607,647 because 所得稅費用 is blank (dash, null not 0). 607,647 is the figure that ties to 資產負債表 本期餘絀."
+N15,新月,111,"A red 關防 seal overlaps the title and column headers on pp.05-09. Resolved by isolating the red channel, which drops the seal ink and leaves the black text legible; the current-column header was confirmed as '112 年 7 月 31 日' (p05) and '111.8.1~112.7.31' (p06). No figure inside the table body is obscured by the seal."
+N15,新月,111,"Page inventory for context: p04 auditor's report (signed 112/9/23, 誠明聯合會計師事務所), p05 資產負債表, p06 收支餘絀表 111.8.1~112.7.31 (current, used), p07 收支餘絀表 110.8.1~111.7.31 (comparative, NOT used), p08 淨值變動表, p09 現金流量表, p10 附註一, p11 附註二."
+N15,新月,111,"No unreadable digits. All 18 balance-sheet/income-statement identity checks and all 8 執行率 checks pass; figures are additionally corroborated by the 淨值變動表 (p08: 2,648,523 / 607,647 / 3,256,170) and the 現金流量表 (p09: 本期稅前餘絀 607,647, 期末現金 9,161,384)."
+N16,中平,111,"收支餘絀表 prints no line literally labelled 「本期餘絀」; it prints 「本期稅前餘絀」 and 「本期稅後餘絀」 (both 11,793 actual, since 所得稅費用 is blank). Both are recorded verbatim; either matches 資產負債表 本期餘絀 11,793."
+N16,中平,111,"附註一（六）states 「核定及實際招收總人數：120 名」 as a single combined figure, not the usual 「分別為 X 名及 Y 名」 form; approved_capacity and actual_enrolment are therefore both 120 from that one printed number."
+N16,中平,111,"REGULATORY FINDING (not a legibility issue): 業務發展費 has a blank 預算數 (no budget appropriated) yet a 決算數 of 1,396,000. Likewise 延後托育支出 412,320 and 其他支出 2,510,862 were spent against blank budgets. Recorded as null, not 0."
+N16,中平,111,執行率 is blank (not a dash) on the 收入合計 / 支出合計 / 本期稅前餘絀 / 所得稅費用 / 本期稅後餘絀 rows; recorded as null.
+N16,中平,111,"The red 關防 seal overlaps the title block and column header of p05 and p06; resolved by isolating the red channel, which rendered the black header text fully legible (p05 left column = 112年7月31日; p06 period = 111.8.1~112.7.31)."
+N17,中正,111,"附註一(六) prints a single combined figure 「核定及實際招收總人數：136 名」; approved capacity and actual enrolment are NOT stated separately, so both fields are set to 136 from that one sentence rather than from two distinct printed numbers."
+N17,中正,111,"收支餘絀表 (p06) has no line labelled exactly 「本期餘絀」; it prints 本期稅前餘絀 / 所得稅費用 / 本期稅後餘絀. 本期稅後餘絀 = 1,180,084 and ties exactly to 本期餘絀 on the 資產負債表 (p05) and to 111學年度餘絀 on the 淨值變動表 (p08)."
+N17,中正,111,"所得稅費用 is a dash in both 預算數 and 決算數 on p06 (recorded null, not 0)."
+N17,中正,111,"No 預算數 was appropriated for 教保費收入減項, 延後托育收入淨額, 利息收入, 其他收入, 業務發展費, 延後托育支出, 其他支出 (dash in the 預算數 column) — recorded as null and 執行率 is likewise a dash (null). These are actual-only lines; the printed 支出合計 預算數 16,191,825 equals the sum of only the seven budgeted expense lines, confirming the dashes are genuine blanks."
+N17,中正,111,A red 關防 seal overlaps the report title/date block on p05-p09. Titles and dates were confirmed by red-channel separation; no table figure is obscured by the seal.
+N17,中正,111,"The prior-year comparative 收支餘絀表 (p07, 110.8.1~111.7.31) contains a 公共事務管理費 line that does NOT appear in the current-year statement (p06). Not a legibility problem, but noted as a line-item inconsistency between periods."
+N17,中正,111,"One intermediate low-resolution crop of the p06 totals block produced digits inconsistent with the full-page read; re-cropped at higher magnification and confirmed the reported values (支出合計 16,191,825 / 15,775,470), which are additionally confirmed by exact column summation and by the 淨值變動表 and 現金流量表 tie-outs."
+N18,福營,111,附註一(六) 印為「核定及實際招收總人數：為 120 名」，核定與實際未分別列示；approved_capacity 與 actual_enrolment 同為此單一數字 120。
+N18,福營,111,"收支餘絀表無標示為「本期餘絀」之單一列，實際印為「本期稅前餘絀」(決算 120,968) 與「本期稅後餘絀」(決算 117,023)；後者與資產負債表之本期餘絀 117,023 相符，兩列均已收錄。"
+N18,福營,111,收支餘絀表之收入合計、支出合計、本期稅前餘絀、所得稅費用、本期稅後餘絀各列未印執行率，故 execution_pct 為 null（非 0）。
+N18,福營,111,多數收入列與業務發展費、延後托育支出、其他支出、所得稅費用之預算數欄印為破折號（無編列預算），故 budget 為 null（非 0）。
+N18,福營,111,資產負債表流動負債「應付帳款」本期欄印為「$ -」（空白），本期無餘額；此欄位不在擷取清單內，僅備註。
+N18,福營,111,p05 資產負債表與 p06 收支餘絀表之標題及欄位標頭有紅色關防覆蓋；以紅色通道分離後全部文字與數字均可判讀，無不可辨識項目。
+N19,中園,111,"資產負債表(p05)之關防紅印覆蓋當期(112/7/31)欄上半部（現金及銀行存款、應收帳款淨額、其他應收款、預付款項、流動資產合計）；以紅色通道(R channel)分離後全部清晰可讀，並經現金流量表(p09)期末現金餘額 6,714,729 及流動資產加總 7,063,528 交叉驗證。"
+N19,中園,111,收支餘絀表(p06)之關防紅印覆蓋教保費收入至延後托育收入淨額之預算數/決算數欄；R channel 分離後清晰可讀，預算數欄該三列均為破折號（空白）。
+N19,中園,111,"收支餘絀表收入類除教保費收入外，預算數均為空白（未編列預算）：教保費收入減項、延後托育收入淨額、利息收入、其他收入；支出類業務發展費、延後托育支出、其他支出亦無編列預算，惟決算數分別為 980,000、347,430、3,632,518 — 屬未編列預算而有支出之情形，已依規則以 null 表示，非 0。"
+N19,中園,111,所得稅費用預算數與決算數均為破折號（空白），以 null 表示。
+N19,中園,111,"流動負債合計 5,189,169 前方有一筆非數字之手寫/掃描雜痕，經 R channel 放大確認數字為 5,189,169。"
+N19,中園,111,"資遣費準備金（資產 217,841）與資遣費準備（負債 217,841）相符；比較期(111/7/31)兩者為 130,950 與 159,229 不相符，惟非本期查核範圍。"
+N25,碧城,111,附註一(六) 以合併語句「核定及實際招收總人數： 120 名」表示，未分別列示核定與實際人數；approved_capacity 與 actual_enrolment 均採該單一數字 120。
+N25,碧城,111,收支餘絀表中 教保費收入減項、延後托育收入淨額、利息收入、其他收入、業務發展費、延後托育支出、其他支出 之預算數欄位皆印為破折號（未編列預算），依規則記為 null（非 0）；其執行率欄位亦為破折號，記為 null。
+N25,碧城,111,所得稅費用 一列 預算數/決算數/差異數 三欄皆為破折號，全部記為 null。
+N25,碧城,111,收入合計、支出合計、本期稅前餘絀、所得稅費用、本期稅後餘絀 各列未印執行率，記為 null。
+N25,碧城,111,資產負債表(p05)與收支餘絀表(p06)標題及表頭有紅色關防套印；經分離紅色通道後黑字仍可辨讀，左欄期別確認為「112年7月31日」（當期），右欄為「111年7月31日」（前期比較）。所有數字欄位未被關防遮蔽。
+N25,碧城,111,"資產負債表無「本期餘絀」以外之餘絀細項；current_surplus 取自左欄 (195,372) 即負值。"
+N29,東湖,111,資產負債表(p05)只有單一期間欄位「112年7月31日」，本園111年8月30日開園，為首個學年度，故無比較期欄位；未虛構比較欄。
+N29,東湖,111,累積餘絀在資產負債表印為破折號「-」（空白），已記為 null 而非 0；淨值變動表(p07)期初「111年8月30日餘額」累積餘絀亦為「$ -」，佐證首年無累積餘絀。
+N29,東湖,111,"資產負債表資產面「並無」資遣費準備金科目：非流動資產僅列業務發展準備金 1,390,000、代管財產 4,347,810、購置財產 212,029，合計 5,949,839 與印製之非流動資產合計相符，故 severance_asset 為 null（科目缺漏，非數字不清）。附註二(四)載明資遣費準備金應與非流動負債之資遣費準備(105,517)相符 — 潛在查核發現。"
+N29,東湖,111,收支餘絀表期間印為「民國111年8月30日至112年7月31日」（欄頭 111.8.30~112.7.31），非題目所述之 111/8/1 起算；依開園日 111/8/30 起算。全份僅一張收支餘絀表，無比較期。
+N29,東湖,111,"預算數為破折號（空白）者已記為 null：教保費收入減項、延後托育收入淨額、利息收入、其他收入、業務發展費、延後托育支出、其他支出、所得稅費用。其中業務發展費決算數 1,390,000 而預算數空白（無編列預算）— 潛在查核發現。"
+N29,東湖,111,執行率欄位在所有小計/合計列為完全空白（非破折號）：收入合計、支出合計、本期稅前餘絀、所得稅費用、本期稅後餘絀，已記為 null。
+N29,東湖,111,"收支餘絀表未印「本期餘絀」單一列，改列「本期稅前餘絀」與「本期稅後餘絀」；資產負債表之本期餘絀 2,645,162 等於本期稅後餘絀決算數。"
+N29,東湖,111,行政管理費之差異數印為破折號（決算=預算，差額為零）；本欄未納入輸出欄位，不影響擷取。
+N29,東湖,111,紅色關防印壓於 p05/p06/p07 標題區，經 RGB 逐點取最大值（抑制紅色通道）後黑字全部清晰可讀；本份文件無任何無法辨識之數字。
+N30,文中,111,資產負債表 (p.5) 只有一欄期間 (112年7月31日)，無比較期欄位；本園於111年9月30日開園，111學年度為首個學年度，故無比較數。
+N30,文中,111,累積餘絀 在資產負債表印為破折號（空白），已記為 null 而非 0；淨值變動表 (p.7) 亦顯示 111年9月30日餘額為 $ - ，可相互驗證。
+N30,文中,111,資產負債表未列 業務發展準備金（資產方）及 業務發展準備（負債方）兩科目，故 reserve_asset / reserve_liability 皆為 null（非 0）。
+N30,文中,111,收支餘絀表 (p.6) 印出之期間為 111.9.30~112.7.31（自開園日起算），非 111/8/1–112/7/31；受託辦理期間雖自111年8月1日起，但111年9月30日才開園。
+N30,文中,111,收支餘絀表無 業務發展費 支出科目，故未列於 lines。
+N30,文中,111,"行政管理費 預算數 199,735 但決算數為破折號（空白）→ actual null、執行率空白；係全年未動支之預算項目。"
+N30,文中,111,"延後托育支出 (126,732) 與 其他支出 (28,885) 之預算數為空白（未編列預算）而有實際支出；收入方 教保費收入減項、延後托育收入淨額、利息收入、其他收入 之預算數亦均為空白。"
+N30,文中,111,"修繕購置費 執行率 214%（決算 264,795 > 預算 123,667），為超支項目。"
+N30,文中,111,收入合計、支出合計、本期稅前餘絀、所得稅費用、本期稅後餘絀 各列之執行率欄位在表上為完全空白（非破折號），記為 null。
+N30,文中,111,紅色關防印章覆蓋 p.5 / p.6 表頭；以藍色通道分離後表頭與期間標題完全清晰可辨，無殘留辨識問題。所有數字皆於 4–5 倍放大下逐格複核。

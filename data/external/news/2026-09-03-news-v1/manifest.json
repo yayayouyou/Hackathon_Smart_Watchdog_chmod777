@@ -1,0 +1,83 @@
+{
+  "manifest_version": 1,
+  "snapshot_id": "2026-09-03-news-v1",
+  "source": "Google News RSS（公開來源，無登入、無個資）",
+  "tls_verification": "system trust store; no bypass",
+  "policy": "未經查證之公開內容不改寫歷史風險分數、不作違規標籤、不公開指控機構；僅產生待人工研判之警示候選。刻意匿名之報導不予歸屬。",
+  "queries": {
+    "不當對待": "\"幼兒園\" 新北 (不當對待 OR 虐童 OR 體罰)",
+    "裁罰處分": "\"幼兒園\" 新北 (裁罰 OR 開罰 OR 處分)",
+    "停辦廢止": "\"幼兒園\" 新北 (停辦 OR 廢止 OR 勒令)",
+    "收費爭議": "\"幼兒園\" 新北 (超收 OR 退費 OR 收費爭議)",
+    "安全事故": "\"幼兒園\" 新北 (受傷 OR 食安 OR 娃娃車)",
+    "教保人力": "\"幼兒園\" 新北 (師生比 OR 超收人數 OR 人力不足)"
+  },
+  "requests": [
+    {
+      "sequence": 1,
+      "label": "不當對待",
+      "query": "\"幼兒園\" 新北 (不當對待 OR 虐童 OR 體罰)",
+      "url": "https://news.google.com/rss/search?q=%22%E5%B9%BC%E5%85%92%E5%9C%92%22+%E6%96%B0%E5%8C%97+%28%E4%B8%8D%E7%95%B6%E5%B0%8D%E5%BE%85+OR+%E8%99%90%E7%AB%A5+OR+%E9%AB%94%E7%BD%B0%29&hl=zh-TW&gl=TW&ceid=TW%3Azh-Hant",
+      "response_sha256": "662ef0d2e6017e14dabf554029c4116b2d25f8d8fb5919312e8017236872f7ae",
+      "byte_length": 118686,
+      "retrieved_at_utc": "2026-09-03T10:29:52Z",
+      "raw_file": "raw/001_不當對待.xml"
+    },
+    {
+      "sequence": 2,
+      "label": "裁罰處分",
+      "query": "\"幼兒園\" 新北 (裁罰 OR 開罰 OR 處分)",
+      "url": "https://news.google.com/rss/search?q=%22%E5%B9%BC%E5%85%92%E5%9C%92%22+%E6%96%B0%E5%8C%97+%28%E8%A3%81%E7%BD%B0+OR+%E9%96%8B%E7%BD%B0+OR+%E8%99%95%E5%88%86%29&hl=zh-TW&gl=TW&ceid=TW%3Azh-Hant",
+      "response_sha256": "87ac0824bad6cfcc26f1060f0f42209111e1a58b8fa15cfe6f22f0f72f943374",
+      "byte_length": 65259,
+      "retrieved_at_utc": "2026-09-03T10:30:19Z",
+      "raw_file": "raw/002_裁罰處分.xml"
+    },
+    {
+      "sequence": 3,
+      "label": "停辦廢止",
+      "query": "\"幼兒園\" 新北 (停辦 OR 廢止 OR 勒令)",
+      "url": "https://news.google.com/rss/search?q=%22%E5%B9%BC%E5%85%92%E5%9C%92%22+%E6%96%B0%E5%8C%97+%28%E5%81%9C%E8%BE%A6+OR+%E5%BB%A2%E6%AD%A2+OR+%E5%8B%92%E4%BB%A4%29&hl=zh-TW&gl=TW&ceid=TW%3Azh-Hant",
+      "response_sha256": "b814ab7812aa9c7ad215506a8360f817160aa6a96ee55ed5fccbee6d63c79bd6",
+      "byte_length": 62533,
+      "retrieved_at_utc": "2026-09-03T10:30:31Z",
+      "raw_file": "raw/003_停辦廢止.xml"
+    },
+    {
+      "sequence": 4,
+      "label": "收費爭議",
+      "query": "\"幼兒園\" 新北 (超收 OR 退費 OR 收費爭議)",
+      "url": "https://news.google.com/rss/search?q=%22%E5%B9%BC%E5%85%92%E5%9C%92%22+%E6%96%B0%E5%8C%97+%28%E8%B6%85%E6%94%B6+OR+%E9%80%80%E8%B2%BB+OR+%E6%94%B6%E8%B2%BB%E7%88%AD%E8%AD%B0%29&hl=zh-TW&gl=TW&ceid=TW%3Azh-Hant",
+      "response_sha256": "f13d1e53992a28660cc68dcb6a0af47028aacc98000d460500f9252aeac6152e",
+      "byte_length": 57689,
+      "retrieved_at_utc": "2026-09-03T10:30:41Z",
+      "raw_file": "raw/004_收費爭議.xml"
+    },
+    {
+      "sequence": 5,
+      "label": "安全事故",
+      "query": "\"幼兒園\" 新北 (受傷 OR 食安 OR 娃娃車)",
+      "url": "https://news.google.com/rss/search?q=%22%E5%B9%BC%E5%85%92%E5%9C%92%22+%E6%96%B0%E5%8C%97+%28%E5%8F%97%E5%82%B7+OR+%E9%A3%9F%E5%AE%89+OR+%E5%A8%83%E5%A8%83%E8%BB%8A%29&hl=zh-TW&gl=TW&ceid=TW%3Azh-Hant",
+      "response_sha256": "4a2a40dc4948892f8783a0bc9b085412e9ff74baefb3505c891dbf84c6b92f22",
+      "byte_length": 34783,
+      "retrieved_at_utc": "2026-09-03T10:30:53Z",
+      "raw_file": "raw/005_安全事故.xml"
+    },
+    {
+      "sequence": 6,
+      "label": "教保人力",
+      "query": "\"幼兒園\" 新北 (師生比 OR 超收人數 OR 人力不足)",
+      "url": "https://news.google.com/rss/search?q=%22%E5%B9%BC%E5%85%92%E5%9C%92%22+%E6%96%B0%E5%8C%97+%28%E5%B8%AB%E7%94%9F%E6%AF%94+OR+%E8%B6%85%E6%94%B6%E4%BA%BA%E6%95%B8+OR+%E4%BA%BA%E5%8A%9B%E4%B8%8D%E8%B6%B3%29&hl=zh-TW&gl=TW&ceid=TW%3Azh-Hant",
+      "response_sha256": "a0f8b6a89b8559045495ceebb584104d41a94168675ac25099b1d18c9660b71f",
+      "byte_length": 54483,
+      "retrieved_at_utc": "2026-09-03T10:31:01Z",
+      "raw_file": "raw/006_教保人力.xml"
+    }
+  ],
+  "outputs": {
+    "data/processed/alert_candidates_ntpc.csv": {
+      "sha256": "080c1727c9689b9aed13bc038a3169d97f92d49012f20eb190f86c9e447fce26",
+      "record_count": 267
+    }
+  }
+}

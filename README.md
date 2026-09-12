@@ -1,0 +1,128 @@
+# 小小守護員 Smart Watchdog
+
+新北市教保機構風險預警系統。AI × 鑑識會計。
+2026 新北市 AI 智慧城市黑客松，教育局組。決賽 2026/9/12–13。
+
+**輸出是「建議查核」的稽查優先序，不是「疑似不法」的違法認定。**
+全市 1,213 園中 94.8% 沒有公開財報——對這些園而言那是涵蓋範圍限制，
+不是合規證明。不確定時標「資料不足」，不標「低風險」。
+
+---
+
+## 在新機器上跑起來
+
+相依清單是 `requirements.txt`，**不是** `pyproject.toml`——後者只列動態版所需的
+三個套件，而且缺 `[project] name`／`version`，`pip install -e .` 會直接失敗。
+
+macOS／Linux：
+
+```bash
+git clone <repo> && cd Hackathon_Smart_Watchdog
+
+python3 -m venv .venv                      # 需要 Python 3.9+
+.venv/bin/pip install -r requirements.txt
+.venv/bin/pip install "fastapi>=0.110" "uvicorn[standard]>=0.29" "httpx>=0.27"
+
+PYTHONPATH=src .venv/bin/python scripts/build_frontend.py   # 產生 dist/
+PYTHONPATH=src .venv/bin/python scripts/serve.py            # → :8000
+```
+
+Windows（PowerShell）——執行檔在 `Scripts\` 不是 `bin/`，`PYTHONPATH` 要另外設：
+
+```powershell
+py -3.11 -m venv .venv
+.venv\Scripts\pip install -r requirements.txt
+.venv\Scripts\pip install "fastapi>=0.110" "uvicorn[standard]>=0.29" "httpx>=0.27"
+
+$env:PYTHONPATH = "src"
+.venv\Scripts\python scripts\build_frontend.py
+.venv\Scripts\python scripts\serve.py
+```
+
+> pip 的相依解析器在這批釘版上可能長時間回溯（實測 13 分鐘沒裝上任何套件）。
+> 有 [uv](https://github.com/astral-sh/uv) 的話 `uv pip install --python .venv/Scripts/python.exe -r requirements.txt`
+> 幾十秒就完成，結果一樣。
+
+開 <http://127.0.0.1:8000>。**不是 `dist/index.html`**——那是靜態單檔版，
+沒有圖磚地圖、沒有聊天查詢、沒有掃描主控台（Artifact 的 CSP 擋掉 fetch
+與非白名單腳本，那些在靜態版做不到）。
+
+驗證（把 `.venv/bin/python` 換成 `.venv\Scripts\python` 即為 Windows 版）：
+
+```bash
+PYTHONPATH=src .venv/bin/python -m pytest tests/ -q
+# 268 passed, 1 skipped   ← 那一條 skip 是正常的，見下方「資料」
+.venv/bin/ruff check src/ tests/ scripts/
+```
+
+## 憑證
+
+**一項都不填也完整可跑。** 分析管線、靜態版、動態版、新聞與 PTT 兩個即時
+管道都不需要金鑰。憑證只**開啟更多管道**。
+
+`.env` 放在專案根目錄（已 gitignore，不會跟著 repo 過去，要自己重建）：
+
+```bash
+cp .env.example .env
+```
+
+| 變數 | 開啟什麼 | 取得 |
+|---|---|---|
+| `GOOGLE_MAPS_API_KEY` | Google 底圖、卷宗內的地圖評論 | console.cloud.google.com，當天可得 |
+| `APIFY_TOKEN` | Threads 貼文掃描 | apify.com → Settings → Integrations |
+| `AWS_*` | 三個 AI 落點改走 Bedrock | 決賽當天由主辦方提供 |
+
+確認讀到了：
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/check_credentials.py
+```
+
+詳細申請步驟見 [`docs/architecture/API申請指引.md`](docs/architecture/API申請指引.md)。
+
+## 資料
+
+`data/processed/` 的分析結果**已進版控**，所以 clone 下來就能直接建前端、
+跑服務、跑測試，不需要原始資料集。
+
+`data/raw/`（主辦方資料集，1.8 GB）**不進版控也不得轉散布**。少了它只影響
+兩件事：重跑抽取管線，以及 `test_every_statement_declares_its_source`
+那一條會 skip（它要核對 ground truth 引用的來源 PDF 是否存在）。
+
+`data/runtime/` 是掃描主控台的花費帳本與任務紀錄，機器各自獨立，不同步。
+
+## 這個系統在做什麼
+
+**軌 A（廣度）** 全市 1,213 園的統計排序。時序切分實測 AUC 0.640，
+前 100 名命中率為隨機抽查的 2.17 倍。
+
+**軌 B（深度）** 132 份非營利財報的視覺抽取與法遵檢核，產出可引述條號的
+稽核發現。22 園有發現，其中 4 園屬高嚴重度。
+
+兩軌**刻意不混成一個分數**：軌 B 是可引述的事實，軌 A 是統計推論。
+稽查員打電話給園所時，這兩者要講的話完全不同。
+
+**唯一經驗證的提前訊號**是官方評鑑「部分指標通過」：OR 2.72（p=0.0009），
+分層後仍成立（私立 2.31、無前科 2.44），中位提前 **268 天**。
+新聞、PTT、Threads 的提前量都是 0——它們消費的是已經發生的官方裁罰紀錄，
+所以定位是即時監看，不是預測。
+
+## 目錄
+
+```
+src/smart_watchdog/
+  extract/      財報視覺抽取。backends.py 抽象後端（Bedrock / Recorded）
+  features/     特徵工程。每個函式吃 as_of，拒絕看它之後的資料
+  risk/         優先序組裝
+  report/       稽核建議書生成與驗證
+  realtime/     即時管道、掃描主控台的價目表與花費帳本
+  api/          FastAPI 端點
+  scrape/       外部資料擷取
+webapp/         動態版前端
+frontend/       靜態版樣板 → dist/index.html
+scripts/        管線與工具
+docs/           架構決策與研究紀錄
+```
+
+開發前先讀 [`CLAUDE.md`](CLAUDE.md)——裡面是已經踩過的坑，
+每一條都對應一個實際發生過的錯誤。

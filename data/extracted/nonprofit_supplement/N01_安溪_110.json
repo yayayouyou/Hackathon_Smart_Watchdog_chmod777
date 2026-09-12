@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "code": "N01",
+  "short_name": "安溪",
+  "academic_year": "110",
+  "source_pdf": "data/raw/資料集/非營利園財報/110學年度/N01安溪_110學年度財務報告.pdf",
+  "source_sha256": "e9e5f0a54f0040732adaac24a1fa2801b7e834c68321c1fe90b1471272ad0b96",
+  "issues": [
+    "目標頁 p03、p04、p08、p09 的 PDF 文字層均為 0 字，已逐頁改走 Apple Vision OCR 並由人工查看原圖覆核。",
+    "空白或破折號保留為 null，不改寫成數值 0；僅在已確認存在的加總式內暫時視為 0。"
+  ],
+  "page_provenance": [
+    {
+      "page": 3,
+      "page_footer": "N01-3",
+      "text_chars": 0,
+      "text_usable": false,
+      "route": "macos_vision_ocr_with_manual_image_verification",
+      "tool": "Apple Vision VNRecognizeTextRequestRevision3",
+      "ocr_languages": ["zh-Hant", "en-US"],
+      "render_dpi": 240,
+      "ocr_line_count": 40,
+      "ocr_mean_confidence": 0.8875,
+      "raw_text_path": "data/interim/nonprofit_supplement_pages/110/N01_安溪/p03.ocr.json",
+      "manually_verified": true
+    },
+    {
+      "page": 4,
+      "page_footer": "N01-4",
+      "text_chars": 0,
+      "text_usable": false,
+      "route": "macos_vision_ocr_with_manual_image_verification",
+      "tool": "Apple Vision VNRecognizeTextRequestRevision3",
+      "ocr_languages": ["zh-Hant", "en-US"],
+      "render_dpi": 240,
+      "ocr_line_count": 39,
+      "ocr_mean_confidence": 0.846153846154,
+      "raw_text_path": "data/interim/nonprofit_supplement_pages/110/N01_安溪/p04.ocr.json",
+      "manually_verified": true
+    },
+    {
+      "page": 8,
+      "page_footer": "N01-8",
+      "text_chars": 0,
+      "text_usable": false,
+      "route": "macos_vision_ocr_with_manual_image_verification",
+      "tool": "Apple Vision VNRecognizeTextRequestRevision3",
+      "ocr_languages": ["zh-Hant", "en-US"],
+      "render_dpi": 240,
+      "ocr_line_count": 44,
+      "ocr_mean_confidence": 0.602272727273,
+      "raw_text_path": "data/interim/nonprofit_supplement_pages/110/N01_安溪/p08.ocr.json",
+      "manually_verified": true
+    },
+    {
+      "page": 9,
+      "page_footer": "N01-9",
+      "text_chars": 0,
+      "text_usable": false,
+      "route": "macos_vision_ocr_with_manual_image_verification",
+      "tool": "Apple Vision VNRecognizeTextRequestRevision3",
+      "ocr_languages": ["zh-Hant", "en-US"],
+      "render_dpi": 240,
+      "ocr_line_count": 59,
+      "ocr_mean_confidence": 0.823728813559,
+      "raw_text_path": "data/interim/nonprofit_supplement_pages/110/N01_安溪/p09.ocr.json",
+      "manually_verified": true
+    }
+  ],
+  "audit_report": {
+    "pages": [3, 4],
+    "opinion_type": "unmodified",
+    "firm": "誠明聯合會計師事務所",
+    "accountants": ["張景嵐"],
+    "report_date": "民國111年9月16日",
+    "opinion_text": "新北市安溪非營利幼兒園（委託社團法人桃園市教保服務人員協會辦理）民國111年7月31日及民國110年7月31日之資產負債表，暨民國110年8月1日至111年7月31日及民國109年8月1日至110年7月31日之收支餘絀表、淨值變動表、現金流量表，以及財務報表附註（包括重大會計政策彙總），業經本會計師查核竣事。\n\n依本會計師之意見，上開財務報表在所有重大方面係依照一般公認會計原則、非營利幼兒園實施辦法暨非營利幼兒園會計財務及經費處理注意事項編製，足以允當表達新北市安溪非營利幼兒園（委託社團法人桃園市教保服務人員協會辦理）民國111年7月31日及民國110年7月31日之財務狀況，暨民國110年8月1日至111年7月31日及民國109年8月1日至110年7月31日之財務績效及現金流量。",
+    "basis_text": "本會計師係依照會計師查核簽證財務報表規則及一般公認審計準則執行查核工作。本會計師於該等準則下之責任將於會計師查核財務報表之責任段進一步說明。本會計師所隸屬事務所受獨立性規範之人員已依會計師職業道德規範，與新北市安溪非營利幼兒園（委託社團法人桃園市教保服務人員協會辦理）保持超然獨立，並履行該規範之其他責任。本會計師相信已取得足夠及適切之查核證據，以作為表示查核意見之基礎。",
+    "emphasis_of_matter_text": "本報告僅供新北市政府教育局監督所轄之新北市安溪非營利幼兒園（委託社團法人桃園市教保服務人員協會辦理）目的使用，不得作為其他用途。"
+  },
+  "net_asset_changes": {
+    "page": 8,
+    "page_footer": "N01-8",
+    "columns": ["accumulated_surplus", "current_surplus", "total"],
+    "rows": [
+      {"label": "109年8月1日餘額", "accumulated_surplus": 1009891, "current_surplus": 557708, "total": 1567599},
+      {"label": "108學年度餘絀轉入累積餘絀", "accumulated_surplus": 557708, "current_surplus": -557708, "total": null},
+      {"label": "109學年度餘絀", "accumulated_surplus": null, "current_surplus": -215209, "total": -215209},
+      {"label": "110年7月31日餘額", "accumulated_surplus": 1567599, "current_surplus": -215209, "total": 1352390},
+      {"label": "109學年度餘絀轉入累積餘絀", "accumulated_surplus": -215209, "current_surplus": 215209, "total": null},
+      {"label": "110學年度餘絀", "accumulated_surplus": null, "current_surplus": 218557, "total": 218557},
+      {"label": "111年7月31日餘額", "accumulated_surplus": 1352390, "current_surplus": 218557, "total": 1570947}
+    ]
+  },
+  "cash_flow_statement": {
+    "page": 9,
+    "page_footer": "N01-9",
+    "periods": ["110.8.1~111.7.31", "109.8.1~110.7.31"],
+    "rows": [
+      {"label": "本期稅前餘絀", "kind": "operating_item", "values": [218557, -215209]},
+      {"label": "應收帳款淨額", "kind": "operating_item", "values": [36720, 554902]},
+      {"label": "其他應收款", "kind": "operating_item", "values": [456, -456]},
+      {"label": "預付款項", "kind": "operating_item", "values": [-95007, 30822]},
+      {"label": "其他流動資產", "kind": "operating_item", "values": [-2716, -2337]},
+      {"label": "應付票據", "kind": "operating_item", "values": [17087, -192481]},
+      {"label": "其他應付款", "kind": "operating_item", "values": [-160097, 645925]},
+      {"label": "預收款項", "kind": "operating_item", "values": [440750, -563765]},
+      {"label": "營業活動之淨現金流入", "kind": "operating_net", "values": [455750, 257401]},
+      {"label": "投資活動之淨現金流入", "kind": "investing_net", "values": [null, null]},
+      {"label": "籌資活動之淨現金流入", "kind": "financing_net", "values": [null, null]},
+      {"label": "本期現金及約當現金淨增加數", "kind": "net_change", "values": [455750, 257401]},
+      {"label": "期初現金及約當現金餘額", "kind": "cash_beginning", "values": [5348001, 5090600]},
+      {"label": "期末現金及約當現金餘額", "kind": "cash_ending", "values": [5803751, 5348001]}
+    ]
+  },
+  "reconciliation": [
+    {"name": "淨值變動表期末餘絀總額 = 主 JSON 資產負債表", "status": "passed", "lhs": 1570947, "rhs": 1570947, "difference": 0},
+    {"name": "本期期末現金 = 主 JSON 資產負債表現金", "status": "passed", "lhs": 5803751, "rhs": 5803751, "difference": 0},
+    {"name": "現金流量表 110.8.1~111.7.31 期末現金 = 期初現金 + 現金淨增加", "status": "passed", "lhs": 5803751, "rhs": 5803751, "difference": 0}
+  ]
+}

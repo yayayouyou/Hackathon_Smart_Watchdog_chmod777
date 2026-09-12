@@ -1,0 +1,130 @@
+{
+  "schema_version": "pcc-operating-contract-awards-v1",
+  "snapshot_id": "ntpc-pilot-v1",
+  "records": [
+    {
+      "award_key": "pcc-f054645726dfa05f80b3",
+      "supplier_award_key": "pccs-60ad4db058a6826f0db0",
+      "unit_id": "3.82.8.44",
+      "unit_name": "新北市三峽區安溪國民小學",
+      "job_number": "104-016",
+      "tender_title": "新北市政府委託營運管理「私立安溪幼兒園（非營利幼兒園）」",
+      "award_notice_type": "更正決標公告",
+      "award_notice_date": "2015-10-12",
+      "award_decision_date": "2015-10-05",
+      "award_decision_date_raw": "104/10/05",
+      "total_award_amount": 30779190,
+      "total_award_amount_raw": "30,779,190元",
+      "official_notice_url": "https://web.pcc.gov.tw/prkms/tender/common/noticeDate/redirectPublic?ds=20151012&fn=BDM-2-51656549.xml",
+      "notice_revisions": [
+        {
+          "notice_date": "20151007",
+          "notice_type": "決標公告",
+          "revision_sequence": 1,
+          "filename": "BDM-1-51656549",
+          "official_url": "https://web.pcc.gov.tw/prkms/tender/common/noticeDate/redirectPublic?ds=20151007&fn=BDM-1-51656549.xml"
+        },
+        {
+          "notice_date": "20151012",
+          "notice_type": "更正決標公告",
+          "revision_sequence": 2,
+          "filename": "BDM-2-51656549",
+          "official_url": "https://web.pcc.gov.tw/prkms/tender/common/noticeDate/redirectPublic?ds=20151012&fn=BDM-2-51656549.xml"
+        }
+      ],
+      "source_supplier_index": 1,
+      "supplier_id": "",
+      "supplier_id_raw": "無",
+      "supplier_name": "社團法人桃園市教保服務人員協會",
+      "award_amount": 30779190,
+      "award_amount_raw": "30,779,190元",
+      "contract_period_raw": "105/02/01－108/07/31(預估)",
+      "contract_start_date": "2016-02-01",
+      "contract_end_date": "2019-07-31",
+      "query_id": "single_uuid_anxi",
+      "entity": "新北市安溪非營利幼兒園",
+      "search_raw_file": "raw/001_single_uuid_anxi_search.json",
+      "search_response_sha256": "d6e19f50b03e20a4b945b636e48c8918ee45a3eb3141d31104b4eb45cffde966",
+      "tender_raw_file": "raw/002_single_uuid_anxi_3.82.8.44_104-016.json",
+      "tender_response_sha256": "502ae7e9e496fb0c27836f6521813b0aa89f374a80f930a2bea19e6d1f8093e0"
+    },
+    {
+      "award_key": "pcc-70aa058c07067975980e",
+      "supplier_award_key": "pccs-52dac633e87d5909fefb",
+      "unit_id": "3.82.9.5",
+      "unit_name": "新北市三峽區北大國民小學",
+      "job_number": "BD1060327",
+      "tender_title": "新北市政府委託營運管理「私立北大非營利幼兒園」",
+      "award_notice_type": "決標公告",
+      "award_notice_date": "2017-05-05",
+      "award_decision_date": "2017-05-03",
+      "award_decision_date_raw": "106/05/03",
+      "total_award_amount": 48304800,
+      "total_award_amount_raw": "48,304,800元",
+      "official_notice_url": "https://web.pcc.gov.tw/prkms/tender/common/noticeDate/redirectPublic?ds=20170505&fn=BDM-1-52130546.xml",
+      "notice_revisions": [
+        {
+          "notice_date": "20170505",
+          "notice_type": "決標公告",
+          "revision_sequence": 1,
+          "filename": "BDM-1-52130546",
+          "official_url": "https://web.pcc.gov.tw/prkms/tender/common/noticeDate/redirectPublic?ds=20170505&fn=BDM-1-52130546.xml"
+        }
+      ],
+      "source_supplier_index": 2,
+      "supplier_id": "26577529",
+      "supplier_id_raw": "26577529",
+      "supplier_name": "社團法人中華音樂舞蹈暨表演藝術教育協會",
+      "award_amount": 48304800,
+      "award_amount_raw": "48,304,800元",
+      "contract_period_raw": "106/05/05－110/07/31(預估)",
+      "contract_start_date": "2017-05-05",
+      "contract_end_date": "2021-07-31",
+      "query_id": "multi_uuid_beida",
+      "entity": "新北市北大非營利幼兒園",
+      "search_raw_file": "raw/003_multi_uuid_beida_search.json",
+      "search_response_sha256": "3a4e07d58fcc8419f838c8c3db0b2ffad35874aa2f2de8f6d852f423d409452f",
+      "tender_raw_file": "raw/004_multi_uuid_beida_3.82.9.5_BD1060327.json",
+      "tender_response_sha256": "23e63ebd48cef874ee4f3724775c2dc000a5071313f1c54cefd28bb42cecd8a0"
+    },
+    {
+      "award_key": "pcc-30ed19d84e13cd91a45a",
+      "supplier_award_key": "pccs-9968522a56d064bafbfb",
+      "unit_id": "3.82.6.14",
+      "unit_name": "新北市立三多國民中學",
+      "job_number": "107002",
+      "tender_title": "[新北市政府委託營運管理「私立三多非營利幼兒園」]採購",
+      "award_notice_type": "決標公告",
+      "award_notice_date": "2018-05-17",
+      "award_decision_date": "2018-05-03",
+      "award_decision_date_raw": "107/05/03",
+      "total_award_amount": 35991035,
+      "total_award_amount_raw": "35,991,035元",
+      "official_notice_url": "https://web.pcc.gov.tw/prkms/tender/common/noticeDate/redirectPublic?ds=20180517&fn=BDM-1-52448040.xml",
+      "notice_revisions": [
+        {
+          "notice_date": "20180517",
+          "notice_type": "決標公告",
+          "revision_sequence": 1,
+          "filename": "BDM-1-52448040",
+          "official_url": "https://web.pcc.gov.tw/prkms/tender/common/noticeDate/redirectPublic?ds=20180517&fn=BDM-1-52448040.xml"
+        }
+      ],
+      "source_supplier_index": 1,
+      "supplier_id": "81588472",
+      "supplier_id_raw": "81588472",
+      "supplier_name": "廣亞學校財團法人育達科技大學",
+      "award_amount": 35991035,
+      "award_amount_raw": "35,991,035元",
+      "contract_period_raw": "107/08/01－111/07/31(預估)",
+      "contract_start_date": "2018-08-01",
+      "contract_end_date": "2022-07-31",
+      "query_id": "multi_uuid_sanduo",
+      "entity": "新北市三多非營利幼兒園",
+      "search_raw_file": "raw/005_multi_uuid_sanduo_search.json",
+      "search_response_sha256": "39585f9ea4b287fd7eab62557b0ddc8c9e31197ca19738b7d438c495c8697a65",
+      "tender_raw_file": "raw/006_multi_uuid_sanduo_3.82.6.14_107002.json",
+      "tender_response_sha256": "62dcdfab8f88a4edb9765d8837f18e1d10fc78932ad499459b2d78d4d3b38adc"
+    }
+  ]
+}

@@ -1,0 +1,867 @@
+{
+  "manifest_version": 1,
+  "snapshot_id": "ntpc-pilot-v1",
+  "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+  "started_at_utc": "2026-08-14T01:19:35Z",
+  "completed_at_utc": "2026-08-14T01:19:35Z",
+  "tls_verification": "system trust store; no bypass",
+  "session_cookies_persisted": false,
+  "parser_schema_version": "eva-search-results-v1",
+  "pilot_scope": {
+    "city_label": "新北市",
+    "queries": [
+      {
+        "id": "single_uuid_anxi",
+        "name": "新北市安溪非營利幼兒園",
+        "case": "single registry UUID with historical evaluations",
+        "expect_zero": false
+      },
+      {
+        "id": "multi_uuid_beida",
+        "name": "新北市北大非營利幼兒園",
+        "case": "operator retendering with sibling registry UUIDs",
+        "expect_zero": false
+      },
+      {
+        "id": "multi_uuid_bicheng",
+        "name": "新北市碧城非營利幼兒園",
+        "case": "second operator-retendering sibling UUID case",
+        "expect_zero": false
+      },
+      {
+        "id": "operator_parentheses_xindianjiren",
+        "name": "新北市新店及人非營利幼兒園",
+        "case": "known registry entity with 申請辦理 title and no live result",
+        "expect_zero": true
+      },
+      {
+        "id": "explicit_zero_control",
+        "name": "__SMART_WATCHDOG_NO_MATCH__",
+        "case": "explicit zero-result parser control",
+        "expect_zero": true
+      }
+    ],
+    "full_population_claim": false,
+    "pagination_policy": "Exact-name queries must not paginate; unexpected pagination fails closed rather than expanding pilot scope."
+  },
+  "control_names": {
+    "city_name": "ddlCityS",
+    "city_value": "03",
+    "city_onchange": "",
+    "area_name": "ddlAreaS",
+    "area_value": "",
+    "evaluation_name": "ddlEResult",
+    "evaluation_value": "",
+    "preschool_name": "txtSchNameS",
+    "search_name": "btnSearch",
+    "search_value": "搜尋",
+    "event_target_name": "__EVENTTARGET",
+    "event_argument_name": "__EVENTARGUMENT"
+  },
+  "initial_control_inventory": {
+    "forms": [
+      {
+        "action": "./evaSearch.aspx",
+        "method": "post",
+        "id": "form1",
+        "name": "",
+        "controls": [
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "__VIEWSTATE",
+            "id": "__VIEWSTATE",
+            "disabled": false,
+            "checked": false,
+            "onclick": "",
+            "label": "",
+            "value_length": 1792
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "__VIEWSTATEGENERATOR",
+            "id": "__VIEWSTATEGENERATOR",
+            "disabled": false,
+            "checked": false,
+            "onclick": "",
+            "label": "",
+            "value_length": 8
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "__VIEWSTATEENCRYPTED",
+            "id": "__VIEWSTATEENCRYPTED",
+            "disabled": false,
+            "checked": false,
+            "onclick": "",
+            "label": "",
+            "value_length": 0
+          },
+          {
+            "tag": "input",
+            "type": "hidden",
+            "name": "__EVENTVALIDATION",
+            "id": "__EVENTVALIDATION",
+            "disabled": false,
+            "checked": false,
+            "onclick": "",
+            "label": "",
+            "value_length": 792
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "name": "txtSchNameS",
+            "id": "txtSchNameS",
+            "value": "",
+            "disabled": false,
+            "checked": false,
+            "onclick": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "select",
+            "name": "ddlCityS",
+            "id": "ddlCityS",
+            "disabled": false,
+            "multiple": false,
+            "onchange": "",
+            "options": [
+              {
+                "value": "",
+                "selected": true,
+                "disabled": false,
+                "text": "全國"
+              },
+              {
+                "value": "01",
+                "selected": false,
+                "disabled": false,
+                "text": "基隆市"
+              },
+              {
+                "value": "02",
+                "selected": false,
+                "disabled": false,
+                "text": "臺北市"
+              },
+              {
+                "value": "03",
+                "selected": false,
+                "disabled": false,
+                "text": "新北市"
+              },
+              {
+                "value": "05",
+                "selected": false,
+                "disabled": false,
+                "text": "桃園市"
+              },
+              {
+                "value": "06",
+                "selected": false,
+                "disabled": false,
+                "text": "新竹市"
+              },
+              {
+                "value": "07",
+                "selected": false,
+                "disabled": false,
+                "text": "新竹縣"
+              },
+              {
+                "value": "08",
+                "selected": false,
+                "disabled": false,
+                "text": "苗栗縣"
+              },
+              {
+                "value": "09",
+                "selected": false,
+                "disabled": false,
+                "text": "臺中市"
+              },
+              {
+                "value": "11",
+                "selected": false,
+                "disabled": false,
+                "text": "彰化縣"
+              },
+              {
+                "value": "12",
+                "selected": false,
+                "disabled": false,
+                "text": "南投縣"
+              },
+              {
+                "value": "13",
+                "selected": false,
+                "disabled": false,
+                "text": "雲林縣"
+              },
+              {
+                "value": "14",
+                "selected": false,
+                "disabled": false,
+                "text": "嘉義市"
+              },
+              {
+                "value": "15",
+                "selected": false,
+                "disabled": false,
+                "text": "嘉義縣"
+              },
+              {
+                "value": "16",
+                "selected": false,
+                "disabled": false,
+                "text": "臺南市"
+              },
+              {
+                "value": "18",
+                "selected": false,
+                "disabled": false,
+                "text": "高雄市"
+              },
+              {
+                "value": "20",
+                "selected": false,
+                "disabled": false,
+                "text": "屏東縣"
+              },
+              {
+                "value": "21",
+                "selected": false,
+                "disabled": false,
+                "text": "臺東縣"
+              },
+              {
+                "value": "22",
+                "selected": false,
+                "disabled": false,
+                "text": "花蓮縣"
+              },
+              {
+                "value": "04",
+                "selected": false,
+                "disabled": false,
+                "text": "宜蘭縣"
+              },
+              {
+                "value": "23",
+                "selected": false,
+                "disabled": false,
+                "text": "澎湖縣"
+              },
+              {
+                "value": "24",
+                "selected": false,
+                "disabled": false,
+                "text": "金門縣"
+              },
+              {
+                "value": "25",
+                "selected": false,
+                "disabled": false,
+                "text": "連江縣"
+              }
+            ],
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "select",
+            "name": "ddlAreaS",
+            "id": "ddlAreaS",
+            "disabled": false,
+            "multiple": false,
+            "onchange": "",
+            "options": [
+              {
+                "value": "",
+                "selected": false,
+                "disabled": false,
+                "text": "全部鄉鎮"
+              }
+            ],
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "ckSPub0",
+            "id": "ckSPub0",
+            "value": "",
+            "disabled": false,
+            "checked": false,
+            "onclick": "",
+            "label": "公立"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "ckSPub2",
+            "id": "ckSPub2",
+            "value": "",
+            "disabled": false,
+            "checked": false,
+            "onclick": "",
+            "label": "非營利"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "name": "ckSPub1",
+            "id": "ckSPub1",
+            "value": "",
+            "disabled": false,
+            "checked": false,
+            "onclick": "",
+            "label": "私立"
+          },
+          {
+            "tag": "select",
+            "type": "select",
+            "name": "ddlEResult",
+            "id": "ddlEResult",
+            "disabled": false,
+            "multiple": false,
+            "onchange": "",
+            "options": [
+              {
+                "value": "",
+                "selected": false,
+                "disabled": false,
+                "text": "不拘"
+              },
+              {
+                "value": "1",
+                "selected": false,
+                "disabled": false,
+                "text": "已接受評鑑"
+              },
+              {
+                "value": "0",
+                "selected": false,
+                "disabled": false,
+                "text": "尚未接受評鑑"
+              }
+            ],
+            "label": ""
+          },
+          {
+            "tag": "button",
+            "type": "submit",
+            "name": "reset",
+            "id": "",
+            "value": "",
+            "disabled": false,
+            "onclick": "",
+            "label": "",
+            "text": "重置"
+          },
+          {
+            "tag": "input",
+            "type": "submit",
+            "name": "btnSearch",
+            "id": "btnSearch",
+            "value": "搜尋",
+            "disabled": false,
+            "checked": false,
+            "onclick": "showloading();",
+            "label": ""
+          }
+        ]
+      }
+    ],
+    "hidden_names": [
+      "__VIEWSTATE",
+      "__VIEWSTATEGENERATOR",
+      "__VIEWSTATEENCRYPTED",
+      "__EVENTVALIDATION"
+    ],
+    "selects": [
+      {
+        "tag": "select",
+        "type": "select",
+        "name": "ddlCityS",
+        "id": "ddlCityS",
+        "disabled": false,
+        "multiple": false,
+        "onchange": "",
+        "options": [
+          {
+            "value": "",
+            "selected": true,
+            "disabled": false,
+            "text": "全國"
+          },
+          {
+            "value": "01",
+            "selected": false,
+            "disabled": false,
+            "text": "基隆市"
+          },
+          {
+            "value": "02",
+            "selected": false,
+            "disabled": false,
+            "text": "臺北市"
+          },
+          {
+            "value": "03",
+            "selected": false,
+            "disabled": false,
+            "text": "新北市"
+          },
+          {
+            "value": "05",
+            "selected": false,
+            "disabled": false,
+            "text": "桃園市"
+          },
+          {
+            "value": "06",
+            "selected": false,
+            "disabled": false,
+            "text": "新竹市"
+          },
+          {
+            "value": "07",
+            "selected": false,
+            "disabled": false,
+            "text": "新竹縣"
+          },
+          {
+            "value": "08",
+            "selected": false,
+            "disabled": false,
+            "text": "苗栗縣"
+          },
+          {
+            "value": "09",
+            "selected": false,
+            "disabled": false,
+            "text": "臺中市"
+          },
+          {
+            "value": "11",
+            "selected": false,
+            "disabled": false,
+            "text": "彰化縣"
+          },
+          {
+            "value": "12",
+            "selected": false,
+            "disabled": false,
+            "text": "南投縣"
+          },
+          {
+            "value": "13",
+            "selected": false,
+            "disabled": false,
+            "text": "雲林縣"
+          },
+          {
+            "value": "14",
+            "selected": false,
+            "disabled": false,
+            "text": "嘉義市"
+          },
+          {
+            "value": "15",
+            "selected": false,
+            "disabled": false,
+            "text": "嘉義縣"
+          },
+          {
+            "value": "16",
+            "selected": false,
+            "disabled": false,
+            "text": "臺南市"
+          },
+          {
+            "value": "18",
+            "selected": false,
+            "disabled": false,
+            "text": "高雄市"
+          },
+          {
+            "value": "20",
+            "selected": false,
+            "disabled": false,
+            "text": "屏東縣"
+          },
+          {
+            "value": "21",
+            "selected": false,
+            "disabled": false,
+            "text": "臺東縣"
+          },
+          {
+            "value": "22",
+            "selected": false,
+            "disabled": false,
+            "text": "花蓮縣"
+          },
+          {
+            "value": "04",
+            "selected": false,
+            "disabled": false,
+            "text": "宜蘭縣"
+          },
+          {
+            "value": "23",
+            "selected": false,
+            "disabled": false,
+            "text": "澎湖縣"
+          },
+          {
+            "value": "24",
+            "selected": false,
+            "disabled": false,
+            "text": "金門縣"
+          },
+          {
+            "value": "25",
+            "selected": false,
+            "disabled": false,
+            "text": "連江縣"
+          }
+        ],
+        "label": ""
+      },
+      {
+        "tag": "select",
+        "type": "select",
+        "name": "ddlAreaS",
+        "id": "ddlAreaS",
+        "disabled": false,
+        "multiple": false,
+        "onchange": "",
+        "options": [
+          {
+            "value": "",
+            "selected": false,
+            "disabled": false,
+            "text": "全部鄉鎮"
+          }
+        ],
+        "label": ""
+      },
+      {
+        "tag": "select",
+        "type": "select",
+        "name": "ddlEResult",
+        "id": "ddlEResult",
+        "disabled": false,
+        "multiple": false,
+        "onchange": "",
+        "options": [
+          {
+            "value": "",
+            "selected": false,
+            "disabled": false,
+            "text": "不拘"
+          },
+          {
+            "value": "1",
+            "selected": false,
+            "disabled": false,
+            "text": "已接受評鑑"
+          },
+          {
+            "value": "0",
+            "selected": false,
+            "disabled": false,
+            "text": "尚未接受評鑑"
+          }
+        ],
+        "label": ""
+      }
+    ],
+    "text_inputs": [
+      {
+        "tag": "input",
+        "type": "text",
+        "name": "txtSchNameS",
+        "id": "txtSchNameS",
+        "value": "",
+        "disabled": false,
+        "checked": false,
+        "onclick": "",
+        "label": ""
+      }
+    ],
+    "submit_controls": [
+      {
+        "tag": "button",
+        "type": "submit",
+        "name": "reset",
+        "id": "",
+        "value": "",
+        "disabled": false,
+        "onclick": "",
+        "label": "",
+        "text": "重置"
+      },
+      {
+        "tag": "input",
+        "type": "submit",
+        "name": "btnSearch",
+        "id": "btnSearch",
+        "value": "搜尋",
+        "disabled": false,
+        "checked": false,
+        "onclick": "showloading();",
+        "label": ""
+      }
+    ],
+    "table_summaries": [
+      {
+        "index": 0,
+        "id": "",
+        "class": "",
+        "row_count": 1,
+        "max_column_count": 1,
+        "first_row": [
+          "資料載入中 ......"
+        ]
+      }
+    ]
+  },
+  "requests": [
+    {
+      "sequence": 1,
+      "role": "initial_get",
+      "method": "GET",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": null,
+      "request_body_sha256": null,
+      "response_sha256": "6b48f4c148f0c7adf800a1164afb6a3d5f1f6a106602e5befa9ab9fe2ea267cb",
+      "byte_length": 25302,
+      "status": 200,
+      "content_type": "text/html",
+      "charset": "utf-8",
+      "retrieved_at_utc": "2026-08-14T01:19:35Z",
+      "predecessor_sequence": null,
+      "raw_file": "raw/001_initial.html",
+      "parser_schema_version": "eva-search-results-v1",
+      "parsed_result_count": null
+    },
+    {
+      "sequence": 2,
+      "role": "query_post",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "query_id": "single_uuid_anxi",
+        "city_label": "新北市",
+        "preschool_name": "新北市安溪非營利幼兒園",
+        "case": "single registry UUID with historical evaluations"
+      },
+      "request_body_sha256": "dca467ea4dc14995dc421c9cc84a673a77a8884c8b0113b0cebb64fc9ff8bf22",
+      "response_sha256": "acc22a4d4913ba9d5de6c6bd8dc63bf5f9916d6d6c944ef349bbb23c410b82db",
+      "byte_length": 42953,
+      "status": 200,
+      "content_type": "text/html",
+      "charset": "utf-8",
+      "retrieved_at_utc": "2026-08-14T01:19:35Z",
+      "predecessor_sequence": 1,
+      "raw_file": "raw/002_single_uuid_anxi_search.html",
+      "parser_schema_version": "eva-search-results-v1",
+      "parsed_result_count": 1
+    },
+    {
+      "sequence": 3,
+      "role": "history_post",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "query_id": "single_uuid_anxi",
+        "city_label": "新北市",
+        "preschool_name": "新北市安溪非營利幼兒園",
+        "case": "single registry UUID with historical evaluations",
+        "event_meaning": "expand prior evaluations"
+      },
+      "request_body_sha256": "216cb38a42ac499c7f3477548cafe042f6d680cda314c25fce034869a03dfd0a",
+      "response_sha256": "db1d300bb1bf5026e5f5ff73f7fa52295586536879e3e6fbc242dec4ced00d68",
+      "byte_length": 54052,
+      "status": 200,
+      "content_type": "text/html",
+      "charset": "utf-8",
+      "retrieved_at_utc": "2026-08-14T01:19:35Z",
+      "predecessor_sequence": 2,
+      "raw_file": "raw/003_single_uuid_anxi_history_1.html",
+      "parser_schema_version": "eva-search-results-v1",
+      "parsed_result_count": 4
+    },
+    {
+      "sequence": 4,
+      "role": "query_post",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "query_id": "multi_uuid_beida",
+        "city_label": "新北市",
+        "preschool_name": "新北市北大非營利幼兒園",
+        "case": "operator retendering with sibling registry UUIDs"
+      },
+      "request_body_sha256": "1646831a8e6b11c99ef182ac2a9826dca8b1894a97cdc0d7f4df8d433cccb466",
+      "response_sha256": "9644e4a545e50c6ef4c2c159f5bd24dab394c8183bdbc850367ee1fe68ae06fd",
+      "byte_length": 42977,
+      "status": 200,
+      "content_type": "text/html",
+      "charset": "utf-8",
+      "retrieved_at_utc": "2026-08-14T01:19:35Z",
+      "predecessor_sequence": 3,
+      "raw_file": "raw/004_multi_uuid_beida_search.html",
+      "parser_schema_version": "eva-search-results-v1",
+      "parsed_result_count": 1
+    },
+    {
+      "sequence": 5,
+      "role": "history_post",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "query_id": "multi_uuid_beida",
+        "city_label": "新北市",
+        "preschool_name": "新北市北大非營利幼兒園",
+        "case": "operator retendering with sibling registry UUIDs",
+        "event_meaning": "expand prior evaluations"
+      },
+      "request_body_sha256": "f8b01aaf4eb86af23150112344994cd0946d04f4183c1510b595deba4561c455",
+      "response_sha256": "0c0172b5d2e09442ede55f2f33f5db64a3cff08a0b9d701df2caa1a20bd8b5d7",
+      "byte_length": 46814,
+      "status": 200,
+      "content_type": "text/html",
+      "charset": "utf-8",
+      "retrieved_at_utc": "2026-08-14T01:19:35Z",
+      "predecessor_sequence": 4,
+      "raw_file": "raw/005_multi_uuid_beida_history_1.html",
+      "parser_schema_version": "eva-search-results-v1",
+      "parsed_result_count": 2
+    },
+    {
+      "sequence": 6,
+      "role": "query_post",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "query_id": "multi_uuid_bicheng",
+        "city_label": "新北市",
+        "preschool_name": "新北市碧城非營利幼兒園",
+        "case": "second operator-retendering sibling UUID case"
+      },
+      "request_body_sha256": "02707b634818e09b3cdc966d7ea0f45d3c7defc36d1e7178a44873800460df1c",
+      "response_sha256": "287c159f1095f80f79d29c97ec5c2eb01acfa26c09c37189c67b1c4d8ba597e1",
+      "byte_length": 42994,
+      "status": 200,
+      "content_type": "text/html",
+      "charset": "utf-8",
+      "retrieved_at_utc": "2026-08-14T01:19:35Z",
+      "predecessor_sequence": 5,
+      "raw_file": "raw/006_multi_uuid_bicheng_search.html",
+      "parser_schema_version": "eva-search-results-v1",
+      "parsed_result_count": 1
+    },
+    {
+      "sequence": 7,
+      "role": "history_post",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "query_id": "multi_uuid_bicheng",
+        "city_label": "新北市",
+        "preschool_name": "新北市碧城非營利幼兒園",
+        "case": "second operator-retendering sibling UUID case",
+        "event_meaning": "expand prior evaluations"
+      },
+      "request_body_sha256": "6c0dcfd2fe480bb7a5503c22020af18f0ae5ce0d296f1c0978ebebe7ea242e90",
+      "response_sha256": "c5acef39e53f55cdf98b672d01b9f8e7105f8eccb4c257daef7567c6e1839657",
+      "byte_length": 50600,
+      "status": 200,
+      "content_type": "text/html",
+      "charset": "utf-8",
+      "retrieved_at_utc": "2026-08-14T01:19:35Z",
+      "predecessor_sequence": 6,
+      "raw_file": "raw/007_multi_uuid_bicheng_history_1.html",
+      "parser_schema_version": "eva-search-results-v1",
+      "parsed_result_count": 3
+    },
+    {
+      "sequence": 8,
+      "role": "query_post",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "query_id": "operator_parentheses_xindianjiren",
+        "city_label": "新北市",
+        "preschool_name": "新北市新店及人非營利幼兒園",
+        "case": "known registry entity with 申請辦理 title and no live result"
+      },
+      "request_body_sha256": "a7234f701bef55c5aa18f8453d00a5c587555a2478f4e887841b9e17cbb56da5",
+      "response_sha256": "e1c18a58417408c8db3ace6a8eb040ccd3d1688802cedc71516493e92c620b30",
+      "byte_length": 29273,
+      "status": 200,
+      "content_type": "text/html",
+      "charset": "utf-8",
+      "retrieved_at_utc": "2026-08-14T01:19:35Z",
+      "predecessor_sequence": 7,
+      "raw_file": "raw/008_operator_parentheses_xindianjiren_search.html",
+      "parser_schema_version": "eva-search-results-v1",
+      "parsed_result_count": 0
+    },
+    {
+      "sequence": 9,
+      "role": "query_post",
+      "method": "POST",
+      "source_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "final_url": "https://ap.ece.moe.edu.tw/webecems/evaSearch.aspx",
+      "public_query": {
+        "query_id": "explicit_zero_control",
+        "city_label": "新北市",
+        "preschool_name": "__SMART_WATCHDOG_NO_MATCH__",
+        "case": "explicit zero-result parser control"
+      },
+      "request_body_sha256": "2b8d7fa53fa82863ab19c4dd34c59a1a965999c5c8515eff0ae4da7ead155103",
+      "response_sha256": "bcf62a6326b5e64342b541a85de616824a5c2eac063bd924fc76a225db502f7f",
+      "byte_length": 29261,
+      "status": 200,
+      "content_type": "text/html",
+      "charset": "utf-8",
+      "retrieved_at_utc": "2026-08-14T01:19:35Z",
+      "predecessor_sequence": 8,
+      "raw_file": "raw/009_explicit_zero_control_search.html",
+      "parser_schema_version": "eva-search-results-v1",
+      "parsed_result_count": 0
+    }
+  ],
+  "outputs": {
+    "parsed/evaluation_results.json": {
+      "sha256": "9644ccdda2aead6d23a4b0852562493ebd377a892c454f691fc3fbab21e15447",
+      "byte_length": 17645,
+      "record_count": 9
+    },
+    "data/processed/evaluations_ntpc.csv": {
+      "sha256": "6ccbe894fb9228f3ab49baf905ea66cd4489c729e37bb76db7262dd9aaaa968e",
+      "byte_length": 14009,
+      "record_count": 9
+    }
+  },
+  "join_summary": {
+    "matched_exact_title": 9
+  }
+}

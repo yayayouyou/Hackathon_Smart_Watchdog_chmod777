@@ -1,0 +1,64 @@
+{
+  "swept_at": "2026-09-08 17:24",
+  "channels_live": 4,
+  "channels_total": 6,
+  "channels": [
+    {
+      "key": "news_rss",
+      "label": "新聞（Google News RSS）",
+      "status": "live",
+      "legal_basis": "公開 RSS feed，無登入、無個資；發布者與日期由來源提供",
+      "may_store": true,
+      "how_to_enable": "已啟用，無須額外授權"
+    },
+    {
+      "key": "ptt",
+      "label": "PTT（親子與新北地區板）",
+      "status": "live",
+      "legal_basis": "無 robots.txt、無登入、公開搜尋端點；不蒐集推文者個資",
+      "may_store": true,
+      "how_to_enable": "已啟用，無須額外授權"
+    },
+    {
+      "key": "apify_threads",
+      "label": "Threads（Apify）",
+      "status": "live",
+      "legal_basis": "由 Apify 上的第三方 actor 供應，依執行次數與筆數計價",
+      "may_store": true,
+      "how_to_enable": "在 .env 設定 APIFY_TOKEN；可另以 APIFY_THREADS_ACTOR 指定 actor"
+    },
+    {
+      "key": "places_reviews",
+      "label": "Google 地圖評論（即時顯示）",
+      "status": "live",
+      "legal_basis": "Places API 政策允許即時顯示評論並要求標示 Google 與作者連結；ToS 3.2.3(a) 禁止匯出或爬取、3.2.3(b) 禁止快取、3.2.3(c)(vii) 禁止用於訓練或驗證模型。因此僅即時顯示，不入庫、不進特徵、不影響排序。",
+      "may_store": false,
+      "how_to_enable": "由教育局申請 Google Maps Platform 金鑰並啟用 Places API（Place Details）。一次性解析 1,213 園的 place_id 後，place_id 依條款可保存。"
+    },
+    {
+      "key": "threads",
+      "label": "Threads 關鍵字搜尋",
+      "status": "needs_approval",
+      "legal_basis": "Meta 官方 Threads API。未取得 threads_keyword_search 權限前僅能搜尋自身貼文；核准後可搜尋公開貼文。每日 2,200 次查詢上限。官方文件載明對其認定敏感或冒犯之關鍵字回傳空陣列。",
+      "may_store": true,
+      "how_to_enable": "建立 Meta 開發者應用程式，申請 threads_basic 與 threads_keyword_search 權限並通過 App Review；以新北市教育局名義申請，用途敘明為教保機構監理。"
+    },
+    {
+      "key": "vendor_feed",
+      "label": "社群資料服務（第三方）",
+      "status": "needs_procurement",
+      "legal_basis": "由資料服務供應商提供；涵蓋範圍與更新頻率依合約",
+      "may_store": true,
+      "how_to_enable": "訂閱 Apify／QSearch／OpView 等服務，把每日檔案路徑或查詢端點填入 .env 的 VENDOR_FEED_PATH。端點可用 {query} 佔位符。"
+    }
+  ],
+  "per_channel": {
+    "news_rss": 30,
+    "ptt": 0,
+    "apify_threads": 1,
+    "places_reviews": 0
+  },
+  "mentions": 31,
+  "institutions_mentioned": 8,
+  "errors": []
+}

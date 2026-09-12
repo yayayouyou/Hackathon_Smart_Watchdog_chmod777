@@ -1,0 +1,266 @@
+{
+  "manifest_version": 1,
+  "snapshot_id": "ntpc-pilot-v1",
+  "official_source_url": "https://web.pcc.gov.tw/",
+  "civic_project_url": "https://pcc.g0v.ronny.tw/",
+  "api_origin": "https://pcc-api.openfun.app",
+  "source_relationship": "The civic API mirrors Government Electronic Procurement System records; official web.pcc.gov.tw notice URLs are retained per award.",
+  "started_at_utc": "2026-08-14T02:39:44Z",
+  "completed_at_utc": "2026-08-14T02:39:50Z",
+  "tls_verification": "system trust store; no bypass",
+  "parser_schema_version": "pcc-operating-contract-awards-v1",
+  "pilot_scope": {
+    "queries": [
+      {
+        "id": "single_uuid_anxi",
+        "entity": "新北市安溪非營利幼兒園",
+        "short_name": "安溪",
+        "query": "安溪 幼兒園 非營利",
+        "case": "single UUID and corrected award notice",
+        "expected_contract_tenders": 1
+      },
+      {
+        "id": "multi_uuid_beida",
+        "entity": "新北市北大非營利幼兒園",
+        "short_name": "北大",
+        "query": "北大 非營利幼兒園",
+        "case": "multiple bidders and sibling registry UUIDs",
+        "expected_contract_tenders": 1
+      },
+      {
+        "id": "multi_uuid_sanduo",
+        "entity": "新北市三多非營利幼兒園",
+        "short_name": "三多",
+        "query": "三多 非營利幼兒園",
+        "case": "repeated school-foundation legal-name stress case",
+        "expected_contract_tenders": 1
+      },
+      {
+        "id": "no_contract_bicheng",
+        "entity": "新北市碧城非營利幼兒園",
+        "short_name": "碧城",
+        "query": "碧城 非營利幼兒園",
+        "case": "search hits equipment only; no operating contract",
+        "expected_contract_tenders": 0
+      },
+      {
+        "id": "zero_source_xindianjiren",
+        "entity": "新北市新店及人非營利幼兒園",
+        "short_name": "新店及人",
+        "query": "新店及人 非營利幼兒園",
+        "case": "known 申請辦理 registry title with zero source hits",
+        "expected_contract_tenders": 0
+      }
+    ],
+    "full_population_claim": false,
+    "search_page_cap": 1,
+    "search_record_cap": 50,
+    "tender_notice_cap": 10,
+    "request_cap": 8,
+    "zero_result_semantics": "No discovered operating-contract award is not evidence of no contract or low risk."
+  },
+  "requests": [
+    {
+      "sequence": 1,
+      "role": "title_search",
+      "method": "GET",
+      "source_url": "https://pcc-api.openfun.app/api/searchbytitle?query=%E5%AE%89%E6%BA%AA+%E5%B9%BC%E5%85%92%E5%9C%92+%E9%9D%9E%E7%87%9F%E5%88%A9&page=1",
+      "final_url": "https://pcc-api.openfun.app/api/searchbytitle?query=%E5%AE%89%E6%BA%AA+%E5%B9%BC%E5%85%92%E5%9C%92+%E9%9D%9E%E7%87%9F%E5%88%A9&page=1",
+      "public_query": {
+        "query_id": "single_uuid_anxi",
+        "entity": "新北市安溪非營利幼兒園",
+        "search_text": "安溪 幼兒園 非營利",
+        "case": "single UUID and corrected award notice"
+      },
+      "response_sha256": "d6e19f50b03e20a4b945b636e48c8918ee45a3eb3141d31104b4eb45cffde966",
+      "byte_length": 29654,
+      "status": 200,
+      "content_type": "application/json",
+      "retrieved_at_utc": "2026-08-14T02:39:45Z",
+      "raw_file": "raw/001_single_uuid_anxi_search.json",
+      "parser_schema_version": "pcc-operating-contract-awards-v1",
+      "parsed_result_count": 1
+    },
+    {
+      "sequence": 2,
+      "role": "tender_history",
+      "method": "GET",
+      "source_url": "https://pcc-api.openfun.app/api/tender?unit_id=3.82.8.44&job_number=104-016",
+      "final_url": "https://pcc-api.openfun.app/api/tender?unit_id=3.82.8.44&job_number=104-016",
+      "public_query": {
+        "query_id": "single_uuid_anxi",
+        "entity": "新北市安溪非營利幼兒園",
+        "search_text": "安溪 幼兒園 非營利",
+        "case": "single UUID and corrected award notice",
+        "unit_id": "3.82.8.44",
+        "job_number": "104-016"
+      },
+      "response_sha256": "502ae7e9e496fb0c27836f6521813b0aa89f374a80f930a2bea19e6d1f8093e0",
+      "byte_length": 50086,
+      "status": 200,
+      "content_type": "application/json",
+      "retrieved_at_utc": "2026-08-14T02:39:45Z",
+      "raw_file": "raw/002_single_uuid_anxi_3.82.8.44_104-016.json",
+      "parser_schema_version": "pcc-operating-contract-awards-v1",
+      "parsed_result_count": 1
+    },
+    {
+      "sequence": 3,
+      "role": "title_search",
+      "method": "GET",
+      "source_url": "https://pcc-api.openfun.app/api/searchbytitle?query=%E5%8C%97%E5%A4%A7+%E9%9D%9E%E7%87%9F%E5%88%A9%E5%B9%BC%E5%85%92%E5%9C%92&page=1",
+      "final_url": "https://pcc-api.openfun.app/api/searchbytitle?query=%E5%8C%97%E5%A4%A7+%E9%9D%9E%E7%87%9F%E5%88%A9%E5%B9%BC%E5%85%92%E5%9C%92&page=1",
+      "public_query": {
+        "query_id": "multi_uuid_beida",
+        "entity": "新北市北大非營利幼兒園",
+        "search_text": "北大 非營利幼兒園",
+        "case": "multiple bidders and sibling registry UUIDs"
+      },
+      "response_sha256": "3a4e07d58fcc8419f838c8c3db0b2ffad35874aa2f2de8f6d852f423d409452f",
+      "byte_length": 10711,
+      "status": 200,
+      "content_type": "application/json",
+      "retrieved_at_utc": "2026-08-14T02:39:46Z",
+      "raw_file": "raw/003_multi_uuid_beida_search.json",
+      "parser_schema_version": "pcc-operating-contract-awards-v1",
+      "parsed_result_count": 1
+    },
+    {
+      "sequence": 4,
+      "role": "tender_history",
+      "method": "GET",
+      "source_url": "https://pcc-api.openfun.app/api/tender?unit_id=3.82.9.5&job_number=BD1060327",
+      "final_url": "https://pcc-api.openfun.app/api/tender?unit_id=3.82.9.5&job_number=BD1060327",
+      "public_query": {
+        "query_id": "multi_uuid_beida",
+        "entity": "新北市北大非營利幼兒園",
+        "search_text": "北大 非營利幼兒園",
+        "case": "multiple bidders and sibling registry UUIDs",
+        "unit_id": "3.82.9.5",
+        "job_number": "BD1060327"
+      },
+      "response_sha256": "23e63ebd48cef874ee4f3724775c2dc000a5071313f1c54cefd28bb42cecd8a0",
+      "byte_length": 39680,
+      "status": 200,
+      "content_type": "application/json",
+      "retrieved_at_utc": "2026-08-14T02:39:47Z",
+      "raw_file": "raw/004_multi_uuid_beida_3.82.9.5_BD1060327.json",
+      "parser_schema_version": "pcc-operating-contract-awards-v1",
+      "parsed_result_count": 1
+    },
+    {
+      "sequence": 5,
+      "role": "title_search",
+      "method": "GET",
+      "source_url": "https://pcc-api.openfun.app/api/searchbytitle?query=%E4%B8%89%E5%A4%9A+%E9%9D%9E%E7%87%9F%E5%88%A9%E5%B9%BC%E5%85%92%E5%9C%92&page=1",
+      "final_url": "https://pcc-api.openfun.app/api/searchbytitle?query=%E4%B8%89%E5%A4%9A+%E9%9D%9E%E7%87%9F%E5%88%A9%E5%B9%BC%E5%85%92%E5%9C%92&page=1",
+      "public_query": {
+        "query_id": "multi_uuid_sanduo",
+        "entity": "新北市三多非營利幼兒園",
+        "search_text": "三多 非營利幼兒園",
+        "case": "repeated school-foundation legal-name stress case"
+      },
+      "response_sha256": "39585f9ea4b287fd7eab62557b0ddc8c9e31197ca19738b7d438c495c8697a65",
+      "byte_length": 25260,
+      "status": 200,
+      "content_type": "application/json",
+      "retrieved_at_utc": "2026-08-14T02:39:48Z",
+      "raw_file": "raw/005_multi_uuid_sanduo_search.json",
+      "parser_schema_version": "pcc-operating-contract-awards-v1",
+      "parsed_result_count": 1
+    },
+    {
+      "sequence": 6,
+      "role": "tender_history",
+      "method": "GET",
+      "source_url": "https://pcc-api.openfun.app/api/tender?unit_id=3.82.6.14&job_number=107002",
+      "final_url": "https://pcc-api.openfun.app/api/tender?unit_id=3.82.6.14&job_number=107002",
+      "public_query": {
+        "query_id": "multi_uuid_sanduo",
+        "entity": "新北市三多非營利幼兒園",
+        "search_text": "三多 非營利幼兒園",
+        "case": "repeated school-foundation legal-name stress case",
+        "unit_id": "3.82.6.14",
+        "job_number": "107002"
+      },
+      "response_sha256": "62dcdfab8f88a4edb9765d8837f18e1d10fc78932ad499459b2d78d4d3b38adc",
+      "byte_length": 39665,
+      "status": 200,
+      "content_type": "application/json",
+      "retrieved_at_utc": "2026-08-14T02:39:49Z",
+      "raw_file": "raw/006_multi_uuid_sanduo_3.82.6.14_107002.json",
+      "parser_schema_version": "pcc-operating-contract-awards-v1",
+      "parsed_result_count": 1
+    },
+    {
+      "sequence": 7,
+      "role": "title_search",
+      "method": "GET",
+      "source_url": "https://pcc-api.openfun.app/api/searchbytitle?query=%E7%A2%A7%E5%9F%8E+%E9%9D%9E%E7%87%9F%E5%88%A9%E5%B9%BC%E5%85%92%E5%9C%92&page=1",
+      "final_url": "https://pcc-api.openfun.app/api/searchbytitle?query=%E7%A2%A7%E5%9F%8E+%E9%9D%9E%E7%87%9F%E5%88%A9%E5%B9%BC%E5%85%92%E5%9C%92&page=1",
+      "public_query": {
+        "query_id": "no_contract_bicheng",
+        "entity": "新北市碧城非營利幼兒園",
+        "search_text": "碧城 非營利幼兒園",
+        "case": "search hits equipment only; no operating contract"
+      },
+      "response_sha256": "5fc428f6f5668a5ae918132e887eaef44b8bd156d2312f8e51475996d75b6311",
+      "byte_length": 2041,
+      "status": 200,
+      "content_type": "application/json",
+      "retrieved_at_utc": "2026-08-14T02:39:50Z",
+      "raw_file": "raw/007_no_contract_bicheng_search.json",
+      "parser_schema_version": "pcc-operating-contract-awards-v1",
+      "parsed_result_count": 0
+    },
+    {
+      "sequence": 8,
+      "role": "title_search",
+      "method": "GET",
+      "source_url": "https://pcc-api.openfun.app/api/searchbytitle?query=%E6%96%B0%E5%BA%97%E5%8F%8A%E4%BA%BA+%E9%9D%9E%E7%87%9F%E5%88%A9%E5%B9%BC%E5%85%92%E5%9C%92&page=1",
+      "final_url": "https://pcc-api.openfun.app/api/searchbytitle?query=%E6%96%B0%E5%BA%97%E5%8F%8A%E4%BA%BA+%E9%9D%9E%E7%87%9F%E5%88%A9%E5%B9%BC%E5%85%92%E5%9C%92&page=1",
+      "public_query": {
+        "query_id": "zero_source_xindianjiren",
+        "entity": "新北市新店及人非營利幼兒園",
+        "search_text": "新店及人 非營利幼兒園",
+        "case": "known 申請辦理 registry title with zero source hits"
+      },
+      "response_sha256": "c081b1fad234819e608ce6342bad68474f1d5c6e3f14aa8a271f19c556773732",
+      "byte_length": 164,
+      "status": 200,
+      "content_type": "application/json",
+      "retrieved_at_utc": "2026-08-14T02:39:50Z",
+      "raw_file": "raw/008_zero_source_xindianjiren_search.json",
+      "parser_schema_version": "pcc-operating-contract-awards-v1",
+      "parsed_result_count": 0
+    }
+  ],
+  "inputs": {
+    "inputs/nonprofit_registry_crosswalk.csv": {
+      "source_path": "data/processed/nonprofit_registry_crosswalk.csv",
+      "sha256": "493488f03955e1ebb8991d6a11e76b877e6a068b7e6437ba1821771e040cfed6",
+      "byte_length": 79726,
+      "record_count": 132
+    }
+  },
+  "outputs": {
+    "parsed/procurement_awards.json": {
+      "sha256": "c42bf2cbd23d8a372d8900a8c6668556c4986d3cdea830302cacc04626b6f6b5",
+      "byte_length": 6129,
+      "record_count": 3
+    },
+    "data/processed/nonprofit_procurement_contracts.csv": {
+      "sha256": "df7964d45bca8105e070a1bd1792944f4fd9106007c7f4e2ae97f12523282db7",
+      "byte_length": 22070,
+      "record_count": 12
+    }
+  },
+  "join_summary": {
+    "matched_operator_contract_covered": 1,
+    "matched_operator_contract_uncovered": 11
+  },
+  "operator_match_summary": {
+    "exact_name": 8,
+    "normalised_legal_name": 4
+  }
+}

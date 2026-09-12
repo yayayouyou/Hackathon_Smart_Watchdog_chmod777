@@ -1,0 +1,276 @@
+{
+  "schema_version": "eva-search-results-v1",
+  "snapshot_id": "ntpc-pilot-v1",
+  "records": [
+    {
+      "source_table_index": 2,
+      "source_table_id": "GridView1_GridView11_0",
+      "source_row_index": 1,
+      "source": {
+        "園名": "新北市安溪非營利幼兒園(委託社團法人桃園市教保服務人員協會辦理)",
+        "縣市": "新北市",
+        "鄉鎮": "三峽區",
+        "設立別": "非營利",
+        "地址": "[237]中華路42號",
+        "電話": "(02)26718607",
+        "園所網址": "",
+        "核定人數": "136",
+        "兼辦國小課後": "無",
+        "評鑑學年度": "114",
+        "評鑑完成日": "2025/10/23",
+        "評鑑結果": "基礎評鑑－全數指標通過",
+        "評鑑報告": "檢視"
+      },
+      "source_links": [
+        "javascript:__doPostBack('GridView1$ctl02$GridView11$ctl02$lbView','')"
+      ],
+      "source_onclick": [
+        "var PosX=(screen.width-1024)/2; var PosY=20; popwin=window.open('./dtl/eva_view.aspx?tp=0&esid=bABFAGMAMAB0AEgAMQBIADQAagBJAEYAYgBZAHoAMQBMAGgAVQAxADMAVgB6AG0AKwBLAHkAWABMAGgAcwB3ADIATQBKAGkAOQBEAE4ATAAwAFkAdwBjACsARwBMAEcAMQBzAEcAWgBpAFAAVgBmAG4ANwBoAEcAbgBBADcAZQBDAHQAdwBkAEQANQA5AHEAQgB5AGkAOQArAFAAdwBLAFcAawBrADQAVgBXAGUARgBpAFUAdQByAC8ANwB3AG8AUgBaAGcAWQBVADIAcQBCAEcAawBVADUAeABlAGsAdgB0AFYAYgBrAFEATwB1AGoATQBlAHQAbwB5AFQAMABtAGkAQwBnAGgAWQBzAHMAOQBQADAAOQAxAE8AagA2AFMAeABjAEIAUQByAG4ANwBmAEMASQBOAFEAVgBMAGEAeQB5AE0AagBRAHgAegB3AE8AeABtAEEAdgBRAGkAMABGAGsAUQB2AFYAQwBnAHkAUQBHAHcAVAB2AFIAZQBTAHgAagBpAFEALwBvAFIAbwBsAHcANQAxAHEAbwB2AFMAVABGAEkALwBCAEwAQQA9AD0A','','toolbar=no,location=no,locationbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=600,top=' + PosY + ',left=' + PosX); return false;"
+      ],
+      "query_id": "single_uuid_anxi",
+      "query_name": "新北市安溪非營利幼兒園",
+      "raw_file": "raw/003_single_uuid_anxi_history_1.html",
+      "response_sha256": "db1d300bb1bf5026e5f5ff73f7fa52295586536879e3e6fbc242dec4ced00d68"
+    },
+    {
+      "source_table_index": 2,
+      "source_table_id": "GridView1_GridView11_0",
+      "source_row_index": 2,
+      "source": {
+        "園名": "新北市安溪非營利幼兒園(委託社團法人桃園市教保服務人員協會辦理)",
+        "縣市": "新北市",
+        "鄉鎮": "三峽區",
+        "設立別": "非營利",
+        "地址": "[237]中華路42號",
+        "電話": "(02)26718607",
+        "園所網址": "",
+        "核定人數": "136",
+        "兼辦國小課後": "無",
+        "評鑑學年度": "109",
+        "評鑑完成日": "2020/09/22",
+        "評鑑結果": "基礎評鑑－全數指標通過",
+        "評鑑報告": "檢視"
+      },
+      "source_links": [
+        "javascript:__doPostBack('GridView1$ctl02$GridView11$ctl03$lbView','')"
+      ],
+      "source_onclick": [
+        "var PosX=(screen.width-1024)/2; var PosY=20; popwin=window.open('./dtl/eva_view.aspx?tp=0&esid=bABFAGMAMAB0AEgAMQBIADQAagBJAEYAYgBZAHoAMQBMAGgAVQAxADMAVgB6AG0AKwBLAHkAWABMAGgAcwB3ADIATQBKAGkAOQBEAE4ATAAwAFkAdwBjACsARwBMAEcAMQBzAEcAWgBpAFAAVgBmAG4ANwBoAEcAbgBBADcAZQBDAHQAdwBkAEQANQA5AHEAQgB5AGkAOQArAFAAdwBLAFcAawBrADQAVgBXAGUARgBpAFUAdQByAC8ANwB3AG8AUgBaAGcAWQBVADIAcQBCAEcAawBVADUAeABlAGsAdgB0AFYAYgBrAFEATwB1AGoATQBlAHQAbwB5AFQAMABtAGkAQwBnAGgAWQBzAHMAOQBQADAAOQAxAE8AagA2AFMAeABjAEIAUQByAG4ANwBmAEMASQBOAFEAVgBMAGEAeQB5AE0AagBRAHgAegB3AE8AeABtAEIATAAzAGcAZQBlADEAcwBJAGcANQBUACsATAB1AE4AegBDAGwAMwBFADYASAAyAGkAYgBJAFoAYQAzACsATgBFAFYANABwAFAARQBrAFgAUQBsAGYAZwA9AD0A','','toolbar=no,location=no,locationbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=600,top=' + PosY + ',left=' + PosX); return false;"
+      ],
+      "query_id": "single_uuid_anxi",
+      "query_name": "新北市安溪非營利幼兒園",
+      "raw_file": "raw/003_single_uuid_anxi_history_1.html",
+      "response_sha256": "db1d300bb1bf5026e5f5ff73f7fa52295586536879e3e6fbc242dec4ced00d68"
+    },
+    {
+      "source_table_index": 2,
+      "source_table_id": "GridView1_GridView11_0",
+      "source_row_index": 3,
+      "source": {
+        "園名": "新北市安溪非營利幼兒園(委託社團法人桃園市教保服務人員協會辦理)",
+        "縣市": "新北市",
+        "鄉鎮": "三峽區",
+        "設立別": "非營利",
+        "地址": "[237]中華路42號",
+        "電話": "(02)26718607",
+        "園所網址": "",
+        "核定人數": "136",
+        "兼辦國小課後": "無",
+        "評鑑學年度": "106",
+        "評鑑完成日": "2017/10/12",
+        "評鑑結果": "基礎評鑑－部分指標通過",
+        "評鑑報告": "檢視"
+      },
+      "source_links": [
+        "javascript:__doPostBack('GridView1$ctl02$GridView11$ctl04$lbView','')"
+      ],
+      "source_onclick": [
+        "var PosX=(screen.width-1024)/2; var PosY=20; popwin=window.open('./dtl/eva_view.aspx?tp=0&esid=bABFAGMAMAB0AEgAMQBIADQAagBJAEYAYgBZAHoAMQBMAGgAVQAxADMAVgB6AG0AKwBLAHkAWABMAGgAcwB3ADIATQBKAGkAOQBEAE4ATAAwAFkAdwBjACsARwBMAEcAMQBzAEcAWgBpAFAAVgBmAG4ANwBoAEcAbgBBADcAZQBDAHQAdwBkAEQANQA5AHEAQgB5AGkAOQArAFAAdwBLAFcAawBrADQAVgBXAGUARgBpAFUAdQByAC8ANwB3AG8AUgBaAGcAWQBVADIAcQBCAEcAawBVADUAeABlAGsAdgB0AFYAYgBrAFEATwB1AGoATQBlAHQAbwB5AFQAMABtAGkAQwBnAGgAWQBzAHMAOQBQADAAOQAxAE8AagA2AFMAeABjAEIAUQByAG4ANwBmAEMASQBOAFEAVgBMAGEAeQB5AE0AagBRAHgAegB3AE8AeABtAEMAaQA0AE4ARwBDAE8ANwBaAGgAawBqAHQAawBRAG0AeAB2AGYAZwBpAGQA','','toolbar=no,location=no,locationbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=600,top=' + PosY + ',left=' + PosX); return false;"
+      ],
+      "query_id": "single_uuid_anxi",
+      "query_name": "新北市安溪非營利幼兒園",
+      "raw_file": "raw/003_single_uuid_anxi_history_1.html",
+      "response_sha256": "db1d300bb1bf5026e5f5ff73f7fa52295586536879e3e6fbc242dec4ced00d68"
+    },
+    {
+      "source_table_index": 2,
+      "source_table_id": "GridView1_GridView11_0",
+      "source_row_index": 4,
+      "source": {
+        "園名": "新北市安溪非營利幼兒園(委託社團法人桃園市教保服務人員協會辦理)",
+        "縣市": "新北市",
+        "鄉鎮": "三峽區",
+        "設立別": "非營利",
+        "地址": "[237]中華路42號",
+        "電話": "(02)26718607",
+        "園所網址": "",
+        "核定人數": "136",
+        "兼辦國小課後": "無",
+        "評鑑學年度": "106",
+        "評鑑完成日": "2018/11/29",
+        "評鑑結果": "追蹤評鑑－全數指標通過",
+        "評鑑報告": "檢視"
+      },
+      "source_links": [
+        "javascript:__doPostBack('GridView1$ctl02$GridView11$ctl05$lbView','')"
+      ],
+      "source_onclick": [
+        "var PosX=(screen.width-1024)/2; var PosY=20; popwin=window.open('./dtl/eva_view.aspx?tp=1&esid=bABFAGMAMAB0AEgAMQBIADQAagBJAEYAYgBZAHoAMQBMAGgAVQAxADMAVgB6AG0AKwBLAHkAWABMAGgAcwB3ADIATQBKAGkAOQBEAE4ATAAwAFkAdwBjACsARwBMAEcAMQBzAEcAWgBpAFAAVgBmAG4ANwBoAEcAbgBBADcAZQBDAHQAdwBkAEQANQA5AHEAQgB5AGkAOQArAFAAdwBLAFcAawBrADQAVgBXAGUARgBpAFUAdQByAC8ANwB3AG8AUgBaAGcAWQBVADIAcQBCAEcAawBVADUAeABlAGsAdgB0AFYAYgBrAFEATwB1AGoATQBlAHQAbwB5AFQAMABtAGkAQwBnAGgAWQBzAHMAOQBQADAAOQAxAE8AagA2AFMAeABjAEIAUQByAG4ANwBmAEMASQBOAFEAVgBMAGEAeQB5AE0AagBRAHgAegB3AE8AeABtAEMAaQA0AE4ARwBDAE8ANwBaAGgAawBqAHQAawBRAG0AeAB2AGYAZwBpAGQA','','toolbar=no,location=no,locationbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=600,top=' + PosY + ',left=' + PosX); return false;"
+      ],
+      "query_id": "single_uuid_anxi",
+      "query_name": "新北市安溪非營利幼兒園",
+      "raw_file": "raw/003_single_uuid_anxi_history_1.html",
+      "response_sha256": "db1d300bb1bf5026e5f5ff73f7fa52295586536879e3e6fbc242dec4ced00d68"
+    },
+    {
+      "source_table_index": 2,
+      "source_table_id": "GridView1_GridView11_0",
+      "source_row_index": 1,
+      "source": {
+        "園名": "新北市北大非營利幼兒園(委託明新學校財團法人明新科技大學辦理)",
+        "縣市": "新北市",
+        "鄉鎮": "三峽區",
+        "設立別": "非營利",
+        "地址": "[237]國光街100號A棟1樓至2樓",
+        "電話": "(02)26747373",
+        "園所網址": "",
+        "核定人數": "182",
+        "兼辦國小課後": "無",
+        "評鑑學年度": "114",
+        "評鑑完成日": "2025/10/23",
+        "評鑑結果": "基礎評鑑－全數指標通過",
+        "評鑑報告": "檢視"
+      },
+      "source_links": [
+        "javascript:__doPostBack('GridView1$ctl02$GridView11$ctl02$lbView','')"
+      ],
+      "source_onclick": [
+        "var PosX=(screen.width-1024)/2; var PosY=20; popwin=window.open('./dtl/eva_view.aspx?tp=0&esid=UwBxAHYAdgBVAFEAVwBiAEsASwBrAE4AMAAzAEUAeABWAG8ASABuAG0ASABHAHUAQQBtACsAeQBQADgANwB0AFcAcABWAFYAQQBYAEoARgBuAHEAVABIADYATwBxAFEAbQBMADIAYwBoAEcAeQBZAEIAUABFAFcATgA2ADQAVABjAGUAcABtAFIAbgBaAFIARgBDAEgAQwBlAEYAbABiAFQAawBPADIAegAwAE4ASwAwADkASwBSAG0AUwBXAGYASABlAGcAdgAxAEwAcgA2ADcATQA0AFoAdABDAGQAeAB3AHQAbgBRADMAYgBOAGIARABUAHIAVAA3AEkAVgBQAFIARQBIAEIAMABvAEcAYQBNAFEAVQBPACsATgBWAEcALwBVAFkAVwBqAHgAUQBnAFAAagBIADIASwAvAHEAUwByAHQAVwBCAFUARQBsAHcASgBtAHgAdgBSAFEAYgBtAFUARwAxAHgAUABIAEgAVABvAFYAWgA2AEIATwBMAGIANgBsAFIASwBRADcAeABXAHUAYwBSAEwAUwBwAGMAYwArAEMATAAwAGwAdwA9AD0A','','toolbar=no,location=no,locationbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=600,top=' + PosY + ',left=' + PosX); return false;"
+      ],
+      "query_id": "multi_uuid_beida",
+      "query_name": "新北市北大非營利幼兒園",
+      "raw_file": "raw/005_multi_uuid_beida_history_1.html",
+      "response_sha256": "0c0172b5d2e09442ede55f2f33f5db64a3cff08a0b9d701df2caa1a20bd8b5d7"
+    },
+    {
+      "source_table_index": 2,
+      "source_table_id": "GridView1_GridView11_0",
+      "source_row_index": 2,
+      "source": {
+        "園名": "新北市北大非營利幼兒園(委託明新學校財團法人明新科技大學辦理)",
+        "縣市": "新北市",
+        "鄉鎮": "三峽區",
+        "設立別": "非營利",
+        "地址": "[237]國光街100號A棟1樓至2樓",
+        "電話": "(02)26747373",
+        "園所網址": "",
+        "核定人數": "182",
+        "兼辦國小課後": "無",
+        "評鑑學年度": "109",
+        "評鑑完成日": "2020/10/23",
+        "評鑑結果": "基礎評鑑－全數指標通過",
+        "評鑑報告": "檢視"
+      },
+      "source_links": [
+        "javascript:__doPostBack('GridView1$ctl02$GridView11$ctl03$lbView','')"
+      ],
+      "source_onclick": [
+        "var PosX=(screen.width-1024)/2; var PosY=20; popwin=window.open('./dtl/eva_view.aspx?tp=0&esid=UwBxAHYAdgBVAFEAVwBiAEsASwBrAE4AMAAzAEUAeABWAG8ASABuAG0ASABHAHUAQQBtACsAeQBQADgANwB0AFcAcABWAFYAQQBYAEoARgBuAHEAVABIADYATwBxAFEAbQBMADIAYwBoAEcAeQBZAEIAUABFAFcATgA2ADQAVABjAGUAcABtAFIAbgBaAFIARgBDAEgAQwBlAEYAbABiAFQAawBPADIAegAwAE4ASwAwADkASwBSAG0AUwBXAGYASABlAGcAdgAxAEwAcgA2ADcATQA0AFoAdABDAGQAeAB3AHQAbgBRADMAYgBOAGIARABUAHIAVAA3AEkAVgBQAFIARQBIAEIAMABvAEcAYQBNAFEAVQBPACsATgBWAEcALwBVAFkAVwBqAHgAUQBnAFAAagBIADIASwAvAHEAUwByAHQAVwBCAFUARQBsAHcASgBtAHoAWgBBAFAARAA3AFUAaQA5AFgASQBLAHQAcgAyAGYAMABLAGUAaQBjADcAaAAwAHgAWQB3AGEAQwB1AFYAVwBTADcAZgBvAGcAdwA0AHgATQA1AHUAQQA9AD0A','','toolbar=no,location=no,locationbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=600,top=' + PosY + ',left=' + PosX); return false;"
+      ],
+      "query_id": "multi_uuid_beida",
+      "query_name": "新北市北大非營利幼兒園",
+      "raw_file": "raw/005_multi_uuid_beida_history_1.html",
+      "response_sha256": "0c0172b5d2e09442ede55f2f33f5db64a3cff08a0b9d701df2caa1a20bd8b5d7"
+    },
+    {
+      "source_table_index": 2,
+      "source_table_id": "GridView1_GridView11_0",
+      "source_row_index": 1,
+      "source": {
+        "園名": "新北市碧城非營利幼兒園(委託財團法人仁德醫護管理專科學校辦理)",
+        "縣市": "新北市",
+        "鄉鎮": "三重區",
+        "設立別": "非營利",
+        "地址": "[241]三信路166號1、2、3樓",
+        "電話": "(02)28577058",
+        "園所網址": "",
+        "核定人數": "120",
+        "兼辦國小課後": "無",
+        "評鑑學年度": "114",
+        "評鑑完成日": "2025/10/03",
+        "評鑑結果": "基礎評鑑－部分指標通過",
+        "評鑑報告": "檢視"
+      },
+      "source_links": [
+        "javascript:__doPostBack('GridView1$ctl02$GridView11$ctl02$lbView','')"
+      ],
+      "source_onclick": [
+        "var PosX=(screen.width-1024)/2; var PosY=20; popwin=window.open('./dtl/eva_view.aspx?tp=0&esid=cgBrAEcANgBmAEIAOQBQAGQAUwA4AEEATQBqAEIAcwA3AHcAcwBLAGMAcgBHAGkAcwBzAHIAcwBSAFAAbwA5AEwAegBJAEwAUQBMAGYAWgA2AEMAUwBiAGQAUgBGAHUAdQBIAHIARgBUADkASABSAHkAdgBEAFkARQBHADAAbAAvAGsATAB1ADIAUgB1AE8AUgBYAG8AaABFADAAagBJADUAQQAvAE8AQQA5AHMANwBWAGUAWABwADcAegAvADEATQBHAHgAZQAwAGUAaQBXAEEAVgBiAE8ARwArAFEAawBlAEQAcABGAEMARQA0ADkAWQBnAGMAVwBEAFkAdQAzAEUANwBLAHoAaABFAGYARgBRAFQAOQBuAHcAQQBZAGQAcgBRAFkAbABxAEIALwBmAFYAdABQADUATQBoAFEAagBvAEwAbgBDAEsAWABMAEIAKwBNAHoARABSAG4AaABXADkAawBLAE8ATQB3AEMAVQBxAHgANwA1AEoAZwA1AGQAeQBRADAAbQBqAGgAWQBCAHoAMQBhAEQARABpADEAVABGAFoAZwBlAG0AdwA9AD0A','','toolbar=no,location=no,locationbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=600,top=' + PosY + ',left=' + PosX); return false;"
+      ],
+      "query_id": "multi_uuid_bicheng",
+      "query_name": "新北市碧城非營利幼兒園",
+      "raw_file": "raw/007_multi_uuid_bicheng_history_1.html",
+      "response_sha256": "c5acef39e53f55cdf98b672d01b9f8e7105f8eccb4c257daef7567c6e1839657"
+    },
+    {
+      "source_table_index": 2,
+      "source_table_id": "GridView1_GridView11_0",
+      "source_row_index": 2,
+      "source": {
+        "園名": "新北市碧城非營利幼兒園(委託財團法人仁德醫護管理專科學校辦理)",
+        "縣市": "新北市",
+        "鄉鎮": "三重區",
+        "設立別": "非營利",
+        "地址": "[241]三信路166號1、2、3樓",
+        "電話": "(02)28577058",
+        "園所網址": "",
+        "核定人數": "120",
+        "兼辦國小課後": "無",
+        "評鑑學年度": "111",
+        "評鑑完成日": "2022/10/21",
+        "評鑑結果": "基礎評鑑－部分指標通過",
+        "評鑑報告": "檢視"
+      },
+      "source_links": [
+        "javascript:__doPostBack('GridView1$ctl02$GridView11$ctl03$lbView','')"
+      ],
+      "source_onclick": [
+        "var PosX=(screen.width-1024)/2; var PosY=20; popwin=window.open('./dtl/eva_view.aspx?tp=0&esid=cgBrAEcANgBmAEIAOQBQAGQAUwA4AEEATQBqAEIAcwA3AHcAcwBLAGMAcgBHAGkAcwBzAHIAcwBSAFAAbwA5AEwAegBJAEwAUQBMAGYAWgA2AEMAUwBiAGQAUgBGAHUAdQBIAHIARgBUADkASABSAHkAdgBEAFkARQBHADAAbAAvAGsATAB1ADIAUgB1AE8AUgBYAG8AaABFADAAagBJADUAQQAvAE8AQQA5AHMANwBWAGUAWABwADcAegAvADEATQBHAHgAZQAwAGUAaQBXAEEAVgBiAE8ARwArAFEAawBlAEQAcABGAEMARQA0ADkAWQBnAGMAVwBEAFkAdQAzAEUANwBLAHoAaABFAGYARgBRAFQAOQBuAHcAQQBZAGQAcgBRAFkAbABxAEIALwBmAFYAdABQADUATQBoAFEAagBvAEwAbgBDAEsAWABMAEIAKwBNAHoAegAyAFEAVwA5ADUAbwAyAE4AbAB3AGoAZwBLAHEAZgBzAE8ANAA3AEEANwBUAGsAYQBRAHgARgBGAGwAeQBnAHYAMgBRADUAZQArAFQAZgBkADUAZwA9AD0A','','toolbar=no,location=no,locationbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=600,top=' + PosY + ',left=' + PosX); return false;"
+      ],
+      "query_id": "multi_uuid_bicheng",
+      "query_name": "新北市碧城非營利幼兒園",
+      "raw_file": "raw/007_multi_uuid_bicheng_history_1.html",
+      "response_sha256": "c5acef39e53f55cdf98b672d01b9f8e7105f8eccb4c257daef7567c6e1839657"
+    },
+    {
+      "source_table_index": 2,
+      "source_table_id": "GridView1_GridView11_0",
+      "source_row_index": 3,
+      "source": {
+        "園名": "新北市碧城非營利幼兒園(委託財團法人仁德醫護管理專科學校辦理)",
+        "縣市": "新北市",
+        "鄉鎮": "三重區",
+        "設立別": "非營利",
+        "地址": "[241]三信路166號1、2、3樓",
+        "電話": "(02)28577058",
+        "園所網址": "",
+        "核定人數": "120",
+        "兼辦國小課後": "無",
+        "評鑑學年度": "111",
+        "評鑑完成日": "2023/11/20",
+        "評鑑結果": "追蹤評鑑－全數指標通過",
+        "評鑑報告": "檢視"
+      },
+      "source_links": [
+        "javascript:__doPostBack('GridView1$ctl02$GridView11$ctl04$lbView','')"
+      ],
+      "source_onclick": [
+        "var PosX=(screen.width-1024)/2; var PosY=20; popwin=window.open('./dtl/eva_view.aspx?tp=1&esid=cgBrAEcANgBmAEIAOQBQAGQAUwA4AEEATQBqAEIAcwA3AHcAcwBLAGMAcgBHAGkAcwBzAHIAcwBSAFAAbwA5AEwAegBJAEwAUQBMAGYAWgA2AEMAUwBiAGQAUgBGAHUAdQBIAHIARgBUADkASABSAHkAdgBEAFkARQBHADAAbAAvAGsATAB1ADIAUgB1AE8AUgBYAG8AaABFADAAagBJADUAQQAvAE8AQQA5AHMANwBWAGUAWABwADcAegAvADEATQBHAHgAZQAwAGUAaQBXAEEAVgBiAE8ARwArAFEAawBlAEQAcABGAEMARQA0ADkAWQBnAGMAVwBEAFkAdQAzAEUANwBLAHoAaABFAGYARgBRAFQAOQBuAHcAQQBZAGQAcgBRAFkAbABxAEIALwBmAFYAdABQADUATQBoAFEAagBvAEwAbgBDAEsAWABMAEIAKwBNAHoAegAyAFEAVwA5ADUAbwAyAE4AbAB3AGoAZwBLAHEAZgBzAE8ANAA3AEEANwBUAGsAYQBRAHgARgBGAGwAeQBnAHYAMgBRADUAZQArAFQAZgBkADUAZwA9AD0A','','toolbar=no,location=no,locationbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=600,top=' + PosY + ',left=' + PosX); return false;"
+      ],
+      "query_id": "multi_uuid_bicheng",
+      "query_name": "新北市碧城非營利幼兒園",
+      "raw_file": "raw/007_multi_uuid_bicheng_history_1.html",
+      "response_sha256": "c5acef39e53f55cdf98b672d01b9f8e7105f8eccb4c257daef7567c6e1839657"
+    }
+  ]
+}

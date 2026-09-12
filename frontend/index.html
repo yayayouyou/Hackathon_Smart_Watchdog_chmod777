@@ -1,0 +1,564 @@
+<title>稽查派工台</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Light-first. The dark block below only re-points the same tokens. */
+:root{
+  --ink:#14202A; --ink-2:#3D4E5C; --ink-3:#6B7C8A; --ink-4:#93A2AE;
+  --paper:#EFF3F5; --panel:#FFFFFF; --sunk:#E6EDF0; --rule:#CFD9E0;
+  --sea:#E2EAEE;
+
+  /* institution type — three unrelated hue families, none reads as good/bad */
+  --pub:#12798F;      /* 公立   teal   */
+  --np:#6E4C9C;       /* 非營利 violet */
+  --prv:#96745A;      /* 私立   taupe  */
+
+  /* semantic, kept apart from the type hues and from the accent */
+  --seal:#B23A2F; --seal-soft:#B23A2F14;
+  --warn:#B07A16; --warn-soft:#B07A1614;
+  --good:#2C7A5B;
+
+  /* choropleth: pale sand -> deep teal, one continuous ramp */
+  --ramp-a:#F2EEE4; --ramp-b:#0F5C6E;
+
+  --shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;
+  --sans:"IBM Plex Sans","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono","PingFang TC",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#DEE6EC; --ink-2:#A8B6C1; --ink-3:#7A8894; --ink-4:#5D6A76;
+  --paper:#0E141A; --panel:#161E26; --sunk:#0A0F14; --rule:#2A3641; --sea:#111921;
+  --pub:#3FA9C0; --np:#A487D4; --prv:#C39A78;
+  --seal:#E4695A; --seal-soft:#E4695A1F;
+  --warn:#D4A03C; --warn-soft:#D4A03C1F; --good:#5AAE86;
+  --ramp-a:#18222B; --ramp-b:#4FA8BE;
+  --shadow:0 1px 2px #0007, 0 6px 16px #0005;
+}}
+:root[data-theme="dark"]{
+  --ink:#DEE6EC; --ink-2:#A8B6C1; --ink-3:#7A8894; --ink-4:#5D6A76;
+  --paper:#0E141A; --panel:#161E26; --sunk:#0A0F14; --rule:#2A3641; --sea:#111921;
+  --pub:#3FA9C0; --np:#A487D4; --prv:#C39A78;
+  --seal:#E4695A; --seal-soft:#E4695A1F;
+  --warn:#D4A03C; --warn-soft:#D4A03C1F; --good:#5AAE86;
+  --ramp-a:#18222B; --ramp-b:#4FA8BE;
+  --shadow:0 1px 2px #0007, 0 6px 16px #0005;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.app{display:grid;grid-template-rows:auto 1fr auto;height:100vh;height:100dvh}
+header{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;padding:11px 20px;
+  border-bottom:1px solid var(--rule);background:var(--panel)}
+h1{margin:0;font-size:15px;font-weight:600}
+h1 span{color:var(--ink-3);font-weight:400;margin-left:9px;font-size:12px}
+.build{margin-left:10px;padding:2px 7px;border:1px solid var(--rule);border-radius:3px;
+  font-family:var(--mono);font-size:11px;color:var(--ink-3);cursor:help;letter-spacing:.04em}
+.hstat{display:flex;gap:18px;margin-left:auto;font-size:12px;color:var(--ink-3)}
+.hstat b{font-family:var(--mono);color:var(--ink);font-weight:500;font-size:13px;
+  font-variant-numeric:tabular-nums}
+
+main{display:grid;grid-template-columns:212px minmax(0,1fr) 376px;min-height:0}
+@media(max-width:1100px){main{grid-template-columns:186px minmax(0,1fr) 326px}}
+@media(max-width:840px){main{grid-template-columns:1fr;grid-template-rows:auto 46vh 1fr}}
+
+/* ── rail ───────────────────────────────────────────── */
+.rail{background:var(--panel);border-right:1px solid var(--rule);overflow-y:auto;
+  padding:14px 14px 22px;display:flex;flex-direction:column;gap:17px}
+.grp{display:flex;flex-direction:column;gap:7px}
+.grp>h2{margin:0;font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3)}
+.capbox{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
+.capbox input{width:56px;padding:5px 7px;text-align:right;border:1px solid var(--rule);
+  border-radius:3px;background:var(--paper);color:var(--ink);font-family:var(--mono)}
+input[type=range]{width:100%;accent-color:var(--seal)}
+.opt{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2);
+  padding:2px 0;cursor:pointer}
+.opt input{accent-color:var(--seal);margin:0}
+.seg{display:flex;flex-direction:column;border:1px solid var(--rule);border-radius:4px;
+  overflow:hidden}
+.seg button{padding:6px 9px;font-size:12px;text-align:left;color:var(--ink-2);
+  border-bottom:1px solid var(--rule)}
+.seg button:last-child{border-bottom:0}
+.seg button[aria-pressed="true"]{background:var(--seal-soft);color:var(--ink);font-weight:500}
+.lg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-2)}
+.lg .sw{width:10px;height:10px;border-radius:50%;flex:none}
+.lg .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.rampbar{height:9px;border-radius:2px;border:1px solid var(--rule);
+  background:linear-gradient(90deg,var(--ramp-a),var(--ramp-b))}
+.rampends{display:flex;justify-content:space-between;font-size:10.5px;
+  color:var(--ink-3);font-family:var(--mono)}
+.note{font-size:11px;color:var(--ink-3);line-height:1.5;margin:0}
+
+/* ── map ────────────────────────────────────────────── */
+.mapwrap{position:relative;min-width:0;min-height:0;background:var(--sea);overflow:hidden}
+svg.map{width:100%;height:100%;display:block;touch-action:none}
+.vp{transition:transform .42s cubic-bezier(.4,0,.2,1)}
+.town{stroke:#ffffff59;stroke-width:.6;vector-effect:non-scaling-stroke;cursor:pointer}
+.town:hover{stroke:var(--ink-2);stroke-width:1.4}
+.town.on{stroke:var(--seal);stroke-width:1.8}
+.town.dim{opacity:.34}
+.tlabel{font-size:8.4px;fill:var(--ink-2);letter-spacing:.06em;pointer-events:none;
+  user-select:none;paint-order:stroke;stroke:var(--sea);stroke-width:2.6px;
+  stroke-linejoin:round}
+.dot{cursor:pointer}
+.ring{fill:none;stroke:var(--seal);stroke-width:1.8;vector-effect:non-scaling-stroke}
+.mapbar{position:absolute;right:12px;top:12px;display:flex;gap:6px}
+.mapbar button{border:1px solid var(--rule);background:var(--panel);border-radius:3px;
+  padding:4px 10px;font-size:12px;color:var(--ink-2);box-shadow:var(--shadow)}
+.src{position:absolute;left:12px;bottom:10px;font-size:10.5px;color:var(--ink-3);
+  background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+  padding:3px 8px;box-shadow:var(--shadow)}
+
+/* ── list ───────────────────────────────────────────── */
+.side{position:relative;display:flex;flex-direction:column;min-height:0;
+  background:var(--panel);border-left:1px solid var(--rule)}
+.sidehead{display:flex;align-items:baseline;gap:9px;padding:10px 15px;
+  border-bottom:1px solid var(--rule)}
+.sidehead h2{margin:0;font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3)}
+.sidehead .n{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.list{overflow-y:auto;min-height:0;flex:1}
+.item{display:grid;grid-template-columns:26px 1fr auto;gap:3px 9px;width:100%;
+  text-align:left;padding:9px 15px;border-bottom:1px solid var(--rule)}
+.item:hover,.item.sel{background:var(--sunk)}
+.item .ord{font-family:var(--mono);font-size:11px;color:var(--ink-4);padding-top:3px}
+.item .nm{font-weight:500;font-size:13.5px;display:flex;align-items:center;gap:6px}
+.item .rk{font-family:var(--mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
+.item .why{grid-column:2/-1;display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
+.tdot{width:8px;height:8px;border-radius:50%;flex:none}
+.tag{border-radius:2px;padding:0 5px;font-size:10.5px;line-height:1.55;white-space:nowrap}
+.tag.s{color:var(--seal);background:var(--seal-soft);border:1px solid var(--seal)}
+.tag.w{color:var(--warn);background:var(--warn-soft);border:1px solid var(--warn)}
+.tag.p{color:var(--ink-3);border:1px solid var(--rule)}
+.ghdr{position:sticky;top:0;z-index:1;background:var(--sunk);padding:4px 15px;
+  font-size:11px;letter-spacing:.06em;color:var(--ink-3);font-family:var(--mono);
+  border-bottom:1px solid var(--rule)}
+
+/* ── dossier ────────────────────────────────────────── */
+.dossier{position:absolute;inset:0;background:var(--panel);display:flex;
+  flex-direction:column;min-height:0;z-index:2}
+.dhead{padding:13px 16px;border-bottom:1px solid var(--rule)}
+.dhead button{float:right;border:1px solid var(--rule);border-radius:3px;
+  padding:2px 9px;font-size:12px;color:var(--ink-2);background:var(--paper)}
+.dhead h3{margin:0 0 3px;font-size:14.5px;font-weight:600;line-height:1.4;padding-right:56px}
+.dhead .meta{font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
+.dbody{overflow-y:auto;min-height:0;flex:1;padding:0 16px 26px}
+.sec{margin-top:17px}
+.sec>h4{margin:0 0 8px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:12.5px;margin:0}
+.kv dt{color:var(--ink-3)}
+.kv dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.finding{border-left:3px solid var(--seal);padding:7px 0 7px 11px;margin-bottom:9px}
+.finding.w{border-left-color:var(--warn)}
+.finding .r{font-weight:500;font-size:12.5px}
+.finding .d{font-size:12px;color:var(--ink-2);margin-top:3px;line-height:1.55}
+.quote{margin-top:6px;padding:7px 10px;background:var(--sunk);border-radius:3px;
+  font-size:11.5px;color:var(--ink-2);line-height:1.6;border-left:2px solid var(--rule)}
+.quote i{color:var(--ink-3);display:block;margin-bottom:2px;font-size:10.5px;
+  letter-spacing:.07em;font-style:normal}
+.insuff{border:1px dashed var(--rule);border-radius:4px;padding:11px 13px;
+  font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.insuff b{color:var(--ink)}
+.badge{display:inline-block;font-size:10px;letter-spacing:.05em;color:var(--ink-3);
+  border:1px solid var(--rule);border-radius:2px;padding:0 5px;margin-left:6px;
+  vertical-align:1px}
+.rt{display:flex;flex-direction:column;gap:7px}
+.rtitem{border-left:3px solid var(--rule);padding:6px 0 6px 10px}
+.rtitem.k-complaint,.rtitem.k-incident{border-left-color:var(--seal)}
+.rtitem.k-question{border-left-color:var(--rule)}
+.rtitem a{color:inherit;text-decoration:none;font-size:12.5px;line-height:1.5;
+  display:block}
+.rtitem a:hover{text-decoration:underline}
+.rtmeta{font-size:10.5px;color:var(--ink-3);font-family:var(--mono);margin-top:2px;
+  display:flex;gap:8px;flex-wrap:wrap}
+.chbar{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
+.chip2{font-size:10.5px;border:1px solid var(--rule);border-radius:2px;
+  padding:1px 6px;color:var(--ink-3);white-space:nowrap}
+.chip2.on{border-color:var(--good);color:var(--good)}
+.draft{white-space:pre-wrap;font-size:12px;line-height:1.75;background:var(--sunk);
+  border-radius:4px;padding:12px 14px;color:var(--ink-2)}
+.buildnote{margin:0 0 10px;padding:9px 11px;border:1px solid var(--rule);
+  border-left:3px solid var(--ink-3);background:var(--sunk);border-radius:3px}
+.buildnote code{font-family:var(--mono);font-size:11px;background:var(--paper);
+  padding:1px 5px;border-radius:2px;border:1px solid var(--rule)}
+footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel);
+  font-size:11px;color:var(--ink-3);line-height:1.55}
+</style>
+
+<div class="app">
+  <header>
+    <h1>稽查派工台<span>新北市教保機構 · 建議查核優先序</span></h1>
+    <span class="build" title="Google 底圖、圖磚地圖、滾輪縮放、聊天查詢、即時掃描僅存在於動態版">靜態版</span>
+    <div class="hstat">
+      <span>全市 <b id="s-all">—</b></span>
+      <span>有公開財報 <b id="s-fin">—</b></span>
+      <span>本批提案 <b id="s-sel">—</b></span>
+      <span>範圍 <b id="s-scope">全市</b></span>
+    </div>
+  </header>
+
+  <main>
+    <aside class="rail">
+      <div class="grp">
+        <h2>派工容量</h2>
+        <label class="capbox">本月可稽查
+          <input id="cap" type="number" min="1" max="200" value="20">家</label>
+        <input id="capr" type="range" min="5" max="120" value="20" aria-label="派工容量">
+      </div>
+      <div class="grp">
+        <h2>納入範圍</h2>
+        <label class="opt"><input type="checkbox" id="f-fin">只看有公開財報</label>
+        <label class="opt"><input type="checkbox" id="f-grp">依行政區分組</label>
+      </div>
+      <div class="grp">
+        <h2>行政區底色</h2>
+        <div class="seg" id="modes">
+          <button data-m="n" aria-pressed="true">園所數</button>
+          <button data-m="fin" aria-pressed="false">財報涵蓋率</button>
+          <button data-m="pen" aria-pressed="false">有裁罰史比率</button>
+        </div>
+        <div class="rampbar"></div>
+        <div class="rampends"><span id="r0">—</span><span id="r1">—</span></div>
+      </div>
+      <div class="grp">
+        <h2>機構類別</h2>
+        <div class="lg"><i class="sw" style="background:var(--pub)"></i>公立<span class="n" id="l0"></span></div>
+        <div class="lg"><i class="sw" style="background:var(--np)"></i>非營利<span class="n" id="l1"></span></div>
+        <div class="lg"><i class="sw" style="background:var(--prv)"></i>私立<span class="n" id="l2"></span></div>
+        <div class="lg"><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="5.2" fill="none" stroke="var(--seal)" stroke-width="1.8"/></svg>本批建議查核</div>
+        <p class="note">顏色代表<b>機構類別</b>，不是風險高低。點行政區可放大並只看該區。</p>
+      </div>
+    </aside>
+
+    <div class="mapwrap">
+      <svg class="map" id="map" role="img" aria-label="新北市各行政區教保機構分布"></svg>
+      <div class="mapbar">
+        <button id="zoomout" hidden>回到全市</button>
+      </div>
+      <div class="src">行政區界：內政部 2023｜機構座標：全國教保資訊網</div>
+    </div>
+
+    <div class="side">
+      <div class="sidehead"><h2>派工提案</h2><span class="n" id="listn"></span></div>
+      <div class="list" id="list"></div>
+      <div class="dossier" id="dossier" hidden></div>
+    </div>
+  </main>
+
+  <footer>
+    <p class="buildnote"><b>這是靜態單檔版</b>——整份資料烤進 HTML，地圖是內嵌 SVG。
+    Google 底圖、圖磚地圖、滾輪縮放與拖曳、標記群集、聊天查詢、即時掃描
+    <b>都只存在於動態版</b>，因為 Artifact 的 CSP 擋掉 fetch 與非白名單腳本。
+    動態版：<code>PYTHONPATH=src .venv/bin/python scripts/serve.py</code>
+    → <code>http://127.0.0.1:8000</code></p>
+    本表為<b>建議查核的優先序</b>，不是違法認定。分數以 2024 年特徵配適、2024–26 裁罰為標籤，
+    時序切分實測 AUC 0.640，前 100 名命中率為隨機抽查的 2.17 倍。
+    全市 94.8% 的園無公開財報，對這些園而言那是涵蓋範圍限制，不是合規證明。
+  </footer>
+</div>
+
+<script>
+const PAYLOAD=/*__PAYLOAD__*/;
+if(PAYLOAD.schema_version!==1)
+  document.body.innerHTML="<p style='padding:2rem'>payload 版本不符，請重建前端。</p>";
+const PTS=PAYLOAD.points, DIST=PAYLOAD.districts, DOS=PAYLOAD.dossier,
+      BENCH=PAYLOAD.bench, BND=PAYLOAD.boundary, RT=PAYLOAD.realtime||{};
+const RTBY=RT.by_institution||{};
+const TYPE=["公立","非營利","私立"], TVAR=["--pub","--np","--prv"];
+const $=id=>document.getElementById(id);
+const nf=n=>(n==null||n==="")?"—":Number(n).toLocaleString("en-US");
+const DM={}; DIST.forEach(d=>DM[d.d]=d);
+let cap=20, finOnly=false, group=false, mode="n", scope=null, cur=null;
+
+/* ── proposal: explicit tiers, never a black box ────── */
+function propose(){
+  let pool=PTS;
+  if(scope) pool=pool.filter(p=>p.d===scope);
+  if(finOnly) pool=pool.filter(p=>p.fin);
+  const seen=new Set(), out=[];
+  const take=(pred,why)=>{for(const p of pool){
+    if(out.length>=cap)return; if(seen.has(p.i)||!pred(p))continue;
+    seen.add(p.i); out.push({p,tier:why});}};
+  take(p=>p.ch>0,"財報法遵未通過（高）");
+  take(p=>p.cf>0,"財報法遵未通過");
+  take(p=>p.ep>0,"近兩年評鑑部分指標未通過");
+  take(p=>p.e90>0,"近 90 日官方事件");
+  for(const p of pool.filter(p=>!seen.has(p.i)).sort((a,b)=>a.r-b.r)){
+    if(out.length>=cap)break; seen.add(p.i); out.push({p,tier:"分數排序"});}
+  return out;
+}
+
+/* ── projection ─────────────────────────────────────── */
+const W=1000,H=880,PAD=24;
+const all=BND.flatMap(f=>f.poly.flat());
+const x0=Math.min(...all.map(p=>p[0])), x1=Math.max(...all.map(p=>p[0]));
+const y0=Math.min(...all.map(p=>p[1])), y1=Math.max(...all.map(p=>p[1]));
+const kx=Math.cos((y0+y1)/2*Math.PI/180);
+const s=Math.min((W-2*PAD)/((x1-x0)*kx),(H-2*PAD)/(y1-y0));
+const ox=PAD+((W-2*PAD)-(x1-x0)*kx*s)/2, oy=PAD+((H-2*PAD)-(y1-y0)*s)/2;
+const PX=v=>ox+(v-x0)*kx*s, PY=v=>H-oy-(v-y0)*s;
+
+/* Zoom is a transform on one group, so geometry is projected once and the
+   labels/дots keep their screen size via the inverse scale. */
+function bbox(d){
+  const f=BND.find(b=>b.d===d); if(!f)return null;
+  const pts=f.poly.flat().map(([a,b])=>[PX(a),PY(b)]);
+  const xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]);
+  return {x:Math.min(...xs),y:Math.min(...ys),
+          w:Math.max(...xs)-Math.min(...xs),h:Math.max(...ys)-Math.min(...ys)};
+}
+function viewTransform(){
+  if(!scope)return{k:1,tx:0,ty:0};
+  const b=bbox(scope); if(!b)return{k:1,tx:0,ty:0};
+  const m=48, k=Math.min((W-2*m)/b.w,(H-2*m)/b.h,4.2);
+  return {k,tx:W/2-k*(b.x+b.w/2),ty:H/2-k*(b.y+b.h/2)};
+}
+
+function metric(d){return mode==="n"?d.n:mode==="fin"?d.fin_pct:d.pen/d.n*100;}
+function mix(a,b,t){const q=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16));
+  const A=q(a),B=q(b);return`rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(",")})`;}
+function cssv(n){const v=getComputedStyle(document.documentElement)
+  .getPropertyValue(n).trim();return v.startsWith("#")?v:"#EEEEEE";}
+
+function drawMap(sel){
+  const on=new Set(sel.map(o=>o.p.i));
+  const vals=DIST.map(metric), lo=Math.min(...vals), hi=Math.max(...vals);
+  $("r0").textContent=mode==="n"?lo:lo.toFixed(0)+"%";
+  $("r1").textContent=mode==="n"?hi:hi.toFixed(0)+"%";
+  const ra=cssv("--ramp-a"), rb=cssv("--ramp-b");
+  const {k,tx,ty}=viewTransform(), inv=1/k;
+  const g=[];
+  for(const f of BND){
+    const d=DM[f.d], t=d&&hi>lo?(metric(d)-lo)/(hi-lo):0;
+    const cls="town"+(scope===f.d?" on":scope?" dim":"");
+    const path=f.poly.map(r=>"M"+r.map(([a,b])=>PX(a).toFixed(1)+","+PY(b).toFixed(1)).join("L")+"Z").join(" ");
+    g.push(`<path class="${cls}" data-d="${f.d}" d="${path}" fill="${mix(ra,rb,0.12+t*0.88)}">
+      <title>${f.d}　${d?`${d.n} 園（公${d.pub}／非${d.np_}／私${d.prv}）　有財報 ${d.fin_pct}%　有裁罰史 ${(d.pen/d.n*100).toFixed(0)}%`:""}</title></path>`);
+  }
+  for(const d of DIST){
+    if(scope&&d.d!==scope)continue;
+    if(!scope&&d.n<16)continue;
+    g.push(`<text class="tlabel" x="${PX(d.cx).toFixed(1)}" y="${PY(d.cy).toFixed(1)}"
+      text-anchor="middle" style="font-size:${(8.4*inv).toFixed(2)}px;stroke-width:${(2.6*inv).toFixed(2)}px">${d.d.replace("區","")}</text>`);
+  }
+  const rings=[];
+  for(const p of PTS){
+    if(scope&&p.d!==scope)continue;
+    const cx=PX(p.x).toFixed(1), cy=PY(p.y).toFixed(1), hit=on.has(p.i);
+    g.push(`<g class="dot" data-i="${p.i}"><circle cx="${cx}" cy="${cy}"
+      r="${((hit?3.3:2.4)*inv).toFixed(2)}" fill="var(${TVAR[p.t]})"
+      fill-opacity="${hit?1:.7}" stroke="var(--panel)" stroke-width="${(.55*inv).toFixed(2)}"
+      ><title>${p.n}（${TYPE[p.t]}）</title></circle></g>`);
+    if(hit)rings.push(`<circle class="ring" cx="${cx}" cy="${cy}" r="${(6.4*inv).toFixed(2)}"/>`);
+  }
+  const svg=$("map");
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  svg.innerHTML=`<g class="vp" transform="translate(${tx.toFixed(2)},${ty.toFixed(2)}) scale(${k.toFixed(4)})">${g.join("")}${rings.join("")}</g>`;
+  svg.querySelectorAll(".town").forEach(el=>el.addEventListener("click",()=>{
+    scope=scope===el.dataset.d?null:el.dataset.d; render();}));
+  svg.querySelectorAll(".dot").forEach(el=>
+    el.addEventListener("click",()=>openDossier(el.dataset.i)));
+  $("zoomout").hidden=!scope;
+}
+
+/* ── list ───────────────────────────────────────────── */
+function drawList(sel){
+  const row=(o,i)=>{
+    const p=o.p, cls=o.tier.startsWith("財報")?"s":o.tier.startsWith("近")?"w":"p";
+    
+    const tags=[`<span class="tag ${cls}">${o.tier}</span>`];
+    if(p.np>0)tags.push(`<span class="tag p">${p.np} 件裁罰史</span>`);
+    if(!p.fin)tags.push(`<span class="tag p">無公開財報</span>`);
+    return `<button class="item${cur===p.i?" sel":""}" data-i="${p.i}">
+      <span class="ord">${i}</span>
+      <span class="nm"><i class="tdot" style="background:var(${TVAR[p.t]})"></i>${p.n}</span>
+      <span class="rk">${p.d.replace("區","")} · #${p.r}</span>
+      <span class="why">${tags.join("")}</span></button>`;};
+  const h=[];
+  if(group){
+    const by={}; sel.forEach(o=>(by[o.p.d]=by[o.p.d]||[]).push(o));
+    let i=1;
+    Object.entries(by).sort((a,b)=>b[1].length-a[1].length).forEach(([d,l])=>{
+      h.push(`<div class="ghdr">${d} · ${l.length} 家</div>`);
+      l.forEach(o=>h.push(row(o,i++)));});
+  } else sel.forEach((o,k)=>h.push(row(o,k+1)));
+  $("list").innerHTML=h.join("");
+  $("list").querySelectorAll(".item").forEach(el=>
+    el.addEventListener("click",()=>openDossier(el.dataset.i)));
+  $("listn").textContent=sel.length+" 家";
+}
+
+/* ── dossier ────────────────────────────────────────── */
+function codeOf(id){for(const[c,v]of Object.entries(DOS))if(v.ids.includes(id))return c;return null;}
+
+function reserveChart(series){
+  const rows=series.filter(r=>r.rl!=null||r.ra!=null);
+  if(!rows.length)return"";
+  const max=Math.max(...rows.flatMap(r=>[r.ra||0,r.rl||0]))||1;
+  const w=190,bh=11,gap=10,h=rows.length*(bh*2+gap)+18;
+  const body=rows.map((r,i)=>{
+    const y=i*(bh*2+gap)+14, wa=(r.ra||0)/max*w, wl=(r.rl||0)/max*w, sh=(r.rl||0)-(r.ra||0);
+    return `<text x="0" y="${y+9}" font-size="9.5" fill="var(--ink-3)" font-family="var(--mono)">${r.y}</text>
+      <rect x="30" y="${y}" width="${wa.toFixed(1)}" height="${bh}" fill="var(--pub)" fill-opacity=".62" rx="1"/>
+      <rect x="30" y="${y+bh+1}" width="${wl.toFixed(1)}" height="${bh}" fill="var(--seal)" fill-opacity="${sh>1?.66:.24}" rx="1"/>
+      ${sh>1?`<text x="${(33+Math.max(wa,wl)).toFixed(1)}" y="${y+bh+10}" font-size="9.5" fill="var(--seal)" font-family="var(--mono)">短 ${nf(sh)}</text>`:""}`;
+  }).join("");
+  return `<svg viewBox="0 0 ${w+130} ${h}" width="100%" style="max-width:340px">
+    <text x="30" y="8" font-size="9" fill="var(--ink-3)">上＝專戶資產　下＝提列負債</text>${body}</svg>`;
+}
+
+function staffBlock(rows){
+  const usable=rows.filter(r=>r.st&&r.cost);
+  if(!usable.length)return"";
+  const last=usable[usable.length-1];
+  const ph=Math.round(last.cost/last.st);
+  const phAll=last.sub?Math.round((last.cost+last.sub)/last.st):null;
+  const inBand=ph>=BENCH.ph_q1&&ph<=BENCH.ph_q3;
+  const ratio=last.ed&&last.en?last.en/last.ed:null;
+  return `<div class="sec"><h4>員工與師生比<span class="badge">${last.y} 學年度</span></h4>
+    <dl class="kv">
+      <dt>員工人數</dt><dd>${nf(last.st)} 人（教保 ${nf(last.ed)}）</dd>
+      <dt>每人人事費</dt><dd>${nf(ph)} ${inBand?"（Q1–Q3 內）":"（四分位距外）"}</dd>
+      ${phAll?`<dt>計入附註三補助</dt><dd>${nf(phAll)}</dd>`:""}
+      <dt>全體中位</dt><dd>${nf(BENCH.ph_med)}</dd>
+      <dt>師生比</dt><dd>${ratio?`1:${ratio.toFixed(1)}`:"—"}（中位 1:${BENCH.ratio_med}）</dd>
+      <dt>招收率</dt><dd>${last.cap?Math.round(last.en/last.cap*100)+"%":"—"}（${nf(last.en)}／${nf(last.cap)}）</dd>
+    </dl>
+    <p class="note" style="margin-top:8px">全體 ${BENCH.n_norm} 份非開辦年報告中，每人人事費
+    <b>無任何一份落在 IQR 之外</b>——非營利園採成本分攤制，薪給結構高度一致，
+    因此本欄是查證對照，不是風險訊號。且人事性質的政府補助有時列在其他支出，
+    僅 ${BENCH.n_subsidised}/${BENCH.n_reports} 份可從附註三看出，跨年度比較尚不可靠。
+    師生比為未分齡的保守上界。</p></div>`;
+}
+
+function realtimeBlock(p){
+  const items=RTBY[p.i]||[];
+  const chips=(RT.channels||[]).map(c=>
+    `<span class="chip2${c.status==="live"?" on":""}" title="${c.legal_basis||""}">
+      ${c.status==="live"?"●":"○"} ${c.label}</span>`).join("");
+  const head=`<div class="sec"><h4>即時公開聲音
+      <span class="badge">${RT.channels_live||0}/${RT.channels_total||0} 管道</span></h4>
+    <div class="chbar">${chips}</div>`;
+  if(!items.length){
+    return head+`<div class="insuff">本次掃描未發現指名本園的公開內容。
+      <b>這不代表沒有問題</b>——目前僅 ${RT.channels_live||0} 個管道在看，
+      且多數報導刻意匿名（實測 267 則中僅 7% 可歸屬到特定機構）。
+      掃描時間 ${RT.swept_at||"—"}。</div></div>`;
+  }
+  const rows=items.slice(0,8).map(m=>`
+    <div class="rtitem k-${m.k}">
+      <a href="${m.u}" target="_blank" rel="noopener noreferrer">${m.h}</a>
+      <div class="rtmeta"><span>${m.d}</span><span>${m.p}</span>
+        <span>${m.k==="complaint"||m.k==="incident"?"事件類":"一般"}</span></div>
+    </div>`).join("");
+  return head+`<div class="rt">${rows}</div>
+    <p class="note" style="margin-top:8px">共 ${items.length} 則，掃描於
+    ${RT.swept_at||"—"}。<b>未經查證，處置為「待人工研判」</b>；
+    公開內容不改寫風險分數、不作違規標籤。</p></div>`;
+}
+
+function draft(p,code){
+  const d=code?DOS[code]:null, fails=d?d.findings.filter(f=>f.st==="fail"):[];
+  const L=[`受文者：${p.full}`,`主旨：本府教育局就下列事項，請貴園提出說明。`,``,
+    `一、列入本次查核建議之依據`,`　　稽查優先序第 ${p.r} 名（全市 ${PTS.length} 園）。`];
+  if(p.np>0)L.push(`　　歷史裁罰紀錄 ${p.np} 件。`);
+  if(p.e90>0)L.push(`　　近 90 日內有官方事件（最近一筆 ${p.evd}）。`);
+  if(fails.length){
+    L.push(``,`二、財務報告與其自述會計政策不符之處`);
+    fails.slice(0,3).forEach((f,i)=>L.push(
+      `　（${"一二三"[i]}）${f.y} 學年度・${f.rule}`,`　　　${f.detail}`,`　　　依據：${f.text}`));
+    L.push(``,`三、請說明事項`,
+      `　　請檢附專戶存款餘額證明書、預算流用核准文件及相關憑證，於文到 15 日內函復。`);
+  }else if(!p.fin){
+    L.push(``,`二、資料涵蓋說明`,`　　本園非屬應公開財務報告之類型，本次未進行財務法遵檢核；`,
+      `　　上開排序僅依登記、裁罰與營運型態資料，不構成財務合規之認定。`);
+  }
+  L.push(``,`※ 本文為系統依公開資料生成之查核建議，非違法認定。`);
+  return L.join("\n");
+}
+
+function openDossier(id){
+  const p=PTS.find(q=>q.i===id); if(!p)return;
+  cur=id;
+  const code=codeOf(id), d=code?DOS[code]:null;
+  const fails=d?d.findings.filter(f=>f.st==="fail"):[];
+  const holds=d?d.findings.filter(f=>f.st==="hold"):[];
+  let h=`<div class="dhead"><button id="dclose">關閉</button>
+    <h3>${p.full}</h3><div class="meta">${TYPE[p.t]} · ${p.d} · 優先序 #${p.r} / ${PTS.length} · 分數 ${p.s.toFixed(3)}</div></div>
+    <div class="dbody">
+    <div class="sec"><h4>基本</h4><dl class="kv">
+      <dt>核定人數</dt><dd>${nf(p.cap)} 人</dd>
+      <dt>月費</dt><dd>${p.fee?nf(p.fee)+" 元":"—"}</dd>
+      <dt>裁罰史</dt><dd>${p.np} 件</dd>
+      <dt>近一年官方事件</dt><dd>${p.e365} 件${p.evd?`（最近 ${p.evd}）`:""}</dd>
+    </dl></div>
+    <div class="sec"><h4>官方評鑑</h4>${p.er
+      ? `<div class="finding${p.ep?"":" w"}" style="${p.ep?"":"border-left-color:var(--good)"}">
+          <div class="r">${p.erd}　${p.er}</div>
+          <div class="d">${p.ep
+            ? "近兩年評鑑有指標未通過。全語料庫實測：評鑑後一年內受罰率 17.9%，"
+              +"全數通過者 7.4%（OR 2.72，p=0.0009）；在無裁罰前科的園中 OR 仍有 2.44。"
+            : "最近一次評鑑全數指標通過。這是該次評鑑的結論，不代表其後未發生問題。"}</div></div>`
+      : `<div class="insuff">查無評鑑紀錄。全市 1,101 園中有 22 園尚未接受評鑑；
+          未受評鑑不等於通過評鑑。</div>`}</div>`;
+  if(!p.fin){
+    h+=`<div class="sec"><h4>財務法遵檢核</h4><div class="insuff">
+      <b>無公開財報：資料不足，非低風險。</b><br>私立園不公告財務報告，
+      占全市 ${Math.round(PTS.filter(q=>q.t===2).length/PTS.length*100)}% 且裁罰基準率最高。
+      本園未出現財務發現，是我們查不到，不是它沒有問題。</div></div>`;
+  }else{
+    if(fails.length){
+      h+=`<div class="sec"><h4>法遵未通過 ${fails.length} 項</h4>`;
+      fails.forEach(f=>h+=`<div class="finding${f.sev==="high"?"":" w"}">
+        <div class="r">${f.y} 學年度・${f.rule}<span class="badge">${f.sev==="high"?"高":"中"}</span></div>
+        <div class="d">${f.detail}</div><div class="quote"><i>依據原文</i>${f.text}</div></div>`);
+      h+=`</div>`;
+    }
+    if(d.series?.length)
+      h+=`<div class="sec"><h4>業務發展準備金　專戶 vs 提列</h4>${reserveChart(d.series)}</div>`;
+    if(d.gaps?.length){
+      h+=`<div class="sec"><h4>跨年度判讀</h4>`;
+      d.gaps.forEach(g=>h+=`<div class="finding${g.v.includes("擴大")?"":" w"}">
+        <div class="r">${g.res}・${g.y0}→${g.y1} 學年度：${g.v}</div>
+        <div class="d">${g.note}</div></div>`);
+      h+=`</div>`;
+    }
+    if(d.staff?.length)h+=staffBlock(d.staff);
+    if(holds.length)h+=`<div class="sec"><h4>待判讀 ${holds.length} 項</h4>
+      <div class="insuff">認定基礎有爭議或資料不足，未判為未通過。</div></div>`;
+  }
+  h+=realtimeBlock(p);
+  h+=`<div class="sec"><h4>稽查建議書草稿<span class="badge">決賽版由 Bedrock 生成</span></h4>
+    <div class="draft">${draft(p,code).replace(/&/g,"&amp;").replace(/</g,"&lt;")}</div></div></div>`;
+  const el=$("dossier"); el.innerHTML=h; el.hidden=false;
+  $("dclose").onclick=()=>{el.hidden=true;cur=null;
+    document.querySelectorAll(".item").forEach(b=>b.classList.remove("sel"));};
+  document.querySelectorAll(".item").forEach(b=>b.classList.toggle("sel",b.dataset.i===id));
+}
+
+/* ── wire ───────────────────────────────────────────── */
+function render(){
+  const sel=propose(); drawMap(sel); drawList(sel);
+  $("s-sel").textContent=sel.length;
+  $("s-scope").textContent=scope||"全市";
+}
+$("s-all").textContent=PTS.length;
+$("s-fin").textContent=PTS.filter(p=>p.fin).length;
+[0,1,2].forEach(t=>$("l"+t).textContent=PTS.filter(p=>p.t===t).length);
+$("cap").addEventListener("input",e=>{cap=Math.max(1,Math.min(200,+e.target.value||20));
+  $("capr").value=Math.min(120,cap); render();});
+$("capr").addEventListener("input",e=>{cap=+e.target.value;$("cap").value=cap;render();});
+$("f-fin").addEventListener("change",e=>{finOnly=e.target.checked;render();});
+$("f-grp").addEventListener("change",e=>{group=e.target.checked;render();});
+$("modes").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  mode=b.dataset.m;
+  $("modes").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  render();});
+$("zoomout").addEventListener("click",()=>{scope=null;render();});
+matchMedia("(prefers-color-scheme:dark)").addEventListener("change",render);
+render();
+</script>

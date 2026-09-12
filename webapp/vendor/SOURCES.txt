@@ -1,0 +1,9 @@
+Leaflet 1.9.4 與 markercluster 1.5.3，自 unpkg.com 取得並就地保存。
+原因：決賽會場網路可能擋 CDN；地圖是動態版的主體，不能靠外部可達性。
+取得時點 2026-09-11。要更新時重跑 scripts 裡的同一段或手動替換。
+
+leaflet.css                    14,806 bytes  sha256:a783710282418482…  https://unpkg.com/leaflet@1.9.4/dist/leaflet.css
+leaflet.js                    147,552 bytes  sha256:db49d009c841f5ca…  https://unpkg.com/leaflet@1.9.4/dist/leaflet.js
+MarkerCluster.css                 872 bytes  sha256:614dea0a98ff3f4e…  https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css
+MarkerCluster.Default.css       1,287 bytes  sha256:61258232d98d64dc…  https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css
+leaflet.markercluster.js       34,136 bytes  sha256:1e4e1d22972a3926…  https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js
