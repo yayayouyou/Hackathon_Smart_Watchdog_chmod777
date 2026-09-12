@@ -113,6 +113,7 @@
       <div>
         <div class="rail-eyebrow">樓層索引</div>
         <div class="rail-list" id="rail-list"></div>
+        <div class="rail-tools" id="rail-tools" hidden></div>
       </div>
 
       <!-- 狗窩：守護犬進房後坐的地方。牠從中庭跑進來，就停在這裡。 -->
@@ -146,7 +147,6 @@
             stroke-linecap="round"/>
           <circle cx="34" cy="52.2" r="1.4" fill="var(--seal)"/>
         </svg>
-        <span class="txt">守護犬在這一室<br>說一句話就行</span>
       </div>
     </aside>
 
@@ -308,14 +308,31 @@
       </div>
 
       <div class="pane" id="pane-data" hidden>
-        <div class="todo">
-          <div class="todo-head">
-            <b>資料提取存放區</b>
-            <span>外殼已就位，內容待設計</span>
+        <div class="drbar">
+          <div class="drseg" id="dr-layer">
+            <button type="button" data-l="raw">原始資料<i id="dr-n-raw">—</i></button>
+            <button type="button" data-l="num" aria-pressed="true">數字<i id="dr-n-num">—</i></button>
           </div>
-          <div class="todo-grid" id="data-grid"></div>
-          <p class="todo-note">每一筆抽取都帶著來源 PDF 的頁碼，所以這一室之後
-            可以直接從清單跳到證據頁。實際的瀏覽與分析介面由組員接手。</p>
+          <button type="button" class="costbtn" id="drmore" aria-expanded="false">判讀與外部佐證</button>
+          <span class="rh-src" id="dr-src">載入中…</span>
+        </div>
+        <div class="pop dr" id="drmorepop" hidden></div>
+
+        <div class="drlayer drraw" id="dr-raw" hidden>
+          <div class="drcol">
+            <div id="dr-upload"></div>
+            <div id="dr-upresult"></div>
+            <div class="list" id="dr-docs"></div>
+          </div>
+          <div class="drside">
+            <div id="dr-docpages" hidden></div>
+            <div class="ev" id="dr-evidence" hidden></div>
+          </div>
+        </div>
+
+        <div class="drlayer" id="dr-num">
+          <div class="drchips" id="dr-kinds"></div>
+          <div class="drscroll" id="dr-tables"></div>
         </div>
       </div>
 
@@ -442,6 +459,7 @@
 <script src="/static/timeline.js"></script>
 <script src="/static/auth.js"></script>
 <script src="/static/agent.js"></script>
+<script src="/static/dataroom.js"></script>
 <script src="/static/memos.js"></script>
 <script src="/static/lobby.js"></script>
 </body>

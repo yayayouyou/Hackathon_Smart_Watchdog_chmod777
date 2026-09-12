@@ -6,6 +6,19 @@
  * 前端不算錢。所有金額、公式、剩餘額度都由 /api/scan/estimate 回傳——
  * 價目表只能有一份，複製一份到瀏覽器就等於埋一個遲早會對不上的第二答案。
  */
+/* ⚠️ 整支包在 IIFE 裡，不是風格偏好。
+ *
+ * 傳統腳本共用同一個全域詞法作用域，而 social.js 也宣告了頂層 `const S`
+ * 並且比這支先載入——重複宣告會讓**整支 scan.js 直接 SyntaxError 而不執行**，
+ * 於是 window.SWScan 是 undefined、掃描主控台整塊是死的，而且主控台只印
+ * 一行「Identifier 'S' has already been declared」，畫面上什麼都看不出來。
+ * app.js:1087 那條註解記的是同一個坑的前一次（`usd`）。
+ *
+ * 包起來之後這支的頂層名稱一律私有，只有結尾的 window.SWScan 對外。
+ */
+(function () {
+"use strict";
+
 const S = window.SW;
 const scan = {
   opts: null, plan: null, job: null, poll: null,
@@ -421,3 +434,4 @@ async function adopt() {
 }
 
 window.SWScan = { open: open_ };
+})();

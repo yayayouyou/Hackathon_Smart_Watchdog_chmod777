@@ -42,8 +42,8 @@
       src: "registry · 快照 2026-08-10" },
     { id: "data", no: "02", name: "資料室", pane: "data", accent: "--pub",
       x: 40, y: 380, w: 505, h: 350, door: { x: 545, y: 550 }, side: "L",
-      desc: "PDF 提取與外部蒐集的存放處",
-      src: "data/extracted · data/external" },
+      desc: "原件、逐頁抽取、依表單分類的數字",
+      src: "data/extracted · 頁級抽取" },
     { id: "voice", no: "03", name: "輿情室", pane: "scan", accent: "--good",
       x: 895, y: 30, w: 505, h: 234, door: { x: 895, y: 150 }, side: "R",
       desc: "民眾 @標註通報、新聞、PTT；未查證線索",
@@ -585,7 +585,6 @@
     drawPlan(counts);
     paintWho();
     bindLobbyWho();
-    fillDataRoom();
     $("plan").addEventListener("pointermove", onPointerMove);
     const b = $("rail-back");
     if (b) b.addEventListener("click", back);
@@ -594,23 +593,6 @@
     });
   }
 
-  /* 資料室的磁磚。數字全部是實際盤點出來的，不是佔位——
-     一間「待設計」的房間如果連現況都說不清楚，接手的人得從頭盤一次。 */
-  function fillDataRoom() {
-    const grid = $("data-grid");
-    if (!grid) return;
-    const tiles = [
-      ["非營利園財報", "132", "已抽取並進版控"],
-      ["公校決算書", "30", "座標抽取，零模型成本"],
-      ["原始 PDF", "162", "data/raw，不進版控"],
-      ["法遵檢核發現", "31", "其中 8 項高嚴重度"],
-      ["外部快照", "7", "含裁罰、登記、界線"],
-      ["文件索引", "148", "問題進，檔案與頁碼出"],
-    ];
-    grid.innerHTML = tiles.map(([k, v, note]) =>
-      `<div class="todo-tile"><span class="k">${k}</span>`
-      + `<span class="v">${v}</span><span class="s">${note}</span></div>`).join("");
-  }
 
   window.Lobby = { start, enter, back, paintWho, get where() { return state.where; } };
 })();

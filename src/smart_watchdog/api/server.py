@@ -127,6 +127,7 @@ _state: dict[str, Any] = {"payload": None, "index": {}, "land": None}
 # 掃描主控台與證據端點。在此掛載而非讓子模組匯入 server，避免循環匯入。
 from . import agent as _agent  # noqa: E402
 from . import auth as _auth  # noqa: E402
+from . import dataroom as _dataroom  # noqa: E402
 from . import dossier as _dossier  # noqa: E402
 from . import evidence as _evidence  # noqa: E402
 from . import explore as _explore  # noqa: E402
@@ -140,6 +141,7 @@ app.include_router(_agent.router)
 app.include_router(_evidence.router)
 app.include_router(_dossier.router)
 app.include_router(_social.router)
+app.include_router(_dataroom.router)
 
 
 def load_payload(path: pathlib.Path = PAYLOAD_PATH) -> dict[str, Any]:

@@ -210,3 +210,32 @@ def test_no_signal_is_never_rendered_as_a_pass() -> None:
     assert "insuff" in src, "無訊號的樣式應沿用 .insuff，不要另外發明合格樣式"
     for banned in ("✓", "✔", "☑", "var(--good)"):
         assert banned not in src, f"社群面板不得用「{banned}」把無訊號畫成合格"
+
+
+def test_no_two_scripts_declare_the_same_global() -> None:
+    """傳統腳本共用同一個全域詞法作用域，同名的頂層 const 會讓後載入的那支
+    **整支 SyntaxError 而不執行**。
+
+    這個坑踩過兩次：第一次是 `usd`（app.js:1087 留了註解），第二次是 `S`
+    —— social.js 與 scan.js 都宣告了它，結果 window.SWScan 是 undefined、
+    掃描主控台整塊是死的，而畫面上完全看不出來，只有主控台一行錯誤。
+
+    修法是把整支包進 IIFE（見 scan.js 檔頭）。這裡守的是「不要再有第三次」。
+    """
+    import collections
+
+    top = re.compile(r"^(?:const|let|var)\s+([A-Za-z_$][\w$]*)", re.M)
+    owners: dict[str, list[str]] = collections.defaultdict(list)
+    for js in sorted(WEBAPP.glob("*.js")):
+        src = js.read_text(encoding="utf-8")
+        # 包在 IIFE 裡的檔案，頂層宣告已經是私有的，不參與全域命名空間。
+        if re.search(r"^\(function\s*\(\)\s*\{", src, re.M):
+            continue
+        for name in set(top.findall(src)):
+            owners[name].append(js.name)
+
+    clashes = {n: f for n, f in owners.items() if len(f) > 1}
+    assert not clashes, (
+        "這些頂層名稱在多支未包 IIFE 的腳本裡重複宣告，後載入的那支不會執行："
+        f"{clashes}"
+    )

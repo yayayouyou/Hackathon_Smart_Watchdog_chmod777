@@ -707,3 +707,132 @@ body.resizing{user-select:none;cursor:col-resize}
   text-transform:uppercase;color:var(--ink-3)}
 .soc-unattr-note{color:var(--ink-3);font-size:11px;margin-bottom:7px;line-height:1.45}
 .soc-why{color:var(--ink-3);font-size:10.5px;margin-top:3px}
+
+/* ── 資料室 ──────────────────────────────────────────────────────────
+   兩層（原始資料／數字）＋ 右上角一顆收判讀與外部佐證的鈕。
+   外殼一律用中性色：--pub 在全 app 是「公立機構」的類別色，而這一室正好要
+   並列公校決算書與非營利財報，用它當主色會撞在一起。 */
+.drbar{display:flex;align-items:center;gap:11px;padding:8px 15px;flex:none;
+  background:var(--panel);border-bottom:1px solid var(--rule)}
+.drseg{display:flex;border:1px solid var(--rule);border-radius:5px;overflow:hidden}
+.drseg button{padding:4px 13px;font-size:12.5px;font-family:var(--sans);
+  color:var(--ink-3);background:var(--panel);border:0;
+  border-right:1px solid var(--rule);cursor:pointer;display:flex;
+  align-items:baseline;gap:6px}
+.drseg button:last-child{border-right:0}
+.drseg button[aria-pressed="true"]{background:var(--sunk);color:var(--ink);
+  font-weight:600}
+.drseg i{font-style:normal;font-family:var(--mono);font-size:11px;
+  color:var(--ink-4);font-variant-numeric:tabular-nums}
+.drbar .rh-src{margin-left:auto}
+.pop.dr{right:15px;top:42px;width:370px;max-height:70vh;overflow-y:auto}
+
+.drlayer{display:flex;flex-direction:column;min-height:0;flex:1}
+.drraw{flex-direction:row;gap:0}
+.drcol{display:flex;flex-direction:column;min-height:0;
+  flex:1 1 52%;border-right:1px solid var(--rule);overflow-y:auto}
+.drraw .list{overflow:visible;flex:none}
+.drside{flex:1 1 48%;min-width:0;overflow-y:auto;padding:0 15px 18px}
+
+/* 類型膠囊：一次點擊換一張表，所以它必須永遠在畫面上、不捲走。 */
+.drchips{display:flex;flex-wrap:wrap;gap:5px;padding:9px 15px;flex:none;
+  max-height:96px;overflow-y:auto;border-bottom:1px solid var(--rule)}
+.drchip{display:inline-flex;align-items:baseline;gap:5px}
+.drchip i{font-style:normal;font-family:var(--mono);font-size:10px;
+  color:var(--ink-4);font-variant-numeric:tabular-nums}
+.preset[aria-pressed="true"]{border-color:var(--seal);background:var(--seal-soft);
+  color:var(--ink);font-weight:600}
+.drscroll{flex:1;min-height:0;overflow-y:auto;padding:0 15px 22px}
+.drcount{font-size:11px;color:var(--ink-4);font-family:var(--mono);
+  padding:9px 0 0}
+
+/* 一張表 */
+.dr-t{margin-top:15px}
+.drth{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:5px}
+.drk{font-size:10.5px;letter-spacing:.06em;color:var(--ink-3)}
+.drv{font-size:13.5px;color:var(--ink);font-weight:600}
+.drpg{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-4)}
+.drpg2{color:var(--ink-4)}
+.draxis,.drrefuse{font-size:11.5px;line-height:1.6;border-radius:4px;
+  padding:7px 10px;margin-bottom:6px}
+.draxis{color:var(--ink-3);background:var(--sunk)}
+.drrefuse{color:var(--seal);border:1px solid var(--seal);background:var(--seal-soft)}
+
+/* 欄數會爆：非營利頁級表最多 16 個期間欄。捲動由這個容器自己負責，
+   .roombody 與 .side 都沒有 overflow 設定。 */
+.ftabwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;
+  background:var(--panel)}
+.ftab{width:100%;border-collapse:collapse;font-size:11.5px}
+.ftab th{position:sticky;top:0;z-index:1;background:var(--panel);padding:6px 9px;
+  text-align:right;font-weight:600;font-size:10.5px;color:var(--ink-3);
+  border-bottom:1px solid var(--rule);white-space:nowrap}
+/* 項目欄吃掉所有剩餘寬度，數字欄才會收在右邊而不是被撐開成一大片。
+   欄數最多的表有 16 欄，靠 .ftabwrap 的 overflow-x 捲。 */
+.ftab th:first-child,.ftab td:first-child{text-align:left;position:sticky;left:0;
+  background:var(--panel);min-width:184px;width:100%}
+.ftab td{padding:4px 9px;border-bottom:1px solid var(--rule);color:var(--ink-2);
+  vertical-align:top}
+.ftab td.n{text-align:right;font-family:var(--mono);color:var(--ink);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+/* 空白＝未編列，不是 0。灰字加破折號，與真正的 0 看得出差別。 */
+.ftab td.n.blank{color:var(--ink-4)}
+/* 負數只加括號不上色。--seal 在這個 app 專指法遵未通過，
+   非營利園是成本分攤制，負餘絀是制度設計不是違規。 */
+.ftab td.n.neg{color:var(--ink)}
+.ftab td.n.tick{color:var(--ink);font-size:13px}
+.ftab td.n.odd{color:var(--warn)}
+.ftab tr.grp td{background:var(--sunk);font-weight:600;color:var(--ink)}
+.ftab tbody tr:hover td{background:var(--sunk)}
+.drpct{font-family:var(--mono);font-size:10px;color:var(--ink-4);margin-top:1px}
+.drnote{font-size:9px;color:var(--ink-4);margin-left:3px}
+.drtm{display:flex;align-items:baseline;gap:9px;margin-top:5px;flex-wrap:wrap}
+.drcite{font-family:var(--mono);font-size:10px;color:var(--ink-4)}
+.drjump{font-size:11px;font-family:var(--sans);color:var(--ink-3);
+  background:none;border:0;border-bottom:1px solid var(--rule);cursor:pointer;
+  padding:0}
+.drjump:hover{color:var(--ink)}
+.drissues{margin-top:6px;border-left:2px solid var(--rule);padding:2px 0 2px 9px}
+.drissues b{font-size:10.5px;letter-spacing:.06em;color:var(--ink-3)}
+.drissues p{margin:2px 0 0;font-size:11px;line-height:1.6;color:var(--ink-2)}
+
+/* 上傳 */
+.drup{padding:13px 15px;border-bottom:1px solid var(--rule);background:var(--panel)}
+.drup-h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.drup-h b{font-size:13px}
+.drup-h span{font-size:11.5px;color:var(--ink-3)}
+.drup-now{margin-top:5px;font-size:11.5px;color:var(--ink-2);font-family:var(--mono);
+  font-variant-numeric:tabular-nums}
+.drup-btn{display:inline-block;margin-top:9px;padding:5px 14px;font-size:12px;
+  border:1px solid var(--seal);color:var(--seal);border-radius:16px;cursor:pointer}
+.drup-btn:hover{background:var(--seal-soft)}
+.drup-reset{margin-left:8px;font-size:11px;color:var(--ink-4);background:none;
+  border:0;cursor:pointer;text-decoration:underline}
+.drup-hint{margin-top:6px;font-size:11px;color:var(--ink-3)}
+.drup-ok{margin-top:11px;border:1px solid var(--rule);border-radius:5px;
+  padding:11px 13px;background:var(--sunk)}
+.drup-ok>b{font-size:13px}
+.drsha{font-family:var(--mono);font-size:10px;word-break:break-all;
+  color:var(--ink-3)}
+.drdiff{display:flex;flex-wrap:wrap;gap:14px;margin-top:9px;padding-top:9px;
+  border-top:1px solid var(--rule);font-size:11.5px;color:var(--ink-3)}
+.drd{white-space:nowrap}
+.drd i{font-style:normal;font-family:var(--mono);color:var(--ink-4)}
+.drd b{font-family:var(--mono);color:var(--ink);font-variant-numeric:tabular-nums}
+.drup-sec{margin-top:9px;font-size:11.5px;color:var(--ink-3);display:flex;
+  flex-wrap:wrap;gap:5px;align-items:center}
+
+/* 原件頁 */
+.drimg{width:100%;border:1px solid var(--rule);border-radius:4px;margin-top:7px;
+  background:var(--panel)}
+.drclose{margin-left:auto;font-size:11px;color:var(--ink-4);background:none;
+  border:0;cursor:pointer;text-decoration:underline}
+.ev .evh{display:flex;align-items:baseline;gap:8px}
+.drnotes p{margin:0 0 6px;font-size:11.5px;line-height:1.6;color:var(--ink-2)}
+.drnotes p.un{border-left:2px solid var(--warn);padding-left:8px}
+.drnotes small{font-size:10.5px;color:var(--ink-4)}
+
+/* 左欄篩選 */
+.rail-tools{display:flex;flex-direction:column;gap:5px;margin-top:13px}
+.rail-tools select{font-size:12px;font-family:var(--sans);padding:4px 6px;
+  border:1px solid var(--rule);border-radius:4px;background:var(--panel);
+  color:var(--ink)}
