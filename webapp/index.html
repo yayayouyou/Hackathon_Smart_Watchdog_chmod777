@@ -41,12 +41,14 @@
     <div class="hstat">
       <span>全市 <b id="s-all">—</b></span>
       <span>有公開財報 <b id="s-fin">—</b></span>
-      <span>本批提案 <b id="s-sel">—</b></span>
-      <span>即時管道 <b id="s-ch">—</b></span>
-      <!-- 花費是會真的扣錢的東西，所以常駐在最上面，而且點得開：
-           只看到一個總額，等於要花錢的人看不到自己花在哪。 -->
-      <button class="costbtn" id="costbtn" aria-expanded="false"
-        title="本掃描週期已花費／自訂上限。點開看各道上限與最近幾筆帳。"
+      <!-- 本批提案、即時管道、本期花費都拿掉了：那三個數字在派工提案、
+           輿情室、掃描主控台裡本來就看得到，擺在最上面是同一件事講兩次。
+           花費的帳本沒有動，只是不再常駐——要看就進輿情室。
+           以下三個節點保留但隱藏：scan.js／app.js 仍會寫進去，
+           拿掉會讓那幾支在找不到節點時靜默失效。 -->
+      <span hidden><b id="s-sel">—</b></span>
+      <span hidden><b id="s-ch">—</b></span>
+      <button class="costbtn" id="costbtn" aria-expanded="false" hidden
         >本期花費 <b id="s-budget">—</b><i class="caret"></i></button>
       <!-- 頁尾拿掉了，但頁尾上那兩件事不能跟著消失：一是輸出定位（建議查核、
            非違法認定），二是 CC-BY 要求的來源標註——後者是**授權條件**。
@@ -388,9 +390,12 @@
   <header>
     <h1>小小守護員<span>稽查中心 · 新北市教保機構</span></h1>
     <div class="hstat">
+      <!-- 中庭只留「全市多少園」。本批提案與即時管道在各自的房間裡
+           本來就寫著（地圖室 20 家待派工、輿情室 31 則），
+           中庭再寫一次是同一件事講兩次。 -->
       <span>全市 <b id="lb-all">—</b></span>
-      <span>本批提案 <b id="lb-sel">—</b></span>
-      <span>即時管道 <b id="lb-ch">—</b></span>
+      <span hidden><b id="lb-sel">—</b></span>
+      <span hidden><b id="lb-ch">—</b></span>
       <button class="who-pod" id="lbwho" aria-expanded="false" hidden>
         <span class="who-av">—</span>
         <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.25">
