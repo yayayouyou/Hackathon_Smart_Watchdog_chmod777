@@ -9,6 +9,10 @@
 
 ---
 
+> **第一次接手這個專案？先讀 [`docs/HANDOVER.md`](docs/HANDOVER.md)**——現況、待辦、三條不能忘的界線，都在那一份。
+
+---
+
 ## 在新機器上跑起來
 
 相依清單是 `requirements.txt`，**不是** `pyproject.toml`——後者只列動態版所需的
