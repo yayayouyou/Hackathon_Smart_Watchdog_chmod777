@@ -239,3 +239,39 @@ def test_no_two_scripts_declare_the_same_global() -> None:
         "這些頂層名稱在多支未包 IIFE 的腳本裡重複宣告，後載入的那支不會執行："
         f"{clashes}"
     )
+
+
+def test_dataroom_class_names_are_namespaced_or_deliberately_reused() -> None:
+    """資料室自己造的 class 一律帶 dr／mx／ftab 前綴，其餘必須是刻意復用的。
+
+    `<tr class="grp">` 撞上了 style.css 早就有的全域 `.grp{display:flex}`：
+    套到 <tr> 上會讓每個儲存格變成 flex item、各自撐成整列寬再往下堆（實測
+    區段標題列被排成 978x11 三層）。畫面上看起來只是「多了一條細白帶」，
+    很難聯想到是 class 撞名。
+
+    這是同一類問題的第三次（前兩次是 JS 全域的 `usd` 與 `S`），所以釘起來。
+    """
+    js = (WEBAPP / "dataroom.js").read_text(encoding="utf-8")
+    emitted = set()
+    for m in re.finditer(r'class="([^"]*)"', js):
+        for tok in m.group(1).split():
+            if re.fullmatch(r"[a-z][a-z0-9-]*", tok):
+                emitted.add(tok)
+    assert emitted, "抓不到任何 class，正則可能過時了"
+
+    own = re.compile(r"^(dr|mx|ftab)")
+    # 刻意復用既有元件的 class。改這份清單前先確認那個 class 在 style.css 裡
+    # 的定義套到你要用的標籤上不會出事。
+    shared = {
+        "sec", "kv", "insuff", "badge", "row", "r", "m", "list", "item",
+        "ord", "nm", "rk", "why", "ev", "evh", "tag", "p", "w", "g",
+        "soc-load", "thinking", "spinner", "costbtn", "pop", "preset",
+        "rh-src", "rail-eyebrow",
+        # 只出現在 .ftab 內，由父選擇器限定範圍
+        "n", "blank", "neg", "tick", "odd",
+    }
+    stray = sorted(c for c in emitted if not own.match(c) and c not in shared)
+    assert not stray, (
+        f"這些 class 既沒有 dr／mx／ftab 前綴，也不在刻意復用的清單裡：{stray}。"
+        "全域 CSS 可能已經有同名規則——加前綴，或確認復用是安全的。"
+    )

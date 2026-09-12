@@ -13,6 +13,7 @@
   const state = {
     ov: null,          // /api/dataroom/overview
     section: null,     // 目前選的表單類型
+    family: null,      // 目前展開的家族
     report: "",        // 目前限定的報告（空＝全部）
     year: "",
     loaded: false,
@@ -136,9 +137,15 @@
           + "</div>" : "";
       const note = r.note_ref
         ? '<sup class="drnote">' + esc(r.note_ref) + "</sup>" : "";
-      return "<tr" + (isGroup ? ' class="grp"' : "") + ">"
+      // 區段標題列逐欄補空 td 而不是 colspan：結構與其他列完全一致，
+      // hover 與底色就不會有一格對不上。
+      //
+      // class 是 drgrp 不是 grp：style.css 早就有一個全域 `.grp{display:flex}`
+      // （版面用的），套到 <tr> 上會讓每個儲存格變成 flex item、各自撐成整列寬
+      // 再往下堆——實測區段列被排成 978x11 三層。這一室的 class 一律帶 dr 前綴。
+      return "<tr" + (isGroup ? ' class="drgrp"' : "") + ">"
         + "<td>" + esc(r.label) + note + pct + "</td>"
-        + (isGroup ? '<td class="n" colspan="' + Math.max(vals.length, 1) + '"></td>' : tds)
+        + (isGroup ? vals.map(() => '<td class="n"></td>').join("") : tds)
         + "</tr>";
     }).join("");
 
@@ -162,19 +169,52 @@
 
   /* ── 數字層 ──────────────────────────────────────────────────── */
 
+  /* 選單兩層：六個家族鈕常駐，下面只展開選中那一族。
+     31 種攤平成一面牆需要 6 行才放得下，會把表格擠出畫面；而攤平之後也沒有
+     結構——要找「支出類」得用眼睛掃過整面。兩層之後同族內換表仍是一次點擊，
+     跨族兩次，而且六個家族本身就先回答了「我們抽到哪幾類資料」。
+
+     ⚠️ 家族的顏色是分類不是分級。六個色的明度刻意相近，不可讓任何一族看起來
+     比另一族「嚴重」——這一室只做原件轉錄，沒有風險判讀。 */
+  function families() {
+    const groups = [];
+    (state.ov.sections || []).forEach((s) => {
+      const last = groups[groups.length - 1];
+      if (last && last.family === s.family) last.items.push(s);
+      else groups.push({ family: s.family, zh: s.family_zh, items: [s] });
+    });
+    return groups;
+  }
+
   function renderKinds() {
     const box = $("dr-kinds");
     if (!box || !state.ov) return;
-    const secs = state.ov.sections || [];
-    box.innerHTML = secs.map((s) =>
-      '<button type="button" class="preset drchip" data-sec="' + esc(s.key) + '"'
+    const groups = families();
+    if (!groups.length) { box.innerHTML = ""; return; }
+    const cur = groups.find((g) => g.family === state.family) || groups[0];
+
+    const tabs = groups.map((g) => {
+      const n = g.items.reduce((a, b) => a + b.tables, 0);
+      return '<button type="button" class="drfambtn" data-f="' + esc(g.family) + '"'
+        + (g.family === cur.family ? ' aria-pressed="true"' : "")
+        + ' title="' + esc(g.zh) + "：" + g.items.length + " 種表單、" + n
+        + ' 張">' + esc(g.zh) + "<i>" + n + "</i></button>";
+    }).join("");
+
+    const chips = cur.items.map((s) =>
+      '<button type="button" class="drchip" data-sec="' + esc(s.key) + '"'
       + (s.key === state.section ? ' aria-pressed="true"' : "")
       + ' title="' + esc(s.zh) + "：" + s.tables + " 張，涵蓋 " + s.reports
       + ' 份報告">' + esc(s.zh) + "<i>" + s.tables + "</i></button>").join("");
+
+    box.innerHTML = '<div class="drfams">' + tabs + "</div>"
+      + '<div class="drtypes" data-f="' + esc(cur.family) + '">' + chips + "</div>";
   }
 
   async function showKind(section) {
     state.section = section;
+    const hit = (state.ov.sections || []).find((s) => s.key === section);
+    if (hit) state.family = hit.family;
     renderKinds();
     const box = $("dr-tables");
     if (!box) return;
@@ -209,41 +249,83 @@
 
   /* ── 原始資料層 ──────────────────────────────────────────────── */
 
-  function docsHTML() {
-    const ov = state.ov;
-    const reps = ov.reports || [];
-    const pend = reps.filter((r) => r.state === "pending");
-    const load = reps.filter((r) => r.state !== "pending");
+  /* 涵蓋矩陣：列是園、欄是學年度。
+     換掉原本那條 132 列的平坦清單，是因為平坦清單答不出這一室最該先答的問題
+     ——「我們缺哪幾個園、哪幾年」。矩陣一眼就看得到缺口的形狀。 */
+  function matrixHTML() {
+    const reps = state.ov.reports || [];
+    const years = [...new Set(reps.map((r) => r.academic_year))].sort();
+    const byCode = new Map();
+    reps.forEach((r) => {
+      if (!byCode.has(r.code)) {
+        byCode.set(r.code, { code: r.code, name: r.short_name, cells: {} });
+      }
+      byCode.get(r.code).cells[r.academic_year] = r;
+    });
+    const rows = [...byCode.values()].sort((a, b) => a.code.localeCompare(b.code));
+    const have = reps.filter((r) => r.state !== "pending").length;
+    const slots = rows.length * years.length;
+    // 待上傳的格子有財報、只是還沒入庫，不能算進「沒有財報」那一堆。
+    const empty = slots - reps.length;
+    const waiting = reps.length - have;
 
-    const row = (r) => '<button type="button" class="item drdoc" data-id="'
-      + esc(r.id) + '">'
-      + '<span class="ord">' + esc(r.code) + "</span>"
-      + '<span class="nm">' + esc(r.short_name)
-      + ' <span class="badge">' + esc(r.academic_year) + " 學年度</span></span>"
-      + '<span class="rk">' + (r.state === "pending" ? "—" : r.tables + " 張") + "</span>"
-      + '<span class="why">' + (r.state === "pending"
-        ? '<span class="tag w">待上傳</span>'
-        : r.pages + " 頁已抽取 · " + (r.n_issues || 0) + " 則註記"
-          + (r.identity_ok ? ' · <span class="tag p">機構已核對</span>' : ""))
-      + "</span></button>";
+    const head = '<tr><th class="mx-n">園所</th>'
+      + years.map((y) => '<th>' + y + "</th>").join("")
+      + "<th class=\"mx-t\">合計</th></tr>";
 
-    const pub = ov.public || [];
+    const body = rows.map((r) => {
+      const tds = years.map((y) => {
+        const c = r.cells[y];
+        if (!c) {
+          return '<td class="mx-c mx-none" title="這一學年度沒有公開財報：'
+            + '可能尚未成立或未申報。資料不足，不是合規證明。">—</td>';
+        }
+        if (c.state === "pending") {
+          return '<td class="mx-c mx-wait" title="尚未入庫，上傳原件後才會進來">'
+            + "待上傳</td>";
+        }
+        return '<td class="mx-c mx-has"><button type="button" class="drdoc" '
+          + 'data-id="' + esc(c.id) + '" title="' + esc(c.id) + "：" + c.pages
+          + " 頁、" + c.tables + ' 張表">' + c.tables + "</button></td>";
+      }).join("");
+      const tot = years.reduce((a, y) => a + ((r.cells[y] || {}).tables || 0), 0);
+      return '<tr><th class="mx-n"><span class="mx-code">' + esc(r.code)
+        + "</span>" + esc(r.name) + "</th>" + tds
+        + '<td class="mx-c mx-t">' + tot + "</td></tr>";
+    }).join("");
+
+    const foot = '<tr><th class="mx-n">各年度</th>'
+      + years.map((y) => '<td class="mx-c mx-t">'
+        + reps.filter((r) => r.academic_year === y && r.state !== "pending").length
+        + "</td>").join("")
+      + '<td class="mx-c mx-t">' + have + "</td></tr>";
+
+    return '<div class="sec"><h4>抽取涵蓋 <span class="badge">'
+      + rows.length + " 園 × " + years.length + " 學年度</span></h4>"
+      + '<p class="drlead">' + slots + " 個可能的園－學年度裡，"
+      + "<b>" + have + "</b> 個有公開財報並已逐頁抽取"
+      + (waiting ? "，<b>" + waiting + "</b> 個待上傳" : "")
+      + "。空的 <b>" + empty + "</b> 格沒有財報——資料不足，不是合規證明。</p>"
+      + '<div class="mxwrap"><table class="mx"><thead>' + head + "</thead>"
+      + "<tbody>" + body + "</tbody><tfoot>" + foot + "</tfoot></table></div></div>";
+  }
+
+  function publicHTML() {
+    const pub = state.ov.public || [];
     const books = pub.filter((p) => !p.is_cover);
-
-    return (pend.length
-      ? '<div class="sec"><h4>待上傳</h4>' + pend.map(row).join("") + "</div>" : "")
-      + '<div class="sec"><h4>非營利園財報 <span class="badge">'
-      + load.length + " 份 · 一份＝一園一學年度</span></h4>"
-      + load.map(row).join("") + "</div>"
-      + '<div class="sec"><h4>公校決算書 <span class="badge">'
+    return '<div class="sec"><h4>公校決算書 <span class="badge">'
       + books.length + " 冊 · 年度制</span></h4>"
       + '<div class="insuff">一冊含多個分基金，切割依頁尾 &lt;分基金代號&gt;-&lt;頁碼&gt;；'
       + "另有 " + (pub.length - books.length) + " 份封面附件。"
-      + "這些沒有頁級抽取，不出現在「數字」層。</div>"
+      + "這些走座標抽取、沒有頁級表格，不出現在「數字」層。</div>"
       + books.map((p) => '<div class="row"><span class="r">' + esc(p.period)
         + '</span><span class="m">' + esc(p.filename) + "</span><span>"
         + p.pages + " 頁</span></div>").join("")
       + "</div>";
+  }
+
+  function docsHTML() {
+    return matrixHTML() + publicHTML();
   }
 
   async function showDoc(id) {
@@ -322,8 +404,11 @@
       renderDocs();
       renderKinds();
       const after = state.ov.totals;
-      const diff = (k) => '<span class="drd"><i>' + (before[k] || 0).toLocaleString("en-US")
-        + "</i> → <b>" + (after[k] || 0).toLocaleString("en-US") + "</b></span>";
+      // 標籤與數字包在同一個 nowrap 裡：分開的話「空白」會留在上一行、
+      // 數字掉到下一行，而這四組數字正是上傳前後最該一眼看完的東西。
+      const diff = (label, k) => '<span class="drd">' + label + " <i>"
+        + (before[k] || 0).toLocaleString("en-US") + "</i> → <b>"
+        + (after[k] || 0).toLocaleString("en-US") + "</b></span>";
       out.innerHTML = '<div class="drup-ok">'
         + "<b>" + esc(res.institution) + " " + esc(res.academic_year)
         + " 學年度</b> 已入庫"
@@ -337,8 +422,8 @@
         + "<span>機構核對</span><span>" + (res.added.identity_ok
           ? "全部頁面的頁尾代號與期望代號相符" : "有頁面未通過，已隔離") + "</span>"
         + "</div>"
-        + '<div class="drdiff">報告 ' + diff("reports") + "　表 " + diff("tables")
-        + "　數字 " + diff("cells") + "　空白 " + diff("blank") + "</div>"
+        + '<div class="drdiff">' + diff("報告", "reports") + diff("表", "tables")
+        + diff("數字", "cells") + diff("空白", "blank") + "</div>"
         + '<div class="drup-sec">新增 ' + res.added.tables + " 張表，分屬 "
         + res.added.sections.length + " 種類型："
         + res.added.sections.map((s) => '<button type="button" class="preset drchip" '
@@ -458,6 +543,12 @@
 
   /* 一次委派，不對每顆按鈕各綁一次——磁磚與表格都會整塊重畫。 */
   document.addEventListener("click", (e) => {
+    const fam = e.target.closest(".drfambtn");
+    if (fam) {
+      const g = families().find((x) => x.family === fam.dataset.f);
+      if (g) { state.family = g.family; showKind(g.items[0].key); }
+      return;
+    }
     const chip = e.target.closest(".drchip");
     if (chip) { showLayer("num"); showKind(chip.dataset.sec); return; }
     const layer = e.target.closest("#dr-layer button");

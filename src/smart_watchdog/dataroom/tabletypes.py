@@ -136,6 +136,59 @@ def zh(section: str) -> str:
     """類別的中文名。查不到就回原 key——猜一個好看的名字會讓人以為分對了。"""
     return SECTION_ZH.get(section, section)
 
+#: 表單家族。31 種類型排成一面牆時沒有結構，要找「支出類」得用眼睛掃過整面；
+#: 分成六族之後，選單有了層次，顏色也才有意義可掛。
+#:
+#: ⚠️ 家族的顏色是**分類**不是**分級**。六個色的明度刻意相近，不可讓任何一族
+#: 看起來比另一族「嚴重」——這一室只做原件轉錄，沒有風險判讀。
+FAMILY_ORDER = ["core", "income", "expense", "budget", "asset", "other"]
+
+FAMILY_ZH = {
+    "core": "四大報表",
+    "income": "收入與代收",
+    "expense": "支出明細",
+    "budget": "預算執行",
+    "asset": "準備金與財產",
+    "other": "查核與其他",
+}
+
+FAMILIES: dict[str, str] = {
+    # 四大報表
+    "balance_sheet": "core", "income_statement": "core",
+    "cash_flow": "core", "equity_change": "core",
+    # 收入與代收
+    "tuition_income": "income", "income_by_function": "income",
+    "project_subsidy": "income", "other_income_expense": "income",
+    "agency_subsidy": "income", "agency_passthrough": "income",
+    "extended_care": "income", "income_detail": "income",
+    # 支出明細
+    "personnel_detail": "expense", "operating_detail": "expense",
+    "material_detail": "expense", "maintenance_detail": "expense",
+    "admin_fee": "expense",
+    # 預算執行
+    "budget_transfer": "budget", "multiyear_compare": "budget",
+    "surplus_execution": "budget",
+    # 準備金與財產
+    "severance_reserve": "asset", "development_reserve": "asset",
+    "property": "asset", "operating_assets": "asset",
+    "cash_detail": "asset", "payables": "asset",
+    # 查核與其他
+    "auditor_checklist": "other", "performance_review": "other",
+    "related_party": "other", "note_items": "other",
+    "net_difference": "other", UNROUTED: "other",
+}
+
+
+def family(section: str) -> str:
+    """這一類屬於哪一族。沒歸過的一律落到「查核與其他」，不另開一族——
+    選單上多一個只有一種類型的家族，比放在「其他」裡更難找。"""
+    return FAMILIES.get(section, "other")
+
+
+def family_zh(fam: str) -> str:
+    return FAMILY_ZH.get(fam, fam)
+
+
 
 def normalise(text: str | None) -> str:
     """比對用的正規化：去掉所有空白（含全形）。顯示一律用原字串。"""

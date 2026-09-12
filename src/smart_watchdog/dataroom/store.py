@@ -124,10 +124,15 @@ def overview() -> dict:
             sec_reports[key] = sec_reports.get(key, 0) + 1
 
     from . import tabletypes as tt
+    # 家族順序優先於張數：選單要先有結構，同一族內才照張數排。
+    # 「未分類明細」不論多大一律排在族內最後——它是殘料，不是門面；點進家族時
+    # 落在它上面會讓人以為那一族就長這樣。它仍然看得見，只是不當代表。
     sections = sorted(
-        ({"key": k, "zh": tt.zh(k), "tables": n, "reports": sec_reports[k]}
+        ({"key": k, "zh": tt.zh(k), "tables": n, "reports": sec_reports[k],
+          "family": tt.family(k), "family_zh": tt.family_zh(tt.family(k))}
          for k, n in sec_tables.items()),
-        key=lambda s: -s["tables"])
+        key=lambda s: (tt.FAMILY_ORDER.index(s["family"]),
+                       s["key"] == tt.UNROUTED, -s["tables"]))
 
     return {
         "totals": totals,
