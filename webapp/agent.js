@@ -59,6 +59,9 @@
 
       case "open_drawer":
         if (a.institution_id) SW.openDossier(a.institution_id);
+        /* 證據：段落 + 檔名頁碼 + 那一頁的截圖。圖片是 lazy 的，
+           因為第一次開要現場渲染 PDF，先把文字與出處顯示出來。 */
+        if (a.evidence_query) showEvidence(a);
         break;
 
       case "close_drawer": {
@@ -92,6 +95,37 @@
       default:
         break;
     }
+  }
+
+  /* 證據抽屜。文字先出來，截圖 lazy 載入——第一次開要現場把 PDF 那一頁
+     渲染成 PNG，不該讓文字等圖。沒有 data/raw 的機器上後端不會給
+     image_url，所以這裡只在有值時才放 <img>。 */
+  function showEvidence(a) {
+    const rows = [];
+    (a.facts || []).forEach((f) => {
+      const v = f.is_blank ? "（空白＝未編列，不是 0）"
+        : `${SW.nf(f.value)} ${esc(f.unit || "")}`;
+      rows.push(`<div class="ev">
+        <div class="evh">${esc(f.label || f.field || "")} ${v}</div>
+        <div class="evc">${esc(f.citation || "")}</div>
+        ${f.image_url ? `<img loading="lazy" src="${f.image_url}" alt="財報頁面">` : ""}
+      </div>`);
+    });
+    (a.passages || []).forEach((p) => {
+      rows.push(`<div class="ev">
+        <div class="evh">${esc(p.label || p.kind || "")}</div>
+        <div class="evt">${esc((p.text || "").slice(0, 300))}</div>
+        <div class="evc">${esc(p.citation || "")}</div>
+        ${p.image_url ? `<img loading="lazy" src="${p.image_url}" alt="財報頁面">` : ""}
+      </div>`);
+    });
+    if (!rows.length) {
+      step('<span class="tag no">證據</span>這份索引查不到，屬資料不足');
+      return;
+    }
+    log().insertAdjacentHTML("beforeend",
+      `<div class="msg bot evwrap">${rows.join("")}</div>`);
+    log().scrollTop = log().scrollHeight;
   }
 
   /* ── 畫面輸出 ────────────────────────────────────────── */

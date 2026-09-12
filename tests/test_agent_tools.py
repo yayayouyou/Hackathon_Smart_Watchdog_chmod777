@@ -245,3 +245,19 @@ def test_mcp_without_a_token_is_denied_by_the_registry_not_by_mcp() -> None:
 def test_mcp_rejects_an_unregistered_tool() -> None:
     out = mcp_server.dispatch("drop_database", {}, "whatever")
     assert "未註冊" in out["payload"]["note"]
+
+
+# ── 證據頁 ───────────────────────────────────────────────────────────
+
+
+def test_search_results_link_to_a_page_image_when_the_pdf_is_present(reg) -> None:
+    """有 data/raw 才掛 image_url——給一個必定 404 的連結比不給更糟。"""
+    out = _run(reg, "search_documents", {"q": "資遣費準備金", "limit": 3})
+    rows = out.payload["facts"] + out.payload["passages"]
+    has_pdf = any((ROOT / r["path"]).exists() for r in rows if r.get("path"))
+    if not has_pdf:
+        pytest.skip("這台機器沒有 data/raw")
+    linked = [r for r in rows if r.get("image_url")]
+    assert linked, "有原始 PDF 卻沒掛上證據頁網址"
+    # 路徑含中文與斜線，一定要編碼過：未編碼會被 uvicorn 以 400 擋掉。
+    assert all("%2F" in r["image_url"] for r in linked)

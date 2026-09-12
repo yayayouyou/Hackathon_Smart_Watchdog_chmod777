@@ -354,15 +354,51 @@ def _search_documents(_ctx: ToolContext, a: SearchDocumentsArgs) -> ToolOutcome:
         )
     finally:
         conn.close()
+
+    passages = [dict(x) for x in res.get("passages", [])]
+    facts = [dict(x) for x in res.get("facts", [])]
+    # 每一筆補上「可以翻開的那一頁」。頁碼只有 facts 有單一值；passages 的
+    # page_label 可能是 "p.11-14" 這種範圍，取第一頁即可（那是段落起始頁）。
+    for f in facts:
+        _attach_image(f, f.get("page"))
+    for p in passages:
+        _attach_image(p, _first_page(p.get("page_label")))
+
     return ToolOutcome(
         payload={
             "query": a.q, "found": res.get("found", 0),
-            "passages": res.get("passages", []), "facts": res.get("facts", []),
+            "passages": passages, "facts": facts,
             "coverage": res.get("coverage"),
             "note": res.get("note", "數值為空白代表未編列，不是 0。"),
         },
-        ui_action={"type": "open_drawer", "evidence_query": a.q},
+        ui_action={"type": "open_drawer", "evidence_query": a.q,
+                   "passages": passages[:3], "facts": facts[:3]},
     )
+
+
+def _first_page(label: Any) -> Optional[int]:
+    """從 "p.11-14" 取 11。取不到就 None——猜錯頁碼比沒有圖更糟。"""
+    import re
+
+    if not label:
+        return None
+    m = re.search(r"\d+", str(label))
+    return int(m.group()) if m else None
+
+
+def _attach_image(row: dict, page: Optional[int]) -> None:
+    """掛上證據頁的圖片網址。沒有 data/raw 的機器上這個網址會回 404，
+    所以只在原始檔真的存在時才掛——不要給出一個一定開不起來的連結。"""
+    from urllib.parse import quote
+
+    path = row.get("path")
+    if not path or not page:
+        return
+    if not (ROOT / path).exists():
+        return
+    # 路徑含中文與斜線，一定要編碼：未編碼的中文查詢字串會被 uvicorn 以
+    # 400 Invalid HTTP request 擋掉（這個坑在 /api/docsearch 已經踩過一次）。
+    row["image_url"] = f"/api/evidence/page?path={quote(path, safe='')}&page={page}"
 
 
 # ── 9. load_skill ────────────────────────────────────────────────────
