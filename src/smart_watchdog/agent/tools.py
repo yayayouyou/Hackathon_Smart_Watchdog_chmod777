@@ -544,6 +544,211 @@ def _record_feedback(ctx: ToolContext, a: RecordFeedbackArgs) -> ToolOutcome:
     })
 
 
+# ── 13. get_rank_track ───────────────────────────────────────────────
+
+
+def _get_rank_track(_ctx: ToolContext, a: InstitutionArgs) -> ToolOutcome:
+    """單一機構在各時點的名次軌跡。
+
+    `set_time_machine` 是全市視角（某一格的前 N 名），這個是單園視角
+    （這一所在每一格排第幾）。兩個都需要——被問「這家一直都排這麼前面嗎」
+    時要的是後者。
+    """
+    p = _point(a.institution_id)
+    if not p:
+        return _not_found(a.institution_id)
+    out = _dos().rank_track_of(a.institution_id)
+    return ToolOutcome(
+        payload={"institution": p["full"], **out},
+        ui_action={"type": "open_drawer", "institution_id": a.institution_id},
+    )
+
+
+# ── 14. get_staffing ─────────────────────────────────────────────────
+
+
+def _get_staffing(_ctx: ToolContext, a: InstitutionArgs) -> ToolOutcome:
+    """員工數、教保人數、每人人事費、師生比，並附全體同儕基準。
+
+    ⚠️ 非營利園採成本分攤制、薪給結構一致，所以這一段是**查證對照**不是風險
+    訊號——全體 94 份非開辦年報告無一落在四分位距外。講的時候不要說成異常。
+    """
+    p = _point(a.institution_id)
+    if not p:
+        return _not_found(a.institution_id)
+    _code, dossier = _dossier_for(a.institution_id)
+    if dossier is None or not dossier.get("staff"):
+        return ToolOutcome(payload={
+            "institution": p["full"], "count": 0, "items": [],
+            "note": "本園無公開財務報告，沒有員工與人事費資料。資料不足，不是低風險。",
+        })
+    bench = _srv().payload().get("bench", {})
+    items = []
+    for s in dossier["staff"]:
+        per_head = round(s["cost"] / s["st"]) if s.get("st") else None
+        ratio = round(s["en"] / s["ed"], 1) if s.get("ed") and s.get("en") else None
+        items.append({
+            "academic_year": s.get("y"), "staff": s.get("st"),
+            "educators": s.get("ed"), "approved": s.get("cap"),
+            "enrolled": s.get("en"), "personnel_cost": s.get("cost"),
+            "cost_per_head": per_head, "child_per_educator": ratio,
+        })
+    return ToolOutcome(
+        payload={
+            "institution": p["full"], "count": len(items), "items": items,
+            "peer_median_cost_per_head": bench.get("ph_med"),
+            "peer_iqr": [bench.get("ph_q1"), bench.get("ph_q3")],
+            "peer_median_child_per_educator": bench.get("ratio_med"),
+            "peer_reports": bench.get("n_norm"),
+            "note": ("非營利園採成本分攤制、薪給結構一致，這一段是查證對照不是"
+                     "風險訊號——全體無一落在四分位距外。不要講成異常。"),
+        },
+        ui_action={"type": "open_drawer", "institution_id": a.institution_id},
+    )
+
+
+# ── 15. get_realtime ─────────────────────────────────────────────────
+
+
+def _get_realtime(_ctx: ToolContext, a: InstitutionArgs) -> ToolOutcome:
+    """這一所的公開提及（新聞／PTT／Threads）與 Google 評論。
+
+    **這些不影響排序，也不是預測。** 新聞講的是已經發生的裁罰，提前量是 0；
+    定位是即時監看。Google 評分只即時顯示、不入庫、不進特徵（Places ToS）。
+    """
+    p = _point(a.institution_id)
+    if not p:
+        return _not_found(a.institution_id)
+    data = _srv().payload()
+    rt = data.get("realtime", {})
+    mentions = rt.get("by_institution", {}).get(a.institution_id, [])
+    return ToolOutcome(
+        payload={
+            "institution": p["full"],
+            "swept_at": rt.get("swept_at", ""),
+            "channels_live": rt.get("channels_live", 0),
+            "channels_total": rt.get("channels_total", 0),
+            "count": len(mentions),
+            "items": [{
+                "channel": m.get("channel"), "headline": m.get("headline"),
+                "publisher": m.get("publisher"), "published": m.get("published"),
+                "url": m.get("url"),
+                # 為什麼歸給這所園。名稱能對應 ≥2 所就會拒絕歸屬。
+                "attribution_basis": m.get("attribution_basis"),
+            } for m in mentions],
+            "note": ("提及不影響排序，也不是預測——新聞消費的是已經發生的官方"
+                     "裁罰紀錄，提前量為 0。查無提及不代表低風險。"),
+        },
+        ui_action={"type": "open_drawer", "institution_id": a.institution_id},
+    )
+
+
+# ── 16. list_memos ───────────────────────────────────────────────────
+
+
+class ListMemosArgs(BaseModel):
+    q: Optional[str] = Field(default=None, description="比對園名或行政區，例如「三重」")
+    limit: int = Field(default=20, ge=1, le=MAX_LIMIT, description="取幾筆")
+
+
+def _list_memos(_ctx: ToolContext, a: ListMemosArgs) -> ToolOutcome:
+    """本批建議書清單。`open_memo` 是開一份，這個是瀏覽整批。"""
+    out = _dos().list_memos(q=a.q, limit=a.limit)
+    return ToolOutcome(
+        payload=out,
+        ui_action={"type": "navigate", "tab": "memos"},
+    )
+
+
+# ── 17. set_map_view ─────────────────────────────────────────────────
+
+
+class SetMapViewArgs(BaseModel):
+    """地圖的顯示設定。每個欄位都可省略，只送要改的那幾個。"""
+
+    colour_by: Optional[str] = Field(
+        default=None, description="標記著色依據：type（設立別）或 penalty（裁罰件數）"
+    )
+    cluster: Optional[bool] = Field(default=None, description="標記群集")
+    districts: Optional[bool] = Field(default=None, description="行政區界線")
+    district_names: Optional[bool] = Field(default=None, description="行政區名稱")
+    mask: Optional[bool] = Field(default=None, description="新北以外反灰")
+    choropleth: Optional[bool] = Field(default=None, description="行政區底色")
+    flagged_only: Optional[bool] = Field(default=None, description="只顯示本批建議查核")
+    capacity: Optional[int] = Field(
+        default=None, ge=1, le=200, description="本月可稽查家數，會改變本批提案的筆數"
+    )
+
+
+def _set_map_view(_ctx: ToolContext, a: SetMapViewArgs) -> ToolOutcome:
+    """改地圖顯示。**只改畫面，不改任何分數或名次。**
+
+    `colour_by` 兩個值都是中性事實（設立別、公開裁罰件數），**不是我們算出來的
+    分數**——分數不上地圖，見 aws-architecture.md §6.5。
+    """
+    if a.colour_by is not None and a.colour_by not in ("type", "penalty"):
+        return ToolOutcome(payload={
+            "error": f"colour_by 只能是 type 或 penalty，收到「{a.colour_by}」",
+        })
+    view = {k: v for k, v in a.model_dump().items() if v is not None}
+    if not view:
+        return ToolOutcome(payload={"error": "沒有指定任何要改的項目"})
+    return ToolOutcome(
+        payload={
+            "applied": view,
+            "note": "只改畫面顯示，不影響排序或分數。地圖顏色代表事實，不是風險高低。",
+        },
+        ui_action={"type": "set_filters", "map": view},
+    )
+
+
+# ── 18. scan_estimate ────────────────────────────────────────────────
+
+
+class ScanEstimateArgs(BaseModel):
+    channels: list[str] = Field(
+        min_length=1, max_length=6,
+        description="管道：news_rss、ptt、apify_threads、places_reviews",
+    )
+    scope: str = Field(
+        default="proposal",
+        description="範圍：city 全市、proposal 本批提案、compliance_fail 法遵未通過、"
+                    "evaluation 評鑑、top_risk 前段班、district 指定行政區",
+    )
+    town: Optional[str] = Field(default=None, description="scope=district 時的行政區")
+
+
+def _scan_estimate(_ctx: ToolContext, a: ScanEstimateArgs) -> ToolOutcome:
+    """**算錢，不花錢。** 回傳金額上界與會被哪一道上限擋住。
+
+    刻意只給估算、不給發動：讓對話能直接產生支出，風險太高。要真的掃描，
+    請人到「掃描」頁籤自己按——那裡會把畫面上的金額回押給伺服器重驗（TOCTOU）。
+
+    直接呼叫 `scan.estimate()` 端點函式，不自己組 plan——估算結果必須與畫面上
+    看到的那個數字完全一樣，否則 agent 講的金額會跟使用者要確認的金額不同。
+    """
+    from ..api.scan import ScanRequest, estimate
+
+    req = ScanRequest(scope=a.scope, district=a.town or "", channels=list(a.channels))
+    try:
+        out = estimate(req)
+    except Exception as exc:  # noqa: BLE001 - 估算失敗要變成可讀訊息，不是 500
+        return ToolOutcome(payload={
+            "error": f"估算失敗：{exc}",
+            "note": "管道或範圍可能不正確；掃描頁籤的選項清單是唯一的來源。",
+        })
+    return ToolOutcome(
+        payload={
+            "scope": out.get("label"), "usd_max": out.get("usd_max"),
+            "lines": out.get("lines"), "gate": out.get("gate"),
+            "expected_leads": out.get("expected_leads"),
+            "note": ("這是金額上界，不是實際花費；實際以供應商自報結算。"
+                     "本 tool 不會發動掃描——要執行請到掃描頁籤操作。"),
+        },
+        ui_action={"type": "navigate", "tab": "scan"},
+    )
+
+
 # ── 註冊 ─────────────────────────────────────────────────────────────
 
 _SPECS = [
@@ -570,6 +775,19 @@ _SPECS = [
     ("record_feedback", "記錄稽查員對建議書單項的認同與否（追加式）",
      RecordFeedbackArgs, _record_feedback, True),
     ("load_skill", "載入一份作業指引", LoadSkillArgs, _load_skill, False),
+    ("get_rank_track", "取單一機構在各時點的名次軌跡（set_time_machine 是全市視角）",
+     InstitutionArgs, _get_rank_track, False),
+    ("get_staffing", "取一所機構的員工數、每人人事費、師生比，附全體同儕基準",
+     InstitutionArgs, _get_staffing, False),
+    ("get_realtime", "取一所機構的公開提及（新聞／PTT／Threads）與歸屬依據",
+     InstitutionArgs, _get_realtime, False),
+    ("list_memos", "瀏覽或搜尋本批建議書清單（open_memo 是開其中一份）",
+     ListMemosArgs, _list_memos, False),
+    ("set_map_view", "改地圖顯示：著色依據、群集、區界、區名、反灰、底色、"
+                     "只看複查名單、派工容量。只改畫面，不改分數",
+     SetMapViewArgs, _set_map_view, False),
+    ("scan_estimate", "估算一次輿情掃描要花多少錢（算錢不花錢，不會發動掃描）",
+     ScanEstimateArgs, _scan_estimate, False),
 ]
 
 

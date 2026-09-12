@@ -34,6 +34,39 @@
     });
   }
 
+  /* 地圖設定：**設好值再觸發控制項自己的事件**，不直接改 SW.state。
+   *
+   * 這樣 agent 的動作與人用滑鼠點，走的是完全同一條程式路徑——各寫一份的話，
+   * 兩者遲早會不一致（例如 f-choro 的 handler 還做了圖例重畫，自己改 state
+   * 就會漏掉）。副作用是勾選框會跟著動，那正是我們要的：畫面上顯示的條件
+   * 必須等於實際套用的條件。 */
+  const TOGGLES = {
+    cluster: "f-cluster", districts: "f-districts", district_names: "f-dnames",
+    mask: "f-mask", choropleth: "f-choro", flagged_only: "f-flagged",
+  };
+
+  function fire(el, type) {
+    el.dispatchEvent(new Event(type, { bubbles: true }));
+  }
+
+  function applyMapView(v) {
+    for (const [key, id] of Object.entries(TOGGLES)) {
+      if (typeof v[key] !== "boolean") continue;
+      const box = $(id);
+      if (!box || box.checked === v[key]) continue;   // 已經是這個狀態就不動
+      box.checked = v[key];
+      fire(box, "change");
+    }
+    if (v.colour_by) {
+      const btn = document.querySelector(`#pinby button[data-p="${v.colour_by}"]`);
+      if (btn) btn.click();
+    }
+    if (typeof v.capacity === "number") {
+      const cap = $("cap");
+      if (cap) { cap.value = v.capacity; fire(cap, "input"); }
+    }
+  }
+
   /* 六種 ui_action。型別由後端的 UI_ACTION_TYPES 限定，這裡只負責接。 */
   function dispatch(a) {
     switch (a.type) {
@@ -50,6 +83,7 @@
         if (a.tab) switchTab(a.tab);
         const f = a.filters || {};
         if (f.type) applyTypeFilter(f.type);
+        if (a.map) applyMapView(a.map);
         if (Array.isArray(a.ids)) {
           SW.state.agentIds = a.ids.length ? new Set(a.ids) : null;
         }

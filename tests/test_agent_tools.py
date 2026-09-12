@@ -69,13 +69,45 @@ def _run(reg, name, args, ctx=None):
     return reg.execute(ctx or _ctx(), name, args)
 
 
+def _with_penalties(reg) -> str:
+    """挑一所有裁罰紀錄的機構。沒有就跳過——測試不該依賴特定某一所。"""
+    for r in _run(reg, "list_institutions", {"limit": 50}).payload["items"]:
+        if r["penalties"] > 2:
+            return r["id"]
+    pytest.skip("這批前 50 名沒有裁罰超過 2 件的機構")
+
+
 # ── 白名單與身分 ──────────────────────────────────────────────────────
 
 
-def test_all_twelve_tools_are_registered(reg) -> None:
-    assert len(reg.names()) == 12
-    assert "list_institutions" in reg.names()
-    assert "search_documents" in reg.names(), "本 repo 獨有的證據檢索 tool"
+def test_every_screen_feature_has_a_tool(reg) -> None:
+    """agent 要能操作網站上的每一件事（發動掃描除外，那會花錢）。
+
+    少一個 tool 的表徵不是報錯，是 agent 說「我做不到」——而使用者會以為
+    是模型不夠聰明，不會想到是我們沒給它工具。
+    """
+    names = set(reg.names())
+    assert len(names) == 18
+    for expected in (
+        "list_institutions", "get_ranking",          # 派工提案
+        "open_institution", "get_penalties", "get_findings",
+        "get_staffing", "get_rank_track", "get_realtime",  # 卷宗各段
+        "open_memo", "list_memos",                   # 建議書
+        "set_time_machine", "get_model_card",        # 時間軸
+        "search_documents",                          # 證據
+        "set_map_view",                              # 地圖控制項
+        "scan_estimate",                             # 掃描（只估算）
+        "export_schedule", "record_feedback", "load_skill",
+    ):
+        assert expected in names, f"少了 {expected}"
+
+
+def test_scanning_can_be_priced_but_not_launched(reg) -> None:
+    """讓對話能直接發動掃描，等於讓 agent 自己花錢。刻意只給估算。"""
+    names = set(reg.names())
+    assert "scan_estimate" in names
+    for forbidden in ("scan_start", "scan", "run_scan", "scan_adopt"):
+        assert forbidden not in names, f"{forbidden} 會讓 agent 花錢"
 
 
 def test_unregistered_tool_is_denied(reg) -> None:
@@ -280,3 +312,79 @@ def test_mcp_lifespan_is_wired_into_the_app() -> None:
     # （載 payload、bind 掃描、重啟對帳）必須在同一支 lifespan 裡。
     assert server.app.router.lifespan_context is not None
     assert server.app.router.on_startup == [], "on_event 與自訂 lifespan 不能並存"
+
+
+# ── 新增的六個 tool ──────────────────────────────────────────────────
+
+
+def test_rank_track_is_per_institution_not_city_wide(reg) -> None:
+    """`set_time_machine` 回某一格的前 N 名，這個回某一所的逐格名次。兩者不同。"""
+    iid = _with_penalties(reg)
+    out = _run(reg, "get_rank_track", {"institution_id": iid})
+    assert out.payload["count"] >= 3
+    assert all("as_of" in p and "rank" in p for p in out.payload["points"])
+    assert "尚未結束" in out.payload["note"], "hit 為空的三態要講明"
+
+
+def test_staffing_says_it_is_a_cross_check_not_a_red_flag(reg) -> None:
+    """非營利園採成本分攤制，薪給結構一致——這一段講成異常就是誤導。"""
+    listed = _run(reg, "list_institutions",
+                  {"has_compliance_failure": True, "limit": 3}).payload["items"]
+    if not listed:
+        pytest.skip("沒有財報法遵未通過的登記")
+    out = _run(reg, "get_staffing", {"institution_id": listed[0]["id"]})
+    assert out.payload["count"] > 0
+    assert out.payload["peer_median_cost_per_head"], "沒有同儕基準就沒有對照意義"
+    assert "不是風險訊號" in out.payload["note"]
+
+
+def test_staffing_without_a_report_says_insufficient_data(reg) -> None:
+    listed = _run(reg, "list_institutions", {"limit": 50}).payload["items"]
+    target = next((r for r in listed if not r["has_financial_report"]), None)
+    if target is None:
+        pytest.skip("這批前 50 名都有財報")
+    out = _run(reg, "get_staffing", {"institution_id": target["id"]})
+    assert out.payload["count"] == 0
+    assert "資料不足" in out.payload["note"]
+
+
+def test_realtime_says_mentions_do_not_predict(reg) -> None:
+    """新聞消費的是已經發生的裁罰，提前量 0。講成預警就是誇大。"""
+    iid = _with_penalties(reg)
+    out = _run(reg, "get_realtime", {"institution_id": iid})
+    assert "不是預測" in out.payload["note"]
+    assert "不代表低風險" in out.payload["note"]
+    for m in out.payload["items"]:
+        assert "attribution_basis" in m, "每則都要能說為什麼歸給這所園"
+
+
+def test_list_memos_browses_and_filters(reg) -> None:
+    everything = _run(reg, "list_memos", {"limit": 50}).payload
+    assert everything["count"] > 100
+    narrowed = _run(reg, "list_memos", {"q": "三重", "limit": 50}).payload
+    assert 0 < narrowed["count"] < everything["count"]
+    assert all("三重" in x["title"] or "三重" in x["town"] for x in narrowed["items"])
+
+
+def test_map_view_only_changes_display(reg) -> None:
+    out = _run(reg, "set_map_view", {"colour_by": "penalty", "cluster": False})
+    assert out.ui_action["type"] == "set_filters"
+    assert out.ui_action["map"] == {"colour_by": "penalty", "cluster": False}
+    assert "不影響排序或分數" in out.payload["note"]
+
+
+def test_map_view_rejects_an_unknown_colour_basis(reg) -> None:
+    """只有 type 與 penalty 兩種，且兩者都是公開事實，不是我們算的分數。"""
+    out = _run(reg, "set_map_view", {"colour_by": "risk"})
+    assert "只能是 type 或 penalty" in out.payload["error"]
+
+
+def test_map_view_with_no_fields_says_so(reg) -> None:
+    assert "沒有指定" in _run(reg, "set_map_view", {}).payload["error"]
+
+
+def test_scan_estimate_prices_without_spending(reg) -> None:
+    out = _run(reg, "scan_estimate", {"channels": ["news_rss", "ptt"], "scope": "proposal"})
+    assert "usd_max" in out.payload
+    assert "不會發動掃描" in out.payload["note"]
+    assert out.ui_action["tab"] == "scan"
