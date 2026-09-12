@@ -1,4 +1,9 @@
 :root{
+  /* 強制淺色。暗色區塊寫成 :root:not([data-theme="light"])，而 <html> 上掛了
+     data-theme="light"，所以那一段整段失效。這裡再宣告 color-scheme，
+     讓表單控制項、捲軸、預設連結色也一起走淺色——沒有它，深色系統的
+     使用者會拿到深色的 <input> 配淺色頁面。 */
+  color-scheme:light;
   --ink:#14202A; --ink-2:#3D4E5C; --ink-3:#6B7C8A; --ink-4:#93A2AE;
   --paper:#EFF3F5; --panel:#FFFFFF; --sunk:#E6EDF0; --rule:#CFD9E0;
   --pub:#2A78D6; --np:#EB6834; --prv:#1BAF7A;
@@ -114,14 +119,33 @@ input[type=range]{accent-color:var(--seal)}
  *
  * 收合時把寬度換成 `--agentw-min`（一條細直排），而不是 display:none——
  * 對話內容留在 DOM 裡，展開回來還在原處，串流中途收合也不會斷。 */
-main{display:grid;
-  grid-template-columns:214px minmax(0,1fr) var(--sidew,390px) 6px var(--agentw,380px);
-  min-height:0}
+/* main 只有兩欄：樓層索引 + 房間。房間內部（roombody）才分地圖／名單／助理，
+   這樣「非地圖室不要有地圖」只要換 roombody 的欄定義，不必動 main。 */
+main{display:grid;grid-template-columns:214px minmax(0,1fr);min-height:0}
+.roomwrap{display:flex;flex-direction:column;min-width:0;min-height:0}
+.roombody{flex:1;min-height:0;display:grid;
+  grid-template-columns:minmax(0,1fr) var(--sidew,390px) 6px var(--agentw,380px)}
+/* 除了地圖室，其他室不放地圖——地圖跟輿情、資料、建議書沒有關係，
+   擺在那裡只是把畫面切碎。 */
+.roombody.no-map .mapwrap{display:none}
+.roombody.no-map{grid-template-columns:minmax(0,1fr) 6px var(--agentw,380px)}
+
+/* 室頭：五間房共用。室號與樓層索引、中庭平面圖上的編號是同一組。 */
+.roomhead{display:flex;align-items:center;gap:10px;padding:9px 18px;
+  background:var(--panel);border-bottom:1px solid var(--rule);flex:none}
+.rh-no{font-family:var(--mono);font-size:11px;color:var(--seal)}
+.rh-name{font-size:15px;font-weight:600}
+.rh-desc{font-size:11.5px;color:var(--ink-3)}
+/* 來源膠囊永遠在同一個位置：可稽核性是常駐元件，不是註腳。 */
+.rh-src{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink-3);
+  border:1px solid var(--rule);border-radius:3px;padding:1px 7px;white-space:nowrap}
 @media(max-width:1400px){main{--sidew:330px;--agentw:330px}}
 @media(max-width:1100px){main{--sidew:290px;--agentw:300px}}
 /* 窄螢幕疊成上下：三欄並排在 860px 以下只會三個都不能用。 */
 @media(max-width:860px){
-  main{grid-template-columns:1fr;grid-template-rows:auto 40vh 1fr auto}
+  main{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .roombody{grid-template-columns:1fr;grid-template-rows:40vh 1fr auto}
+  .roombody.no-map{grid-template-columns:1fr;grid-template-rows:1fr auto}
   .agentgrip{display:none}
   .agentcol{border-left:0;border-top:1px solid var(--rule);max-height:46vh}
 }

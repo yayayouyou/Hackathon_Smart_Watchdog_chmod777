@@ -33,22 +33,30 @@
   const KENNEL = { x: 118, y: 648 };   // 放大到全螢幕後，狗窩在左下角
 
   /* 每一室。`pane` 對應既有 app 的分頁，`door` 是中庭那一側的開口中心。 */
+  /* `map: true` 才會顯示地圖那一欄。地圖跟輿情、資料、建議書沒有關係，
+     擺在那裡只是把畫面切碎——這是使用者明確要求的。
+     `src` 是室頭右側的來源膠囊：每一室都要說得出自己的數字哪來的。 */
   const ROOMS = [
-    { id: "map", no: "01", name: "地圖室", pane: "list", accent: "--seal",
+    { id: "map", no: "01", name: "地圖室", pane: "list", accent: "--seal", map: true,
       x: 40, y: 30, w: 505, h: 350, door: { x: 545, y: 210 }, side: "L",
-      desc: "全市 1,213 園 · 點一園看判斷原因與紀錄" },
-    { id: "data", no: "02", name: "資料室", pane: "memos", accent: "--pub",
+      desc: "全市 1,213 園 · 點一園看判斷原因與紀錄",
+      src: "registry · 快照 2026-08-10" },
+    { id: "data", no: "02", name: "資料室", pane: "data", accent: "--pub",
       x: 40, y: 380, w: 505, h: 350, door: { x: 545, y: 550 }, side: "L",
-      desc: "PDF 提取與外部蒐集的存放處" },
+      desc: "PDF 提取與外部蒐集的存放處",
+      src: "data/extracted · data/external" },
     { id: "voice", no: "03", name: "輿情室", pane: "scan", accent: "--good",
       x: 895, y: 30, w: 505, h: 234, door: { x: 895, y: 150 }, side: "R",
-      desc: "新聞、PTT、評鑑；Threads 待接" },
+      desc: "新聞、PTT、評鑑；Threads 待接",
+      src: "realtime · 掃描於 2026-09-08" },
     { id: "backtest", no: "04", name: "回測室", pane: "timeline", accent: "--warn",
       x: 895, y: 264, w: 505, h: 233, door: { x: 895, y: 380 }, side: "R",
-      desc: "每年重訓一次，看當時的排序後來對不對" },
-    { id: "letters", no: "05", name: "文書室", pane: "chat", accent: "--ink-3",
+      desc: "每年重訓一次，看當時的排序後來對不對",
+      src: "timeline · 2021–2024" },
+    { id: "letters", no: "05", name: "文書室", pane: "memos", accent: "--ink-3",
       x: 895, y: 497, w: 505, h: 233, door: { x: 895, y: 613 }, side: "R",
-      desc: "稽核建議書草稿與派工單" },
+      desc: "稽核建議書草稿與派工單",
+      src: "report · 143 份" },
   ];
 
   const state = { where: "lobby", busy: false, dogX: 720, dogY: 560, room: null };
@@ -139,7 +147,7 @@
       });
     });
 
-    ROOMS.forEach((r) => roomArt(r.g, r));
+    ROOMS.forEach((r) => { roomArt(r.g, r); kennelArt(r.g, r); });
     drawBoard(rest);
 
     /* 守護犬：獨立一層，不受縮放影響 */
@@ -231,7 +239,10 @@
         t.textContent = label;
         cx += w + 8;
       });
-      const w = el("text", { x, y: y + 212, "font-size": 11, fill: cssv("--warn") }, g);
+      /* 左下角那一塊是狗窩的地盤（每一室都有），內容一律讓開。
+         輿情室只有 234 高，這行字原本就壓在狗窩上。 */
+      const w = el("text", { x: x + 72, y: y + 210, "font-size": 11,
+        fill: cssv("--warn") }, g);
       w.textContent = "⚠ 提前量 0，定位是即時監看不是預測";
       return;
     }
@@ -296,6 +307,21 @@
     put(602, 288, "前 100 名命中率 2.29× · AUC 0.658", 11, cssv("--ink-3"));
   }
 
+  /* 每一室左下角的狗窩。中庭看得到它，進房後守護犬就躺在對應的位置——
+     牠是「跑進那一格」，不是「消失再出現」。 */
+  function kennelArt(g, r) {
+    const kx = r.x + 22, ky = r.y + r.h - 52;
+    const k = el("g", { opacity: .55 }, g);
+    el("path", { d: `M${kx} ${ky + 34} v-18 l14 -13 14 13 v18 z`,
+      fill: cssv("--panel"), stroke: cssv("--ink-4"), "stroke-width": 1.4,
+      "stroke-linejoin": "round" }, k);
+    el("path", { d: `M${kx + 9} ${ky + 34} v-11 a5 5 0 0 1 10 0 v11 z`,
+      fill: cssv("--sunk"), stroke: cssv("--ink-4"), "stroke-width": 1.2 }, k);
+    const t = el("text", { x: kx + 36, y: ky + 32, "font-size": 9.5,
+      fill: cssv("--ink-4"), "letter-spacing": 1.2 }, k);
+    t.textContent = "狗窩";
+  }
+
   function dogArt(g) {
     const ink = cssv("--edge"), paper = cssv("--paper"), seal = cssv("--seal");
     el("ellipse", { cx: 22, cy: 37, rx: 12.5, ry: 2.8, fill: cssv("--ink"),
@@ -348,11 +374,19 @@
   }
 
   /* ── 進房 ─────────────────────────────────────────── */
+  /* FLIP：量出那一間在螢幕上的實際矩形，算出把它放大到填滿舞台需要的
+     位移與倍率，交給 CSS transform。用螢幕像素而不是 viewBox 單位，
+     是因為 preserveAspectRatio 會留邊，兩套座標不是等比的。 */
   function zoomTransform(r) {
-    // 把這一間放大到填滿舞台：先把它的中心移到畫面中心，再放大
-    const s = Math.max(W / r.w, H / r.h);
-    const cx = r.x + r.w / 2, cy = r.y + r.h / 2;
-    return `translate(${W / 2} ${H / 2}) scale(${s}) translate(${-cx} ${-cy})`;
+    const stage = $("planstage");
+    const rect = r.g.getBoundingClientRect();
+    const box = stage.getBoundingClientRect();
+    if (!rect.width || !box.width) return "";
+    const rx = rect.left - box.left, ry = rect.top - box.top;
+    const sc = Math.max(box.width / rect.width, box.height / rect.height);
+    const tx = box.width / 2 - sc * (rx + rect.width / 2);
+    const ty = box.height / 2 - sc * (ry + rect.height / 2);
+    return `translate(${tx}px, ${ty}px) scale(${sc})`;
   }
 
   function enter(id) {
@@ -372,9 +406,12 @@
 
     // ② 房間放大、其餘淡出
     setTimeout(() => {
-      $("planzoom").setAttribute("transform", zoomTransform(r));
       lobby.classList.add("zooming");
-    }, 260);
+      // 先量、再等一幀才套 transform：量測會觸發 layout，跟套用擠在同一幀
+      // 就是那一格掉幀。
+      const t = zoomTransform(r);
+      requestAnimationFrame(() => { $("planstage").style.transform = t; });
+    }, 240);
 
     // ③ 走進去，坐到狗窩
     setTimeout(() => moveDog(KENNEL.x, KENNEL.y, true), 620);
@@ -386,8 +423,30 @@
   /* app 不用 hidden：Leaflet 在 display:none 裡量到的是 0×0，一旦這樣初始化
      過，之後 invalidateSize() 也救不回正確的圖磚邊界。所以 app 從頭到尾都活著，
      中庭只是蓋在它上面（position:fixed, z-index 40）。 */
+  /* 室頭 + 版面。五間房走同一條路，差別只在 `r.map` 與 `r.pane`——
+     每一室各寫一次進場邏輯，第六間房出現時就會有一間忘了同步。 */
+  function dressRoom(r) {
+    $("rh-no").textContent = r.no;
+    $("rh-name").textContent = r.name;
+    $("rh-desc").textContent = r.desc;
+    $("rh-src").textContent = r.src || "";
+    $("roombody").classList.toggle("no-map", !r.map);
+    lieDown();
+  }
+
+  /* 守護犬躺進這一室的狗窩。每次進房重播一次入場，
+     因為「牠跟著我進來了」是這個設計要傳達的東西。 */
+  function lieDown() {
+    const box = document.querySelector(".rail-kennel .kennel-dog");
+    if (!box) return;
+    box.style.animation = "none";
+    void box.offsetWidth;          // 強制重排，動畫才會重播
+    box.style.animation = "";
+  }
+
   function showRoom(r) {
     setRail(r);
+    dressRoom(r);
     if (window.SW && window.SW.showPane) window.SW.showPane(r.pane);
     $("lobby").hidden = true;
     state.where = "room";
@@ -395,7 +454,7 @@
     /* 中庭蓋著的期間版面可能變過（收合助理欄、改視窗大小），重新量一次。
        光 invalidateSize() 不夠：它保留原本的中心與縮放，容器變寬就會多露出
        一片海。要連 fitNTPC() 一起跑，畫面才會回到「剛好是新北」。 */
-    if (window.SW && window.SW.state && window.SW.state.map) {
+    if (r.map && window.SW && window.SW.state && window.SW.state.map) {
       setTimeout(() => {
         window.SW.state.map.invalidateSize();
         if (window.SW.fitNTPC) window.SW.fitNTPC();
@@ -412,7 +471,7 @@
     if (reduced) { state.busy = false; return; }
     // 房間縮回原位，守護犬走回中庭中央
     requestAnimationFrame(() => {
-      $("planzoom").setAttribute("transform", "");
+      $("planstage").style.transform = "";
       lobby.classList.remove("zooming");
       const tip2 = $("dogtip");
       if (tip2) tip2.style.opacity = "";
@@ -437,7 +496,14 @@
         if (r.id === current.id) return;
         state.room = r;
         setRail(r);
+        dressRoom(r);
         if (window.SW && window.SW.showPane) window.SW.showPane(r.pane);
+        if (r.map && window.SW && window.SW.state.map) {
+          setTimeout(() => {
+            window.SW.state.map.invalidateSize();
+            if (window.SW.fitNTPC) window.SW.fitNTPC();
+          }, 40);
+        }
       });
       list.appendChild(b);
     });
@@ -504,12 +570,31 @@
     drawPlan(counts);
     paintWho();
     bindLobbyWho();
+    fillDataRoom();
     $("plan").addEventListener("pointermove", onPointerMove);
     const b = $("rail-back");
     if (b) b.addEventListener("click", back);
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && state.where === "room" && !state.busy) back();
     });
+  }
+
+  /* 資料室的磁磚。數字全部是實際盤點出來的，不是佔位——
+     一間「待設計」的房間如果連現況都說不清楚，接手的人得從頭盤一次。 */
+  function fillDataRoom() {
+    const grid = $("data-grid");
+    if (!grid) return;
+    const tiles = [
+      ["非營利園財報", "132", "已抽取並進版控"],
+      ["公校決算書", "30", "座標抽取，零模型成本"],
+      ["原始 PDF", "162", "data/raw，不進版控"],
+      ["法遵檢核發現", "31", "其中 8 項高嚴重度"],
+      ["外部快照", "7", "含裁罰、登記、界線"],
+      ["文件索引", "148", "問題進，檔案與頁碼出"],
+    ];
+    grid.innerHTML = tiles.map(([k, v, note]) =>
+      `<div class="todo-tile"><span class="k">${k}</span>`
+      + `<span class="v">${v}</span><span class="s">${note}</span></div>`).join("");
   }
 
   window.Lobby = { start, enter, back, paintWho, get where() { return state.where; } };

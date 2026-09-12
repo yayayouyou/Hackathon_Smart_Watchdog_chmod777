@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -114,21 +114,47 @@
       </div>
 
       <!-- 狗窩：守護犬進房後坐的地方。牠從中庭跑進來，就停在這裡。 -->
+      <!-- 狗窩在左下角，與中庭平面圖上各室左下角的狗窩對得起來。
+           進房後守護犬就躺在裡面——「到家了」，不是「立正待命」。 -->
       <div class="rail-kennel">
-        <svg width="30" height="28" viewBox="0 0 44 40" aria-hidden="true">
-          <path d="M9 19c0-2.4 1.4-3.8 3.2-2.9L16 18h12l3.8-1.9C33.6 15.2 35 16.6 35 19v9c0 3.3-2.7 6-6 6H15c-3.3 0-6-2.7-6-6z"
-            fill="var(--panel)" stroke="var(--edge)" stroke-width="1.8" stroke-linejoin="round"/>
-          <path d="M11 17c-1.6-3.2-1.2-6.4.6-6.9 1.7-.5 3.6 1.4 4.4 4.3z" fill="var(--paper)"
-            stroke="var(--edge)" stroke-width="1.6"/>
-          <path d="M33 17c1.6-3.2 1.2-6.4-.6-6.9-1.7-.5-3.6 1.4-4.4 4.3z" fill="var(--paper)"
-            stroke="var(--edge)" stroke-width="1.6"/>
-          <circle cx="17.5" cy="24" r="1.8" fill="var(--edge)"/>
-          <circle cx="26.5" cy="24" r="1.8" fill="var(--edge)"/>
-          <circle cx="22" cy="26.8" r="1.6" fill="var(--seal)"/></svg>
+        <svg class="kennel-dog" width="74" height="52" viewBox="0 0 74 52"
+             aria-hidden="true">
+          <!-- 窩 -->
+          <path d="M4 46 v-20 l17 -15 17 15 v20 z" fill="var(--panel)"
+            stroke="var(--ink-4)" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M13 46 v-13 a8 8 0 0 1 16 0 v13 z" fill="var(--sunk)"
+            stroke="var(--ink-4)" stroke-width="1.3"/>
+          <!-- 躺著的守護犬：身體是一顆橫躺的膠囊，頭靠在窩口 -->
+          <ellipse cx="48" cy="43" rx="22" ry="3" fill="var(--ink)" opacity=".12"/>
+          <path d="M32 41 h26 a9 9 0 0 0 0 -12 h-26 a6 6 0 0 0 0 12 z"
+            fill="var(--panel)" stroke="var(--edge)" stroke-width="1.6"
+            stroke-linejoin="round"/>
+          <circle cx="30" cy="33" r="8" fill="var(--panel)" stroke="var(--edge)"
+            stroke-width="1.6"/>
+          <path d="M24 28c-2.6-1.4-3.4-4-2.2-5 1.2-1 3.6 0 4.6 2.2z"
+            fill="var(--paper)" stroke="var(--edge)" stroke-width="1.4"/>
+          <!-- 閉著的眼睛：在窩裡是休息 -->
+          <path d="M26.5 32.5 a2 2 0 0 0 3 0" fill="none" stroke="var(--edge)"
+            stroke-width="1.3" stroke-linecap="round"/>
+          <circle cx="23.5" cy="35.5" r="1.4" fill="var(--seal)"/>
+          <path d="M62 33 q7 -2 6 -8" stroke="var(--edge)" stroke-width="1.5"
+            fill="none" stroke-linecap="round"/>
+        </svg>
         <span class="txt">守護犬在這一室<br>說一句話就行</span>
       </div>
     </aside>
 
+    <div class="roomwrap">
+      <!-- 室頭：五間房共用同一條。室號、室名、一句說明、右側來源膠囊——
+           把「我在哪一間、這裡的數字哪來的」做成每一室都有的常駐元件。 -->
+      <div class="roomhead">
+        <span class="rh-no" id="rh-no">01</span>
+        <b class="rh-name" id="rh-name">地圖室</b>
+        <span class="rh-desc" id="rh-desc"></span>
+        <span class="rh-src" id="rh-src"></span>
+      </div>
+
+      <div class="roombody" id="roombody">
     <div class="mapwrap">
       <div id="map"></div>
 
@@ -275,6 +301,18 @@
         </form>
       </div>
 
+      <div class="pane" id="pane-data" hidden>
+        <div class="todo">
+          <div class="todo-head">
+            <b>資料提取存放區</b>
+            <span>外殼已就位，內容待設計</span>
+          </div>
+          <div class="todo-grid" id="data-grid"></div>
+          <p class="todo-note">每一筆抽取都帶著來源 PDF 的頁碼，所以這一室之後
+            可以直接從清單跳到證據頁。實際的瀏覽與分析介面由組員接手。</p>
+        </div>
+      </div>
+
       <div class="pane" id="pane-scan" hidden>
         <div class="scanwrap" id="scanwrap">載入中…</div>
       </div>
@@ -335,6 +373,8 @@
         </form>
       </div>
     </aside>
+      </div>
+    </div>
   </main>
 
 </div>
@@ -364,7 +404,9 @@
     </div>
   </header>
   <div class="planwrap">
-    <svg class="plan" id="plan" role="group" aria-label="稽查中心平面圖"></svg>
+    <div class="planstage" id="planstage">
+      <svg class="plan" id="plan" role="group" aria-label="稽查中心平面圖"></svg>
+    </div>
   </div>
 </div>
 

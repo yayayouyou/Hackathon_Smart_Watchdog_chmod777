@@ -70,11 +70,22 @@ def test_every_tab_has_a_pane() -> None:
     assert not missing, f"這些頁籤沒有對應的 pane：{missing}"
 
 
-def test_every_pane_has_a_tab() -> None:
+def test_every_pane_is_reachable() -> None:
+    """每個 pane 都要有辦法點到，否則它就是死的。
+
+    到得了的路有兩條，缺一不可地都算數：
+      - 頂部分頁列的 `data-t`（現在隱藏，但 scan.js／timeline.js 仍靠它）
+      - 中庭的樓層索引（`lobby.js` 的 `ROOMS[].pane`）——**現在真正的導覽**
+
+    原本只認分頁列，於是資料室那一間（只從樓層索引進得去）被判成孤兒。
+    測試要問的是「到得了嗎」，不是「有沒有分頁」。
+    """
     html = _html()
     tabs = set(re.findall(r'data-t="([a-z]+)"', html))
+    rail = set(re.findall(r'pane:\s*"([a-z]+)"',
+                          (WEBAPP / "lobby.js").read_text(encoding="utf-8")))
     panes = set(re.findall(r'id="pane-([a-z]+)"', html))
-    orphan = sorted(panes - tabs)
+    orphan = sorted(panes - tabs - rail)
     assert not orphan, f"這些 pane 點不到：{orphan}"
 
 

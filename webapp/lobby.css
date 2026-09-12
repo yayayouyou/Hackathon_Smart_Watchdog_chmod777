@@ -33,10 +33,20 @@
 .room-enter{opacity:0;transition:opacity .18s}
 .room-hit:hover .room-enter{opacity:1}
 
-/* 縮放群組：進房時把被點的那一間放大到填滿整個舞台 */
-#planzoom{transition:transform .62s cubic-bezier(.45,.02,.2,1)}
-#planrest{transition:opacity .42s ease-out}
-.lobby.zooming #planrest{opacity:0}
+/* ⚠️ 縮放做在**外層 HTML 元素**上，不是 SVG 的 <g>。
+   第一版對 <g> 的 transform 屬性做過渡：那條路徑瀏覽器每一幀都要重新光柵化
+   整張平面圖（幾百個節點、一個 pattern、一堆文字），實測會卡。
+   改成對 .planstage 做 CSS transform 之後，SVG 只光柵化一次，縮放交給 GPU 合成。
+   will-change 只在過渡期間掛上：常駐會讓這一層永遠佔著一塊合成記憶體。 */
+.planstage{position:absolute;inset:0;transform-origin:0 0;
+  transition:transform .58s cubic-bezier(.4,0,.2,1);
+  /* 常駐提升成合成層。只在 .zooming 時才加 will-change 是來不及的：
+     圖層要在同一幀建立，瀏覽器仍得先光柵化一次整張 SVG，於是第一幀就爆掉。
+     中庭只有一個螢幕，長期多佔一塊合成記憶體是划算的交換。 */
+  will-change:transform;transform:translateZ(0)}
+/* ⚠️ **不要**在縮放的同時淡出 SVG 內容。#planrest 在被縮放的子樹裡，對它做
+   opacity 過渡等於每一幀都要以新的倍率重新光柵化整張平面圖——實測掉 13/83 幀、
+   最長 67ms。放大本身就會把其他房間推出畫面，那個淡出是純裝飾。 */
 
 /* 守護犬在縮放群組之外：牠要能獨立走位，不跟著房間一起被放大變形 */
 #dog{transition:transform .42s cubic-bezier(.33,.9,.34,1)}
@@ -89,10 +99,16 @@
 .rail-tools{display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--rule);
   padding-top:12px;min-height:0;overflow-y:auto}
 
-/* 狗窩：守護犬進房後坐的位置 */
-.rail-kennel{margin-top:auto;display:flex;align-items:center;gap:9px;padding:8px 9px;
-  background:var(--paper);border-radius:5px}
-.rail-kennel .txt{font-size:10.5px;color:var(--ink-3);line-height:1.45}
+/* 狗窩：每一室左下角都有一個，守護犬進房後就躺在裡面。
+   位置與中庭平面圖上各室左下角的狗窩對得起來——牠是「跑進那一格」，
+   不是「消失再出現」。 */
+.rail-kennel{margin-top:auto;display:flex;align-items:flex-end;gap:8px;padding:9px;
+  background:var(--paper);border-radius:6px;position:relative;overflow:hidden}
+.rail-kennel .txt{font-size:10.5px;color:var(--ink-3);line-height:1.45;padding-bottom:2px}
+/* 躺下的姿勢：進房是「到家了」，不是「立正待命」。 */
+.kennel-dog{animation:kennel-in .42s cubic-bezier(.33,.9,.34,1) both}
+@keyframes kennel-in{from{transform:translateX(-26px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.kennel-dog{animation:none}}
 
 /* ── 進出房的畫面過渡 ──────────────────────────────────── */
 /* 室內內容在房間放大到底之後才進場：兩件事同時動會看不出「走進去」這件事 */
@@ -100,8 +116,24 @@
 .app.entering{opacity:0}
 
 @media (prefers-reduced-motion:reduce){
-  #planzoom,#planrest,#dog,.app{transition:none}
+  .planstage,#planrest,#dog,.app{transition:none}
 }
+
+/* 待設計的室：外殼一致，內容誠實說明現況。 */
+.todo{padding:20px 22px;overflow-y:auto;min-height:0;display:flex;
+  flex-direction:column;gap:15px}
+.todo-head{display:flex;align-items:baseline;gap:10px}
+.todo-head b{font-size:15px}
+.todo-head span{font-size:11.5px;color:var(--ink-4)}
+.todo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:11px}
+.todo-tile{border:1px solid var(--rule);border-radius:6px;padding:11px 13px;
+  background:var(--panel);display:flex;flex-direction:column;gap:3px}
+.todo-tile .k{font-size:10.5px;color:var(--ink-3);letter-spacing:.06em}
+.todo-tile .v{font-family:var(--mono);font-size:21px;font-weight:500;
+  font-variant-numeric:tabular-nums}
+.todo-tile .s{font-size:10.5px;color:var(--ink-4)}
+.todo-note{margin:0;font-size:11.5px;color:var(--ink-3);line-height:1.6;
+  border-top:1px solid var(--rule);padding-top:12px}
 
 /* 對話泡泡跟著守護犬移動；進房時淡出（不然它會一路飄進房間） */
 #dogtip{transition:transform .42s cubic-bezier(.33,.9,.34,1),opacity .2s}
