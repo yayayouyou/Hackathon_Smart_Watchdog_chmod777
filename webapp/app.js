@@ -1264,7 +1264,10 @@ $("listclear").addEventListener("click", () => {
 
 /* 掃描分頁（scan.js）需要這些；集中匯出一次，不要讓它去翻全域變數。 */
 window.SW = { api, post, $, esc, nf, state, openDossier, TYPE, drawMarkers, refresh,
-  timelineDock, showPane, fitNTPC };
+  timelineDock, showPane, fitNTPC,
+  // 助理設了 state.agentIds 之後，地圖與清單都要重畫。少匯出這一支的後果是
+  // 地圖篩了、清單沒動——畫面上列出來的不是助理剛才講的那幾筆。
+  drawList };
 
 boot().catch((e) => {
   document.body.insertAdjacentHTML("afterbegin",

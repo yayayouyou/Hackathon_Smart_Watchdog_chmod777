@@ -9,6 +9,8 @@
 2. 稽核列由 `registry.execute()` 寫，迴圈不重複寫
 3. 禁用詞被替換掉，且替換有被記錄
 4. 未註冊的 tool 被白名單擋下，且擋下來不會讓整輪崩掉
+5. 一輪不管怎麼收尾，還原出來的歷史都接得上下一輪（見 `_replayable`）
+6. tool 自己回的錯誤不會在畫面上顯示成成功
 """
 
 from __future__ import annotations
@@ -26,6 +28,7 @@ pytest.importorskip("pydantic")
 from pydantic import BaseModel
 
 from smart_watchdog.agent.loop import run_turn
+from smart_watchdog.agent.memory import load_history
 from smart_watchdog.agent.protocol import (
     AgentBackend,
     TextDelta,
@@ -181,3 +184,141 @@ def test_sse_frames_use_crlf_which_the_frontend_must_normalise() -> None:
     raw = sse.ServerSentEvent(data='{"a":1}', event="text").encode()
     assert raw.endswith(b"\r\n\r\n")
     assert b"\n\n" not in raw, "若哪天變成 LF，agent.js 的正規化就不再是必要的"
+
+
+# ── 還原出來的歷史必須接得上下一輪 ──────────────────────────────────
+
+
+def _replayable(s) -> list[dict]:
+    """還原歷史，並檢查它接得上下一則使用者訊息。
+
+    `run_turn` 下一輪做的第一件事就是 `load_history()` 之後 append 一則 user
+    訊息，所以這串必須以 assistant 結尾，而且不能有懸空的 tool_use。任一條
+    不成立，Converse 就會整串拒收——症狀是這個 session **之後每一輪都失敗**，
+    使用者只能重新整理頁面。
+    """
+    messages = load_history(s, SESSION_ID)
+    for i, m in enumerate(messages):
+        if any(b["type"] == "tool_use" for b in m["content"]):
+            nxt = messages[i + 1] if i + 1 < len(messages) else None
+            assert nxt and any(b["type"] == "tool_result" for b in nxt["content"]), (
+                f"第 {i} 則帶著沒有對應 tool_result 的 tool_use"
+            )
+    roles = [m["role"] for m in messages] + ["user"]
+    assert all(a != b for a, b in zip(roles, roles[1:])), f"角色沒有交替：{roles}"
+    return messages
+
+
+def _boom(_ctx: ToolContext, _a: NoArgs) -> ToolOutcome:
+    raise RuntimeError("payload 讀不到／資料庫鎖住／handler 自己的 bug")
+
+
+def test_a_crashing_tool_does_not_poison_the_session(db) -> None:
+    """handler 丟例外之後，這個 session 還要能繼續用。
+
+    `execute()` 先寫 tool_call 稽核才跑 handler，所以 handler 炸掉時曾經只留下
+    tool_call 那一列，軌跡上是「叫了但沒有下文」，而下一輪還原出來是一個沒有
+    對應 tool_result 的 tool_use。
+    """
+    reg = ToolRegistry()
+    reg.register(ToolSpec(
+        name="do_thing", description="做一件事", params=NoArgs, handler=_boom,
+    ))
+    s, user = db
+    with pytest.raises(RuntimeError):
+        list(run_turn(
+            db=s, user=user, session_id=SESSION_ID, turn=1, text="做一下", view={},
+            backend=ScriptedBackend([[
+                TextDelta("我先查一下。"),
+                ToolUse(ToolCall("c1", "do_thing", {})),
+                TurnEnd("tool_use"),
+            ]]),
+            registry=reg,
+        ))
+    kinds = [r.kind for r in s.query(AgentMessage).order_by(AgentMessage.id).all()]
+    assert kinds == ["text", "text", "tool_call", "tool_result"], (
+        "失敗的 tool 也要留下 tool_result，否則稽核軌跡缺一半"
+    )
+    _replayable(s)
+
+
+@pytest.mark.parametrize(
+    "script",
+    [
+        # 不帶講解句：8 步 × 2 列 + 使用者那一句 = 17 列，還在 HISTORY_LIMIT
+        # 的視窗內。每步都配一句講解就是 25 列，使用者那一句會被切到視窗外，
+        # `load_history` 找不到安全起點而回傳空清單——那條路徑測不到這裡要測的事。
+        pytest.param(
+            [[ToolUse(ToolCall(f"c{i}", "do_thing", {})), TurnEnd("tool_use")]
+             for i in range(20)],
+            id="撞到-MAX_STEPS",
+        ),
+        pytest.param(
+            [[TextDelta("我先查一下。"), ToolUse(ToolCall("c1", "do_thing", {})),
+              TurnEnd("tool_use")],
+             [TurnEnd("end_turn")]],
+            id="最後一步沒吐講解句",
+        ),
+    ],
+)
+def test_history_always_ends_where_the_next_turn_can_continue(db, registry, script) -> None:
+    """這兩種收尾都**不是錯誤**，卻一樣會讓下一輪的訊息串不合法。
+
+    兩者的最後一列都是 tool_result，而 tool_result 的 role 是 user——下一輪在
+    後面接上使用者訊息就成了連續兩則 user，角色沒有交替。這條路徑不必出任何
+    差錯就會走到。
+    """
+    _run(db, registry, script)
+    _replayable(db[0])
+
+
+def test_a_dead_backend_on_the_first_step_does_not_poison_the_session(db, registry) -> None:
+    """Bedrock 在第一步就丟例外（限流、憑證過期）時，資料庫只留下使用者那一句。
+
+    留著它，下一輪接上新的使用者訊息就是連續兩則 user。寧可整串不還原。
+    """
+
+    class DeadBackend(AgentBackend):
+        name = "dead"
+
+        def stream(self, *, system, messages, tools, timeout_s=60):  # noqa: ARG002
+            raise RuntimeError("Bedrock throttled")
+            yield  # pragma: no cover - 讓它是 generator
+
+    s, user = db
+    with pytest.raises(RuntimeError):
+        list(run_turn(
+            db=s, user=user, session_id=SESSION_ID, turn=1, text="做一下", view={},
+            backend=DeadBackend(), registry=registry,
+        ))
+    assert _replayable(s) == [], "只剩一句使用者訊息時，寧可少還原也不要送出不合法的串"
+
+
+# ── tool 自己回的錯誤 ────────────────────────────────────────────────
+
+
+def _not_found(_ctx: ToolContext, _a: NoArgs) -> ToolOutcome:
+    return ToolOutcome(payload={
+        "error": "查無機構 deadbeef",
+        "note": "機構 id 是 8 碼十六進位，可先用 list_institutions 取得。",
+    })
+
+
+def test_a_tool_that_returns_an_error_is_not_shown_as_success(db) -> None:
+    """tool 自己回 error 時，步驟軌道不可以顯示成綠色打勾。
+
+    這類回傳（查無機構、類別名稱不合法、export_schedule 少給參數）不是例外，
+    所以曾經一律送 `ok: True`，軌道上顯示「✓ 完成」，而模型下一句講的是
+    「查無這筆」——畫面與說法互相矛盾。
+    """
+    reg = ToolRegistry()
+    reg.register(ToolSpec(
+        name="do_thing", description="做一件事", params=NoArgs, handler=_not_found,
+    ))
+    events = _run(db, reg, [
+        [ToolUse(ToolCall("c1", "do_thing", {})), TurnEnd("tool_use")],
+        [TextDelta("查無這筆。"), TurnEnd("end_turn")],
+    ])
+    result = next(e for e in events if e.event == "tool_result")
+    assert result.data["ok"] is False
+    assert result.data["summary"] == "查無機構 deadbeef", "摘要要講出錯在哪，不是「完成」"

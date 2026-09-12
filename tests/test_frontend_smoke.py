@@ -179,3 +179,26 @@ def test_example_button_selectors_point_at_containers_that_exist() -> None:
         src = path.read_text(encoding="utf-8")
         for sel in re.findall(r'querySelectorAll\("#([a-zA-Z0-9_-]+)\s', src):
             assert sel in ids, f"{path.name} 的選擇器 #{sel} 指向不存在的元素"
+
+
+def test_agent_repaints_both_the_map_and_the_list() -> None:
+    """助理改篩選後，地圖與清單必須一起重畫。
+
+    只重畫其中一個的表徵是：它說「蘆洲區 20 筆」，地圖確實只剩那 20 筆，
+    但清單仍列著全市提案——使用者看到的是「它講的跟畫面上的不一樣」。
+    這個 bug 出現過兩次：第一次是 drawList 沒讀 agentIds，
+    第二次是 drawList 根本沒被匯出、分派器也從沒呼叫它。
+    """
+    app = (WEBAPP / "app.js").read_text(encoding="utf-8")
+    agent = (WEBAPP / "agent.js").read_text(encoding="utf-8")
+
+    assert re.search(r"window\.SW\s*=\s*\{[^}]*\bdrawList\b", app, re.S), (
+        "app.js 沒把 drawList 匯出，助理就無法重畫清單"
+    )
+    assert "state.agentIds" in app, "drawList/drawMarkers 要依 agentIds 篩選"
+    assert "SW.drawList()" in agent, "agent.js 從來沒有重畫清單"
+    # 分派器不該再單獨呼叫 drawMarkers——那正是漏掉清單的寫法。
+    body = agent[agent.index("function dispatch("):]
+    assert "SW.drawMarkers()" not in body, (
+        "分派器仍單獨呼叫 drawMarkers；應改用同時重畫兩者的 repaint()"
+    )

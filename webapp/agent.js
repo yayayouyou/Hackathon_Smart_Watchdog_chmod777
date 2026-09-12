@@ -45,6 +45,13 @@
     mask: "f-mask", choropleth: "f-choro", flagged_only: "f-flagged",
   };
 
+  /* 助理改了篩選之後，地圖與清單都要重畫。只畫其中一個，兩邊就會不一致——
+     使用者看到的是「它說蘆洲區 20 筆，清單卻列著全市提案」。 */
+  function repaint() {
+    SW.drawMarkers();
+    SW.drawList();
+  }
+
   function fire(el, type) {
     el.dispatchEvent(new Event(type, { bubbles: true }));
   }
@@ -98,7 +105,7 @@
         if (a.institution_id) SW.openDossier(a.institution_id);
         if (Array.isArray(a.ids) && a.ids.length) {
           SW.state.agentIds = new Set(a.ids);
-          SW.drawMarkers();
+          repaint();
         }
         break;
 
@@ -111,7 +118,7 @@
         if (Array.isArray(a.ids)) {
           SW.state.agentIds = a.ids.length ? new Set(a.ids) : null;
         }
-        SW.drawMarkers();
+        repaint();
         break;
       }
 
@@ -131,7 +138,7 @@
       case "highlight":
         if (Array.isArray(a.ids)) {
           SW.state.agentIds = a.ids.length ? new Set(a.ids) : null;
-          SW.drawMarkers();
+          repaint();
         }
         break;
 
@@ -421,7 +428,7 @@
   if (clear) {
     clear.addEventListener("click", () => {
       SW.state.agentIds = null;
-      SW.drawMarkers();
+      repaint();
     });
   }
 
