@@ -541,6 +541,76 @@ main{display:grid;grid-template-columns:214px minmax(0,1fr);min-height:0}
   text-overflow:ellipsis;white-space:nowrap}
 .agentbody{display:flex;flex-direction:column;min-height:0;flex:1}
 
+/* ── 助理頭像：會動的守護犬 ───────────────────────────────
+   同一隻狗在畫面上有兩種身分：中庭那隻是「陪你走路的」，這隻是「正在替你
+   做事的」。所以這裡不重畫角色，只換狀態。
+
+   ⚠️ SVG 的 transform-origin 預設是**整張畫布的原點**，不是元素自己。
+   每一個要轉的零件都必須自己宣告 transform-box:fill-box，否則耳朵一轉就會
+   飛到畫面外。這是改這一段最容易踩的地方。
+
+   狀態由 `data-mood` 決定，只有五個：
+     idle    待命——呼吸、偶爾眨眼、尾巴慢慢晃
+     think   思考——歪頭、耳朵微動、尾巴停
+     work    做事——耳朵豎起、尾巴快搖、身體輕微上下
+     talk    講話——嘴巴開合，取代那條閉著的嘴線
+     blocked 被擋下——耳朵垂下、眼睛變成兩條線
+   五個以外的值一律當 idle（CSS 的預設就是 idle 那組）。            */
+.agentdog{flex:none;overflow:visible}
+.agentdog *{transform-box:fill-box;transform-origin:center}
+
+/* 呼吸。幅度刻意很小——頭像只有 30px，再大就變成在抖。 */
+.ad-all{animation:ad-breathe 3.4s ease-in-out infinite}
+@keyframes ad-breathe{0%,100%{transform:none}50%{transform:translateY(-.6px) scale(1.025)}}
+
+/* 眨眼。用 scaleY 壓扁，不是換圖，所以兩顆眼睛各自在原地闔上。
+   8 秒一次、只佔其中 4%，才像偶爾眨一下而不是在閃。 */
+.ad-eyes{animation:ad-blink 8s steps(1,end) infinite}
+@keyframes ad-blink{0%,96%{transform:none}97%,99%{transform:scaleY(.12)}100%{transform:none}}
+
+/* 尾巴。轉軸在尾巴根部（右下），不是尾尖，不然會像鐘擺盪。 */
+.ad-tail{transform-origin:left bottom;animation:ad-wag 2.6s ease-in-out infinite}
+@keyframes ad-wag{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(7deg)}}
+
+.ad-yap{opacity:0}
+
+/* 思考：歪頭。歪的是整隻，因為頭就是身體。 */
+.agentdog[data-mood="think"] .ad-all{animation:ad-tilt 1.6s ease-in-out infinite}
+@keyframes ad-tilt{0%,100%{transform:rotate(0)}50%{transform:rotate(-9deg)}}
+.agentdog[data-mood="think"] .ad-tail{animation-duration:4s}
+.agentdog[data-mood="think"] .ad-ear{animation:ad-twitch 1.6s ease-in-out infinite}
+@keyframes ad-twitch{0%,100%{transform:none}45%{transform:rotate(-6deg)}}
+
+/* 做事：耳朵豎起、尾巴快搖。這是唯一「牠在動手」的訊號，
+   要比思考明顯，因為使用者這時最想知道「它到底有沒有在跑」。 */
+.agentdog[data-mood="work"] .ad-all{animation:ad-bob .62s ease-in-out infinite}
+@keyframes ad-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.4px)}}
+.agentdog[data-mood="work"] .ad-tail{animation-duration:.34s}
+.agentdog[data-mood="work"] .ad-l{transform:rotate(-14deg) scaleY(1.12)}
+.agentdog[data-mood="work"] .ad-r{transform:rotate(14deg) scaleY(1.12)}
+
+/* 講話：嘴巴開合。那條閉著的嘴線讓位給一顆會開的嘴。 */
+.agentdog[data-mood="talk"] .ad-mouth{opacity:0}
+.agentdog[data-mood="talk"] .ad-yap{opacity:1;animation:ad-yap .3s ease-in-out infinite}
+@keyframes ad-yap{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+.agentdog[data-mood="talk"] .ad-all{animation:ad-bob 1.2s ease-in-out infinite}
+
+/* 被擋下：耳朵垂下、眼睛闔成線。不用紅色——這不是錯誤，
+   是「這件事我不做」，跟畫面其他地方的用詞界線一致。 */
+.agentdog[data-mood="blocked"] .ad-l{transform:rotate(38deg) translateY(1px)}
+.agentdog[data-mood="blocked"] .ad-r{transform:rotate(-38deg) translateY(1px)}
+.agentdog[data-mood="blocked"] .ad-eyes{animation:none;transform:scaleY(.12)}
+.agentdog[data-mood="blocked"] .ad-tail{animation:none;transform:rotate(16deg)}
+.agentdog[data-mood="blocked"] .ad-all{animation:none}
+
+/* 耳朵與尾巴的姿勢用 transition 銜接，狀態切換才不是硬跳一格。 */
+.ad-ear,.ad-tail{transition:transform .28s cubic-bezier(.33,.9,.34,1)}
+
+@media (prefers-reduced-motion:reduce){
+  .ad-all,.ad-eyes,.ad-tail,.ad-ear,.ad-yap{animation:none!important;
+    transition:none!important}
+}
+
 /* 拖曳把手。6px 太細不好抓，所以用 ::before 往兩側各外擴 4px 當熱區，
    視覺上仍然只有中間那一條線。 */
 .agentgrip{position:relative;cursor:col-resize;background:var(--rule);

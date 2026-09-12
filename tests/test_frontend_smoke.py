@@ -280,3 +280,68 @@ def test_the_step_table_is_cleared_when_a_turn_starts() -> None:
     assert re.search(r"steps\s*=\s*new Map\(\)", body), (
         "send() 沒有把上一輪的步驟表清掉"
     )
+
+
+def test_every_mood_the_agent_sets_is_one_the_stylesheet_draws() -> None:
+    """頭像的表情是 JS 與 CSS 之間的一份契約，而它斷掉時**完全沒有徵兆**。
+
+    `agent.js` 設 `data-mood="工作"`，`style.css` 卻只認得 `work` 的話，屬性
+    照樣寫得進去、選擇器只是配不到——狗不會動，也不會有任何錯誤。改名或新增
+    狀態時最容易漏掉另一邊。
+
+    `idle` 是基準狀態，沒有自己的選擇器（就是那組預設動畫），所以放行。
+    """
+    js = (WEBAPP / "agent.js").read_text(encoding="utf-8")
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    html = _html()
+
+    set_in_js = set(re.findall(r'\bmood\("([a-z]+)"\)', js))
+    assert set_in_js, "agent.js 沒有設定任何表情"
+    drawn = set(re.findall(r'\[data-mood="([a-z]+)"\]', css)) | {"idle"}
+    unknown = sorted(set_in_js - drawn)
+    assert not unknown, f"agent.js 設了樣式表畫不出來的表情：{unknown}"
+
+    # 預設值也要是畫得出來的，否則一進站頭像就是死的。
+    default = re.search(r'id="agentdog"[^>]*data-mood="([a-z]+)"', html, re.S)
+    assert default, "index.html 的頭像沒有預設表情"
+    assert default.group(1) in drawn
+
+
+def test_the_avatar_reacts_to_the_states_that_matter() -> None:
+    """使用者最想分辨的是「它在想」與「它在動手」——後者代表畫面等一下會變。
+
+    所以 `tool_call`／`tool_result`／`error` 三個事件一定要換表情。少接一個的
+    表徵是狗卡在同一個動作上，看起來像當掉了。
+    """
+    js = (WEBAPP / "agent.js").read_text(encoding="utf-8")
+    body = js[js.index("function handleFrame("):]
+    for event, expected in (("tool_call", "work"), ("error", "blocked")):
+        seg = body[body.index(f'case "{event}":'):]
+        seg = seg[:seg.index("break;")]
+        assert f'mood("{expected}")' in seg, f"{event} 事件沒有把表情換成 {expected}"
+    # tool_result 成功與失敗要分得出來，不能兩邊都同一個表情。
+    seg = body[body.index('case "tool_result":'):]
+    seg = seg[:seg.index("break;")]
+    assert "mood(" in seg and "?" in seg, "tool_result 沒有區分成功與被擋下"
+
+
+def test_the_avatar_honours_reduced_motion() -> None:
+    """整份樣式表其他會動的東西都有這道開關（中庭的狗、房間轉場），
+    頭像是一直在跑的無限動畫，漏掉它對前庭系統敏感的人是實際的傷害。"""
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+
+    # ⚠️ 用正則抓 `@media{...}` 會錯：這份樣式表裡有規則以 `}}` 收在同一行，
+    # 非貪婪的 `(.+?)\n\}` 於是一路吞到一萬字之外，讓這支測試「通過」得毫無
+    # 根據（實測過：把 .ad-all 從開關裡拿掉，測試照樣綠）。所以老實數大括號。
+    blocks = []
+    for m in re.finditer(r"@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{", css):
+        i, depth = m.end(), 1
+        while i < len(css) and depth:
+            depth += {"{": 1, "}": -1}.get(css[i], 0)
+            i += 1
+        blocks.append(css[m.end():i - 1])
+
+    assert blocks, "整份樣式表沒有任何 prefers-reduced-motion 區塊"
+    assert any(".ad-all" in b for b in blocks), (
+        "頭像的動畫沒有被 prefers-reduced-motion 關掉"
+    )

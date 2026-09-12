@@ -273,6 +273,30 @@
       summary ? `${label}　${summary}` : label;
   }
 
+  /* 頭像的表情。`data-mood` 的五個值與 style.css 的選擇器一一對應。
+   *
+   * 為什麼要有這個而不是只靠「思考中」那行字：那行字只有兩態（在／不在），
+   * 而使用者最想分辨的是「它在想」還是「它在動手」——後者才代表畫面等一下
+   * 會變。狗的耳朵與尾巴把這件事講得比一行字快。
+   *
+   * 講話是**短暫**的：打字動畫跑完就回上一個狀態，所以 talk 帶自動回復，
+   * 其餘狀態都是設了就留著，等下一個事件覆蓋。 */
+  function mood(name) {
+    const el = $("agentdog");
+    if (el) el.dataset.mood = name;
+  }
+
+  let yapTimer = null;
+
+  function yap(ms) {
+    mood("talk");
+    clearTimeout(yapTimer);
+    // 講完回「思考中」而不是「待命」：一輪還沒結束，下一步馬上要來。
+    yapTimer = setTimeout(() => {
+      if ($("agentdog").dataset.mood === "talk") mood("think");
+    }, ms);
+  }
+
   /* 「思考中」。一則真的 tool 呼叫來回要數秒到數十秒，沒有這個指示，
      畫面與「壞掉了」完全分不出來。每收到一個事件就把它移到最後面，
      所以它永遠停在最新一步的下方，代表「還有下一步」。 */
@@ -323,6 +347,7 @@
     // 上一輪的步驟區塊留在畫面上，但不要再被這一輪的 step_id 認領——
     // 後端每輪都從 1 重新編號。
     steps = new Map();
+    mood("think");
     $("agentsend").disabled = true;
     bubble(esc(text), "me");
     thinking(true, "連線中");
@@ -377,6 +402,7 @@
       }
     }
     thinking(false);
+    mood("idle");
     busy = false;
     $("agentsend").disabled = false;
   }
@@ -399,13 +425,17 @@
         break;
       case "text":
         stepSay(d.step_id, d.text, d.softened);
+        // 打字動畫每 12ms 吐 2 個字，嘴巴就開合到那句講完為止。
+        yap(d.text.length * 6 + 400);
         break;
       case "tool_call":
         thinking(false);       // 圓點自己會顯示進行中，不必再有第二個指示
+        mood("work");
         stepAct(d.step_id, d.name, "run", "");
         break;
       case "tool_result":
         stepAct(d.step_id, d.name, d.ok ? "ok" : "no", d.summary);
+        mood(d.ok ? "think" : "blocked");
         thinking(true, "整理中");
         break;
       case "ui_action":
@@ -413,6 +443,7 @@
         break;
       case "error":
         thinking(false);
+        mood("blocked");
         bubble(`出錯：${esc(d.message)}`, "bot err");
         break;
       case "done":

@@ -331,6 +331,38 @@
 
     <aside class="agentcol" id="agentcol">
       <div class="agenthead">
+        <!-- 助理的頭像就是中庭那隻守護犬。路徑是從 lobby.js 的 dogArt() 原樣
+             搬過來的（同一組耳朵、眼睛、鼻子、尾巴座標），所以兩邊看起來是
+             同一隻狗，而不是兩個長得像的角色。牠會跟著 data-mood 換表情：
+             idle 待命／think 思考／work 做事／talk 講話／blocked 被擋下。
+             mood 由 agent.js 在收到事件時設定，動畫全部在 style.css。 -->
+        <!-- viewBox 收在狗的實際邊界上（頭 9–35、耳頂 10、下巴 34、尾尖 41），
+             不留空邊。留空邊的話同樣的 width 會把狗畫小，線寬跟著被壓細，
+             耳朵在 30px 下就從花瓣變成兩根天線——中庭那隻是 1.35 倍放大，
+             這裡要接近它才像同一隻狗。 -->
+        <svg class="agentdog" id="agentdog" viewBox="8.5 9 33 26"
+             width="36" height="28" data-mood="idle" aria-hidden="true">
+          <g class="ad-all">
+            <path class="ad-head" d="M9 19c0-2.4 1.4-3.8 3.2-2.9L16 18h12l3.8-1.9C33.6 15.2 35 16.6 35 19v9c0 3.3-2.7 6-6 6H15c-3.3 0-6-2.7-6-6z"
+              fill="var(--panel)" stroke="var(--edge)" stroke-width="1.6"
+              stroke-linejoin="round"/>
+            <path class="ad-ear ad-l" d="M11 17c-1.6-3.2-1.2-6.4.6-6.9 1.7-.5 3.6 1.4 4.4 4.3z"
+              fill="var(--paper)" stroke="var(--edge)" stroke-width="1.5"/>
+            <path class="ad-ear ad-r" d="M33 17c1.6-3.2 1.2-6.4-.6-6.9-1.7-.5-3.6 1.4-4.4 4.3z"
+              fill="var(--paper)" stroke="var(--edge)" stroke-width="1.5"/>
+            <g class="ad-eyes" fill="var(--edge)">
+              <circle cx="17.5" cy="24" r="1.7"/>
+              <circle cx="26.5" cy="24" r="1.7"/>
+            </g>
+            <path class="ad-mouth" d="M20.4 28.6h3.2" stroke="var(--edge)"
+              stroke-width="1.6" stroke-linecap="round" fill="none"/>
+            <ellipse class="ad-yap" cx="22" cy="29.4" rx="2.3" ry="1.7"
+              fill="var(--edge)"/>
+            <circle class="ad-nose" cx="22" cy="26.6" r="1.5" fill="var(--seal)"/>
+            <path class="ad-tail" d="M35 22 q6 -3 5 -9" stroke="var(--edge)"
+              stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
         <b class="agenttitle">助理</b>
         <!-- 「我是誰」與「登出」已移到右上角身分鈕：同一件事在畫面上出現兩次，
              人會以為它們是兩個不同的東西。 -->
