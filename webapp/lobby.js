@@ -30,7 +30,6 @@
   const ATRIUM = { x: 545, y: 30, w: 350, h: 700 };
   /* 守護犬的活動範圍：中庭再往內縮，免得牠半個身體卡在牆上 */
   const WALK = { x0: 578, x1: 862, y0: 70, y1: 686 };
-  const KENNEL = { x: 118, y: 648 };   // 放大到全螢幕後，狗窩在左下角
 
   /* 每一室。`pane` 對應既有 app 的分頁，`door` 是中庭那一側的開口中心。 */
   /* `map: true` 才會顯示地圖那一欄。地圖跟輿情、資料、建議書沒有關係，
@@ -86,7 +85,11 @@
 
     /* 縮放群組：進房時只動它。守護犬不在裡面，牠要能獨立走位。 */
     const zoom = el("g", { id: "planzoom" }, svg);
-    const rest = el("g", { id: "planrest" }, zoom);   // 除了目標房間以外的一切
+    /* 兩層：牆與中庭（放大時整層收掉）、房間（放大時只留目標那一間）。
+       第一版全部塞在同一層，放大後外牆那條 3px 的線被放大成十幾 px 的黑框
+       橫過整個畫面——看起來就是「黑框超出房間」。 */
+    const rest = el("g", { id: "planbg" }, zoom);
+    const roomLayer = el("g", { id: "planrooms" }, zoom);
 
     el("rect", { x: 40, y: 30, width: 1360, height: 700, rx: 4,
       fill: cssv("--panel"), stroke: cssv("--edge"), "stroke-width": 3 }, rest);
@@ -103,12 +106,14 @@
       // 每一室自己一個 g，進房時把它從 rest 提到 zoom 底下單獨留著
       const g = el("g", { class: "room-hit", "data-room": r.id,
         role: "button", tabindex: "0",
-        "aria-label": `${r.no} ${r.name}，${r.desc}` }, rest);
+        "aria-label": `${r.no} ${r.name}，${r.desc}` }, roomLayer);
       r.g = g;
       el("rect", { x: r.x, y: r.y, width: r.w, height: r.h, class: "room-fill",
         fill: cssv(r.accent), opacity: .07 }, g);
       el("rect", { x: r.x, y: r.y, width: r.w, height: r.h, fill: "none",
-        stroke: cssv("--edge"), "stroke-width": 2.2 }, g);
+        stroke: cssv("--edge"), "stroke-width": 2.2,
+        // 放大時線寬不跟著長。沒有它，2.2px 在 2.8 倍下會變成 6px 的粗黑邊。
+        "vector-effect": "non-scaling-stroke" }, g);
 
       const tx = r.x + 34;
       const no = el("text", { x: tx, y: r.y + 44, "font-size": 11,
@@ -241,7 +246,7 @@
       });
       /* 左下角那一塊是狗窩的地盤（每一室都有），內容一律讓開。
          輿情室只有 234 高，這行字原本就壓在狗窩上。 */
-      const w = el("text", { x: x + 72, y: y + 210, "font-size": 11,
+      const w = el("text", { x: x + 44, y: y + 208, "font-size": 11.5,
         fill: cssv("--warn") }, g);
       w.textContent = "⚠ 提前量 0，定位是即時監看不是預測";
       return;
@@ -310,16 +315,15 @@
   /* 每一室左下角的狗窩。中庭看得到它，進房後守護犬就躺在對應的位置——
      牠是「跑進那一格」，不是「消失再出現」。 */
   function kennelArt(g, r) {
-    const kx = r.x + 22, ky = r.y + r.h - 52;
-    const k = el("g", { opacity: .55 }, g);
-    el("path", { d: `M${kx} ${ky + 34} v-18 l14 -13 14 13 v18 z`,
-      fill: cssv("--panel"), stroke: cssv("--ink-4"), "stroke-width": 1.4,
+    // 貼著左下角，並且比第一版小一號：它是這一室的固定家具，不是重點，
+    // 站太靠中間就會跟內容搶位置（輿情室那條警語被壓過一次）。
+    const kx = r.x + 16, ky = r.y + r.h - 46;
+    const k = el("g", { opacity: .45 }, g);
+    el("path", { d: `M${kx} ${ky + 28} v-15 l12 -11 12 11 v15 z`,
+      fill: cssv("--panel"), stroke: cssv("--ink-4"), "stroke-width": 1.3,
       "stroke-linejoin": "round" }, k);
-    el("path", { d: `M${kx + 9} ${ky + 34} v-11 a5 5 0 0 1 10 0 v11 z`,
-      fill: cssv("--sunk"), stroke: cssv("--ink-4"), "stroke-width": 1.2 }, k);
-    const t = el("text", { x: kx + 36, y: ky + 32, "font-size": 9.5,
-      fill: cssv("--ink-4"), "letter-spacing": 1.2 }, k);
-    t.textContent = "狗窩";
+    el("path", { d: `M${kx + 8} ${ky + 28} v-9 a4 4 0 0 1 8 0 v9 z`,
+      fill: cssv("--sunk"), stroke: cssv("--ink-4"), "stroke-width": 1.1 }, k);
   }
 
   function dogArt(g) {
@@ -401,23 +405,32 @@
     const lobby = $("lobby");
     const tip = $("dogtip");
     if (tip) tip.style.opacity = "0";
-    // ① 先跑到門口
+
+    /* 順序是：**先走進去躺好，房間才放大。**
+       第一版是邊走邊放大，兩件事同時動，看起來像房間把牠吸進去。
+       先走完再放大，因果才對：是牠進去了，所以我們跟著進去。 */
+    // ① 跑到門口
     moveDog(r.door.x + (r.side === "L" ? -30 : 30), r.door.y, true);
 
-    // ② 房間放大、其餘淡出
+    // ② 進門，走到這一室左下角的狗窩
+    setTimeout(() => moveDog(r.x + 38, r.y + r.h - 34, true), 430);
+
+    // ③ 躺好了，房間才開始放大。牠淡出——放大後的室內有自己的狗窩。
     setTimeout(() => {
+      const d = $("dog");
+      if (d) d.style.opacity = "0";
+      // 只留這一間：其餘房間與整層牆在放大時收掉，不然外牆那條線會被
+      // 放大成橫過畫面的黑框。
+      ROOMS.forEach((x) => x.g.classList.toggle("target", x.id === r.id));
       lobby.classList.add("zooming");
       // 先量、再等一幀才套 transform：量測會觸發 layout，跟套用擠在同一幀
       // 就是那一格掉幀。
       const t = zoomTransform(r);
       requestAnimationFrame(() => { $("planstage").style.transform = t; });
-    }, 240);
+    }, 1000);
 
-    // ③ 走進去，坐到狗窩
-    setTimeout(() => moveDog(KENNEL.x, KENNEL.y, true), 620);
-
-    // ④ 室內介面淡入
-    setTimeout(() => showRoom(r), 880);
+    // ④ 室內介面
+    setTimeout(() => showRoom(r), 1560);
   }
 
   /* app 不用 hidden：Leaflet 在 display:none 裡量到的是 0×0，一旦這樣初始化
@@ -475,7 +488,9 @@
       lobby.classList.remove("zooming");
       const tip2 = $("dogtip");
       if (tip2) tip2.style.opacity = "";
-      moveDog(720, 560, true);
+      const d = $("dog");
+      if (d) d.style.opacity = "";
+      moveDog(720, 560, false);      // 直接歸位，不要讓牠橫越整張圖
       setTimeout(() => { state.busy = false; }, 620);
     });
   }
