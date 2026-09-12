@@ -23,10 +23,13 @@
 
   function paint() {
     const box = $("whoami");
-    if (!box) return;
-    box.textContent = me ? `${me.name}（${me.role}）` : "未登入";
+    if (box) box.textContent = me ? `${me.name}（${me.role}）` : "未登入";
     const out = $("logout");
     if (out) out.hidden = !me;
+    /* 右上角的身分鈕由 lobby.js 畫。從這裡通知它，而不是讓它自己輪詢——
+       `check()` 是非同步的，中庭啟動時 `me` 常常還是 null，只在啟動時畫一次
+       的話身分鈕會永遠是空的（實測過）。 */
+    if (window.Lobby && window.Lobby.paintWho) window.Lobby.paintWho();
   }
 
   async function check() {

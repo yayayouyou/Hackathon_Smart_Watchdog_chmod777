@@ -1,5 +1,5 @@
 code,short_name,academic_year,pdf_page,page_kind,table_index,section,title,context_heading,n_columns,n_rows,n_valued_rows,aligned
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,4,32,27,True
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,32,27,True
 N01,安溪,110,6,income_statement,1,unrouted,收支結餘表,,4,23,20,True
 N01,安溪,110,7,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N01,安溪,110,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True
@@ -108,7 +108,7 @@ N01,安溪,112,24,detail_schedule,2,income_by_function,,附表一：收支餘絀
 N01,安溪,112,25,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,5,30,30,True
 N01,安溪,112,26,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,4,31,31,True
 N01,安溪,112,27,detail_schedule,1,unrouted,,,4,33,32,True
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,4,31,26,True
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,31,26,True
 N01,安溪,113,6,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N01,安溪,113,7,income_statement,1,income_statement,收支餘絀表,,4,23,20,True
 N01,安溪,113,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True
@@ -208,7 +208,7 @@ N02,山北,110,21,note,2,admin_fee,五、關係人交易－(二)1. 行政管理�
 N02,山北,110,21,note,3,payables,五、關係人交易－(二)2. 其他應付款,,2,1,1,True
 N02,山北,110,23,detail_schedule,1,income_by_function,收支餘絀表-功能別,附表一：收支餘絀表-功能別,1,17,15,True
 N02,山北,110,23,detail_schedule,2,income_by_function,,附表一：收支餘絀表-功能別,1,4,4,True
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,4,31,31,True
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,31,31,True
 N02,山北,110,25,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,12,30,30,True
 N02,山北,110,26,detail_schedule,1,unrouted,,,12,33,33,True
 N02,山北,110,27,property_list,1,property,財產清冊,,5,21,21,True
@@ -285,7 +285,7 @@ N02,山北,112,24,detail_schedule,2,income_by_function,,附表一：收支餘絀
 N02,山北,112,25,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,4,31,31,True
 N02,山北,112,26,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,4,32,32,True
 N02,山北,112,27,detail_schedule,1,unrouted,,,4,29,28,True
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,4,30,25,True
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,30,25,True
 N02,山北,113,6,income_statement,1,income_statement,"新北市山北非營利幼兒園
 （委託財團法人三之三生命教育基金會辦理）
 收支餘絀表
@@ -345,7 +345,7 @@ N02,山北,113,35,auditor_report,1,auditor_checklist,查核項目,,3,4,0,True
 N02,山北,113,36,detail_schedule,1,performance_review,113學年度績效考評,,1,5,3,True
 N02,山北,113,37,other,1,unrouted,考評指標考評方式評分考評依據備註,,1,4,4,True
 N02,山北,113,37,other,2,unrouted,其他特殊情形：（採總分外扣方式，扣至總分0分止）,,1,1,0,True
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,4,34,29,True
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,34,29,True
 N03,龍埔成長,110,6,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N03,龍埔成長,110,7,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N03,龍埔成長,110,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True
@@ -511,7 +511,7 @@ N03,龍埔成長,113,36,auditor_report,1,auditor_checklist,查核項目,,3,4,0,T
 N03,龍埔成長,113,37,other,1,performance_review,113學年度績效考評,,1,5,3,True
 N03,龍埔成長,113,38,auditor_report,1,unrouted,,,5,10,4,True
 N03,龍埔成長,113,38,auditor_report,2,unrouted,其他特殊情形：（採總分外扣方式，扣至總分0分止）,,4,4,0,True
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,4,29,24,True
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,29,24,True
 N04,海工,110,6,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N04,海工,110,7,income_statement,1,income_statement,收支餘絀表,,4,22,20,True
 N04,海工,110,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True
@@ -625,7 +625,7 @@ N04,海工,112,24,detail_schedule,2,income_by_function,,附表一：收支餘絀
 N04,海工,112,25,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,5,30,30,True
 N04,海工,112,26,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,16,26,26,True
 N04,海工,112,27,detail_schedule,1,unrouted,,,16,35,35,True
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,4,29,24,True
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,29,24,True
 N04,海工,113,6,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N04,海工,113,7,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N04,海工,113,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True
@@ -684,7 +684,7 @@ N04,海工,113,35,auditor_report,1,auditor_checklist,查核項目,,3,4,4,True
 N04,海工,113,36,detail_schedule,1,performance_review,113學年度績效考評,,1,5,3,True
 N04,海工,113,37,other,1,unrouted,,,1,4,4,True
 N04,海工,113,37,other,2,unrouted,其他特殊情形：（採總分外扣方式，扣至總分0分止）,,1,1,0,True
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,4,31,26,True
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,31,26,True
 N05,漢翔,110,6,income_statement,1,income_statement,收支餘絀表,,4,22,20,True
 N05,漢翔,110,7,income_statement,1,income_statement,收支餘絀表,,4,22,20,True
 N05,漢翔,110,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True
@@ -801,7 +801,7 @@ N05,漢翔,112,24,detail_schedule,2,income_by_function,,附表一：收支餘絀
 N05,漢翔,112,25,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,4,30,30,True
 N05,漢翔,112,26,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,16,27,27,True
 N05,漢翔,112,27,detail_schedule,1,unrouted,,,16,35,35,True
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,4,32,27,True
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,32,27,True
 N05,漢翔,113,6,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N05,漢翔,113,7,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N05,漢翔,113,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True
@@ -862,7 +862,7 @@ N05,漢翔,113,40,auditor_report,1,auditor_checklist,查核項目,,3,2,0,True
 N05,漢翔,113,41,other,1,performance_review,113學年度績效考評,,1,5,3,True
 N05,漢翔,113,42,other,1,unrouted,,,1,4,4,True
 N05,漢翔,113,42,other,2,unrouted,其他特殊情形：（採總分外扣方式，扣至總分０分止）,,1,1,0,True
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,4,34,29,True
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,34,29,True
 N06,昌平,110,6,income_statement,1,unrouted,收支餘細表,,4,22,20,True
 N06,昌平,110,7,income_statement,1,income_statement,收支餘絀表,,4,23,20,True
 N06,昌平,110,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True
@@ -972,7 +972,7 @@ N06,昌平,112,24,income_statement,2,unrouted,,"補充說明：教保費收支�
 N06,昌平,112,25,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,5,30,30,True
 N06,昌平,112,26,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,12,31,31,True
 N06,昌平,112,27,detail_schedule,1,unrouted,,,12,30,30,True
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,4,34,29,True
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,34,29,True
 N06,昌平,113,6,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N06,昌平,113,7,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N06,昌平,113,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True
@@ -1031,7 +1031,7 @@ N06,昌平,113,38,auditor_report,1,auditor_checklist,查核項目,,3,2,0,True
 N06,昌平,113,39,detail_schedule,1,performance_review,113學年度績效考評,,1,5,3,True
 N06,昌平,113,40,other,1,unrouted,考評指標表（會計查核簽證情形）,,1,4,4,True
 N06,昌平,113,40,other,2,unrouted,其他特殊情形：（採總分外扣方式，扣至總分０分止）,,1,1,0,True
-N07,北大,110,5,balance_sheet,1,unrouted,,,4,30,25,True
+N07,北大,110,5,balance_sheet,1,unrouted,,,2,30,25,True
 N07,北大,110,6,income_statement,1,unrouted,歲支徵絀表,,4,22,19,True
 N07,北大,110,7,income_statement,1,unrouted,收支決算表,,4,23,20,True
 N07,北大,110,8,equity_change,1,unrouted,,,3,7,7,True
@@ -1315,7 +1315,7 @@ N08,鷺江,112,24,detail_schedule,2,income_by_function,,附表一：收支餘絀
 N08,鷺江,112,25,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,4,30,30,True
 N08,鷺江,112,26,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,12,31,31,True
 N08,鷺江,112,27,detail_schedule,1,unrouted,,,12,32,32,True
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,4,31,26,True
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,31,26,True
 N08,鷺江,113,6,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N08,鷺江,113,7,income_statement,1,income_statement,收支餘絀表,,4,22,19,True
 N08,鷺江,113,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True
@@ -1475,7 +1475,7 @@ N09,安興,112,24,detail_schedule,2,unrouted,,"補充說明：教保費收支淨
 N09,安興,112,25,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,4,31,31,True
 N09,安興,112,26,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,12,30,30,True
 N09,安興,112,27,detail_schedule,1,unrouted,,,12,33,33,True
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,4,31,26,True
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,31,26,True
 N09,安興,113,6,income_statement,1,income_statement,收支餘絀表,,4,25,23,True
 N09,安興,113,7,income_statement,1,income_statement,收支餘絀表,,4,23,20,True
 N09,安興,113,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True
@@ -1625,7 +1625,7 @@ N10,大觀,112,24,detail_schedule,2,income_by_function,,附表一：收支餘絀
 N10,大觀,112,25,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,4,30,30,True
 N10,大觀,112,26,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,8,30,30,True
 N10,大觀,112,27,detail_schedule,1,unrouted,,,8,31,30,True
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,4,31,26,True
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,31,26,True
 N10,大觀,113,6,income_statement,1,unrouted,收支綜合表,,4,22,19,True
 N10,大觀,113,7,income_statement,1,unrouted,收支決算表,,4,22,19,True
 N10,大觀,113,8,equity_change,1,unrouted,,,3,7,7,True
@@ -3247,7 +3247,7 @@ N23,菁湖,110,20,detail_schedule,5,agency_passthrough,,(3) 代收代付收入�
 N23,菁湖,110,20,detail_schedule,6,agency_passthrough,,(3) 代收代付收入及支出,3,3,3,True
 N23,菁湖,110,23,detail_schedule,1,income_by_function,收支餘絀表－功能別,附表一：收支餘絀表-功能別,1,17,15,True
 N23,菁湖,110,23,detail_schedule,2,income_by_function,,附表一：收支餘絀表-功能別,1,4,4,True
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,5,30,30,True
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,4,30,30,True
 N23,菁湖,110,25,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,8,30,30,True
 N23,菁湖,110,26,detail_schedule,1,unrouted,,,8,30,30,True
 N23,菁湖,111,8,equity_change,1,equity_change,淨值變動表,,3,7,7,True

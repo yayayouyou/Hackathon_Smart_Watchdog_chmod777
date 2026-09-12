@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    body{margin:0;background:#EFF3F5;color:#14202A;
+      font-family:"IBM Plex Sans","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+      font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+    a{color:#3D4E5C}a:hover{color:#14202A}
+    .mono{font-family:"IBM Plex Mono","PingFang TC",ui-monospace,monospace;
+      font-variant-numeric:tabular-nums}
+  </style>
+</helmet>
+
+<div style="width:1440px;height:900px;display:flex;flex-direction:column;background:#EFF3F5">
+
+  <!-- 功能列 -->
+  <div style="display:flex;align-items:center;gap:18px;padding:11px 22px;
+    background:#FFFFFF;border-bottom:1px solid #CFD9E0">
+    <div style="display:flex;align-items:center;gap:9px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 9c0-1 .6-1.6 1.4-1.2L8 9h8l2.6-1.2C19.4 7.4 20 8 20 9v6.5c0 2.5-2 4.5-4.5 4.5h-7A4.5 4.5 0 0 1 4 15.5z"
+          stroke="#B23A2F" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="9.5" cy="13" r="1.1" fill="#B23A2F"/>
+        <circle cx="14.5" cy="13" r="1.1" fill="#B23A2F"/>
+        <path d="M11 16.4h2" stroke="#B23A2F" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div style="font-size:15px;font-weight:600;white-space:nowrap">小小守護員</div>
+      <div style="color:#6B7C8A;font-size:12px">新北市教保機構 · 建議查核優先序</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:20px;font-size:12px;color:#6B7C8A;align-items:center">
+      <span>全市 <b class="mono" style="color:#14202A;font-size:13px">1,213</b></span>
+      <span>本批提案 <b class="mono" style="color:#14202A;font-size:13px">20</b></span>
+      <span>即時管道 <b class="mono" style="color:#14202A;font-size:13px">4/6</b></span>
+      <span style="color:#93A2AE">示範稽查員</span>
+    </div>
+  </div>
+
+  <!-- 磁磚牆 -->
+  <div style="flex:1;min-height:0;padding:26px 28px;display:flex;flex-direction:column;gap:18px">
+
+    <div style="display:flex;align-items:baseline;gap:12px">
+      <div style="font-size:19px;font-weight:600">今天要做什麼</div>
+      <div style="font-size:12px;color:#6B7C8A">
+        本月可稽查 20 家 · 名單已依優先序排好，其中 4 家帶高嚴重度財務發現</div>
+    </div>
+
+    <!-- 第一列：地圖佔兩格寬 -->
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;flex:1;min-height:0">
+
+      <!-- 地圖（2 格寬） -->
+      <div style="grid-column:span 2;background:#FFFFFF;border:1px solid #CFD9E0;border-radius:8px;
+        box-shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;display:flex;flex-direction:column;
+        overflow:hidden;position:relative">
+        <div style="padding:13px 16px 0;display:flex;align-items:baseline;gap:9px">
+          <div style="font-size:14px;font-weight:600">全市地圖</div>
+          <div style="font-size:11px;color:#6B7C8A">1,213 園 · 29 行政區</div>
+          <div class="mono" style="margin-left:auto;font-size:11px;color:#B23A2F">20 家待派工</div>
+        </div>
+        <div style="flex:1;margin:11px 16px 16px;border-radius:5px;background:#E6EDF0;
+          position:relative;overflow:hidden">
+          <svg viewBox="0 0 400 210" style="width:100%;height:100%;display:block">
+            <path d="M78 34 L150 20 L214 40 L268 30 L316 58 L330 104 L290 150 L232 176 L168 170 L112 142 L74 96 Z"
+              fill="#DCA6A1" stroke="#243542" stroke-width="1.4"/>
+            <path d="M150 20 L214 40 L212 92 L150 86 Z" fill="#C9756D" stroke="#ffffff88" stroke-width=".7"/>
+            <path d="M112 142 L168 170 L164 120 L118 112 Z" fill="#B23A2F" stroke="#ffffff88" stroke-width=".7"/>
+            <path d="M268 30 L316 58 L330 104 L282 96 Z" fill="#ECCECB" stroke="#ffffff88" stroke-width=".7"/>
+            <g fill="#4A1D78"><circle cx="146" cy="118" r="4"/><circle cx="160" cy="132" r="4"/></g>
+            <g fill="#9E72C0"><circle cx="176" cy="108" r="3.4"/><circle cx="134" cy="140" r="3.4"/>
+              <circle cx="196" cy="126" r="3.4"/></g>
+            <g fill="#C8D0D7"><circle cx="210" cy="66" r="2.6"/><circle cx="252" cy="88" r="2.6"/>
+              <circle cx="118" cy="80" r="2.6"/><circle cx="288" cy="120" r="2.6"/>
+              <circle cx="226" cy="150" r="2.6"/></g>
+            <g stroke="#B23A2F" stroke-width="1.6" fill="none">
+              <circle cx="146" cy="118" r="8"/><circle cx="160" cy="132" r="8"/></g>
+            <text x="150" y="60" font-size="8" fill="#24323C" letter-spacing="1.6">淡水</text>
+            <text x="136" y="150" font-size="8" fill="#24323C" letter-spacing="1.6">板橋</text>
+          </svg>
+          <div style="position:absolute;left:9px;bottom:9px;background:#FFFFFFE8;
+            border:1px solid #CFD9E0;border-radius:3px;padding:3px 8px;font-size:10px;color:#6B7C8A">
+            點一園 → 判斷原因與紀錄</div>
+        </div>
+      </div>
+
+      <!-- 派工提案 -->
+      <div style="background:#FFFFFF;border:1px solid #CFD9E0;border-radius:8px;
+        box-shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;display:flex;flex-direction:column;overflow:hidden">
+        <div style="padding:13px 15px 9px;display:flex;align-items:baseline;gap:8px">
+          <div style="font-size:14px;font-weight:600">派工提案</div>
+          <div class="mono" style="margin-left:auto;font-size:11px;color:#6B7C8A">20</div>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <div style="padding:7px 15px;border-top:1px solid #CFD9E0;display:flex;gap:8px;align-items:baseline">
+            <span class="mono" style="font-size:10px;color:#93A2AE">1</span>
+            <span style="font-size:12.5px;font-weight:500">安溪非營利</span>
+            <span class="mono" style="margin-left:auto;font-size:10px;color:#6B7C8A">#856</span>
+          </div>
+          <div style="padding:0 15px 7px 32px">
+            <span style="font-size:10.5px;color:#B23A2F;border:1px solid #B23A2F;
+              background:#B23A2F14;border-radius:2px;padding:0 5px">財報法遵未通過（高）</span>
+          </div>
+          <div style="padding:7px 15px;border-top:1px solid #CFD9E0;display:flex;gap:8px;align-items:baseline">
+            <span class="mono" style="font-size:10px;color:#93A2AE">2</span>
+            <span style="font-size:12.5px;font-weight:500">佳和非營利</span>
+            <span class="mono" style="margin-left:auto;font-size:10px;color:#6B7C8A">#887</span>
+          </div>
+          <div style="padding:0 15px 7px 32px">
+            <span style="font-size:10.5px;color:#B23A2F;border:1px solid #B23A2F;
+              background:#B23A2F14;border-radius:2px;padding:0 5px">財報法遵未通過（高）</span>
+          </div>
+          <div style="padding:7px 15px;border-top:1px solid #CFD9E0;display:flex;gap:8px;align-items:baseline">
+            <span class="mono" style="font-size:10px;color:#93A2AE">3</span>
+            <span style="font-size:12.5px;font-weight:500">昌福非營利</span>
+            <span class="mono" style="margin-left:auto;font-size:10px;color:#6B7C8A">#74</span>
+          </div>
+          <div style="padding:0 15px 9px 32px;display:flex;gap:4px">
+            <span style="font-size:10.5px;color:#B23A2F;border:1px solid #B23A2F;
+              background:#B23A2F14;border-radius:2px;padding:0 5px">法遵未通過</span>
+            <span style="font-size:10.5px;color:#6B7C8A;border:1px solid #CFD9E0;
+              border-radius:2px;padding:0 5px">7 件裁罰史</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 回測 -->
+      <div style="background:#FFFFFF;border:1px solid #CFD9E0;border-radius:8px;
+        box-shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;display:flex;flex-direction:column;
+        padding:13px 15px;gap:11px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div style="font-size:14px;font-weight:600">回測成績</div>
+          <div style="font-size:11px;color:#6B7C8A">2021–2024</div>
+        </div>
+        <div>
+          <div class="mono" style="font-size:26px;font-weight:500;line-height:1.1">2.29<span
+            style="font-size:14px;color:#6B7C8A">×</span></div>
+          <div style="font-size:11px;color:#6B7C8A;margin-top:2px">前 100 名命中率／隨機抽查</div>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:6px;height:56px">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
+            <div style="width:100%;height:30px;background:#DCA6A1;border-radius:2px 2px 0 0"></div>
+            <div class="mono" style="font-size:9px;color:#93A2AE">21</div></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
+            <div style="width:100%;height:41px;background:#C9756D;border-radius:2px 2px 0 0"></div>
+            <div class="mono" style="font-size:9px;color:#93A2AE">22</div></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
+            <div style="width:100%;height:36px;background:#C9756D;border-radius:2px 2px 0 0"></div>
+            <div class="mono" style="font-size:9px;color:#93A2AE">23</div></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
+            <div style="width:100%;height:47px;background:#B23A2F;border-radius:2px 2px 0 0"></div>
+            <div class="mono" style="font-size:9px;color:#93A2AE">24</div></div>
+        </div>
+        <div style="font-size:10.5px;color:#6B7C8A;line-height:1.5;border-top:1px solid #CFD9E0;padding-top:8px">
+          每年各自重新訓練，只用當年看得到的資料。平均 AUC 0.658。</div>
+      </div>
+    </div>
+
+    <!-- 第二列：四格 -->
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;height:212px">
+
+      <!-- 輿論 -->
+      <div style="background:#FFFFFF;border:1px solid #CFD9E0;border-radius:8px;
+        box-shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;padding:13px 15px;
+        display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div style="font-size:14px;font-weight:600">輿論收集</div>
+          <div class="mono" style="margin-left:auto;font-size:11px;color:#6B7C8A">31 則</div>
+        </div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">
+          <span style="font-size:10px;color:#2C7A5B;border:1px solid #2C7A5B;border-radius:9px;
+            padding:1px 7px">新聞 RSS</span>
+          <span style="font-size:10px;color:#2C7A5B;border:1px solid #2C7A5B;border-radius:9px;
+            padding:1px 7px">PTT</span>
+          <span style="font-size:10px;color:#2C7A5B;border:1px solid #2C7A5B;border-radius:9px;
+            padding:1px 7px">評鑑</span>
+          <span style="font-size:10px;color:#93A2AE;border:1px dashed #CFD9E0;border-radius:9px;
+            padding:1px 7px">Threads 待接</span>
+        </div>
+        <div style="border-left:2px solid #CFD9E0;padding-left:9px;font-size:11.5px;color:#3D4E5C;
+          line-height:1.5">板橋某幼兒園家長反映接送動線⋯⋯
+          <div class="mono" style="font-size:10px;color:#93A2AE;margin-top:3px">09-08 · 新聞</div></div>
+        <div style="margin-top:auto;font-size:10.5px;color:#B07A16;line-height:1.45">
+          ⚠ 提前量實測為 0，定位是即時監看，不是預測訊號</div>
+      </div>
+
+      <!-- 資料庫 -->
+      <div style="background:#FFFFFF;border:1px solid #CFD9E0;border-radius:8px;
+        box-shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;padding:13px 15px;
+        display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div style="font-size:14px;font-weight:600">資料提取存放</div>
+          <div class="mono" style="margin-left:auto;font-size:11px;color:#6B7C8A">162 份</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:#3D4E5C">
+            <span style="width:6px;height:6px;border-radius:50%;background:#EB6834"></span>
+            非營利財報<span class="mono" style="margin-left:auto;color:#6B7C8A">132</span></div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:#3D4E5C">
+            <span style="width:6px;height:6px;border-radius:50%;background:#2A78D6"></span>
+            公校決算書<span class="mono" style="margin-left:auto;color:#6B7C8A">30</span></div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:11.5px;color:#3D4E5C">
+            <span style="width:6px;height:6px;border-radius:50%;background:#1BAF7A"></span>
+            外部快照<span class="mono" style="margin-left:auto;color:#6B7C8A">7</span></div>
+        </div>
+        <div style="margin-top:auto;border-top:1px solid #CFD9E0;padding-top:8px;
+          font-size:10.5px;color:#6B7C8A;line-height:1.45">
+          每個數字可回溯到來源 PDF 的頁碼</div>
+      </div>
+
+      <!-- 建議書 -->
+      <div style="background:#FFFFFF;border:1px solid #CFD9E0;border-radius:8px;
+        box-shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;padding:13px 15px;
+        display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div style="font-size:14px;font-weight:600">稽核建議書</div>
+          <div class="mono" style="margin-left:auto;font-size:11px;color:#6B7C8A">143</div>
+        </div>
+        <div class="mono" style="font-size:26px;font-weight:500;line-height:1.1;color:#2C7A5B">143<span
+          style="font-size:13px;color:#6B7C8A">／143</span></div>
+        <div style="font-size:11px;color:#6B7C8A">通過機械驗證</div>
+        <div style="margin-top:auto;font-size:10.5px;color:#6B7C8A;line-height:1.45;
+          border-top:1px solid #CFD9E0;padding-top:8px">
+          未通過驗證的草稿不會寫出來——一封不能用的信好過一封錯信</div>
+      </div>
+
+      <!-- 掃描花費 -->
+      <div style="background:#FFFFFF;border:1px solid #CFD9E0;border-radius:8px;
+        box-shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;padding:13px 15px;
+        display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div style="font-size:14px;font-weight:600">掃描主控台</div>
+          <div class="mono" style="margin-left:auto;font-size:11px;color:#6B7C8A">US$0.25</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:#6B7C8A">
+            <span>本週期</span><span class="mono" style="color:#14202A">0.25 / 4.00</span></div>
+          <div style="height:5px;border-radius:3px;background:#E6EDF0;overflow:hidden">
+            <div style="width:6%;height:100%;background:#2C7A5B"></div></div>
+        </div>
+        <div style="margin-top:auto;font-size:10.5px;color:#6B7C8A;line-height:1.45;
+          border-top:1px solid #CFD9E0;padding-top:8px">
+          撞自己的牆是不給跑；撞供應商的牆是跑到一半被砍、錢照付</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 守護犬：停在磁磚之間，游標靠近哪一格就走過去 -->
+  <div style="position:absolute;left:calc(50% - 18px);bottom:196px;pointer-events:none">
+    <svg width="44" height="40" viewBox="0 0 44 40" aria-hidden="true">
+      <ellipse cx="22" cy="37" rx="12" ry="2.6" fill="#14202A" opacity=".12"/>
+      <path d="M9 19c0-2.4 1.4-3.8 3.2-2.9L16 18h12l3.8-1.9C33.6 15.2 35 16.6 35 19v9c0 3.3-2.7 6-6 6H15c-3.3 0-6-2.7-6-6z"
+        fill="#FFFFFF" stroke="#243542" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M11 17c-1.6-3.2-1.2-6.4.6-6.9 1.7-.5 3.6 1.4 4.4 4.3z" fill="#EFF3F5" stroke="#243542" stroke-width="1.5"/>
+      <path d="M33 17c1.6-3.2 1.2-6.4-.6-6.9-1.7-.5-3.6 1.4-4.4 4.3z" fill="#EFF3F5" stroke="#243542" stroke-width="1.5"/>
+      <circle cx="17.5" cy="24" r="1.7" fill="#243542"/>
+      <circle cx="26.5" cy="24" r="1.7" fill="#243542"/>
+      <path d="M20.4 28.6h3.2" stroke="#243542" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="22" cy="26.6" r="1.5" fill="#B23A2F"/>
+    </svg>
+  </div>
+
+  <div style="position:absolute;right:24px;bottom:200px;background:#FFFFFF;border:1px solid #CFD9E0;
+    border-radius:14px 14px 14px 3px;padding:7px 12px;font-size:11.5px;color:#3D4E5C;
+    box-shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;max-width:210px;line-height:1.5">
+    守護犬跟著游標走，點磁磚時牠先跑進去，下一層跟著展開</div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -62,6 +62,7 @@ convention at all.
 from __future__ import annotations
 
 import dataclasses
+import re
 
 #: Page kinds. ASCII keys so downstream grouping never depends on the model
 #: reproducing a Chinese label byte-for-byte; the printed title is kept verbatim
@@ -355,6 +356,92 @@ def validate_page(payload: dict) -> list[str]:
                 f"values 長度不等於 period_labels（{len(labels)} 欄）"
             )
     return problems
+
+
+_PCT_CHARS = ("%", "％")
+_PAREN = re.compile(r"[（(][^）)]*[）)]")
+_TRAILING_WORDS = re.compile(r"(金額|占比|比率)\s*$")
+
+
+def _has_pct(label: str) -> bool:
+    return any(c in str(label) for c in _PCT_CHARS)
+
+
+def _stem(label: str) -> str:
+    """The period a column header names, with the %/金額 decoration removed."""
+    s = str(label)
+    for c in _PCT_CHARS:
+        s = s.replace(c, "")
+    return _TRAILING_WORDS.sub("", _PAREN.sub("", s)).strip()
+
+
+def split_percent_columns(table: dict) -> bool:
+    """Move a paired 「金額 / %」 sub-column out of ``period_labels`` into ``percents``.
+
+    ``CLAUDE.md``: **`period_labels` 的一項＝表頭上的一欄；「占比 %」不是一欄。**
+    資產負債表 prints each 基準日 as two sub-columns, 金額 and %, so a table that
+    lists four headers for two dates has turned a presentational split into two
+    extra periods. 收支餘絀表 is the opposite case: 預算數／決算數／差異數／
+    執行率(%) really are four parallel columns and all four belong in ``values``.
+
+    Telling them apart is structural, not a keyword list. A % header is *paired*
+    only when another header in the same table names the same period without the
+    %: `111年7月31日%` has the sibling `111年7月31日金額`, while `執行率%` has no
+    sibling because no other column is "執行率 something-else". Measured across
+    the corpus this separates 30 paired headers from 1,943 standalone ones, and
+    the standalone set is exactly the 執行率／差異 family.
+
+    Returns True when the table was changed. Values are never dropped -- a % that
+    moves lands in ``percents`` at its sibling's position -- so this is
+    reversible in meaning even though it rewrites the row.
+    """
+    labels = list(table.get("period_labels") or [])
+    if not labels:
+        return False
+
+    paired: dict[int, int] = {}
+    for i, label in enumerate(labels):
+        if not _has_pct(label):
+            continue
+        stem = _stem(label)
+        if not stem:
+            continue
+        for j, other in enumerate(labels):
+            if j == i or _has_pct(other):
+                continue
+            other_stem = _stem(other)
+            if str(other).strip().startswith(stem) or (
+                    other_stem and stem.startswith(other_stem)):
+                paired[i] = j
+                break
+    if not paired:
+        return False
+
+    keep = [i for i in range(len(labels)) if i not in paired]
+    new_index = {old: new for new, old in enumerate(keep)}
+
+    for row in table.get("items") or []:
+        values = list(row.get("values") or [])
+        percents = list(row.get("percents") or [])
+
+        def at(seq: list, i: int):
+            return seq[i] if i < len(seq) else None
+
+        new_values = [at(values, i) for i in keep]
+        new_percents: list = [None] * len(keep)
+        for old, new in new_index.items():
+            got = at(percents, old)
+            if got is not None:
+                new_percents[new] = got
+        for pct_i, sibling in paired.items():
+            if sibling in new_index:
+                new_percents[new_index[sibling]] = at(values, pct_i)
+        row["values"] = new_values
+        row["percents"] = (new_percents
+                           if any(v is not None for v in new_percents) else None)
+
+    table["period_labels"] = [labels[i] for i in keep]
+    return True
 
 
 def has_content(payload: dict) -> bool:

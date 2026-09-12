@@ -57,7 +57,7 @@ $env:PYTHONPATH = "src"
 
 ```bash
 PYTHONPATH=src .venv/bin/python -m pytest tests/ -q
-# 419 passed   ← POSIX 上是 418 passed + 1 skipped，
+# 424 passed   ← POSIX 上是 423 passed + 1 skipped，
 #                那一條 skip 是 flock 沒有逾時可測，正常
 .venv/bin/ruff check .
 ```

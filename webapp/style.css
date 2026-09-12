@@ -1,4 +1,9 @@
 :root{
+  /* 強制淺色。暗色區塊寫成 :root:not([data-theme="light"])，而 <html> 上掛了
+     data-theme="light"，所以那一段整段失效。這裡再宣告 color-scheme，
+     讓表單控制項、捲軸、預設連結色也一起走淺色——沒有它，深色系統的
+     使用者會拿到深色的 <input> 配淺色頁面。 */
+  color-scheme:light;
   --ink:#14202A; --ink-2:#3D4E5C; --ink-3:#6B7C8A; --ink-4:#93A2AE;
   --paper:#EFF3F5; --panel:#FFFFFF; --sunk:#E6EDF0; --rule:#CFD9E0;
   --pub:#2A78D6; --np:#EB6834; --prv:#1BAF7A;
@@ -63,7 +68,8 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
 input{font:inherit}
 :focus-visible{outline:2px solid var(--seal);outline-offset:2px}
 
-.app{display:grid;grid-template-rows:auto 1fr auto;height:100vh;height:100dvh}
+/* 兩列而不是三列：頁尾已移除（內容進了 ⓘ 說明），留 auto 會多出一條空白帶。 */
+.app{display:grid;grid-template-rows:auto 1fr;height:100vh;height:100dvh}
 header{position:relative;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
   padding:8px 18px;border-bottom:1px solid var(--rule);background:var(--panel)}
 h1{margin:0;font-size:15px;font-weight:600;white-space:nowrap}
@@ -106,44 +112,44 @@ input[type=range]{accent-color:var(--seal)}
 .pop .led span{display:flex;justify-content:space-between;gap:10px}
 .pop .src{margin:8px 0 0;font-size:10.5px;color:var(--ink-4);line-height:1.5}
 
-/* 三欄：地圖 / 閱讀 / 助理。
+/* 三欄：地圖 │ 派工名單 │ 助理。
  *
- * 中間那欄是**閱讀區**——卷宗、建議書全文、法遵發現都在那裡，所以它要比
- * 地圖寬。先前把它設成固定 390px，結果最需要寬度的那一欄最窄，公文擠成
- * 一條，而地圖佔著最大的空間卻不是每次都要看。
+ * 助理欄寬由 `--agentw` 控制，JS 拖 `.agentgrip` 時改的就是這個變數——
+ * 用 CSS 變數而不是直接寫 inline style 到 aside 上，是因為 grip 自己的位置
+ * 也由同一個 grid 決定；改一處，兩者一起動，不會在拖曳中途錯開一格。
  *
- * 兩欄都用 fr 讓它們一起伸縮，中間略大（1.15）；助理固定寬，因為對話的
- * 行長超過約 45 字就不好讀，給它更多寬度沒有好處。
- */
-main{display:grid;min-height:0;
-  grid-template-columns:minmax(300px,1fr) minmax(420px,1.15fr) 350px;
-  --rightcols:800px}
-/* 收起助理：剩下的寬度兩欄分掉。 */
-main.noagent{grid-template-columns:minmax(300px,1fr) minmax(420px,1.15fr);
-  --rightcols:450px}
-main.noagent .agentcol{display:none}
-/* 筆電（約 1150–1380）：三欄保留，但各自收緊。助理是這個系統的主要互動
-   方式，能維持三欄就不要把它藏起來——藏起來使用者就看不到它在講什麼。
-   助理最窄到 310px：再窄下去步驟軌道的標籤會折行。 */
-@media (max-width:1380px){
-  main{grid-template-columns:minmax(260px,0.85fr) minmax(380px,1.1fr) 310px;
-    --rightcols:720px}
-  main.noagent{grid-template-columns:minmax(260px,0.85fr) minmax(380px,1.1fr);
-    --rightcols:410px}
+ * 收合時把寬度換成 `--agentw-min`（一條細直排），而不是 display:none——
+ * 對話內容留在 DOM 裡，展開回來還在原處，串流中途收合也不會斷。 */
+/* main 只有兩欄：樓層索引 + 房間。房間內部（roombody）才分地圖／名單／助理，
+   這樣「非地圖室不要有地圖」只要換 roombody 的欄定義，不必動 main。 */
+main{display:grid;grid-template-columns:214px minmax(0,1fr);min-height:0}
+.roomwrap{display:flex;flex-direction:column;min-width:0;min-height:0}
+.roombody{flex:1;min-height:0;display:grid;
+  grid-template-columns:minmax(0,1fr) var(--sidew,390px) 6px var(--agentw,380px)}
+/* 除了地圖室，其他室不放地圖——地圖跟輿情、資料、建議書沒有關係，
+   擺在那裡只是把畫面切碎。 */
+.roombody.no-map .mapwrap{display:none}
+.roombody.no-map{grid-template-columns:minmax(0,1fr) 6px var(--agentw,380px)}
+
+/* 室頭：五間房共用。室號與樓層索引、中庭平面圖上的編號是同一組。 */
+.roomhead{display:flex;align-items:center;gap:10px;padding:9px 18px;
+  background:var(--panel);border-bottom:1px solid var(--rule);flex:none}
+.rh-no{font-family:var(--mono);font-size:11px;color:var(--seal)}
+.rh-name{font-size:15px;font-weight:600}
+.rh-desc{font-size:11.5px;color:var(--ink-3)}
+/* 來源膠囊永遠在同一個位置：可稽核性是常駐元件，不是註腳。 */
+.rh-src{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink-3);
+  border:1px solid var(--rule);border-radius:3px;padding:1px 7px;white-space:nowrap}
+@media(max-width:1400px){main{--sidew:330px;--agentw:330px}}
+@media(max-width:1100px){main{--sidew:290px;--agentw:300px}}
+/* 窄螢幕疊成上下：三欄並排在 860px 以下只會三個都不能用。 */
+@media(max-width:860px){
+  main{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .roombody{grid-template-columns:1fr;grid-template-rows:40vh 1fr auto}
+  .roombody.no-map{grid-template-columns:1fr;grid-template-rows:1fr auto}
+  .agentgrip{display:none}
+  .agentcol{border-left:0;border-top:1px solid var(--rule);max-height:46vh}
 }
-/* 真的太窄（<1150）才退成兩欄，助理改用收合鈕臨時叫出來。 */
-@media (max-width:1150px){
-  main{grid-template-columns:minmax(240px,1fr) minmax(340px,1.15fr);
-    --rightcols:400px}
-  .agentcol{display:none}
-  main.showagent{grid-template-columns:minmax(0,0.7fr) minmax(320px,1fr) 300px;
-    --rightcols:680px}
-  main.showagent .agentcol{display:flex}
-}
-}
-}
-@media(max-width:1100px){main{grid-template-columns:minmax(0,1fr) 330px}}
-@media(max-width:860px){main{grid-template-columns:1fr;grid-template-rows:46vh 1fr}}
 
 .grp{display:flex;flex-direction:column;gap:7px}
 .grp>h2{margin:0;font-size:10.5px;font-weight:600;letter-spacing:.1em;
@@ -313,13 +319,14 @@ main.noagent .agentcol{display:none}
 .rtitem a:hover{text-decoration:underline}
 .rtmeta{font-size:10.5px;color:var(--ink-3);font-family:var(--mono);margin-top:2px;
   display:flex;gap:8px;flex-wrap:wrap}
-footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel);
-  font-size:11px;color:var(--ink-3);line-height:1.55}
-/* 來源標註。CC-BY 要求標註要看得見，所以它降一級但不隱藏——分行獨立成一段，
-   讓它跟上面那段「這是建議查核不是違法認定」的界線宣告分開讀。 */
-footer .src{display:block;margin-top:5px;padding-top:5px;
-  border-top:1px dashed var(--rule);font-size:10.5px;color:var(--ink-4)}
-footer .src a{color:var(--ink-3)}
+/* ⓘ 說明。頁尾移除後，輸出定位與 CC-BY 標註搬到這裡——兩者都是有約束力的
+   內容（前者是專案的三條界線之一，後者是授權條件），只是不再常駐佔畫面。 */
+.pop.about{width:376px;color:var(--ink-3);line-height:1.6}
+.pop.about h4{margin-top:12px}
+.pop.about h4:first-child{margin-top:0}
+.pop.about p{margin:0 0 9px;font-size:11.5px}
+.pop.about b{color:var(--ink);font-weight:600}
+.pop.about a{color:var(--ink-2)}
 
 /* ── 掃描主控台 ───────────────────────────────────────────
    金額是這一頁的主角：費用數字用最大的字級，其他一律讓位。
@@ -523,6 +530,35 @@ footer .src a{color:var(--ink-3)}
 /* ── 助理面板 ─────────────────────────────────────────────
    .msg／.chatlog／.egs／.chatbar 沿用查詢頁籤原有的樣式，
    這裡只加助理新增的四類元素。 */
+/* 助理欄本體。常駐第三欄，不是分頁——它會操作畫面，看不到結果就沒有意義。 */
+.agentcol{display:flex;flex-direction:column;min-height:0;min-width:0;
+  background:var(--panel);border-left:1px solid var(--rule)}
+.agenthead{display:flex;align-items:center;gap:8px;padding:8px 12px;
+  border-bottom:1px solid var(--rule);font-size:11.5px;color:var(--ink-3)}
+.agenttitle{font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+.agenthead .who{flex:1;font-family:var(--mono);overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.agentbody{display:flex;flex-direction:column;min-height:0;flex:1}
+
+/* 拖曳把手。6px 太細不好抓，所以用 ::before 往兩側各外擴 4px 當熱區，
+   視覺上仍然只有中間那一條線。 */
+.agentgrip{position:relative;cursor:col-resize;background:var(--rule);
+  opacity:.55;transition:opacity .15s}
+.agentgrip::before{content:"";position:absolute;inset:0 -4px;cursor:col-resize}
+.agentgrip:hover,.agentgrip:focus-visible,.agentgrip.drag{opacity:1;background:var(--seal)}
+/* 拖曳中整頁禁止選字，否則會一路把右欄的文字反白起來。 */
+body.resizing{user-select:none;cursor:col-resize}
+
+/* 收合：只留一條直排標題。用寬度而不是 display:none——對話留在 DOM 裡，
+   展開回來還在原處，串流中途收合也不會斷線。 */
+.agentcol.fold .agentbody{display:none}
+.agentcol.fold .who,.agentcol.fold .mini:not(.fold){display:none}
+.agentcol.fold .agenthead{flex-direction:column;gap:10px;padding:10px 0;height:100%;
+  align-items:center;border-bottom:0}
+.agentcol.fold .agenttitle{writing-mode:vertical-rl;letter-spacing:.28em}
+.mini.fold{padding:3px 7px;line-height:1}
+
 .agentbar{display:flex;align-items:center;gap:8px;padding:8px 12px;
   border-bottom:1px solid var(--rule);font-size:11.5px;color:var(--ink-3)}
 .agentbar .who{flex:1;font-family:var(--mono)}
@@ -562,17 +598,19 @@ footer .src a{color:var(--ink-3)}
 
 /* 「思考中」：一則 tool 呼叫來回要數秒到數十秒，沒有這個就與「壞掉了」
    分不出來。三點依序淡入淡出。 */
-.thinking{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--ink-4);
+/* 思考中：轉圈環。沿用 MaiCoin 專案（agent_ui）那一顆——一圈淡色底環，
+   頂端一段實色跟著轉。相對於三顆閃爍的點，轉圈傳達的是「有東西在跑」
+   而不是「在等你」，而一則 tool 來回要數秒到數十秒，那個差別很重要。 */
+.thinking{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-4);
   font-family:var(--mono);padding:2px 0}
-.thinking .dots{display:inline-flex;gap:3px}
-.thinking .dots i{width:5px;height:5px;border-radius:50%;background:var(--seal);
-  opacity:.25;animation:wd-blink 1.05s infinite}
-.thinking .dots i:nth-child(2){animation-delay:.18s}
-.thinking .dots i:nth-child(3){animation-delay:.36s}
-@keyframes wd-blink{0%,70%,100%{opacity:.25}35%{opacity:1}}
-/* 使用者關掉動態效果時就只留靜態的點，不要閃。 */
+.thinking .spinner{width:15px;height:15px;border-radius:50%;flex-shrink:0;
+  border:2px solid color-mix(in srgb, var(--seal) 22%, transparent);
+  border-top-color:var(--seal);
+  animation:wd-spin .7s linear infinite}
+@keyframes wd-spin{to{transform:rotate(360deg)}}
+/* 關掉動態效果時留一個完整的淡環：不轉，但仍看得出「這裡在等」。 */
 @media (prefers-reduced-motion:reduce){
-  .thinking .dots i{animation:none;opacity:.6}
+  .thinking .spinner{animation:none;border-top-color:var(--ink-4)}
 }
 
 /* ── 卷宗：裁罰時間軸 ───────────────────────────────────── */
@@ -667,31 +705,9 @@ footer .src a{color:var(--ink-3)}
 .listnote button:hover{background:var(--seal);color:#fff}
 
 
-/* ── 中間欄：閱讀區 ───────────────────────────────────────
-   這一欄變寬之後，原本照 390px 設計的內容要跟著調，否則只是把同樣的東西
-   拉長，行長過寬反而更難讀。 */
-
-/* 卷宗內文限制行長。公文與財報原文一行超過約 45 個中文字就開始要用手指
-   指著讀，所以給它一個上限並置中，兩側留白不是浪費。 */
-.dbody{padding:0 24px 30px}
-.dbody>*{max-width:760px}
-.dhead{padding:15px 24px}
-.dhead h3{font-size:16px}
-
-/* 建議書全文是這一欄最主要的閱讀內容：放大、加行高、限制行長。 */
-.memo{font-size:13px;line-height:1.95;padding:14px 18px;max-height:none}
-
-/* 名單列變寬之後，讓機構名稱有更多空間，理由標籤排在同一行右側。 */
-.item{padding:10px 20px}
-.item .nm{font-size:14px}
-
-/* 法遵發現與同儕比較的說明文字。 */
-.finding .d,.peer-item{font-size:12.5px;line-height:1.7}
-.quote{font-size:12px;line-height:1.75;padding:9px 13px}
-
-/* 證據截圖在寬欄裡可以放大看，不必再擠成縮圖。 */
-.ev img{max-width:640px}
-
-/* ── 助理欄：行長 ─────────────────────────────────────────
-   對話的行長超過約 45 字就不好讀，所以即使欄位變寬也限制內文寬度。 */
+/* ── 助理欄的行長 ─────────────────────────────────────────
+   對話的行長超過約 45 字就不好讀，欄位被拖寬時也要守住。
+   （先前這裡還有一批為「寬閱讀區」寫的覆寫——卷宗加大留白、限行長 760px
+   等等。main 的版面改成房間制、中間欄仍是 390px，那些是為不存在的版面
+   寫的，已移除。） */
 #agentlog .msg.bot p{max-width:46em}
