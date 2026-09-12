@@ -161,12 +161,14 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .roomhead{display:flex;align-items:center;gap:10px;padding:9px 18px;
   background:var(--panel);border-bottom:1px solid var(--rule);flex:none;
   box-shadow:inset 0 3px 0 var(--rc, var(--rule))}
-.rh-no{font-family:var(--mono);font-size:15px;font-weight:600;
+/* ⚠️ 這裡曾經有一份合併殘留：`.roomhead` 被留了兩份，而第二份的選擇器那一行
+   在解衝突時掉了，只剩一個孤兒的 `}`。CSS 遇到多餘的右括號會**從那裡開始整段
+   停止解析**——實測 751 條規則只認出 581 條，`.authwrap` 等所有後面的規則全部
+   失效，登入層因此變成一大塊沒有樣式的原始表單疊在畫面下方。
+   取捨：室號的顏色用 --rc（跟著該室走，見 lobby.js::dressRoom），字級取兩者中
+   較大的那一組（全站 15px 底線那次調整的結果）。 */
+.rh-no{font-family:var(--mono);font-size:16px;font-weight:600;
   color:var(--rc, var(--ink-3))}
-.rh-name{font-size:17px;font-weight:600}
-.rh-desc{font-size:15px;color:var(--ink-3)}
-  background:var(--panel);border-bottom:1px solid var(--rule);flex:none}
-.rh-no{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--seal)}
 .rh-name{font-size:20px;font-weight:600}
 .rh-desc{font-size:16px;color:var(--ink-3)}
 /* 來源膠囊永遠在同一個位置：可稽核性是常駐元件，不是註腳。 */
@@ -490,10 +492,13 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .tlpillsub{color:var(--ink-4);font-size:15px}
 /* 寬度用 CSS 變數，跟著右側被佔用的寬度走——寫死的算式在版面改成三欄那天
    就會讓這塊被助理欄蓋住，而且不會有任何錯誤訊息。 */
+/* ⚠️ 合併殘留修正。這條原本被留成兩份，而第一份少了收尾的 `}`，於是它把
+   之後 248 行（含整個登入層 .authwrap/.authbox）全部吞進自己的宣告區塊——
+   那些規則一條都沒生效，登入表單因此在畫面下方變成一大塊沒有樣式的原始表單。
+   合併取捨：寬度用 --rightcols 變數版（上面那段註解說明了為什麼），
+   外觀宣告取另一份的。 */
 .tlbar{position:static;width:min(72vw,720px);
   max-width:calc(100vw - var(--rightcols, 460px));
-.tlpillsub{color:var(--ink-4);font-size:15px}
-.tlbar{position:static;width:min(72vw,720px);max-width:calc(100vw - 460px);
   background:var(--panel);border:1px solid var(--rule);border-radius:8px;
   box-shadow:var(--shadow);padding:10px 14px 12px}
 @media(max-width:860px){.tlbar{max-width:calc(100vw - 40px)}}
@@ -712,12 +717,12 @@ body.resizing{user-select:none;cursor:col-resize}
   align-items:center;justify-content:center;background:#14202AE6}
 .authbox{background:var(--panel);border-radius:10px;box-shadow:var(--shadow);
   padding:26px 28px;width:min(430px,92vw);display:flex;flex-direction:column;gap:12px}
-.authbox h2{margin:0;font-size:17px;color:var(--ink)}
-.authbox p{margin:0;font-size:15px;color:var(--ink-3);line-height:1.6}
+.authbox h2{margin:0;font-size:20px;color:var(--ink)}
+.authbox p{margin:0;font-size:16px;color:var(--ink-3);line-height:1.6}
 .authbox>label{display:flex;flex-direction:column;gap:4px;
-  font-size:15px;color:var(--ink-2)}
+  font-size:16px;color:var(--ink-2)}
 .authbox input:not([type="radio"]){padding:8px 10px;border:1px solid var(--rule);
-  border-radius:6px;font-size:15px;font-family:var(--sans)}
+  border-radius:6px;font-size:17px;font-family:var(--sans)}
 .authroles{margin:0;padding:0;border:0}
 .authroles legend{margin-bottom:6px;font-size:15px;color:var(--ink-2)}
 .authrole-grid,.quickrole-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -729,25 +734,15 @@ body.resizing{user-select:none;cursor:col-resize}
 .authrole b{font-size:15px;color:var(--ink);font-weight:600}
 .authrole small{font-size:15px;color:var(--ink-3)}
 .authbox button{margin-top:4px;padding:9px;border:1px solid var(--seal);
-  border-radius:6px;background:var(--seal);color:#fff;font-size:15px;cursor:pointer}
+  border-radius:6px;background:var(--seal);color:#fff;font-size:17px;cursor:pointer}
 .authbox button:disabled{cursor:wait;opacity:.62}
-.autherr{font-size:15px;color:var(--seal);min-height:15px}
+.autherr{font-size:16px;color:var(--seal);min-height:15px}
 .quicklogin{display:flex;flex-direction:column;gap:8px}
 .authdivider{display:flex;align-items:center;gap:8px;color:var(--ink-4);font-size:15px}
 .authdivider::before,.authdivider::after{content:"";height:1px;flex:1;background:var(--rule)}
 .quickrole-grid .quickrole{margin:0;background:var(--panel);color:var(--seal);font-size:15px}
 .quickrole-grid .quickrole:hover{background:var(--seal-soft)}
 @media(max-width:480px){.authrole-grid,.quickrole-grid{grid-template-columns:1fr}}
-  padding:26px 28px;width:min(360px,92vw);display:flex;flex-direction:column;gap:12px}
-.authbox h2{margin:0;font-size:20px;color:var(--ink)}
-.authbox p{margin:0;font-size:16px;color:var(--ink-3);line-height:1.6}
-.authbox label{display:flex;flex-direction:column;gap:4px;
-  font-size:16px;color:var(--ink-2)}
-.authbox input{padding:8px 10px;border:1px solid var(--rule);border-radius:6px;
-  font-size:17px;font-family:var(--sans)}
-.authbox button{margin-top:4px;padding:9px;border:1px solid var(--seal);
-  border-radius:6px;background:var(--seal);color:#fff;font-size:17px;cursor:pointer}
-.autherr{font-size:16px;color:var(--seal);min-height:15px}
 
 /* 證據抽屜：段落、出處、財報頁截圖。 */
 .evwrap{display:flex;flex-direction:column;gap:9px}
@@ -1349,3 +1344,101 @@ body.resizing{user-select:none;cursor:col-resize}
 .soc-thread>.soc-post.t-neg{box-shadow:inset 3px 0 0 var(--seal)}
 .soc-thread>.soc-post.t-warn{box-shadow:inset 3px 0 0 var(--warn)}
 .soc-thread>.soc-post.t-none{box-shadow:inset 3px 0 0 var(--rule)}
+
+/* ── 訊號圖（04 分析驗證）────────────────────────────────────────────
+   中心是模型的現行配置，往內一圈是訊號，往外一圈是資料來源。
+   「沒連到中心」是這張圖要講的話，不是缺漏：資料我們都有，但不是每個由它
+   算出來的訊號都進得了計分。 */
+.smbar{display:flex;align-items:center;gap:12px;padding:9px 16px;flex:none;
+  background:var(--panel);border-bottom:1px solid var(--rule)}
+.smbar .rh-src{margin-left:auto;font-size:15px}
+.smwrap{flex:1;min-height:0;display:grid;
+  grid-template-columns:minmax(0,1fr) 404px}
+.smcanvas{min-width:0;min-height:0;overflow:auto;padding:3px}
+/* 1:1 排版：寬高由 JS 依容器實際尺寸設定，這裡不要再縮放，
+   否則 15px 的字會被縮成 6px。 */
+.smsvg{display:block}
+.smdetail{border-left:1px solid var(--rule);overflow-y:auto;padding:14px 16px;
+  background:var(--panel)}
+
+/* 連線。實線＝真的影響分數；虛線＝量到了但還沒納入；沒有線＝沒進來。 */
+.sm-feed{stroke:var(--rule);stroke-width:1}
+.sm-link{stroke:var(--fam-core)}
+.sm-link-solid{stroke-width:2.4}
+.sm-link-dash{stroke-width:2;stroke-dasharray:6 5}
+
+/* 中心 */
+.sm-core{fill:color-mix(in srgb, var(--fam-core) 10%, var(--panel));
+  stroke:var(--fam-core);stroke-width:2}
+.sm-core-eyebrow{font-size:15px;fill:var(--ink-3);letter-spacing:.08em}
+.sm-core-n{font-size:19px;font-weight:600;fill:var(--ink)}
+.sm-core-k{font-size:16px;fill:var(--fam-core);font-family:var(--mono);
+  font-weight:600}
+.sm-core-note{font-size:15px;fill:var(--ink-4)}
+
+/* 節點 */
+.sm-node{cursor:pointer}
+.sm-node:focus{outline:none}
+.sm-dot{fill:var(--ink-4)}
+.sm-src-name{font-size:15px;fill:var(--ink-2)}
+.sm-src-n{font-size:15px;fill:var(--ink-4);font-family:var(--mono)}
+.sm-src:hover .sm-dot,.sm-src.on .sm-dot{fill:var(--fam-core);r:9}
+.sm-src:hover .sm-src-name,.sm-src.on .sm-src-name{fill:var(--ink);font-weight:600}
+
+.sm-box{fill:var(--panel);stroke:var(--rule);stroke-width:1.4;
+  transition:stroke .12s,fill .12s}
+.sm-sig-name{font-size:15px;font-weight:600;fill:var(--ink)}
+.sm-sig-n{font-size:15px;fill:var(--ink-3);font-family:var(--mono)}
+.sm-sig:hover .sm-box,.sm-sig.on .sm-box{stroke-width:2.4}
+
+/* 已計分：實心邊，最重 */
+.sm-scored .sm-box{stroke:var(--fam-core);
+  fill:color-mix(in srgb, var(--fam-core) 8%, var(--panel))}
+.sm-scored .sm-sig-n{fill:var(--fam-core)}
+/* 候選：虛邊 */
+.sm-cand .sm-box{stroke:var(--fam-asset);stroke-dasharray:5 4;
+  fill:color-mix(in srgb, var(--fam-asset) 7%, var(--panel))}
+.sm-cand .sm-sig-n{fill:var(--fam-asset)}
+/* 只作參考 */
+.sm-ctx .sm-box{stroke:var(--rule)}
+/* 不具預測力／無法量測：整個灰掉。**不用紅色**——這裡講的是「這個訊號有沒有
+   進模型」，不是「這間園有沒有問題」，紅色在這個 app 專指後者。 */
+.sm-off .sm-box{stroke:var(--rule);fill:var(--sunk);opacity:.6}
+.sm-off .sm-sig-name{fill:var(--ink-4);font-weight:500}
+.sm-off .sm-sig-n{fill:var(--ink-4)}
+
+/* 右側說明 */
+.sm-d-eyebrow{font-size:15px;letter-spacing:.1em;color:var(--ink-4)}
+.sm-d-title{margin:4px 0 8px;font-size:16px;font-weight:600;color:var(--ink)}
+.sm-d-title.sm-scored{color:var(--fam-core)}
+.sm-d-title.sm-cand{color:var(--fam-asset)}
+.sm-d-title.sm-off{color:var(--ink-3)}
+.sm-d-note{margin:0 0 10px;font-size:15.5px;line-height:1.65;color:var(--ink-2)}
+.sm-d-warn{margin-top:12px;padding:9px 11px;border-radius:5px;
+  background:var(--warn-soft);border-left:3px solid var(--warn);
+  font-size:15px;line-height:1.6;color:var(--ink-2)}
+.sm-row{padding:7px 0;border-bottom:1px solid var(--rule);font-size:15px}
+.sm-row b{display:block;color:var(--ink);margin-bottom:2px}
+.sm-row span{color:var(--ink-2);line-height:1.55}
+.sm-row.sm-off b{color:var(--ink-3)}
+.sm-mono{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:15px}
+.sm-none{color:var(--ink-4)}
+.sm-legend{display:flex;flex-direction:column;gap:5px;margin:0 0 12px;
+  font-size:15px;color:var(--ink-2)}
+.sm-lg{display:inline-block;width:22px;height:0;vertical-align:middle;
+  margin-right:7px;border-top-width:2.4px}
+.sm-lg-solid{border-top:2.4px solid var(--fam-core)}
+.sm-lg-dash{border-top:2.4px dashed var(--fam-asset)}
+.sm-lg-off{border-top:2.4px dotted var(--ink-4)}
+.sm-stats{display:flex;gap:10px;margin:6px 0 10px}
+.sm-stat{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:10px 6px;border:1px solid var(--rule);border-radius:7px;
+  background:color-mix(in srgb, var(--fam-core) 5%, var(--panel))}
+.sm-stat b{font-family:var(--mono);font-size:20px;color:var(--fam-core);
+  font-variant-numeric:tabular-nums}
+.sm-stat span{font-size:15px;color:var(--ink-3)}
+.sm-i{width:20px;height:20px;fill:none;stroke:var(--fam-core);stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round}
+.sm-i .f{fill:var(--fam-core);stroke:none}
+.sm-legend b{margin-left:auto;font-family:var(--mono);color:var(--ink)}
+.sm-legend div{display:flex;align-items:center}

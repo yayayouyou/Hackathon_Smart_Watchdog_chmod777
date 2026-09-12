@@ -1236,7 +1236,12 @@ function showPane(name) {
   if (name === "data" && window.SWData) window.SWData.open();
   if (name === "scan" && window.SWSocial) window.SWSocial.open();
   if (name === "scan" && window.SWScan) window.SWScan.open();
-  if (name === "timeline") timelineDock(true);
+  if (name === "timeline") {
+    // 綁在 showPane 而不是分頁列的 click：#tabs 是 hidden，從中庭進來的人
+    // 不會去點它，綁在那裡的結果就是進來一片空白（memos.js 踩過）。
+    if (window.SWSignalMap) window.SWSignalMap.open();
+    timelineDock(true);
+  }
 }
 
 document.querySelectorAll(".tabs button").forEach((b) =>

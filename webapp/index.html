@@ -346,7 +346,20 @@
       </div>
 
       <div class="pane" id="pane-timeline" hidden>
-        <div class="tllist" id="tllist">
+        <div class="smbar">
+          <div class="drseg" id="sm-view">
+            <button type="button" data-v="map" aria-pressed="true">訊號圖</button>
+            <button type="button" data-v="time">時間軸回測</button>
+          </div>
+          <span class="rh-src" id="sm-src">signal_map · 時序切分</span>
+        </div>
+
+        <div class="smwrap" id="sm-pane">
+          <div class="smcanvas" id="sm-canvas"></div>
+          <div class="smdetail" id="sm-detail"></div>
+        </div>
+
+        <div class="tllist" id="tllist" hidden>
           <div class="tlnote">拖動地圖下方的時間軸，看那一年的排序與事後結果。</div>
         </div>
       </div>
@@ -489,6 +502,7 @@
 <script src="/static/auth.js"></script>
 <script src="/static/agent.js"></script>
 <script src="/static/dataroom.js"></script>
+<script src="/static/signalmap.js"></script>
 <script src="/static/memos.js"></script>
 <script src="/static/lobby.js"></script>
 </body>
