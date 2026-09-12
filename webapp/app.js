@@ -558,7 +558,25 @@ function timelinePin(p, entry, topN) {
   });
 }
 
+/* 重畫地圖的外殼：同一個 frame 內呼叫幾次都只畫一次。
+ *
+ * 為什麼需要：助理改一次地圖設定會觸發多個勾選框的 change，每個 handler 都
+ * 各自呼叫一次重畫，加上分派器最後還會再呼叫一次——一個動作最多重畫七次，
+ * 每次重建 1,213 個標記。那就是「操作地圖會卡」的原因。
+ *
+ * 用 requestAnimationFrame 而不是 setTimeout：重畫本來就該對齊下一次繪製，
+ * 而且分頁切到背景時瀏覽器會自動暫停，不會累積一堆待畫。
+ */
+let _drawPending = 0;
 function drawMarkers() {
+  if (_drawPending) return;
+  _drawPending = requestAnimationFrame(() => {
+    _drawPending = 0;
+    drawMarkersNow();
+  });
+}
+
+function drawMarkersNow() {
   state.layer.clearLayers();
   const tl = state.timeline;
   const flagged = new Set(state.proposal.map((o) => o.i));
@@ -714,7 +732,17 @@ function tagClass(tier) {
 }
 
 function drawList() {
-  $("list").innerHTML = state.proposal.map((p, i) => {
+  /* 助理點名機構時，清單要跟著只顯示那幾筆——否則會出現「畫面切到派工提案、
+     但列出來的不是剛才講的那些」，那是最容易讓人以為系統壞掉的落差。
+     地圖早就有這個判斷（drawMarkers），清單漏掉了。 */
+  let rows = state.proposal;
+  if (state.agentIds) {
+    const byId = state.byId;
+    rows = [...state.agentIds].map((i) => byId[i]).filter(Boolean);
+    // 助理給的順序就是它講的順序，不要重排。
+  }
+  $("listnote").hidden = !state.agentIds;
+  $("list").innerHTML = rows.map((p, i) => {
     const tags = [`<span class="tag ${tagClass(p.tier)}">${esc(p.tier)}</span>`];
     if (p.np > 0) tags.push(`<span class="tag p">${p.np} 件裁罰史</span>`);
     if (!p.fin) tags.push(`<span class="tag p">無公開財報</span>`);
@@ -1163,6 +1191,31 @@ document.querySelectorAll(".tabs button").forEach((b) =>
     if (b.dataset.t === "scan" && window.SWScan) window.SWScan.open();
     if (b.dataset.t === "timeline") timelineDock(true);
   }));
+
+/* 助理欄位的收合。窄螢幕預設收起，寬螢幕預設展開——助理是這個系統的主要
+   互動方式，不該每次都要先按一下才出現。 */
+(function () {
+  const main = document.querySelector("main");
+  const btn = $("agenttoggle");
+  const narrow = () => window.matchMedia("(max-width:1280px)").matches;
+  const set = (on) => {
+    main.classList.toggle("noagent", !on && !narrow());
+    main.classList.toggle("showagent", on && narrow());
+    btn.setAttribute("aria-pressed", String(on));
+    // 欄寬變了，地圖要重新量一次，否則圖磚會留一塊空白。
+    if (state.map) setTimeout(() => state.map.invalidateSize(), 220);
+  };
+  set(!narrow());
+  btn.addEventListener("click", () =>
+    set(btn.getAttribute("aria-pressed") !== "true"));
+})();
+
+/* 清單的「顯示全部」：清掉助理的篩選，地圖與清單一起回到全市。 */
+$("listclear").addEventListener("click", () => {
+  state.agentIds = null;
+  drawList();
+  drawMarkers();
+});
 
 /* 掃描分頁（scan.js）需要這些；集中匯出一次，不要讓它去翻全域變數。 */
 window.SW = { api, post, $, esc, nf, state, openDossier, TYPE, drawMarkers, refresh,

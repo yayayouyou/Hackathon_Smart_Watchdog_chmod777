@@ -22,11 +22,12 @@
 
     <nav class="tabs" id="tabs">
       <button data-t="list" aria-pressed="true">派工提案</button>
-      <button data-t="agent">助理</button>
       <button data-t="scan">掃描</button>
       <button data-t="timeline">時間軸</button>
       <button data-t="memos">建議書</button>
     </nav>
+
+    <button type="button" id="agenttoggle" class="mini" aria-pressed="true">助理</button>
 
     <div class="capbox">
       <label for="cap">本月可稽查</label>
@@ -174,32 +175,10 @@
     <!-- 右欄：目前是清單與卷宗，之後這一欄會讓給 AI 側邊欄。 -->
     <div class="side">
       <div class="pane" id="pane-list">
+        <div class="listnote" id="listnote" hidden>
+          助理篩選中 · <button type="button" id="listclear">顯示全部</button>
+        </div>
         <div class="list" id="list"></div>
-      </div>
-
-      <div class="pane" id="pane-agent" hidden>
-        <div class="agentbar">
-          <span class="who" id="whoami">未登入</span>
-          <button type="button" id="agentclear" class="mini">清除地圖標記</button>
-          <button type="button" id="logout" class="mini" hidden>登出</button>
-        </div>
-        <div class="chatlog" id="agentlog">
-          <div class="msg bot">
-            <p>我可以操作這個畫面——切頁籤、移動地圖、開卷宗、匯出排程。說一句話，我會邊做邊講。</p>
-            <div class="egs">
-              <button class="eg">我要調查蘆洲區</button>
-              <button class="eg">幫我排這週的稽查</button>
-              <button class="eg">安溪跟同儕比起來如何？</button>
-              <button class="eg">資遣費準備金的規定寫在財報哪一頁？</button>
-              <button class="eg">你這個排序準不準？</button>
-            </div>
-          </div>
-        </div>
-        <form class="chatbar" id="agentform">
-          <input id="aq" placeholder="用中文說一句話，例如：我要調查三重區"
-                 autocomplete="off">
-          <button type="submit" id="agentsend">送出</button>
-        </form>
       </div>
 
       <div class="pane" id="pane-scan" hidden>
@@ -225,6 +204,31 @@
 
       <div class="dossier" id="dossier" hidden></div>
     </div>
+
+      <aside class="agentcol" id="agentcol">
+        <div class="agentbar">
+          <span class="who" id="whoami">未登入</span>
+          <button type="button" id="agentclear" class="mini">清除地圖標記</button>
+          <button type="button" id="logout" class="mini" hidden>登出</button>
+        </div>
+        <div class="chatlog" id="agentlog">
+          <div class="msg bot">
+            <p>我可以操作這個畫面——切頁籤、移動地圖、開卷宗、匯出排程。說一句話，我會邊做邊講。</p>
+            <div class="egs">
+              <button class="eg">我要調查蘆洲區</button>
+              <button class="eg">幫我排這週的稽查</button>
+              <button class="eg">安溪跟同儕比起來如何？</button>
+              <button class="eg">資遣費準備金的規定寫在財報哪一頁？</button>
+              <button class="eg">你這個排序準不準？</button>
+            </div>
+          </div>
+        </div>
+        <form class="chatbar" id="agentform">
+          <input id="aq" placeholder="用中文說一句話，例如：我要調查三重區"
+                 autocomplete="off">
+          <button type="submit" id="agentsend">送出</button>
+        </form>
+      </aside>
   </main>
 
   <footer>

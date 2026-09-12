@@ -105,7 +105,19 @@ input[type=range]{accent-color:var(--seal)}
 .pop .led span{display:flex;justify-content:space-between;gap:10px}
 .pop .src{margin:8px 0 0;font-size:10.5px;color:var(--ink-4);line-height:1.5}
 
-main{display:grid;grid-template-columns:minmax(0,1fr) 390px;min-height:0}
+/* 三欄：地圖 / 分頁 / 助理。助理**常駐**而不是分頁——它會操作前兩欄，
+   自己是分頁的話，一動作就把自己藏起來，使用者看不到它在講什麼。 */
+main{display:grid;grid-template-columns:minmax(0,1fr) 390px 360px;min-height:0}
+/* 收起助理時回到兩欄。地圖拿回空間，其餘不變。 */
+main.noagent{grid-template-columns:minmax(0,1fr) 390px}
+main.noagent .agentcol{display:none}
+/* 窄螢幕：助理讓位給地圖與分頁，改用收合鈕臨時叫出來。 */
+@media (max-width:1280px){
+  main{grid-template-columns:minmax(0,1fr) 360px}
+  .agentcol{display:none}
+  main.showagent{grid-template-columns:minmax(0,1fr) 360px 340px}
+  main.showagent .agentcol{display:flex}
+}
 @media(max-width:1100px){main{grid-template-columns:minmax(0,1fr) 330px}}
 @media(max-width:860px){main{grid-template-columns:1fr;grid-template-rows:46vh 1fr}}
 
@@ -583,34 +595,40 @@ footer .src a{color:var(--ink-3)}
 
 
 /* ── 助理：步驟軌道 ───────────────────────────────────────
-   一步一節，左側一條連接線把它們串起來，讓「它正在依序做事」看得出來。
-   圓點三態：進行中（空心＋脈動）、完成（實心）、被擋下（紅）。 */
+   使用者回報「步驟不夠明顯」，所以這一版把它做重：整組有底色與左側粗軌，
+   進行中那一節反白。它要能一眼看出「現在做到第幾步」。 */
 .rail{position:relative;display:grid;grid-template-columns:auto 1fr;
-  column-gap:10px;padding:5px 0 5px 2px;align-items:baseline}
-/* 連接線畫在圓點的正下方，接到下一節。最後一節不畫（:last-child）。 */
-.rail::before{content:"";position:absolute;left:6px;top:17px;bottom:-6px;
-  width:1px;background:var(--rule)}
-.rail:last-child::before{display:none}
-.rail .dot{grid-row:1;width:11px;height:11px;border-radius:50%;
-  border:2px solid var(--rule);background:var(--panel);
-  position:relative;z-index:1;margin-top:3px}
-.rail .lb{grid-row:1;font-size:12.5px;color:var(--ink-2);letter-spacing:.01em}
+  column-gap:11px;align-items:start;
+  padding:8px 11px 8px 13px;margin:0 0 1px;
+  background:var(--sunk);border-left:3px solid var(--rule)}
+.rail:first-of-type{border-radius:6px 6px 0 0;margin-top:6px}
+.rail:last-of-type{border-radius:0 0 6px 6px;margin-bottom:8px}
+/* 連接線串起相鄰的節，讓它讀起來是一條流程而不是幾張卡片。 */
+.rail::before{content:"";position:absolute;left:18px;top:22px;bottom:-1px;
+  width:2px;background:var(--rule)}
+.rail:last-of-type::before{display:none}
+.rail .dot{grid-row:1;width:13px;height:13px;border-radius:50%;
+  border:2.5px solid var(--rule);background:var(--panel);
+  position:relative;z-index:1;margin-top:2px;flex:none}
+.rail .lb{grid-row:1;font-size:13px;color:var(--ink-2);letter-spacing:.02em}
 .rail .sub{grid-column:2;grid-row:2;font-size:11px;color:var(--ink-4);
-  font-family:var(--mono);margin-top:2px}
+  font-family:var(--mono);margin-top:3px;line-height:1.5}
 
-/* 進行中：圓點空心、標籤較深，並以光暈脈動。 */
+/* 進行中：整節反白 + 左軌轉紅 + 圓點脈動。 */
+.rail[data-st="run"]{background:var(--seal-soft);border-left-color:var(--seal)}
 .rail[data-st="run"] .dot{border-color:var(--seal);animation:wd-pulse 1.2s infinite}
-.rail[data-st="run"] .lb{color:var(--ink);font-weight:500}
+.rail[data-st="run"] .lb{color:var(--ink);font-weight:600}
 @keyframes wd-pulse{
-  0%,100%{box-shadow:0 0 0 0 var(--seal-soft)}
-  50%{box-shadow:0 0 0 5px var(--seal-soft)}
+  0%,100%{box-shadow:0 0 0 0 #B23A2F44}
+  50%{box-shadow:0 0 0 6px #B23A2F00}
 }
-/* 完成：實心。 */
+/* 完成：實心綠、左軌轉綠。 */
+.rail[data-st="ok"]{border-left-color:var(--good)}
 .rail[data-st="ok"] .dot{border-color:var(--good);background:var(--good)}
-/* 被擋下：紅，且標籤也轉紅——白名單擋下來是要被看見的，不是背景雜訊。 */
+/* 被擋下：整節轉紅——白名單擋下來是要被看見的，不是背景雜訊。 */
+.rail[data-st="no"]{background:var(--seal-soft);border-left-color:var(--seal)}
 .rail[data-st="no"] .dot{border-color:var(--seal);background:var(--seal)}
-.rail[data-st="no"] .lb{color:var(--seal)}
-.rail[data-st="no"] .sub{color:var(--seal)}
+.rail[data-st="no"] .lb,.rail[data-st="no"] .sub{color:var(--seal)}
 
 @media (prefers-reduced-motion:reduce){
   .rail[data-st="run"] .dot{animation:none}
@@ -625,3 +643,17 @@ footer .src a{color:var(--ink-3)}
 /* 使用者訊息與助理回覆之間留白多一點，一輪一輪分得開。 */
 #agentlog .msg.me{margin-top:10px}
 #agentlog .msg.bot{margin-bottom:2px}
+
+
+/* ── 助理：常駐欄位 ─────────────────────────────────────── */
+.agentcol{display:flex;flex-direction:column;min-height:0;min-width:0;
+  background:var(--panel);border-left:1px solid var(--rule)}
+.agentcol .chatlog{flex:1}
+
+/* 清單被助理篩選時要說出來，否則「畫面上這幾筆是哪來的」沒有答案。 */
+.listnote{display:flex;align-items:center;gap:8px;padding:7px 12px;
+  font-size:11.5px;color:var(--seal);background:var(--seal-soft);
+  border-bottom:1px solid var(--rule)}
+.listnote button{border:1px solid var(--seal);border-radius:11px;padding:2px 9px;
+  font-size:11px;color:var(--seal);background:transparent;cursor:pointer}
+.listnote button:hover{background:var(--seal);color:#fff}
