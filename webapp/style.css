@@ -756,6 +756,12 @@ body.resizing{user-select:none;cursor:col-resize}
 .astep[data-st="run"] .dot{border-color:var(--seal);animation:wd-pulse 1.2s infinite}
 .astep[data-st="ok"] .dot{border-color:var(--good);background:var(--good)}
 .astep[data-st="no"] .dot{border-color:var(--seal);background:var(--seal)}
+/* 收尾那句沒有 tool，所以不該用綠色（那是「tool 成功」的意思）。實心＝結束了，
+   淡色＝它不是一個結果。空心會被讀成「還在跑」——實際被誤讀過。 */
+.astep[data-st="done"] .dot{border-color:var(--ink-4);background:var(--ink-4)}
+/* 流程線到最後一步為止。`:last-child` 在加了每輪抬頭之後不再成立，
+   因為最後一步後面接的是下一輪的抬頭。 */
+.astep.tail::before{display:none}
 .astep[data-st="no"] .act{color:var(--seal)}
 @keyframes wd-pulse{
   0%,100%{box-shadow:0 0 0 0 #B23A2F44}

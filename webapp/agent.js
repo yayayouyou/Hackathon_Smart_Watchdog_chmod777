@@ -364,6 +364,28 @@
     yapTimer = setTimeout(() => { delete el.dataset.talking; }, ms);
   }
 
+  /* 收尾：把這一輪還沒有狀態的步驟標成完成，並讓流程線在最後一步停住。
+   *
+   * 為什麼不能在收到 `text` 時就標：`stepSay()` 不知道後面還會不會接一個
+   * tool，而收尾那句是純敘述（沒有 tool），所以它的圓點從頭到尾沒被設過狀態
+   * ——永遠是空心的。使用者讀到的是「跑到一半停住了」。串流結束時才確定
+   * 「沒有下一步」，所以在這裡標。
+   *
+   * 只碰**這一輪**的步驟（用 `steps` 這張表），不掃整個對話區：上面幾輪早就
+   * 收好了，重掃一遍只會把已經正確的狀態再寫一次。
+   *
+   * 還停在 `run` 的不動。那代表某個 tool 真的沒有回報，把它改成「完成」是謊；
+   * 實務上不會發生（registry 保證每個 tool_call 都補一列 tool_result），
+   * 真的發生時讓它留著比較好查。 */
+  function settle() {
+    const blocks = [...steps.values()];
+    blocks.forEach((el) => { if (!el.dataset.st) el.dataset.st = "done"; });
+    // 流程線畫在每一步的 ::before，靠 :last-child 收尾。加了每輪抬頭之後最後
+    // 一步不再是最後一個子元素（後面接著下一輪的抬頭），線於是一路延伸下去。
+    const last = blocks[blocks.length - 1];
+    if (last) last.classList.add("tail");
+  }
+
   /* 一輪結束時把嘴也收掉。最後一句通常是整輪最長的，`yap()` 的計時器還在跑，
      不清掉的話串流都結束了狗還在對著空氣說話。 */
   function hush() {
@@ -482,6 +504,7 @@
       }
     }
     thinking(false);
+    settle();
     mood("idle");
     // 這裡刻意不呼叫 hush()：串流結束時最後一句通常還在逐字打，
     // 立刻閉嘴就會變成「字還在跑、嘴已經閉了」。讓 yap() 自己的計時器收尾。

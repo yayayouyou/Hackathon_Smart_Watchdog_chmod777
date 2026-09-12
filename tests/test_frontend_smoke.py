@@ -397,3 +397,53 @@ def test_only_the_newest_avatar_is_animated() -> None:
     assert ".agentdog:not(.live)*{animation:none" in tight, (
         "樣式表沒有把非最新的頭像的動畫關掉"
     )
+
+
+def test_the_last_step_of_a_turn_is_marked_finished() -> None:
+    """收尾那句沒有 tool，所以它的圓點從頭到尾沒被設過狀態——永遠是空心的。
+
+    使用者讀到的是「跑到一半停住了」（本人回報：「我也會以為沒有結束」）。
+    不能在收到 `text` 時就標，因為那時還不知道後面會不會接一個 tool；
+    串流結束才確定「沒有下一步」，所以收尾要發生在讀取迴圈之後。
+    """
+    js = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+
+    assert 'dataset.st = "done"' in js, "沒有任何地方把收尾那一步標成完成"
+    assert '.astep[data-st="done"]' in css, "樣式表畫不出 done 這個狀態"
+
+    # 收尾必須在串流讀完之後。寫在 handleFrame 裡就等於在「還可能有下一步」
+    # 的時候宣告結束。
+    body = js[js.index("async function send("):]
+    assert "settle()" in body, "send() 沒有收尾"
+    assert body.index("getReader()") < body.index("settle()"), (
+        "收尾寫在讀取串流之前，那時還不知道有沒有下一步"
+    )
+
+
+def test_the_flow_line_stops_at_the_last_step() -> None:
+    """步驟之間那條細線靠 `:last-child` 收尾。
+
+    加了每輪抬頭之後最後一步不再是最後一個子元素（後面接著下一輪的抬頭），
+    線於是一路延伸到下一輪去——看起來像還有下一步還沒出現。
+    這是加抬頭時弄壞的，補一個明確的收尾標記。
+    """
+    js = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    assert 'classList.add("tail")' in js, "沒有標出哪一步是這一輪的最後一步"
+    assert ".astep.tail::before{display:none}" in css.replace(" ", ""), (
+        "樣式表沒有讓流程線在最後一步停住"
+    )
+
+
+def test_settling_only_touches_the_current_turn() -> None:
+    """上面幾輪早就收好了。重掃整個對話區不只是浪費——它會把已經停在 `run`
+    的舊步驟一起重寫，而那種步驟代表某個 tool 真的沒回報，是要留著查的。
+
+    這一輪有哪些步驟，`steps` 那張表已經知道了。
+    """
+    js = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    body = js[js.index("function settle()"):]
+    body = body[:body.index("\n  }") + 4]
+    assert "steps.values()" in body, "settle() 沒有用這一輪的步驟表"
+    assert "querySelectorAll" not in body, "settle() 掃了整個對話區，會動到舊的輪次"
