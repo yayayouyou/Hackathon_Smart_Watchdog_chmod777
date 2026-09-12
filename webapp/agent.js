@@ -425,7 +425,7 @@
       send(text);
     });
   }
-  document.querySelectorAll("#pane-agent .eg").forEach((b) =>
+  document.querySelectorAll("#agentcol .eg").forEach((b) =>
     b.addEventListener("click", () => send(b.textContent)));
 
   const clear = $("agentclear");

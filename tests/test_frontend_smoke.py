@@ -111,20 +111,22 @@ def test_each_submit_form_is_wired_to_something() -> None:
     assert not dead, f"這些表單沒有任何 JS 接它，送出鈕會是死的：{dead}"
 
 
-def test_example_buttons_are_scoped_to_their_own_pane() -> None:
-    """查詢與助理各有一組範例鈕。
+def test_example_buttons_are_scoped_to_a_container() -> None:
+    """範例鈕的綁定必須限定在自己的容器內，不能用全域委派。
 
-    用全域委派（`document.addEventListener` + `closest(".eg")`）的話，助理面板
-    的範例鈕會同時觸發查詢的 `ask()`——兩個面板各跑一次，畫面會很奇怪。
-    所以兩邊都必須把選擇器限定在自己的 pane 內。
+    全域委派（`document.addEventListener` + `closest(".eg")`）會讓任何面板的
+    範例鈕觸發所有監聽者——先前查詢與助理並存時就會兩邊各跑一次。
+    現在只剩助理，但規則保留：下一個加範例鈕的面板不該再踩一次。
     """
     for name in ("app.js", "agent.js"):
         src = (WEBAPP / name).read_text(encoding="utf-8")
         if ".eg" not in src:
             continue
-        assert "#pane-" in src, f"{name} 的 .eg 綁定沒有限定 pane"
         assert 'closest(".eg")' not in src, (
-            f"{name} 用了全域委派，會誤觸另一個面板的範例鈕"
+            f"{name} 用了全域委派，會誤觸其他面板的範例鈕"
+        )
+        assert re.search(r'querySelectorAll\("#[a-zA-Z0-9_-]+\s+\.eg"\)', src), (
+            f"{name} 的 .eg 綁定沒有限定容器"
         )
 
 
@@ -139,3 +141,18 @@ def test_scripts_are_loaded_in_dependency_order() -> None:
             assert order.index(earlier) < order.index(later), (
                 f"{earlier}.js 必須排在 {later}.js 前面"
             )
+
+
+def test_example_button_selectors_point_at_containers_that_exist() -> None:
+    """改容器 id 時最容易漏掉的就是這一行。
+
+    症狀是「點範例按鈕完全沒反應」，而且沒有任何錯誤——querySelectorAll
+    找不到東西時回空集合，forEach 什麼也不做。實際發生過一次：
+    面板從 pane-agent 改名成 agentcol，選擇器沒跟著改。
+    """
+    html = _html()
+    ids = set(re.findall(r'id="([a-zA-Z0-9_-]+)"', html))
+    for path in _our_scripts():
+        src = path.read_text(encoding="utf-8")
+        for sel in re.findall(r'querySelectorAll\("#([a-zA-Z0-9_-]+)\s', src):
+            assert sel in ids, f"{path.name} 的選擇器 #{sel} 指向不存在的元素"

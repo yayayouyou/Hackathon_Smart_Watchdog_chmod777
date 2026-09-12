@@ -25,6 +25,7 @@
      OSM 的黃綠底。--mask-line 是鄰縣市之間的界，--edge 是新北市界本身：
      市界要比縣市界重，它是這張圖唯一需要一眼認出的邊。 */
   --mask:#B9C6CF; --mask-op:.62; --mask-line:#7D8E9C; --edge:#243542;
+  --rightcols:790px;   /* 側欄 390 + 助理 360 + 留白 */
   --sans:"IBM Plex Sans","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
   --mono:"IBM Plex Mono","PingFang TC",ui-monospace,monospace;
 }
@@ -109,13 +110,13 @@ input[type=range]{accent-color:var(--seal)}
    自己是分頁的話，一動作就把自己藏起來，使用者看不到它在講什麼。 */
 main{display:grid;grid-template-columns:minmax(0,1fr) 390px 360px;min-height:0}
 /* 收起助理時回到兩欄。地圖拿回空間，其餘不變。 */
-main.noagent{grid-template-columns:minmax(0,1fr) 390px}
+main.noagent{grid-template-columns:minmax(0,1fr) 390px;--rightcols:430px}
 main.noagent .agentcol{display:none}
 /* 窄螢幕：助理讓位給地圖與分頁，改用收合鈕臨時叫出來。 */
 @media (max-width:1280px){
-  main{grid-template-columns:minmax(0,1fr) 360px}
+  main{grid-template-columns:minmax(0,1fr) 360px;--rightcols:400px}
   .agentcol{display:none}
-  main.showagent{grid-template-columns:minmax(0,1fr) 360px 340px}
+  main.showagent{grid-template-columns:minmax(0,1fr) 360px 340px;--rightcols:740px}
   main.showagent .agentcol{display:flex}
 }
 @media(max-width:1100px){main{grid-template-columns:minmax(0,1fr) 330px}}
@@ -422,7 +423,10 @@ footer .src a{color:var(--ink-3)}
 .tldot{width:7px;height:7px;border-radius:50%;background:var(--seal);flex:none;
   box-shadow:0 0 0 3px var(--seal-soft)}
 .tlpillsub{color:var(--ink-4);font-size:11px}
-.tlbar{position:static;width:min(72vw,720px);max-width:calc(100vw - 460px);
+/* 寬度用 CSS 變數，跟著右側被佔用的寬度走——寫死的算式在版面改成三欄那天
+   就會讓這塊被助理欄蓋住，而且不會有任何錯誤訊息。 */
+.tlbar{position:static;width:min(72vw,720px);
+  max-width:calc(100vw - var(--rightcols, 460px));
   background:var(--panel);border:1px solid var(--rule);border-radius:8px;
   box-shadow:var(--shadow);padding:10px 14px 12px}
 @media(max-width:860px){.tlbar{max-width:calc(100vw - 40px)}}
