@@ -226,6 +226,24 @@ class ThreadsMention(Base):
     # 歸屬結果。NULL = 拒配，理由見類別說明。
     institution_id: Mapped[Optional[str]] = mapped_column(String(32), index=True)
     attribution_basis: Mapped[Optional[str]] = mapped_column(Text)
+    # ── 分類結果（`realtime/classify.py`）────────────────────────────
+    # 六欄**全部允許 NULL，而 NULL 一律代表「尚未分類」**，不代表「沒有問題」、
+    # 不代表「中性」、不代表「不含兒少可識別資訊」。這個分別要靠 `classified_at`
+    # 判斷而不是靠 `tone is None`：模型答不出來時 `tone` 會是字串 `"unclear"`
+    # 而不是 NULL，那是**跑過分類、但看不出來**，與從來沒跑過是兩件事。
+    # 把兩者混成同一格，畫面上就會出現「132 則中性」而其中 130 則根本沒人看過。
+    #
+    # 分類結果**不進分數、不進 payload、不進任何 CSV**，與這張表的其餘欄位
+    # 一樣（見類別說明）。它只用來替畫面上的貼文分堆與上色。
+    event_category: Mapped[Optional[str]] = mapped_column(String(24))
+    tone: Mapped[Optional[str]] = mapped_column(String(16))
+    specificity: Mapped[Optional[str]] = mapped_column(String(16))
+    stance: Mapped[Optional[str]] = mapped_column(String(16))
+    contains_minor_identifiers: Mapped[Optional[bool]] = mapped_column(Boolean)
+    # 分類的時間。有值＝這一則跑過分類，無值＝沒跑過。唯一的那個判準。
+    classified_at: Mapped[Optional[dt.datetime]] = mapped_column(
+        DateTime(timezone=True)
+    )
     # 平台原始回應的那一則，完整保存。之後想補欄位時不必重抓。
     raw: Mapped[dict] = mapped_column(JSON, nullable=False, default=dict)
     observed_at: Mapped[dt.datetime] = mapped_column(
