@@ -17,9 +17,7 @@
    "title": "資產負債表",
    "period_labels": [
     "111年7月31日金額",
-    "111年7月31日%",
-    "110年7月31日金額",
-    "110年7月31日%"
+    "110年7月31日金額"
    ],
    "unit": "新臺幣元",
    "items": [
@@ -28,18 +26,19 @@
      "note_ref": null,
      "values": [
       null,
-      null,
-      null,
       null
-     ]
+     ],
+     "percents": null
     },
     {
      "label": "現金及銀行存款",
      "note_ref": "二、三",
      "values": [
       5803751,
+      5348001
+     ],
+     "percents": [
       39,
-      5348001,
       41
      ]
     },
@@ -48,28 +47,28 @@
      "note_ref": null,
      "values": [
       17797,
-      null,
-      54517,
-      null
-     ]
+      54517
+     ],
+     "percents": null
     },
     {
      "label": "其他應收款",
      "note_ref": null,
      "values": [
       null,
-      null,
-      456,
-      null
-     ]
+      456
+     ],
+     "percents": null
     },
     {
      "label": "預付款項",
      "note_ref": null,
      "values": [
       240587,
+      145580
+     ],
+     "percents": [
       2,
-      145580,
       1
      ]
     },
@@ -78,18 +77,19 @@
      "note_ref": null,
      "values": [
       25029,
-      null,
-      22313,
-      null
-     ]
+      22313
+     ],
+     "percents": null
     },
     {
      "label": "流動資產合計",
      "note_ref": null,
      "values": [
       6087164,
+      5570867
+     ],
+     "percents": [
       41,
-      5570867,
       42
      ]
     },
@@ -98,18 +98,19 @@
      "note_ref": null,
      "values": [
       null,
-      null,
-      null,
       null
-     ]
+     ],
+     "percents": null
     },
     {
      "label": "資遺費準備金",
      "note_ref": "二、三",
      "values": [
       564718,
+      520040
+     ],
+     "percents": [
       4,
-      520040,
       4
      ]
     },
@@ -118,8 +119,10 @@
      "note_ref": "二、三",
      "values": [
       6791844,
+      5692844
+     ],
+     "percents": [
       46,
-      5692844,
       43
      ]
     },
@@ -128,8 +131,10 @@
      "note_ref": "二、三",
      "values": [
       1119608,
+      1268577
+     ],
+     "percents": [
       8,
-      1268577,
       10
      ]
     },
@@ -138,8 +143,10 @@
      "note_ref": "二、三",
      "values": [
       168381,
+      110980
+     ],
+     "percents": [
       1,
-      110980,
       1
      ]
     },
@@ -148,18 +155,19 @@
      "note_ref": null,
      "values": [
       3600,
-      null,
-      3600,
-      null
-     ]
+      3600
+     ],
+     "percents": null
     },
     {
      "label": "非流動資產合計",
      "note_ref": null,
      "values": [
       8648151,
+      7596041
+     ],
+     "percents": [
       59,
-      7596041,
       58
      ]
     },
@@ -168,8 +176,10 @@
      "note_ref": null,
      "values": [
       14735315,
+      13166908
+     ],
+     "percents": [
       100,
-      13166908,
       100
      ]
     },
@@ -178,28 +188,28 @@
      "note_ref": null,
      "values": [
       null,
-      null,
-      null,
       null
-     ]
+     ],
+     "percents": null
     },
     {
      "label": "應付票據",
      "note_ref": null,
      "values": [
       17087,
-      null,
-      null,
       null
-     ]
+     ],
+     "percents": null
     },
     {
      "label": "其他應付款",
      "note_ref": "五",
      "values": [
       1423915,
+      1584012
+     ],
+     "percents": [
       10,
-      1584012,
       12
      ]
     },
@@ -208,8 +218,10 @@
      "note_ref": null,
      "values": [
       3078815,
+      2638065
+     ],
+     "percents": [
       21,
-      2638065,
       20
      ]
     },
@@ -218,8 +230,10 @@
      "note_ref": null,
      "values": [
       4519817,
+      4222077
+     ],
+     "percents": [
       31,
-      4222077,
       32
      ]
     },
@@ -228,18 +242,19 @@
      "note_ref": null,
      "values": [
       null,
-      null,
-      null,
       null
-     ]
+     ],
+     "percents": null
     },
     {
      "label": "資遺費準備",
      "note_ref": "二、三",
      "values": [
       564718,
+      520040
+     ],
+     "percents": [
       4,
-      520040,
       4
      ]
     },
@@ -248,8 +263,10 @@
      "note_ref": "二、三",
      "values": [
       6791844,
+      5692844
+     ],
+     "percents": [
       46,
-      5692844,
       43
      ]
     },
@@ -258,8 +275,10 @@
      "note_ref": "二、三",
      "values": [
       1119608,
+      1268577
+     ],
+     "percents": [
       8,
-      1268577,
       10
      ]
     },
@@ -268,8 +287,10 @@
      "note_ref": "二、三",
      "values": [
       168381,
+      110980
+     ],
+     "percents": [
       1,
-      110980,
       1
      ]
     },
@@ -278,8 +299,10 @@
      "note_ref": null,
      "values": [
       8644551,
+      7592441
+     ],
+     "percents": [
       59,
-      7592441,
       58
      ]
     },
@@ -288,8 +311,10 @@
      "note_ref": null,
      "values": [
       13164368,
+      11814518
+     ],
+     "percents": [
       90,
-      11814518,
       90
      ]
     },
@@ -298,18 +323,19 @@
      "note_ref": null,
      "values": [
       null,
-      null,
-      null,
       null
-     ]
+     ],
+     "percents": null
     },
     {
      "label": "累積餘絀",
      "note_ref": "四",
      "values": [
       1352390,
+      1567599
+     ],
+     "percents": [
       9,
-      1567599,
       12
      ]
     },
@@ -318,8 +344,10 @@
      "note_ref": "四",
      "values": [
       218557,
+      -215209
+     ],
+     "percents": [
       1,
-      -215209,
       -2
      ]
     },
@@ -328,8 +356,10 @@
      "note_ref": null,
      "values": [
       1570947,
+      1352390
+     ],
+     "percents": [
       10,
-      1352390,
       10
      ]
     },
@@ -338,8 +368,10 @@
      "note_ref": null,
      "values": [
       14735315,
+      13166908
+     ],
+     "percents": [
       100,
-      13166908,
       100
      ]
     }

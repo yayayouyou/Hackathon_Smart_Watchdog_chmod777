@@ -1,100 +1,56 @@
 code,short_name,academic_year,pdf_page,page_kind,table_index,section,table_title,context_heading,period_index,period_label,item_label,note_ref,value,percent
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,現金及銀行存款,二、三,5803751,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,現金及銀行存款,二、三,39,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,現金及銀行存款,二、三,5348001,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,現金及銀行存款,二、三,41,
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,現金及銀行存款,二、三,5803751,39
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,現金及銀行存款,二、三,5348001,41
 N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應收帳款淨額,,17797,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應收帳款淨額,,54517,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他應收款,,456,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預付款項,,240587,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,預付款項,,2,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,預付款項,,145580,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,預付款項,,1,
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應收帳款淨額,,54517,
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他應收款,,456,
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預付款項,,240587,2
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,預付款項,,145580,1
 N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他流動資產,,25029,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他流動資產,,22313,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動資產合計,,6087164,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,流動資產合計,,41,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,流動資產合計,,5570867,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,流動資產合計,,42,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遺費準備金,二、三,564718,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資遺費準備金,二、三,4,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資遺費準備金,二、三,520040,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資遺費準備金,二、三,4,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備金,二、三,6791844,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,業務發展準備金,二、三,46,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,業務發展準備金,二、三,5692844,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,業務發展準備金,二、三,43,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,代管財產,二、三,1119608,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,代管財產,二、三,8,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,代管財產,二、三,1268577,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,代管財產,二、三,10,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,購置財產,二、三,168381,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,購置財產,二、三,1,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,購置財產,二、三,110980,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,購置財產,二、三,1,
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他流動資產,,22313,
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動資產合計,,6087164,41
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,流動資產合計,,5570867,42
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遺費準備金,二、三,564718,4
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資遺費準備金,二、三,520040,4
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備金,二、三,6791844,46
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,業務發展準備金,二、三,5692844,43
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,代管財產,二、三,1119608,8
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,代管財產,二、三,1268577,10
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,購置財產,二、三,168381,1
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,購置財產,二、三,110980,1
 N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,存出保證金,,3600,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,存出保證金,,3600,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動資產合計,,8648151,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,非流動資產合計,,59,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,非流動資產合計,,7596041,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,非流動資產合計,,58,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資產總計,,14735315,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資產總計,,100,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資產總計,,13166908,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資產總計,,100,
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,存出保證金,,3600,
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動資產合計,,8648151,59
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,非流動資產合計,,7596041,58
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資產總計,,14735315,100
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資產總計,,13166908,100
 N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付票據,,17087,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應付款,五,1423915,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,其他應付款,五,10,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他應付款,五,1584012,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,其他應付款,五,12,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預收款項,,3078815,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,預收款項,,21,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,預收款項,,2638065,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,預收款項,,20,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動負債合計,,4519817,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,流動負債合計,,31,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,流動負債合計,,4222077,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,流動負債合計,,32,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遺費準備,二、三,564718,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資遺費準備,二、三,4,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資遺費準備,二、三,520040,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資遺費準備,二、三,4,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備,二、三,6791844,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,業務發展準備,二、三,46,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,業務發展準備,二、三,5692844,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,業務發展準備,二、三,43,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付代管財產,二、三,1119608,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付代管財產,二、三,8,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付代管財產,二、三,1268577,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付代管財產,二、三,10,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付購置財產,二、三,168381,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付購置財產,二、三,1,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付購置財產,二、三,110980,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付購置財產,二、三,1,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動負債合計,,8644551,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,非流動負債合計,,59,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,非流動負債合計,,7592441,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,非流動負債合計,,58,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債總額,,13164368,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,負債總額,,90,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,負債總額,,11814518,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,負債總額,,90,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,累積餘絀,四,1352390,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,累積餘絀,四,9,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,累積餘絀,四,1567599,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,累積餘絀,四,12,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,本期餘絀,四,218557,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,本期餘絀,四,1,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,本期餘絀,四,-215209,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,本期餘絀,四,-2,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,餘絀總額,,1570947,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,餘絀總額,,10,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,餘絀總額,,1352390,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,餘絀總額,,10,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債及餘絀總計,,14735315,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,負債及餘絀總計,,100,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,負債及餘絀總計,,13166908,
-N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,負債及餘絀總計,,100,
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應付款,五,1423915,10
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他應付款,五,1584012,12
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預收款項,,3078815,21
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,預收款項,,2638065,20
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動負債合計,,4519817,31
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,流動負債合計,,4222077,32
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遺費準備,二、三,564718,4
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資遺費準備,二、三,520040,4
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備,二、三,6791844,46
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,業務發展準備,二、三,5692844,43
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付代管財產,二、三,1119608,8
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付代管財產,二、三,1268577,10
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付購置財產,二、三,168381,1
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付購置財產,二、三,110980,1
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動負債合計,,8644551,59
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,非流動負債合計,,7592441,58
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債總額,,13164368,90
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,負債總額,,11814518,90
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,累積餘絀,四,1352390,9
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,累積餘絀,四,1567599,12
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,本期餘絀,四,218557,1
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,本期餘絀,四,-215209,-2
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,餘絀總額,,1570947,10
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,餘絀總額,,1352390,10
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債及餘絀總計,,14735315,100
+N01,安溪,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,負債及餘絀總計,,13166908,100
 N01,安溪,110,6,income_statement,1,unrouted,收支結餘表,,0,110.8.1~111.7.31 預算數(a),教保費收入,二、三,10067760,
 N01,安溪,110,6,income_statement,1,unrouted,收支結餘表,,1,110.8.1~111.7.31 決算數(b),教保費收入,二、三,10069260,
 N01,安溪,110,6,income_statement,1,unrouted,收支結餘表,,2,差異數 (c)=(b)-(a),教保費收入,二、三,1500,
@@ -3689,99 +3645,57 @@ N01,安溪,112,27,detail_schedule,1,unrouted,,,0,112學年度 預算數,本期�
 N01,安溪,112,27,detail_schedule,1,unrouted,,,1,112學年度 決算數,本期稅後餘絀,,250799,
 N01,安溪,112,27,detail_schedule,1,unrouted,,,2,112學年度 決算數與預算數之差異,本期稅後餘絀,,-179321,
 N01,安溪,112,27,detail_schedule,1,unrouted,,,3,112學年度 執行率%,本期稅後餘絀,,58,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,8868744,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,現金及銀行存款,二、三,34,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,現金及銀行存款,二、三,9654314,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,現金及銀行存款,二、三,40,
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,8868744,34
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,現金及銀行存款,二、三,9654314,40
 N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應收帳款淨額,,37897,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應收帳款淨額,,34918,
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應收帳款淨額,,34918,
 N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預付款項,,44201,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,預付款項,,51068,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,8950842,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動資產合計,,34,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動資產合計,,9740300,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動資產合計,,40,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備金,二、三,790438,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資遣費準備金,二、三,3,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備金,二、三,713906,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備金,二、三,3,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備金,二、三,13699844,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,業務發展準備金,二、三,52,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備金,二、三,10479844,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備金,二、三,43,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,2572979,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,代管財產,二、三,10,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,代管財產,二、三,3030018,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,代管財產,二、三,13,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,170274,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,購置財產,二、三,1,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,購置財產,二、三,172779,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,購置財產,二、三,1,
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,預付款項,,51068,
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,8950842,34
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動資產合計,,9740300,40
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備金,二、三,790438,3
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備金,二、三,713906,3
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備金,二、三,13699844,52
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備金,二、三,10479844,43
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,2572979,10
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,代管財產,二、三,3030018,13
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,170274,1
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,購置財產,二、三,172779,1
 N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,存出保證金,,3600,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,存出保證金,,3600,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,17237135,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動資產合計,,66,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動資產合計,,14400147,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動資產合計,,60,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,26187977,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資產總計,,100,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資產總計,,24140447,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資產總計,,100,
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,存出保證金,,3600,
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,17237135,66
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動資產合計,,14400147,60
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,26187977,100
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資產總計,,24140447,100
 N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付票據,,17684,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,1926288,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,其他應付款,五,7,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他應付款,五,2063288,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,其他應付款,五,8,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預收款項,,4324548,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,預收款項,,17,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,預收款項,,5207452,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,預收款項,,22,
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,1926288,7
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他應付款,五,2063288,8
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預收款項,,4324548,17
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,預收款項,,5207452,22
 N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他流動負債,,3075,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他流動負債,,1542,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,6271595,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動負債合計,,24,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動負債合計,,7272282,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動負債合計,,30,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備,二、三,790438,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資遣費準備,二、三,3,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備,二、三,713906,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備,二、三,3,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備,二、三,15899844,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,業務發展準備,二、三,61,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備,二、三,10479844,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備,二、三,43,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,2572979,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付代管財產,二、三,10,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付代管財產,二、三,3030018,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付代管財產,二、三,13,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,170274,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付購置財產,二、三,1,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付購置財產,二、三,172779,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付購置財產,二、三,1,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,19433535,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動負債合計,,75,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動負債合計,,14396547,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動負債合計,,60,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,25705130,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債總額,,99,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債總額,,21668829,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債總額,,90,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,2471618,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,累積餘絀,四,9,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,累積餘絀,四,2220819,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,累積餘絀,四,9,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,-1988771,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,本期餘絀,四,-8,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,本期餘絀,四,250799,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,本期餘絀,四,1,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,482847,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,餘絀總額,,1,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,餘絀總額,,2471618,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,餘絀總額,,10,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,26187977,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債及餘絀總計,,100,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債及餘絀總計,,24140447,
-N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債及餘絀總計,,100,
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他流動負債,,1542,
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,6271595,24
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動負債合計,,7272282,30
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備,二、三,790438,3
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備,二、三,713906,3
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備,二、三,15899844,61
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備,二、三,10479844,43
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,2572979,10
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付代管財產,二、三,3030018,13
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,170274,1
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付購置財產,二、三,172779,1
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,19433535,75
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動負債合計,,14396547,60
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,25705130,99
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債總額,,21668829,90
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,2471618,9
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,累積餘絀,四,2220819,9
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,-1988771,-8
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,本期餘絀,四,250799,1
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,482847,1
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,餘絀總額,,2471618,10
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,26187977,100
+N01,安溪,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債及餘絀總計,,24140447,100
 N01,安溪,113,6,income_statement,1,income_statement,收支餘絀表,,0,預算數(a),教保費收入,二、三,18236160,
 N01,安溪,113,6,income_statement,1,income_statement,收支餘絀表,,1,決算數(b),教保費收入,二、三,17990000,
 N01,安溪,113,6,income_statement,1,income_statement,收支餘絀表,,2,差異數(c)=(b)-(a),教保費收入,二、三,-246160,
@@ -6131,122 +6045,94 @@ N02,山北,110,23,detail_schedule,2,income_by_function,,附表一：收支餘絀
 N02,山北,110,23,detail_schedule,2,income_by_function,,附表一：收支餘絀表-功能別,0,金額,合　　計,,1359266,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,人事費,,7774379,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,人事費,,6971731,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,人事費,,-802648,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,人事費,,-10,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,人事費,,-802648,-10
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,人事費,,7395243,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,人事費,,6620147,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,人事費,,-775096,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,人事費,,-10,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,人事費,,-775096,-10
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,加班費,,333840,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,加班費,,306288,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,加班費,,-27552,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,加班費,,-8,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,加班費,,-27552,-8
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,資遣費,,45296,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,資遣費,,45296,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,業務費,,689200,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,業務費,,445333,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,業務費,,-243867,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,業務費,,-35,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,業務費,,-243867,-35
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,活動費,,95000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,活動費,,81338,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,活動費,,-13662,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,活動費,,-14,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,活動費,,-13662,-14
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,研習、進修,,26000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,研習、進修,,6500,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,研習、進修,,-19500,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,研習、進修,,-75,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,研習、進修,,-19500,-75
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,水費,,26000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,水費,,11079,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,水費,,-14921,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,水費,,-57,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,水費,,-14921,-57
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,電費,,204000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,電費,,156603,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,電費,,-47397,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,電費,,-23,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,電費,,-47397,-23
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,瓦斯費,,32000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,瓦斯費,,11895,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,瓦斯費,,-20105,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,瓦斯費,,-63,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,瓦斯費,,-20105,-63
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,保全,,80000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,保全,,34256,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,保全,,-45744,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,保全,,-57,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,保全,,-45744,-57
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,辦公文具,,18000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,辦公文具,,6245,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,辦公文具,,-11755,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,辦公文具,,-65,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,辦公文具,,-11755,-65
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,事務機器耗材,,60000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,事務機器耗材,,39493,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,事務機器耗材,,-20507,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,事務機器耗材,,-34,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,事務機器耗材,,-20507,-34
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,電話費（含網路）,,45000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,電話費（含網路）,,29553,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,電話費（含網路）,,-15447,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,電話費（含網路）,,-34,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,電話費（含網路）,,-15447,-34
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,郵資,,7200,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,郵資,,4750,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,郵資,,-2450,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,郵資,,-34,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,郵資,,-2450,-34
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,文宣費（一般文宣）,,10000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,文宣費（一般文宣）,,1670,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,文宣費（一般文宣）,,-8330,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,文宣費（一般文宣）,,-83,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,文宣費（一般文宣）,,-8330,-83
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,文宣費（園刊）,,22000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,文宣費（園刊）,,10000,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,文宣費（園刊）,,-12000,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,文宣費（園刊）,,-55,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,文宣費（園刊）,,-12000,-55
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,攝影照片,,9000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,攝影照片,,5175,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,攝影照片,,-3825,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,攝影照片,,-43,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,攝影照片,,-3825,-43
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,園務特支,,39000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,園務特支,,46776,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,園務特支,,7776,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,園務特支,,20,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,園務特支,,7776,20
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,差旅費,,16000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,差旅費,,-16000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,材料費,,1401300,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,材料費,,1085568,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,材料費,,-315732,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,材料費,,-23,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,材料費,,-315732,-23
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,教保材料費,,216000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,教保材料費,,80817,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,教保材料費,,-135183,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,教保材料費,,-63,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,教保材料費,,-135183,-63
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,日常消耗用品,,54000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,日常消耗用品,,42841,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,日常消耗用品,,-11159,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,日常消耗用品,,-21,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,日常消耗用品,,-11159,-21
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,藥品費,,6300,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,藥品費,,5641,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,藥品費,,-659,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,藥品費,,-10,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,藥品費,,-659,-10
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,餐點費,,1125000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,餐點費,,956269,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,餐點費,,-168731,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,餐點費,,-15,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,餐點費,,-168731,-15
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,維護費,,118000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,維護費,,93029,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,維護費,,-24971,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,維護費,,-21,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,維護費,,-24971,-21
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,修繕購置費,,126000,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,修繕購置費,,50201,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,修繕購置費,,-75799,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,修繕購置費,,-60,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,修繕購置費,,-75799,-60
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,公共事務管理費,,45966,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,公共事務管理費,,14400,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,公共事務管理費,,-31566,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,公共事務管理費,,-69,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,公共事務管理費,,-31566,-69
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,雜支,,41352,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,雜支,,3850,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,雜支,,-37502,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,雜支,,-91,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,雜支,,-37502,-91
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,行政管理費,,125430,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,行政管理費,,125430,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,合　　計,,10321627,
 N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,合　　計,,8789542,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,合　　計,,-1532085,
-N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,合　　計,,-15,
+N02,山北,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,合　　計,,-1532085,-15
 N02,山北,110,25,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,0,110學年度_預算數,收入,,10232832,
 N02,山北,110,25,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,1,110學年度_決算數,收入,,12382097,
 N02,山北,110,25,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,2,110學年度_決算數與預算數之差異,收入,,2149265,
@@ -9238,96 +9124,54 @@ N02,山北,112,27,detail_schedule,1,unrouted,,,0,112學年度 預算數,本期�
 N02,山北,112,27,detail_schedule,1,unrouted,,,1,112學年度 決算數,本期稅後賸絀,,-348840,
 N02,山北,112,27,detail_schedule,1,unrouted,,,2,112學年度 決算數與預算數之差異,本期稅後賸絀,,-678292,
 N02,山北,112,27,detail_schedule,1,unrouted,,,3,執行率%,本期稅後賸絀,,-106,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,6615258,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,現金及銀行存款,二、三,39,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,現金及銀行存款,二、三,6143624,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,現金及銀行存款,二、三,43,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應收帳款淨額,,23731,
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,6615258,39
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,現金及銀行存款,二、三,6143624,43
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應收帳款淨額,,23731,
 N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他流動資產,,4475,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他流動資產,,9,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,6619733,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動資產合計,,39,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動資產合計,,6167364,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動資產合計,,43,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備金,二、三,413891,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資遣費準備金,二、三,2,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備金,二、三,357572,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備金,二、三,2,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備金,二、三,9114885,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,業務發展準備金,二、三,54,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備金,二、三,6910098,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備金,二、三,49,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,602285,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,代管財產,二、三,4,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,代管財產,二、三,687929,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,代管財產,二、三,5,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,119004,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,購置財產,二、三,1,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,購置財產,二、三,101679,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,購置財產,二、三,1,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,10250065,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動資產合計,,61,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動資產合計,,8057278,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動資產合計,,57,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,16869798,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資產總計,,100,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資產總計,,14224642,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資產總計,,100,
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他流動資產,,9,
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,6619733,39
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動資產合計,,6167364,43
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備金,二、三,413891,2
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備金,二、三,357572,2
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備金,二、三,9114885,54
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備金,二、三,6910098,49
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,602285,4
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,代管財產,二、三,687929,5
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,119004,1
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,購置財產,二、三,101679,1
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,10250065,61
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動資產合計,,8057278,57
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,16869798,100
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資產總計,,14224642,100
 N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付帳款,,12749,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付帳款,,6491,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,1379303,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,其他應付款,五,8,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他應付款,五,1287014,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,其他應付款,五,9,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預收款項,,2714589,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,預收款項,,16,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,預收款項,,3035595,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,預收款項,,21,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他流動負債,,55,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,4106641,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動負債合計,,24,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動負債合計,,4329155,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動負債合計,,30,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備,二、三,413891,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資遣費準備,二、三,2,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備,二、三,357572,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備,二、三,2,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備,二、三,9114885,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,業務發展準備,二、三,54,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備,二、三,6910098,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備,二、三,49,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,602285,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付代管財產,二、三,4,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付代管財產,二、三,687929,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付代管財產,二、三,5,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,119004,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付購置財產,二、三,1,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付購置財產,二、三,101679,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付購置財產,二、三,1,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,10250065,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動負債合計,,61,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動負債合計,,8057278,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動負債合計,,57,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,14356706,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債總額,,85,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債總額,,12386433,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債總額,,87,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,1838209,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,累積餘絀,四,11,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,累積餘絀,四,2187049,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,累積餘絀,四,15,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,674883,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,本期餘絀,四,4,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,本期餘絀,四,-348840,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,本期餘絀,四,-2,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,2513092,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,餘絀總額,,15,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,餘絀總額,,1838209,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,餘絀總額,,13,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,16869798,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債及餘絀總計,,100,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債及餘絀總計,,14224642,
-N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債及餘絀總計,,100,
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付帳款,,6491,
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,1379303,8
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他應付款,五,1287014,9
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預收款項,,2714589,16
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,預收款項,,3035595,21
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他流動負債,,55,
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,4106641,24
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動負債合計,,4329155,30
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備,二、三,413891,2
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備,二、三,357572,2
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備,二、三,9114885,54
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備,二、三,6910098,49
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,602285,4
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付代管財產,二、三,687929,5
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,119004,1
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付購置財產,二、三,101679,1
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,10250065,61
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動負債合計,,8057278,57
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,14356706,85
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債總額,,12386433,87
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,1838209,11
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,累積餘絀,四,2187049,15
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,674883,4
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,本期餘絀,四,-348840,-2
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,2513092,15
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,餘絀總額,,1838209,13
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,16869798,100
+N02,山北,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債及餘絀總計,,14224642,100
 N02,山北,113,6,income_statement,1,income_statement,"新北市山北非營利幼兒園
 （委託財團法人三之三生命教育基金會辦理）
 收支餘絀表
@@ -10825,111 +10669,64 @@ N02,山北,113,37,other,1,unrouted,考評指標考評方式評分考評依據備
 N02,山北,113,37,other,1,unrouted,考評指標考評方式評分考評依據備註,,0,評分,(3)前學年度會計師簽證報告揭露缺失之改善情形,,2,
 N02,山北,113,37,other,1,unrouted,考評指標考評方式評分考評依據備註,,0,評分,(4)財產依規定登錄及報廢之情形。,,1,
 N02,山北,113,37,other,1,unrouted,考評指標考評方式評分考評依據備註,,0,評分,會計查核簽證情形評分合計：,,17,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,現金及銀行存款,二、三,5594770,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,現金及銀行存款,二、三,61,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,現金及銀行存款,二、三,4734132,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,現金及銀行存款,二、三,58,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應收帳款淨額,,71124,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應收帳款淨額,,1,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應收帳款淨額,,7973,
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,現金及銀行存款,二、三,5594770,61
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,現金及銀行存款,二、三,4734132,58
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應收帳款淨額,,71124,1
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應收帳款淨額,,7973,
 N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應收款,,652,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他應收款,,121,
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他應收款,,121,
 N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預付款項,,15039,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,預付款項,,17045,
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,預付款項,,17045,
 N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他流動資產,,3533,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他流動資產,,983,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動資產合計,,5685118,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,流動資產合計,,62,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,流動資產合計,,4760254,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,流動資產合計,,58,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備金,二、三,280189,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資遣費準備金,二、三,3,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資遣費準備金,二、三,234507,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資遣費準備金,二、三,3,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備金,二、三,2536501,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,業務發展準備金,二、三,27,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,業務發展準備金,二、三,2438501,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,業務發展準備金,二、三,30,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,代管財產,二、三,260214,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,代管財產,二、三,3,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,代管財產,二、三,346135,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,代管財產,二、三,4,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,購置財產,二、三,460670,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,購置財產,二、三,5,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,購置財產,二、三,395020,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,購置財產,二、三,5,
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他流動資產,,983,
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動資產合計,,5685118,62
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,流動資產合計,,4760254,58
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備金,二、三,280189,3
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資遣費準備金,二、三,234507,3
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備金,二、三,2536501,27
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,業務發展準備金,二、三,2438501,30
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,代管財產,二、三,260214,3
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,代管財產,二、三,346135,4
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,購置財產,二、三,460670,5
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,購置財產,二、三,395020,5
 N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,存出保證金,,7200,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,存出保證金,,7200,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動資產合計,,3544774,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,非流動資產合計,,38,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,非流動資產合計,,3421363,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,非流動資產合計,,42,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資產總計,,9229892,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資產總計,,100,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資產總計,,8181617,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資產總計,,100,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付票據,,74658,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付票據,,1,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付票據,,326729,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付票據,,4,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付帳款,,510278,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付帳款,,6,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付帳款,,222731,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付帳款,,3,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應付款,五,831812,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,其他應付款,五,10,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他應付款,五,678160,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,其他應付款,五,8,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預收款項,,1980450,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,預收款項,,21,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,預收款項,,2012383,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,預收款項,,25,
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,存出保證金,,7200,
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動資產合計,,3544774,38
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,非流動資產合計,,3421363,42
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資產總計,,9229892,100
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資產總計,,8181617,100
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付票據,,74658,1
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付票據,,326729,4
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付帳款,,510278,6
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付帳款,,222731,3
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應付款,五,831812,10
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他應付款,五,678160,8
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預收款項,,1980450,21
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,預收款項,,2012383,25
 N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他流動負債,,278,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他流動負債,,282,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動負債合計,,3397476,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,流動負債合計,,38,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,流動負債合計,,3240285,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,流動負債合計,,40,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備,二、三,280189,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資遣費準備,二、三,3,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資遣費準備,二、三,234507,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資遣費準備,二、三,3,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備,二、三,2536501,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,業務發展準備,二、三,27,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,業務發展準備,二、三,2438501,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,業務發展準備,二、三,30,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付代管財產,二、三,260214,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付代管財產,二、三,3,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付代管財產,二、三,346135,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付代管財產,二、三,4,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付購置財產,二、三,460670,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付購置財產,二、三,5,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付購置財產,二、三,395020,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付購置財產,二、三,5,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動負債合計,,3537574,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,非流動負債合計,,38,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,非流動負債合計,,3414163,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,非流動負債合計,,42,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債總額,,6935050,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,負債總額,,76,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,負債總額,,6654448,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,負債總額,,82,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,累積餘絀,四,1527169,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,累積餘絀,四,17,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,累積餘絀,四,1257979,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,累積餘絀,四,15,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,本期餘絀,四,767673,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,本期餘絀,四,7,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,本期餘絀,四,269190,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,本期餘絀,四,3,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,餘絀總額,,2294842,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,餘絀總額,,24,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,餘絀總額,,1527169,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,餘絀總額,,18,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債及餘絀總計,,9229892,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,負債及餘絀總計,,100,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,負債及餘絀總計,,8181617,
-N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,負債及餘絀總計,,100,
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他流動負債,,282,
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動負債合計,,3397476,38
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,流動負債合計,,3240285,40
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備,二、三,280189,3
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資遣費準備,二、三,234507,3
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備,二、三,2536501,27
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,業務發展準備,二、三,2438501,30
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付代管財產,二、三,260214,3
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付代管財產,二、三,346135,4
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付購置財產,二、三,460670,5
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付購置財產,二、三,395020,5
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動負債合計,,3537574,38
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,非流動負債合計,,3414163,42
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債總額,,6935050,76
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,負債總額,,6654448,82
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,累積餘絀,四,1527169,17
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,累積餘絀,四,1257979,15
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,本期餘絀,四,767673,7
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,本期餘絀,四,269190,3
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,餘絀總額,,2294842,24
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,餘絀總額,,1527169,18
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債及餘絀總計,,9229892,100
+N03,龍埔成長,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,負債及餘絀總計,,8181617,100
 N03,龍埔成長,110,6,income_statement,1,income_statement,收支餘絀表,,0,110.8.1~111.7.31 預算數(a),教保費收入,二、三,10429560,
 N03,龍埔成長,110,6,income_statement,1,income_statement,收支餘絀表,,1,110.8.1~111.7.31 決算數(b),教保費收入,二、三,10094201,
 N03,龍埔成長,110,6,income_statement,1,income_statement,收支餘絀表,,2,110.8.1~111.7.31 差異數(c)=(b)-(a),教保費收入,二、三,-335359,
@@ -16100,98 +15897,54 @@ N03,龍埔成長,113,38,auditor_report,1,unrouted,,,2,評分,評分,,1,
 N03,龍埔成長,113,38,auditor_report,1,unrouted,,,2,評分,評分,,0,
 N03,龍埔成長,113,38,auditor_report,1,unrouted,,,2,評分,評分,,1,
 N03,龍埔成長,113,38,auditor_report,1,unrouted,,,2,評分,會計查核簽證情形評分合計：,,13,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,現金及銀行存款,二、三,2575148,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,現金及銀行存款,二、三,49,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,現金及銀行存款,二、三,1803908,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,現金及銀行存款,二、三,42,
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,現金及銀行存款,二、三,2575148,49
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,現金及銀行存款,二、三,1803908,42
 N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應收帳款淨額,,18000,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應收帳款淨額,,239460,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應收帳款淨額,,5,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動資產合計,,2593148,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,流動資產合計,,49,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,流動資產合計,,2043368,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,流動資產合計,,47,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備金,二、三,113473,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資遣費準備金,二、三,2,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資遣費準備金,二、三,84489,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資遣費準備金,二、三,2,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備金,二、三,2074000,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,業務發展準備金,二、三,39,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,業務發展準備金,二、三,1738000,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,業務發展準備金,二、三,40,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,代管財產,二、三,188534,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,代管財產,二、三,4,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,代管財產,二、三,153552,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,代管財產,二、三,4,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,購置財產,二、三,316183,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,購置財產,二、三,6,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,購置財產,二、三,316183,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,購置財產,二、三,7,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動資產合計,,2692190,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,非流動資產合計,,51,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,非流動資產合計,,2292224,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,非流動資產合計,,53,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資產總計,,5285338,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資產總計,,100,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資產總計,,4335592,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資產總計,,100,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付帳款,,61510,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付帳款,,1,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付帳款,,12400,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應付款,五,148378,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,其他應付款,五,3,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他應付款,五,125493,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,其他應付款,五,3,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預收款項,,1208580,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,預收款項,,23,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,預收款項,,1103580,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,預收款項,,26,
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應收帳款淨額,,239460,5
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動資產合計,,2593148,49
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,流動資產合計,,2043368,47
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備金,二、三,113473,2
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資遣費準備金,二、三,84489,2
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備金,二、三,2074000,39
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,業務發展準備金,二、三,1738000,40
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,代管財產,二、三,188534,4
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,代管財產,二、三,153552,4
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,購置財產,二、三,316183,6
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,購置財產,二、三,316183,7
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動資產合計,,2692190,51
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,非流動資產合計,,2292224,53
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資產總計,,5285338,100
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資產總計,,4335592,100
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付帳款,,61510,1
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付帳款,,12400,
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應付款,五,148378,3
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他應付款,五,125493,3
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預收款項,,1208580,23
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,預收款項,,1103580,26
 N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他流動負債,,12276,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他流動負債,,9255,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動負債合計,,1430744,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,流動負債合計,,27,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,流動負債合計,,1250728,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,流動負債合計,,29,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備,二、三,113473,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資遣費準備,二、三,2,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資遣費準備,二、三,87806,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資遣費準備,二、三,2,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備,二、三,2074000,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,業務發展準備,二、三,39,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,業務發展準備,二、三,1738000,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,業務發展準備,二、三,40,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付代管財產,二、三,188534,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付代管財產,二、三,4,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付代管財產,二、三,153552,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付代管財產,二、三,4,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付購置財產,二、三,316183,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付購置財產,二、三,6,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付購置財產,二、三,316183,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付購置財產,二、三,7,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動負債合計,,2692190,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,非流動負債合計,,51,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,非流動負債合計,,2295541,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,非流動負債合計,,53,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債總額,,4122934,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,負債總額,,78,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,負債總額,,3546269,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,負債總額,,82,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,累積餘絀,四,789323,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,累積餘絀,四,15,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,累積餘絀,四,637764,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,累積餘絀,四,15,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,本期餘絀,四,373081,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,本期餘絀,四,7,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,本期餘絀,四,151559,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,本期餘絀,四,3,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,餘絀總額,,1162404,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,餘絀總額,,22,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,餘絀總額,,789323,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,餘絀總額,,18,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債及餘絀總計,,5285338,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,負債及餘絀總計,,100,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,負債及餘絀總計,,4335592,
-N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,負債及餘絀總計,,100,
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他流動負債,,9255,
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動負債合計,,1430744,27
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,流動負債合計,,1250728,29
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備,二、三,113473,2
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資遣費準備,二、三,87806,2
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備,二、三,2074000,39
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,業務發展準備,二、三,1738000,40
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付代管財產,二、三,188534,4
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付代管財產,二、三,153552,4
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付購置財產,二、三,316183,6
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付購置財產,二、三,316183,7
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動負債合計,,2692190,51
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,非流動負債合計,,2295541,53
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債總額,,4122934,78
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,負債總額,,3546269,82
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,累積餘絀,四,789323,15
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,累積餘絀,四,637764,15
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,本期餘絀,四,373081,7
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,本期餘絀,四,151559,3
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,餘絀總額,,1162404,22
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,餘絀總額,,789323,18
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債及餘絀總計,,5285338,100
+N04,海工,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,負債及餘絀總計,,4335592,100
 N04,海工,110,6,income_statement,1,income_statement,收支餘絀表,,0,預算數(a),教保費收入,二、三,6409440,
 N04,海工,110,6,income_statement,1,income_statement,收支餘絀表,,1,決算數(b),教保費收入,二、三,6210921,
 N04,海工,110,6,income_statement,1,income_statement,收支餘絀表,,2,差異數(c)=(b)-(a),教保費收入,二、三,-198519,
@@ -19975,95 +19728,52 @@ N04,海工,112,27,detail_schedule,1,unrouted,,,12,109學年度_預算數,本期�
 N04,海工,112,27,detail_schedule,1,unrouted,,,13,109學年度_決算數,本期稅後餘絀,,151559,
 N04,海工,112,27,detail_schedule,1,unrouted,,,14,109學年度_決算數與預算數之差異,本期稅後餘絀,,-4885,
 N04,海工,112,27,detail_schedule,1,unrouted,,,15,109學年度_執行率%,本期稅後餘絀,,97,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,3294879,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,現金及銀行存款,二、三,37,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,現金及銀行存款,二、三,3226040,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,現金及銀行存款,二、三,41,
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,3294879,37
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,現金及銀行存款,二、三,3226040,41
 N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應收款,,9269,
 N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預付款項,,5717,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,預付款項,,45000,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,預付款項,,1,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,3309865,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動資產合計,,37,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動資產合計,,3271040,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動資產合計,,42,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備金,二、三,198704,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資遣費準備金,二、三,2,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備金,二、三,166661,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備金,二、三,2,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備金,二、三,5024000,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,業務發展準備金,二、三,56,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備金,二、三,3854000,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備金,二、三,50,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,127360,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,代管財產,二、三,1,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,代管財產,二、三,161339,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,代管財產,二、三,2,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,372503,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,購置財產,二、三,4,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,購置財產,二、三,337703,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,購置財產,二、三,4,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,5722567,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動資產合計,,63,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動資產合計,,4519703,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動資產合計,,58,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,9032432,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資產總計,,100,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資產總計,,7790743,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資產總計,,100,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,618330,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,其他應付款,五,7,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他應付款,五,198867,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,其他應付款,五,3,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預收款項,,1641672,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,預收款項,,18,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,預收款項,,1488338,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,預收款項,,19,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他流動負債,,13904,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,2260002,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動負債合計,,25,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動負債合計,,1701109,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動負債合計,,22,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備,二、三,198704,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資遣費準備,二、三,2,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備,二、三,166661,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備,二、三,2,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備,二、三,5024000,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,業務發展準備,二、三,56,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備,二、三,3854000,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備,二、三,50,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,127360,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付代管財產,二、三,1,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付代管財產,二、三,161339,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付代管財產,二、三,2,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,372503,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付購置財產,二、三,4,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付購置財產,二、三,337703,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付購置財產,二、三,4,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,5722567,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動負債合計,,63,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動負債合計,,4519703,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動負債合計,,58,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,7982569,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債總額,,88,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債總額,,6220812,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債總額,,80,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,1569931,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,累積餘絀,四,17,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,累積餘絀,四,1247706,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,累積餘絀,四,16,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,-520068,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,本期餘絀,四,-5,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,本期餘絀,四,322225,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,本期餘絀,四,4,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,1049863,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,餘絀總額,,12,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,餘絀總額,,1569931,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,餘絀總額,,20,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,9032432,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債及餘絀總計,,100,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債及餘絀總計,,7790743,
-N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債及餘絀總計,,100,
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,預付款項,,45000,1
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,3309865,37
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動資產合計,,3271040,42
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備金,二、三,198704,2
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備金,二、三,166661,2
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備金,二、三,5024000,56
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備金,二、三,3854000,50
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,127360,1
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,代管財產,二、三,161339,2
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,372503,4
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,購置財產,二、三,337703,4
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,5722567,63
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動資產合計,,4519703,58
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,9032432,100
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資產總計,,7790743,100
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,618330,7
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他應付款,五,198867,3
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預收款項,,1641672,18
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,預收款項,,1488338,19
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他流動負債,,13904,
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,2260002,25
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動負債合計,,1701109,22
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備,二、三,198704,2
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備,二、三,166661,2
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備,二、三,5024000,56
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備,二、三,3854000,50
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,127360,1
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付代管財產,二、三,161339,2
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,372503,4
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付購置財產,二、三,337703,4
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,5722567,63
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動負債合計,,4519703,58
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,7982569,88
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債總額,,6220812,80
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,1569931,17
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,累積餘絀,四,1247706,16
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,-520068,-5
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,本期餘絀,四,322225,4
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,1049863,12
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,餘絀總額,,1569931,20
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,9032432,100
+N04,海工,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債及餘絀總計,,7790743,100
 N04,海工,113,6,income_statement,1,income_statement,收支餘絀表,,0,預算數(a),教保費收入,二、三,7394688,
 N04,海工,113,6,income_statement,1,income_statement,收支餘絀表,,1,決算數(b),教保費收入,二、三,7608000,
 N04,海工,113,6,income_statement,1,income_statement,收支餘絀表,,2,差異數(c)=(b)-(a),教保費收入,二、三,213312,
@@ -21219,102 +20929,58 @@ N04,海工,113,37,other,1,unrouted,,,0,評分,(2)依第1學期會計師查核修
 N04,海工,113,37,other,1,unrouted,,,0,評分,(3)前學年度會計師簽證報告揭露缺失之改善情形,,2,
 N04,海工,113,37,other,1,unrouted,,,0,評分,(4)財產依規定登錄及報廢之情形。,,1,
 N04,海工,113,37,other,1,unrouted,,,0,評分,會計查核簽證情形評分合計：,,16,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,現金及銀行存款,二、三,4227113,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,現金及銀行存款,二、三,35,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,現金及銀行存款,二、三,4005885,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,現金及銀行存款,二、三,37,
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,現金及銀行存款,二、三,4227113,35
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,現金及銀行存款,二、三,4005885,37
 N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應收帳款淨額,,675,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應收帳款淨額,,270,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應收款,,367937,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,其他應收款,,3,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他應收款,,114918,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,其他應收款,,1,
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應收帳款淨額,,270,
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應收款,,367937,3
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他應收款,,114918,1
 N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預付款項,,9450,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,預付款項,,14360,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動資產合計,,4605175,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,流動資產合計,,38,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,流動資產合計,,4135433,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,流動資產合計,,38,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備金,二、三,222828,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資遣費準備金,二、三,2,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資遣費準備金,二、三,182887,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資遣費準備金,二、三,1,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備金,二、三,5664300,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,業務發展準備金,二、三,46,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,業務發展準備金,二、三,4898000,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,業務發展準備金,二、三,45,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,代管財產,二、三,1440724,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,代管財產,二、三,12,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,代管財產,二、三,1444703,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,代管財產,二、三,13,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,購置財產,二、三,338493,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,購置財產,二、三,2,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,購置財產,二、三,323268,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,購置財產,二、三,3,
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,預付款項,,14360,
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動資產合計,,4605175,38
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,流動資產合計,,4135433,38
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備金,二、三,222828,2
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資遣費準備金,二、三,182887,1
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備金,二、三,5664300,46
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,業務發展準備金,二、三,4898000,45
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,代管財產,二、三,1440724,12
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,代管財產,二、三,1444703,13
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,購置財產,二、三,338493,2
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,購置財產,二、三,323268,3
 N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,存出保證金,,15000,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,存出保證金,,15000,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動資產合計,,7681345,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,非流動資產合計,,62,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,非流動資產合計,,6863858,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,非流動資產合計,,62,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資產總計,,12286520,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資產總計,,100,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資產總計,,10999291,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資產總計,,100,
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,存出保證金,,15000,
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動資產合計,,7681345,62
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,非流動資產合計,,6863858,62
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資產總計,,12286520,100
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資產總計,,10999291,100
 N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付帳款,,17254,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付帳款,,43297,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應付款,五,1009356,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,其他應付款,五,8,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他應付款,五,1122994,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,其他應付款,五,10,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預收款項,,2010759,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,預收款項,,17,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,預收款項,,2193343,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,預收款項,,21,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動負債合計,,3037369,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,流動負債合計,,25,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,流動負債合計,,3359634,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,流動負債合計,,31,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備,二、三,222828,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資遣費準備,二、三,2,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資遣費準備,二、三,182887,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資遣費準備,二、三,1,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備,二、三,5664300,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,業務發展準備,二、三,46,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,業務發展準備,二、三,4898000,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,業務發展準備,二、三,45,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付代管財產,二、三,1440724,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付代管財產,二、三,12,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付代管財產,二、三,1444703,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付代管財產,二、三,13,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付購置財產,二、三,338493,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付購置財產,二、三,2,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付購置財產,二、三,323268,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付購置財產,二、三,3,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動負債合計,,7666345,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,非流動負債合計,,62,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,非流動負債合計,,6848858,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,非流動負債合計,,62,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債總額,,10703714,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,負債總額,,87,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,負債總額,,10208492,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,負債總額,,93,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,累積餘絀,四,790799,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,累積餘絀,四,6,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,累積餘絀,四,1142977,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,累積餘絀,四,10,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,本期餘絀,四,792007,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,本期餘絀,四,7,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,本期餘絀,四,-352178,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,本期餘絀,四,-3,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,餘絀總額,,1582806,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,餘絀總額,,13,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,餘絀總額,,790799,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,餘絀總額,,7,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債及餘絀總計,,12286520,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,負債及餘絀總計,,100,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,負債及餘絀總計,,10999291,
-N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,負債及餘絀總計,,100,
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付帳款,,43297,
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應付款,五,1009356,8
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他應付款,五,1122994,10
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預收款項,,2010759,17
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,預收款項,,2193343,21
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動負債合計,,3037369,25
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,流動負債合計,,3359634,31
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備,二、三,222828,2
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資遣費準備,二、三,182887,1
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備,二、三,5664300,46
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,業務發展準備,二、三,4898000,45
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付代管財產,二、三,1440724,12
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付代管財產,二、三,1444703,13
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付購置財產,二、三,338493,2
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付購置財產,二、三,323268,3
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動負債合計,,7666345,62
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,非流動負債合計,,6848858,62
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債總額,,10703714,87
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,負債總額,,10208492,93
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,累積餘絀,四,790799,6
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,累積餘絀,四,1142977,10
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,本期餘絀,四,792007,7
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,本期餘絀,四,-352178,-3
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,餘絀總額,,1582806,13
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,餘絀總額,,790799,7
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債及餘絀總計,,12286520,100
+N05,漢翔,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,負債及餘絀總計,,10999291,100
 N05,漢翔,110,6,income_statement,1,income_statement,收支餘絀表,,0,預算數(a),教保費收入,二、三,9343440,
 N05,漢翔,110,6,income_statement,1,income_statement,收支餘絀表,,1,決算數(b),教保費收入,二、三,9030884,
 N05,漢翔,110,6,income_statement,1,income_statement,收支餘絀表,,2,差異數(c)=(b)-(a),教保費收入,二、三,-312556,
@@ -26147,101 +25813,57 @@ N05,漢翔,112,27,detail_schedule,1,unrouted,,,12,109學年度預算數,本期�
 N05,漢翔,112,27,detail_schedule,1,unrouted,,,13,109學年度決算數,本期稅後餘絀,,-352178,
 N05,漢翔,112,27,detail_schedule,1,unrouted,,,14,109學年度決算數與預算算數之差異,本期稅後餘絀,,-622895,
 N05,漢翔,112,27,detail_schedule,1,unrouted,,,15,109學年度執行率%,本期稅後餘絀,,-130,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,現金及銀行存款,二、三,6877439,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,現金及銀行存款,二、三,35,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,現金及銀行存款,二、三,5236308,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,現金及銀行存款,二、三,36,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,應收帳款淨額,,742,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,其他應收款,,90811,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,其他應收款,,1,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,其他應收款,,14255,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,預付款項,,2167,
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,現金及銀行存款,二、三,6877439,35
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,現金及銀行存款,二、三,5236308,36
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,應收帳款淨額,,742,
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,其他應收款,,90811,1
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,其他應收款,,14255,
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,預付款項,,2167,
 N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,其他流動資產,,5503,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,流動資產合計,,6973753,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,流動資產合計,,36,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,流動資產合計,,5253472,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,流動資產合計,,36,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資遣費準備金,二、三,354784,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,資遣費準備金,二、三,2,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,資遣費準備金,二、三,305646,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,資遣費準備金,二、三,2,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,業務發展準備金,二、三,10767024,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,業務發展準備金,二、三,55,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,業務發展準備金,二、三,8191619,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,業務發展準備金,二、三,56,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,代管財產,二、三,941471,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,代管財產,二、三,5,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,代管財產,二、三,515711,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,代管財產,二、三,4,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,購置財產,二、三,391293,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,購置財產,二、三,2,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,購置財產,二、三,391293,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,購置財產,二、三,2,
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,流動資產合計,,6973753,36
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,流動資產合計,,5253472,36
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資遣費準備金,二、三,354784,2
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,資遣費準備金,二、三,305646,2
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,業務發展準備金,二、三,10767024,55
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,業務發展準備金,二、三,8191619,56
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,代管財產,二、三,941471,5
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,代管財產,二、三,515711,4
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,購置財產,二、三,391293,2
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,購置財產,二、三,391293,2
 N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,存出保證金,,15000,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,存出保證金,,15000,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,非流動資產合計,,12469572,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,非流動資產合計,,64,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,非流動資產合計,,9419269,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,非流動資產合計,,64,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資產總計,,19443325,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,資產總計,,100,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,資產總計,,14672741,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,資產總計,,100,
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,存出保證金,,15000,
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,非流動資產合計,,12469572,64
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,非流動資產合計,,9419269,64
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資產總計,,19443325,100
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,資產總計,,14672741,100
 N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,應付帳款,,15572,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,應付帳款,,111517,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,應付帳款,,1,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,其他應付款,五,939947,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,其他應付款,五,5,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,其他應付款,五,1004024,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,其他應付款,五,7,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,預收款項,,2468856,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,預收款項,,13,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,預收款項,,2195398,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,預收款項,,15,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,流動負債合計,,3424375,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,流動負債合計,,18,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,流動負債合計,,3310939,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,流動負債合計,,23,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資遣費準備,二、三,354784,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,資遣費準備,二、三,2,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,資遣費準備,二、三,305646,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,資遣費準備,二、三,2,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,業務發展準備,二、三,10767024,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,業務發展準備,二、三,55,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,業務發展準備,二、三,8191619,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,業務發展準備,二、三,56,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,應付代管財產,二、三,941471,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,應付代管財產,二、三,5,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,應付代管財產,二、三,515711,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,應付代管財產,二、三,4,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,應付購置財產,二、三,391293,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,應付購置財產,二、三,2,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,應付購置財產,二、三,391293,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,應付購置財產,二、三,2,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,非流動負債合計,,12454572,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,非流動負債合計,,64,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,非流動負債合計,,9404269,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,非流動負債合計,,64,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,負債總額,,15878947,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,負債總額,,82,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,負債總額,,12715208,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,負債總額,,87,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,累積餘絀,四,1957533,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,累積餘絀,四,10,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,累積餘絀,四,1689457,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,累積餘絀,四,11,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,本期餘絀,四,1606845,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,本期餘絀,四,8,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,本期餘絀,四,268076,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,本期餘絀,四,2,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,餘絀總額,,3564378,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,餘絀總額,,18,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,餘絀總額,,1957533,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,餘絀總額,,13,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,負債及餘絀總計,,19443325,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,負債及餘絀總計,,100,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,負債及餘絀總計,,14672741,
-N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,負債及餘絀總計,,100,
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,應付帳款,,111517,1
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,其他應付款,五,939947,5
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,其他應付款,五,1004024,7
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,預收款項,,2468856,13
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,預收款項,,2195398,15
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,流動負債合計,,3424375,18
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,流動負債合計,,3310939,23
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資遣費準備,二、三,354784,2
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,資遣費準備,二、三,305646,2
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,業務發展準備,二、三,10767024,55
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,業務發展準備,二、三,8191619,56
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,應付代管財產,二、三,941471,5
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,應付代管財產,二、三,515711,4
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,應付購置財產,二、三,391293,2
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,應付購置財產,二、三,391293,2
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,非流動負債合計,,12454572,64
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,非流動負債合計,,9404269,64
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,負債總額,,15878947,82
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,負債總額,,12715208,87
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,累積餘絀,四,1957533,10
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,累積餘絀,四,1689457,11
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,本期餘絀,四,1606845,8
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,本期餘絀,四,268076,2
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,餘絀總額,,3564378,18
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,餘絀總額,,1957533,13
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,負債及餘絀總計,,19443325,100
+N05,漢翔,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,負債及餘絀總計,,14672741,100
 N05,漢翔,113,6,income_statement,1,income_statement,收支餘絀表,,0,113.8.1~114.7.31 預算數(a),教保費收入,二、三,12033792,
 N05,漢翔,113,6,income_statement,1,income_statement,收支餘絀表,,1,113.8.1~114.7.31 決算數(b),教保費收入,二、三,12232000,
 N05,漢翔,113,6,income_statement,1,income_statement,收支餘絀表,,2,113.8.1~114.7.31 差異數(c)=(b)-(a),教保費收入,二、三,198208,
@@ -28076,106 +27698,62 @@ N05,漢翔,113,42,other,1,unrouted,,,0,評分,(2)依第1學期會計師查核修
 N05,漢翔,113,42,other,1,unrouted,,,0,評分,(3)前學年度會計師簽證報告揭露缺失之改善情形,,2,
 N05,漢翔,113,42,other,1,unrouted,,,0,評分,(4)財產依規定登錄及報廢之情形。,,1,
 N05,漢翔,113,42,other,1,unrouted,,,0,評分,會計查核簽證情形評分合計：,,17,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,現金及銀行存款,二、三,5319138,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,現金及銀行存款,二、三,47,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,現金及銀行存款,二、三,3674287,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,現金及銀行存款,二、三,42,
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,現金及銀行存款,二、三,5319138,47
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,現金及銀行存款,二、三,3674287,42
 N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應收帳款淨額,,10362,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應收款,,252000,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,其他應收款,,2,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他應收款,,43152,
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應收款,,252000,2
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他應收款,,43152,
 N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預付款項,,32310,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,預付款項,,11900,
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,預付款項,,11900,
 N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他流動資產,,444,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他流動資產,,32,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動資產合計,,5614254,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,流動資產合計,,49,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,流動資產合計,,3729371,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,流動資產合計,,42,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備金,二、三,215484,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資遣費準備金,二、三,2,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資遣費準備金,二、三,166884,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資遣費準備金,二、三,2,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備金,二、三,4277567,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,業務發展準備金,二、三,38,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,業務發展準備金,二、三,3664467,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,業務發展準備金,二、三,41,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,代管財產,二、三,1064891,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,代管財產,二、三,9,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,代管財產,二、三,1064891,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,代管財產,二、三,12,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,購置財產,二、三,270513,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,購置財產,二、三,2,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,購置財產,二、三,233635,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,購置財產,二、三,3,
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他流動資產,,32,
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動資產合計,,5614254,49
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,流動資產合計,,3729371,42
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備金,二、三,215484,2
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資遣費準備金,二、三,166884,2
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備金,二、三,4277567,38
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,業務發展準備金,二、三,3664467,41
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,代管財產,二、三,1064891,9
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,代管財產,二、三,1064891,12
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,購置財產,二、三,270513,2
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,購置財產,二、三,233635,3
 N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,存出保證金,,11500,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,存出保證金,,11500,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動資產合計,,5839955,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,非流動資產合計,,51,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,非流動資產合計,,5141377,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,非流動資產合計,,58,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資產總計,,11454209,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資產總計,,100,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資產總計,,8870748,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資產總計,,100,
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,存出保證金,,11500,
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動資產合計,,5839955,51
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,非流動資產合計,,5141377,58
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資產總計,,11454209,100
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資產總計,,8870748,100
 N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付票據,,2000,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付票據,,2000,
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付票據,,2000,
 N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付帳款,,6780,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付帳款,,77287,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付帳款,,1,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應付款,五,1269841,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,其他應付款,五,11,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,其他應付款,五,1247891,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,其他應付款,五,14,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預收款項,,2527673,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,預收款項,,22,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,預收款項,,2206250,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,預收款項,,25,
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付帳款,,77287,1
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他應付款,五,1269841,11
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,其他應付款,五,1247891,14
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,預收款項,,2527673,22
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,預收款項,,2206250,25
 N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,其他流動負債,,162,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動負債合計,,3806456,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,流動負債合計,,33,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,流動負債合計,,3533428,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,流動負債合計,,40,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備,二、三,215484,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,資遣費準備,二、三,2,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,資遣費準備,二、三,166884,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,資遣費準備,二、三,2,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備,二、三,4277567,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,業務發展準備,二、三,38,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,業務發展準備,二、三,3664467,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,業務發展準備,二、三,41,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付代管財產,二、三,1064891,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付代管財產,二、三,9,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付代管財產,二、三,1064891,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付代管財產,二、三,12,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付購置財產,二、三,270513,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,應付購置財產,二、三,2,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,應付購置財產,二、三,233635,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,應付購置財產,二、三,3,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動負債合計,,5828455,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,非流動負債合計,,51,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,非流動負債合計,,5129877,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,非流動負債合計,,58,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債總額,,9634911,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,負債總額,,84,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,負債總額,,8663305,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,負債總額,,98,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,累積餘絀,四,207443,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,累積餘絀,四,2,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,累積餘絀,四,845420,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,累積餘絀,四,9,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,本期餘絀,四,1611855,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,本期餘絀,四,14,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,本期餘絀,四,-637977,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,本期餘絀,四,-7,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,餘絀總額,,1819298,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,餘絀總額,,16,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,餘絀總額,,207443,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,餘絀總額,,2,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債及餘絀總計,,11454209,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,111年7月31日%,負債及餘絀總計,,100,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,2,110年7月31日金額,負債及餘絀總計,,8870748,
-N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,3,110年7月31日%,負債及餘絀總計,,100,
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,流動負債合計,,3806456,33
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,流動負債合計,,3533428,40
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,資遣費準備,二、三,215484,2
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,資遣費準備,二、三,166884,2
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,業務發展準備,二、三,4277567,38
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,業務發展準備,二、三,3664467,41
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付代管財產,二、三,1064891,9
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付代管財產,二、三,1064891,12
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,應付購置財產,二、三,270513,2
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,應付購置財產,二、三,233635,3
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,非流動負債合計,,5828455,51
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,非流動負債合計,,5129877,58
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債總額,,9634911,84
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,負債總額,,8663305,98
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,累積餘絀,四,207443,2
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,累積餘絀,四,845420,9
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,本期餘絀,四,1611855,14
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,本期餘絀,四,-637977,-7
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,餘絀總額,,1819298,16
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,餘絀總額,,207443,2
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,0,111年7月31日金額,負債及餘絀總計,,11454209,100
+N06,昌平,110,5,balance_sheet,1,balance_sheet,資產負債表,,1,110年7月31日金額,負債及餘絀總計,,8870748,100
 N06,昌平,110,6,income_statement,1,unrouted,收支餘細表,,0,預算數(a),教保費收入,二、三,12130560,
 N06,昌平,110,6,income_statement,1,unrouted,收支餘細表,,1,決算數(b),教保費收入,二、三,11741812,
 N06,昌平,110,6,income_statement,1,unrouted,收支餘細表,,2,差異數(c)=(b)-(a),教保費收入,二、三,-388748,
@@ -31826,104 +31404,60 @@ N06,昌平,112,27,detail_schedule,1,unrouted,,,8,110學年度　預算數,本期
 N06,昌平,112,27,detail_schedule,1,unrouted,,,9,110學年度　決算數,本期稅後餘絀,,1611855,
 N06,昌平,112,27,detail_schedule,1,unrouted,,,10,110學年度　決算數與預算數之差異,本期稅後餘絀,,1298792,
 N06,昌平,112,27,detail_schedule,1,unrouted,,,11,110學年度　執行率%,本期稅後餘絀,,515,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,4822001,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,現金及銀行存款,二、三,30,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,現金及銀行存款,二、三,5823963,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,現金及銀行存款,二、三,37,
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,4822001,30
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,現金及銀行存款,二、三,5823963,37
 N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應收帳款淨額,,6990,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應收帳款淨額,,6210,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他應收款,,158950,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,其他應收款,,1,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,預付款項,,49950,
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應收帳款淨額,,6210,
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他應收款,,158950,1
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,預付款項,,49950,
 N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他流動資產,,2716,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,4831707,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動資產合計,,30,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動資產合計,,6039073,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動資產合計,,38,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備金,二、三,333792,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資遣費準備金,二、三,2,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備金,二、三,281638,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備金,二、三,2,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備金,二、三,9482365,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,業務發展準備金,二、三,58,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備金,二、三,7699279,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備金,二、三,49,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,1290255,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,代管財產,二、三,8,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,代管財產,二、三,1385955,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,代管財產,二、三,9,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,305163,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,購置財產,二、三,2,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,購置財產,二、三,287838,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,購置財產,二、三,2,
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,4831707,30
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動資產合計,,6039073,38
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備金,二、三,333792,2
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備金,二、三,281638,2
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備金,二、三,9482365,58
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備金,二、三,7699279,49
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,1290255,8
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,代管財產,二、三,1385955,9
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,305163,2
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,購置財產,二、三,287838,2
 N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,存出保證金,,11500,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,存出保證金,,11500,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,11423075,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動資產合計,,70,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動資產合計,,9666210,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動資產合計,,62,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,16254782,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資產總計,,100,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資產總計,,15705283,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資產總計,,100,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付票據,,2000,
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,存出保證金,,11500,
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,11423075,70
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動資產合計,,9666210,62
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,16254782,100
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資產總計,,15705283,100
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付票據,,2000,
 N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付帳款,,11775,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付帳款,,112579,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付帳款,,1,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,1464147,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,其他應付款,五,9,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他應付款,五,1259043,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,其他應付款,五,8,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預收款項,,2030400,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,預收款項,,13,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,預收款項,,2737503,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,預收款項,,17,
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付帳款,,112579,1
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,1464147,9
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他應付款,五,1259043,8
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預收款項,,2030400,13
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,預收款項,,2737503,17
 N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他流動負債,,2,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他流動負債,,52,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,3506324,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動負債合計,,22,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動負債合計,,4111177,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動負債合計,,26,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備,二、三,333792,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資遣費準備,二、三,2,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備,二、三,281638,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備,二、三,2,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備,二、三,9482365,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,業務發展準備,二、三,58,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備,二、三,7699279,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備,二、三,49,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,1290255,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付代管財產,二、三,8,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付代管財產,二、三,1385955,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付代管財產,二、三,9,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,305163,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付購置財產,二、三,2,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付購置財產,二、三,287838,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付購置財產,二、三,2,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,11411575,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動負債合計,,70,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動負債合計,,9654710,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動負債合計,,62,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,14917899,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債總額,,92,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債總額,,13765887,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債總額,,88,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,1939396,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,累積餘絀,四,12,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,累積餘絀,四,1752254,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,累積餘絀,四,11,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,-602513,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,本期餘絀,四,-4,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,本期餘絀,四,187142,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,本期餘絀,四,1,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,1336883,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,餘絀總額,,8,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,餘絀總額,,1939396,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,餘絀總額,,12,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,16254782,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債及餘絀總計,,100,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債及餘絀總計,,15705283,
-N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債及餘絀總計,,100,
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他流動負債,,52,
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,3506324,22
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動負債合計,,4111177,26
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備,二、三,333792,2
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備,二、三,281638,2
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備,二、三,9482365,58
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備,二、三,7699279,49
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,1290255,8
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付代管財產,二、三,1385955,9
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,305163,2
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付購置財產,二、三,287838,2
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,11411575,70
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動負債合計,,9654710,62
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,14917899,92
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債總額,,13765887,88
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,1939396,12
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,累積餘絀,四,1752254,11
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,-602513,-4
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,本期餘絀,四,187142,1
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,1336883,8
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,餘絀總額,,1939396,12
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,16254782,100
+N06,昌平,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債及餘絀總計,,15705283,100
 N06,昌平,113,6,income_statement,1,income_statement,收支餘絀表,,0,113.8.1~114.7.31 預算數(a),教保費收入,二、三,11894400,
 N06,昌平,113,6,income_statement,1,income_statement,收支餘絀表,,1,113.8.1~114.7.31 決算數(b),教保費收入,二、三,11765429,
 N06,昌平,113,6,income_statement,1,income_statement,收支餘絀表,,2,差異數 (c)=(b)-(a),教保費收入,二、三,-128971,
@@ -34052,99 +33586,55 @@ N06,昌平,113,40,other,1,unrouted,考評指標表（會計查核簽證情形）
 N06,昌平,113,40,other,1,unrouted,考評指標表（會計查核簽證情形）,,0,評分,(3)前學年度會計師簽證報告揭露缺失之改善情形,,2,
 N06,昌平,113,40,other,1,unrouted,考評指標表（會計查核簽證情形）,,0,評分,(4)財產依規定登錄及報廢之情形。,,1,
 N06,昌平,113,40,other,1,unrouted,考評指標表（會計查核簽證情形）,,0,評分,會計查核簽證情形評分合計：,,17,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,現金及銀行存款,二、三,6036334,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,現金及銀行存款,二、三,51,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,現金及銀行存款,二、三,3835528,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,現金及銀行存款,二、三,37,
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,現金及銀行存款,二、三,6036334,51
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,現金及銀行存款,二、三,3835528,37
 N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,應收帳款淨額,,2351,
 N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,其他應收款,,13800,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,其他應收款,,328975,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,其他應收款,,3,
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,其他應收款,,328975,3
 N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,預付款項,,8930,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,預付款項,,67725,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,預付款項,,1,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,流動資產合計,,6061415,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,流動資產合計,,51,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,流動資產合計,,4232228,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,流動資產合計,,41,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,資遣費準備金,二、三,261769,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,資遣費準備金,二、三,2,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,資遣費準備金,二、三,202480,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,資遣費準備金,二、三,2,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,業務發展準備金,二、三,2687000,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,業務發展準備金,二、三,24,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,業務發展準備金,二、三,2588000,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,業務發展準備金,二、三,25,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,代管財產,二、三,2367179,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,代管財產,二、三,20,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,代管財產,二、三,2994505,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,代管財產,二、三,29,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,購置財產,二、三,402575,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,購置財產,二、三,3,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,購置財產,二、三,252425,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,購置財產,二、三,3,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,非流動資產合計,,5718523,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,非流動資產合計,,49,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,非流動資產合計,,6037410,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,非流動資產合計,,59,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,資產總計,,11779938,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,資產總計,,100,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,資產總計,,10269638,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,資產總計,,100,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,其他應付款,五,1710583,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,其他應付款,五,15,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,其他應付款,五,1639442,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,其他應付款,五,16,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,預收款項,,2664450,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,預收款項,,22,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,預收款項,,2439450,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,預收款項,,24,
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,預付款項,,67725,1
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,流動資產合計,,6061415,51
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,流動資產合計,,4232228,41
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,資遣費準備金,二、三,261769,2
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,資遣費準備金,二、三,202480,2
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,業務發展準備金,二、三,2687000,24
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,業務發展準備金,二、三,2588000,25
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,代管財產,二、三,2367179,20
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,代管財產,二、三,2994505,29
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,購置財產,二、三,402575,3
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,購置財產,二、三,252425,3
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,非流動資產合計,,5718523,49
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,非流動資產合計,,6037410,59
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,資產總計,,11779938,100
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,資產總計,,10269638,100
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,其他應付款,五,1710583,15
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,其他應付款,五,1639442,16
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,預收款項,,2664450,22
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,預收款項,,2439450,24
 N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,其他流動負債,,33899,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,其他流動負債,,23859,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,流動負債合計,,4408932,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,流動負債合計,,37,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,流動負債合計,,4102751,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,流動負債合計,,40,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,資遣費準備,二、三,261769,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,資遣費準備,二、三,2,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,資遣費準備,二、三,202480,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,資遣費準備,二、三,2,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,業務發展準備,二、三,2687000,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,業務發展準備,二、三,24,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,業務發展準備,二、三,2588000,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,業務發展準備,二、三,25,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,應付代管財產,二、三,2367179,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,應付代管財產,二、三,20,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,應付代管財產,二、三,2994505,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,應付代管財產,二、三,29,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,應付購置財產,二、三,402575,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,應付購置財產,二、三,3,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,應付購置財產,二、三,252425,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,應付購置財產,二、三,3,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,非流動負債合計,,5718523,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,非流動負債合計,,49,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,非流動負債合計,,6037410,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,非流動負債合計,,59,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,負債總額,,10127455,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,負債總額,,86,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,負債總額,,10140161,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,負債總額,,99,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,累積餘絀,四,129477,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,累積餘絀,四,1,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,累積餘絀,四,867352,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,累積餘絀,四,8,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,本期餘絀,四,1523006,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,本期餘絀,四,13,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,本期餘絀,四,-737875,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,本期餘絀,四,-7,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,餘絀總額,,1652483,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,餘絀總額,,14,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,餘絀總額,,129477,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,餘絀總額,,1,
-N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,負債及餘絀總計,,11779938,
-N07,北大,110,5,balance_sheet,1,unrouted,,,1,111年7月31日%,負債及餘絀總計,,100,
-N07,北大,110,5,balance_sheet,1,unrouted,,,2,110年7月31日金額,負債及餘絀總計,,10269638,
-N07,北大,110,5,balance_sheet,1,unrouted,,,3,110年7月31日%,負債及餘絀總計,,100,
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,其他流動負債,,23859,
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,流動負債合計,,4408932,37
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,流動負債合計,,4102751,40
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,資遣費準備,二、三,261769,2
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,資遣費準備,二、三,202480,2
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,業務發展準備,二、三,2687000,24
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,業務發展準備,二、三,2588000,25
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,應付代管財產,二、三,2367179,20
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,應付代管財產,二、三,2994505,29
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,應付購置財產,二、三,402575,3
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,應付購置財產,二、三,252425,3
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,非流動負債合計,,5718523,49
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,非流動負債合計,,6037410,59
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,負債總額,,10127455,86
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,負債總額,,10140161,99
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,累積餘絀,四,129477,1
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,累積餘絀,四,867352,8
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,本期餘絀,四,1523006,13
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,本期餘絀,四,-737875,-7
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,餘絀總額,,1652483,14
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,餘絀總額,,129477,1
+N07,北大,110,5,balance_sheet,1,unrouted,,,0,111年7月31日金額,負債及餘絀總計,,11779938,100
+N07,北大,110,5,balance_sheet,1,unrouted,,,1,110年7月31日金額,負債及餘絀總計,,10269638,100
 N07,北大,110,6,income_statement,1,unrouted,歲支徵絀表,,0,預算數(a),教保費收入,二、三,14736600,
 N07,北大,110,6,income_statement,1,unrouted,歲支徵絀表,,1,決算數(b),教保費收入,二、三,14247593,
 N07,北大,110,6,income_statement,1,unrouted,歲支徵絀表,,2,差異數(c)=(b)-(a),教保費收入,二、三,-489007,
@@ -43910,101 +43400,58 @@ N08,鷺江,112,27,detail_schedule,1,unrouted,,,8,110學年度 預算數,本期�
 N08,鷺江,112,27,detail_schedule,1,unrouted,,,9,110學年度 決算數,本期稅後餘絀,,1556346,
 N08,鷺江,112,27,detail_schedule,1,unrouted,,,10,110學年度 決算數與預算數之差異,本期稅後餘絀,,1243639,
 N08,鷺江,112,27,detail_schedule,1,unrouted,,,11,110學年度 執行率%,本期稅後餘絀,,498,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,4356499,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,現金及銀行存款,二、三,25,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,現金及銀行存款,二、三,5361714,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,現金及銀行存款,二、三,32,
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,4356499,25
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,現金及銀行存款,二、三,5361714,32
 N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應收帳款淨額,,22340,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應收帳款淨額,,23836,
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應收帳款淨額,,23836,
 N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應收款,五,59824,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他應收款,五,235338,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,其他應收款,五,2,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,4438663,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動資產合計,,25,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動資產合計,,5620888,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動資產合計,,34,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備金,二、三,342271,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資遣費準備金,二、三,2,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備金,二、三,290996,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備金,二、三,2,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備金,二、三,11525647,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,業務發展準備金,二、三,66,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備金,二、三,9280497,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備金,二、三,56,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,803020,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,代管財產,二、三,5,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,代管財產,二、三,1079110,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,代管財產,二、三,6,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,428453,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,購置財產,二、三,2,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,購置財產,二、三,351143,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,購置財產,二、三,2,
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他應收款,五,235338,2
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,4438663,25
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動資產合計,,5620888,34
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備金,二、三,342271,2
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備金,二、三,290996,2
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備金,二、三,11525647,66
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備金,二、三,9280497,56
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,803020,5
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,代管財產,二、三,1079110,6
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,428453,2
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,購置財產,二、三,351143,2
 N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,存出保證金,,3000,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,存出保證金,,3000,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,13102391,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動資產合計,,75,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動資產合計,,11004746,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動資產合計,,66,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,17541054,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資產總計,,100,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資產總計,,16625634,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資產總計,,100,
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,存出保證金,,3000,
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,13102391,75
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動資產合計,,11004746,66
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,17541054,100
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資產總計,,16625634,100
 N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付帳款,,1315,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付帳款,,2357,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,842780,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,其他應付款,五,5,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他應付款,五,715973,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,其他應付款,五,4,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預收款項,,2149620,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,預收款項,,12,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,預收款項,,2696859,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,預收款項,,16,
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付帳款,,2357,
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,842780,5
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他應付款,五,715973,4
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,預收款項,,2149620,12
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,預收款項,,2696859,16
 N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他流動負債,,91906,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他流動負債,,86997,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,其他流動負債,,1,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,3085621,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動負債合計,,17,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動負債合計,,3502186,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動負債合計,,21,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備,二、三,342271,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資遣費準備,二、三,2,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備,二、三,290996,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備,二、三,2,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備,二、三,11525647,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,業務發展準備,二、三,66,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備,二、三,9280497,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備,二、三,56,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,803020,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付代管財產,二、三,5,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付代管財產,二、三,1079110,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付代管財產,二、三,6,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,428453,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付購置財產,二、三,2,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付購置財產,二、三,351143,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付購置財產,二、三,2,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,13099391,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動負債合計,,75,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動負債合計,,11001746,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動負債合計,,66,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,16185012,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債總額,,92,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債總額,,14503932,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債總額,,87,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,2121702,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,累積餘絀,四,12,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,累積餘絀,四,2202977,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,累積餘絀,四,13,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,-765660,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,本期餘絀,四,-4,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,本期餘絀,四,-81275,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,1356042,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,餘絀總額,,8,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,餘絀總額,,2121702,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,餘絀總額,,13,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,17541054,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債及餘絀總計,,100,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債及餘絀總計,,16625634,
-N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債及餘絀總計,,100,
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他流動負債,,86997,1
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,3085621,17
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動負債合計,,3502186,21
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資遣費準備,二、三,342271,2
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備,二、三,290996,2
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,業務發展準備,二、三,11525647,66
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備,二、三,9280497,56
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,803020,5
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付代管財產,二、三,1079110,6
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,428453,2
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付購置財產,二、三,351143,2
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,13099391,75
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動負債合計,,11001746,66
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,16185012,92
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債總額,,14503932,87
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,2121702,12
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,累積餘絀,四,2202977,13
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,-765660,-4
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,本期餘絀,四,-81275,
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,1356042,8
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,餘絀總額,,2121702,13
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,17541054,100
+N08,鷺江,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債及餘絀總計,,16625634,100
 N08,鷺江,113,6,income_statement,1,income_statement,收支餘絀表,,0,113.8.1~114.7.31 預算數(a),教保費收入,二、三,11524800,
 N08,鷺江,113,6,income_statement,1,income_statement,收支餘絀表,,1,113.8.1~114.7.31 決算數(b),教保費收入,二、三,11529155,
 N08,鷺江,113,6,income_statement,1,income_statement,收支餘絀表,,2,113.8.1~114.7.31 差異數(c)=(b)-(a),教保費收入,二、三,4355,
@@ -49181,91 +48628,50 @@ N09,安興,112,27,detail_schedule,1,unrouted,,,8,110季年度-預算數,本期�
 N09,安興,112,27,detail_schedule,1,unrouted,,,9,110季年度-決算數,本期稅後餘絀,,608783,
 N09,安興,112,27,detail_schedule,1,unrouted,,,10,110季年度-決算數與預算數之差異,本期稅後餘絀,,471412,
 N09,安興,112,27,detail_schedule,1,unrouted,,,11,110季年度-執行率%,本期稅後餘絀,,443,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,8589308,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,現金及銀行存款,二、三,90,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,現金及銀行存款,二、三,4398152,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,現金及銀行存款,二、三,40,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應收帳款淨額,,77479,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應收帳款淨額,,1,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應收帳款淨額,,61256,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應收帳款淨額,,1,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,預付款項,,32426,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他流動資產,,3306,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,8666787,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動資產合計,,91,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動資產合計,,4495140,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動資產合計,,41,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備金,二、三,150459,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備金,二、三,1,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備金,二、三,5305000,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備金,二、三,48,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,766730,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,代管財產,二、三,8,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,代管財產,二、三,958198,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,代管財產,二、三,9,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,126700,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,購置財產,二、三,1,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,購置財產,二、三,126700,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,購置財產,二、三,1,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,893430,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動資產合計,,9,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動資產合計,,6540357,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動資產合計,,59,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,9560217,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,資產總計,,100,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資產總計,,11035497,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資產總計,,100,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付帳款,,189791,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付帳款,,2,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付帳款,,32173,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,1517639,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,其他應付款,五,16,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,其他應付款,五,1099432,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,其他應付款,五,10,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付所得稅,三,1278682,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付所得稅,三,13,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,預收款項,,1596474,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,預收款項,,15,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,2986112,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,流動負債合計,,31,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,流動負債合計,,2728079,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,流動負債合計,,25,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,資遣費準備,二、三,150459,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,資遣費準備,二、三,1,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,業務發展準備,二、三,5305000,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,業務發展準備,二、三,48,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,766730,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付代管財產,二、三,8,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付代管財產,二、三,958198,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付代管財產,二、三,9,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,126700,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,應付購置財產,二、三,1,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,應付購置財產,二、三,126700,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,應付購置財產,二、三,1,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,893430,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,非流動負債合計,,9,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,非流動負債合計,,6540357,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,非流動負債合計,,59,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,3879542,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債總額,,40,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債總額,,9268436,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債總額,,84,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,1767061,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,累積餘絀,四,19,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,累積餘絀,四,1690488,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,累積餘絀,四,15,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,3913614,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,本期餘絀,四,41,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,本期餘絀,四,76573,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,本期餘絀,四,1,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,5680675,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,餘絀總額,,60,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,餘絀總額,,1767061,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,餘絀總額,,16,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,9560217,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日%,負債及餘絀總計,,100,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日金額,負債及餘絀總計,,11035497,
-N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日%,負債及餘絀總計,,100,
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,現金及銀行存款,二、三,8589308,90
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,現金及銀行存款,二、三,4398152,40
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應收帳款淨額,,77479,1
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應收帳款淨額,,61256,1
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,預付款項,,32426,
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他流動資產,,3306,
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動資產合計,,8666787,91
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動資產合計,,4495140,41
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備金,二、三,150459,1
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備金,二、三,5305000,48
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,代管財產,二、三,766730,8
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,代管財產,二、三,958198,9
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,購置財產,二、三,126700,1
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,購置財產,二、三,126700,1
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動資產合計,,893430,9
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動資產合計,,6540357,59
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,資產總計,,9560217,100
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資產總計,,11035497,100
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付帳款,,189791,2
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付帳款,,32173,
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,其他應付款,五,1517639,16
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,其他應付款,五,1099432,10
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付所得稅,三,1278682,13
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,預收款項,,1596474,15
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,流動負債合計,,2986112,31
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,流動負債合計,,2728079,25
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,資遣費準備,二、三,150459,1
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,業務發展準備,二、三,5305000,48
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付代管財產,二、三,766730,8
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付代管財產,二、三,958198,9
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,應付購置財產,二、三,126700,1
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,應付購置財產,二、三,126700,1
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,非流動負債合計,,893430,9
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,非流動負債合計,,6540357,59
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債總額,,3879542,40
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債總額,,9268436,84
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,累積餘絀,四,1767061,19
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,累積餘絀,四,1690488,15
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,本期餘絀,四,3913614,41
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,本期餘絀,四,76573,1
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,餘絀總額,,5680675,60
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,餘絀總額,,1767061,16
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日金額,負債及餘絀總計,,9560217,100
+N09,安興,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日金額,負債及餘絀總計,,11035497,100
 N09,安興,113,6,income_statement,1,income_statement,收支餘絀表,,0,預算數(a),教保費收入,二、三,6997536,
 N09,安興,113,6,income_statement,1,income_statement,收支餘絀表,,1,決算數(b),教保費收入,二、三,6342600,
 N09,安興,113,6,income_statement,1,income_statement,收支餘絀表,,2,差異數(c)=(b)-(a),教保費收入,二、三,-654936,
@@ -54608,101 +54014,57 @@ N10,大觀,112,27,detail_schedule,1,unrouted,,,4,111學年度預算數,本期稅
 N10,大觀,112,27,detail_schedule,1,unrouted,,,5,111學年度決算數,本期稅後餘絀,,193966,
 N10,大觀,112,27,detail_schedule,1,unrouted,,,6,111學年度決算數與預算數之差異,本期稅後餘絀,,-132578,
 N10,大觀,112,27,detail_schedule,1,unrouted,,,7,111學年度執行率%,本期稅後餘絀,,59,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,現金及銀行存款,二、三,6479455,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,現金及銀行存款,二、三,46,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,現金及銀行存款,二、三,7036258,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,現金及銀行存款,二、三,53,
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,現金及銀行存款,二、三,6479455,46
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,現金及銀行存款,二、三,7036258,53
 N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,應收帳款淨額,,24220,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,應收帳款淨額,,8000,
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,應收帳款淨額,,8000,
 N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,其他應收款,,50000,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,其他應收款,,441715,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,其他應收款,,4,
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,其他應收款,,441715,4
 N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,預付款項,,1750,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,預付款項,,41298,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,流動資產合計,,6555425,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,流動資產合計,,46,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,流動資產合計,,7527271,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,流動資產合計,,57,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資遣費準備金,二、三,335006,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,資遣費準備金,二、三,3,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,資遣費準備金,二、三,242493,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,資遣費準備金,二、三,2,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,業務發展準備金,二、三,5572550,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,業務發展準備金,二、三,39,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,業務發展準備金,二、三,3686000,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,業務發展準備金,二、三,28,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,代管財產,二、三,1260719,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,代管財產,二、三,9,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,代管財產,二、三,1380766,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,代管財產,二、三,10,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,購置財產,二、三,475505,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,購置財產,二、三,3,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,購置財產,二、三,393010,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,購置財產,二、三,3,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,非流動資產合計,,7643780,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,非流動資產合計,,54,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,非流動資產合計,,5702269,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,非流動資產合計,,43,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資產總計,,14199205,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,資產總計,,100,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,資產總計,,13229540,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,資產總計,,100,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,應付帳款,,4676,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,其他應付款,五,1954184,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,其他應付款,五,14,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,其他應付款,五,1688944,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,其他應付款,五,13,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,預收款項,,3338598,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,預收款項,,23,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,預收款項,,3718185,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,預收款項,,28,
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,預付款項,,41298,
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,流動資產合計,,6555425,46
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,流動資產合計,,7527271,57
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資遣費準備金,二、三,335006,3
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,資遣費準備金,二、三,242493,2
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,業務發展準備金,二、三,5572550,39
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,業務發展準備金,二、三,3686000,28
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,代管財產,二、三,1260719,9
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,代管財產,二、三,1380766,10
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,購置財產,二、三,475505,3
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,購置財產,二、三,393010,3
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,非流動資產合計,,7643780,54
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,非流動資產合計,,5702269,43
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資產總計,,14199205,100
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,資產總計,,13229540,100
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,應付帳款,,4676,
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,其他應付款,五,1954184,14
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,其他應付款,五,1688944,13
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,預收款項,,3338598,23
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,預收款項,,3718185,28
 N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,其他流動負債,,885,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,其他流動負債,,97997,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,其他流動負債,,1,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,流動負債合計,,5293667,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,流動負債合計,,37,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,流動負債合計,,5509802,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,流動負債合計,,42,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資遣費準備,二、三,335006,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,資遣費準備,二、三,3,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,資遣費準備,二、三,298187,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,資遣費準備,二、三,2,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,業務發展準備,二、三,5572550,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,業務發展準備,二、三,39,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,業務發展準備,二、三,3862650,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,業務發展準備,二、三,30,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,應付代管財產,二、三,1260719,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,應付代管財產,二、三,9,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,應付代管財產,二、三,1380766,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,應付代管財產,二、三,10,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,應付購置財產,二、三,475505,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,應付購置財產,二、三,3,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,應付購置財產,二、三,393010,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,應付購置財產,二、三,3,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,非流動負債合計,,7643780,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,非流動負債合計,,54,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,非流動負債合計,,5934613,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,非流動負債合計,,45,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,負債總額,,12937447,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,負債總額,,91,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,負債總額,,11444415,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,負債總額,,87,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,累積餘絀,四,1785125,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,累積餘絀,四,13,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,累積餘絀,四,1024469,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,累積餘絀,四,7,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,本期餘絀,四,-523367,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,本期餘絀,四,-4,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,本期餘絀,四,760656,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,本期餘絀,四,6,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,餘絀總額,,1261758,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,餘絀總額,,9,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,餘絀總額,,1785125,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,餘絀總額,,13,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,負債及餘絀總計,,14199205,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,114年7月31日 %,負債及餘絀總計,,100,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,2,113年7月31日 金額,負債及餘絀總計,,13229540,
-N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,3,113年7月31日 %,負債及餘絀總計,,100,
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,其他流動負債,,97997,1
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,流動負債合計,,5293667,37
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,流動負債合計,,5509802,42
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,資遣費準備,二、三,335006,3
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,資遣費準備,二、三,298187,2
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,業務發展準備,二、三,5572550,39
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,業務發展準備,二、三,3862650,30
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,應付代管財產,二、三,1260719,9
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,應付代管財產,二、三,1380766,10
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,應付購置財產,二、三,475505,3
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,應付購置財產,二、三,393010,3
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,非流動負債合計,,7643780,54
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,非流動負債合計,,5934613,45
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,負債總額,,12937447,91
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,負債總額,,11444415,87
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,累積餘絀,四,1785125,13
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,累積餘絀,四,1024469,7
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,本期餘絀,四,-523367,-4
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,本期餘絀,四,760656,6
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,餘絀總額,,1261758,9
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,餘絀總額,,1785125,13
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,0,114年7月31日 金額,負債及餘絀總計,,14199205,100
+N10,大觀,113,5,balance_sheet,1,balance_sheet,資產負債表,,1,113年7月31日 金額,負債及餘絀總計,,13229540,100
 N10,大觀,113,6,income_statement,1,unrouted,收支綜合表,,0,113.8.1~114.7.31 預算數(a),教保費收入,二、三,13305600,
 N10,大觀,113,6,income_statement,1,unrouted,收支綜合表,,1,113.8.1~114.7.31 決算數(b),教保費收入,二、三,13254220,
 N10,大觀,113,6,income_statement,1,unrouted,收支綜合表,,2,113.8.1~114.7.31 差異數(c)=(b)-(a),教保費收入,二、三,-51380,
@@ -107486,116 +106848,90 @@ N23,菁湖,110,23,detail_schedule,2,income_by_function,,附表一：收支餘絀
 N23,菁湖,110,23,detail_schedule,2,income_by_function,,附表一：收支餘絀表-功能別,0,金額,合　　計,,1672957,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,人事費,,7574852,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,人事費,,6594614,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,人事費,,-980238,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,人事費,,-13,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,人事費,,-980238,-13
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,人事費,,7119963,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,人事費,,6228693,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,人事費,,-891270,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,人事費,,-13,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,人事費,,-891270,-13
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,加班費,,411060,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,加班費,,322092,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,加班費,,-88968,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,加班費,,-22,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,加班費,,-88968,-22
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,資遣費,,43829,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,資遣費,,43829,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,業務費,,809400,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,業務費,,535164,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,業務費,,-274236,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,業務費,,-34,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,業務費,,-274236,-34
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,活動費,,115000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,活動費,,29939,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,活動費,,-85061,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,活動費,,-74,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,活動費,,-85061,-74
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,研習、進修,,26000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,研習、進修,,8200,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,研習、進修,,-17800,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,研習、進修,,-68,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,研習、進修,,-17800,-68
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,水費,,32000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,水費,,13836,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,水費,,-18164,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,水費,,-57,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,水費,,-18164,-57
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,電費,,264000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,電費,,204612,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,電費,,-59388,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,電費,,-22,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,電費,,-59388,-22
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,瓦斯費,,34000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,瓦斯費,,23100,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,瓦斯費,,-10900,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,瓦斯費,,-32,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,瓦斯費,,-10900,-32
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,保全,,80000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,保全,,96000,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,保全,,16000,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,保全,,20,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,保全,,16000,20
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,辦公文具,,24000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,辦公文具,,25946,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,辦公文具,,1946,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,辦公文具,,8,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,辦公文具,,1946,8
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,事務機器耗材,,65000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,事務機器耗材,,55851,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,事務機器耗材,,-9149,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,事務機器耗材,,-14,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,事務機器耗材,,-9149,-14
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,電話費（含網路）,,54000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,電話費（含網路）,,43601,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,電話費（含網路）,,-10399,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,電話費（含網路）,,-19,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,電話費（含網路）,,-10399,-19
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,郵資,,8400,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,郵資,,3611,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,郵資,,-4789,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,郵資,,-57,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,郵資,,-4789,-57
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,文宣費（一般文宣）,,10000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,文宣費（一般文宣）,,1739,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,文宣費（一般文宣）,,-8261,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,文宣費（一般文宣）,,-83,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,文宣費（一般文宣）,,-8261,-83
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,文宣費（園刊）,,30000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,文宣費（園刊）,,10000,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,文宣費（園刊）,,-20000,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,文宣費（園刊）,,-67,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,文宣費（園刊）,,-20000,-67
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,攝影照片,,10000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,攝影照片,,-10000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,園務特支,,42000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,園務特支,,18729,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,園務特支,,-23271,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,園務特支,,-55,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,園務特支,,-23271,-55
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,差旅費,,15000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,差旅費,,-15000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,材料費,,1650420,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,材料費,,1175179,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,材料費,,-475241,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,材料費,,-29,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,材料費,,-475241,-29
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,教保材料費,,254400,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,教保材料費,,213905,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,教保材料費,,-40495,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,教保材料費,,-16,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,教保材料費,,-40495,-16
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,日常消耗用品,,63600,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,日常消耗用品,,60791,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,日常消耗用品,,-2809,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,日常消耗用品,,-4,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,日常消耗用品,,-2809,-4
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,藥品費,,7420,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,藥品費,,4225,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,藥品費,,-3195,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,藥品費,,-43,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,藥品費,,-3195,-43
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,餐點費,,1325000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,餐點費,,896258,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,餐點費,,-428742,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,餐點費,,-32,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,餐點費,,-428742,-32
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,維護費,,143000,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,維護費,,73441,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,維護費,,-69559,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,維護費,,-49,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,維護費,,-69559,-49
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,修繕購置費,,148400,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,修繕購置費,,140074,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,修繕購置費,,-8326,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,修繕購置費,,-6,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,修繕購置費,,-8326,-6
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,雜支,,48564,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,雜支,,46805,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,雜支,,-1759,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,雜支,,-4,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,雜支,,-1759,-4
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,行政管理費,,147589,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,行政管理費,,147589,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,0,預算數,合　計,,10522225,
 N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,1,決算數,合　計,,8712866,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,合　計,,-1809359,
-N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,3,差異%,合　計,,-17,
+N23,菁湖,110,24,detail_schedule,1,budget_transfer,經費流用及勻支檢查表,附表二：經費流用及勻支檢查表,2,差異數,合　計,,-1809359,-17
 N23,菁湖,110,25,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,0,110學年度_預算數,收入,,10521984,
 N23,菁湖,110,25,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,1,110學年度_決算數,收入,,12725890,
 N23,菁湖,110,25,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,2,110學年度_決算數與預算數之差異,收入,,2203906,
