@@ -20,6 +20,10 @@
 | `procurement/ntpc-pilot-v1/` | 見子目錄 manifest | g0v/openfun API（資料源為政府電子採購網）| 5 個 allowlisted 查詢、8 份 raw JSON、3 筆 canonical 受託營運決標與 12 列財報年度時間軸 |
 | `education_bureau_announcements/ntpc-pilot-v1/` | 見子目錄 manifest | [新北市幼兒教育資源網](https://kidedu.ntpc.edu.tw/app/home.php)／[重要公告](https://kidedu.ntpc.edu.tw/p/403-1000-9-1.php) | 5 份官方 detail HTML、2 份追蹤評鑑 PDF、5 筆 notices 與 98 筆園所 actions |
 | `education_bureau_announcements/listing_observations/` | 見各 observation manifest | 新北市幼教重要公告 listing | Phase 1B content-addressed listing observations、固定 predecessor chain、page-1 stability check、2-page／60-ID bootstrap horizon 與 stable-ID discovery diff；bootstrap 為 0 discoveries |
+| `evaluation/2026-09-03-ntpc-full-v1/` | 2026-09-03 | 官方 `evaSearch.aspx` | 新北市 111 頁全量查詢：1,101 所機構、1,191 筆評鑑紀錄（22 所查無紀錄）|
+| `news/2026-09-03-news-v1/` | 2026-09-03 | Google News RSS | 6 組關鍵字查詢的原始 XML。未經查證的報導只產生待人工研判候選，不寫入風險分數 |
+| `ntpc_town_boundary.json` | 界線版本 2023-03-17 | `kiang/taiwan_basecode` | 新北 29 個行政區界線，簡化後供前端離線繪圖；說明見 `ntpc_town_boundary.README.md` |
+| `tw_neighbor_land.json` | 界線版本 2023-03-17 | `kiang/taiwan_basecode` | 鄰近 11 縣市陸地外框，讓「新北以外」反灰時不會連海一起灰掉；說明見 `tw_neighbor_land.README.md` |
 
 `manifest.json` 誠實標示這批既有快照沒有保留下來的 HTTP response headers 與精確
 取得時間；只有原先文件記錄的取得日期。後續每次由 downloader 更新都會保存
@@ -74,19 +78,54 @@ Content was rephrased for compliance with licensing restrictions.
 
 ## 來源與授權
 
-上游為「台灣幼兒園地圖」（作者：江明宗 Finjon Kiang，MIT License），
-其資料彙整自政府公開資料平台與全國教保資訊網。
-原始資料為政府公開資料；此處僅作為競賽研究用途的時點快照。
+### 主來源的標註（CC-BY，這是條件不是禮貌）
 
-- 專案：https://github.com/kiang/preschools
-- 資料：https://github.com/kiang/ap.ece.moe.edu.tw
-- 政府電子採購網：https://web.pcc.gov.tw/
-- g0v/openfun 採購 API：https://pcc.g0v.ronny.tw/
-- 新北市幼兒教育資源網：https://kidedu.ntpc.edu.tw/app/home.php
-- 新北市幼教重要公告：https://kidedu.ntpc.edu.tw/p/403-1000-9-1.php
+`preschools.json`、`punish_all.json`、`kids_vehicles.json` 與收費明細 `slip1xx`
+全部來自「台灣幼兒園地圖」資料庫。上游 README 把程式與資料分開授權，我們也必須
+分開寫——**寫成「整個專案 MIT」會少掉 CC-BY 要求的出處標註**，而 CC-BY 的標註是
+授權生效的條件，不是禮貌。
 
-採購 API 後端程式採開源授權；API 內容仍源自政府電子採購網，使用時依原始來源
-的合理使用與註明出處要求辦理。
+> 原始資料來源：**全國教保資訊網** <https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx>
+> 取得管道：**台灣幼兒園地圖資料庫** <https://github.com/kiang/ap.ece.moe.edu.tw>
+> （江明宗 Finjon Kiang 維護，程式採 MIT License；資料相容於 CC-BY）
+> 快照日期：**2026-08-10**（見 `manifest.json` 各檔的 `retrieved_on`）
+
+之所以要連「取得管道」一起寫，是因為這兩件事在稽核上不能互相取代：CC-BY 要求
+標註的對象是**原始資料來源**（官方端點），但我們實際拿到的位元組來自**鏡像**，
+而鏡像保有官方已下架的歷史裁罰（保存期限問題見
+[../../docs/research/03-external-data.md](../../docs/research/03-external-data.md) §1.2）。
+只寫官方端點，別人
+照著去抓會得到不一樣的資料；只寫鏡像，則沒有履行 CC-BY 的標註義務。
+
+**標註出現在三個地方，缺一不可**——因為這三種人看到的東西不一樣：
+
+| 位置 | 給誰看 |
+|---|---|
+| 本檔與 `data/README.md` | 讀 repo 的人 |
+| `webapp/index.html` 頁尾 | 看動態版畫面的人（他不會去讀 markdown）|
+| `frontend/index.html` 頁尾 | 拿到**靜態單檔版**的人 |
+
+靜態版那一份最容易被漏掉：它會離開 repo 單獨散布（Artifact、附件、隨信寄出），
+收到的人手上只有那一個 HTML 檔。標註義務跟著**檔案**走，不是跟著 repo 走。
+
+### 各份外部資料的來源與授權現況
+
+「待確認」代表我們查不到明文條款，**不是**代表沒有限制。政府網站的公開頁面多半
+沒有掛開放資料授權標章，這種情況下我們維持「標註出處、只留 provenance、不重新
+散布內文」的作法，而不是自行推定一個授權。
+
+| 資料 | 原始來源（權威） | 取得管道 | 授權現況 |
+|---|---|---|---|
+| `preschools.json`、`punish_all.json`、`kids_vehicles.json`、收費明細 | 全國教保資訊網 <https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx> | <https://github.com/kiang/ap.ece.moe.edu.tw>（鏡像頁 <https://kiang.github.io/ap.ece.moe.edu.tw/>）| **資料 CC-BY**（須標註上列原始來源）；**鏡像程式 MIT**。兩者不可混為一談 |
+| `observations/` | 同上（由同三份快照衍生）| 本專案產生 | 內容承襲上列 CC-BY 標註義務；diff 與 manifest 本身是本專案產物 |
+| `evaluation/`（pilot 與全量）| 全國教保資訊網 `evaSearch.aspx` | 官方端點直接取得 | 政府公開查詢結果；官方頁面未載明開放資料授權條款，**授權條款待確認**，引用時標註官方出處 |
+| `procurement/` | 政府電子採購網 <https://web.pcc.gov.tw/> | g0v/openfun 採購 API <https://pcc.g0v.ronny.tw/>（現行 origin `pcc-api.openfun.app`）| API 後端程式為開源專案；**標的資料的原始授權條款待確認**，故每筆決標都保留官方公告 URL，讓引用可回到權威來源 |
+| `education_bureau_announcements/` | 新北市幼兒教育資源網 <https://kidedu.ntpc.edu.tw/app/home.php>／[重要公告](https://kidedu.ntpc.edu.tw/p/403-1000-9-1.php) | 官方 detail HTML 與附件 PDF | 政府公開公告；未載明開放資料授權條款，**待確認**。只保存原始回應作 provenance |
+| `news/` | 各新聞媒體（著作權屬原媒體）| Google News RSS | **非開放授權**。快照只作事件比對與 provenance，不重製內文、不對外轉載、不作違規標籤 |
+| `ntpc_town_boundary.json`、`tw_neighbor_land.json` | 內政部鄉鎮市區界線（<http://data.moi.gov.tw/>）| <https://github.com/kiang/taiwan_basecode> → `city/topo/20230317.json` | 該 repo 的 LICENSE 為 **MIT**（已核對），但未另行聲明資料授權；**界線資料的原始條款待確認**，標註以內政部為原始來源 |
+
+`data/raw/`（主辦方 1.8 GB 資料集）不在這個目錄，也**不得轉散布**，與上述外部
+公開資料的授權狀態無關，見 [../README.md](../README.md)。
 
 ## 更新方式
 

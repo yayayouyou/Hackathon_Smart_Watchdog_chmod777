@@ -110,6 +110,7 @@ async function apply() {
     asOf: p.as_of, point: p, ranks: tl.cache[p.as_of], topN: tl.topN,
   };
   T.drawMarkers();
+  T.timelineDock(true);          // 收起來的話，回測模式會沒有任何畫面反應
   T.$("tlbar").classList.add("active");
   drawRankList();
 }

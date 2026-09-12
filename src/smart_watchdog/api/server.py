@@ -28,6 +28,7 @@ web app 沒有這些限制，所以這一層一上來，Google 地圖、滾輪�
 
 from __future__ import annotations
 
+import contextlib
 import json
 import pathlib
 from typing import Any, Optional
@@ -43,11 +44,74 @@ from .. import config
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 WEBAPP = ROOT / "webapp"
 PAYLOAD_PATH = ROOT / "dist/data/payload.json"
+LAND_PATH = ROOT / "data/external/tw_neighbor_land.json"
+
+# ── MCP ──────────────────────────────────────────────────────────────
+# 同一組 tool 的第二條入口：瀏覽器走 /api/agent/messages，MCP 客戶端走 /mcp。
+# 白名單與稽核都在 ToolRegistry.execute()，所以兩條路徑不可能有不同的權限。
+#
+# ⚠️ **必須在建立 app 之前先建好**，因為 FastMCP 的 StreamableHTTPSessionManager
+# 要靠它自己的 lifespan 初始化 task group——只 mount 不接 lifespan 的話，
+# mount 成功、tools/list 也列得出來，但**協定層的 initialize 會 500**
+# （`Task group is not initialized`）。這個組合實測踩過。
+#
+# 掛載失敗不讓整個服務起不來：MCP 是額外通道，派工台本身不依賴它。
+_mcp_app = None
+try:
+    from ..agent.mcp_server import build_mcp as _build_mcp
+
+    _mcp_app = _build_mcp().http_app(path="/")
+except Exception as _mcp_exc:  # noqa: BLE001 - 缺 fastmcp 或版本不符都只停用這條
+    print(f"MCP 未掛載：{_mcp_exc}")
+
+
+@contextlib.asynccontextmanager
+async def _lifespan(app_: FastAPI):
+    """啟動工作 + MCP 的 lifespan。
+
+    改成 lifespan 而不是 `@app.on_event("startup")`，是因為 Starlette 一旦收到
+    自訂 lifespan 就不再跑 on_event 的處理器——兩者不能並存。內容與原本那支
+    `_startup` 完全相同，只是多包了 MCP 那一層。
+    """
+    # 建表。`create_all` 是冪等的，已存在就什麼都不做。
+    #
+    # 為什麼放在這裡而不是只靠 `scripts/seed_users.py`：那支是容器部署路徑
+    # （見 docs/DEPLOY.md），但**本機 `run.py serve` 不會跑它**。結果是在一台
+    # 剛 clone 的機器上，SQLAlchemy 連線時會把 sqlite 檔建出來卻沒有任何表，
+    # 於是 `POST /api/auth/login` 回 **500 Internal Server Error**，
+    # 訊息是 `no such table: user_session`——看起來像資料庫壞了，實際上是沒建過。
+    # 這個情境已經真的發生過（合併後在本機實測）。
+    try:
+        from ..db.session import init_db
+
+        init_db()
+    except Exception as exc:  # noqa: BLE001 - 建表失敗不該讓整個服務起不來
+        print(f"⚠️ 資料表初始化失敗（登入與助理會不可用）：{exc}")
+
+    try:
+        load_payload()
+    except FileNotFoundError as exc:  # keep the server up so /api/health can say why
+        print(f"⚠️ {exc}")
+    _scan.bind(payload, get_proposal)
+    # 重啟對帳：進行中的任務標為中斷，且**不釋放**已預留的額度。
+    from ..realtime.jobs import STORE
+
+    n = STORE.sweep_interrupted()
+    if n:
+        print(f"⚠️ {n} 個掃描任務因重啟中斷；預留額度維持佔用（當機的執行照樣花了錢）")
+
+    if _mcp_app is None:
+        yield
+    else:
+        async with _mcp_app.lifespan(app_):
+            yield
+
 
 app = FastAPI(
     title="小小守護員 Smart Watchdog",
     description="新北市教保機構稽查優先序。輸出為建議查核，非違法認定。",
     version="1.0",
+    lifespan=_lifespan,
 )
 # The console may be served from a different origin during development.
 app.add_middleware(
@@ -55,14 +119,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-_state: dict[str, Any] = {"payload": None, "index": {}}
+_state: dict[str, Any] = {"payload": None, "index": {}, "land": None}
 
 # 掃描主控台與證據端點。在此掛載而非讓子模組匯入 server，避免循環匯入。
+from . import agent as _agent  # noqa: E402
+from . import auth as _auth  # noqa: E402
+from . import dossier as _dossier  # noqa: E402
+from . import evidence as _evidence  # noqa: E402
 from . import explore as _explore  # noqa: E402
 from . import scan as _scan  # noqa: E402
 
 app.include_router(_scan.router)
 app.include_router(_explore.router)
+app.include_router(_auth.router)
+app.include_router(_agent.router)
+app.include_router(_evidence.router)
+app.include_router(_dossier.router)
 
 
 def load_payload(path: pathlib.Path = PAYLOAD_PATH) -> dict[str, Any]:
@@ -84,19 +156,6 @@ def payload() -> dict[str, Any]:
     return _state["payload"]
 
 
-@app.on_event("startup")
-def _startup() -> None:
-    try:
-        load_payload()
-    except FileNotFoundError as exc:  # keep the server up so /api/health can say why
-        print(f"⚠️ {exc}")
-    _scan.bind(payload, get_proposal)
-    # 重啟對帳：進行中的任務標為中斷，且**不釋放**已預留的額度。
-    from ..realtime.jobs import STORE
-
-    n = STORE.sweep_interrupted()
-    if n:
-        print(f"⚠️ {n} 個掃描任務因重啟中斷；預留額度維持佔用（當機的執行照樣花了錢）")
 
 
 # ── 讀取 ────────────────────────────────────────────────────────────
@@ -121,6 +180,24 @@ def list_institutions(town: Optional[str] = None,
 def list_districts() -> dict:
     return {"districts": payload().get("districts", []),
             "boundary": payload().get("boundary", [])}
+
+
+@app.get("/api/land")
+def get_land() -> dict:
+    """鄰縣市的陸地輪廓。地圖用它把新北以外的**陸地**反灰，海留原色。
+
+    刻意不進 payload：這是圖磚底圖才有的問題。靜態版自己畫 SVG，畫面上根本沒有
+    別的縣市，把 105 KB 內嵌進去只是讓那一份變胖。檔案不在就回空陣列——前端的
+    遮罩會自己退回舊做法，地圖照常能用。
+    """
+    if _state.get("land") is None:
+        try:
+            _state["land"] = json.loads(LAND_PATH.read_text(encoding="utf-8"))
+        except OSError:
+            print(f"⚠️ {LAND_PATH} 不存在，地圖反灰會連海一起灰掉。"
+                  "重建：python run.py neighbor-land")
+            _state["land"] = []
+    return {"land": _state["land"]}
 
 
 @app.get("/api/institutions/{institution_id}")
@@ -322,9 +399,28 @@ def health() -> dict:
         "channels_live": rt.get("channels_live", 0),
         "channels_total": rt.get("channels_total", 0),
         "schema_version": (data or {}).get("schema_version"),
+        # 自然語言查詢現在實際由誰做計畫。決賽當天要能一眼看出「台上跑的是
+        # Bedrock 還是關鍵字降級版」，而不是等問了一題才從回應裡發現。
+        "chat_planner": _chat_planner_kind(),
         # 缺的是授權不是資料——照實列出，並附上去哪裡申請。
         "credentials": config.status(),
     }
+
+
+def _chat_planner_kind() -> str:
+    """/api/health 用。解析失敗時回報 unknown，不要讓健康檢查自己掛掉。
+
+    `CHAT_PLANNER` 打錯字時要說出來。只顯示退回後的 `keyword` 的話，
+    設定錯誤會看起來像「Bedrock 莫名其妙沒被用到」。
+    """
+    try:
+        from .chat import invalid_kind, resolve_kind
+
+        kind = resolve_kind()
+        bad = invalid_kind()
+        return f"{kind}（CHAT_PLANNER={bad!r} 無法辨識，已退回）" if bad else kind
+    except Exception as exc:  # noqa: BLE001 - 健康檢查必須永遠回得了話
+        return f"unknown ({type(exc).__name__})"
 
 
 # ── 聊天 ────────────────────────────────────────────────────────────
@@ -333,17 +429,67 @@ class ChatRequest(BaseModel):
     institution_id: Optional[str] = None
 
 
+#: Planner 實例依種類快取。`BedrockPlanner` 第一次 `plan()` 時才建 client，
+#: 每次請求重建等於每次查詢多一次 client 初始化。種類本身每次重新解析
+#: （見 `chat.resolve_kind`），所以**啟動時沒憑證、之後才補上 .env** 不必重啟。
+#: ⚠️ 但**換掉一把已載入過的金鑰一定要重啟**——理由見 `chat.resolve_kind`
+#: 與 `bedrock.client` 的說明（.env 不覆寫、botocore 與 SDK 都有快取）。
+_planners: dict[str, Any] = {}
+
+
+def chat_planner() -> Any:
+    from .chat import get_planner, resolve_kind
+
+    kind = resolve_kind()
+    if kind not in _planners:
+        _planners[kind] = get_planner(kind)
+    return _planners[kind]
+
+
 @app.post("/api/chat")
 def chat(req: ChatRequest) -> dict:
-    from .chat import answer
+    from .chat import answer, get_planner
 
-    return answer(req.question, payload(), institution_id=req.institution_id)
+    try:
+        return answer(req.question, payload(),
+                      institution_id=req.institution_id, planner=chat_planner())
+    except Exception as exc:  # noqa: BLE001 - 降級，不是吞錯：原因照實回報給呼叫端
+        # 會場斷網、STS 憑證過期、模型被限流都會走到這裡。示範時讓查詢變慢是
+        # 可以接受的，讓它變成 500 不行——KeywordPlanner 產生的是同一組檢索
+        # 條件，所以降級只影響「問句怎麼被理解」，不影響答案的措辭與界線。
+        from ..bedrock import explain_error
+
+        result = answer(req.question, payload(),
+                        institution_id=req.institution_id,
+                        planner=get_planner("keyword"))
+        result["planner_fallback"] = explain_error(exc)
+        return result
+
+
+if _mcp_app is not None:
+    app.mount("/mcp", _mcp_app)
 
 
 # ── 靜態前端 ─────────────────────────────────────────────────────────
+class NoCacheStatic(StaticFiles):
+    """前端檔案一律要求瀏覽器回來驗證。
+
+    StaticFiles 只送 ETag 與 Last-Modified，**沒有** Cache-Control，瀏覽器於是
+    用啟發式快取自己決定要不要問。結果是改了 app.js、重整卻還是舊畫面——這個
+    誤會很貴：看起來像功能沒做出來，實際上是根本沒載到新檔。多一趟 304 的成本
+    可以忽略，示範現場的「怎麼沒生效」不行。
+    """
+
+    def file_response(self, *args, **kwargs):  # type: ignore[override]
+        resp = super().file_response(*args, **kwargs)
+        resp.headers["Cache-Control"] = "no-cache"
+        return resp
+
+
 if WEBAPP.exists():
-    app.mount("/static", StaticFiles(directory=str(WEBAPP)), name="static")
+    app.mount("/static", NoCacheStatic(directory=str(WEBAPP)), name="static")
 
     @app.get("/")
     def index() -> FileResponse:
-        return FileResponse(str(WEBAPP / "index.html"))
+        return FileResponse(str(WEBAPP / "index.html"),
+                            headers={"Cache-Control": "no-cache"})

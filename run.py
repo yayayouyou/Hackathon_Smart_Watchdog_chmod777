@@ -93,6 +93,10 @@ TASKS = [
          _s("setup_raw_data.py"), group="準備"),
     Task("check-credentials", "實測 .env 裡的每一把金鑰",
          _s("check_credentials.py"), group="準備"),
+    # 建表是冪等的，服務啟動時也會做一次；這個任務多做的是**建帳號**
+    # （取 .env 的 SEED_INSPECTOR_EMAIL／PASSWORD）。沒有帳號就登不進助理頁。
+    Task("seed-users", "建立資料表與稽查員帳號（冪等；助理與登入需要）",
+         _s("seed_users.py"), group="準備"),
     Task("bedrock-check", "實測 Bedrock：憑證、可用模型、三個 AI 落點",
          _s("check_bedrock.py"), group="準備", needs_network=True),
 
@@ -104,9 +108,14 @@ TASKS = [
     Task("extract-public", "從決算書座標抽出 22 所市立幼兒園財務（零模型成本）",
          _s("extract_public_kindergartens.py"), group="抽取",
          needs_raw=True, in_pipeline=True),
-    # 刻意不放進 pipeline：這一步會花錢且需數小時，不該被 `run.py pipeline` 意外觸發。
-    # 它是可續跑的，重跑只會補上缺的頁，所以人工啟動不會有半途而廢的風險。
-    Task("extract-pages", "Bedrock 視覺模型逐頁抽取 132 份非營利財報（可續跑，數小時）",
+    # 兩者都不進 pipeline：都會真的花錢呼叫模型。用途不同，刻意並存——
+    # extract-bedrock 量的是「抽得對不對」（對照人工基準頁），
+    # extract-pages 量的是「抽得到多少」（依目錄定向的大量抽取）。
+    # 先跑前者確認準確率，再跑後者鋪量，順序反過來就是在賭。
+    Task("extract-bedrock", "用 Bedrock 視覺模型實跑抽取（預設 5 張基準頁，--dry-run 可試算）",
+         _s("extract_nonprofit_bedrock.py"), group="抽取",
+         needs_raw=True, needs_network=True),
+    Task("extract-pages", "Bedrock 依目錄定向逐頁抽取 132 份非營利財報（可續跑）",
          _s("extract_pages_bedrock.py"), group="抽取",
          needs_raw=True, needs_network=True),
 
@@ -150,6 +159,8 @@ TASKS = [
          _s("build_audit_priority.py"), group="輸出", in_pipeline=True),
     Task("letters", "為名單上每一所園草擬稽核建議書",
          _s("build_audit_letters.py"), group="輸出", in_pipeline=True),
+    Task("neighbor-land", "產生鄰縣市陸地輪廓（地圖反灰只灰陸地、不灰海）",
+         _s("build_neighbor_land.py"), group="輸出", needs_network=True),
     Task("frontend", "產生 dist/（靜態單檔版與動態版共用的 payload）",
          _s("build_frontend.py"), group="輸出", in_pipeline=True),
     Task("serve", "啟動動態版稽查派工台，網址 http://127.0.0.1:8000",
@@ -176,6 +187,10 @@ TASKS = [
          _s("download_evaluation_ntpc.py"), group="外部", needs_network=True),
     Task("snapshots", "更新或採認外部公開資料快照",
          _s("download_external_snapshots.py"), group="外部", needs_network=True),
+    # 逐園裁罰檔：補上 punish_all.json 缺的處分書文號。刻意不進 pipeline——
+    # 它不餵模型特徵（會動到已公布的 AUC），只作旁證與前瞻驗證。
+    Task("mirror-extras", "抓逐園裁罰檔（補處分書文號；-- --report 看它能回答什麼）",
+         _s("download_mirror_extras.py"), group="外部", needs_network=True),
     Task("sweep", "掃一次即時管道並記錄提及",
          _s("run_realtime_sweep.py"), group="外部", needs_network=True),
 

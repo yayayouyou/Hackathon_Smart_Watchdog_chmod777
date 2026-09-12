@@ -33,6 +33,18 @@ ignore = [
 "src/smart_watchdog/api/server.py" = ["UP045"]
 "src/smart_watchdog/api/scan.py" = ["UP045"]
 "src/smart_watchdog/api/explore.py" = ["UP045"]
+# 同上；另加 B008——`Depends()`／`Cookie()` 放在參數預設值是 FastAPI 唯一的
+# 依賴注入寫法，改成「在函式內呼叫」會讓 FastAPI 看不到依賴。
+"src/smart_watchdog/api/auth.py" = ["UP045", "B008"]
+# SQLAlchemy 和 FastAPI 一樣在執行期 evaluate `Mapped[...]` 註記，
+# Python 3.9 無法 evaluate `X | None`，所以這裡也必須寫 Optional[X]。
+"src/smart_watchdog/db/models.py" = ["UP045"]
+# 同理：Pydantic 的 tool 參數模型與 dataclass 欄位都在執行期被讀，
+# 而 tool 的 JSON schema 是由那些註記生成的（registry.schemas()）。
+"src/smart_watchdog/agent/*.py" = ["UP045"]
+"src/smart_watchdog/api/agent.py" = ["UP045", "B008"]
+"src/smart_watchdog/api/evidence.py" = ["UP045", "B008"]
+"src/smart_watchdog/api/dossier.py" = ["UP045", "B008"]
 # Scripts prepend src/ to sys.path before importing the package, so their
 # imports cannot sit at the top of the file.
 "scripts/*" = ["E402"]

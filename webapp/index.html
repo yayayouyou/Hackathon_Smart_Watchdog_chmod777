@@ -15,64 +15,133 @@
 </head>
 <body>
 <div class="app">
+  <!-- 功能列：切換功能、設派工容量、看全域狀態。地圖自己的設定不放這裡，
+       那些綁在地圖上（右上角的「圖層」鈕），因為它們只對地圖有意義。 -->
   <header>
     <h1>稽查派工台<span>新北市教保機構 · 建議查核優先序</span></h1>
+
+    <nav class="tabs" id="tabs">
+      <button data-t="list" aria-pressed="true">派工提案</button>
+      <button data-t="chat">查詢</button>
+      <button data-t="agent">助理</button>
+      <button data-t="scan">掃描</button>
+      <button data-t="timeline">時間軸</button>
+      <button data-t="memos">建議書</button>
+    </nav>
+
+    <div class="capbox">
+      <label for="cap">本月可稽查</label>
+      <input id="cap" type="number" min="1" max="200" value="20"><span>家</span>
+      <input id="capr" type="range" min="5" max="120" value="20" aria-label="派工容量">
+    </div>
+
     <div class="hstat">
       <span>全市 <b id="s-all">—</b></span>
       <span>有公開財報 <b id="s-fin">—</b></span>
       <span>本批提案 <b id="s-sel">—</b></span>
       <span>即時管道 <b id="s-ch">—</b></span>
-      <span title="本掃描週期已花費／自訂上限。撞自己的牆是不給跑，撞供應商的牆是跑到一半被砍、錢照付。"
-        >本期花費 <b id="s-budget">—</b></span>
+      <!-- 花費是會真的扣錢的東西，所以常駐在最上面，而且點得開：
+           只看到一個總額，等於要花錢的人看不到自己花在哪。 -->
+      <button class="costbtn" id="costbtn" aria-expanded="false"
+        title="本掃描週期已花費／自訂上限。點開看各道上限與最近幾筆帳。"
+        >本期花費 <b id="s-budget">—</b><i class="caret"></i></button>
     </div>
+
+    <div class="pop" id="costpop" hidden>載入中…</div>
   </header>
 
   <main>
-    <aside class="rail">
-      <div class="grp">
-        <h2>派工容量</h2>
-        <label class="capbox">本月可稽查
-          <input id="cap" type="number" min="1" max="200" value="20">家</label>
-        <input id="capr" type="range" min="5" max="120" value="20" aria-label="派工容量">
-      </div>
-
-      <div class="grp">
-        <h2>底圖</h2>
-        <div class="seg" id="basemaps">
-          <button data-b="osm" aria-pressed="true">OpenStreetMap</button>
-          <button data-b="carto">淺色地圖</button>
-          <button data-b="google" id="b-google">Google 地圖</button>
-        </div>
-        <p class="note" id="gnote">Google 底圖需金鑰；未設定時停用。</p>
-      </div>
-
-      <div class="grp">
-        <h2>圖層</h2>
-        <label class="opt"><input type="checkbox" id="f-cluster" checked>標記群集</label>
-        <label class="opt"><input type="checkbox" id="f-districts">行政區界線</label>
-        <label class="opt"><input type="checkbox" id="f-flagged">只顯示複查名單</label>
-      </div>
-
-      <div class="grp">
-        <h2>機構類別</h2>
-        <label class="opt"><input type="checkbox" class="ftype" value="0" checked>
-          <i class="sw" style="background:var(--pub)"></i>公立<span class="n" id="l0"></span></label>
-        <label class="opt"><input type="checkbox" class="ftype" value="1" checked>
-          <i class="sw" style="background:var(--np)"></i>非營利<span class="n" id="l1"></span></label>
-        <label class="opt"><input type="checkbox" class="ftype" value="2" checked>
-          <i class="sw" style="background:var(--prv)"></i>私立<span class="n" id="l2"></span></label>
-        <p class="note">顏色代表<b>機構類別</b>，不是風險高低。<br>
-          紅圈為本批建議查核。</p>
-      </div>
-    </aside>
-
     <div class="mapwrap">
       <div id="map"></div>
+
+      <!-- 地圖設定收在地圖右上角。展開才佔畫面，收起來只剩一顆鈕與目前
+           開著幾層的角標。 -->
+      <div class="mapui">
+        <button class="mapui-btn" id="layerbtn" aria-expanded="false"
+                title="底圖、圖層與機構類別">
+          <svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M8 1.5 15 5 8 8.5 1 5z" fill="none" stroke="currentColor"
+                  stroke-width="1.3" stroke-linejoin="round"/>
+            <path d="M2.4 8 8 10.8 13.6 8M2.4 11 8 13.8 13.6 11" fill="none"
+                  stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+          </svg>
+          圖層<i class="mapui-n" id="layern">—</i>
+        </button>
+
+        <div class="mapui-panel" id="layerpanel" hidden>
+          <div class="grp">
+            <h2>底圖</h2>
+            <div class="seg" id="basemaps">
+              <button data-b="osm" aria-pressed="true">OpenStreetMap</button>
+              <button data-b="google" id="b-google">Google 地圖</button>
+            </div>
+            <p class="note" id="gnote">Google 底圖需金鑰；未設定時停用。</p>
+          </div>
+
+          <div class="grp">
+            <h2>圖層</h2>
+            <label class="opt"><input type="checkbox" id="f-cluster" checked>標記群集</label>
+            <label class="opt"><input type="checkbox" id="f-districts">行政區界線</label>
+            <label class="opt"><input type="checkbox" id="f-dnames" checked>行政區名稱</label>
+            <label class="opt"><input type="checkbox" id="f-mask" checked>新北以外反灰</label>
+            <label class="opt"><input type="checkbox" id="f-flagged">只顯示複查名單</label>
+            <label class="opt"><input type="checkbox" id="f-choro" checked>行政區優先度底色</label>
+          </div>
+
+          <!-- 標記顏色要嘛講「這是哪一類機構」，要嘛講「它被罰過幾次」。
+               兩者都是既有的公開事實；我們算出來的風險分數不上地圖
+               （見 docs/architecture/aws-architecture.md §6.5）。 -->
+          <div class="grp">
+            <h2>標記著色</h2>
+            <div class="seg" id="pinby">
+              <button data-p="type" aria-pressed="true">機構類別</button>
+              <button data-p="penalty">歷史裁罰件數</button>
+            </div>
+          </div>
+
+          <!-- 這一層畫的是主管機關**已經開罰**的公開紀錄，不是我們算的分數。
+               所以它可以上地圖，但用詞不能滑向「風險」。 -->
+          <div class="grp" id="pen-grp" hidden>
+            <h2>歷史裁罰件數</h2>
+            <div class="legend" id="pen-legend"></div>
+            <p class="note">全國教保資訊網公告之<b>裁罰紀錄件數</b>，非風險評分。<br>
+              ⚠️ 件數隨<b>園齡與規模</b>自然累積：老牌大園天生偏多，深色不等於現在比較糟。<br>
+              無紀錄畫成灰色而非綠色——0 件是<b>沒有紀錄</b>，不是合規證明。</p>
+          </div>
+
+          <!-- 這一層回答的是出題端真正要問的問題：人力先派到哪一區。
+               單位是「若依模型排序抽前 100 名，這一區會有幾家進榜」——
+               不是危險程度，是建議查核的密度。 -->
+          <div class="grp">
+            <h2>行政區優先度</h2>
+            <div class="legend" id="choro-legend"></div>
+            <p class="note">底色＝該區進入<b>全市前 100 名</b>的家數。
+              放大到街廓尺度會自動淡出，讓底圖回到可讀狀態。</p>
+          </div>
+
+          <div class="grp">
+            <h2>機構類別</h2>
+            <label class="opt"><input type="checkbox" class="ftype" value="0" checked>
+              <i class="sw" style="background:var(--pub)"></i>公立<span class="n" id="l0"></span></label>
+            <label class="opt"><input type="checkbox" class="ftype" value="1" checked>
+              <i class="sw" style="background:var(--np)"></i>非營利<span class="n" id="l1"></span></label>
+            <label class="opt"><input type="checkbox" class="ftype" value="2" checked>
+              <i class="sw" style="background:var(--prv)"></i>私立<span class="n" id="l2"></span></label>
+            <p class="note">顏色代表<b>機構類別</b>，不是風險高低。<br>
+              紅圈為本批建議查核。</p>
+          </div>
+
+
+        </div>
+      </div>
+
       <div class="mapbadge" id="mapbadge">—</div>
 
-      <!-- 時間軸：把時鐘倒回去，看當時的排序後來對不對。
+      <!-- 時間軸預設收成左下角一顆小 bar：它是「證明這套排序有效」的證據，
+           不是每天要用的操作面板，沒理由常駐吃掉地圖下緣。
            右設限的格子以虛線標出，不與完整觀察的格子連成同一條趨勢線。 -->
-      <div class="tlbar" id="tlbar">
+      <div class="tldock" id="tldock">
+      <div class="tlbar" id="tlbar" hidden>
         <div class="tlhead">
           <b>時間軸回測</b>
           <span class="tlsub">每一格都重新訓練一次，只用當天看得到的資料</span>
@@ -96,16 +165,15 @@
           <i class="tlpin tl-out"></i>未排入
         </div>
       </div>
+      <button class="tlpill" id="tlpill" aria-expanded="false">
+        <span class="tldot"></span>時間軸回測
+        <span class="tlpillsub" id="tlpillsub">2021–今天 · 逐年重訓</span>
+      </button>
+      </div>
     </div>
 
+    <!-- 右欄：目前是清單與卷宗，之後這一欄會讓給 AI 側邊欄。 -->
     <div class="side">
-      <div class="tabs">
-        <button data-t="list" aria-pressed="true">派工提案</button>
-        <button data-t="chat">查詢</button>
-        <button data-t="scan">掃描</button>
-        <button data-t="timeline">時間軸</button>
-      </div>
-
       <div class="pane" id="pane-list">
         <div class="list" id="list"></div>
       </div>
@@ -129,6 +197,30 @@
         </form>
       </div>
 
+      <div class="pane" id="pane-agent" hidden>
+        <div class="agentbar">
+          <span class="who" id="whoami">未登入</span>
+          <button type="button" id="agentclear" class="mini">清除地圖標記</button>
+          <button type="button" id="logout" class="mini" hidden>登出</button>
+        </div>
+        <div class="chatlog" id="agentlog">
+          <div class="msg bot">
+            <p>我可以操作這個畫面。說一句話，我會邊做邊講。</p>
+            <div class="egs">
+              <button class="eg">幫我排這週的稽查，先看板橋區</button>
+              <button class="eg">三重區財報法遵沒通過的有哪些？</button>
+              <button class="eg">資遣費準備金的規定寫在財報哪一頁？</button>
+              <button class="eg">你這個排序準不準？</button>
+            </div>
+          </div>
+        </div>
+        <form class="chatbar" id="agentform">
+          <input id="aq" placeholder="例如：把板橋區有前科的前十筆列出來"
+                 autocomplete="off">
+          <button type="submit" id="agentsend">送出</button>
+        </form>
+      </div>
+
       <div class="pane" id="pane-scan" hidden>
         <div class="scanwrap" id="scanwrap">載入中…</div>
       </div>
@@ -137,6 +229,17 @@
         <div class="tllist" id="tllist">
           <div class="tlnote">拖動地圖下方的時間軸，看那一年的排序與事後結果。</div>
         </div>
+      </div>
+
+      <div class="pane" id="pane-memos" hidden>
+        <div class="agentbar">
+          <span class="who" id="memocount">—</span>
+        </div>
+        <form class="chatbar" id="memoform">
+          <input id="memoq" placeholder="搜尋園名或行政區，例如：三重" autocomplete="off">
+          <button type="submit">搜尋</button>
+        </form>
+        <div class="list" id="memolist"></div>
       </div>
 
       <div class="dossier" id="dossier" hidden></div>
@@ -148,7 +251,31 @@
     四個完整觀察年度，每年各自重新訓練）平均 AUC 0.658，前 100 名命中率為隨機
     抽查的 2.29 倍；詳見「時間軸」分頁。全市 94.8% 的園無公開財報，對這些園
     而言那是涵蓋範圍限制，不是合規證明。
+    <!-- CC-BY 的標註是授權條件不是禮貌：上游明訂「Data is compatible with CC-BY
+         license. When using this data, please attribute to ap.ece.moe.edu.tw」。
+         標註要出現在使用者看得到的地方，不能只寫在 repo 的 markdown 裡。 -->
+    <span class="src">
+      機構基本資料、裁罰紀錄與收費明細來源：<a
+        href="https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx"
+        target="_blank" rel="noopener">全國教保資訊網</a>（教育部），
+      經 <a href="https://github.com/kiang/ap.ece.moe.edu.tw" target="_blank"
+        rel="noopener">kiang/ap.ece.moe.edu.tw</a> 鏡像取得（江明宗維護，
+      程式碼 MIT、資料 CC-BY）。地圖圖磚 © <a
+        href="https://www.openstreetmap.org/copyright" target="_blank"
+        rel="noopener">OpenStreetMap</a> 貢獻者。
+    </span>
   </footer>
+</div>
+
+<div class="authwrap" id="authwrap" hidden>
+  <form class="authbox" id="authform">
+    <h2>稽查派工台</h2>
+    <p>本系統含 1,213 所真實機構的查核優先序，僅供內部稽查使用。</p>
+    <label>帳號 <input id="email" type="email" autocomplete="username" required></label>
+    <label>密碼 <input id="password" type="password" autocomplete="current-password" required></label>
+    <div class="autherr" id="autherr"></div>
+    <button type="submit">登入</button>
+  </form>
 </div>
 
 <script src="/static/vendor/leaflet.js"></script>
@@ -156,5 +283,8 @@
 <script src="/static/app.js"></script>
 <script src="/static/scan.js"></script>
 <script src="/static/timeline.js"></script>
+<script src="/static/auth.js"></script>
+<script src="/static/agent.js"></script>
+<script src="/static/memos.js"></script>
 </body>
 </html>

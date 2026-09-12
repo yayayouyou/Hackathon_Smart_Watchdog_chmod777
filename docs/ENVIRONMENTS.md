@@ -13,10 +13,15 @@
 ```bash
 python run.py setup            # 建 venv、裝相依（有 uv 就用 uv，快很多）
 cp .env.example .env           # 然後把憑證填進去，見 §2
+python run.py seed-users       # ⚠️ 建帳號。沒有帳號連地圖都看不到
 python run.py bedrock-check    # 確認 AWS 打得通
 python run.py frontend         # 產生前端資料
 python run.py serve            # → http://127.0.0.1:8000
 ```
+
+⚠️ **`seed-users` 不是選配。** 動態版有全螢幕登入牆，沒有帳號時地圖、
+派工提案、時間軸一個都看不到。帳密取自 `.env` 的 `SEED_INSPECTOR_EMAIL`
+與 `SEED_INSPECTOR_PASSWORD`。
 
 `python run.py --list` 會列出全部任務。
 
@@ -35,7 +40,7 @@ python run.py serve            # → http://127.0.0.1:8000
 
 ```bash
 python run.py setup
-python run.py test        # 294 passed（有 data/raw 時）
+python run.py test        # 379 passed（POSIX 上 378 passed + 1 skipped）
 python run.py serve
 ```
 
@@ -125,6 +130,52 @@ python run.py letters -- --backend bedrock
 
 Bedrock 草稿**沒通過驗證就不會寫出來**，會自動退回模板並記下原因——
 一封不能用的信，好過一封寄給真實園所的錯信。
+
+### 2.6 三個落點各自怎麼切換
+
+| 落點 | 預設 | 怎麼指定 |
+|---|---|---|
+| 財報視覺抽取 | 不自動跑（會花錢） | `python run.py extract-bedrock`；`-- --dry-run` 先試算頁數 |
+| 稽核建議書 | `template`（確定性、永不出錯） | `python run.py letters -- --backend bedrock` |
+| 自然語言查詢 | **auto**——有憑證就走 Bedrock | 環境變數 `CHAT_PLANNER=bedrock｜keyword｜auto` |
+
+`/api/health` 的 `chat_planner` 欄位會直接回報**現在**是哪一個在做計畫，
+不必先問一題才知道。若某次請求打 Bedrock 失敗（斷網、憑證過期、限流），
+該次回應會降級成 `planner: "keyword"` 並附上 `planner_fallback` 說明原因——
+**降級一定會說出來**，因為悄悄換成關鍵字比對而宣稱跑在 Bedrock 上是同一件事。
+
+可用性判斷只看本機有沒有 `anthropic` 與 AWS 金鑰，**不打網路**。
+否則會場斷網時每一次查詢都要先等一個 timeout 才降級，等於沒有降級。
+
+### 2.7 視覺抽取的實測準確率（2026-09-12）
+
+`python run.py extract-bedrock` 跑 5 張人工核對過的基準頁，
+再用 `python run.py score-extraction` 對 ground truth 逐格比對：
+
+```
+儲存格準確率：236/236 = 100.00%
+恆等式：63/63 通過
+會產生錯誤財務陳述的格數（假零＋錯值＋多餘）：0 (0.00%)
+```
+
+> 恆等式從 44 變成 63，不是因為抽得更好，而是因為**有 19 條以前根本沒跑**。
+> `_validate_variance()` 用完全相等比對找 `預算數`／`決算數`／`差異數` 三欄，
+> 但規則 1 要求逐字照抄，表上印的是 `預算數(a)`／`決算數(b)`／`差異數(c)=(b)-(a)`
+> ——永遠對不上，整族逐列檢核靜靜變成 skipped，而回報的「N/N 通過」看不出少驗了什麼。
+> 改成含有比對後，收支餘絀表的決算數欄與差異數欄整欄互換才抓得到。
+
+⚠️ **這個數字是修過一次 prompt 之後才拿到的，過程本身就是結論。**
+第一次跑的結果是**恆等式 79/79 全過、逐格準確率卻只有 67.8%**：
+模型把資產負債表的「占比 %」小欄也當成一個期間塞進 `values`，
+於是 `values[1]` 是本期占比而不是比較期金額，整份表從第二欄起錯位。
+**自我驗算抓不到它**——占比在同一個分母下同樣滿足加總關係，
+各明細的 % 加起來就等於小計的 %。
+
+意思是：**恆等式全過不等於抽對了。** 修法是把欄位約定寫進
+`extract/schema.py` 的 `EXTRACTION_PROMPT` 規則 5（資產負債表的 % 進
+`percents`；收支餘絀表的「執行率」則是表頭上自成一欄，留在 `values`）。
+這也是為什麼 ground truth 那 5 張頁面不能省：沒有它，
+我們會拿著 79/79 的恆等式報告一個 67.8% 的抽取。
 
 ---
 

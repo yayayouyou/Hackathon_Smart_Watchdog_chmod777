@@ -152,7 +152,12 @@ def check_bedrock() -> None:
         import anthropic  # noqa: F401
         print("  ✅ anthropic 套件已安裝")
     except ImportError:
-        print("  ⬜ 尚未安裝 anthropic（決賽當天：pip install anthropic）")
+        # 這是缺套件，不是缺憑證——但 bedrock.client() 的匯入失敗會被
+        # check_bedrock.py 的 except 吞掉，顯示成「7 個模型全部打不通」，
+        # 方向完全相反。所以這裡要講清楚下一步是重裝相依而不是換金鑰。
+        print("  ❌ 缺 anthropic 套件——三個 AI 落點都連不上（會誤報成憑證問題）")
+        print("     修法：python run.py setup"
+              "（已釘在 requirements.txt，正常情況不該缺）")
 
 
 def main() -> None:

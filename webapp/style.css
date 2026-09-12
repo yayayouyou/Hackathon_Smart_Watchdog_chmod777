@@ -1,20 +1,52 @@
 :root{
   --ink:#14202A; --ink-2:#3D4E5C; --ink-3:#6B7C8A; --ink-4:#93A2AE;
   --paper:#EFF3F5; --panel:#FFFFFF; --sunk:#E6EDF0; --rule:#CFD9E0;
-  --pub:#12798F; --np:#6E4C9C; --prv:#96745A;
+  --pub:#2A78D6; --np:#EB6834; --prv:#1BAF7A;
+  /* 行政區優先度色階：單一色相由淺到深（稽查紅家族）。這是「建議查核密度」
+     不是「危險程度」，用詞與圖例都要守住這條界線。 */
+  --c1:#ECCECB; --c2:#DCA6A1; --c3:#C9756D; --c4:#B23A2F;
+  /* 標記依「歷史裁罰件數」著色時的色階。**刻意不用上面的稽查紅家族**：那一族
+     講的是我們算出來的「建議查核密度」，這一族講的是主管機關已經開罰的**公開
+     事實**。兩者在同一張圖上同時出現，色相必須分得開，否則會被讀成同一件事。
+     --k0 是「無紀錄」，用中性灰而不是綠色——0 件不等於安全，全市 60% 的園是 0，
+     把它畫成綠色等於發了 730 張合格證。 */
+  /* ⚠️ 亮度必須單調遞減。第一版 --k0 取 #9AA8B4（中灰）、--k1 取 #CDBBDD
+     （極淺紫），結果「被罰過 1 件」畫出來比「無紀錄」還淺——色階反了，
+     而且是在截圖上才看出來的。--k0 改成淺中性灰：它既要比任何一級紫都淺，
+     又要在色相上與紫族分開，因為「無紀錄」不是這個量尺上的最小值，
+     是「不在這個量尺上」。 */
+  --k0:#C8D0D7; --k1:#C4A9DA; --k2:#9E72C0; --k3:#7340A0; --k4:#4A1D78;
+  /* 行政區名稱：字本身用 ink，光暈用紙色，這樣在 OSM 與 Google 兩種底圖上都讀得到。 */
+  --dlabel:#24323C; --dlabel-halo:#FFFFFFE0;
   --seal:#B23A2F; --seal-soft:#B23A2F14;
   --warn:#B07A16; --warn-soft:#B07A1614; --good:#2C7A5B;
   --shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;
+  /* 新北以外的**陸地**蓋這一層（海不蓋）。不是純灰——留一點藍才壓得住
+     OSM 的黃綠底。--mask-line 是鄰縣市之間的界，--edge 是新北市界本身：
+     市界要比縣市界重，它是這張圖唯一需要一眼認出的邊。 */
+  --mask:#B9C6CF; --mask-op:.62; --mask-line:#7D8E9C; --edge:#243542;
   --sans:"IBM Plex Sans","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
   --mono:"IBM Plex Mono","PingFang TC",ui-monospace,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --ink:#DEE6EC; --ink-2:#A8B6C1; --ink-3:#7A8894; --ink-4:#5D6A76;
   --paper:#0E141A; --panel:#161E26; --sunk:#0A0F14; --rule:#2A3641;
-  --pub:#3FA9C0; --np:#A487D4; --prv:#C39A78;
+  --pub:#2A78D6; --np:#EB6834; --prv:#1BAF7A;
+  --c1:#ECCECB; --c2:#DCA6A1; --c3:#C9756D; --c4:#B23A2F;
+  /* 暗色底圖上整族要往亮的方向移，否則深紫與底圖糊在一起。 */
+  /* 方向與亮色主題一致（深＝多）。標記本來就有 2px 白色外圈保證可見度，
+     不必為了暗底把色階反過來——反過來會讓切換主題時「深＝多」突然變成
+     「淺＝多」，同一個人看同一張圖得到相反的結論。整族只往上提亮度，
+     避免最深的兩級在暗底上糊成同一塊。 */
+  --k0:#7D8B97; --k1:#C9B0DE; --k2:#A87FCB; --k3:#8655B2; --k4:#653A91;
+  /* ⚠️ 行政區名稱**不跟著暗色主題翻**。暗色主題翻的是 UI 外殼，OSM／Google
+     的圖磚沒有暗色版，字底下永遠是亮的。第一版跟著翻成白字深外框，結果在
+     亮圖磚上只剩外框在撐——截圖才看出來。字色要跟著**圖磚**走，不是跟著
+     主題走，所以這裡刻意不覆寫 --dlabel／--dlabel-halo。 */
   --seal:#E4695A; --seal-soft:#E4695A1F;
   --warn:#D4A03C; --warn-soft:#D4A03C1F; --good:#5AAE86;
   --shadow:0 1px 2px #0007, 0 6px 16px #0005;
+  --mask:#25333E; --mask-op:.55; --mask-line:#485A68; --edge:#BBD0DD;
 }}
 /* 作者樣式一律勝過瀏覽器預設樣式，與特異性無關。`.pane{display:flex}` 與
  * `.dossier{display:flex}` 因此蓋掉了 UA 的 `[hidden]{display:none}`：
@@ -31,28 +63,55 @@ input{font:inherit}
 :focus-visible{outline:2px solid var(--seal);outline-offset:2px}
 
 .app{display:grid;grid-template-rows:auto 1fr auto;height:100vh;height:100dvh}
-header{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;padding:11px 20px;
-  border-bottom:1px solid var(--rule);background:var(--panel)}
-h1{margin:0;font-size:15px;font-weight:600}
+header{position:relative;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  padding:8px 18px;border-bottom:1px solid var(--rule);background:var(--panel)}
+h1{margin:0;font-size:15px;font-weight:600;white-space:nowrap}
 h1 span{color:var(--ink-3);font-weight:400;margin-left:9px;font-size:12px}
-.hstat{display:flex;gap:18px;margin-left:auto;font-size:12px;color:var(--ink-3)}
+.hstat{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:12px;
+  color:var(--ink-3)}
 .hstat b{font-family:var(--mono);color:var(--ink);font-weight:500;font-size:13px;
   font-variant-numeric:tabular-nums}
 
-main{display:grid;grid-template-columns:210px minmax(0,1fr) 390px;min-height:0}
-@media(max-width:1100px){main{grid-template-columns:180px minmax(0,1fr) 330px}}
-@media(max-width:860px){main{grid-template-columns:1fr;grid-template-rows:auto 46vh 1fr}}
+/* 功能列上的派工容量。數字框與拖桿並存：拖桿用來示範「多一家少一家名單
+   怎麼變」，數字框用來輸入真正的月容量。 */
+.capbox{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3);
+  white-space:nowrap}
+.capbox input[type=number]{width:52px;padding:3px 6px;text-align:right;
+  border:1px solid var(--rule);border-radius:3px;background:var(--paper);
+  color:var(--ink);font-family:var(--mono);font-size:12px}
+.capbox input[type=range]{width:96px}
+input[type=range]{accent-color:var(--seal)}
 
-/* rail */
-.rail{background:var(--panel);border-right:1px solid var(--rule);overflow-y:auto;
-  padding:14px 14px 22px;display:flex;flex-direction:column;gap:16px}
+/* 花費：常駐在功能列，點開看細目 */
+.costbtn{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--ink-3);
+  border:1px solid transparent;border-radius:4px;padding:3px 7px}
+.costbtn:hover{border-color:var(--rule);background:var(--paper)}
+.costbtn[aria-expanded="true"]{border-color:var(--rule);background:var(--paper)}
+.caret{width:0;height:0;border:3.5px solid transparent;border-top-color:var(--ink-4);
+  margin-top:3px}
+.pop{position:absolute;right:18px;top:calc(100% - 4px);z-index:900;width:330px;
+  background:var(--panel);border:1px solid var(--rule);border-radius:6px;
+  box-shadow:var(--shadow);padding:12px 14px;font-size:12px;color:var(--ink-2)}
+.pop h4{margin:0 0 8px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600}
+.pop .meter{margin-bottom:10px}
+.pop .mlab{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:3px}
+.pop .mlab b{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink)}
+.pop .bar{height:5px;border-radius:3px;background:var(--sunk);overflow:hidden}
+.pop .bar i{display:block;height:100%;background:var(--seal)}
+.pop .bar i.ok{background:var(--good)}
+.pop .led{border-top:1px solid var(--rule);margin-top:10px;padding-top:8px;
+  font-family:var(--mono);font-size:10.5px;color:var(--ink-3);line-height:1.7}
+.pop .led span{display:flex;justify-content:space-between;gap:10px}
+.pop .src{margin:8px 0 0;font-size:10.5px;color:var(--ink-4);line-height:1.5}
+
+main{display:grid;grid-template-columns:minmax(0,1fr) 390px;min-height:0}
+@media(max-width:1100px){main{grid-template-columns:minmax(0,1fr) 330px}}
+@media(max-width:860px){main{grid-template-columns:1fr;grid-template-rows:46vh 1fr}}
+
 .grp{display:flex;flex-direction:column;gap:7px}
 .grp>h2{margin:0;font-size:10.5px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;color:var(--ink-3)}
-.capbox{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
-.capbox input{width:56px;padding:5px 7px;text-align:right;border:1px solid var(--rule);
-  border-radius:3px;background:var(--paper);color:var(--ink);font-family:var(--mono)}
-input[type=range]{width:100%;accent-color:var(--seal)}
 .opt{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2);
   padding:2px 0;cursor:pointer}
 .opt input{accent-color:var(--seal);margin:0}
@@ -66,25 +125,75 @@ input[type=range]{width:100%;accent-color:var(--seal)}
 .seg button[aria-pressed="true"]{background:var(--seal-soft);color:var(--ink);font-weight:500}
 .seg button[disabled]{opacity:.45;cursor:not-allowed}
 .note{font-size:11px;color:var(--ink-3);line-height:1.5;margin:0}
+.legend{display:flex;flex-direction:column;gap:3px}
+.legend div{display:flex;align-items:center;gap:7px;font-size:11.5px;
+  color:var(--ink-2)}
+.legend i{width:16px;height:10px;border-radius:2px;flex:none;
+  border:1px solid #00000018}
+.legend b{margin-left:auto;font-family:var(--mono);font-size:10.5px;
+  color:var(--ink-3);font-weight:400}
+
+/* 地圖上的圖層控制：收起來只有一顆鈕，展開才佔畫面。放右上角是因為
+   Leaflet 的縮放鈕固定在左上角，兩個控制不該擠在同一角。 */
+.mapui{position:absolute;right:12px;top:12px;z-index:600;display:flex;
+  flex-direction:column;align-items:flex-end;gap:6px}
+.mapui-btn{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2);
+  background:var(--panel);border:1px solid var(--rule);border-radius:4px;
+  padding:5px 9px;box-shadow:var(--shadow)}
+.mapui-btn:hover{color:var(--ink)}
+.mapui-btn[aria-expanded="true"]{color:var(--ink);border-color:var(--ink-4)}
+.mapui-n{font-family:var(--mono);font-style:normal;font-size:10.5px;color:var(--ink-3);
+  background:var(--sunk);border-radius:8px;padding:0 5px;min-width:16px;text-align:center}
+.mapui-panel{width:206px;max-height:calc(100vh - 220px);overflow-y:auto;
+  background:var(--panel);border:1px solid var(--rule);border-radius:6px;
+  box-shadow:var(--shadow);padding:12px 13px 14px;display:flex;flex-direction:column;
+  gap:15px}
 
 /* map */
 .mapwrap{position:relative;min-width:0;min-height:0}
 #map{width:100%;height:100%;background:var(--sunk)}
-.mapbadge{position:absolute;left:12px;bottom:22px;z-index:500;background:var(--panel);
+.mapbadge{position:absolute;right:12px;bottom:26px;z-index:500;background:var(--panel);
   border:1px solid var(--rule);border-radius:3px;padding:3px 9px;font-size:11px;
   color:var(--ink-3);box-shadow:var(--shadow);font-family:var(--mono)}
 .leaflet-container{font-family:var(--sans)}
-.pin{border-radius:50%;border:1.5px solid #fff;box-shadow:0 0 0 .5px #0003}
-.pin.flag{box-shadow:0 0 0 2.5px var(--seal)}
+/* 白色外圈是「疊在圖磚上」的必要條件：沒有它，標記會跟底圖的綠地、
+   水域糊在一起。紅圈＝本批建議查核，套在白圈外面。 */
+.pin{border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 .5px #00000040}
+.pin.flag{box-shadow:0 0 0 3px var(--seal), 0 0 0 4px #ffffffcc}
+
+/* 行政區名稱。
+ *
+ * 白色光暈（四向 text-shadow）不是裝飾：底下可能是 OSM 的黃綠、Google 的灰白、
+ * 或行政區優先度底色的深紅，任何單一字色都會在其中一種底下消失。光暈讓字與
+ * 底圖解耦，兩種底圖、明暗兩個主題都不必各調一次。
+ *
+ * `pointer-events:none` 讓名字不吃點擊——它是註記不是控制項，蓋住底下的機構
+ * 標記會讓人點不到園。字級由 JS 依縮放調整（見 app.js::districtLabelScale）。 */
+.dlabel{color:var(--dlabel);font-weight:700;letter-spacing:.12em;white-space:nowrap;
+  pointer-events:none;font-family:var(--sans);line-height:1;
+  text-shadow:0 1px 0 var(--dlabel-halo),0 -1px 0 var(--dlabel-halo),
+              1px 0 0 var(--dlabel-halo),-1px 0 0 var(--dlabel-halo),
+              0 0 6px var(--dlabel-halo)}
+
+/* 群集泡泡改成中性灰藍。預設的綠／黃／橘是另一套「多寡」色階，會跟機構
+   類別的三色、以及行政區底色搶同一個視覺通道——低縮放時畫面該由行政區
+   底色講話，群集只負責報數量。 */
+.marker-cluster-small,.marker-cluster-medium,.marker-cluster-large{
+  background:#FFFFFF66}
+.marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{
+  background:#FFFFFFF2;color:#14202A;box-shadow:0 0 0 1px #14202a33}
+.marker-cluster div{font-family:var(--mono);font-weight:600;font-size:11.5px}
 
 /* right */
 .side{position:relative;display:flex;flex-direction:column;min-height:0;
   background:var(--panel);border-left:1px solid var(--rule)}
-.tabs{display:flex;border-bottom:1px solid var(--rule)}
-.tabs button{flex:1;padding:9px 0;font-size:12px;letter-spacing:.06em;
-  color:var(--ink-3);border-bottom:2px solid transparent}
+/* 分頁在功能列上，不在右欄裡——右欄之後要讓給 AI 側邊欄。 */
+.tabs{display:flex;gap:2px}
+.tabs button{padding:5px 12px;font-size:12.5px;color:var(--ink-3);border-radius:4px;
+  white-space:nowrap}
+.tabs button:hover{color:var(--ink);background:var(--paper)}
 .tabs button[aria-pressed="true"]{color:var(--ink);font-weight:600;
-  border-bottom-color:var(--seal)}
+  background:var(--seal-soft);box-shadow:inset 0 0 0 1px var(--seal)}
 .pane{display:flex;flex-direction:column;min-height:0;flex:1}
 .list{overflow-y:auto;min-height:0;flex:1}
 .item{display:grid;grid-template-columns:26px 1fr auto;gap:3px 9px;width:100%;
@@ -170,6 +279,11 @@ input[type=range]{width:100%;accent-color:var(--seal)}
   display:flex;gap:8px;flex-wrap:wrap}
 footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel);
   font-size:11px;color:var(--ink-3);line-height:1.55}
+/* 來源標註。CC-BY 要求標註要看得見，所以它降一級但不隱藏——分行獨立成一段，
+   讓它跟上面那段「這是建議查核不是違法認定」的界線宣告分開讀。 */
+footer .src{display:block;margin-top:5px;padding-top:5px;
+  border-top:1px dashed var(--rule);font-size:10.5px;color:var(--ink-4)}
+footer .src a{color:var(--ink-3)}
 
 /* ── 掃描主控台 ───────────────────────────────────────────
    金額是這一頁的主角：費用數字用最大的字級，其他一律讓位。
@@ -284,11 +398,22 @@ footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel)
  * 三種結果的顏色刻意不共用機構類別的色票（--pub/--np/--prv）：那三色代表
  * 「是哪一種園」，這三色代表「當時排進去了嗎、後來出事了嗎」。同一個畫面
  * 用同一組顏色講兩件事，就沒人看得懂命中率了。 */
-.tlbar{position:absolute;left:12px;right:12px;bottom:52px;z-index:600;
+/* 時間軸是「證明這套排序有效」的證據，不是每天要用的操作面板——預設收成
+   左下角一顆小 bar，點開才展開。 */
+.tldock{position:absolute;left:12px;bottom:22px;z-index:600;display:flex;
+  flex-direction:column;align-items:flex-start;gap:7px}
+.tlpill{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-2);
+  background:var(--panel);border:1px solid var(--rule);border-radius:16px;
+  padding:5px 13px 5px 10px;box-shadow:var(--shadow)}
+.tlpill:hover{color:var(--ink)}
+.tlpill[aria-expanded="true"]{color:var(--ink);border-color:var(--ink-4)}
+.tldot{width:7px;height:7px;border-radius:50%;background:var(--seal);flex:none;
+  box-shadow:0 0 0 3px var(--seal-soft)}
+.tlpillsub{color:var(--ink-4);font-size:11px}
+.tlbar{position:static;width:min(72vw,720px);max-width:calc(100vw - 460px);
   background:var(--panel);border:1px solid var(--rule);border-radius:8px;
-  box-shadow:var(--shadow);padding:10px 14px 12px;
-  opacity:.92;transition:opacity .15s}
-.tlbar:hover,.tlbar.active{opacity:1}
+  box-shadow:var(--shadow);padding:10px 14px 12px}
+@media(max-width:860px){.tlbar{max-width:calc(100vw - 40px)}}
 .tlhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .tlhead b{font-size:13px}
 .tlsub{color:var(--ink-3);font-size:12px;flex:1}
@@ -355,3 +480,103 @@ footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel)
   justify-content:flex-end;gap:4px}
 .ptrend-bar{width:22px;background:var(--ink-4);border-radius:2px 2px 0 0;opacity:.75}
 .ptrend-y{font-size:10px;color:var(--ink-3);font-family:var(--mono)}
+
+/* ── 助理面板 ─────────────────────────────────────────────
+   .msg／.chatlog／.egs／.chatbar 沿用查詢頁籤原有的樣式，
+   這裡只加助理新增的四類元素。 */
+.agentbar{display:flex;align-items:center;gap:8px;padding:8px 12px;
+  border-bottom:1px solid var(--rule);font-size:11.5px;color:var(--ink-3)}
+.agentbar .who{flex:1;font-family:var(--mono)}
+.mini{border:1px solid var(--rule);border-radius:12px;padding:3px 9px;
+  font-size:11px;color:var(--ink-3);background:var(--panel);cursor:pointer}
+.mini:hover{border-color:var(--seal);color:var(--ink)}
+
+/* 一步一列：呼叫、結果、畫面動作。刻意做得比講解句淡——
+   這是給人看「它做了什麼」的軌跡，不是對話內容。 */
+.astep{font-family:var(--mono);font-size:10.5px;color:var(--ink-4);
+  line-height:1.6;padding-left:2px;word-break:break-all}
+.astep .tag{display:inline-block;min-width:30px;margin-right:6px;padding:1px 5px;
+  border-radius:3px;background:var(--sunk);color:var(--ink-3);font-size:10px}
+.astep .tag.ok{background:#2C7A5B14;color:var(--good)}
+.astep .tag.no{background:var(--seal-soft);color:var(--seal)}
+.astep .tag.ui{background:var(--warn-soft);color:var(--warn)}
+.astep code{font-size:10px;color:var(--ink-3)}
+
+/* 禁用詞被替換時要看得見。模型多常想說認定性的話，本身就是一個指標。 */
+.msg .soft{display:block;margin-top:4px;font-size:10.5px;color:var(--warn)}
+.msg.err{color:var(--seal)}
+
+/* ── 登入層 ─────────────────────────────────────────────── */
+.authwrap{position:fixed;inset:0;z-index:9000;display:flex;
+  align-items:center;justify-content:center;background:#14202AE6}
+.authbox{background:var(--panel);border-radius:10px;box-shadow:var(--shadow);
+  padding:26px 28px;width:min(360px,92vw);display:flex;flex-direction:column;gap:12px}
+.authbox h2{margin:0;font-size:17px;color:var(--ink)}
+.authbox p{margin:0;font-size:11.5px;color:var(--ink-3);line-height:1.6}
+.authbox label{display:flex;flex-direction:column;gap:4px;
+  font-size:12px;color:var(--ink-2)}
+.authbox input{padding:8px 10px;border:1px solid var(--rule);border-radius:6px;
+  font-size:13px;font-family:var(--sans)}
+.authbox button{margin-top:4px;padding:9px;border:1px solid var(--seal);
+  border-radius:6px;background:var(--seal);color:#fff;font-size:13px;cursor:pointer}
+.autherr{font-size:11.5px;color:var(--seal);min-height:15px}
+
+/* 證據抽屜：段落、出處、財報頁截圖。 */
+.evwrap{display:flex;flex-direction:column;gap:9px}
+.ev{border:1px solid var(--rule);border-radius:6px;padding:8px 9px;background:var(--panel)}
+.ev .evh{font-size:12px;font-weight:500;color:var(--ink)}
+.ev .evt{margin-top:4px;font-size:11.5px;color:var(--ink-2);line-height:1.6;
+  max-height:90px;overflow:auto}
+/* 出處用等寬字：檔名與頁碼是要被抄下來核對的東西。 */
+.ev .evc{margin-top:5px;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.ev img{margin-top:7px;width:100%;border:1px solid var(--rule);border-radius:4px;
+  background:#fff}
+
+/* 「思考中」：一則 tool 呼叫來回要數秒到數十秒，沒有這個就與「壞掉了」
+   分不出來。三點依序淡入淡出。 */
+.thinking{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--ink-4);
+  font-family:var(--mono);padding:2px 0}
+.thinking .dots{display:inline-flex;gap:3px}
+.thinking .dots i{width:5px;height:5px;border-radius:50%;background:var(--seal);
+  opacity:.25;animation:wd-blink 1.05s infinite}
+.thinking .dots i:nth-child(2){animation-delay:.18s}
+.thinking .dots i:nth-child(3){animation-delay:.36s}
+@keyframes wd-blink{0%,70%,100%{opacity:.25}35%{opacity:1}}
+/* 使用者關掉動態效果時就只留靜態的點，不要閃。 */
+@media (prefers-reduced-motion:reduce){
+  .thinking .dots i{animation:none;opacity:.6}
+}
+
+/* ── 卷宗：裁罰時間軸 ───────────────────────────────────── */
+.ptlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+.ptl{display:grid;grid-template-columns:76px 1fr;gap:9px;padding:7px 0;
+  border-left:2px solid var(--rule);padding-left:11px;margin-left:3px}
+.ptl:hover{border-left-color:var(--seal)}
+.ptl .pd{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.ptl .pb{font-size:12px;color:var(--ink-2)}
+.ptl .pb b{color:var(--ink);font-weight:500}
+.ptl .prole{margin-left:6px;font-size:10.5px;color:var(--ink-3);
+  border:1px solid var(--rule);border-radius:3px;padding:0 4px}
+.ptl .pf{margin-left:6px;font-family:var(--mono);font-size:11px;color:var(--seal)}
+.ptl .pl{margin-top:3px;font-size:10.5px;color:var(--ink-3);line-height:1.5}
+
+/* ── 卷宗：排名軌跡 ─────────────────────────────────────── */
+.rtlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.rtlist li{display:grid;grid-template-columns:52px 1fr 44px 62px;gap:7px;
+  align-items:center;font-size:11px}
+.rty{font-family:var(--mono);color:var(--ink-3)}
+/* 長條越長代表名次越前面（1 名最長）。 */
+.rtbar{height:7px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.rtbar i{display:block;height:100%;border-radius:4px}
+.rtn{font-family:var(--mono);color:var(--ink-2);text-align:right}
+.rth{font-size:10px}
+/* 三態的顏色與時間軸分頁一致，讓人一眼對得起來。 */
+.rt-hit{background:var(--seal)}      .rth.rt-hit{color:var(--seal)}
+.rt-miss{background:var(--ink-4)}    .rth.rt-miss{color:var(--ink-4)}
+.rt-live{background:var(--warn)}     .rth.rt-live{color:var(--warn)}
+
+/* ── 卷宗：建議書 ───────────────────────────────────────── */
+.memometa{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-bottom:6px}
+.memo{margin:0;padding:10px 11px;background:var(--sunk);border-radius:5px;
+  font-family:var(--sans);font-size:11.5px;line-height:1.75;color:var(--ink-2);
+  white-space:pre-wrap;max-height:320px;overflow:auto}

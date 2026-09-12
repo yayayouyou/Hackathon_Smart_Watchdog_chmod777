@@ -201,6 +201,9 @@ svg.map{width:100%;height:100%;display:block;touch-action:none}
   padding:1px 5px;border-radius:2px;border:1px solid var(--rule)}
 footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel);
   font-size:11px;color:var(--ink-3);line-height:1.55}
+footer .src{display:block;margin-top:5px;padding-top:5px;
+  border-top:1px dashed var(--rule);font-size:10.5px;color:var(--ink-4)}
+footer .src a{color:var(--ink-3)}
 </style>
 
 <div class="app">
@@ -272,6 +275,17 @@ footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel)
     本表為<b>建議查核的優先序</b>，不是違法認定。分數以 2024 年特徵配適、2024–26 裁罰為標籤，
     時序切分實測 AUC 0.640，前 100 名命中率為隨機抽查的 2.17 倍。
     全市 94.8% 的園無公開財報，對這些園而言那是涵蓋範圍限制，不是合規證明。
+    <!-- 靜態版是**單獨散布**的一個檔（Artifact、附件、隨信寄出），所以標註不能
+         只放在 repo 的 markdown 或動態版的頁尾裡——這一份離開 repo 之後，
+         使用者手上只有它。CC-BY 的標註義務跟著檔案走。 -->
+    <span class="src">
+      機構基本資料、裁罰紀錄與收費明細來源：<a
+        href="https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx"
+        target="_blank" rel="noopener">全國教保資訊網</a>（教育部），
+      經 <a href="https://github.com/kiang/ap.ece.moe.edu.tw" target="_blank"
+        rel="noopener">kiang/ap.ece.moe.edu.tw</a> 鏡像取得（江明宗維護，
+      程式碼 MIT、資料 CC-BY）。
+    </span>
   </footer>
 </div>
 

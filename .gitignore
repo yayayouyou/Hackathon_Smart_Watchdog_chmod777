@@ -34,6 +34,9 @@ __pycache__/
 # Notebooks
 .ipynb_checkpoints/
 
+# 鄰縣市陸地輪廓的原始 TopoJSON（5.9 MB，可由 scripts/build_neighbor_land.py 重下載）
+data/external/.cache_tw_towns_*.topo.json
+
 # Runtime snapshot updater coordination/recovery state
 data/external/.snapshot-update.lock
 data/external/.snapshot-update-transaction.json
@@ -50,3 +53,11 @@ data/runtime/
 # 但不進版控——現行版本在 data/extracted/nonprofit_pages/ 裡。
 data/extracted/_pagewise_v1/
 data/extracted/_pagewise_pre_context/
+
+# MCP 客戶端設定：`claude mcp add` 會把 bearer token 明文寫進去。
+# 權杖等同身分，且各人各自發，不該共用也不該進版控。
+# 範本見 .mcp.json.example。
+.mcp.json
+
+# Claude Code 的本機設定（各人自己的 MCP 核准與權限），不進版控。
+.claude/settings.local.json
