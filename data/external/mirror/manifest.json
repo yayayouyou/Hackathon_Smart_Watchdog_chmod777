@@ -1,0 +1,14 @@
+{
+ "manifest_version": 1,
+ "files": {
+  "punish_by_school_ntpc.json": {
+   "source_url": "https://kiang.github.io/ap.ece.moe.edu.tw/data/punish/新北市/",
+   "retrieved_on": "2026-09-12",
+   "byte_length": 413922,
+   "sha256": "5efef85d54a8b0210a8f84d284dfce2e5c8cedf23deaff398ad18954034509dd",
+   "schema_version": "punish-by-school-v1",
+   "school_count": 497,
+   "record_count": 1508
+  }
+ }
+}

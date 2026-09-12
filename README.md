@@ -130,3 +130,16 @@ docs/           架構決策與研究紀錄
 
 開發前先讀 [`CLAUDE.md`](CLAUDE.md)——裡面是已經踩過的坑，
 每一條都對應一個實際發生過的錯誤。
+
+## 資料來源與授權
+
+機構基本資料、裁罰紀錄與收費明細的**原始來源**是
+[全國教保資訊網](https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx)（教育部），
+**取得管道**是 [`kiang/ap.ece.moe.edu.tw`](https://github.com/kiang/ap.ece.moe.edu.tw)
+鏡像（江明宗維護）。上游把兩者分開授權：**程式碼 MIT、資料 CC-BY**，
+而 CC-BY 要求標註到原始來源——那是授權條件，不是禮貌。
+
+為什麼走鏡像而不是官方即時頁面：官方裁罰紀錄**有保存期限會下架**，
+只爬官方會拿到被截斷的標籤，而且它長得像乾淨資料、不會報錯。
+完整的來源與授權對照（含評鑑、採購、公告、界線各自的現況）見
+[`data/external/README.md`](data/external/README.md)。

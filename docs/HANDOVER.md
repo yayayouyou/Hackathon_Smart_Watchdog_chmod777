@@ -12,10 +12,20 @@
 ```bash
 python run.py setup          # 建 venv 裝相依（已存在就跳過）
 cp .env.example .env         # 填憑證，見 docs/ENVIRONMENTS.md
+python run.py seed-users     # ⚠️ 沒有帳號就進不去，見下方
 python run.py bedrock-check  # 決賽當天第一件事
 python run.py frontend
 python run.py serve          # → http://127.0.0.1:8000
 ```
+
+⚠️ **`seed-users` 不可略過。** 動態版有全螢幕登入牆（`webapp/auth.js`），
+沒有帳號時地圖、派工提案、時間軸**一個都看不到**。帳密取自 `.env` 的
+`SEED_INSPECTOR_EMAIL` 與 `SEED_INSPECTOR_PASSWORD`，兩者缺一就不會建帳號
+（腳本會明白說缺什麼，不會預設一組寫死的密碼）。
+
+建表本身是冪等的，`run.py serve` 啟動時也會做一次——所以「登入回 500、
+log 寫 `no such table: user_session`」那個狀況不會再發生。`seed-users`
+多做的是**建帳號**。
 
 `python run.py --list` 列出全部任務。**Mac 與 Windows 指令完全相同。**
 

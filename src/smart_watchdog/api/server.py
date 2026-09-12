@@ -73,6 +73,21 @@ async def _lifespan(app_: FastAPI):
     自訂 lifespan 就不再跑 on_event 的處理器——兩者不能並存。內容與原本那支
     `_startup` 完全相同，只是多包了 MCP 那一層。
     """
+    # 建表。`create_all` 是冪等的，已存在就什麼都不做。
+    #
+    # 為什麼放在這裡而不是只靠 `scripts/seed_users.py`：那支是容器部署路徑
+    # （見 docs/DEPLOY.md），但**本機 `run.py serve` 不會跑它**。結果是在一台
+    # 剛 clone 的機器上，SQLAlchemy 連線時會把 sqlite 檔建出來卻沒有任何表，
+    # 於是 `POST /api/auth/login` 回 **500 Internal Server Error**，
+    # 訊息是 `no such table: user_session`——看起來像資料庫壞了，實際上是沒建過。
+    # 這個情境已經真的發生過（合併後在本機實測）。
+    try:
+        from ..db.session import init_db
+
+        init_db()
+    except Exception as exc:  # noqa: BLE001 - 建表失敗不該讓整個服務起不來
+        print(f"⚠️ 資料表初始化失敗（登入與助理會不可用）：{exc}")
+
     try:
         load_payload()
     except FileNotFoundError as exc:  # keep the server up so /api/health can say why

@@ -97,6 +97,17 @@ Content was rephrased for compliance with licensing restrictions.
 只寫官方端點，別人
 照著去抓會得到不一樣的資料；只寫鏡像，則沒有履行 CC-BY 的標註義務。
 
+**標註出現在三個地方，缺一不可**——因為這三種人看到的東西不一樣：
+
+| 位置 | 給誰看 |
+|---|---|
+| 本檔與 `data/README.md` | 讀 repo 的人 |
+| `webapp/index.html` 頁尾 | 看動態版畫面的人（他不會去讀 markdown）|
+| `frontend/index.html` 頁尾 | 拿到**靜態單檔版**的人 |
+
+靜態版那一份最容易被漏掉：它會離開 repo 單獨散布（Artifact、附件、隨信寄出），
+收到的人手上只有那一個 HTML 檔。標註義務跟著**檔案**走，不是跟著 repo 走。
+
 ### 各份外部資料的來源與授權現況
 
 「待確認」代表我們查不到明文條款，**不是**代表沒有限制。政府網站的公開頁面多半

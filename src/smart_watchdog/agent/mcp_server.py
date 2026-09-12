@@ -89,17 +89,27 @@ def dispatch(name: str, arguments: dict, token: Optional[str]) -> dict:
     裡「查無」「格式不正確」的既有慣例一致，不讓協定層的錯誤把整個呼叫炸掉，
     模型看得到這句話就能自己反應。
     """
-    db = db_session()
+    reg = _registry()
+    # **白名單先查，資料庫後開。** 判斷仍然由 registry 做（它已經是先查白名單
+    # 再查登入），這裡只決定「要不要為了這個名字去開一個 DB session」。
+    #
+    # 理由有二：未註冊的 tool 名沒有理由造成任何資料庫存取；而且在資料表
+    # 還沒建起來的機器上，先連 DB 會讓「拒絕一個不存在的 tool」變成
+    # `OperationalError: no such table: user_session`——錯誤訊息指向資料庫，
+    # 真正的問題卻是有人叫了一個不存在的 tool。這個情境已經真的發生過。
+    known = isinstance(name, str) and name in reg.names()
+    db = db_session() if known else None
     try:
-        user = _resolve(db, token)
+        user = _resolve(db, token) if db is not None else None
         session_id = _mcp_agent_session(db, user) if user else ""
         ctx = ToolContext(db=db if user else None, user=user, view={},
                           session_id=session_id)
-        outcome = _registry().execute(ctx, name, arguments)
+        outcome = reg.execute(ctx, name, arguments)
     except (ToolDenied, ToolInvalid) as exc:
         return {"payload": {"note": str(exc)}, "ui_action": None}
     finally:
-        db.close()
+        if db is not None:
+            db.close()
     return {"payload": outcome.payload, "ui_action": outcome.ui_action}
 
 
