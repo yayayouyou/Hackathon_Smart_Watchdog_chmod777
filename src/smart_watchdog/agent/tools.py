@@ -45,6 +45,12 @@ def _ex():
 
     return explore
 
+
+def _dos():
+    from ..api import dossier
+
+    return dossier
+
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 SKILLS_DIR = pathlib.Path(__file__).resolve().parent / "skills"
 SKILL_NAMES = ("schedule_inspection", "read_memo", "explain_risk",
@@ -212,20 +218,13 @@ def _get_penalties(_ctx: ToolContext, a: InstitutionArgs) -> ToolOutcome:
     p = _point(a.institution_id)
     if not p:
         return _not_found(a.institution_id)
-    df = _penalties()
-    rows = df[df["short_id"] == a.institution_id]
-    items = [{
-        "date": r.date, "article": r.article, "law": r.law,
-        # 非金錢處分的 fine 是空值而不是 0——填 0 等於謊稱罰了零元。
-        "fine": None if _isna(r.fine) else int(r.fine),
-        "sanction_type": r.sanction_type,
-        "actor_role": r.actor_role, "punishment": r.punishment,
-    } for r in rows.itertuples()]
-    items.sort(key=lambda x: str(x["date"]), reverse=True)
-    return ToolOutcome(payload={
-        "institution": p["full"], "count": len(items), "items": items,
-        "note": "受處分角色（負責人／行為人）不同即為不同處分，不可合併計數。",
-    })
+    # 與卷宗畫面走同一支函式——各讀一次 CSV 的那天，就是 agent 講的數字與
+    # 畫面不符的那天。
+    out = _dos().penalties_of(a.institution_id)
+    return ToolOutcome(
+        payload={"institution": p["full"], **out},
+        ui_action={"type": "open_drawer", "institution_id": a.institution_id},
+    )
 
 
 def _isna(v: Any) -> bool:
@@ -427,24 +426,17 @@ class OpenMemoArgs(BaseModel):
 
 
 def _open_memo(_ctx: ToolContext, a: OpenMemoArgs) -> ToolOutcome:
-    """取現行的稽核建議書。檔名是 `<id>_<園名>.txt`，id 就是 8 碼前綴。"""
+    """取現行的稽核建議書。與卷宗畫面走同一支函式。"""
     p = _point(a.institution_id)
     if not p:
         return _not_found(a.institution_id)
-    hits = sorted((ROOT / "data/processed/audit_letters").glob(f"{a.institution_id}_*.txt"))
-    if not hits:
-        return ToolOutcome(payload={
-            "institution": p["full"],
-            "note": "這一所沒有現行建議書。未列入本批建議查核名單的園不會產生建議書。",
-        })
+    out = _dos().memo_of(a.institution_id)
+    if not out.get("exists"):
+        return ToolOutcome(payload={"institution": p["full"], **out})
     return ToolOutcome(
-        payload={
-            "institution": p["full"], "file": hits[0].name,
-            "content": hits[0].read_text("utf-8"),
-            "note": "本文是請求說明，不是違法認定。涵蓋範圍那一段要一併讀。",
-        },
+        payload={"institution": p["full"], **out},
         ui_action={"type": "open_drawer", "institution_id": a.institution_id,
-                   "memo": hits[0].name},
+                   "memo": out["file"]},
     )
 
 

@@ -406,3 +406,37 @@ footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel)
 @media (prefers-reduced-motion:reduce){
   .thinking .dots i{animation:none;opacity:.6}
 }
+
+/* ── 卷宗：裁罰時間軸 ───────────────────────────────────── */
+.ptlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+.ptl{display:grid;grid-template-columns:76px 1fr;gap:9px;padding:7px 0;
+  border-left:2px solid var(--rule);padding-left:11px;margin-left:3px}
+.ptl:hover{border-left-color:var(--seal)}
+.ptl .pd{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.ptl .pb{font-size:12px;color:var(--ink-2)}
+.ptl .pb b{color:var(--ink);font-weight:500}
+.ptl .prole{margin-left:6px;font-size:10.5px;color:var(--ink-3);
+  border:1px solid var(--rule);border-radius:3px;padding:0 4px}
+.ptl .pf{margin-left:6px;font-family:var(--mono);font-size:11px;color:var(--seal)}
+.ptl .pl{margin-top:3px;font-size:10.5px;color:var(--ink-3);line-height:1.5}
+
+/* ── 卷宗：排名軌跡 ─────────────────────────────────────── */
+.rtlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.rtlist li{display:grid;grid-template-columns:52px 1fr 44px 62px;gap:7px;
+  align-items:center;font-size:11px}
+.rty{font-family:var(--mono);color:var(--ink-3)}
+/* 長條越長代表名次越前面（1 名最長）。 */
+.rtbar{height:7px;background:var(--sunk);border-radius:4px;overflow:hidden}
+.rtbar i{display:block;height:100%;border-radius:4px}
+.rtn{font-family:var(--mono);color:var(--ink-2);text-align:right}
+.rth{font-size:10px}
+/* 三態的顏色與時間軸分頁一致，讓人一眼對得起來。 */
+.rt-hit{background:var(--seal)}      .rth.rt-hit{color:var(--seal)}
+.rt-miss{background:var(--ink-4)}    .rth.rt-miss{color:var(--ink-4)}
+.rt-live{background:var(--warn)}     .rth.rt-live{color:var(--warn)}
+
+/* ── 卷宗：建議書 ───────────────────────────────────────── */
+.memometa{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-bottom:6px}
+.memo{margin:0;padding:10px 11px;background:var(--sunk);border-radius:5px;
+  font-family:var(--sans);font-size:11.5px;line-height:1.75;color:var(--ink-2);
+  white-space:pre-wrap;max-height:320px;overflow:auto}

@@ -380,6 +380,15 @@ async function openDossier(id) {
     }
   }
 
+  /* 這三段的資料量比較大（裁罰明細逐筆、名次軌跡七個時點、建議書全文），
+     所以先放佔位、開完卷宗再各自載入——不要讓卷宗等它們。 */
+  h += `<div class="sec" id="penalties-sec"><h4>裁罰紀錄</h4>
+    <div class="insuff">載入中…</div></div>`;
+  h += `<div class="sec" id="ranktrack-sec"><h4>排名軌跡</h4>
+    <div class="insuff">載入中…</div></div>`;
+  h += `<div class="sec" id="memo-sec"><h4>稽核建議書</h4>
+    <div class="insuff">載入中…</div></div>`;
+
   h += realtimeBlock(rt);
   h += `<div class="sec" id="reviews-sec"><h4>Google 地圖評論</h4>
     <div class="insuff">載入中…</div></div>`;
@@ -391,6 +400,94 @@ async function openDossier(id) {
   el.hidden = false;
   $("dclose").onclick = () => { el.hidden = true; state.selected = null; };
   loadReviews(id);
+  loadPenalties(id);
+  loadRankTrack(id);
+  loadMemo(id);
+}
+
+/* ── 卷宗的三段補充 ───────────────────────────────────────
+ * 都是「agent 本來就叫得到、但人點卷宗看不到」的東西。與 agent 的
+ * get_penalties／set_time_machine／open_memo 走同一組端點，所以畫面上的
+ * 數字與 agent 講的話保證一致。 */
+
+function sectionFail(id, msg) {
+  const el = $(id);
+  if (el) el.querySelector(".insuff").textContent = msg;
+}
+
+async function loadPenalties(id) {
+  let r;
+  try { r = await api(`/api/institutions/${id}/penalties`); }
+  catch (e) { return sectionFail("penalties-sec", `載入失敗：${e.message}`); }
+  const sec = $("penalties-sec");
+  if (!sec) return;
+  if (!r.count) {
+    sec.innerHTML = `<h4>裁罰紀錄</h4>
+      <div class="insuff">查無裁罰紀錄。這代表公開資料中沒有，不等於該園無虞。</div>`;
+    return;
+  }
+  /* 時間軸：新到舊。金額為空白代表非金錢處分，**不是罰 0 元**。 */
+  const rows = r.items.map((x) => `
+    <li class="ptl">
+      <span class="pd">${esc(x.date || "—")}</span>
+      <span class="pb">
+        <b>${x.article ? "第 " + x.article + " 條" : esc(x.sanction_type || "處分")}</b>
+        ${x.actor_role ? `<span class="prole">${esc(x.actor_role)}</span>` : ""}
+        <span class="pf">${x.fine == null ? "非金錢處分" : "罰鍰 " + nf(x.fine)}</span>
+        ${x.law ? `<div class="pl">${esc(x.law)}</div>` : ""}
+      </span>
+    </li>`).join("");
+  sec.innerHTML = `<h4>裁罰紀錄 ${r.count} 件</h4>
+    <ul class="ptlist">${rows}</ul>
+    <p class="note">${esc(r.note)}</p>`;
+}
+
+async function loadRankTrack(id) {
+  let r;
+  try { r = await api(`/api/institutions/${id}/ranking`); }
+  catch (e) { return sectionFail("ranktrack-sec", `載入失敗：${e.message}`); }
+  const sec = $("ranktrack-sec");
+  if (!sec) return;
+  const pts = r.points.filter((p) => p.rank != null);
+  if (!pts.length) {
+    sec.innerHTML = `<h4>排名軌跡</h4>
+      <div class="insuff">這一所沒有進入任何時點的排序。</div>`;
+    return;
+  }
+  /* 名次越小越前面，所以長條用「越前面越長」表示。hit 三態要看得出來：
+     命中（後來受罰）、落空、待觀察（觀察期還沒過完，不是沒事）。 */
+  const total = pts[0].total || 1213;
+  const bars = pts.map((p) => {
+    const pct = Math.max(2, (1 - (p.rank - 1) / total) * 100);
+    const cls = p.hit === 1 ? "rt-hit" : p.hit === null ? "rt-live" : "rt-miss";
+    const label = p.hit === 1 ? "後來受罰" : p.hit === null ? "待觀察" : "後來未受罰";
+    return `<li>
+      <span class="rty">${esc(p.as_of.slice(0, 7))}</span>
+      <span class="rtbar"><i class="${cls}" style="width:${pct.toFixed(1)}%"></i></span>
+      <span class="rtn">#${p.rank}</span>
+      <span class="rth ${cls}">${label}</span>
+    </li>`;
+  }).join("");
+  sec.innerHTML = `<h4>排名軌跡</h4><ul class="rtlist">${bars}</ul>
+    <p class="note">${esc(r.note)}</p>`;
+}
+
+async function loadMemo(id) {
+  let r;
+  try { r = await api(`/api/institutions/${id}/memo`); }
+  catch (e) { return sectionFail("memo-sec", `載入失敗：${e.message}`); }
+  const sec = $("memo-sec");
+  if (!sec) return;
+  if (!r.exists) {
+    sec.innerHTML = `<h4>稽核建議書</h4><div class="insuff">${esc(r.note)}</div>`;
+    return;
+  }
+  sec.innerHTML = `<h4>稽核建議書</h4>
+    <div class="memometa">${esc(r.file)}${
+      r.backend ? `　產生方式 ${esc(r.backend)}` : ""}${
+      r.verified === "True" ? "　已通過驗證" : ""}</div>
+    <pre class="memo">${esc(r.content)}</pre>
+    <p class="note">${esc(r.note)}</p>`;
 }
 
 /* Google 評論在開卷宗時才取，不隨 payload 一起送——評分會變，而且只有被點開

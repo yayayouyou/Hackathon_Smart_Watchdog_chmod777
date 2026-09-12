@@ -104,6 +104,7 @@
         <button data-t="chat">助理</button>
         <button data-t="scan">掃描</button>
         <button data-t="timeline">時間軸</button>
+        <button data-t="memos">建議書</button>
       </div>
 
       <div class="pane" id="pane-list">
@@ -144,6 +145,17 @@
         </div>
       </div>
 
+      <div class="pane" id="pane-memos" hidden>
+        <div class="agentbar">
+          <span class="who" id="memocount">—</span>
+        </div>
+        <form class="chatbar" id="memoform">
+          <input id="memoq" placeholder="搜尋園名或行政區，例如：三重" autocomplete="off">
+          <button type="submit">搜尋</button>
+        </form>
+        <div class="list" id="memolist"></div>
+      </div>
+
       <div class="dossier" id="dossier" hidden></div>
     </div>
   </main>
@@ -174,5 +186,6 @@
 <script src="/static/timeline.js"></script>
 <script src="/static/auth.js"></script>
 <script src="/static/agent.js"></script>
+<script src="/static/memos.js"></script>
 </body>
 </html>
