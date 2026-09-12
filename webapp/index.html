@@ -12,15 +12,19 @@
      Noto Sans TC／微軟正黑），斷線只會換字體，不會讓畫面壞掉。 -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/lobby.css">
 </head>
 <body>
-<div class="app">
+<div class="app" id="app">
   <!-- 功能列：切換功能、設派工容量、看全域狀態。地圖自己的設定不放這裡，
        那些綁在地圖上（右上角的「圖層」鈕），因為它們只對地圖有意義。 -->
   <header>
     <h1>稽查派工台<span>新北市教保機構 · 建議查核優先序</span></h1>
 
-    <nav class="tabs" id="tabs">
+    <!-- 分頁列改由左側「樓層索引」取代（見 lobby.js::setRail）。
+         這一列留著但隱藏：既有程式仍靠 data-t 切 pane，拿掉會連帶動到
+         scan.js／timeline.js／memos.js 三處，決賽前不值得。 -->
+    <nav class="tabs" id="tabs" hidden>
       <button data-t="list" aria-pressed="true">派工提案</button>
       <button data-t="chat">查詢</button>
       <button data-t="scan">掃描</button>
@@ -49,6 +53,22 @@
            收進這顆鈕：畫面乾淨，但兩者都還在一次點擊之內。 -->
       <button class="costbtn" id="aboutbtn" aria-expanded="false"
         title="這份排序是什麼、不是什麼，以及資料來源與授權">ⓘ 說明</button>
+      <!-- 身分常駐右上角：agent 的回饋記錄的是「哪一位稽查員認同這條建議」，
+           看得到自己是誰，那句話才有重量。 -->
+      <button class="who-pod" id="whopod" aria-expanded="false" hidden>
+        <span class="who-av">—</span>
+        <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.25">
+          <span class="who-name">—</span>
+          <span class="who-role"></span>
+        </span>
+      </button>
+    </div>
+
+    <div class="pop who" id="whopop" hidden>
+      <h4>稽查員</h4>
+      <div class="whopop-body"></div>
+      <button type="button" id="logout" class="mini" style="margin-top:10px;width:100%"
+        hidden>登出</button>
     </div>
 
     <div class="pop" id="costpop" hidden>載入中…</div>
@@ -73,6 +93,42 @@
   </header>
 
   <main>
+    <!-- 左側樓層索引。室號 01–05 與中庭平面圖上的編號一致——
+         「我在哪一間」在兩個畫面之間必須是連續的，否則進房就等於換了一個 app。 -->
+    <aside class="rail">
+      <button type="button" class="rail-back" id="rail-back">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M9.5 3.5 5 8l4.5 4.5" stroke="currentColor" stroke-width="1.4"
+            stroke-linecap="round" stroke-linejoin="round"/></svg>
+        回中庭
+        <svg width="17" height="16" viewBox="0 0 44 40" style="margin-left:auto" aria-hidden="true">
+          <path d="M9 19c0-2.4 1.4-3.8 3.2-2.9L16 18h12l3.8-1.9C33.6 15.2 35 16.6 35 19v9c0 3.3-2.7 6-6 6H15c-3.3 0-6-2.7-6-6z"
+            fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+          <circle cx="17.5" cy="24" r="2.2" fill="currentColor"/>
+          <circle cx="26.5" cy="24" r="2.2" fill="currentColor"/></svg>
+      </button>
+
+      <div>
+        <div class="rail-eyebrow">樓層索引</div>
+        <div class="rail-list" id="rail-list"></div>
+      </div>
+
+      <!-- 狗窩：守護犬進房後坐的地方。牠從中庭跑進來，就停在這裡。 -->
+      <div class="rail-kennel">
+        <svg width="30" height="28" viewBox="0 0 44 40" aria-hidden="true">
+          <path d="M9 19c0-2.4 1.4-3.8 3.2-2.9L16 18h12l3.8-1.9C33.6 15.2 35 16.6 35 19v9c0 3.3-2.7 6-6 6H15c-3.3 0-6-2.7-6-6z"
+            fill="var(--panel)" stroke="var(--edge)" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M11 17c-1.6-3.2-1.2-6.4.6-6.9 1.7-.5 3.6 1.4 4.4 4.3z" fill="var(--paper)"
+            stroke="var(--edge)" stroke-width="1.6"/>
+          <path d="M33 17c1.6-3.2 1.2-6.4-.6-6.9-1.7-.5-3.6 1.4-4.4 4.3z" fill="var(--paper)"
+            stroke="var(--edge)" stroke-width="1.6"/>
+          <circle cx="17.5" cy="24" r="1.8" fill="var(--edge)"/>
+          <circle cx="26.5" cy="24" r="1.8" fill="var(--edge)"/>
+          <circle cx="22" cy="26.8" r="1.6" fill="var(--seal)"/></svg>
+        <span class="txt">守護犬在這一室<br>說一句話就行</span>
+      </div>
+    </aside>
+
     <div class="mapwrap">
       <div id="map"></div>
 
@@ -253,9 +309,10 @@
     <aside class="agentcol" id="agentcol">
       <div class="agenthead">
         <b class="agenttitle">助理</b>
-        <span class="who" id="whoami">未登入</span>
+        <!-- 「我是誰」與「登出」已移到右上角身分鈕：同一件事在畫面上出現兩次，
+             人會以為它們是兩個不同的東西。 -->
+        <span class="who" id="whoami" hidden></span>
         <button type="button" id="agentclear" class="mini">清除標記</button>
-        <button type="button" id="logout" class="mini" hidden>登出</button>
         <button type="button" id="agentfold" class="mini fold"
                 aria-expanded="true" title="收合助理欄">‹</button>
       </div>
@@ -282,6 +339,35 @@
 
 </div>
 
+<!-- 中庭。登入完先看到這裡，走進某一室才會看到上面那個 app。 -->
+<div class="lobby" id="lobby">
+  <header>
+    <h1>小小守護員<span>稽查中心 · 新北市教保機構</span></h1>
+    <div class="hstat">
+      <span>全市 <b id="lb-all">—</b></span>
+      <span>本批提案 <b id="lb-sel">—</b></span>
+      <span>即時管道 <b id="lb-ch">—</b></span>
+      <button class="who-pod" id="lbwho" aria-expanded="false" hidden>
+        <span class="who-av">—</span>
+        <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.25">
+          <span class="who-name">—</span>
+          <span class="who-role"></span>
+        </span>
+      </button>
+    </div>
+
+    <!-- 大廳自己的身分浮層。內容與 app 那一份相同，由 paintWho 一起填。 -->
+    <div class="pop who" id="lbwhopop" hidden
+      style="position:absolute;right:20px;top:52px;z-index:10">
+      <h4>稽查員</h4>
+      <div class="whopop-body"></div>
+    </div>
+  </header>
+  <div class="planwrap">
+    <svg class="plan" id="plan" role="group" aria-label="稽查中心平面圖"></svg>
+  </div>
+</div>
+
 <div class="authwrap" id="authwrap" hidden>
   <form class="authbox" id="authform">
     <h2>稽查派工台</h2>
@@ -301,5 +387,6 @@
 <script src="/static/auth.js"></script>
 <script src="/static/agent.js"></script>
 <script src="/static/memos.js"></script>
+<script src="/static/lobby.js"></script>
 </body>
 </html>

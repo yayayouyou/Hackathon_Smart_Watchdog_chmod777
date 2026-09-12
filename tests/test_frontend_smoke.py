@@ -83,13 +83,20 @@ def test_element_ids_used_by_scripts_exist_somewhere() -> None:
 
     id 可能在 index.html 裡，也可能是 JS 執行期自己產生的（例如卷宗展開後的
     各段、助理的思考中指示），兩種都算數。
+
+    「自己產生」有三種寫法，全部要認得，否則會把正確的程式碼判成紅燈：
+      1. 樣板字串裡的 `id="x"`（卷宗、掃描面板）
+      2. `el.id = "x"`（助理的思考中指示）
+      3. **屬性物件 `{ id: "x" }`**——`createElementNS` 搭配屬性表時的寫法
+         （中庭的 SVG 節點）。第三種原本沒被認得，中庭一加就紅了，
+         而那些 id 是真的有被建出來的。
     """
     html = _html()
     declared = set(re.findall(r'id="([a-zA-Z0-9_-]+)"', html))
     for path in _our_scripts():
         src = path.read_text(encoding="utf-8")
-        made = set(re.findall(r'id="([a-zA-Z0-9_-]+)"', src))
-        made |= set(re.findall(r'id\s*=\s*"([a-zA-Z0-9_-]+)"', src))
+        made = set(re.findall(r'id\s*=\s*"([a-zA-Z0-9_-]+)"', src))
+        made |= set(re.findall(r'\bid:\s*"([a-zA-Z0-9_-]+)"', src))
         used = set(re.findall(r'\$\("([a-zA-Z0-9_-]+)"\)', src))
         unknown = sorted(used - declared - made)
         assert not unknown, f"{path.name} 取用了不存在也沒產生的 id：{unknown}"

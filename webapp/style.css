@@ -115,13 +115,13 @@ input[type=range]{accent-color:var(--seal)}
  * 收合時把寬度換成 `--agentw-min`（一條細直排），而不是 display:none——
  * 對話內容留在 DOM 裡，展開回來還在原處，串流中途收合也不會斷。 */
 main{display:grid;
-  grid-template-columns:minmax(0,1fr) var(--sidew,390px) 6px var(--agentw,380px);
+  grid-template-columns:214px minmax(0,1fr) var(--sidew,390px) 6px var(--agentw,380px);
   min-height:0}
 @media(max-width:1400px){main{--sidew:330px;--agentw:330px}}
 @media(max-width:1100px){main{--sidew:290px;--agentw:300px}}
 /* 窄螢幕疊成上下：三欄並排在 860px 以下只會三個都不能用。 */
 @media(max-width:860px){
-  main{grid-template-columns:1fr;grid-template-rows:40vh 1fr auto}
+  main{grid-template-columns:1fr;grid-template-rows:auto 40vh 1fr auto}
   .agentgrip{display:none}
   .agentcol{border-left:0;border-top:1px solid var(--rule);max-height:46vh}
 }

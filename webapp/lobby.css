@@ -1,0 +1,108 @@
+/* 中庭與進房過渡。
+ *
+ * 為什麼中庭是一張**建築平面圖**而不是等角俯視或像素場景：平面圖是政府本來
+ * 就在用的語彙（辦公室配置圖、逃生圖），用它做空間感不必解釋，也不會在教育局
+ * 面前被讀成遊戲。房間大小直接等於功能份量——地圖室佔最大一間。
+ *
+ * 為什麼守護犬走不進房間：中庭是牠的活動範圍，`clampToAtrium()` 把牠的目標點
+ * 夾在中庭矩形內。滑過房間只會亮門，不會讓牠跨過牆——**進房是一個決定，不是
+ * 滑鼠飄過去的副作用**。沒有這條，游標經過就進房會讓人不敢移動滑鼠。
+ */
+
+/* ── 中庭 ─────────────────────────────────────────────── */
+/* ⚠️ z-index 要高過 Leaflet。`.app` 沒有 position 也沒有 z-index，所以它
+   **不建立堆疊脈絡**——Leaflet 的 map pane(400)／marker pane(600) 是直接跟
+   中庭在同一個根脈絡裡比大小的。第一版給 40，結果中庭看得到但點不到：
+   點擊全被底下的 leaflet canvas 吃掉。2000 在 .mapui(600) 之上、登入牆
+   (9000) 之下。 */
+.lobby{position:fixed;inset:0;z-index:2000;display:flex;flex-direction:column;
+  background:var(--paper)}
+.lobby[hidden]{display:none}
+
+/* 平面圖用 flex:1 + preserveAspectRatio 自己吃掉剩餘高度，不寫死 900px——
+   寫死的話在筆電上就會上下爆出捲軸（第一版的問題）。 */
+.planwrap{flex:1;min-height:0;position:relative;padding:14px 20px 18px}
+.plan{width:100%;height:100%;display:block}
+
+/* 房間：滑過才亮，點下去才進去 */
+.room-hit{cursor:pointer}
+.room-fill{transition:opacity .18s}
+.room-hit:hover .room-fill{opacity:.16}
+.room-door{opacity:0;transition:opacity .18s}
+.room-hit:hover .room-door{opacity:1}
+.room-enter{opacity:0;transition:opacity .18s}
+.room-hit:hover .room-enter{opacity:1}
+
+/* 縮放群組：進房時把被點的那一間放大到填滿整個舞台 */
+#planzoom{transition:transform .62s cubic-bezier(.45,.02,.2,1)}
+#planrest{transition:opacity .42s ease-out}
+.lobby.zooming #planrest{opacity:0}
+
+/* 守護犬在縮放群組之外：牠要能獨立走位，不跟著房間一起被放大變形 */
+#dog{transition:transform .42s cubic-bezier(.33,.9,.34,1)}
+#dog.walk{transition-duration:.52s}
+
+/* 中庭立牌 */
+.plan-card{fill:var(--panel);stroke:var(--rule);stroke-width:1.4}
+
+/* ── 身分資訊：右上角 ──────────────────────────────────── */
+.who-pod{display:flex;align-items:center;gap:10px;padding:5px 7px 5px 10px;
+  border:1px solid var(--rule);border-radius:20px;background:var(--panel);
+  font-size:12px;color:var(--ink-3);cursor:pointer}
+.who-pod:hover{border-color:var(--ink-4)}
+.who-av{width:26px;height:26px;border-radius:50%;background:var(--seal-soft);
+  border:1px solid var(--seal);display:grid;place-items:center;flex:none;
+  color:var(--seal);font-size:11px;font-weight:600}
+.who-name{color:var(--ink);font-weight:500}
+.who-role{font-size:10.5px;color:var(--ink-4)}
+
+/* 身分浮層：沿用 .pop 的殼，只加內容排版 */
+.pop.who{width:268px}
+.pop.who .row{display:flex;justify-content:space-between;gap:12px;padding:5px 0;
+  font-size:11.5px;border-bottom:1px dashed var(--rule)}
+.pop.who .row:last-of-type{border-bottom:0}
+.pop.who .row b{color:var(--ink);font-weight:500}
+.pop.who .towns{display:flex;gap:4px;flex-wrap:wrap;margin-top:3px}
+.pop.who .towns span{font-size:10.5px;color:var(--ink-2);border:1px solid var(--rule);
+  border-radius:2px;padding:0 5px}
+
+/* ── 室內：左側樓層索引 ────────────────────────────────── */
+.rail{width:214px;flex:none;background:var(--panel);border-right:1px solid var(--rule);
+  display:flex;flex-direction:column;padding:11px 10px;gap:14px;min-height:0}
+.rail-back{display:flex;align-items:center;gap:8px;padding:7px 9px;
+  border:1px solid var(--rule);border-radius:5px;font-size:12px;color:var(--ink-2);
+  background:var(--panel);width:100%}
+.rail-back:hover{border-color:var(--seal);color:var(--ink)}
+.rail-eyebrow{font-size:10px;letter-spacing:.1em;color:var(--ink-4);padding:0 4px 3px}
+.rail-list{display:flex;flex-direction:column;gap:2px}
+.rail-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:5px;
+  font-size:13px;color:var(--ink-2);width:100%;text-align:left}
+.rail-item:hover{background:var(--paper);color:var(--ink)}
+/* 室號留著：它對得上中庭平面圖上的編號，「我在哪一間」才是連續的 */
+.rail-no{font-family:var(--mono);font-size:10px;color:var(--ink-4);width:16px;flex:none}
+.rail-n{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.rail-item[aria-current="true"]{background:var(--seal-soft);color:var(--ink);
+  font-weight:500;box-shadow:inset 0 0 0 1px var(--seal)}
+.rail-item[aria-current="true"] .rail-no{color:var(--seal)}
+
+/* 室內工具：只屬於這一室的控制項。現在那個到處飄的圖層面板，去處就是這裡。 */
+.rail-tools{display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--rule);
+  padding-top:12px;min-height:0;overflow-y:auto}
+
+/* 狗窩：守護犬進房後坐的位置 */
+.rail-kennel{margin-top:auto;display:flex;align-items:center;gap:9px;padding:8px 9px;
+  background:var(--paper);border-radius:5px}
+.rail-kennel .txt{font-size:10.5px;color:var(--ink-3);line-height:1.45}
+
+/* ── 進出房的畫面過渡 ──────────────────────────────────── */
+/* 室內內容在房間放大到底之後才進場：兩件事同時動會看不出「走進去」這件事 */
+.app{transition:opacity .3s ease-out}
+.app.entering{opacity:0}
+
+@media (prefers-reduced-motion:reduce){
+  #planzoom,#planrest,#dog,.app{transition:none}
+}
+
+/* 對話泡泡跟著守護犬移動；進房時淡出（不然它會一路飄進房間） */
+#dogtip{transition:transform .42s cubic-bezier(.33,.9,.34,1),opacity .2s}
+@media (prefers-reduced-motion:reduce){#dogtip{transition:none}}

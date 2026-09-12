@@ -365,7 +365,7 @@
     grip.style.visibility = on ? "hidden" : "";
     document.querySelector("main").style.setProperty(
       "--agentw", on ? "34px" : (restoreWidth() + "px"));
-    try { localStorage.setItem("sw.agentfold", on ? "1" : ""); } catch { /* 同上 */ }
+    try { localStorage.setItem("sw.agentfold", on ? "1" : "0"); } catch { /* 同上 */ }
     // Leaflet 要被告知容器變了，否則地圖會停在舊尺寸、滑鼠座標整個對不上。
     if (SW.state.map) setTimeout(() => SW.state.map.invalidateSize(), 210);
   }
@@ -405,8 +405,16 @@
   const foldBtn = $("agentfold");
   if (foldBtn) {
     foldBtn.addEventListener("click", () => fold(!col.classList.contains("fold")));
-    let folded = false;
-    try { folded = !!localStorage.getItem("sw.agentfold"); } catch { /* 同上 */ }
+    /* 預設收起來。理由是量出來的：視窗 1500 寬時，樓層索引 214 + 派工名單 390
+       + 助理 380 佔掉 990，地圖只剩 510 寬卻有 843 高——新北是橫的，塞進直立
+       的框裡就會浮出一大片海（實測 fitBounds 後緯度跨距 2.1 度）。
+       收起來之後地圖拿到約 856 寬，比例才正常。
+       它仍然是常駐的：右緣那條直排寫著「助理」，點一下就展開。 */
+    let folded = true;
+    try {
+      const saved = localStorage.getItem("sw.agentfold");
+      if (saved !== null) folded = saved === "1";
+    } catch { /* 私密視窗：用預設 */ }
     if (folded) fold(true);
     else document.querySelector("main").style
       .setProperty("--agentw", restoreWidth() + "px");

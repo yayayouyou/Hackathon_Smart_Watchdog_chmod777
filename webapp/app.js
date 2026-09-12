@@ -86,6 +86,17 @@ async function boot() {
   initMap();
   syncLayerCount();
   await refresh();
+
+  // 交棒給中庭。app 預設 hidden，走進某一室才顯示——
+  // 先畫地圖再顯示中庭，是因為 Leaflet 在 display:none 裡量不到容器尺寸，
+  // 必須先在可見狀態初始化過一次，之後 invalidateSize() 才有東西可以量。
+  if (window.Lobby) {
+    window.Lobby.start(state.payload);
+    $("lb-all").textContent = state.points.length.toLocaleString("en-US");
+    $("lb-sel").textContent = state.proposal.length;
+    const rt2 = state.payload.realtime || {};
+    $("lb-ch").textContent = `${rt2.channels_live || 0}/${rt2.channels_total || 0}`;
+  }
 }
 
 /* ── 地圖 ─────────────────────────────────────────────── */
@@ -1144,18 +1155,32 @@ $("aboutbtn").addEventListener("click", () => {
   showAbout($("aboutpop").hidden);
   showCost(false);
   showLayers(false);
+  showWho(false);
+});
+/* 身分浮層。內容由 lobby.js::paintWho 填，這裡只管開關。 */
+function showWho(on) {
+  $("whopop").hidden = !on;
+  $("whopod").setAttribute("aria-expanded", String(on));
+}
+$("whopod").addEventListener("click", () => {
+  showWho($("whopop").hidden);
+  showCost(false);
+  showAbout(false);
+  showLayers(false);
 });
 // 點到別處就收起浮層；Esc 也收。浮層蓋住地圖時要能一鍵回到地圖。
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".mapui")) showLayers(false);
   if (!e.target.closest("#costpop") && !e.target.closest("#costbtn")) showCost(false);
   if (!e.target.closest("#aboutpop") && !e.target.closest("#aboutbtn")) showAbout(false);
+  if (!e.target.closest("#whopop") && !e.target.closest("#whopod")) showWho(false);
 });
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
   showLayers(false);
   showCost(false);
   showAbout(false);
+  showWho(false);
 });
 LAYER_BOXES.forEach((id) =>
   $(id).addEventListener("change", syncLayerCount));
@@ -1202,17 +1227,23 @@ document.querySelectorAll(".ftype").forEach((el) =>
       .map((x) => +x.value));
     drawMarkers();
   }));
+/* 切換右欄顯示哪一個 pane。
+ *
+ * 抽成函式是因為現在有兩個呼叫端：隱藏的分頁列（scan.js／timeline.js 仍靠它
+ * 的 data-t）與左側樓層索引（lobby.js::setRail）。兩邊各寫一份 pane 切換的
+ * 話，第三個呼叫端出現時就會有一個忘了同步。 */
+function showPane(name) {
+  document.querySelectorAll(".tabs button")
+    .forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.t === name)));
+  document.querySelectorAll(".pane").forEach((pane) => {
+    pane.hidden = pane.id !== `pane-${name}`;
+  });
+  if (name === "scan" && window.SWScan) window.SWScan.open();
+  if (name === "timeline") timelineDock(true);
+}
+
 document.querySelectorAll(".tabs button").forEach((b) =>
-  b.addEventListener("click", () => {
-    document.querySelectorAll(".tabs button")
-      .forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-    // 依 data-t 找對應的 pane，加分頁不必再回來改這裡。
-    document.querySelectorAll(".pane").forEach((pane) => {
-      pane.hidden = pane.id !== `pane-${b.dataset.t}`;
-    });
-    if (b.dataset.t === "scan" && window.SWScan) window.SWScan.open();
-    if (b.dataset.t === "timeline") timelineDock(true);
-  }));
+  b.addEventListener("click", () => showPane(b.dataset.t)));
 
 /* 查詢頁籤（main 的 Bedrock planner）。助理頁籤是另一個面板、另一組 id，
    兩者並存：查詢回名單，助理會實際操作畫面。 */
@@ -1230,7 +1261,7 @@ document.querySelectorAll("#pane-chat .eg").forEach((el) =>
 
 /* 掃描分頁（scan.js）需要這些；集中匯出一次，不要讓它去翻全域變數。 */
 window.SW = { api, post, $, esc, nf, state, openDossier, TYPE, drawMarkers, refresh,
-  timelineDock };
+  timelineDock, showPane, fitNTPC };
 
 boot().catch((e) => {
   document.body.insertAdjacentHTML("afterbegin",
