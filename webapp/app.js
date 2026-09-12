@@ -1238,6 +1238,7 @@ function showPane(name) {
   document.querySelectorAll(".pane").forEach((pane) => {
     pane.hidden = pane.id !== `pane-${name}`;
   });
+  if (name === "scan" && window.SWSocial) window.SWSocial.open();
   if (name === "scan" && window.SWScan) window.SWScan.open();
   if (name === "timeline") timelineDock(true);
 }

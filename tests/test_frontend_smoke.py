@@ -159,8 +159,54 @@ def test_scripts_are_loaded_in_dependency_order() -> None:
     """
     html = _html()
     order = re.findall(r'<script src="/static/([a-z]+)\.js"></script>', html)
-    for later, earlier in (("agent", "app"), ("agent", "auth"), ("memos", "app")):
+    for later, earlier in (("agent", "app"), ("agent", "auth"), ("memos", "app"),
+                           ("social", "app")):
         if later in order and earlier in order:
             assert order.index(earlier) < order.index(later), (
                 f"{earlier}.js 必須排在 {later}.js 前面"
             )
+
+
+def test_social_panel_sits_above_the_scan_console() -> None:
+    """輿情室的順序即是使用順序：先看已經收到的，再決定要不要花錢掃。
+
+    `socialwrap` 讀庫是免費的；`scanwrap` 底下每一次執行都會計費。把花錢的
+    那一塊放在上面，等於請人先付錢再看手上有什麼。
+    """
+    html = _html()
+    assert "socialwrap" in html and "scanwrap" in html
+    assert html.index('id="socialwrap"') < html.index('id="scanwrap"')
+
+
+def test_social_panel_is_opened_when_the_room_is_entered() -> None:
+    """`SWSocial.open()` 沒被呼叫時，輿情室上半會永遠停在「載入中…」。
+
+    這是 agent.js 那次事故的同一個形狀：檔案載入了、函式定義了，但沒有人叫它。
+    """
+    app = (WEBAPP / "app.js").read_text(encoding="utf-8")
+    assert "window.SWSocial" in app, "showPane 沒有喚醒社群聲音面板"
+    assert "window.SWSocial = { open }" in \
+        (WEBAPP / "social.js").read_text(encoding="utf-8")
+
+
+def test_the_voice_room_no_longer_advertises_threads_as_pending() -> None:
+    """大廳那句室況是給評審與使用者看的第一行字，接完就不能再說「待接」。"""
+    lobby = (WEBAPP / "lobby.js").read_text(encoding="utf-8")
+    assert "Threads 待接" not in lobby
+
+
+def test_no_signal_is_never_rendered_as_a_pass() -> None:
+    """無訊號不是合格。
+
+    style.css 的 --k0 註解已經把同一件事講過：0 件不等於安全，把它畫成綠色
+    等於發了 730 張合格證。社群面板沿用 .insuff（虛線框、中性色），所以這裡
+    釘住「不要哪天有人順手改成綠色或打勾」。
+
+    只擋**視覺上的合格記號**，不擋字詞：面板裡就有一句「這是『此管道無訊號』，
+    不是『全市無異常』」，那是在否定那個說法。用字詞黑名單會把否定句判成違規，
+    第一版就是這樣紅的——斷言要問的是畫面長什麼樣，不是出現過哪些字。
+    """
+    src = (WEBAPP / "social.js").read_text(encoding="utf-8")
+    assert "insuff" in src, "無訊號的樣式應沿用 .insuff，不要另外發明合格樣式"
+    for banned in ("✓", "✔", "☑", "var(--good)"):
+        assert banned not in src, f"社群面板不得用「{banned}」把無訊號畫成合格"

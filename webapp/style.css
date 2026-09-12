@@ -653,3 +653,56 @@ body.resizing{user-select:none;cursor:col-resize}
 .memo{margin:0;padding:10px 11px;background:var(--sunk);border-radius:5px;
   font-family:var(--sans);font-size:11.5px;line-height:1.75;color:var(--ink-2);
   white-space:pre-wrap;max-height:320px;overflow:auto}
+
+/* ── 社群聲音（輿情室上半）─────────────────────────────────
+   .scanwrap 原本吃滿整個 pane 的高度；上下兩塊並存後改成各自捲動，
+   否則掃描主控台的估價列會被推到看不見的地方。
+   沒有任何一個 class 用綠色或打勾：無訊號不是合格，理由與 --k0 那段
+   註解相同。 */
+#pane-scan{display:flex;flex-direction:column;min-height:0}
+.socialwrap{flex:1 1 55%;min-height:0;overflow-y:auto;padding:12px 14px;
+  border-bottom:1px solid var(--rule)}
+#pane-scan .scanwrap{flex:1 1 45%;min-height:0;height:auto}
+
+.soc-bar{display:flex;align-items:baseline;gap:10px;margin-bottom:9px}
+.soc-title{font-weight:600;font-size:13px}
+.soc-sub{color:var(--ink-3);font-size:11px}
+
+.soc-row{padding:7px 9px;border:1px solid var(--rule);border-radius:3px;
+  margin-bottom:5px;cursor:pointer;background:var(--panel)}
+.soc-row:hover{border-color:var(--ink-4)}
+.soc-row.on{border-color:var(--ink-2)}
+.soc-head{display:flex;align-items:baseline;gap:8px}
+.soc-nm{font-weight:500;flex:1 1 auto;min-width:0;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.soc-town{color:var(--ink-3);font-size:11px;white-space:nowrap}
+/* 計數：主貼文與回覆分開印，中間是「·」不是「+」——見 social.js 檔頭。 */
+.soc-cnt{color:var(--ink-2);font-size:11px;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.soc-day{color:var(--ink-4);font-size:11px;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.soc-latest{color:var(--ink-3);font-size:11.5px;margin-top:3px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.soc-detail{padding:2px 9px 10px}
+.soc-thread{border-left:2px solid var(--rule);padding-left:9px;margin-bottom:9px}
+.soc-post{padding:5px 0}
+/* 回覆縮排。縮排會讓人把回覆讀成「也是在講上面那一園」，所以指名別家的
+   那一則會另外掛 .soc-other 標出去向。 */
+.soc-post.reply{margin-left:14px;border-left:1px solid var(--rule);padding-left:9px}
+.soc-by{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.soc-user{font-size:11px;color:var(--ink-2)}
+.soc-other{font-size:10.5px;color:var(--seal)}
+.soc-link{font-size:10.5px;color:var(--ink-3)}
+.soc-text{font-size:12px;margin-top:2px;white-space:normal;word-break:break-word}
+.soc-empty{color:var(--ink-4)}
+.soc-skip{color:var(--ink-3);font-size:11px;margin-top:5px}
+.soc-rv{font-size:12px;margin-bottom:5px;font-variant-numeric:tabular-nums}
+.soc-dis{margin-top:11px;color:var(--ink-3);font-size:11px;line-height:1.45}
+.soc-load{color:var(--ink-3);font-size:11.5px;padding:6px 0}
+
+.soc-unattr{margin-top:14px;padding-top:11px;border-top:1px solid var(--rule)}
+.soc-unattr>h4{margin:0 0 4px;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3)}
+.soc-unattr-note{color:var(--ink-3);font-size:11px;margin-bottom:7px;line-height:1.45}
+.soc-why{color:var(--ink-3);font-size:10.5px;margin-top:3px}
