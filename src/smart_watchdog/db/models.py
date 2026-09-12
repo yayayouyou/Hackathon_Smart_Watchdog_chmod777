@@ -58,6 +58,9 @@ class User(Base):
     towns: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
     password_hash: Mapped[str] = mapped_column(Text, nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    # 使用者層記憶。**只由程式寫**（`agent/memory.py::remember`，呼叫點在路由），
+    # 不給 tool 寫——模型能寫進自己下一輪脈絡的東西，就是一條能自我強化的管道。
+    agent_memory: Mapped[dict] = mapped_column(JSON, nullable=False, default=dict)
     created_at: Mapped[dt.datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )

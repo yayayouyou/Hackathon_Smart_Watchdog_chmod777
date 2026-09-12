@@ -58,6 +58,7 @@ app.add_middleware(
 _state: dict[str, Any] = {"payload": None, "index": {}}
 
 # 掃描主控台與證據端點。在此掛載而非讓子模組匯入 server，避免循環匯入。
+from . import agent as _agent  # noqa: E402
 from . import auth as _auth  # noqa: E402
 from . import explore as _explore  # noqa: E402
 from . import scan as _scan  # noqa: E402
@@ -65,6 +66,7 @@ from . import scan as _scan  # noqa: E402
 app.include_router(_scan.router)
 app.include_router(_explore.router)
 app.include_router(_auth.router)
+app.include_router(_agent.router)
 
 
 def load_payload(path: pathlib.Path = PAYLOAD_PATH) -> dict[str, Any]:
