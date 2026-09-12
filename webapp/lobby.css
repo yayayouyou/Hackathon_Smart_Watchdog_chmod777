@@ -34,11 +34,38 @@
 .room-hit:focus-visible .room-fill{stroke:var(--seal);stroke-width:3;
   vector-effect:non-scaling-stroke}
 .room-fill{transition:opacity .18s}
-.room-hit:hover .room-fill{opacity:.16}
-.room-door{opacity:0;transition:opacity .18s}
+.room-hit:hover .room-fill{opacity:.24}
+/* 門與「進入」以前是 opacity:0、滑過才出現——等於要先猜到這裡可以點，
+   才找得到可以點的地方。改成常駐但安靜：平常淡，滑過才實心。 */
+.room-door{opacity:.45;transition:opacity .18s}
 .room-hit:hover .room-door{opacity:1}
-.room-enter{opacity:0;transition:opacity .18s}
+.room-enter{opacity:.6;transition:opacity .18s}
 .room-hit:hover .room-enter{opacity:1}
+/* 門墊在滑過時亮起來，游標還沒進到房間就先看得到「入口在這裡」。 */
+.room-mat{opacity:.55;transition:opacity .18s}
+.room-hit:hover .room-mat{opacity:.95}
+
+/* 進場提示：五個入口依序亮一下再回到常駐狀態，只播一次。
+   第一次看到這張平面圖的人不會知道整格都可以點；常駐的「進入」解決了
+   「找不找得到」，這個依序的動作解決「會不會注意到」。
+   用 CSS animation 而不是 JS 計時器：不佔主執行緒，也不會跟進房的
+   FLIP 過渡搶時間。 */
+@keyframes enter-cue{
+  0%,100%{opacity:.6}
+  35%,65%{opacity:1}
+}
+@keyframes mat-cue{
+  0%,100%{opacity:.55}
+  35%,65%{opacity:1}
+}
+/* ⚠️ 動畫掛在 .lobby.cue 底下，由 JS 播完後把 cue 拿掉，而不是用
+   `.zooming{animation:none}` 去擋。CSS 動畫在 animation 屬性被移除又加回來時
+   會**重新播放**：那樣寫的話每次從房間回中庭，五個入口都會再閃一輪。 */
+.lobby.cue .room-enter{animation:enter-cue 1.1s var(--cue-delay,0s) 2 ease-in-out}
+.lobby.cue .room-mat{animation:mat-cue 1.1s var(--cue-delay,0s) 2 ease-in-out}
+@media (prefers-reduced-motion:reduce){
+  .lobby.cue .room-enter,.lobby.cue .room-mat{animation:none}
+}
 
 /* ⚠️ 縮放做在**外層 HTML 元素**上，不是 SVG 的 <g>。
    第一版對 <g> 的 transform 屬性做過渡：那條路徑瀏覽器每一幀都要重新光柵化
