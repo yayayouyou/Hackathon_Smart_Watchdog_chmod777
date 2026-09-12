@@ -35,26 +35,30 @@
   /* `map: true` 才會顯示地圖那一欄。地圖跟輿情、資料、建議書沒有關係，
      擺在那裡只是把畫面切碎——這是使用者明確要求的。
      `src` 是室頭右側的來源膠囊：每一室都要說得出自己的數字哪來的。 */
+  /* 名字直接講這一格做什麼，不再是「○○室」。
+     五個名字連起來就是一次稽查的動線：先看現況、再看手上有什麼資料、
+     接住外面進來的訊號、驗證我們的判斷方法站不站得住、最後產出對外的回覆。
+     id 與 pane 不動——那是程式的接縫，改名只改給人看的字。 */
   const ROOMS = [
-    { id: "map", no: "01", name: "地圖室", pane: "list", accent: "--room-map", map: true,
+    { id: "map", no: "01", name: "全市監看", pane: "list", accent: "--room-map", map: true,
       x: 40, y: 30, w: 505, h: 350, door: { x: 545, y: 210 }, side: "L",
-      desc: "全市 1,213 園 · 點一園看判斷原因與紀錄",
+      desc: "1,213 園的現況總覽與即時監測",
       src: "registry · 快照 2026-08-10" },
-    { id: "data", no: "02", name: "資料室", pane: "data", accent: "--room-data",
+    { id: "data", no: "02", name: "文件控管", pane: "data", accent: "--room-data",
       x: 40, y: 380, w: 505, h: 350, door: { x: 545, y: 550 }, side: "L",
-      desc: "原件、逐頁抽取、依表單分類的數字",
+      desc: "我們掌握的書面資料：原件、逐頁抽取、依表單分類",
       src: "data/extracted · 頁級抽取" },
-    { id: "voice", no: "03", name: "輿情室", pane: "scan", accent: "--room-voice",
+    { id: "voice", no: "03", name: "輿情蒐集", pane: "scan", accent: "--room-voice",
       x: 895, y: 30, w: 505, h: 234, door: { x: 895, y: 150 }, side: "R",
-      desc: "民眾 @標註通報、新聞、PTT；未查證線索",
+      desc: "Threads、新聞、PTT 與民眾 @標註通報；未查證線索",
       src: "threads · realtime · 讀庫即時" },
-    { id: "backtest", no: "04", name: "回測室", pane: "timeline", accent: "--room-back",
+    { id: "backtest", no: "04", name: "分析驗證", pane: "timeline", accent: "--room-back",
       x: 895, y: 264, w: 505, h: 233, door: { x: 895, y: 380 }, side: "R",
-      desc: "每年重訓一次，看當時的排序後來對不對",
+      desc: "掌握哪些數據、跟什麼比對、方法怎麼驗證",
       src: "timeline · 2021–2024" },
-    { id: "letters", no: "05", name: "文書室", pane: "memos", accent: "--room-letters",
+    { id: "letters", no: "05", name: "答詢擬稿", pane: "memos", accent: "--room-letters",
       x: 895, y: 497, w: 505, h: 233, door: { x: 895, y: 613 }, side: "R",
-      desc: "稽核建議書草稿與派工單",
+      desc: "把通報與發現整理成回覆初稿與質詢答復",
       src: "report · 143 份" },
   ];
 
@@ -109,6 +113,9 @@
       // 每一室自己一個 g，進房時把它從 rest 提到 zoom 底下單獨留著
       const g = el("g", { class: "room-hit", "data-room": r.id,
         role: "button", tabindex: "0",
+        // 進場時五個入口依序亮一下。第一次看到這張平面圖的人不會知道
+        // 整格都可以點，而一個只在 hover 才出現的提示要先猜到才找得到。
+        style: `--cue-delay:${.5 + ROOMS.indexOf(r) * .16}s`,
         "aria-label": `${r.no} ${r.name}，${r.desc}` }, roomLayer);
       r.g = g;
       el("rect", { x: r.x, y: r.y, width: r.w, height: r.h, class: "room-fill",
@@ -124,14 +131,21 @@
         "vector-effect": "non-scaling-stroke" }, g);
 
       const tx = r.x + 34;
-      const no = el("text", { x: tx, y: r.y + 48, "font-size": 12,
-        "font-weight": 600, fill: cssv(r.accent), "letter-spacing": 2.4,
+      /* 門牌：教室門口那塊號碼牌。編號從 12px 的小字變成牌面上的主角——
+         遠看先數得出有五格，再讀名字。牌子的顏色就是這一格的顏色。 */
+      const py = r.y + 28;
+      el("rect", { x: tx, y: py, width: 54, height: 54, rx: 15,
+        fill: cssv(r.accent) }, g);
+      const no = el("text", { x: tx + 27, y: py + 37, "font-size": 27,
+        "font-weight": 700, fill: cssv("--panel"), "text-anchor": "middle",
         "font-family": cssv("--mono") }, g);
       no.textContent = r.no;
-      const nm = el("text", { x: tx, y: r.y + 80, "font-size": 24,
+
+      const nx = tx + 70;
+      const nm = el("text", { x: nx, y: py + 26, "font-size": 25,
         "font-weight": 600, fill: cssv("--ink"), "letter-spacing": 2 }, g);
       nm.textContent = r.name;
-      const ds = el("text", { x: tx, y: r.y + 106, "font-size": 12.5,
+      const ds = el("text", { x: nx, y: py + 50, "font-size": 12.5,
         fill: cssv("--ink-3") }, g);
       ds.textContent = r.desc;
 
@@ -150,14 +164,16 @@
       /* 門墊：鋪在中庭那一側，顏色就是這一室的顏色。幼兒園每間教室門口
          都有一塊自己的墊子，這裡它同時是「哪一間在哪裡」的第四個色點。 */
       el("rect", { x: inward > 0 ? dx + 5 : dx - 27, y: dy - 19, width: 22,
-        height: 38, rx: 5, fill: cssv(r.accent), opacity: .55 }, g);
+        height: 38, rx: 5, class: "room-mat", fill: cssv(r.accent) }, g);
       el("path", { d: `M${dx} ${dy - 26} a26 26 0 0 ${inward > 0 ? 1 : 0} ${26 * inward} 26`,
         fill: "none", stroke: cssv(r.accent), "stroke-width": 1.6,
         "stroke-dasharray": "3 3", class: "room-door" }, g);
-      const en = el("text", { x: dx + 34 * inward, y: dy + 4, "font-size": 11,
+      /* 「點這裡進去」原本只有滑過才看得見，等於要先猜到才找得到。
+         改成常駐但安靜：平常半透明，滑過才實心。 */
+      const en = el("text", { x: dx + 34 * inward, y: dy + 4, "font-size": 12,
         fill: cssv(r.accent), "font-weight": 600, class: "room-enter",
         "text-anchor": inward > 0 ? "start" : "end" }, g);
-      en.textContent = "進入 ›";
+      en.textContent = inward > 0 ? "進入 ›" : "‹ 進入";
 
       g.addEventListener("click", () => enter(r.id));
       g.addEventListener("keydown", (e) => {
@@ -184,6 +200,14 @@
     [l1.textContent, l2.textContent] = DOG_LINES[0];
     positionTip();
     startTalking();
+
+    /* 入口提示只播一次：播完就把 cue 拿掉，之後從房間回中庭不會再閃。
+       最後一格的延遲 .5 + 4×.16 = 1.14s，兩輪 2.2s，取 3.6s 收尾。 */
+    const lb = $("lobby");
+    if (lb) {
+      lb.classList.add("cue");
+      setTimeout(() => lb.classList.remove("cue"), 3600);
+    }
   }
 
 
@@ -194,11 +218,11 @@
      「建議查核的優先序」講成「抓到了」。牠可以可愛，不可以下判斷。 */
   const DOG_LINES = [
     ["今天也在巡邏，", "有事叫我一聲。"],
-    ["五間室都開著，", "想先去哪一間？"],
+    ["五個分區都開著，", "想先去哪一個？"],
     ["每個數字我都記得", "是從哪一頁來的。"],
     ["我們排的是查核順序，", "不是誰有罪。"],
     ["慢慢看，", "我不會催你。"],
-    ["不管進哪一間，", "我都跟著你。"],
+    ["不管進哪一格，", "我都跟著你。"],
     ["查不到的時候，", "我會說資料不足。"],
     ["中庭風有點大，", "我先趴一下。"],
   ];

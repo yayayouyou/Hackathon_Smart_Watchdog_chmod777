@@ -477,7 +477,7 @@
       + '<button type="button" class="preset" id="dr-notes">看抽取註記</button>'
       + '<div id="dr-notesbox"></div>'
       + "<h4>外部佐證</h4>"
-      + '<div class="insuff">裁罰、登記與界線快照在輿情室與地圖室。</div>';
+      + '<div class="insuff">裁罰、登記與界線快照在「輿情蒐集」與「全市監看」。</div>';
   }
 
   function railTools() {
