@@ -214,7 +214,22 @@
             <div class="seg" id="pinby">
               <button data-p="type" aria-pressed="true">機構類別</button>
               <button data-p="penalty">歷史裁罰件數</button>
+              <button data-p="realtime">近期公開報導</button>
             </div>
+          </div>
+
+          <!-- 第二種稽核標準：不是訓出來的排序，是「現在正在發生什麼」。
+               這一層畫的是有幾家媒體在談、多久以前談的——都是既有的公開事實，
+               所以它可以上地圖。它不做回測驗證：一則「教育局已開罰 39 萬」的
+               報導不是預測，那筆裁罰就是報導本身在講的事。 -->
+          <div class="grp" id="rt-grp" hidden>
+            <h2>近期公開報導</h2>
+            <div class="legend rt" id="rt-legend"></div>
+            <p class="note">新聞／PTT／Threads 的<b>未查證線索</b>，
+              由模型分類事件類別；<b>不寫入風險分數</b>、不做回測。<br>
+              分數＝各則新鮮度相加（7 日 1.0／30 日 0.6／90 日 0.3／一年 0.1），
+              例行報導不計。<br>
+              ⚠️ 沒有報導<b>不等於</b>沒有問題——多數園從來不會上新聞。</p>
           </div>
 
           <!-- 這一層畫的是主管機關**已經開罰**的公開紀錄，不是我們算的分數。
@@ -300,6 +315,13 @@
       <div class="pane" id="pane-list">
         <div class="listnote" id="listnote" hidden>
           助理篩選中 · <button type="button" id="listclear">顯示全部</button>
+        </div>
+        <!-- 兩套稽核標準疊在同一份清單上：下面的名次是訓練出來的優先序，
+             上面這幾家是這幾天被公開報導點名的。後者不改前者的分數，
+             只是把它們提到看得到的地方——否則地圖上放大的紅點在清單裡找不到。 -->
+        <div class="listnote rt" id="rtnote" hidden>
+          <b id="rtnote-n">0</b> 家近期有公開報導，已提到最上面 ·
+          <span>不影響下方名次</span>
         </div>
         <div class="list" id="list"></div>
       </div>

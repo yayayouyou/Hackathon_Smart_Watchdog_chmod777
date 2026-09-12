@@ -938,3 +938,79 @@ def test_dataroom_class_names_are_namespaced_or_deliberately_reused() -> None:
         f"這些 class 既沒有 dr／mx／ftab 前綴，也不在刻意復用的清單裡：{stray}。"
         "全域 CSS 可能已經有同名規則——加前綴，或確認復用是安全的。"
     )
+
+
+# ── 即時圖層 ──────────────────────────────────────────────────────────
+
+def test_realtime_layer_is_wired_end_to_end() -> None:
+    """按鈕、圖例容器、著色分支三者要同時在。
+
+    這一層是靠 `#pinby` 的按鈕切進來的；少任何一塊的症狀都是「按了沒反應」，
+    不會有錯誤訊息。
+    """
+    html = (WEBAPP / "index.html").read_text(encoding="utf-8")
+    app = (WEBAPP / "app.js").read_text(encoding="utf-8")
+    assert 'data-p="realtime"' in html
+    assert 'id="rt-grp"' in html and 'id="rt-legend"' in html
+    assert 'state.pinBy === "realtime"' in app
+
+
+def test_realtime_quiet_dots_are_smaller_than_the_reported_ones() -> None:
+    """0 級一定要比 1 級小。
+
+    第一版是 [10, 20, 27, 34]：0 級只小一半，而 0 級有 1,210 個、每個帶白邊，
+    疊起來是一片白，真正有報導的三顆淹在裡面。這條釘的是「安靜的要退下去」，
+    不是釘某個特定數字。
+    """
+    app = (WEBAPP / "app.js").read_text(encoding="utf-8")
+    m = re.search(r"const RT_SIZE = \[([^\]]+)\]", app)
+    assert m, "RT_SIZE 不見了"
+    sizes = [int(x.strip()) for x in m.group(1).split(",")]
+    assert len(sizes) == 4, sizes
+    assert sizes == sorted(sizes), f"級數越高要越大：{sizes}"
+    assert sizes[1] >= sizes[0] * 2.5, (
+        f"0 級 {sizes[0]}px 對 1 級 {sizes[1]}px 差距不夠，"
+        "全市視角下有報導的點會被沒報導的淹掉"
+    )
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    assert ".pin.rt-t0{" in css, "0 級沒有自己的樣式，白邊會照畫"
+
+
+def test_the_legend_thresholds_match_the_code_that_computes_them() -> None:
+    """圖例上印的門檻要等於 payload 真的在用的門檻。
+
+    圖例寫「≥2.0 正在發酵」而程式切在 1.5，比沒有圖例更糟——看的人會拿一套
+    不存在的規則去解釋畫面。第一版圖例寫的是「近 30 日多則」，那是在描述一個
+    程式沒在做的規則（分數是則數 × 新鮮度，一年內六則也會到 0.6）。
+    """
+    py = (ROOT / "src/smart_watchdog/api/payload.py").read_text(encoding="utf-8")
+    m = re.search(r"tier = 3 if score >= ([\d.]+) else 2 if score >= ([\d.]+)", py)
+    assert m, "_heat 的分級寫法變了，圖例要跟著改"
+    t3, t2 = m.group(1), m.group(2)
+
+    app = (WEBAPP / "app.js").read_text(encoding="utf-8")
+    tiers = re.search(r"const tiers = \[(.+?)\];", app, re.S)
+    assert tiers, "圖例的 tiers 不見了"
+    assert f'"≥{t3}"' in tiers.group(1), f"圖例沒印 ≥{t3}"
+    assert f'"≥{t2}"' in tiers.group(1), f"圖例沒印 ≥{t2}"
+
+    # 新鮮度權重同理：說明文字裡的四個數字要來自 _RECENCY。
+    rec = re.search(r"_RECENCY = \(\((.+?)\)\)", py)
+    assert rec, "_RECENCY 不見了"
+    weights = re.findall(r"\d+,\s*([\d.]+)", "((" + rec.group(1) + "))")
+    html = (WEBAPP / "index.html").read_text(encoding="utf-8")
+    note = html[html.index('id="rt-grp"'):html.index('id="rt-grp"') + 1400]
+    for w in weights:
+        assert w in note, f"說明沒印新鮮度權重 {w}"
+
+
+def test_the_realtime_layer_never_claims_to_be_a_risk_score() -> None:
+    """用詞界線。這一層畫的是公開報導，不是我們算出來的分數。
+
+    `aws-architecture.md` §6.5 禁止的正是把個別機構的風險分數畫到圖上，
+    所以這一層的說明必須自己講清楚它不是那個東西。
+    """
+    html = (WEBAPP / "index.html").read_text(encoding="utf-8")
+    blk = html[html.index('id="rt-grp"'):html.index('id="rt-grp"') + 1400]
+    assert "不寫入風險分數" in blk
+    assert "不等於" in blk, "缺「沒有報導不等於沒有問題」這句"

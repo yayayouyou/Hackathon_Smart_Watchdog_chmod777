@@ -549,7 +549,14 @@ def reviews_of(institution_id: str) -> dict:
     # 每開一次就是一次計費請求，而且完全不受任何上限約束。
     from ..realtime import pricing as _pricing
 
-    unit = _pricing.PLACES_WITH_REVIEWS[1]
+    # ⚠️ 單價不等於這一次的成本。Places 每月前 1,000 次是免費的，
+    # `pricing.places_meter()` 已經把它扣掉了——這裡原本直接用單價 0.025，
+    # 於是免費額度內的每一次開卷宗都在本機帳本上記一次錢，讓月上限 US$4
+    # 在大約第 140 次開卷宗時就把自己擋住，而 Google 那邊一毛都還沒收。
+    # 免費額度的計數走 note_call（下面那行），金額走這裡，兩者不可混用。
+    _b = _ledger.budget()
+    unit = _pricing.places_meter(
+        1, used_this_month=_b.places_used_this_month).usd_max
     gate = _ledger.check(unit)
     if not gate["ok"]:
         return {"available": False,
@@ -876,6 +883,79 @@ def institution_social(institution_id: str, live: bool = True,
 # ── 擬定回覆 ──────────────────────────────────────────────────────────
 # 路徑多一段（`/{id}/draft-reply`），所以與上面那支 catch-all GET 不會相撞；
 # 方法也不同。`unattributed` 那個排序陷阱在這裡不成立。
+
+
+def _clean(value: Any) -> str:
+    text = str(value or "").strip()
+    return "" if text.lower() in {"nan", "none", "null", "-"} else text
+
+
+class DraftBriefRequest(BaseModel):
+    """`backend` 不給時自動選（有 Bedrock 走 Bedrock，沒有走樣板）。"""
+
+    backend: Optional[str] = None
+
+
+@router.post("/{institution_id}/draft-brief")
+def draft_brief(institution_id: str, req: DraftBriefRequest) -> dict:
+    """把一所園手上所有的東西統整成一份**內部說明稿**，給承辦人拿去答詢。
+
+    與 `/draft-reply` 是兩份不同的文書，差別不在措辭而在收件人：
+
+        draft-reply  對外回民眾。不得點名、不得複述指控、有可送出的那一段。
+        draft-brief  **對內**給承辦人回局長／處長／議員。寫得出園名與依據，
+                     整份都不對外，所以沒有「可送出」這個概念。
+
+    三件事與那一支一致，因為它們是同一條界線的兩端：
+
+    1. **事實由程式組裝。** 排序、發現數、裁罰件數、外界聲音的則數與日期都由
+       這裡填，模型只寫三段話，而那三段要過 `verify_brief()`——四位數以上且
+       不在來源裡的數字一律退件。答詢稿會被念出來，議場上沒有人能當場查證一個
+       憑空長出來的件數。
+    2. **外界聲音只進來源清單，不進生成段落。** 模型看得到內容（否則寫不出貼題
+       的第一句），但照抄會被閘門攔下——這同時是 prompt injection 的停損點。
+    3. **不入庫、不進分數、不進 payload。** 與回覆草稿同一個不變式：這支端點
+       產出的是文字，不是狀態。
+    """
+    from ..report import brief as _brief
+
+    inst = _institution(institution_id)
+    point = _index().get(inst["id"]) or {}
+    mentions = mentions_of(inst, live=True)
+    voices = [_brief.Voice.from_row(row) for row in (mentions.get("items") or [])]
+
+    facts = _brief.BriefFacts(
+        title=inst["title"],
+        town=inst.get("town", ""),
+        rank=point.get("r"),
+        total=len(_payload().get("points") or []) or None,
+        findings=int(point.get("cf") or 0),
+        penalties=int(point.get("np") or 0),
+        has_financials=bool(point.get("fin")),
+        # `why` 來自 pandas，缺值序列化後是字串 "nan"——照印會在答詢稿上
+        # 出現「進入名單的理由：nan」。
+        tier=_clean(point.get("why")),
+    )
+    kind = (req.backend or "").strip().lower() or (
+        "bedrock" if _brief.available() else "template")
+    result = _brief.draft(facts, voices, backend=_brief.get_backend(kind))
+
+    return {
+        "institution": inst,
+        "voices_used": len(voices),
+        "draft": result.text,
+        "backend": result.backend,
+        "verified": result.verified,
+        "problems": result.problems,
+        "fell_back": result.fell_back,
+        "fallback_reason": result.fallback_reason,
+        "checklist": list(_brief.CHECKLIST),
+        # 前端不得把這份稿畫成「已核定」或任何完成狀態。
+        "approved": False,
+        "note": ("本稿為內部說明稿，未對外發布、未經陳核。"
+                 "所述排序為建議查核的優先序，非違法認定。"),
+        "disclaimer": DISCLAIMER,
+    }
 
 
 class DraftReplyRequest(BaseModel):

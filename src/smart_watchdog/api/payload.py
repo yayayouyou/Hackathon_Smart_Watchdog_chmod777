@@ -325,6 +325,109 @@ def benchmarks(dossier: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+
+#: 事件類別的嚴重度序。兒少安全在最前面不是因為模型說的，是因為幼照法把
+#: 「不當對待」放在最重的一類，而公共化園 63 筆裁罰裡第33條就佔 42 筆。
+CATEGORY_ORDER = ("兒少安全", "營運穩定", "財務收費")
+
+#: 新鮮度權重。同一則報導在三天前與在三年前，對「現在要不要派人」的意義
+#: 完全不同。分級而不是連續衰減，是因為要能對著畫面講清楚為什麼是這個大小。
+_RECENCY = ((7, 1.0), (30, 0.6), (90, 0.3), (365, 0.1))
+
+
+def _label_key(row) -> str:
+    from ..realtime import news_classify
+
+    return news_classify.key_for(str(row.channel), str(row.url),
+                                 str(row.headline)[:180])
+
+
+def _news_labels() -> dict[str, dict]:
+    """讀分類標籤。兩份都讀，順序有意義。
+
+    `data/external/news_labels_public.jsonl` 是進版控的那一份（只有標籤與
+    provenance，沒有任何一個字的內文——`scripts/export_news_labels.py` 產生）。
+    `data/runtime/news_labels.jsonl` 是本機跑分類留下的完整紀錄，整個
+    `data/runtime/` 都 gitignore，因為那裡面留著送進模型的標題節錄。
+
+    **後者蓋前者**：在這台機器上重跑過分類的人，看到的要是自己剛跑出來的結果，
+    不是版控裡的舊快照。兩份都沒有就回空——那代表「尚未分類」，
+    不是「沒有問題」。
+    """
+    import json
+
+    root = pathlib.Path(__file__).resolve().parents[3]
+    out: dict[str, dict] = {}
+    for path in (root / "data/external/news_labels_public.jsonl",
+                 root / "data/runtime/news_labels.jsonl"):
+        if not path.exists():
+            continue
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except ValueError:
+                continue
+            if row.get("key"):
+                out[row["key"]] = row
+    return out
+
+
+def _heat(items: list[dict]) -> dict:
+    """近期公開報導的量與新鮮度。
+
+    ⚠️ **這不是風險分數，也不是我們算的排序。** 它數的是「有幾家媒體在談、
+    多久以前談的」——兩者都是既有的公開事實，所以它可以上地圖
+    （`docs/architecture/aws-architecture.md` §6.5 禁止的是把我們算出來的
+    風險分數畫到圖上）。
+
+    只算**事件報導**與**爭議未定**：例行報導（沿革介紹、招生公告）不是事件，
+    把它算進發酵程度會讓一所園因為被寫了一篇校史而變大點。尚未分類的一律
+    計入但標出來——不確定時不可以當成沒事。
+
+    即時這一層**不做回測驗證**。它回答的不是「誰未來會違規」而是「現在正在
+    發生什麼」；一則「教育局已開罰 39 萬」的報導不是預測，那筆裁罰就是報導
+    本身在講的事，拿它去測預測力是範疇錯誤。判準是事件的類別與量，
+    不是提升倍數。
+    """
+    import datetime as dt
+
+    today = dt.date.today()
+    score = 0.0
+    counted = 0
+    unclassified = 0
+    cats: dict[str, int] = {}
+    latest = ""
+    for m in items:
+        rk = m.get("rk") or ""
+        if rk == "例行報導":
+            continue
+        if not rk:
+            unclassified += 1
+        try:
+            d = dt.date.fromisoformat(str(m.get("d"))[:10])
+        except ValueError:
+            continue
+        days = (today - d).days
+        w = next((v for lim, v in _RECENCY if days <= lim), 0.0)
+        if w == 0.0:
+            continue
+        score += w
+        counted += 1
+        cat = m.get("cat") or ""
+        if cat in CATEGORY_ORDER:
+            cats[cat] = cats.get(cat, 0) + 1
+        latest = max(latest, str(m.get("d") or ""))
+
+    top = min(cats, key=lambda c: CATEGORY_ORDER.index(c)) if cats else ""
+    # 三級，門檻寫死並印在圖例上：看得到的東西要說得出為什麼是這個大小。
+    tier = 3 if score >= 2.0 else 2 if score >= 0.6 else 1 if score > 0 else 0
+    return {"n": counted, "score": round(score, 2), "tier": tier,
+            "cat": top, "latest": latest, "unclassified": unclassified,
+            "total": len(items)}
+
+
 def realtime(mentions, stamp: dict[str, Any]) -> dict[str, Any]:
     """Live-channel mentions, grouped by 園, with the sweep's own provenance.
 
@@ -335,12 +438,18 @@ def realtime(mentions, stamp: dict[str, Any]) -> dict[str, Any]:
     Two of five channels are live; the other three are waiting on a key, an app
     review, or a procurement, and the panel says so.
     """
+    labels = _news_labels()
     by_institution: dict[str, list[dict]] = {}
     for r in mentions.itertuples(index=False):
+        lab = labels.get(_label_key(r)) or {}
         by_institution.setdefault(str(r.institution_id)[:8], []).append({
             "ch": str(r.channel), "h": str(r.headline)[:180],
             "u": str(r.url), "d": str(r.published),
             "p": str(r.publisher), "k": str(r.kind),
+            # 分類結果。缺的時候是「尚未分類」——不是「沒有問題」，
+            # 也不是「語氣中性」。前端必須照這個分別顯示。
+            "rk": lab.get("report_kind", ""),
+            "cat": lab.get("event_category", ""),
         })
     for items in by_institution.values():
         items.sort(key=lambda m: m["d"], reverse=True)
@@ -350,6 +459,7 @@ def realtime(mentions, stamp: dict[str, Any]) -> dict[str, Any]:
         "channels_total": stamp.get("channels_total", 0),
         "channels": stamp.get("channels", []),
         "by_institution": by_institution,
+        "heat": {k: _heat(v) for k, v in by_institution.items()},
         "disposition": "待人工研判",
     }
 
