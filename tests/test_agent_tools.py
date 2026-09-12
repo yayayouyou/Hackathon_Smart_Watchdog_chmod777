@@ -524,3 +524,39 @@ def test_each_skill_says_when_to_use_it(reg) -> None:
     for name in SKILL_NAMES:
         body = _run(reg, "load_skill", {"name": name}).payload["content"]
         assert "## 何時用" in body, f"{name} 少了「何時用」"
+
+
+def test_an_institution_can_be_found_by_name_alone(reg) -> None:
+    """使用者講的是「安溪」，而 `open_institution` 要的是 8 碼 id。
+
+    沒有這條路的時候，助理拿到「安溪跟同儕比起來如何？」會去撈**畫面現在那一
+    區**的名單（實測：它沿用上一輪的蘆洲區），撈不到就回「這份索引查不到，
+    屬資料不足」——而安溪是三峽區一所真實存在、而且有公開財報的園。
+    `search_documents` 補不了這個洞：那支搜的是財報內文，不是機構主檔。
+
+    子字串要同時比全名與簡稱：主檔存的是
+    「新北市安溪非營利幼兒園(委託社團法人桃園市教保服務人員協會辦理)」。
+    """
+    hits = _run(reg, "list_institutions", {"name": "安溪"}).payload["items"]
+    assert hits, "用名字找不到安溪"
+    assert all("安溪" in h["title"] for h in hits)
+    assert {h["town"] for h in hits} == {"三峽區"}
+
+    # 名稱與行政區是 AND，不是 OR——不然「安溪」加上錯的區會撈出整區。
+    assert _run(
+        reg, "list_institutions", {"name": "安溪", "town": "蘆洲區"}
+    ).payload["items"] == []
+
+
+def test_the_compare_skill_tells_the_model_how_to_turn_a_name_into_an_id(reg) -> None:
+    """光是有這個參數沒有用——模型要被告知它存在。
+
+    比較情境是唯一一定會遇到「只有名字」的情境（使用者不會背 id），
+    所以這條指示寫在 `compare_institutions` 裡。
+    """
+    del reg
+    skill = (ROOT / "src/smart_watchdog/agent/skills/compare_institutions.md").read_text(
+        encoding="utf-8")
+    assert "list_institutions" in skill and "name" in skill, (
+        "比較情境沒有教模型怎麼把名字換成 id"
+    )

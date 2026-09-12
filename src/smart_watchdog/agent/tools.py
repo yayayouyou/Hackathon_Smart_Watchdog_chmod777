@@ -98,7 +98,8 @@ def _dossier_for(institution_id: str) -> tuple[Optional[str], Optional[dict]]:
 def _not_found(institution_id: str) -> ToolOutcome:
     return ToolOutcome(payload={
         "error": f"查無機構 {institution_id}",
-        "note": "機構 id 是 8 碼十六進位，可先用 list_institutions 取得。",
+        "note": "機構 id 是 8 碼十六進位。只知道名字的話，"
+                "用 list_institutions 的 name 參數換 id。",
     })
 
 
@@ -106,6 +107,11 @@ def _not_found(institution_id: str) -> ToolOutcome:
 
 
 class ListInstitutionsArgs(BaseModel):
+    name: Optional[str] = Field(
+        default=None,
+        description="機構名稱的一部分，例如「安溪」。**使用者只給名字時用這個**"
+                    "把它換成 id，不要自己猜 id，也不要用行政區去撈。可與 town 併用。",
+    )
     town: Optional[str] = Field(
         default=None, description="行政區全名，例如「板橋區」。不給就是全市。"
     )
@@ -139,6 +145,8 @@ def _list_institutions(_ctx: ToolContext, a: ListInstitutionsArgs) -> ToolOutcom
     mentions = payload.get("realtime", {}).get("by_institution", {})
 
     filters: dict = {}
+    if a.name:
+        filters["name"] = a.name
     if a.town:
         filters["town"] = a.town
     if a.type:

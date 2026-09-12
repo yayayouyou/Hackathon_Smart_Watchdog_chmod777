@@ -248,6 +248,12 @@ def resolve_planner(kind: str | None = None, **kwargs) -> Planner:
 
 
 def _matches(p: dict, f: dict, mentions: dict) -> bool:
+    # 名稱是子字串比對，全名與簡稱都算。使用者與模型講的都是「安溪」，
+    # 而主檔存的是「新北市安溪非營利幼兒園(委託社團法人桃園市教保服務人員協會辦理)」。
+    if "name" in f:
+        q = f["name"]
+        if q not in p.get("full", "") and q not in p.get("n", ""):
+            return False
     if "town" in f and p["d"] != f["town"]:
         return False
     if "type" in f and p["t"] != f["type"]:
