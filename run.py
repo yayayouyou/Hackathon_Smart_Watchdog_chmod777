@@ -206,6 +206,12 @@ TASKS = [
          _s("download_mirror_extras.py"), group="外部", needs_network=True),
     Task("sweep", "掃一次即時管道並記錄提及",
          _s("run_realtime_sweep.py"), group="外部", needs_network=True),
+    # 一次性補完，有快取（同一則不重跑），結果寫進 data/runtime/ 的 sidecar，
+    # 不動釘住的快照 CSV。刻意不掛進 mention_poller 的每輪自動分類——那條路是
+    # 為 Threads 通報設計的，新聞快照不是每 5 分鐘變一次。
+    Task("classify-news",
+         "替新聞／PTT 提及補上報導性質與事件類別（--show／--compare 離線可跑）",
+         _s("classify_news_mentions.py"), group="外部", needs_network=True),
     # 標 needs_network 是給人看的前置條件，講的是預設路徑：沒有網路時
     # `-- --fixture tests/fixtures/threads_mentions.json` 一樣跑得完，
     # 決賽現場的主線其實是那一條。

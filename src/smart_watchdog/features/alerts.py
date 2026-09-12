@@ -129,9 +129,7 @@ def attribute(
     # is a substring of it. Keeping the mask minimal means a headline about
     # 新北投 (which is in 台北市) still hits 台北市 on its own terms.
     scanned = text.replace("新北市", "")
-    for city in OTHER_CITIES:
-        if city in scanned:
-            return Attribution(None, "", f"標題提及其他縣市（{city}），不予歸屬", False)
+    other_city = next((c for c in OTHER_CITIES if c in scanned), "")
 
     hits: list[tuple[dict, str, bool]] = []
     for inst in institutions:
@@ -150,6 +148,9 @@ def attribute(
             hits.append((inst, core, False))
 
     if not hits:
+        if other_city:
+            return Attribution(
+                None, "", f"標題提及其他縣市（{other_city}），不予歸屬", False)
         return Attribution(None, "", "標題未以機構名稱形式出現可辨識名稱", False)
 
     ids = {inst["id"] for inst, _, _ in hits}
@@ -161,6 +162,26 @@ def attribute(
     inst, name, is_full = hits[0]
     town = str(inst.get("town", "")).replace("區", "")
     corroborated = bool(town and town in text)
+
+    # 跨縣市否決（規則 4）現在**排在候選比對之後**，而且只有在本文沒有用行政區
+    # 佐證任何一所新北的園時才生效。
+    #
+    # 它原本是第一道閘門，用來擋「何嘉仁幼兒園又被抓！南港分校…北市府罰84萬」
+    # ——連鎖園在多個縣市有分校，光憑名稱無從分辨是哪一家的事。那個理由在
+    # 「本文同時寫出了行政區」時就不成立了：「板橋的○○幼兒園」已經指明是
+    # 哪一家，另一個縣市是被拿來對比的、不是事件所在地。
+    #
+    # 這個洞是真實貼文暴露的：一位家長寫「台北市那則新聞，名字跟板橋的○○
+    # 幼兒園好像，到底是不是同一家」——那**正是**本模組說明開頭引的
+    # 「衰被誤認虐童！林口幼兒園急澄清」那個情境，而舊規則把它擋在門外。
+    #
+    # 何嘉仁那則仍然拒配：文中沒有出現該園登記的行政區（新店），
+    # corroborated 為 False，否決照樣生效。
+    if other_city and not corroborated:
+        return Attribution(
+            None, name,
+            f"標題提及其他縣市（{other_city}）且未以行政區佐證，不予歸屬", False)
+
     return Attribution(
         inst["id"], name,
         "標題出現機構全名" if is_full else "標題以機構名稱形式出現可辨識名稱",

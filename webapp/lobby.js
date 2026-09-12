@@ -256,6 +256,8 @@
     if (tipTimer) { clearInterval(tipTimer); tipTimer = null; }
   }
 
+  /* 提示泡泡已移除（使用者要求）。三處呼叫點都有 null 檢查，所以這支留成
+     無操作而不是刪掉——泡泡要回來時只需要重建那個 <g id="dogtip">。 */
   function positionTip() {
     const t = $("dogtip");
     if (!t) return;
@@ -633,6 +635,19 @@
     });
   }
 
+  /* 換到另一室，不經過中庭。樓層索引的按鈕走這條，程式（social.js 把草稿
+     送進文書室）也走這條——各寫一份的話，其中一份遲早會忘了換室頭或樓層索引，
+     於是畫面顯示「03 輿情室」而內容是文書室的。
+     已經在那一室就什麼都不做；還在中庭的話走完整進場動畫。 */
+  function go(id) {
+    const r = ROOMS.find((x) => x.id === id);
+    if (!r) return false;
+    // 合併時兩邊各自寫了一支換室：這一支吃房間 id（樓層索引與 social.js 用），
+    // `goto_` 吃 pane 名稱（助理用）。實作只留一份——原本這一支在室與室之間
+    // 切換時也會重算地圖視野，而那會把助理剛飛到蘆洲區的畫面拉回全市。
+    return goto_(r.pane);
+  }
+
   /* ── 左側樓層索引 ──────────────────────────────────── */
   function setRail(current) {
     const list = $("rail-list");
@@ -760,6 +775,6 @@
     return true;
   }
 
-  window.Lobby = { start, enter, back, paintWho, goto: goto_,
+  window.Lobby = { start, enter, go, back, paintWho, goto: goto_,
     get where() { return state.where; } };
 })();

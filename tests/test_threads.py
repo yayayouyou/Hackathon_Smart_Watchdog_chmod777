@@ -17,6 +17,11 @@
 `tests/fixtures/threads_mentions.json` 與 `threads_replies.json` 同時是決賽離線
 demo 的資料來源，所以它們的行為也在這裡測：demo 當天跑出什麼，測試裡就先跑過
 什麼。
+
+那兩份 fixture 裡的貼文是我們編的，所以它們**只准指名示範機構**
+（`data/demo/institutions_demo.csv`，說明見 `realtime/demo_data.py`）。編造的
+投訴掛在真實機構名下就是捏造指控，而它在畫面上與真通報長得一模一樣。
+「一個真實園名都不准出現」這條由 `tests/test_demo_data.py` 釘住。
 """
 
 from __future__ import annotations
@@ -37,21 +42,26 @@ from smart_watchdog.scrape import threads
 
 FIXTURE = pathlib.Path(__file__).resolve().parent / "fixtures" / "threads_mentions.json"
 REPLIES = pathlib.Path(__file__).resolve().parent / "fixtures" / "threads_replies.json"
-#: fixture 裡那則可歸屬的主貼文（蘆洲文德），與它底下那一串。
+#: fixture 裡那則可歸屬的主貼文（板橋示範一號），與它底下那一串。
 ROOT = "17849251066204813"
-WENDE = "00957c83-0061-4581-a587-97629968f371"
-GINEER = "a1"                           # 回覆裡指名的另一所園（新莊吉尼爾）
-NO_NAME_ROOT = "17851990341270562"      # 跨縣市規則拒配的那則主貼文
+DEMO1 = "demo0001-0000-0000-0000-000000000001"
+DEMO2 = "demo0002-0000-0000-0000-000000000002"   # 回覆裡指名的另一所示範園
+# 真正認不出園名的那則：發文者自己寫了「不想寫出園名怕被認出來」。
+# 原本指向那則跨縣市貼文，但規則 4 放寬之後它會正確歸屬到示範一號
+# （「板橋的」佐證了行政區），不再是「拒配的主貼文」的樣本。
+# 這一則不一樣——它認不出來是因為**發文者刻意不寫**，任何規則都救不了，
+# 所以它是「繼承不到」這組測試該用的固定樣本。
+NO_NAME_ROOT = "17850447712389105"
 
 # 歸屬用的機構清單就地造，不讀 CSV：測的是規則，不是那份檔案今天長什麼樣。
-# 文德有兩所同名（私立文德在蘆洲、板橋區文德國小附幼），兩所都放進來，
-# 才測得到「文德幼兒園」只會命中前者。
+# 第二筆是刻意造的同名園（示範一號國小附幼在板橋），兩所都放進來，才測得到
+# 「示範一號幼兒園」只會命中前者——真實主檔裡「文德」正是這個形狀（私立文德
+# 與板橋區文德國小附幼），但示範資料不拿真實園名來測。
 INSTITUTIONS = [
-    {"id": "00957c83-0061-4581-a587-97629968f371",
-     "title": "新北市私立文德幼兒園", "town": "蘆洲區"},
+    {"id": DEMO1, "title": "新北市私立示範一號幼兒園", "town": "板橋區"},
     {"id": "b7e480b2-8345-4775-b44f-32a3ec85fb80",
-     "title": "新北市板橋區文德國民小學附設幼兒園", "town": "板橋區"},
-    {"id": "a1", "title": "新北市私立吉尼爾幼兒園", "town": "新莊區"},
+     "title": "新北市板橋區示範一號國民小學附設幼兒園", "town": "板橋區"},
+    {"id": DEMO2, "title": "新北市私立範例二號幼兒園", "town": "新莊區"},
 ]
 
 
@@ -160,7 +170,7 @@ def test_fetch_refuses_any_host_but_the_api_because_the_request_carries_a_bearer
 
 def test_headline_skips_the_mention_line_and_the_hashtag_line():
     """@標註與純 hashtag 不帶資訊，但會把 alerts.attribute() 要的那一行擠掉。"""
-    body = "蘆洲的文德幼兒園多收教材費"
+    body = "板橋的示範一號幼兒園多收教材費"
     assert mention_store._headline(f"@ntpc_watchdog\n#教保通報\n{body}") == body
     # 「@標註 後面就接正文」是常見寫法，那一行有內容，不能跳過。
     assert mention_store._headline(
@@ -171,20 +181,30 @@ def test_the_demo_fixture_attributes_the_post_that_names_the_kindergarten():
     """決賽當天跑出來的第一筆就是這一則，所以它先在這裡跑一次。"""
     posts = {p.threads_id: p for p in threads.load_fixture(FIXTURE)}
     att = mention_store.attribute_post(posts["17849251066204813"], INSTITUTIONS)
-    assert att.institution_id == "00957c83-0061-4581-a587-97629968f371"
-    assert att.matched_name == "文德"
-    assert att.corroborated_by_town     # 貼文寫了蘆洲，與主檔的行政區一致
+    assert att.institution_id == DEMO1
+    assert att.matched_name == "示範一號"
+    assert att.corroborated_by_town     # 貼文寫了板橋，與主檔的行政區一致
 
 
-def test_the_fixture_post_naming_another_city_is_refused_by_the_cross_city_rule():
-    """那則貼文問的正是「新聞裡那家是不是我們這家」——猜一次就複製了它擔心的傷害。
+def test_the_fixture_post_naming_another_city_is_attributed_when_the_district_agrees():
+    """那則貼文問的正是「新聞裡那家是不是我們這家」——而它該被我們看見。
 
-    沒有跨縣市規則的話它會歸屬到文德：貼文裡「文德幼兒園」四個字是齊的。
+    第一版斷言它必須被拒配，因為跨縣市否決是 `attribute()` 的第一道閘門：
+    看到「台北市」就結束，根本走不到園名比對。但這則寫的是「**板橋的**示範
+    一號幼兒園」——行政區把哪一家講明了，另一個縣市是拿來對比的、不是事件
+    所在地。
+
+    更要緊的是，這則貼文就是 `features/alerts.py` 模組說明開頭引的那個情境：
+    「衰被誤認虐童！林口幼兒園急澄清」——一位家長擔心自家的園被認錯成新聞裡
+    那一所。當初為了防止那種傷害而訂的規則，反而把我們最該看見的那一種擋在
+    門外。所以規則改成：否決排在候選比對之後，且只在沒有行政區佐證時生效。
+
+    何嘉仁那則（連鎖園、文中沒有出現登記行政區）仍然拒配，見 test_alerts.py。
     """
     posts = {p.threads_id: p for p in threads.load_fixture(FIXTURE)}
     att = mention_store.attribute_post(posts["17851990341270562"], INSTITUTIONS)
-    assert att.institution_id is None
-    assert "台北市" in att.basis
+    assert att.attributed, att.basis
+    assert att.corroborated_by_town, "應由「板橋」佐證行政區才准許歸屬"
 
 
 # ── 入庫 ────────────────────────────────────────────────────────────
@@ -224,12 +244,14 @@ def test_a_mention_we_cannot_attribute_is_still_stored_with_the_reason_why():
     mention_store.record(db, threads.load_fixture(FIXTURE), INSTITUTIONS)
 
     unattributed = [r for r in _rows(db) if r["institution_id"] is None]
-    assert len(unattributed) == 2
+    # 跨縣市那則現在會歸屬（「板橋的」佐證行政區），所以拒配的只剩「刻意不寫
+    # 園名」那一則——那是任何比對規則都救不了的一種，也是人工認園存在的理由。
+    assert len(unattributed) == 1
     assert all(r["attribution_basis"] for r in unattributed)
-    assert any("台北市" in r["attribution_basis"] for r in unattributed)
+    assert any("未以機構名稱形式" in r["attribution_basis"] for r in unattributed)
 
     summary = mention_store.stats(db)
-    assert (summary["total"], summary["attributed"], summary["unattributed"]) == (3, 1, 2)
+    assert (summary["total"], summary["attributed"], summary["unattributed"]) == (3, 2, 1)
     db.close()
 
 
@@ -388,8 +410,8 @@ def _with_thread(db) -> dict:
 def test_a_reply_that_names_another_kindergarten_is_about_that_one_not_the_thread():
     """串是討論的容器，不是主體的容器。
 
-    在文德那串底下說「吉尼爾幼兒園也這樣」的那一則，講的是吉尼爾。把它壓成
-    文德，就是把「討論裡冒出第二家」這條線索改寫成一則附和。
+    在示範一號那串底下說「範例二號幼兒園也這樣」的那一則，講的是範例二號。
+    把它壓成示範一號，就是把「討論裡冒出第二家」這條線索改寫成一則附和。
     """
     db = _db()
     counts = _with_thread(db)
@@ -397,10 +419,11 @@ def test_a_reply_that_names_another_kindergarten_is_about_that_one_not_the_threa
 
     stray = {r["threads_id"]: r for r in mention_store.thread(db, ROOT)
              }["17851122066394518"]
-    assert stray["institution_id"] == GINEER
+    assert stray["institution_id"] == DEMO2
     assert stray["attribution_source"] == mention_store.OWN
     # 複查的人要看得出這則是在誰的串裡講的，所以主貼文那一家也寫進 basis。
-    assert "吉尼爾" in stray["attribution_basis"] and "文德" in stray["attribution_basis"]
+    assert ("範例二號" in stray["attribution_basis"]
+            and "示範一號" in stray["attribution_basis"])
     # 呼叫端要能把這件事印出來，而不是自己去比對 institution_id。
     assert [o["threads_id"] for o in counts["named_others"]] == ["17851122066394518"]
     db.close()
@@ -414,7 +437,7 @@ def test_a_reply_that_names_nobody_inherits_the_thread_it_is_sitting_in():
 
     plus_one = {r["threads_id"]: r for r in mention_store.thread(db, ROOT)
                 }["17851120844172396"]
-    assert plus_one["institution_id"] == WENDE
+    assert plus_one["institution_id"] == DEMO1
     assert plus_one["attribution_source"] == mention_store.INHERITED
     assert ROOT in plus_one["attribution_basis"]
     db.close()
@@ -433,7 +456,7 @@ def test_a_cram_school_is_not_a_childcare_institution_so_the_reply_inherits():
     row = {r["threads_id"]: r for r in mention_store.thread(db, ROOT)
            }["17851123177405629"]
     assert row["attribution_source"] == mention_store.INHERITED
-    assert row["institution_id"] == WENDE
+    assert row["institution_id"] == DEMO1
     db.close()
 
 
@@ -460,12 +483,13 @@ def test_a_reply_with_a_name_still_wins_when_the_root_has_none_to_inherit():
     counts = mention_store.record_replies(
         db, NO_NAME_ROOT,
         threads.parse(_payload(
-            _row(id="x2", text="我講的是蘆洲的文德幼兒園，不是新聞那家", is_reply=True))),
+            _row(id="x2", text="我講的是板橋的示範一號幼兒園，不是新聞那家",
+                 is_reply=True))),
         INSTITUTIONS)
 
     assert counts["attributed_own"] == 1
     row = mention_store.thread(db, NO_NAME_ROOT)[1]
-    assert row["institution_id"] == WENDE
+    assert row["institution_id"] == DEMO1
     assert row["attribution_source"] == mention_store.OWN
     assert "主貼文未歸屬" in row["attribution_basis"]
     db.close()

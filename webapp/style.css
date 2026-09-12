@@ -4,7 +4,7 @@
      讓表單控制項、捲軸、預設連結色也一起走淺色——沒有它，深色系統的
      使用者會拿到深色的 <input> 配淺色頁面。 */
   color-scheme:light;
-  --ink:#14202A; --ink-2:#3D4E5C; --ink-3:#6B7C8A; --ink-4:#93A2AE;
+  --ink:#14202A; --ink-2:#3D4E5C; --ink-3:#55656F; --ink-4:#5E6C77;
   --paper:#EFF3F5; --panel:#FFFFFF; --sunk:#E6EDF0; --rule:#CFD9E0;
   --pub:#2A78D6; --np:#EB6834; --prv:#1BAF7A;
   /* 行政區優先度色階：單一色相由淺到深（稽查紅家族）。這是「建議查核密度」
@@ -81,7 +81,7 @@
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
-  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
 input{font:inherit}
 :focus-visible{outline:2px solid var(--seal);outline-offset:2px}
@@ -90,26 +90,26 @@ input{font:inherit}
 .app{display:grid;grid-template-rows:auto 1fr;height:100vh;height:100dvh}
 header{position:relative;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
   padding:8px 18px;border-bottom:1px solid var(--rule);background:var(--panel)}
-h1{margin:0;font-size:15px;font-weight:600;white-space:nowrap}
-h1 span{color:var(--ink-3);font-weight:400;margin-left:9px;font-size:12px}
-.hstat{display:flex;align-items:center;gap:18px;margin-left:auto;font-size:13px;
+h1{margin:0;font-size:18px;font-weight:600;white-space:nowrap}
+h1 span{color:var(--ink-3);font-weight:400;margin-left:9px;font-size:16px}
+.hstat{display:flex;align-items:center;gap:18px;margin-left:auto;font-size:17px;
   color:var(--ink-3)}
 /* 數值一律加粗：這一行上唯一要被讀到的是數字，標籤只是它的名字。 */
-.hstat b{font-family:var(--mono);color:var(--ink);font-weight:600;font-size:15px;
+.hstat b{font-family:var(--mono);color:var(--ink);font-weight:600;font-size:18px;
   font-variant-numeric:tabular-nums}
 
 /* 功能列上的派工容量。數字框與拖桿並存：拖桿用來示範「多一家少一家名單
    怎麼變」，數字框用來輸入真正的月容量。 */
-.capbox{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3);
+.capbox{display:flex;align-items:center;gap:6px;font-size:16px;color:var(--ink-3);
   white-space:nowrap}
 .capbox input[type=number]{width:52px;padding:3px 6px;text-align:right;
   border:1px solid var(--rule);border-radius:3px;background:var(--paper);
-  color:var(--ink);font-family:var(--mono);font-size:12px}
+  color:var(--ink);font-family:var(--mono);font-size:16px}
 .capbox input[type=range]{width:96px}
 input[type=range]{accent-color:var(--seal)}
 
 /* 花費：常駐在功能列，點開看細目 */
-.costbtn{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--ink-3);
+.costbtn{display:flex;align-items:center;gap:5px;font-size:16px;color:var(--ink-3);
   border:1px solid transparent;border-radius:4px;padding:3px 7px}
 .costbtn:hover{border-color:var(--rule);background:var(--paper)}
 .costbtn[aria-expanded="true"]{border-color:var(--rule);background:var(--paper)}
@@ -117,19 +117,19 @@ input[type=range]{accent-color:var(--seal)}
   margin-top:3px}
 .pop{position:absolute;right:18px;top:calc(100% - 4px);z-index:900;width:330px;
   background:var(--panel);border:1px solid var(--rule);border-radius:6px;
-  box-shadow:var(--shadow);padding:12px 14px;font-size:12px;color:var(--ink-2)}
-.pop h4{margin:0 0 8px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  box-shadow:var(--shadow);padding:12px 14px;font-size:16px;color:var(--ink-2)}
+.pop h4{margin:0 0 8px;font-size:15px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink-3);font-weight:600}
 .pop .meter{margin-bottom:10px}
-.pop .mlab{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:3px}
+.pop .mlab{display:flex;justify-content:space-between;font-size:16px;margin-bottom:3px}
 .pop .mlab b{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink)}
 .pop .bar{height:5px;border-radius:3px;background:var(--sunk);overflow:hidden}
 .pop .bar i{display:block;height:100%;background:var(--seal)}
 .pop .bar i.ok{background:var(--good)}
 .pop .led{border-top:1px solid var(--rule);margin-top:10px;padding-top:8px;
-  font-family:var(--mono);font-size:10.5px;color:var(--ink-3);line-height:1.7}
+  font-family:var(--mono);font-size:15px;color:var(--ink-3);line-height:1.7}
 .pop .led span{display:flex;justify-content:space-between;gap:10px}
-.pop .src{margin:8px 0 0;font-size:10.5px;color:var(--ink-4);line-height:1.5}
+.pop .src{margin:8px 0 0;font-size:15px;color:var(--ink-4);line-height:1.5}
 
 /* 三欄：地圖 │ 派工名單 │ 助理。
  *
@@ -161,12 +161,19 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .roomhead{display:flex;align-items:center;gap:10px;padding:9px 18px;
   background:var(--panel);border-bottom:1px solid var(--rule);flex:none;
   box-shadow:inset 0 3px 0 var(--rc, var(--rule))}
-.rh-no{font-family:var(--mono);font-size:12px;font-weight:600;
+/* ⚠️ 這一段曾經是兩份疊在一起的：`1cee42c` 加了配色版的 .roomhead／.rh-*，
+   卻沒刪掉舊版的開頭，留下一行沒有選擇器的
+   `background:…;flex:none}`。那個 `}` 關掉了不存在的區塊，**整份樣式表從那裡
+   斷掉**——後面每一條規則都沒生效，包括登入層的 `.authwrap{position:fixed;
+   z-index:9000}`。於是登入畫面被中庭整片蓋住，全新的瀏覽器根本登不進來。
+   帶著既有 cookie 測不會遇到，所以它躺了好幾個 commit 沒被發現。
+   兩次改動的意圖都保留：配色取 `--rc` 那一版，字級取放大後的那一版。 */
+.rh-no{font-family:var(--mono);font-size:16px;font-weight:600;
   color:var(--rc, var(--ink-3))}
-.rh-name{font-size:17px;font-weight:600}
-.rh-desc{font-size:12.5px;color:var(--ink-3)}
+.rh-name{font-size:20px;font-weight:600}
+.rh-desc{font-size:16px;color:var(--ink-3)}
 /* 來源膠囊永遠在同一個位置：可稽核性是常駐元件，不是註腳。 */
-.rh-src{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3);
+.rh-src{margin-left:auto;font-family:var(--mono);font-size:15px;color:var(--ink-3);
   border:1px solid var(--rule);border-radius:3px;padding:1px 7px;white-space:nowrap}
 @media(max-width:1400px){main{--sidew:330px;--agentw:330px}}
 @media(max-width:1100px){main{--sidew:290px;--agentw:300px}}
@@ -180,39 +187,39 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 }
 
 .grp{display:flex;flex-direction:column;gap:7px}
-.grp>h2{margin:0;font-size:10.5px;font-weight:600;letter-spacing:.1em;
+.grp>h2{margin:0;font-size:15px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;color:var(--ink-3)}
-.opt{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2);
+.opt{display:flex;align-items:center;gap:7px;font-size:16px;color:var(--ink-2);
   padding:2px 0;cursor:pointer}
 .opt input{accent-color:var(--seal);margin:0}
 .opt .sw{width:10px;height:10px;border-radius:50%;flex:none}
-.opt .n{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.opt .n{margin-left:auto;font-family:var(--mono);font-size:15px;color:var(--ink-3)}
 .seg{display:flex;flex-direction:column;border:1px solid var(--rule);border-radius:4px;
   overflow:hidden}
-.seg button{padding:6px 9px;font-size:12px;text-align:left;color:var(--ink-2);
+.seg button{padding:6px 9px;font-size:16px;text-align:left;color:var(--ink-2);
   border-bottom:1px solid var(--rule)}
 .seg button:last-child{border-bottom:0}
 .seg button[aria-pressed="true"]{background:var(--seal-soft);color:var(--ink);font-weight:500}
 .seg button[disabled]{opacity:.45;cursor:not-allowed}
-.note{font-size:11px;color:var(--ink-3);line-height:1.5;margin:0}
+.note{font-size:15px;color:var(--ink-3);line-height:1.5;margin:0}
 .legend{display:flex;flex-direction:column;gap:3px}
-.legend div{display:flex;align-items:center;gap:7px;font-size:11.5px;
+.legend div{display:flex;align-items:center;gap:7px;font-size:16px;
   color:var(--ink-2)}
 .legend i{width:16px;height:10px;border-radius:2px;flex:none;
   border:1px solid #00000018}
-.legend b{margin-left:auto;font-family:var(--mono);font-size:10.5px;
+.legend b{margin-left:auto;font-family:var(--mono);font-size:15px;
   color:var(--ink-3);font-weight:400}
 
 /* 地圖上的圖層控制：收起來只有一顆鈕，展開才佔畫面。放右上角是因為
    Leaflet 的縮放鈕固定在左上角，兩個控制不該擠在同一角。 */
 .mapui{position:absolute;right:12px;top:12px;z-index:600;display:flex;
   flex-direction:column;align-items:flex-end;gap:6px}
-.mapui-btn{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2);
+.mapui-btn{display:flex;align-items:center;gap:6px;font-size:16px;color:var(--ink-2);
   background:var(--panel);border:1px solid var(--rule);border-radius:4px;
   padding:5px 9px;box-shadow:var(--shadow)}
 .mapui-btn:hover{color:var(--ink)}
 .mapui-btn[aria-expanded="true"]{color:var(--ink);border-color:var(--ink-4)}
-.mapui-n{font-family:var(--mono);font-style:normal;font-size:10.5px;color:var(--ink-3);
+.mapui-n{font-family:var(--mono);font-style:normal;font-size:15px;color:var(--ink-3);
   background:var(--sunk);border-radius:8px;padding:0 5px;min-width:16px;text-align:center}
 .mapui-panel{width:206px;max-height:calc(100vh - 220px);overflow-y:auto;
   background:var(--panel);border:1px solid var(--rule);border-radius:6px;
@@ -223,7 +230,7 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .mapwrap{position:relative;min-width:0;min-height:0}
 #map{width:100%;height:100%;background:var(--sunk)}
 .mapbadge{position:absolute;right:12px;bottom:26px;z-index:500;background:var(--panel);
-  border:1px solid var(--rule);border-radius:3px;padding:3px 9px;font-size:11px;
+  border:1px solid var(--rule);border-radius:3px;padding:3px 9px;font-size:15px;
   color:var(--ink-3);box-shadow:var(--shadow);font-family:var(--mono)}
 .leaflet-container{font-family:var(--sans)}
 /* 白色外圈是「疊在圖磚上」的必要條件：沒有它，標記會跟底圖的綠地、
@@ -252,14 +259,14 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
   background:#FFFFFF66}
 .marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{
   background:#FFFFFFF2;color:#14202A;box-shadow:0 0 0 1px #14202a33}
-.marker-cluster div{font-family:var(--mono);font-weight:600;font-size:11.5px}
+.marker-cluster div{font-family:var(--mono);font-weight:600;font-size:16px}
 
 /* right */
 .side{position:relative;display:flex;flex-direction:column;min-height:0;
   background:var(--panel);border-left:1px solid var(--rule)}
 /* 分頁在功能列上，不在右欄裡——右欄之後要讓給 AI 側邊欄。 */
 .tabs{display:flex;gap:2px}
-.tabs button{padding:5px 12px;font-size:12.5px;color:var(--ink-3);border-radius:4px;
+.tabs button{padding:5px 12px;font-size:16px;color:var(--ink-3);border-radius:4px;
   white-space:nowrap}
 .tabs button:hover{color:var(--ink);background:var(--paper)}
 .tabs button[aria-pressed="true"]{color:var(--ink);font-weight:600;
@@ -269,44 +276,47 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .item{display:grid;grid-template-columns:26px 1fr auto;gap:3px 9px;width:100%;
   text-align:left;padding:9px 15px;border-bottom:1px solid var(--rule)}
 .item:hover,.item.sel{background:var(--sunk)}
-.item .ord{font-family:var(--mono);font-size:11px;color:var(--ink-4);padding-top:3px}
-.item .nm{font-weight:500;font-size:13.5px;display:flex;align-items:center;gap:6px}
-.item .rk{font-family:var(--mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
+.item .ord{font-family:var(--mono);font-size:15px;color:var(--ink-4);padding-top:3px}
+.item .nm{font-weight:500;font-size:16px;display:flex;align-items:center;gap:6px}
+.item .rk{font-family:var(--mono);font-size:15px;color:var(--ink-3);white-space:nowrap}
 .item .why{grid-column:2/-1;display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
 .tdot{width:8px;height:8px;border-radius:50%;flex:none}
-.tag{border-radius:2px;padding:0 5px;font-size:10.5px;line-height:1.55;white-space:nowrap}
+.tag{border-radius:2px;padding:0 5px;font-size:15px;line-height:1.55;white-space:nowrap}
 .tag.s{color:var(--seal);background:var(--seal-soft);border:1px solid var(--seal)}
 .tag.w{color:var(--warn);background:var(--warn-soft);border:1px solid var(--warn)}
 .tag.p{color:var(--ink-3);border:1px solid var(--rule)}
+/* 示範資料的標記。虛線框：它不是警示（.tag.w 是），它是「這一筆不是真的」。
+   字級沿用 .tag 的 15px，不再縮小——縮到看不見就等於沒標。 */
+.tag.demo{color:var(--warn);background:var(--warn-soft);border:1px dashed var(--warn)}
 
 /* chat */
 .chatlog{overflow-y:auto;min-height:0;flex:1;padding:14px 15px;display:flex;
   flex-direction:column;gap:12px}
-.msg{font-size:13px;line-height:1.65}
+.msg{font-size:17px;line-height:1.65}
 .msg.me{align-self:flex-end;background:var(--seal-soft);border:1px solid var(--seal);
   color:var(--ink);border-radius:10px 10px 2px 10px;padding:7px 11px;max-width:85%}
 .msg.bot{color:var(--ink-2)}
 .msg.bot p{margin:0 0 7px}
 .msg .sum{color:var(--ink);font-weight:500}
 .egs{display:flex;flex-direction:column;gap:5px;align-items:flex-start}
-.eg{border:1px solid var(--rule);border-radius:14px;padding:4px 11px;font-size:12px;
+.eg{border:1px solid var(--rule);border-radius:14px;padding:4px 11px;font-size:16px;
   color:var(--ink-2);text-align:left}
 .eg:hover{border-color:var(--seal);color:var(--ink)}
 .rows{display:flex;flex-direction:column;gap:1px;margin-top:8px}
 .row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:baseline;
   padding:5px 8px;border-radius:3px;background:var(--sunk);cursor:pointer;
-  font-size:12.5px;text-align:left;width:100%}
+  font-size:16px;text-align:left;width:100%}
 .row:hover{outline:1px solid var(--rule)}
-.row .r{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
-.row .m{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
-.cav{margin-top:9px;font-size:11px;color:var(--ink-3);line-height:1.55;
+.row .r{font-family:var(--mono);font-size:15px;color:var(--ink-3)}
+.row .m{font-family:var(--mono);font-size:15px;color:var(--ink-3)}
+.cav{margin-top:9px;font-size:15px;color:var(--ink-3);line-height:1.55;
   border-left:2px solid var(--rule);padding-left:9px}
-.plan{font-size:10.5px;color:var(--ink-4);font-family:var(--mono);margin-top:6px}
+.plan{font-size:15px;color:var(--ink-4);font-family:var(--mono);margin-top:6px}
 .chatbar{display:flex;gap:7px;padding:10px 12px;border-top:1px solid var(--rule)}
 .chatbar input{flex:1;padding:8px 11px;border:1px solid var(--rule);border-radius:18px;
-  background:var(--paper);color:var(--ink);font-size:13px}
+  background:var(--paper);color:var(--ink);font-size:17px}
 .chatbar button{border:1px solid var(--seal);color:var(--seal);border-radius:18px;
-  padding:0 15px;font-size:13px}
+  padding:0 15px;font-size:17px}
 .chatbar button:hover{background:var(--seal-soft)}
 
 /* dossier */
@@ -314,45 +324,45 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
   flex-direction:column;min-height:0;z-index:20}
 .dhead{padding:13px 16px;border-bottom:1px solid var(--rule)}
 .dhead button{float:right;border:1px solid var(--rule);border-radius:3px;
-  padding:2px 9px;font-size:12px;color:var(--ink-2);background:var(--paper)}
-.dhead h3{margin:0 0 3px;font-size:14.5px;font-weight:600;line-height:1.4;padding-right:56px}
-.dhead .meta{font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
+  padding:2px 9px;font-size:16px;color:var(--ink-2);background:var(--paper)}
+.dhead h3{margin:0 0 3px;font-size:17px;font-weight:600;line-height:1.4;padding-right:56px}
+.dhead .meta{font-size:16px;color:var(--ink-3);font-family:var(--mono)}
 .dbody{overflow-y:auto;min-height:0;flex:1;padding:0 16px 26px}
 .sec{margin-top:17px}
-.sec>h4{margin:0 0 8px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+.sec>h4{margin:0 0 8px;font-size:15px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink-3);font-weight:600}
-.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:12.5px;margin:0}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:16px;margin:0}
 .kv dt{color:var(--ink-3)}
 .kv dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .finding{border-left:3px solid var(--seal);padding:7px 0 7px 11px;margin-bottom:9px}
 .finding.w{border-left-color:var(--warn)}
-.finding .r{font-weight:500;font-size:12.5px}
-.finding .d{font-size:12px;color:var(--ink-2);margin-top:3px;line-height:1.55}
+.finding .r{font-weight:500;font-size:16px}
+.finding .d{font-size:16px;color:var(--ink-2);margin-top:3px;line-height:1.55}
 .quote{margin-top:6px;padding:7px 10px;background:var(--sunk);border-radius:3px;
-  font-size:11.5px;color:var(--ink-2);line-height:1.6;border-left:2px solid var(--rule)}
-.quote i{color:var(--ink-3);display:block;margin-bottom:2px;font-size:10.5px;
+  font-size:16px;color:var(--ink-2);line-height:1.6;border-left:2px solid var(--rule)}
+.quote i{color:var(--ink-3);display:block;margin-bottom:2px;font-size:15px;
   letter-spacing:.07em;font-style:normal}
 .insuff{border:1px dashed var(--rule);border-radius:4px;padding:11px 13px;
-  font-size:12.5px;color:var(--ink-2);line-height:1.6}
+  font-size:16px;color:var(--ink-2);line-height:1.6}
 .insuff b{color:var(--ink)}
-.badge{display:inline-block;font-size:10px;letter-spacing:.05em;color:var(--ink-3);
+.badge{display:inline-block;font-size:15px;letter-spacing:.05em;color:var(--ink-3);
   border:1px solid var(--rule);border-radius:2px;padding:0 5px;margin-left:6px}
 .chbar{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px}
-.chip2{font-size:10.5px;border:1px solid var(--rule);border-radius:2px;padding:1px 6px;
+.chip2{font-size:15px;border:1px solid var(--rule);border-radius:2px;padding:1px 6px;
   color:var(--ink-3);white-space:nowrap}
 .chip2.on{border-color:var(--good);color:var(--good)}
 .rtitem{border-left:3px solid var(--rule);padding:6px 0 6px 10px;margin-bottom:6px}
 .rtitem.k-complaint,.rtitem.k-incident{border-left-color:var(--seal)}
-.rtitem a{color:inherit;text-decoration:none;font-size:12.5px;line-height:1.5;display:block}
+.rtitem a{color:inherit;text-decoration:none;font-size:16px;line-height:1.5;display:block}
 .rtitem a:hover{text-decoration:underline}
-.rtmeta{font-size:10.5px;color:var(--ink-3);font-family:var(--mono);margin-top:2px;
+.rtmeta{font-size:15px;color:var(--ink-3);font-family:var(--mono);margin-top:2px;
   display:flex;gap:8px;flex-wrap:wrap}
 /* ⓘ 說明。頁尾移除後，輸出定位與 CC-BY 標註搬到這裡——兩者都是有約束力的
    內容（前者是專案的三條界線之一，後者是授權條件），只是不再常駐佔畫面。 */
 .pop.about{width:376px;color:var(--ink-3);line-height:1.6}
 .pop.about h4{margin-top:12px}
 .pop.about h4:first-child{margin-top:0}
-.pop.about p{margin:0 0 9px;font-size:11.5px}
+.pop.about p{margin:0 0 9px;font-size:16px}
 .pop.about b{color:var(--ink);font-weight:600}
 .pop.about a{color:var(--ink-2)}
 
@@ -363,78 +373,78 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .scanwrap{padding:12px 14px;overflow-y:auto;height:100%}
 .scanform section{margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
 .scanform section:last-child{border-bottom:0}
-.scanform h3{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.05em;
+.scanform h3{margin:0 0 8px;font-size:16px;font-weight:600;letter-spacing:.05em;
   color:var(--ink-3);text-transform:none}
 .chline{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;align-items:baseline;
   padding:6px 0;cursor:pointer}
 .chline input{grid-row:span 2}
-.chname{font-size:13px;color:var(--ink)}
-.chnote{grid-column:2;font-size:11px;color:var(--ink-3);line-height:1.5}
+.chname{font-size:17px;color:var(--ink)}
+.chnote{grid-column:2;font-size:15px;color:var(--ink-3);line-height:1.5}
 .chline.off{cursor:default;opacity:.65}
-.pendch{margin-top:6px;font-size:11px;color:var(--ink-3)}
+.pendch{margin-top:6px;font-size:15px;color:var(--ink-3)}
 .pendch summary{cursor:pointer;padding:4px 0}
 
 .presets{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:7px}
-.preset{padding:3px 8px;font-size:11px;font-family:var(--sans);cursor:pointer;
+.preset{padding:3px 8px;font-size:15px;font-family:var(--sans);cursor:pointer;
   border:1px solid var(--rule);border-radius:3px;background:var(--paper);color:var(--ink-2)}
 .preset:hover{background:var(--sunk);color:var(--ink)}
 #kw{width:100%;box-sizing:border-box;padding:7px 8px;font-family:var(--mono);
-  font-size:12px;line-height:1.6;border:1px solid var(--rule);border-radius:3px;
+  font-size:16px;line-height:1.6;border:1px solid var(--rule);border-radius:3px;
   background:var(--paper);color:var(--ink);resize:vertical}
-#dist{margin-top:6px;padding:5px 7px;font-family:var(--sans);font-size:12px;
+#dist{margin-top:6px;padding:5px 7px;font-family:var(--sans);font-size:16px;
   border:1px solid var(--rule);border-radius:3px;background:var(--paper);color:var(--ink)}
 
 .scopes .opt{display:grid;grid-template-columns:auto 1fr;gap:1px 7px;
   align-items:baseline;padding:5px 0}
-.scnote{grid-column:2;font-size:11px;color:var(--ink-3);line-height:1.5}
+.scnote{grid-column:2;font-size:15px;color:var(--ink-3);line-height:1.5}
 
 /* 費用：本頁的主角 */
 .costbox{background:var(--sunk);border:1px solid var(--rule);border-radius:4px;
   padding:12px 13px}
 .costhead{display:flex;align-items:baseline;gap:9px;margin-bottom:9px}
-.costnum{font-family:var(--mono);font-size:26px;font-weight:500;color:var(--ink);
+.costnum{font-family:var(--mono);font-size:30px;font-weight:500;color:var(--ink);
   font-variant-numeric:tabular-nums}
-.costnum.free{color:var(--good);font-size:20px}
-.costlbl{font-size:11px;color:var(--ink-3)}
-.costtab{width:100%;border-collapse:collapse;font-size:11px}
+.costnum.free{color:var(--good);font-size:23px}
+.costlbl{font-size:15px;color:var(--ink-3)}
+.costtab{width:100%;border-collapse:collapse;font-size:15px}
 .costtab td{padding:3px 5px 3px 0;vertical-align:top;color:var(--ink-2)}
 .costtab .mode{white-space:nowrap;color:var(--ink-3)}
 .costtab .amt{text-align:right;font-family:var(--mono);white-space:nowrap;
   font-variant-numeric:tabular-nums;color:var(--ink)}
-.costtab .fx{font-family:var(--mono);font-size:10px;color:var(--ink-3);
+.costtab .fx{font-family:var(--mono);font-size:15px;color:var(--ink-3);
   line-height:1.5;padding-left:8px}
 .costtab tr.blocked td{color:var(--warn)}
-.leads{margin:8px 0 0;font-size:11px;color:var(--ink-3);line-height:1.6}
+.leads{margin:8px 0 0;font-size:15px;color:var(--ink-3);line-height:1.6}
 .budgetbar{position:relative;margin-top:10px;height:20px;border-radius:3px;
   background:var(--paper);border:1px solid var(--rule);overflow:hidden}
 .budgetbar .bfill{position:absolute;inset:0 auto 0 0;background:var(--warn-soft)}
 .budgetbar span{position:relative;display:block;padding:3px 7px;font-family:var(--mono);
-  font-size:10px;color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
+  font-size:15px;color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
 
-.runbtn{width:100%;margin-top:9px;padding:10px;font-family:var(--sans);font-size:13px;
+.runbtn{width:100%;margin-top:9px;padding:10px;font-family:var(--sans);font-size:17px;
   font-weight:500;cursor:pointer;border:1px solid var(--seal);border-radius:4px;
   background:var(--seal);color:#fff}
 .runbtn:hover:not(:disabled){filter:brightness(1.08)}
 .runbtn:disabled{cursor:not-allowed;background:var(--sunk);color:var(--ink-4);
   border-color:var(--rule)}
-.scanerr{margin:7px 0 0;padding:7px 9px;font-size:11px;line-height:1.6;
+.scanerr{margin:7px 0 0;padding:7px 9px;font-size:15px;line-height:1.6;
   color:var(--warn);background:var(--warn-soft);border-radius:3px}
 
 /* 任務 */
 .job{margin-top:12px;border:1px solid var(--rule);border-radius:4px;padding:11px 12px}
-.jobhead{display:flex;align-items:baseline;gap:9px;font-size:12px;color:var(--ink-2)}
-.jobhead b{font-size:13px;color:var(--ink)}
+.jobhead{display:flex;align-items:baseline;gap:9px;font-size:16px;color:var(--ink-2)}
+.jobhead b{font-size:17px;color:var(--ink)}
 .jobhead .amt{margin-left:auto;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .job .bar{margin-top:8px;height:2px;background:var(--sunk);overflow:hidden}
 .job .bar i{display:block;height:100%;width:35%;background:var(--seal);
   animation:sweep 1.3s ease-in-out infinite}
 @keyframes sweep{0%{transform:translateX(-100%)}100%{transform:translateX(385%)}}
 @media (prefers-reduced-motion:reduce){.job .bar i{animation:none;width:100%;opacity:.4}}
-.octab{width:100%;margin-top:9px;border-collapse:collapse;font-size:11px}
+.octab{width:100%;margin-top:9px;border-collapse:collapse;font-size:15px}
 .octab td{padding:3px 5px 3px 0;color:var(--ink-2)}
 .octab .st{white-space:nowrap}
 .octab .amt{text-align:right;font-family:var(--mono);white-space:nowrap}
-.octab .ocwhy td{padding:0 0 6px;font-size:10px;color:var(--ink-3);line-height:1.6}
+.octab .ocwhy td{padding:0 0 6px;font-size:15px;color:var(--ink-3);line-height:1.6}
 /* 「沒結果」與「失敗」必須看得出差別 */
 .oc-ok .st{color:var(--good)}
 .oc-empty .st{color:var(--ink-3)}
@@ -442,25 +452,25 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .oc-skipped .st{color:var(--ink-4)}
 
 .mentions{margin-top:12px;border-top:1px solid var(--rule);padding-top:10px}
-.mentions h4{margin:0 0 8px;font-size:12px;font-weight:600;color:var(--ink)}
-.pend{padding:1px 6px;font-family:var(--mono);font-size:10px;font-weight:400;
+.mentions h4{margin:0 0 8px;font-size:16px;font-weight:600;color:var(--ink)}
+.pend{padding:1px 6px;font-family:var(--mono);font-size:15px;font-weight:400;
   color:var(--warn);background:var(--warn-soft);border-radius:2px}
 .mrow{display:grid;grid-template-columns:auto 1fr;gap:8px;padding:8px 0;
   border-bottom:1px solid var(--rule);cursor:pointer}
 .mrow:last-of-type{border-bottom:0}
-.mhead{display:flex;flex-wrap:wrap;gap:7px;align-items:baseline;font-size:11px;
+.mhead{display:flex;flex-wrap:wrap;gap:7px;align-items:baseline;font-size:15px;
   color:var(--ink-3)}
-.mhead .mgo{font-size:12px;color:var(--seal);cursor:pointer;text-decoration:underline;
+.mhead .mgo{font-size:16px;color:var(--seal);cursor:pointer;text-decoration:underline;
   text-underline-offset:2px}
-.mrow p{margin:3px 0;font-size:12px;line-height:1.6;color:var(--ink)}
-.mbasis{font-size:10px;color:var(--ink-3);font-family:var(--mono)}
-.adopt{margin-top:9px;padding:7px 12px;font-family:var(--sans);font-size:12px;
+.mrow p{margin:3px 0;font-size:16px;line-height:1.6;color:var(--ink)}
+.mbasis{font-size:15px;color:var(--ink-3);font-family:var(--mono)}
+.adopt{margin-top:9px;padding:7px 12px;font-family:var(--sans);font-size:16px;
   cursor:pointer;border:1px solid var(--rule);border-radius:3px;background:var(--paper);
   color:var(--ink)}
 .adopt:disabled{cursor:default;color:var(--good);border-color:var(--good)}
 /* 範圍外的命中：看得出來，但不要藏起來——那往往才是最值得看的。 */
 .mrow.oos{opacity:.82}
-.mrow.oos .mhead::after{content:"範圍外";padding:1px 5px;font-size:10px;
+.mrow.oos .mhead::after{content:"範圍外";padding:1px 5px;font-size:15px;
   font-family:var(--mono);color:var(--ink-3);border:1px solid var(--rule);
   border-radius:2px}
 
@@ -473,33 +483,38 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
    左下角一顆小 bar，點開才展開。 */
 .tldock{position:absolute;left:12px;bottom:22px;z-index:600;display:flex;
   flex-direction:column;align-items:flex-start;gap:7px}
-.tlpill{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-2);
+.tlpill{display:flex;align-items:center;gap:7px;font-size:16px;color:var(--ink-2);
   background:var(--panel);border:1px solid var(--rule);border-radius:16px;
   padding:5px 13px 5px 10px;box-shadow:var(--shadow)}
 .tlpill:hover{color:var(--ink)}
 .tlpill[aria-expanded="true"]{color:var(--ink);border-color:var(--ink-4)}
 .tldot{width:7px;height:7px;border-radius:50%;background:var(--seal);flex:none;
   box-shadow:0 0 0 3px var(--seal-soft)}
-.tlpillsub{color:var(--ink-4);font-size:11px}
+.tlpillsub{color:var(--ink-4);font-size:15px}
 /* 寬度用 CSS 變數，跟著右側被佔用的寬度走——寫死的算式在版面改成三欄那天
    就會讓這塊被助理欄蓋住，而且不會有任何錯誤訊息。 */
+/* ⚠️ 這條規則曾經沒有結尾。新舊兩版在某次合併時交錯在一起：新版開了 `{`
+   卻少了後半段與 `}`，接著是一行重複的 .tlpillsub，然後才是舊版。於是這個
+   `{` 一路吞到第 744 行才被一段孤兒的 `}` 關掉——中間 248 行規則全部失效，
+   包括登入層的 `.authwrap{position:fixed;z-index:9000}`。
+   表徵是登入畫面被中庭整片蓋住、完全無法登入，而且瀏覽器不會報任何錯。 */
 .tlbar{position:static;width:min(72vw,720px);
   max-width:calc(100vw - var(--rightcols, 460px));
   background:var(--panel);border:1px solid var(--rule);border-radius:8px;
   box-shadow:var(--shadow);padding:10px 14px 12px}
 @media(max-width:860px){.tlbar{max-width:calc(100vw - 40px)}}
 .tlhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.tlhead b{font-size:13px}
-.tlsub{color:var(--ink-3);font-size:12px;flex:1}
-.tltopsel{font-size:12px;color:var(--ink-2)}
+.tlhead b{font-size:17px}
+.tlsub{color:var(--ink-3);font-size:16px;flex:1}
+.tltopsel{font-size:16px;color:var(--ink-2)}
 .tltopsel select{font:inherit;background:var(--sunk);color:var(--ink);
   border:1px solid var(--rule);border-radius:4px;padding:1px 4px}
-#tloff{font-size:12px;color:var(--ink-3);border:1px solid var(--rule);
+#tloff{font-size:16px;color:var(--ink-3);border:1px solid var(--rule);
   border-radius:4px;padding:2px 8px}
 #tloff:hover{color:var(--ink);border-color:var(--ink-3)}
 
 .tlticks{display:flex;justify-content:space-between;margin:0 2px 2px}
-.tltick{font-size:11px;color:var(--ink-3);cursor:pointer;padding:0 4px;
+.tltick{font-size:15px;color:var(--ink-3);cursor:pointer;padding:0 4px;
   border-bottom:2px solid transparent}
 .tltick.on{color:var(--ink);font-weight:600;border-bottom-color:var(--seal)}
 /* 右設限＝前瞻窗還沒走完。虛線底線是唯一的視覺提示，因為這種格子的
@@ -507,12 +522,12 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .tltick.censored{border-bottom:2px dashed var(--warn)}
 #tlrange{width:100%;margin:0 0 6px;accent-color:var(--seal)}
 
-.tlmetrics{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--ink-2)}
+.tlmetrics{display:flex;flex-wrap:wrap;gap:14px;font-size:16px;color:var(--ink-2)}
 .tlmetrics b{color:var(--ink);font-family:var(--mono)}
 .tlmetrics i{color:var(--ink-4);font-style:normal}
 .tlwarn{color:var(--warn)}
-.tltrain{font-size:11px;color:var(--ink-4);margin-top:4px}
-.tlkey{display:flex;align-items:center;gap:6px;font-size:11px;
+.tltrain{font-size:15px;color:var(--ink-4);margin-top:4px}
+.tlkey{display:flex;align-items:center;gap:6px;font-size:15px;
   color:var(--ink-3);margin-top:6px;flex-wrap:wrap}
 .tlkey .tlpin{width:10px;height:10px;margin-left:8px}
 .tlkey .tlpin:first-child{margin-left:0}
@@ -531,29 +546,29 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
   align-items:center;padding:5px 12px;border-bottom:1px solid var(--rule);
   cursor:pointer}
 .tlrow:hover{background:var(--sunk)}
-.tlr{font-family:var(--mono);font-size:12px;color:var(--ink-3);text-align:right}
-.tln{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tlt{font-size:11px;color:var(--ink-4)}
-.tlm{font-size:11px;font-style:normal;padding:1px 6px;border-radius:3px}
+.tlr{font-family:var(--mono);font-size:16px;color:var(--ink-3);text-align:right}
+.tln{font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tlt{font-size:15px;color:var(--ink-4)}
+.tlm{font-size:15px;font-style:normal;padding:1px 6px;border-radius:3px}
 .tlm.hit{background:var(--seal-soft);color:var(--seal)}
 .tlm.miss{background:var(--sunk);color:var(--ink-3)}
 .tlm.live{background:var(--warn-soft);color:var(--warn)}
-.tlnote{padding:14px;color:var(--ink-3);font-size:12px}
+.tlnote{padding:14px;color:var(--ink-3);font-size:16px}
 
 /* ── 同儕財務差異 ──────────────────────────────────────────────────
  * 刻意使用中性的 --ink-3 灰藍，不用 --seal（法遵未通過的紅）或 --warn。
  * 「與同儕不同」和「違反自述的會計政策」是兩種強度完全不同的陳述，
  * 共用顏色會讓讀者把前者讀成後者。                                     */
 .peer-list{margin-top:9px}
-.peer-cap{font-size:11px;color:var(--ink-3);line-height:1.5;margin-bottom:6px}
+.peer-cap{font-size:15px;color:var(--ink-3);line-height:1.5;margin-bottom:6px}
 .peer-item{border-left:2px solid var(--ink-4);padding:5px 0 5px 10px;
-  margin-bottom:6px;font-size:12px;color:var(--ink-2);line-height:1.55}
+  margin-bottom:6px;font-size:16px;color:var(--ink-2);line-height:1.55}
 .ptrend{display:flex;align-items:flex-end;gap:8px;height:76px;
   padding:6px 2px 0;border-bottom:1px solid var(--rule)}
 .ptrend-col{display:flex;flex-direction:column;align-items:center;
   justify-content:flex-end;gap:4px}
 .ptrend-bar{width:22px;background:var(--ink-4);border-radius:2px 2px 0 0;opacity:.75}
-.ptrend-y{font-size:10px;color:var(--ink-3);font-family:var(--mono)}
+.ptrend-y{font-size:15px;color:var(--ink-3);font-family:var(--mono)}
 
 /* ── 助理面板 ─────────────────────────────────────────────
    .msg／.chatlog／.egs／.chatbar 沿用查詢頁籤原有的樣式，
@@ -562,8 +577,8 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .agentcol{display:flex;flex-direction:column;min-height:0;min-width:0;
   background:var(--panel);border-left:1px solid var(--rule)}
 .agenthead{display:flex;align-items:center;gap:8px;padding:8px 12px;
-  border-bottom:1px solid var(--rule);font-size:11.5px;color:var(--ink-3)}
-.agenttitle{font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  border-bottom:1px solid var(--rule);font-size:16px;color:var(--ink-3)}
+.agenttitle{font-size:15px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
 .agenthead .who{flex:1;font-family:var(--mono);overflow:hidden;
   text-overflow:ellipsis;white-space:nowrap}
@@ -586,7 +601,7 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
    五個以外的值一律當 idle（CSS 的預設就是 idle 那組）。            */
 /* 「這一段是助理在講」的抬頭：頭像 ＋ 名字。每一輪一個，訊息接在下面。 */
 .turnhead{display:flex;align-items:center;gap:8px;margin:2px 0 8px}
-.turnhead b{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--ink-3)}
+.turnhead b{font-size:15px;font-weight:600;letter-spacing:.08em;color:var(--ink-3)}
 /* 第一輪之外的抬頭上面要留白，不然兩輪會黏在一起看不出分界。 */
 .turnhead:not(:first-child){margin-top:14px;padding-top:14px;
   border-top:1px solid var(--rule)}
@@ -677,14 +692,25 @@ body.resizing{user-select:none;cursor:col-resize}
 .mini.fold{padding:3px 7px;line-height:1}
 
 .agentbar{display:flex;align-items:center;gap:8px;padding:8px 12px;
-  border-bottom:1px solid var(--rule);font-size:11.5px;color:var(--ink-3)}
+  border-bottom:1px solid var(--rule);font-size:16px;color:var(--ink-3)}
 .agentbar .who{flex:1;font-family:var(--mono)}
 .mini{border:1px solid var(--rule);border-radius:12px;padding:3px 9px;
-  font-size:11px;color:var(--ink-3);background:var(--panel);cursor:pointer}
+  font-size:15px;color:var(--ink-3);background:var(--panel);cursor:pointer}
 .mini:hover{border-color:var(--seal);color:var(--ink)}
 
+/* 一步一列：呼叫、結果、畫面動作。刻意做得比講解句淡——
+   這是給人看「它做了什麼」的軌跡，不是對話內容。 */
+.astep{font-family:var(--mono);font-size:15px;color:var(--ink-4);
+  line-height:1.6;padding-left:2px;word-break:break-all}
+.astep .tag{display:inline-block;min-width:30px;margin-right:6px;padding:1px 5px;
+  border-radius:3px;background:var(--sunk);color:var(--ink-3);font-size:15px}
+.astep .tag.ok{background:#2C7A5B14;color:var(--good)}
+.astep .tag.no{background:var(--seal-soft);color:var(--seal)}
+.astep .tag.ui{background:var(--warn-soft);color:var(--warn)}
+.astep code{font-size:15px;color:var(--ink-3)}
+
 /* 禁用詞被替換時要看得見。模型多常想說認定性的話，本身就是一個指標。 */
-.msg .soft{display:block;margin-top:4px;font-size:10.5px;color:var(--warn)}
+.msg .soft{display:block;margin-top:4px;font-size:15px;color:var(--warn)}
 .msg.err{color:var(--seal)}
 
 /* ── 登入層 ─────────────────────────────────────────────── */
@@ -693,40 +719,40 @@ body.resizing{user-select:none;cursor:col-resize}
 .authbox{background:var(--panel);border-radius:10px;box-shadow:var(--shadow);
   padding:26px 28px;width:min(430px,92vw);display:flex;flex-direction:column;gap:12px}
 .authbox h2{margin:0;font-size:17px;color:var(--ink)}
-.authbox p{margin:0;font-size:11.5px;color:var(--ink-3);line-height:1.6}
+.authbox p{margin:0;font-size:15px;color:var(--ink-3);line-height:1.6}
 .authbox>label{display:flex;flex-direction:column;gap:4px;
-  font-size:12px;color:var(--ink-2)}
+  font-size:15px;color:var(--ink-2)}
 .authbox input:not([type="radio"]){padding:8px 10px;border:1px solid var(--rule);
-  border-radius:6px;font-size:13px;font-family:var(--sans)}
+  border-radius:6px;font-size:15px;font-family:var(--sans)}
 .authroles{margin:0;padding:0;border:0}
-.authroles legend{margin-bottom:6px;font-size:12px;color:var(--ink-2)}
+.authroles legend{margin-bottom:6px;font-size:15px;color:var(--ink-2)}
 .authrole-grid,.quickrole-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .authrole{display:flex;flex-direction:row;align-items:center;gap:8px;padding:9px 10px;
   border:1px solid var(--rule);border-radius:7px;background:var(--panel);cursor:pointer}
 .authrole.selected{border-color:var(--seal);background:var(--seal-soft)}
 .authrole input{width:15px;height:15px;margin:0;accent-color:var(--seal);flex:0 0 auto}
 .authrole span{display:flex;min-width:0;flex-direction:column;gap:2px}
-.authrole b{font-size:12px;color:var(--ink);font-weight:600}
-.authrole small{font-size:10.5px;color:var(--ink-3)}
+.authrole b{font-size:15px;color:var(--ink);font-weight:600}
+.authrole small{font-size:15px;color:var(--ink-3)}
 .authbox button{margin-top:4px;padding:9px;border:1px solid var(--seal);
-  border-radius:6px;background:var(--seal);color:#fff;font-size:13px;cursor:pointer}
+  border-radius:6px;background:var(--seal);color:#fff;font-size:15px;cursor:pointer}
 .authbox button:disabled{cursor:wait;opacity:.62}
-.autherr{font-size:11.5px;color:var(--seal);min-height:15px}
+.autherr{font-size:15px;color:var(--seal);min-height:15px}
 .quicklogin{display:flex;flex-direction:column;gap:8px}
-.authdivider{display:flex;align-items:center;gap:8px;color:var(--ink-4);font-size:10.5px}
+.authdivider{display:flex;align-items:center;gap:8px;color:var(--ink-4);font-size:15px}
 .authdivider::before,.authdivider::after{content:"";height:1px;flex:1;background:var(--rule)}
-.quickrole-grid .quickrole{margin:0;background:var(--panel);color:var(--seal);font-size:12px}
+.quickrole-grid .quickrole{margin:0;background:var(--panel);color:var(--seal);font-size:15px}
 .quickrole-grid .quickrole:hover{background:var(--seal-soft)}
 @media(max-width:480px){.authrole-grid,.quickrole-grid{grid-template-columns:1fr}}
 
 /* 證據抽屜：段落、出處、財報頁截圖。 */
 .evwrap{display:flex;flex-direction:column;gap:9px}
 .ev{border:1px solid var(--rule);border-radius:6px;padding:8px 9px;background:var(--panel)}
-.ev .evh{font-size:12px;font-weight:500;color:var(--ink)}
-.ev .evt{margin-top:4px;font-size:11.5px;color:var(--ink-2);line-height:1.6;
+.ev .evh{font-size:16px;font-weight:500;color:var(--ink)}
+.ev .evt{margin-top:4px;font-size:16px;color:var(--ink-2);line-height:1.6;
   max-height:90px;overflow:auto}
 /* 出處用等寬字：檔名與頁碼是要被抄下來核對的東西。 */
-.ev .evc{margin-top:5px;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.ev .evc{margin-top:5px;font-family:var(--mono);font-size:15px;color:var(--ink-3)}
 .ev img{margin-top:7px;width:100%;border:1px solid var(--rule);border-radius:4px;
   background:#fff}
 
@@ -735,7 +761,7 @@ body.resizing{user-select:none;cursor:col-resize}
 /* 思考中：轉圈環。沿用 MaiCoin 專案（agent_ui）那一顆——一圈淡色底環，
    頂端一段實色跟著轉。相對於三顆閃爍的點，轉圈傳達的是「有東西在跑」
    而不是「在等你」，而一則 tool 來回要數秒到數十秒，那個差別很重要。 */
-.thinking{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-4);
+.thinking{display:flex;align-items:center;gap:8px;font-size:16px;color:var(--ink-4);
   font-family:var(--mono);padding:2px 0}
 .thinking .spinner{width:15px;height:15px;border-radius:50%;flex-shrink:0;
   border:2px solid color-mix(in srgb, var(--seal) 22%, transparent);
@@ -752,33 +778,33 @@ body.resizing{user-select:none;cursor:col-resize}
 .ptl{display:grid;grid-template-columns:76px 1fr;gap:9px;padding:7px 0;
   border-left:2px solid var(--rule);padding-left:11px;margin-left:3px}
 .ptl:hover{border-left-color:var(--seal)}
-.ptl .pd{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
-.ptl .pb{font-size:12px;color:var(--ink-2)}
+.ptl .pd{font-family:var(--mono);font-size:15px;color:var(--ink-3)}
+.ptl .pb{font-size:16px;color:var(--ink-2)}
 .ptl .pb b{color:var(--ink);font-weight:500}
-.ptl .prole{margin-left:6px;font-size:10.5px;color:var(--ink-3);
+.ptl .prole{margin-left:6px;font-size:15px;color:var(--ink-3);
   border:1px solid var(--rule);border-radius:3px;padding:0 4px}
-.ptl .pf{margin-left:6px;font-family:var(--mono);font-size:11px;color:var(--seal)}
-.ptl .pl{margin-top:3px;font-size:10.5px;color:var(--ink-3);line-height:1.5}
+.ptl .pf{margin-left:6px;font-family:var(--mono);font-size:15px;color:var(--seal)}
+.ptl .pl{margin-top:3px;font-size:15px;color:var(--ink-3);line-height:1.5}
 
 /* ── 卷宗：排名軌跡 ─────────────────────────────────────── */
 .rtlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
 .rtlist li{display:grid;grid-template-columns:52px 1fr 44px 62px;gap:7px;
-  align-items:center;font-size:11px}
+  align-items:center;font-size:15px}
 .rty{font-family:var(--mono);color:var(--ink-3)}
 /* 長條越長代表名次越前面（1 名最長）。 */
 .rtbar{height:7px;background:var(--sunk);border-radius:4px;overflow:hidden}
 .rtbar i{display:block;height:100%;border-radius:4px}
 .rtn{font-family:var(--mono);color:var(--ink-2);text-align:right}
-.rth{font-size:10px}
+.rth{font-size:15px}
 /* 三態的顏色與時間軸分頁一致，讓人一眼對得起來。 */
 .rt-hit{background:var(--seal)}      .rth.rt-hit{color:var(--seal)}
 .rt-miss{background:var(--ink-4)}    .rth.rt-miss{color:var(--ink-4)}
 .rt-live{background:var(--warn)}     .rth.rt-live{color:var(--warn)}
 
 /* ── 卷宗：建議書 ───────────────────────────────────────── */
-.memometa{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-bottom:6px}
+.memometa{font-family:var(--mono);font-size:15px;color:var(--ink-3);margin-bottom:6px}
 .memo{margin:0;padding:10px 11px;background:var(--sunk);border-radius:5px;
-  font-family:var(--sans);font-size:11.5px;line-height:1.75;color:var(--ink-2);
+  font-family:var(--sans);font-size:16px;line-height:1.75;color:var(--ink-2);
   white-space:pre-wrap;max-height:320px;overflow:auto}
 
 
@@ -795,10 +821,10 @@ body.resizing{user-select:none;cursor:col-resize}
   border:2px solid var(--rule);background:var(--panel);
   position:relative;z-index:1;margin-top:5px}
 /* 講解句：這一欄的主角，字級與顏色都比 tool 那行重。 */
-.astep .say{grid-column:2;font-size:13.5px;line-height:1.85;color:var(--ink);
+.astep .say{grid-column:2;font-size:15px;line-height:1.85;color:var(--ink);
   letter-spacing:.01em;min-height:1.2em}
 /* tool 名稱與結果：小字、等寬、淡——它是註腳不是內容。 */
-.astep .act{grid-column:2;font-family:var(--mono);font-size:10.5px;
+.astep .act{grid-column:2;font-family:var(--mono);font-size:15px;
   color:var(--ink-4);margin-top:3px;line-height:1.5}
 .astep .act:empty{display:none}
 
@@ -815,7 +841,7 @@ body.resizing{user-select:none;cursor:col-resize}
 .astep[data-st="done"] .dot{border-color:transparent;background:none}
 .astep[data-st="done"] .dot::after{content:"✓";position:absolute;
   left:50%;top:50%;transform:translate(-50%,-50%);
-  font-size:13px;line-height:1;font-weight:700;color:var(--good)}
+  font-size:15px;line-height:1;font-weight:700;color:var(--good)}
 /* 流程線到最後一步為止。`:last-child` 在加了每輪抬頭之後不再成立，
    因為最後一步後面接的是下一輪的抬頭。 */
 .astep.tail::before{display:none}
@@ -830,9 +856,9 @@ body.resizing{user-select:none;cursor:col-resize}
 
 /* ── 助理：對話文字 ───────────────────────────────────────
    講解句是要被讀的，比軌道的狀態文字重一級。 */
-#agentlog .msg.bot p{font-size:13.5px;line-height:1.85;color:var(--ink);
+#agentlog .msg.bot p{font-size:15px;line-height:1.85;color:var(--ink);
   margin:0 0 6px;letter-spacing:.01em}
-#agentlog .msg.me{font-size:13px;line-height:1.7;padding:7px 12px;border-radius:14px}
+#agentlog .msg.me{font-size:15px;line-height:1.7;padding:7px 12px;border-radius:14px}
 #agentlog{gap:3px;padding:14px 15px 18px}
 /* 使用者訊息與助理回覆之間留白多一點，一輪一輪分得開。 */
 #agentlog .msg.me{margin-top:10px}
@@ -846,10 +872,10 @@ body.resizing{user-select:none;cursor:col-resize}
 
 /* 清單被助理篩選時要說出來，否則「畫面上這幾筆是哪來的」沒有答案。 */
 .listnote{display:flex;align-items:center;gap:8px;padding:7px 12px;
-  font-size:11.5px;color:var(--seal);background:var(--seal-soft);
+  font-size:15px;color:var(--seal);background:var(--seal-soft);
   border-bottom:1px solid var(--rule)}
 .listnote button{border:1px solid var(--seal);border-radius:11px;padding:2px 9px;
-  font-size:11px;color:var(--seal);background:transparent;cursor:pointer}
+  font-size:15px;color:var(--seal);background:transparent;cursor:pointer}
 .listnote button:hover{background:var(--seal);color:#fff}
 
 
@@ -870,8 +896,8 @@ body.resizing{user-select:none;cursor:col-resize}
 #pane-scan .scanwrap{flex:1 1 45%;min-height:0;height:auto}
 
 .soc-bar{display:flex;align-items:baseline;gap:10px;margin-bottom:9px}
-.soc-title{font-weight:600;font-size:13px}
-.soc-sub{color:var(--ink-3);font-size:11px}
+.soc-title{font-weight:600;font-size:17px}
+.soc-sub{color:var(--ink-3);font-size:15px}
 
 .soc-row{padding:7px 9px;border:1px solid var(--rule);border-radius:3px;
   margin-bottom:5px;cursor:pointer;background:var(--panel)}
@@ -880,13 +906,13 @@ body.resizing{user-select:none;cursor:col-resize}
 .soc-head{display:flex;align-items:baseline;gap:8px}
 .soc-nm{font-weight:500;flex:1 1 auto;min-width:0;overflow:hidden;
   text-overflow:ellipsis;white-space:nowrap}
-.soc-town{color:var(--ink-3);font-size:11px;white-space:nowrap}
+.soc-town{color:var(--ink-3);font-size:15px;white-space:nowrap}
 /* 計數：主貼文與回覆分開印，中間是「·」不是「+」——見 social.js 檔頭。 */
-.soc-cnt{color:var(--ink-2);font-size:11px;white-space:nowrap;
+.soc-cnt{color:var(--ink-2);font-size:15px;white-space:nowrap;
   font-variant-numeric:tabular-nums}
-.soc-day{color:var(--ink-4);font-size:11px;white-space:nowrap;
+.soc-day{color:var(--ink-4);font-size:15px;white-space:nowrap;
   font-variant-numeric:tabular-nums}
-.soc-latest{color:var(--ink-3);font-size:11.5px;margin-top:3px;
+.soc-latest{color:var(--ink-3);font-size:16px;margin-top:3px;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 .soc-detail{padding:2px 9px 10px}
@@ -896,21 +922,24 @@ body.resizing{user-select:none;cursor:col-resize}
    那一則會另外掛 .soc-other 標出去向。 */
 .soc-post.reply{margin-left:14px;border-left:1px solid var(--rule);padding-left:9px}
 .soc-by{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
-.soc-user{font-size:11px;color:var(--ink-2)}
-.soc-other{font-size:10.5px;color:var(--seal)}
-.soc-link{font-size:10.5px;color:var(--ink-3)}
-.soc-text{font-size:12px;margin-top:2px;white-space:normal;word-break:break-word}
+.soc-user{font-size:15px;color:var(--ink-2)}
+.soc-other{font-size:15px;color:var(--seal)}
+.soc-link{font-size:15px;color:var(--ink-3)}
+.soc-text{font-size:16px;margin-top:2px;white-space:normal;word-break:break-word}
 .soc-empty{color:var(--ink-4)}
-.soc-skip{color:var(--ink-3);font-size:11px;margin-top:5px}
-.soc-rv{font-size:12px;margin-bottom:5px;font-variant-numeric:tabular-nums}
-.soc-dis{margin-top:11px;color:var(--ink-3);font-size:11px;line-height:1.45}
-.soc-load{color:var(--ink-3);font-size:11.5px;padding:6px 0}
+.soc-skip{color:var(--ink-3);font-size:15px;margin-top:5px}
+.soc-rv{font-size:16px;margin-bottom:5px;font-variant-numeric:tabular-nums}
+.soc-dis{margin-top:11px;color:var(--ink-3);font-size:15px;line-height:1.45}
+.soc-demo{margin:2px 0 8px;padding:5px 9px;font-size:15px;line-height:1.45;
+  color:var(--warn);background:var(--warn-soft);border:1px dashed var(--warn);
+  border-radius:3px}
+.soc-load{color:var(--ink-3);font-size:16px;padding:6px 0}
 
 .soc-unattr{margin-top:14px;padding-top:11px;border-top:1px solid var(--rule)}
-.soc-unattr>h4{margin:0 0 4px;font-size:10.5px;letter-spacing:.1em;
+.soc-unattr>h4{margin:0 0 4px;font-size:15px;letter-spacing:.1em;
   text-transform:uppercase;color:var(--ink-3)}
-.soc-unattr-note{color:var(--ink-3);font-size:11px;margin-bottom:7px;line-height:1.45}
-.soc-why{color:var(--ink-3);font-size:10.5px;margin-top:3px}
+.soc-unattr-note{color:var(--ink-3);font-size:15px;margin-bottom:7px;line-height:1.45}
+.soc-why{color:var(--ink-3);font-size:15px;margin-top:3px}
 
 /* ── 資料室 ──────────────────────────────────────────────────────────
    兩層（原始資料／數字）＋ 右上角一顆收判讀與外部佐證的鈕。
@@ -918,7 +947,7 @@ body.resizing{user-select:none;cursor:col-resize}
 .drbar{display:flex;align-items:center;gap:12px;padding:9px 16px;flex:none;
   background:var(--panel);border-bottom:1px solid var(--rule)}
 .drseg{display:flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
-.drseg button{padding:6px 16px;font-size:14px;font-family:var(--sans);
+.drseg button{padding:6px 16px;font-size:15px;font-family:var(--sans);
   color:var(--ink-2);background:var(--panel);border:0;
   border-right:1px solid var(--rule);cursor:pointer;display:flex;
   align-items:baseline;gap:7px;transition:background .12s,color .12s}
@@ -926,10 +955,10 @@ body.resizing{user-select:none;cursor:col-resize}
 .drseg button:hover{background:var(--sunk);color:var(--ink)}
 .drseg button[aria-pressed="true"]{background:var(--seal);color:#fff;font-weight:600}
 .drseg button[aria-pressed="true"] i{color:#ffffffcc}
-.drseg i{font-style:normal;font-family:var(--mono);font-size:12px;
+.drseg i{font-style:normal;font-family:var(--mono);font-size:15px;
   color:var(--ink-4);font-variant-numeric:tabular-nums}
-.drbar .rh-src{margin-left:auto;font-size:12px}
-.drbar .costbtn{font-size:13px;color:var(--fam-core)}
+.drbar .rh-src{margin-left:auto;font-size:15px}
+.drbar .costbtn{font-size:15px;color:var(--fam-core)}
 .drbar .costbtn:hover{color:var(--ink)}
 .pop.dr{right:16px;top:46px;width:390px;max-height:70vh;overflow-y:auto}
 
@@ -939,7 +968,7 @@ body.resizing{user-select:none;cursor:col-resize}
   flex:1 1 52%;border-right:1px solid var(--rule);overflow-y:auto}
 .drraw .list{overflow:visible;flex:none}
 .drside{flex:1 1 48%;min-width:0;overflow-y:auto;padding:0 16px 18px}
-.drlead{margin:0 0 9px;font-size:13px;line-height:1.65;color:var(--ink-2)}
+.drlead{margin:0 0 9px;font-size:15px;line-height:1.65;color:var(--ink-2)}
 .drlead b{font-family:var(--mono);font-size:15px;color:var(--ink)}
 
 /* ── 類型選單：兩層 ─────────────────────────────────────────────────
@@ -949,7 +978,7 @@ body.resizing{user-select:none;cursor:col-resize}
   background:var(--panel)}
 .drfams{display:flex;flex-wrap:wrap;gap:6px}
 .drfambtn{display:inline-flex;align-items:baseline;gap:6px;padding:6px 14px;
-  font-size:13.5px;font-family:var(--sans);font-weight:600;border-radius:7px;
+  font-size:15px;font-family:var(--sans);font-weight:600;border-radius:7px;
   cursor:pointer;background:var(--panel);color:var(--fam);
   border:1px solid color-mix(in srgb, var(--fam) 38%, transparent);
   transition:background .12s,color .12s,border-color .12s}
@@ -963,7 +992,7 @@ body.resizing{user-select:none;cursor:col-resize}
   border-color:var(--fam)}
 .drfambtn[aria-pressed="true"]{background:var(--fam);border-color:var(--fam);
   color:#fff}
-.drfambtn i{font-style:normal;font-family:var(--mono);font-size:11.5px;
+.drfambtn i{font-style:normal;font-family:var(--mono);font-size:15px;
   opacity:.72;font-variant-numeric:tabular-nums}
 
 .drtypes{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;padding-top:9px;
@@ -975,7 +1004,7 @@ body.resizing{user-select:none;cursor:col-resize}
 .drtypes[data-f="asset"]{--fam:var(--fam-asset)}
 .drtypes[data-f="other"]{--fam:var(--fam-other)}
 .drchip{display:inline-flex;align-items:baseline;gap:6px;padding:5px 13px;
-  font-size:13px;font-family:var(--sans);border-radius:15px;cursor:pointer;
+  font-size:15px;font-family:var(--sans);border-radius:15px;cursor:pointer;
   background:var(--panel);color:var(--ink-2);
   border:1px solid color-mix(in srgb, var(--fam) 32%, transparent);
   transition:background .12s,color .12s,border-color .12s}
@@ -983,42 +1012,42 @@ body.resizing{user-select:none;cursor:col-resize}
   background:color-mix(in srgb, var(--fam) 9%, var(--panel))}
 .drchip[aria-pressed="true"]{background:var(--fam);border-color:var(--fam);
   color:#fff;font-weight:600}
-.drchip i{font-style:normal;font-family:var(--mono);font-size:11.5px;
+.drchip i{font-style:normal;font-family:var(--mono);font-size:15px;
   color:var(--ink-4);font-variant-numeric:tabular-nums}
 .drchip[aria-pressed="true"] i{color:#ffffffcc}
 .drscroll{flex:1;min-height:0;overflow-y:auto;padding:0 16px 24px}
-.drcount{font-size:12px;color:var(--ink-3);font-family:var(--mono);padding:11px 0 0}
+.drcount{font-size:15px;color:var(--ink-3);font-family:var(--mono);padding:11px 0 0}
 
 /* ── 涵蓋矩陣：列是園、欄是學年度 ───────────────────────────────── */
 .mxwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:5px;
   background:var(--panel)}
-.mx{width:100%;border-collapse:collapse;font-size:13px}
+.mx{width:100%;border-collapse:collapse;font-size:15px}
 .mx th,.mx td{border-bottom:1px solid var(--rule);padding:3px 9px}
 .mx thead th{position:sticky;top:0;z-index:1;background:var(--sunk);
-  font-size:12px;color:var(--ink-2);font-weight:600;text-align:center}
+  font-size:15px;color:var(--ink-2);font-weight:600;text-align:center}
 .mx .mx-n{text-align:left;font-weight:500;color:var(--ink);white-space:nowrap}
-.mx-code{font-family:var(--mono);font-size:11px;color:var(--ink-4);margin-right:7px}
+.mx-code{font-family:var(--mono);font-size:15px;color:var(--ink-4);margin-right:7px}
 .mx-c{text-align:center;font-family:var(--mono);
   font-variant-numeric:tabular-nums;padding:0}
-.mx-has button{width:100%;padding:6px 0;font-size:13px;font-family:var(--mono);
+.mx-has button{width:100%;padding:6px 0;font-size:15px;font-family:var(--mono);
   border:0;cursor:pointer;color:var(--fam-core);font-variant-numeric:tabular-nums;
   background:color-mix(in srgb, var(--fam-core) 10%, transparent);
   transition:background .12s,color .12s}
 .mx-has button:hover{background:var(--fam-core);color:#fff}
 .mx-none{color:var(--ink-4);background:var(--sunk)}
-.mx-wait{font-size:11.5px;font-family:var(--sans);color:var(--warn);
+.mx-wait{font-size:15px;font-family:var(--sans);color:var(--warn);
   background:var(--warn-soft);font-weight:600}
-.mx-t{color:var(--ink-3);font-size:12px}
+.mx-t{color:var(--ink-3);font-size:15px}
 .mx tfoot td,.mx tfoot th{background:var(--sunk);font-weight:600;color:var(--ink-2)}
 
 /* ── 一張表 ─────────────────────────────────────────────────────── */
 .dr-t{margin-top:18px}
 .drth{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:6px}
-.drk{font-size:11.5px;letter-spacing:.05em;color:var(--fam-core);font-weight:600}
+.drk{font-size:15px;letter-spacing:.05em;color:var(--fam-core);font-weight:600}
 .drv{font-size:15.5px;color:var(--ink);font-weight:600}
-.drpg{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.drpg{margin-left:auto;font-family:var(--mono);font-size:15px;color:var(--ink-3)}
 .drpg2{color:var(--ink-4)}
-.draxis,.drrefuse{font-size:12.5px;line-height:1.6;border-radius:5px;
+.draxis,.drrefuse{font-size:15px;line-height:1.6;border-radius:5px;
   padding:8px 11px;margin-bottom:7px}
 .draxis{color:var(--ink-2);background:var(--sunk);border-left:3px solid var(--fam-core)}
 .drrefuse{color:var(--seal);border:1px solid var(--seal);background:var(--seal-soft)}
@@ -1027,9 +1056,9 @@ body.resizing{user-select:none;cursor:col-resize}
    .roombody 與 .side 都沒有 overflow 設定。 */
 .ftabwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:5px;
   background:var(--panel)}
-.ftab{width:100%;border-collapse:collapse;font-size:13px}
+.ftab{width:100%;border-collapse:collapse;font-size:15px}
 .ftab th{position:sticky;top:0;z-index:1;background:var(--sunk);padding:7px 10px;
-  text-align:right;font-weight:600;font-size:11.5px;color:var(--ink-2);
+  text-align:right;font-weight:600;font-size:15px;color:var(--ink-2);
   border-bottom:1px solid var(--rule);white-space:nowrap}
 /* 項目欄吃掉所有剩餘寬度，數字欄才會收在右邊而不是被撐開成一大片。 */
 .ftab th:first-child,.ftab td:first-child{text-align:left;position:sticky;left:0;
@@ -1038,7 +1067,7 @@ body.resizing{user-select:none;cursor:col-resize}
 .ftab td{padding:5px 10px;border-bottom:1px solid var(--rule);color:var(--ink-2);
   vertical-align:top}
 .ftab td.n{text-align:right;font-family:var(--mono);color:var(--ink);
-  font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px}
+  font-variant-numeric:tabular-nums;white-space:nowrap;font-size:15px}
 /* 空白＝未編列，不是 0。灰字加破折號，與真正的 0 看得出差別。 */
 .ftab td.n.blank{color:var(--ink-4)}
 /* 負數只加括號不上色。--seal 在這個 app 專指法遵未通過，
@@ -1050,62 +1079,269 @@ body.resizing{user-select:none;cursor:col-resize}
 .ftab tbody tr:hover td,
 .ftab tbody tr:hover td:first-child{
   background:color-mix(in srgb, var(--fam-core) 7%, var(--panel))}
-.drpct{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:2px}
-.drnote{font-size:10px;color:var(--fam-core);margin-left:3px}
+.drpct{font-family:var(--mono);font-size:15px;color:var(--ink-3);margin-top:2px}
+.drnote{font-size:15px;color:var(--fam-core);margin-left:3px}
 .drtm{display:flex;align-items:baseline;gap:10px;margin-top:6px;flex-wrap:wrap}
-.drcite{font-family:var(--mono);font-size:11px;color:var(--ink-4)}
-.drjump{font-size:12.5px;font-family:var(--sans);color:var(--fam-core);
+.drcite{font-family:var(--mono);font-size:15px;color:var(--ink-4)}
+.drjump{font-size:15px;font-family:var(--sans);color:var(--fam-core);
   background:none;border:0;border-bottom:1px solid currentColor;cursor:pointer;
   padding:0}
 .drjump:hover{color:var(--ink)}
 .drissues{margin-top:7px;border-left:3px solid var(--warn);padding:3px 0 3px 10px}
-.drissues b{font-size:11.5px;letter-spacing:.05em;color:var(--warn);font-weight:600}
-.drissues p{margin:3px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2)}
+.drissues b{font-size:15px;letter-spacing:.05em;color:var(--warn);font-weight:600}
+.drissues p{margin:3px 0 0;font-size:15px;line-height:1.65;color:var(--ink-2)}
 
 /* ── 上傳 ───────────────────────────────────────────────────────── */
 .drup{padding:14px 16px;border-bottom:1px solid var(--rule);background:var(--panel)}
 .drup-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .drup-h b{font-size:15px}
-.drup-h span{font-size:12.5px;color:var(--ink-3)}
-.drup-now{margin-top:6px;font-size:13px;color:var(--ink-2);font-family:var(--mono);
+.drup-h span{font-size:15px;color:var(--ink-3)}
+.drup-now{margin-top:6px;font-size:15px;color:var(--ink-2);font-family:var(--mono);
   font-variant-numeric:tabular-nums}
 .drup-now b{color:var(--ink);font-size:15px}
-.drup-btn{display:inline-block;margin-top:10px;padding:7px 18px;font-size:13.5px;
+.drup-btn{display:inline-block;margin-top:10px;padding:7px 18px;font-size:15px;
   font-weight:600;background:var(--seal);color:#fff;border-radius:18px;
   cursor:pointer;transition:filter .12s}
 .drup-btn:hover{filter:brightness(1.12)}
-.drup-reset{margin-left:10px;font-size:12.5px;color:var(--ink-3);background:none;
+.drup-reset{margin-left:10px;font-size:15px;color:var(--ink-3);background:none;
   border:0;cursor:pointer;text-decoration:underline}
 .drup-reset:hover{color:var(--ink)}
-.drup-hint{margin-top:7px;font-size:12.5px;color:var(--warn)}
+.drup-hint{margin-top:7px;font-size:15px;color:var(--warn)}
 .drup-ok{margin-top:12px;border:1px solid var(--fam-asset);border-radius:6px;
   padding:13px 15px;background:color-mix(in srgb, var(--fam-asset) 7%, var(--panel))}
 .drup-ok>b{font-size:15px;color:var(--ink)}
-.drup-ok .kv{font-size:12.5px;margin-top:6px}
-.drsha{font-family:var(--mono);font-size:11px;word-break:break-all;color:var(--ink-3)}
+.drup-ok .kv{font-size:15px;margin-top:6px}
+.drsha{font-family:var(--mono);font-size:15px;word-break:break-all;color:var(--ink-3)}
 .drdiff{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:10px;padding-top:10px;
-  border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-3)}
+  border-top:1px solid var(--rule);font-size:15px;color:var(--ink-3)}
 .drd{white-space:nowrap}
 .drd i{font-style:normal;font-family:var(--mono);color:var(--ink-4)}
-.drd b{font-family:var(--mono);color:var(--fam-asset);font-size:14px;
+.drd b{font-family:var(--mono);color:var(--fam-asset);font-size:15px;
   font-variant-numeric:tabular-nums}
-.drup-sec{margin-top:10px;font-size:12.5px;color:var(--ink-3);display:flex;
+.drup-sec{margin-top:10px;font-size:15px;color:var(--ink-3);display:flex;
   flex-wrap:wrap;gap:6px;align-items:center}
 .drup-sec .drchip{--fam:var(--fam-asset)}
 
 /* ── 原件頁 ─────────────────────────────────────────────────────── */
 .drimg{width:100%;border:1px solid var(--rule);border-radius:5px;margin-top:8px;
   background:var(--panel)}
-.drclose{margin-left:auto;font-size:12px;color:var(--ink-3);background:none;
+.drclose{margin-left:auto;font-size:15px;color:var(--ink-3);background:none;
   border:0;cursor:pointer;text-decoration:underline}
-.ev .evh{display:flex;align-items:baseline;gap:9px;font-size:13.5px}
-.drnotes p{margin:0 0 7px;font-size:12.5px;line-height:1.65;color:var(--ink-2)}
+.ev .evh{display:flex;align-items:baseline;gap:9px;font-size:15px}
+.drnotes p{margin:0 0 7px;font-size:15px;line-height:1.65;color:var(--ink-2)}
 .drnotes p.un{border-left:3px solid var(--warn);padding-left:9px}
-.drnotes small{font-size:11.5px;color:var(--ink-4)}
+.drnotes small{font-size:15px;color:var(--ink-4)}
 
 /* ── 左欄篩選 ───────────────────────────────────────────────────── */
 .rail-tools{display:flex;flex-direction:column;gap:6px;margin-top:14px}
-.rail-tools select{font-size:13px;font-family:var(--sans);padding:6px 8px;
+.rail-tools select{font-size:15px;font-family:var(--sans);padding:6px 8px;
   border:1px solid var(--rule);border-radius:5px;background:var(--panel);
   color:var(--ink);cursor:pointer}
 .rail-tools select:hover{border-color:var(--fam-core)}
+.soc-unattr-note{color:var(--ink-3);font-size:15px;margin-bottom:7px;line-height:1.45}
+.soc-why{color:var(--ink-3);font-size:15px;margin-top:3px}
+
+/* 輿情室：左社群聲音、右主動掃描。兩欄各自捲動，否則右欄那張估價表單一長
+   起來就會把左邊的通報推出可視範圍。窄螢幕改回上下，左右各 300px 以下
+   兩邊都不能讀。 */
+#pane-scan{flex-direction:row;gap:0}
+#pane-scan>.socialwrap{flex:1 1 56%;min-width:0;min-height:0;overflow-y:auto;
+  border-right:1px solid var(--rule);border-bottom:0}
+.scancol{flex:1 1 44%;min-width:0;min-height:0;display:flex;flex-direction:column}
+.scancol-head{flex:0 0 auto;padding:9px 14px;font-size:16px;background:var(--sunk);
+  border-bottom:1px solid var(--rule);display:flex;align-items:baseline;gap:8px}
+/* 額度常駐在右欄頂端：要花錢的人不該需要捲動才看得到自己還剩多少。 */
+#scanfold-budget{margin-left:auto;color:var(--ink-3);font-size:15px;
+  font-variant-numeric:tabular-nums}
+.scancol>.scanwrap{flex:1 1 auto;min-height:0;overflow-y:auto;height:auto}
+@media (max-width:860px){
+  #pane-scan{flex-direction:column}
+  #pane-scan>.socialwrap{flex:1 1 55%;border-right:0;
+    border-bottom:1px solid var(--rule)}
+  .scancol{flex:1 1 45%}
+}
+
+/* ── 輿情室：兩欄的視覺區分 ────────────────────────────────
+   **只用顏色分結構，不用顏色分判斷。** 這個調色盤裡的兩套色階都已經被賦予
+   語意——`--c1~c4` 是建議查核密度、`--k0~k4` 是歷史裁罰件數——再加一套
+   紅黃綠去標「這園有幾則通報」，就會變成一組沒有根據的風險燈號，而且跟那
+   兩套打架。`--k0` 的註解已經把理由講過：0 件不等於安全。
+
+   所以左右的差別是**底色與欄頭**，不是色相語意：左欄（已經收到的、免費）
+   用白底，右欄（要花錢去收集的）用紙底往後退一階。讀者一眼分得出「這兩邊
+   是兩件事」，但沒有任何一邊被說成好或壞。
+
+   唯一的色彩訊號是「待人工認園」用 --warn，而那講的是**我方的工作量**，
+   不是機構的狀態——那一格說的是「有幾則我們還認不出是哪一園」。 */
+.soc-head-bar,.scancol-head{flex:0 0 auto;padding:10px 14px;
+  background:var(--sunk);border-bottom:1px solid var(--rule);
+  display:flex;align-items:baseline;gap:9px;font-size:17px;font-weight:600}
+.soc-head-bar .soc-sub,.scancol-head #scanfold-budget{margin-left:auto;
+  font-weight:400;font-size:15px;color:var(--ink-3)}
+
+#pane-scan>.socialwrap{background:var(--panel)}
+.scancol{background:var(--paper)}
+
+/* 列表本身：中年使用者的主要閱讀對象是園名，所以園名最大最重，
+   其餘一律退到 --ink-3 以下。 */
+.soc-nm{font-size:17px;font-weight:600}
+.soc-latest{font-size:16px;color:var(--ink-3)}
+.soc-row{padding:9px 11px}
+.soc-text{font-size:16px;line-height:1.6}
+.soc-user{font-size:15px;font-weight:500;color:var(--ink-2)}
+
+/* 待人工認園：--warn 講的是我方待辦，不是機構狀態。 */
+.soc-unattr{border-top:2px solid var(--warn);margin-top:16px;padding-top:12px}
+.soc-unattr>h4{color:var(--warn);font-size:15px}
+
+/* ── 語氣上色（realtime/classify.py）──────────────────────────
+   上色在**貼文**，不在機構。一整園染紅等於用一批未查證的貼文對一家真實機構
+   下風險判斷——features/alerts.py 整支模組就是為了不製造這種傷害而存在的。
+   機構那一列走 .soc-mix（純文字組成，沒有顏色）。
+
+   只用 --seal 與 --warn 兩個既有語意色，**刻意不碰 --c1~c4 與 --k0~k4**：
+   那兩族已經分別是「建議查核密度」與「歷史裁罰件數」，第三套借用它們的色階，
+   同一張畫面上就會有三套顏色在互相解釋。
+
+   每一個顏色旁邊一定有 .soc-tone 那顆帶文字的膠囊。沒有說明的色點在這個
+   畫面上最容易被猜成「這園有問題」，而那正是這套顏色不能表示的意思。 */
+.soc-tones{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px}
+.soc-tone{font-size:15px;line-height:1.35;padding:1px 7px;border-radius:10px;
+  border:1px solid var(--rule);color:var(--ink-3);white-space:nowrap}
+.soc-tone.t-neg{color:var(--seal);border-color:var(--seal);background:var(--seal-soft)}
+.soc-tone.t-warn{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.soc-tone.t-flat{color:var(--ink-2)}
+/* 未分類：虛線框、中性色。**不是中性、也不是沒事**——它是「還沒有人看過」，
+   所以長得要跟 .insuff（資料不足）同一族，不跟「中性」同一族。 */
+.soc-tone.t-none{border-style:dashed;color:var(--ink-4)}
+
+/* 貼文左緣那條色帶。回覆本來就有一條 --rule 的縮排線，語氣的顏色直接蓋掉
+   它的顏色而不動幾何，這樣縮排關係不會因為上色而跑掉。 */
+.soc-post.t-neg{border-left:3px solid var(--seal);padding-left:9px;margin-left:2px}
+.soc-post.t-warn{border-left:3px solid var(--warn);padding-left:9px;margin-left:2px}
+.soc-post.t-none{border-left:3px dashed var(--rule);padding-left:9px;margin-left:2px}
+.soc-post.reply.t-neg,.soc-post.reply.t-warn,.soc-post.reply.t-none{margin-left:14px}
+
+/* 機構那一列與各段段頭的語氣組成。純文字，沒有底色也沒有色點：
+   「3 則語氣負面 · 1 則中性 · 1 則詢問」本身就把分母講出來了。 */
+.soc-mix{font-size:15px;color:var(--ink-2);margin-top:3px;
+  font-variant-numeric:tabular-nums}
+
+/* 「擬定回覆」：一顆一般的次要按鈕，**不是主行動**。它產生的是草稿，
+   而草稿不會被送出——把它做成醒目的主按鈕，會讓人以為按下去就是回覆了。 */
+.soc-draft{margin-left:auto;font-size:15px;padding:1px 9px;border-radius:12px;
+  border:1px solid var(--rule);background:var(--panel);color:var(--ink-2);
+  cursor:pointer;font-family:inherit}
+.soc-draft:hover{border-color:var(--ink-4);color:var(--ink)}
+.soc-draft[disabled]{color:var(--ink-4);cursor:default}
+
+/* ── 文書室裡的回覆草稿 ─────────────────────────────────────
+   與底下那份建議書清單**刻意長得不一樣**：建議書是已經可以發文的公文，
+   這是一份未送出、也不會自動送出的草稿，回的還是一則未經查證的貼文。
+   兩者長得一樣的那天，就是有人把草稿當成已核定的公文往外貼的那天。 */
+.memodraft{border:1px solid var(--warn);border-left:4px solid var(--warn);
+  border-radius:3px;background:var(--panel);padding:10px 12px;margin-bottom:10px}
+.md-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:17px}
+.md-src{color:var(--ink-3);font-size:15px}
+.md-x{margin-left:auto;font-size:15px;padding:1px 9px;border-radius:12px;
+  border:1px solid var(--rule);background:var(--panel);color:var(--ink-2);
+  cursor:pointer;font-family:inherit}
+.md-warn{font-size:15px;color:var(--warn);margin-top:4px;line-height:1.5}
+.md-link{font-size:15px;color:var(--ink-3);margin-top:4px;word-break:break-all}
+.md-body{margin:7px 0 0;padding:9px 11px;background:var(--sunk);border-radius:3px;
+  font-family:var(--sans);font-size:16px;line-height:1.7;color:var(--ink);
+  white-space:pre-wrap;max-height:420px;overflow:auto}
+.md-foot{margin-top:7px;font-size:15px;color:var(--ink-3);line-height:1.45}
+
+/* 機構列的語氣組成：每一段各自上色，整列不上色。
+   染在「3 則語氣負面」這個數字上，講的是那三則貼文；染在整列或園名上，
+   講的就變成這一園——後者是用未查證內容對真實機構下判斷。 */
+.soc-comp{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;margin-top:4px}
+.soc-seg{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.soc-seg.t-neg{color:var(--seal)}
+.soc-seg.t-warn{color:var(--warn)}
+.soc-seg.t-flat{color:var(--ink-2);font-weight:400}
+.soc-seg.t-none{color:var(--ink-4);font-weight:400;border-bottom:1px dashed var(--rule)}
+.soc-sep{color:var(--ink-4)}
+
+/* ── 報導性質（realtime/news_classify.py）─────────────────────
+   **與上面那一族是兩套標籤，共用顏色但不共用詞彙，計數永遠不合併。**
+   顏色只有 --seal 與 --warn 可用（--c1~c4 是建議查核密度、--k0~k4 是歷史
+   裁罰件數，借過來就會有三套顏色在同一張畫面上互相解釋），所以分辨兩者靠的
+   是**文字**：新聞那一族印「事件報導」，Threads 那一族印「語氣負面」。
+
+   為什麼一定要分：「教育局開罰 39 萬」是一件已經作成的官方行動，
+   「多收教材費想問這樣合理嗎」是一句未經查證的民眾陳述。兩者都掛「語氣負面」
+   的話，稽查員就分不出該先看哪一則——而那個分別正是他判斷輕重的依據。
+
+   r-event 用 --seal：已發生的官方行動。r-dispute 用 --warn：有指控但未見官方
+   行動，以及 PTT 的投訴文。r-flat 中性（例行報導）。r-none 虛線灰——
+   性質不明與未分類，跟 .insuff（資料不足）同一族，不跟「例行」同一族。 */
+.soc-rep{font-size:15px;line-height:1.35;padding:1px 7px;border-radius:10px;
+  border:1px solid var(--rule);color:var(--ink-3);white-space:nowrap}
+.soc-rep.r-event{color:var(--seal);border-color:var(--seal);background:var(--seal-soft)}
+.soc-rep.r-dispute{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.soc-rep.r-flat{color:var(--ink-2)}
+.soc-rep.r-none{border-style:dashed;color:var(--ink-4)}
+.soc-post.r-event{border-left:3px solid var(--seal);padding-left:9px;margin-left:2px}
+.soc-post.r-dispute{border-left:3px solid var(--warn);padding-left:9px;margin-left:2px}
+.soc-post.r-none{border-left:3px dashed var(--rule);padding-left:9px;margin-left:2px}
+.soc-seg.r-event{color:var(--seal)}
+.soc-seg.r-dispute{color:var(--warn)}
+.soc-seg.r-flat{color:var(--ink-2);font-weight:400}
+.soc-seg.r-none{color:var(--ink-4);font-weight:400;border-bottom:1px dashed var(--rule)}
+
+/* 組成行的抬頭。**兩個組成分兩行印，各自帶抬頭**——沒有抬頭的話兩行數字會
+   讀成同一串，而把「3 則語氣負面」與「2 則事件報導」讀成一串，就是把未查證
+   的抱怨與已經起訴的案件數成同一類。 */
+.soc-cap{font-size:15px;font-weight:400;color:var(--ink-3);
+  border-right:1px solid var(--rule);padding-right:7px;margin-right:1px}
+
+/* ── 排序控制 ────────────────────────────────────────────────
+   預設是「最新活動」，不是「關注程度」：抱怨的人會把園名寫完整（要讓機關
+   找得到），稱讚的人寫得隨意，所以歸屬成功率本身就與語氣相關。把負面優先
+   設成永久預設，等於讓一個部分由歸屬規則造成的排序每次開啟都排在最前面。 */
+.soc-sortl{margin-left:auto;font-size:15px;color:var(--ink-3);
+  display:inline-flex;align-items:baseline;gap:5px}
+.soc-sort{font-size:15px;font-family:inherit;color:var(--ink);
+  background:var(--panel);border:1px solid var(--rule);border-radius:3px;
+  padding:1px 5px}
+
+/* 「關注程度」的分段抬頭。未分類那一段自成一段而不是沉到底下跟「無負面」
+   排在一起：沒有人看過 ≠ 看過了沒問題。 */
+.soc-group{font-size:16px;font-weight:600;color:var(--ink-2);
+  margin:12px 0 2px;padding-bottom:2px;border-bottom:1px solid var(--rule)}
+.soc-group-n{font-weight:400;color:var(--ink-3);font-size:15px;margin-left:6px;
+  font-variant-numeric:tabular-nums}
+.soc-group-why{font-size:15px;color:var(--ink-3);line-height:1.5;margin:2px 0 4px}
+
+/* 整張卡片依貼文語氣組成上色。卡片上一定有一行字說明那個顏色是什麼意思
+   （「貼文語氣：多數負面」），不是風險等級，也不進分數。
+   用左側粗邊 + 淡底而不是整片填滿：填滿會壓掉園名與內文的對比，而這個
+   介面的主要讀者是中年稽查員，可讀性優先於視覺強度。 */
+.soc-row.m-neg{border-left:5px solid var(--seal);background:var(--seal-soft)}
+.soc-row.m-warn{border-left:5px solid var(--warn);background:var(--warn-soft)}
+.soc-row.m-flat{border-left:5px solid var(--rule)}
+.soc-row.m-none{border-left:5px dashed var(--rule)}
+.soc-mood{font-size:15px;font-weight:600;margin-bottom:3px}
+.soc-mood.m-neg{color:var(--seal)}
+.soc-mood.m-warn{color:var(--warn)}
+.soc-mood.m-flat,.soc-mood.m-none{color:var(--ink-3);font-weight:400}
+
+/* 一串 = 一張卡。原本只有一條左邊線，主貼文與回覆在視覺上是平的，讀起來
+   像三則不相干的貼文並排；實際上它們是同一個對話，而「這是同一串」正是
+   判讀時最重要的上下文——一則「我也遇到欸」離開它所在的串就沒有意義。
+   06-plan §6 的分析單位是「園所 × 事件群集」，卡片邊界就是那個群集的邊界。 */
+.soc-thread{border:1px solid var(--rule);border-radius:5px;padding:0;
+  margin-bottom:12px;background:var(--panel);overflow:hidden;border-left-width:1px}
+/* 主貼文是這一串的起點，給它一條底線把它跟回覆分開。 */
+.soc-thread>.soc-post:first-child{border-bottom:1px solid var(--rule);
+  background:var(--panel);margin:0;padding:10px 12px}
+/* 回覆縮在串內，底色下沉一階，一眼看得出是「這串底下的」而不是新的一串。 */
+.soc-thread>.soc-post.reply{background:var(--sunk);margin:0;
+  padding:9px 12px 9px 26px;border-left:0;border-top:1px solid var(--rule)}
+.soc-thread>.soc-post.reply:first-of-type{border-top:0}
+/* 語氣色改畫在卡片內緣，不要再各自長出一條外框線把卡片切碎。 */
+.soc-thread>.soc-post.t-neg{box-shadow:inset 3px 0 0 var(--seal)}
+.soc-thread>.soc-post.t-warn{box-shadow:inset 3px 0 0 var(--warn)}
+.soc-thread>.soc-post.t-none{box-shadow:inset 3px 0 0 var(--rule)}

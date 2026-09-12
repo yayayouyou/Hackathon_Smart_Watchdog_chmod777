@@ -334,11 +334,15 @@
       </div>
 
       <div class="pane" id="pane-scan" hidden>
-        <!-- 輿情室：上半是已經收進來的社群聲音（免費、即時讀庫），
-             下半是掃描主控台（花錢去收集更多）。順序即是使用順序：
-             先看手上有什麼，再決定要不要花錢。 -->
+        <!-- 左：已經收到的社群聲音（讀庫、免費）。右：主動掃描（付費）。
+             並排而不是上下，因為兩邊都是這間房的主體——一邊看手上有什麼，
+             一邊決定要不要花錢再找。右欄頂端常駐剩餘額度。 -->
         <div class="socialwrap" id="socialwrap">載入中…</div>
-        <div class="scanwrap" id="scanwrap">載入中…</div>
+        <div class="scancol">
+          <div class="scancol-head">主動掃描（付費管道）
+            <span id="scanfold-budget">—</span></div>
+          <div class="scanwrap" id="scanwrap">載入中…</div>
+        </div>
       </div>
 
       <div class="pane" id="pane-timeline" hidden>
@@ -351,6 +355,9 @@
         <div class="agentbar">
           <span class="who" id="memocount">—</span>
         </div>
+        <!-- 從輿情室按「擬定回覆」送過來的草稿落在這裡。預設收起：文書室
+             平常是看本批建議書的地方，沒有草稿時不該多一塊空白。 -->
+        <div class="memodraft" id="memodraft" hidden></div>
         <form class="chatbar" id="memoform">
           <input id="memoq" placeholder="搜尋園名或行政區，例如：三重" autocomplete="off">
           <button type="submit">搜尋</button>

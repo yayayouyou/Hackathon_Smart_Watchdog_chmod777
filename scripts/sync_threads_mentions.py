@@ -7,9 +7,16 @@
     PYTHONPATH=src .venv/bin/python scripts/sync_threads_mentions.py --show
     PYTHONPATH=src .venv/bin/python scripts/sync_threads_mentions.py \
         --thread 17849251066204813
+    PYTHONPATH=src .venv/bin/python scripts/sync_threads_mentions.py --classify-only
 
 沒有 `THREADS_ACCESS_TOKEN` 時不是失敗，是「這個管道還沒開」——照實說，
 回 exit 0。缺的是授權不是資料，這個分別在畫面上與在退出碼上都要成立。
+
+**`--classify` 與 `--classify-only` 分開，因為它們的成本不同。** `--classify`
+只跑本次新進的那幾則（接在同步後面）；`--classify-only` 補跑庫裡所有還沒跑過
+的，不碰任何外部端點。每一則都是一次模型呼叫，把整庫重跑當成同步的副作用，
+會在某個沒有人按過任何按鈕的下午燒掉一整批額度。沒有 AWS 憑證時照實說
+「未分類」並回 exit 0——**未分類不等於沒有問題，也不等於語氣中性。**
 
 **回覆的三種結局要分開講。** 讀不到（端點拒絕）、沒有人回覆、連不上，是三件
 不同的事，混成一句「0 則回覆」就會讓操作的人以為功能正常而公眾沉默。這與
@@ -40,7 +47,7 @@ import pandas as pd
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
 from smart_watchdog.db import session as db_session
-from smart_watchdog.realtime import mention_store
+from smart_watchdog.realtime import demo_data, mention_store
 from smart_watchdog.scrape import threads
 
 INSTITUTIONS = pathlib.Path("data/processed/institutions_ntpc.csv")
@@ -55,13 +62,33 @@ PERMISSION_HELP = (
 )
 
 
-def _institutions() -> list[dict]:
-    """歸屬用的機構清單，與 run_realtime_sweep.py 餵給其他管道的是同一份。"""
+def _real_institutions() -> list[dict]:
+    """主檔裡的真實機構。讀不到就是空的，不在這裡印任何話——`--show` 也會叫它，
+    而那條路上根本沒有在歸屬，印「本次不做歸屬」會是一句不成立的話。"""
     if not INSTITUTIONS.exists():
-        print(f"找不到 {INSTITUTIONS}，本次不做歸屬（通報照樣入庫，institution_id 留空）")
         return []
     frame = pd.read_csv(INSTITUTIONS)
     return frame[["id", "title", "town"]].to_dict("records")
+
+
+def _names() -> dict[str, str]:
+    """id → 園名，真實與示範都在裡面。只給顯示用，不做歸屬。"""
+    return {i["id"]: i["title"] for i in demo_data.merged(_real_institutions())}
+
+
+def _institutions() -> list[dict]:
+    """歸屬用的機構清單：真實機構 + 示範機構。
+
+    真實那半與 run_realtime_sweep.py 餵給其他管道的是同一份。示範那半來自
+    `realtime/demo_data.py`，**只在這條社群／歸屬路徑上合併**：示範貼文指名的
+    是示範園，沒有它們就會整批躺進「待人工認園」，而那份佇列是給人看工作量的。
+    合併寫在 `demo_data.merged()` 裡，API 那邊用的是同一支函式。
+    """
+    real = _real_institutions()
+    if not real:
+        print(f"找不到 {INSTITUTIONS}，真實機構本次不做歸屬"
+              "（通報照樣入庫，institution_id 留空）；示範機構仍會歸屬")
+    return demo_data.merged(real)
 
 
 def _fixture_replies(path: str) -> dict:
@@ -79,12 +106,17 @@ def _fixture_replies(path: str) -> dict:
     return grouped
 
 
-def _sync_replies(db, roots, fetch_replies, institutions) -> None:
-    """對每一串抓一次回覆並入庫，結局分開報。
+def _sync_replies(db, roots, fetch_replies, institutions) -> list:
+    """對每一串抓一次回覆並入庫，結局分開報。回傳本次真的寫進去的 threads_id。
 
     `fetch_replies(root)` 要嘛回一串貼文，要嘛丟 `ThreadsError`——空陣列在這裡
     **只代表**「這串沒有人回覆」，所以取用層不准用它來表示讀不到。
+
+    回傳 id 而不只是計數，理由與 `mention_store.record()` 的 `inserted_ids`
+    一樣：`--classify` 要對**本次新進的那幾則**跑分類，只給計數的話它只能用
+    「最近 N 則」去猜是哪幾則，猜錯就是重跑舊的、漏跑新的。
     """
+    inserted_ids: list = []
     inserted = duplicate = empty = 0
     own = inherited = unattributed = 0
     others: list[dict] = []
@@ -105,6 +137,7 @@ def _sync_replies(db, roots, fetch_replies, institutions) -> None:
             empty += 1
             continue
         counts = mention_store.record_replies(db, root, replies, institutions)
+        inserted_ids.extend(counts["inserted_ids"])
         inserted += counts["inserted"]
         duplicate += counts["duplicate"]
         own += counts["attributed_own"]
@@ -142,6 +175,59 @@ def _sync_replies(db, roots, fetch_replies, institutions) -> None:
         print(f"{len(orphaned)} 串的主貼文不在庫裡，回覆未入庫（不寫孤兒列）：")
         for _, reason in orphaned:
             print(f"   {reason}")
+    return inserted_ids
+
+
+def _classify(db, threads_ids=None) -> None:
+    """對還沒分類過的貼文跑一次分類。沒有憑證時照實說「未分類」，不是失敗。
+
+    `threads_ids=None` 代表「庫裡所有還沒跑過的」（`--classify-only`）；
+    給一份 id 時只跑那幾則（`--classify` 接在同步後面）。
+
+    **未分類與中性不是同一件事**，所以這裡印的是「N 則仍未分類」而不是把它們
+    算進任何一種語氣。分類結果不進分數、不進 payload、不進任何 CSV，與
+    `threads_mention` 這張表的其餘欄位一樣。
+    """
+    from smart_watchdog.realtime import classify
+
+    rows = classify.pending(db, threads_ids=threads_ids)
+    if not rows:
+        print("分類：沒有待分類的貼文。")
+        return
+
+    backend = classify.get_backend("auto")
+    counts = classify.classify_rows(db, rows, backend)
+    if counts["reason"]:
+        # 符號一律用 Big5 有的那幾個：Windows 控制台預設 cp950，
+        # 印不出來的字不是少一個圖標，是整支腳本倒在 print 上。
+        print(f"※ 分類：{len(rows)} 則仍未分類——{counts['reason']}")
+        print("   要跑分類請設定 AWS 憑證（.env 的四個 AWS_... 值），再重跑 "
+              "--classify-only。")
+        return
+
+    tones = "、".join(f"{classify.TONE_LABELS.get(k, k)} {v}"
+                     for k, v in sorted(counts["by_tone"].items()))
+    cats = "、".join(f"{k} {v}" for k, v in sorted(counts["by_category"].items()))
+    print(f"分類（{counts['backend']}）：{counts['classified']} 則完成"
+          + (f"、{counts['failed']} 則呼叫失敗（維持未分類）" if counts["failed"] else ""))
+    if tones:
+        print(f"   語氣：{tones}")
+    if cats:
+        print(f"   事件類別：{cats}")
+    # issues 只印在這裡，不入庫也不上畫面——它是模型寫的自由文字，內容受外部
+    # 貼文影響。理由見 classify.Classification。
+    for item in counts["issues"][:10]:
+        print(f"   ※ {item['threads_id']}：{item['note']}")
+    for item in counts["errors"][:5]:
+        print(f"   × {item['threads_id']}：{str(item['error'])[:120]}")
+
+
+def _who(names: dict[str, str], institution_id: str | None) -> str:
+    """一列印出來的園名。示範機構帶前綴，不靠名字看起來假不假。"""
+    if not institution_id:
+        return "（未歸屬）"
+    name = names.get(institution_id, institution_id)
+    return f"［示範］{name}" if demo_data.is_demo(institution_id) else name
 
 
 def _show(db) -> int:
@@ -155,14 +241,13 @@ def _show(db) -> int:
         print(f"最新一則發文時間：{summary['latest_posted_at']}")
     # 印園名不印 id：庫裡存的是 36 字元的 UUID，直接印出來既排不齊也沒人讀得懂，
     # 而「這則是哪一園的」正是看這份清單的唯一理由。認不出來的照樣要列出來。
-    # 先檢查檔案存在再叫 _institutions()：它缺檔時印的是「本次不做歸屬」，
-    # 而 --show 根本沒有在歸屬，照印會變成一句不成立的話。
-    names = ({i["id"]: i["title"] for i in _institutions()}
-             if INSTITUTIONS.exists() else {})
+    # 示範機構前面加標記：這份清單會被貼進報告與截圖，而截圖裡沒有人可以問
+    # 「這一家是真的嗎」。
+    names = _names()
     # 主貼文與它底下的回覆一起印。回覆單獨列成一行沒有意義——回覆的人是在跟
     # 原 PO 講話，脫離那一串就只剩「+1」。
     for row in mention_store.recent(db, limit=10, kind=mention_store.MENTION):
-        who = names.get(row["institution_id"], row["institution_id"] or "（未歸屬）")
+        who = _who(names, row["institution_id"])
         head = row["text"].replace("\n", " ")[:40]
         print(f"  {row['posted_at'][:10]}  {who:<18}  @{row['username']:<18}  {head}")
         for reply in mention_store.thread(db, row["threads_id"])[1:]:
@@ -173,9 +258,7 @@ def _show(db) -> int:
             # 而縮排本身會讓人讀成「這則也是在講上面那一園」。
             mark = ""
             if reply["institution_id"] != row["institution_id"]:
-                named = names.get(reply["institution_id"],
-                                  reply["institution_id"] or "未歸屬")
-                mark = f"   ← 自身指名 {named}"
+                mark = f"   ← 自身指名 {_who(names, reply['institution_id'])}"
             print(f"       └ {reply['posted_at'][:10]}  "
                   f"@{reply['username']:<18}  {body}{mark}")
     return 0
@@ -194,6 +277,10 @@ def main() -> int:
     ap.add_argument("--no-replies", action="store_true",
                     help="不去抓主貼文底下的回覆，只同步 @標註本身")
     ap.add_argument("--thread", help="只抓這一串的回覆（給測試與補抓用）")
+    ap.add_argument("--classify", action="store_true",
+                    help="同步後對本次新進的貼文跑一次分類（需 AWS 憑證）")
+    ap.add_argument("--classify-only", action="store_true", dest="classify_only",
+                    help="不同步，只對庫裡還沒分類過的貼文補跑分類")
     args = ap.parse_args()
 
     db_session.init_db()
@@ -201,6 +288,10 @@ def main() -> int:
     try:
         if args.show:
             return _show(db)
+        # --classify-only 不碰任何外部端點，所以它連機構清單都不需要讀。
+        if args.classify_only:
+            _classify(db)
+            return 0
 
         institutions = _institutions()
         fixture_replies = (_fixture_replies(args.replies_fixture)
@@ -213,7 +304,9 @@ def main() -> int:
 
         # --thread：只補抓指定的那一串，不碰 /me/mentions。
         if args.thread:
-            _sync_replies(db, [args.thread], fetch_replies, institutions)
+            fresh = _sync_replies(db, [args.thread], fetch_replies, institutions)
+            if args.classify:
+                _classify(db, fresh)
             return 0
 
         if args.fixture:
@@ -243,14 +336,21 @@ def main() -> int:
             print(f"有 {counts['inserted'] - counts['attributed']} 則認不出是哪一園，"
                   "已入庫待人工判讀——不是雜訊，是工作量。")
 
+        fresh = list(counts["inserted_ids"])
         if not args.no_replies:
             # live 只追本次新存進去的那幾串；離線那份檔案已經抓回來了，全套用。
             roots = (sorted(fixture_replies) if fixture_replies is not None
                      else counts["inserted_ids"])
             if roots:
-                _sync_replies(db, roots, fetch_replies, institutions)
+                fresh += _sync_replies(db, roots, fetch_replies, institutions)
             else:
                 print("沒有新的主貼文，本次不抓回覆（要補抓用 --thread <id>）")
+
+        # 分類只跑本次新進的那幾則。舊列用 --classify-only 補，兩者分開是因為
+        # 每一則都是一次模型呼叫——把整庫重跑一遍當成同步的副作用，會在某個
+        # 沒有人按過任何按鈕的下午燒掉一整批額度。
+        if args.classify:
+            _classify(db, fresh)
         return 0
     except threads.ThreadsError as exc:
         print(f"Threads API 失敗：{exc}", file=sys.stderr)

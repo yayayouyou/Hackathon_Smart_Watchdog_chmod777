@@ -18,13 +18,14 @@ JSON。實作在 `src/smart_watchdog/api/social.py`，測試在 `tests/test_soci
 | `GET /api/social/{institution_id}` | 單一機構的社群聲音全貌 | 會（新聞、PTT、Google 評論）|
 | `GET /api/social` | 最近有社群聲音的機構（跨機構瀏覽）| 不會（讀資料庫與建置時快照）|
 | `GET /api/social/unattributed` | 歸屬拒配的通報佇列（待人工認園）| 不會 |
+| `POST /api/social/{institution_id}/draft-reply` | 替一串 @標註通報擬一份回覆**草稿** | 可能（生成 backend 會呼叫 Bedrock）|
 
 單園端點會即時查新聞與 PTT，回應時間約 1–3 秒。想先把畫面撐起來、稍後再補
 即時結果的話，用 `?live=false`：只回建置時快照，不等外部請求。
 
 ---
 
-## 2. 讀任何一支之前要先懂的六件事
+## 2. 讀任何一支之前要先懂的九件事
 
 ### 2.1 機構 id 有兩種形態，兩種都收
 
@@ -88,6 +89,129 @@ JSON。實作在 `src/smart_watchdog/api/social.py`，測試在 `tests/test_soci
 過「太平洋新聞網」配到太平洋幼兒園、「林口某雙語補習班」配到林口幼兒園），所以
 認不出來是常態而不是故障。這些通報全部留在 `/api/social/unattributed`，那是一份
 **待人工認園的工作量清單**。
+
+### 2.7 語氣分類：六個欄位，NULL 一律代表「尚未分類」
+
+分類由 `realtime/classify.py` 做，一則貼文一次 Bedrock 呼叫，**只回封閉值**
+（enum 與 bool），不回摘要、引文、建議或風險分數。回應裡每一則貼文帶：
+
+| 欄位 | 值域 | 說明 |
+|---|---|---|
+| `event_category` | `06-plan` §6 的八類＋`unclear` | 兒少安全／人員管理／衛生健康／交通安全／財務收費／營運穩定／招生契約／一般服務抱怨 |
+| `tone` | `negative` `neutral` `question` `unclear` | 「請問這樣合理嗎」是 `question` 不是 `negative` |
+| `specificity` | `specific` `vague` `unclear` | 有沒有具體的時間、地點、行為 |
+| `stance` | `first_hand` `second_hand` `unknown` | 發文者與事件的關係 |
+| `contains_minor_identifiers` | bool | 含兒童姓名／班級／可識別資訊。**不確定時為 `true`**（保守方向是「當成含有」）|
+| `classified_at` | ISO 字串或 `null` | **有值＝跑過分類；`null`＝從來沒跑過** |
+
+**`unclear` 與 `null` 是兩件事，而且差很遠。**
+
+* `tone: "unclear"` ＝ 跑過分類，模型看不出來。
+* `classified_at: null` ＝ **這一則沒有人看過**。
+
+判斷要用 `classified_at`，不要用 `tone == null`。後端已經把這件事算好放在
+`tone_bucket`／`tone_label` 兩個欄位裡，前端照著畫即可：
+
+| `tone_bucket` | `tone_label` | 畫面 |
+|---|---|---|
+| `negative` | 語氣負面 | `--seal`（稽查紅）|
+| `question` | 詢問 | `--warn`（琥珀）|
+| `neutral` | 中性 | 中性 |
+| `unclear` | 語氣不明 | 中性 |
+| `unclassified` | 未分類 | 虛線框中性色，與 `.insuff`（資料不足）同一族 |
+
+模型寫的自由文字（`issues`）**刻意不在回應裡**。它的內容受外部貼文影響，
+印在官方主控台上等於讓陌生人的句子借用系統的口吻說話；要看原文點 `permalink`。
+它也不入庫，只印在 `scripts/sync_threads_mentions.py --classify` 的 CLI 輸出上。
+
+**分類結果不進分數、不進 payload、不進任何 CSV**（`06-plan` §1）。
+
+### 2.8 `is_demo`：這一園是不是示範用的虛構園所
+
+決賽現場要放幾則家長通報，通報就得指名某一園。那些貼文是我們編的，所以它們
+**只准指名示範機構**（`data/demo/institutions_demo.csv`，說明見
+`realtime/demo_data.py`）——編造的投訴掛在真實機構名下就是捏造指控，而它在
+畫面上與真通報長得一模一樣。
+
+| 欄位 | 出現在 | 意思 |
+|---|---|---|
+| `institution.is_demo` | `GET /api/social/{id}` | 這一園是示範機構 |
+| `items[].is_demo` | `GET /api/social` | 同上，列表那一列 |
+| `threads.items[].*.is_demo` | 貼文層 | 這一則指名的是示範機構 |
+| `demo_note` | 兩支端點 | 示範資料的定位，逐字固定。`is_demo` 為 false 的單園回應是空字串 |
+
+三條規則：
+
+1. **判斷靠 `is_demo`，不靠名字。** 名字（`示範一號`／`範例二號`…）是給人看的，
+   旗標是給程式檢查的。用名字判斷的話，貼文措辭一改，標示就會靜靜消失。
+2. **畫面上一定要標。** 前端在園名旁印「示範資料」chip（`.tag.demo`），展開後
+   在詳情最上方印 `demo_note`。看得出是假的名字不夠：畫面會被截圖，而截圖裡
+   沒有人可以問「這一家是真的嗎」。
+3. **示範機構只到得了這條路。** 它們不在 `institutions_ntpc.csv`、不在
+   `dist/data/payload.json`、不在稽查優先序裡——那份 AUC 0.641／P@100 2.17x
+   是量測過的數字。`tests/test_demo_data.py` 把這三個地方都釘住。
+
+### 2.9 新聞／PTT 的標籤：**與 Threads 的語氣不共用、計數不合併**
+
+這是整份契約裡最容易被寫錯的一條，因為兩族長得很像：都是封閉值、都印一排
+膠囊、都只用 `--seal` 與 `--warn` 兩個色。但它們講的是兩件事：
+
+| | Threads 貼文 | 新聞／PTT |
+|---|---|---|
+| 例子 | 「多收教材費，想問這樣合理嗎」 | 「2 教保員強制罪起訴」「教育局開罰 39 萬」 |
+| 是什麼 | **未查證的民眾陳述** | **已發生之官方行動的報導** |
+| 欄位 | `tone` / `tone_bucket` / `tone_label` | `report_kind` / `report_bucket` / `report_label` |
+| 組成 | `threads.tone` | `mentions.labels`、列表的 `items[].news` |
+
+後者不是「語氣負面」。兩者都染紅又共用同一個標籤，就把這個分別抹掉了——
+而**那個分別正是稽查員判斷輕重的依據**。
+
+分類由 `realtime/news_classify.py` 做，一則標題一次 Bedrock 呼叫，只回封閉值。
+
+| 欄位 | 值域 | 說明 |
+|---|---|---|
+| `report_kind` | `事件報導` `爭議未定` `例行報導` `unclear` | 判準是「**有沒有已發生的官方行動或具體事件**」，不是記者的用字 |
+| `event_category` | `06-plan` §6 的八類＋`unclear` | **與 Threads 共用同一套**（這一半刻意一致：事件類別是跨來源的分類）|
+| `news_classified_at` | ISO 字串或 `null` | **有值＝跑過分類；`null`＝從來沒跑過** |
+
+三個 `report_kind` 的界線：
+
+* `事件報導`＝裁罰、罰鍰金額（「罰30萬」也算）、停招、停辦、廢止、勒令、
+  起訴、判決、移送、懲處、稽查結果、確認的傷害或不當對待。
+* `爭議未定`＝有指控、投訴、爭議、家長反映，但**看不到官方已採取行動**。
+* `例行報導`＝招生、活動、表揚、評鑑通過、揭牌、捐贈、人物特寫。
+
+前端照著畫：
+
+| `report_bucket` | `report_label` | 畫面 |
+|---|---|---|
+| `事件報導` | 事件報導 | `--seal`（稽查紅）|
+| `爭議未定` | 爭議未定 | `--warn`（琥珀）|
+| `例行報導` | 例行報導 | 中性 |
+| `unclear` | 性質不明 | 虛線框中性色 |
+| `unclassified` | 未分類 | 虛線框中性色，與 `.insuff`（資料不足）同一族 |
+
+PTT 的 `kind`（`complaint` / `question`）是既有的看板判定，**與模型那一層並存**，
+自己一顆膠囊；`complaint` 走琥珀——那是一則民眾投訴，不是一件官方行動。
+
+四條硬規則：
+
+1. **標籤文字不得互換。** 新聞那一族一律用新聞自己的詞彙（「事件報導」），
+   **不可以寫「語氣負面」**；反之亦然。
+2. **計數不得合併。** `threads.tone` 與 `mentions.labels`／`items[].news` 是
+   兩個欄位，永遠分兩處印。加總就是把未查證的抱怨與已起訴的案件數成同一類
+   （§7.1 的另一個形態）。
+3. **未分類不是例行。** `news_classified_at: null` 代表這一則沒有人看過。
+   沒有 Bedrock 憑證的機器上整份 sidecar 是空的，那時每一則都是「未分類」。
+4. **結果不寫回 `data/processed/`。** 標籤存在
+   `data/runtime/news_labels.jsonl`（sidecar），鍵是分類時實際送出的那段文字
+   的雜湊。釘住的快照 CSV 是 `python run.py verify-external` 的驗證對象，
+   改它會讓那支驗證失敗。刪掉 sidecar 再跑一次 CLI 就重建得回來。
+
+補跑：`python run.py classify-news`（`--show` / `--compare` / `--dry-run`
+離線可跑，不呼叫模型）。**刻意不掛進 `mention_poller` 的每輪自動分類**——
+那條路是為 Threads 通報設計的，新聞快照不是每 5 分鐘變一次。同一則不重跑，
+判準是 sidecar 裡有沒有那個鍵。
 
 ---
 
@@ -231,6 +355,14 @@ reviews，每月前 1,000 次免費，之後每千次 US$25）。後端有額度
     "errors": [],
     "snapshot_swept_at": "2026-09-08 17:24",
     "counts": { "news_rss": 0, "ptt": 0, "vendor_feed": 0, "apify_threads": 0, "total": 0 },
+    "labels": {
+      "counts": { "事件報導": 0, "爭議未定": 0, "例行報導": 0, "unclear": 0, "unclassified": 0 },
+      "classified": 0,
+      "unclassified": 0,
+      "labels": { "事件報導": "事件報導", "爭議未定": "爭議未定", "例行報導": "例行報導", "unclear": "性質不明", "unclassified": "未分類" },
+      "note": "新聞／PTT 的標籤是對**這一則報導**的分類，用的是新聞自己的詞彙，與 Threads 貼文的語氣標籤**不共用、也不合併計數**：一則民眾抱怨與一件已經起訴的案子不是同一種東西，加總就會把兩者數成一類。未分類代表尚未跑過分類，不代表性質例行、也不代表沒有問題。"
+    },
+    "label_note": "新聞／PTT 的標籤是對**這一則報導**的分類，用的是新聞自己的詞彙，與 Threads 貼文的語氣標籤**不共用、也不合併計數**：……",
     "items": []
   },
   "reviews": {
@@ -301,12 +433,21 @@ reviews，每月前 1,000 次免費，之後每千次 US$25）。後端有額度
 | `items[].root` | 主貼文。**可能是 `null`**——只同步到回覆、主貼文不在庫裡時，`root_missing_reason` 會說明。此時不要拿第一則回覆頂替 |
 | `items[].replies[]` | 串下回覆，依發文時間排。**不是樹**：巢狀關係在 `reply_to_threads_id`，要畫成樹自己接 |
 | `items[].counts` | `mentions` / `replies` 只算**歸屬到這一園**的；`posts_in_thread` 是整串的貼文數 |
+| `tone` | 這一園的**語氣組成**，`counts` 的**兄弟不是成員**：`counts` 的每一項都是「幾則」，這一項是那幾則長什麼樣。內容為 `counts`（negative／neutral／question／unclear／unclassified 各幾則）＋`labels`（中文標籤）＋`note`。**沒有單一語氣欄位，也不會有** |
+| `tone_note` | 「這不是對機構的判斷」那句話，逐字固定 |
+| `items[].tone` | 同上，一串的組成。同樣只算歸屬到這一園的那幾則 |
+| `*.tone_bucket` / `*.tone_label` | 這一則該畫成哪一堆，見 §2.7。**前端不要用 `tone` 自己重推**|
 | `items[].other_institutions` | 這一串裡歸屬到**別家**的貼文。空陣列是常態；有值代表一串討論裡冒出第二家 |
+| `*.is_demo` | 這一則指名的是不是示範機構（§2.8）。前端照這個印「示範資料」，不自己看名字 |
 | `*.is_this_institution` | 這一則是不是這一園的。縮排會讓人讀成「這則也在講上面那一園」，所以每一則自己說 |
 | `*.attribution_basis` | 歸屬（或拒配）的理由，原文照登。複查的人靠這句判斷機器是怎麼算的 |
 
 整串都會回來，**包含指名了別家的那幾則**——串是討論的容器，不是主體的容器，
 濾掉它們會讓複查的人看到一段沒有上下文的對話。
+
+`tone` 是組成不是判斷：**機構那一層只回各語氣的則數，不回單一語氣、不回風險
+等級**。`GET /api/social` 的每一列也是同樣的 `tone`（在 `counts` 之外）。
+理由見 §7.6。
 
 #### `mentions` — 新聞／PTT
 
@@ -318,10 +459,20 @@ reviews，每月前 1,000 次免費，之後每千次 US$25）。後端有額度
 | `snapshot_swept_at` | 建置時那次全市掃描的時間 |
 | `items[].source` | `"live"`（這次查到的）或 `"snapshot"`（上次全市掃描留下的）|
 | `items[].attribution_basis` | 快照來源是 `null`——代表**當時沒記下來**，不是「沒有依據」|
-| `items[].kind` | 快照帶的事件分類（`incident` / `routine` / `unclear`）；即時結果是 `null`，不做分類 |
+| `items[].kind` | **關鍵字表**（`features/alerts.py::article_kind()`）當時判的（`incident` / `routine` / `unclear`；PTT 另有 `complaint` / `question`）。即時結果是 `null`，關鍵字表那一層不重跑 |
+| `items[].report_kind` | **模型**判的報導性質，見 §2.9。`null` ＝尚未分類 |
+| `items[].event_category` | 模型判的事件類別（與 Threads 共用同一套八類）。`null` ＝尚未分類 |
+| `items[].report_bucket` | 前端該把這一則畫成哪一堆，見 §2.9 的對照表 |
+| `items[].report_label` | 該堆的中文標籤（「事件報導」…）。**不是語氣標籤** |
+| `items[].news_classified_at` | ISO 字串或 `null`。**有值＝跑過分類；`null`＝從來沒跑過** |
+| `labels` | 這一段的**性質組成**（各類的則數）。與 `threads.tone` 是兩個欄位，**不相加** |
+| `label_note` | 兩族標籤不共用、計數不合併，逐字固定 |
 
 `source` 一定要顯示出來。把四個月前的快照跟今天查到的混在一起，畫面上會讓一則
 舊新聞看起來像剛發生。
+
+`kind` 與 `report_kind` **是兩個欄位、兩層判斷，不互相覆蓋**。關鍵字表判
+`unclear`、模型判 `事件報導` 的那幾則，正是最該由人看一眼的。
 
 #### `reviews` — Google 評論
 
@@ -330,7 +481,7 @@ reviews，每月前 1,000 次免費，之後每千次 US$25）。後端有額度
 因為那是這個來源的定位：*家長主觀評價，非法遵指標*。
 
 `rating` 與 `reviews[].rating` 是 Google 的原始資料，原樣轉發。**不是風險指標**，
-理由見第 6 節。
+理由見第 7 節。
 
 ---
 
@@ -440,6 +591,9 @@ reviews，每月前 1,000 次免費，之後每千次 US$25）。後端有額度
 | `last_activity` | 來源給什麼就是什麼：Threads 給完整時戳，建置快照只給日期 |
 | `last_activity_date` | `YYYY-MM-DD`，排序與 `since` 比對用的那一個 |
 | `counts.threads.threads` | **串數**。要顯示「數量」時用這個 |
+| `tone` | 這一園**Threads 貼文**的語氣組成（`classify.compose()`）|
+| `news` | 這一園**新聞／PTT** 的報導性質組成（`news_classify.compose()`）。與 `tone` 是兩個欄位，**不相加、不合併成一個「關注度」**，理由見 §2.9 |
+| `label_note` | 兩族標籤不共用、計數不合併，逐字固定（回應層級）|
 | `latest.summary` | 最新一則的第一行，截 120 字。是摘要不是全文，**要點進去才算讀過** |
 
 排序是 `last_activity` 新到舊，同日以串數作為穩定排序的 tie-break。
@@ -514,9 +668,70 @@ reviews，每月前 1,000 次免費，之後每千次 US$25）。後端有額度
 
 ---
 
-## 6. 前端不可以做的事
+## 6. `POST /api/social/{institution_id}/draft-reply`
 
-### 6.1 不要把各來源計數加總成一個數字
+替一串 @標註通報擬一份給承辦人的**回覆草稿**。
+
+**這支端點不送出任何東西，也沒有任何程式路徑可以送出。** `scrape/threads.py`
+是唯讀的，它沒有發文、回覆或刪除的函式可以被 import。官方帳號在任何人讀過
+內容之前自動回一句「已收到您的通報」，是一個公開的受理表態——那是設計決定，
+不是還沒做完的功能。
+
+### 6.1 請求
+
+```json
+POST /api/social/00957c83-0061-4581-a587-97629968f371/draft-reply
+{ "root_threads_id": "17849251066204813", "backend": "template" }
+```
+
+| 欄位 | 說明 |
+|---|---|
+| `root_threads_id` | 要回哪一串。整串（主貼文＋回覆）都會被當成脈絡 |
+| `backend` | `"template"`（確定性組裝，離線可用）或 `"bedrock"`（生成）。不給時自動選：有 AWS 憑證走 bedrock，沒有走 template |
+
+### 6.2 回應
+
+| 欄位 | 說明 |
+|---|---|
+| `draft` | 草稿全文，**兩段**：「承辦人須知」（內部）＋「建議回覆內文」（可能對外）|
+| `sendable` | **只有可送出的那一段**。前端要顯示「可以貼出去的是哪些字」時用這個，**不要自己切 `draft`**——切錯會把園名連同「這是未查證的通報」一起貼到公開平台上 |
+| `sendable_mark` | 兩段之間的分隔線，與 `draft` 裡的那一行相同 |
+| `verified` | 有沒有通過 `report/verify.py` 的閘門 |
+| `problems[]` | 沒通過的理由 |
+| `fell_back` / `fallback_reason` | 生成那條路被退件時會改用樣板，這兩欄說明為什麼 |
+| `checklist[]` | 承辦人送出前一定要自己確認的事項，逐字固定 |
+| `auto_send` | 恆為 `false`。**前端不得把它畫成「已送出」「已受理」或任何完成狀態** |
+| `posts_used` / `attributed` | 用了整串幾則；那一串有沒有歸屬到機構 |
+
+### 6.3 草稿裡的三條界線
+
+1. **可送出的那一段不出現任何機構名稱。** 官方帳號在一則未查證的指控底下公開
+   回覆「本局將就○○幼兒園查明」，等於在任何人查證之前由機關把那一園與那則指控
+   綁在一起。承辦人需要園名——它在「承辦人須知」那一段，那一段不對外。
+2. **可送出的那一段不照抄原貼文。** 把指控引述進本局自己的句子裡，讀起來就是
+   機關在複述指控。這同時是 prompt injection 的停損點：陌生人寫的字沒有任何
+   一條路徑可以穿過模型進到官方發言裡。
+3. **兩句聲明都必須在**：「非違法認定」與「未經查證」。只有前者的回覆讀起來
+   仍像機關已經確認發生過什麼、只是還沒定性。
+
+三條都由 `report/verify.py::verify_reply()` 機械檢查，用的是**與稽核建議書
+同一份** `FORBIDDEN` 清單與同一套否定詞剝除規則（`verdict_words()`）。
+退件時換確定性樣板，不是把退件的草稿送上去，也不是回一個錯誤讓畫面空著。
+
+### 6.4 錯誤
+
+| 情況 | 回應 |
+|---|---|
+| 機構不存在 | `404` |
+| 那一串不在庫裡 | `404`，「查無這一串通報 {id}」 |
+| 只同步到回覆、主貼文不在庫裡 | `409`——要回的那個人不在手上，草稿沒有收件人 |
+| 那一串歸屬到別家 | `409`，請從該園的面板擬定回覆 |
+
+---
+
+## 7. 前端不可以做的事
+
+### 7.1 不要把各來源計數加總成一個數字
 
 ```js
 // ✗ 絕對不要
@@ -532,7 +747,7 @@ const buzz = counts.threads.mentions + counts.threads.replies
 帳號；合併之後，「有 11 個人向教育局反映」這句話就灌水了十倍，而那個數字正是
 說明會上會被講出去的東西。要講人數時用 `counts.threads.mentions`。
 
-### 6.2 不要把「無訊號」畫成綠燈或「正常」
+### 7.2 不要把「無訊號」畫成綠燈或「正常」
 
 `has_signal: false` 代表**本系統沒有取得公開社群內容**，不代表這家園沒事。
 
@@ -542,7 +757,7 @@ const buzz = counts.threads.mentions + counts.threads.replies
 同理，**不在 `/api/social` 清單上的機構不是安全的**。如果面板有「全市總覽」，
 不要把沒列出來的 1,203 家畫成綠色。
 
-### 6.3 不要把 Google 星等當風險指標
+### 7.3 不要把 Google 星等當風險指標
 
 實測：裁罰 ≥5 件的園評分中位 **4.20**、無裁罰者 **4.60**（p=0.061，不顯著），
 而個案完全不具鑑別力——16 件裁罰的幼苗國際 4.7 星、13 件的南蒂亞 4.9 星、
@@ -556,7 +771,7 @@ const buzz = counts.threads.mentions + counts.threads.replies
 另外 `may_store: false` —— **不要**把評論存進 localStorage、不要做前端快取、
 不要放進匯出的報表。Places API ToS 3.2.3(a)(b) 禁止匯出、爬取與快取。
 
-### 6.4 每一則都要能點回原文
+### 7.4 每一則都要能點回原文
 
 每一則通報、新聞、回覆都有 `permalink`（評論是 `author_uri` 與 `maps_uri`）。
 **不要只顯示摘要就結束。** 這個面板的產品定位是「可點回原文的清單，判斷留給
@@ -564,14 +779,65 @@ const buzz = counts.threads.mentions + counts.threads.replies
 
 `latest.summary` 是截斷過的第一行，不要拿它當全文。
 
-### 6.5 不要自己算分數、等級或情緒
+### 7.5 不要自己算分數、等級或情緒
 
 回應裡沒有 `score`、`risk`、`level`、`sentiment` 這些欄位，是刻意的
 （`tests/test_social_api.py::test_no_endpoint_returns_a_score_or_a_risk_level`
 會擋住任何人加回去）。前端也不要自己算一個出來——不管是「熱度」「關注度」還是
 「三顆火焰」。
 
-### 6.6 用詞界線
+### 7.6 不要把一整園染成單一風險色
+
+語氣分類是對**單一貼文**的標記。把一整園（清單那一列、地圖上的標記、卷宗的
+標題）染成紅色或任何一個「代表這一園語氣」的顏色，就是用一批未經查證的貼文
+對一家真實機構下風險判斷——而那正是 `features/alerts.py` 整支模組存在的理由：
+它的模組說明記了四個真實誤配，其中一則是某園在新聞裡被誤認後**公開澄清**
+「衰被誤認虐童」。
+
+機構那一層要印的是**組成**：
+
+* ✓ 「3 則語氣負面 · 1 則中性 · 1 則詢問」——讀的人看得到分母
+* ✗ 一顆紅點、一條紅色底線、一個「負面」標籤掛在園名旁邊
+
+`tone` 刻意只給各類的則數，沒有任何一個「主要語氣」「情緒分數」欄位，
+前端也不要自己從則數推一個出來（例如「負面最多就標紅」）。
+
+另外：語氣的顏色只用 `--seal` 與 `--warn`，**不得沿用 `--c1~c4`**
+（那是建議查核密度）或 `--k0~k4`（那是歷史裁罰件數）。這兩族已經各有語意，
+第三套借用它們的色階，同一張畫面上就會有三套顏色互相解釋。
+**每個顏色旁邊一定要有文字標籤**，不得出現沒有說明的色點。
+
+### 7.7 不要把「未分類」當成中性
+
+`classified_at: null` 代表**這一則沒有人看過**，不是「語氣中性」、不是
+「沒有問題」、也不是「已檢查無異常」。
+
+* ✗ `const tone = p.tone || "neutral"` ——一行把整批沒跑過分類的貼文變成中性
+* ✗ 把未分類的那些從組成裡拿掉，只印已分類的三個數字（分母會少一截）
+* ✓ 印「未分類 N 則」，樣式與 `.insuff`（資料不足）同一族，不與「中性」同族
+
+這與 §2.2「無訊號不是綠燈」是同一條原則的第二個形態：**我們沒看過的東西，
+畫面上不可以長得像我們看過而且沒事。**
+
+### 7.8 不要把新聞的標籤與 Threads 的語氣混為一談
+
+完整規則在 §2.9。前端最容易犯的三個形態：
+
+* ✗ 把新聞那一則畫上「語氣負面」的標籤（它是**已發生之官方行動的報導**，
+  不是情緒）
+* ✗ 把 `threads.tone.counts` 與 `mentions.labels.counts`／`items[].news.counts`
+  加起來，得到一個「總共幾則負面」——那是把未查證的抱怨與已起訴的案件數成
+  同一類，§7.1 的另一個形態
+* ✗ 把兩個組成印在同一行、中間放一個「·」——沒有抬頭的話兩串數字會讀成一串
+
+✓ 兩個組成分兩行、各自帶抬頭（「貼文語氣」／「新聞／PTT」），文字各用各的
+詞彙。顏色可以共用（這個介面只有 `--seal` 與 `--warn` 兩個語意色），
+**詞彙不行**。
+
+排序控制（若有）也適用同一條：「關注程度」這類排序**只能依其中一族**排，
+而且要說清楚依的是哪一族；把兩族混成一個分數就是上面第二點。
+
+### 7.9 用詞界線
 
 社群內容是**未經查證的公開內容**。面向使用者的文字一律用：
 
@@ -582,7 +848,7 @@ const buzz = counts.threads.mentions + counts.threads.replies
 
 ---
 
-## 7. 管道未開通時，畫面該長什麼樣
+## 8. 管道未開通時，畫面該長什麼樣
 
 管道沒開**不能靜靜地回空陣列**——那會教操作的人「這一園很平靜」，而事實是沒有
 人在聽。`sources[]` 永遠回七條，沒開通的那幾條要顯示，並附上怎麼開通。
@@ -607,7 +873,7 @@ const buzz = counts.threads.mentions + counts.threads.replies
 
 ---
 
-## 8. 錯誤與邊界
+## 9. 錯誤與邊界
 
 | 情況 | 回應 |
 |---|---|
@@ -624,7 +890,7 @@ const buzz = counts.threads.mentions + counts.threads.replies
 
 ---
 
-## 9. 相關檔案
+## 10. 相關檔案
 
 | 路徑 | 內容 |
 |---|---|
@@ -632,5 +898,12 @@ const buzz = counts.threads.mentions + counts.threads.replies
 | `src/smart_watchdog/realtime/sources.py` | 管道定義與 `legal_basis`（模組說明講了 availability 為何是一等公民）|
 | `src/smart_watchdog/realtime/mention_store.py` | Threads 通報的寫入與查詢，`attribution_source` 的三個值 |
 | `src/smart_watchdog/db/models.py::ThreadsMention` | 欄位語意的權威來源 |
-| `docs/research/06-realtime-event-monitoring-plan.md` | §1 不併入風險分數、§6 alert governance |
+| `src/smart_watchdog/realtime/classify.py` | 貼文分類：封閉值、一次性補完、不接 agent、不做歸屬 |
+| `src/smart_watchdog/realtime/news_classify.py` | 新聞／PTT 分類：同樣的隔離，但用**新聞自己的詞彙**（§2.9），結果寫 sidecar |
+| `scripts/classify_news_mentions.py` | 補跑新聞分類的 CLI（`python run.py classify-news`），有快取與硬上限 |
+| `data/runtime/news_labels.jsonl` | 新聞標籤的 sidecar。可刪可重建；**釘住的快照 CSV 不會被寫入** |
+| `tests/test_news_classify.py` | §2.9 每一條保證的對應測試 |
+| `src/smart_watchdog/report/reply.py` | 回覆草稿產生器：樣板地板＋Bedrock 生成，兩者都過 `verify.py` |
+| `src/smart_watchdog/report/verify.py` | `verify_letter()` 與 `verify_reply()` 共用同一份用詞清單 |
+| `docs/research/06-realtime-event-monitoring-plan.md` | §1 不併入風險分數、§6 事件分類與 alert governance |
 | `tests/test_social_api.py` | 本文件每一條保證的對應測試 |

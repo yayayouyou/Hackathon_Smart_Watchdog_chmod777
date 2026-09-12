@@ -81,6 +81,9 @@ async function boot() {
   api("/api/scan/budget").then((b) => {
     $("s-budget").textContent =
       `US$${b.month_spent_usd.toFixed(2)}/${b.caps.month.toFixed(2)}`;
+    // 摺疊列也印一次：收起來的時候，額度是唯一還看得見的成本訊號。
+    const fold = $("scanfold-budget");
+    if (fold) fold.textContent = `本月尚可 US$${b.month_remaining_usd.toFixed(2)}`;
   }).catch(() => { $("s-budget").textContent = "—"; });
 
   initMap();

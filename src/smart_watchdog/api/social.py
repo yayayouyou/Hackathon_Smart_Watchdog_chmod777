@@ -40,10 +40,11 @@ import pathlib
 from typing import Any, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from ..db.session import get_db
-from ..realtime import mention_store
+from ..realtime import classify, demo_data, mention_store, news_classify
 
 router = APIRouter(prefix="/api/social", tags=["social"])
 
@@ -99,6 +100,28 @@ _WHY_NOT = {
 #: 「沒有訊號」與「沒有異常」的分界線，逐字固定下來。
 _QUIET = "無訊號不等於無異常；本系統僅代表未取得公開社群內容。"
 
+#: 語氣分類的層級界線，逐字固定下來，三支端點共用。**上色在貼文，不在機構。**
+#: 把一整園染成一個顏色，等於用未查證的貼文對一家真實機構下風險判斷——
+#: `features/alerts.py` 整支模組就是為了不製造這種傷害而存在的（它的模組說明
+#: 記了四個真實誤配，其中一則是某園公開澄清自己被誤認為新聞裡的那一家）。
+#: 所以機構那一層回的是**組成**（三則負面、一則中性、一則詢問），不是一個值。
+TONE_NOTE = ("語氣分類是對**單一貼文**的標記，不是對機構的評價，也不進任何分數"
+             "（06-plan §1）。機構層只回各語氣的則數組成，不回單一語氣、"
+             "不回風險等級；未分類代表尚未跑過分類，不是中性、也不是沒有問題。")
+
+#: 新聞／PTT 的標籤定位，逐字沿用 `realtime/news_classify.py` 的那一句。
+#: **兩套標籤不共用、計數不合併**，理由見那支模組的模組說明：一則民眾抱怨
+#: （未查證的陳述）與一件已經起訴的案子（已發生的官方行動）不是同一種東西，
+#: 共用同一個「語氣負面」標籤就是把稽查員判斷輕重的依據抹掉。
+LABEL_NOTE = news_classify.LABEL_NOTE
+
+#: 示範機構的定位，逐字固定下來。`is_demo` 為 true 的每一列都適用。
+#: 示範內容不准指名真實機構——編造的投訴掛在真機構名下就是捏造指控，
+#: 與 CLAUDE.md「輸出定位」同一條界線。理由見 `realtime/demo_data.py`。
+DEMO_NOTE = ("is_demo 為 true 的機構是示範用的虛構園所（data/demo/"
+             "institutions_demo.csv），不存在於真實主檔、不進風險分數、"
+             "不進 payload。畫面上必須標示，不可與真實機構混為一談。")
+
 #: 跨機構列表掃多少列資料庫。列表要先分組再排序，所以不能靠 SQL 的 LIMIT——
 #: 那會在分組之前就把某一園的較舊那幾列切掉，counts 就少了。
 _ROW_SCAN = 2000
@@ -151,6 +174,13 @@ def _master() -> dict[str, dict]:
                     "title": row.get("title", ""),
                     "town": row.get("town", ""),
                 })
+    # 示範機構（`realtime/demo_data.py`）也要查得到，否則指名它們的示範貼文
+    # 在畫面上會變成「認不出是哪一園」。它們只到得了這張查表——payload、
+    # 風險分數、`data/processed/` 的任何一個檔案都沒有它們的路徑。
+    for inst in demo_data.institutions():
+        full = str(inst["id"])
+        out.setdefault(full[:8], {"id": full, "title": inst["title"],
+                                  "town": inst["town"]})
     return out
 
 
@@ -178,6 +208,9 @@ def _institution(institution_id: str) -> dict:
         "full_id": master.get("id") or (given if len(given) > 8 else short),
         "title": point.get("full") or master.get("title", ""),
         "town": point.get("d") or master.get("town", ""),
+        # 示範機構要自己說出來。名字看得出是假的不算數：畫面會被截圖，
+        # 而截圖裡沒有人可以問「這一家是真的嗎」。判斷靠 id 不靠名字。
+        "is_demo": demo_data.is_demo(short),
     }
 
 
@@ -237,11 +270,28 @@ def _post(row: dict, full_id: str) -> dict:
         "attribution_basis": row["attribution_basis"],
         "institution_id": row["institution_id"],
         "institution_title": _title_of(row["institution_id"]),
+        # 這一則指名的是示範機構嗎。前端照這個印「示範資料」，不自己看名字。
+        "is_demo": demo_data.is_demo(row["institution_id"]),
         "reply_to_threads_id": row["reply_to_threads_id"],
         "is_reply": row["is_reply"],
         # 這一串裡可能混著別家的回覆（「吉尼爾也這樣」）。縮排會讓人讀成
         # 「這則也是在講上面那一園」，所以每一則都自己說是不是。
         "is_this_institution": row["institution_id"] == full_id,
+        # ── 分類（`realtime/classify.py`）──────────────────────────
+        # 全是封閉值，沒有摘要、沒有引文、沒有建議、沒有分數。模型寫的自由
+        # 文字（`issues`）刻意不經過這裡：它的內容受外部貼文影響，印在官方
+        # 主控台上等於讓陌生人的句子借用系統的口吻說話。要看原文點 permalink。
+        "event_category": row["event_category"],
+        "tone": row["tone"],
+        "specificity": row["specificity"],
+        "stance": row["stance"],
+        "contains_minor_identifiers": row["contains_minor_identifiers"],
+        "classified_at": row["classified_at"],
+        # 前端該把這一則畫成哪一堆。**`classified_at` 為空時是 `unclassified`，
+        # 不是 `neutral`**——前端若自己寫 `tone || "neutral"`，132 則沒有人看過
+        # 的貼文會一次變成中性。所以這個判斷在後端做一次，前端照著畫。
+        "tone_bucket": classify.tone_of(row),
+        "tone_label": classify.TONE_LABELS[classify.tone_of(row)],
     }
 
 
@@ -276,6 +326,7 @@ def threads_of(db: Session, full_id: str, *, limit: int = _THREAD_ROWS) -> dict:
             entry = others.setdefault(key, {
                 "institution_id": p["institution_id"],
                 "title": p["institution_title"],
+                "is_demo": p["is_demo"],
                 "posts": 0,
             })
             entry["posts"] += 1
@@ -295,6 +346,11 @@ def threads_of(db: Session, full_id: str, *, limit: int = _THREAD_ROWS) -> dict:
                 "replies": sum(1 for p in mine if p["kind"] == mention_store.REPLY),
                 "posts_in_thread": len(posts),
             },
+            # 語氣**組成**，不是單一語氣，所以它不住在 `counts` 裡——`counts`
+            # 數的是貼文，這個講的是那些貼文長什麼樣。只算歸屬到這一園的那幾則：
+            # 串裡指名別家的那則仍會顯示，但把它計進來就是替這一園多記一筆
+            # 別人的抱怨。
+            "tone": classify.compose(mine),
             # 這一串裡歸屬到別家的貼文。空的是常態；有值代表一串討論裡冒出了
             # 第二家，那是新線索不是雜訊。
             "other_institutions": list(others.values()),
@@ -319,6 +375,9 @@ def threads_of(db: Session, full_id: str, *, limit: int = _THREAD_ROWS) -> dict:
         "has_signal": bool(items),
         "reason": reason,
         "counts": counts,
+        # 這一園的語氣組成。**沒有「主要語氣」欄位，也不會有**——理由見 TONE_NOTE。
+        "tone": classify.compose(rows),
+        "tone_note": TONE_NOTE,
         "items": items,
     }
 
@@ -327,7 +386,10 @@ def threads_of(db: Session, full_id: str, *, limit: int = _THREAD_ROWS) -> dict:
 
 
 def _live_item(mention: dict, labels: dict) -> dict:
-    return {
+    # `decorate()` 只查 sidecar（`data/runtime/news_labels.jsonl`），不打模型：
+    # 面板會被反覆重整，而分類是要錢的。補跑走
+    # `scripts/classify_news_mentions.py`，查不到就照實回「未分類」。
+    return news_classify.decorate({
         "channel": mention.get("channel", ""),
         "channel_label": labels.get(mention.get("channel", ""), mention.get("channel", "")),
         "headline": mention.get("headline", ""),
@@ -335,15 +397,16 @@ def _live_item(mention: dict, labels: dict) -> dict:
         "published": mention.get("published", ""),
         "publisher": mention.get("publisher", ""),
         "attribution_basis": mention.get("attribution_basis", ""),
-        # 即時結果不做分類；null 是「沒有這個欄位」，不是「分類為無」。
+        # 即時結果不做關鍵字分類；null 是「沒有這個欄位」，不是「分類為無」。
+        # 模型那一層（`report_kind`）不看這個欄位，兩層各自獨立。
         "kind": None,
         "source": "live",
         "may_store": bool(mention.get("stored", False)),
-    }
+    })
 
 
 def _snapshot_item(row: dict, labels: dict) -> dict:
-    return {
+    return news_classify.decorate({
         "channel": row.get("ch", ""),
         "channel_label": labels.get(row.get("ch", ""), row.get("ch", "")),
         "headline": row.get("h", ""),
@@ -352,10 +415,12 @@ def _snapshot_item(row: dict, labels: dict) -> dict:
         "publisher": row.get("p", ""),
         # 快照沒有保留歸屬依據。null 代表「當時沒記下來」，不是「沒有依據」。
         "attribution_basis": None,
+        # 關鍵字表（`features/alerts.py::article_kind()`）當時記下的那個值。
+        # **原樣留著，不被模型結果覆蓋**：兩者不一致的那幾則正是最該看的。
         "kind": row.get("k"),
         "source": "snapshot",
         "may_store": True,
-    }
+    })
 
 
 def mentions_of(institution: dict, *, live: bool = True, limit: int = 20) -> dict:
@@ -378,6 +443,12 @@ def mentions_of(institution: dict, *, live: bool = True, limit: int = 20) -> dic
     errors: list[dict] = []
     live_items: list[dict] = []
 
+    # 示範機構不去查外面。拿一個虛構園名打新聞與 PTT，回來的只會是空的；
+    # 萬一不是空的，那就是把一篇關於**真實**機構的報導掛到了假園名下。
+    if live and demo_data.is_demo(institution["id"]):
+        live = False
+        skipped = [{"key": c.key, "reason": "示範機構，不對外查詢"}
+                   for c in channels]
     if live:
         result = watch({"id": institution["id"], "title": institution["title"],
                         "town": institution["town"]},
@@ -388,7 +459,7 @@ def mentions_of(institution: dict, *, live: bool = True, limit: int = 20) -> dic
         skipped = [{"key": c.key,
                     "reason": _WHY_NOT.get(c.status, "尚未開通")}
                    for c in channels if c.status != LIVE]
-    else:
+    elif not skipped:
         skipped = [{"key": c.key, "reason": "本次以 live=false 呼叫，未即時查詢"}
                    for c in channels]
 
@@ -418,6 +489,11 @@ def mentions_of(institution: dict, *, live: bool = True, limit: int = 20) -> dic
         "errors": errors,
         "snapshot_swept_at": snapshot.get("swept_at", ""),
         "counts": counts,
+        # 報導**性質**的組成，不是語氣組成，所以它住在自己的欄位裡而不是
+        # 併進 `threads.tone`。兩邊的分母是兩種東西：那邊數的是未查證的民眾
+        # 陳述，這邊數的是已經見報的報導。加起來就分不出來了。
+        "labels": news_classify.compose(items),
+        "label_note": LABEL_NOTE,
         "items": items,
     }
 
@@ -529,6 +605,13 @@ def _reviews_block(institution_id: str) -> dict:
     前端少一個判斷分支，就少一個把缺金鑰畫成綠燈的機會。`/api/reviews/{id}`
     仍然回原本那句（它的呼叫端是卷宗，不是這個面板）。
     """
+    if demo_data.is_demo(institution_id):
+        # 示範機構沒有 Google 商家，也不在 payload 上。`reviews_of()` 對不在
+        # payload 上的 id 是丟 404，而那個 404 會讓**整個面板**消失——看起來
+        # 就像這一園不存在，而不是「這一段不適用」。
+        return {"available": False, "has_signal": False,
+                "reason": f"示範機構沒有 Google 商家資料，本段不適用。{_QUIET}",
+                "reviews": [], "note": REVIEWS_NOTE, "may_store": False}
     try:
         raw = reviews_of(institution_id)
     except HTTPException:
@@ -631,8 +714,10 @@ def browse(limit: int = Query(50, ge=1, le=500),
 
     def _entry(short: str) -> dict:
         return agg.setdefault(short, {
-            "roots": set(), "mentions": 0, "replies": 0,
-            "channels": {}, "latest": None, "last": "",
+            "roots": set(), "mentions": 0, "replies": 0, "posts": [],
+            # `posts` 餵語氣組成、`news` 餵報導性質組成。**兩個清單刻意分開**，
+            # 因為它們永遠不會被加在一起——合在一個清單裡的那天就會有人這麼做。
+            "channels": {}, "news": [], "latest": None, "last": "",
         })
 
     def _offer(entry: dict, stamp: str, latest: dict) -> None:
@@ -645,6 +730,7 @@ def browse(limit: int = Query(50, ge=1, le=500),
             continue                      # 拒配的在 /api/social/unattributed
         entry = _entry(str(row["institution_id"])[:8])
         entry["roots"].add(row["root_threads_id"] or row["threads_id"])
+        entry["posts"].append(row)
         if row["kind"] == mention_store.REPLY:
             entry["replies"] += 1
         else:
@@ -666,6 +752,8 @@ def browse(limit: int = Query(50, ge=1, le=500),
         for row in rows:
             ch = row.get("ch", "")
             entry["channels"][ch] = entry["channels"].get(ch, 0) + 1
+            entry["news"].append(news_classify.label_of(
+                ch, row.get("u", ""), row.get("h", "")))
             _offer(entry, _date10(row.get("d")), {
                 "source": ch,
                 "kind": row.get("k"),
@@ -697,6 +785,8 @@ def browse(limit: int = Query(50, ge=1, le=500),
             "full_id": master.get("id") or short,
             "title": point.get("full") or master.get("title", ""),
             "town": row_town,
+            # 示範機構（`realtime/demo_data.py`）。這一列在畫面上要標出來。
+            "is_demo": demo_data.is_demo(short),
             # 來源給什麼就是什麼：Threads 給完整時戳，快照只給日期。
             "last_activity": entry["last"],
             "last_activity_date": last_date,
@@ -706,6 +796,15 @@ def browse(limit: int = Query(50, ge=1, le=500),
                             "replies": entry["replies"]},
                 "mentions": mention_counts,
             },
+            # 這一列該印「3 則語氣負面 · 1 則中性 · 1 則詢問」，不是一個顏色。
+            # 放在 `counts` 之外，因為 `counts` 的每一項都是「幾則」，而這一項
+            # 是那幾則的組成——混進去會讓「各來源計數不可相加」那句話多一個
+            # 不是計數的成員。理由見 TONE_NOTE。
+            "tone": classify.compose(entry["posts"]),
+            # 新聞／PTT 的性質組成。**與 `tone` 是兩個欄位，不相加、不合併成
+            # 一個「關注度」**：那邊是未查證的民眾陳述，這邊是已經見報的報導，
+            # 數成同一類就等於把「有人抱怨」與「已經起訴」畫上等號。
+            "news": news_classify.compose(entry["news"]),
             "latest": entry["latest"],
             "has_signal": True,
         })
@@ -731,6 +830,9 @@ def browse(limit: int = Query(50, ge=1, le=500),
         "items": shown,
         "note": ("依最近活動時間排序，不是聲量排行榜；本端點不回任何分數。"
                  + COUNTS_NOTE),
+        "tone_note": TONE_NOTE,
+        "label_note": LABEL_NOTE,
+        "demo_note": DEMO_NOTE,
         "disclaimer": DISCLAIMER,
     }
 
@@ -764,5 +866,96 @@ def institution_social(institution_id: str, live: bool = True,
         "has_signal": has_signal,
         "reason": "" if has_signal else (
             f"三個來源目前都沒有訊號。{_QUIET}"),
+        # 文字住在後端，前端照印。示範與真實的分界線由一句話定義，
+        # 而那句話有兩個呼叫端（列表與單園面板）——寫在前端就是寫兩次。
+        "demo_note": DEMO_NOTE if inst["is_demo"] else "",
+        "disclaimer": DISCLAIMER,
+    }
+
+
+# ── 擬定回覆 ──────────────────────────────────────────────────────────
+# 路徑多一段（`/{id}/draft-reply`），所以與上面那支 catch-all GET 不會相撞；
+# 方法也不同。`unattributed` 那個排序陷阱在這裡不成立。
+
+
+class DraftReplyRequest(BaseModel):
+    """`root_threads_id` 指定要回哪一串。`backend` 不給時自動選。
+
+    `backend="template"` 是**離線與測試的那條路**，也是模型不通時的地板；
+    `"bedrock"` 強制走生成。兩者的輸出都必須通過 `report/verify.py` 的閘門，
+    所以選哪一個改變的是措辭，不是這份草稿被允許說什麼。
+    """
+
+    root_threads_id: str
+    backend: Optional[str] = None
+
+
+@router.post("/{institution_id}/draft-reply")
+def draft_reply(institution_id: str, req: DraftReplyRequest,
+                db: Session = Depends(get_db)) -> dict:
+    """替一串 @標註通報擬一份回覆草稿。**只回文字，不送出任何東西。**
+
+    這支端點是整個系統裡唯一一個以「民眾的貼文」為輸入產生對外文字的地方，
+    所以它的三條界線寫在這裡而不只寫在 `report/reply.py`：
+
+    1. **不發文。** 本函式不 import `scrape/threads.py`，那支模組也沒有任何
+       發文、回覆或刪除的函式可以被 import。草稿走到承辦人畫面上就停住。
+       官方帳號在任何人讀過內容之前自動回「已收到您的通報」，是一個公開的
+       受理表態——`scrape/threads.py` 的模組說明把這件事講得很清楚。
+    2. **標題取自那一串自己的歸屬，不取自網址。** 網址上的機構只是畫面脈絡；
+       若那一串歸屬到別家，這裡回 400 而不是照著網址寫一個園名上去——
+       草稿不得宣稱一個 `mention_store` 沒有做出來的歸屬。
+    3. **草稿不入庫、不進分數、不進 payload。** 與 `threads_mention` 那張表的
+       不變式一致：要進卷宗必須人工逐則採用，而且沒有那條程式路徑。
+    """
+    from ..report import reply as _reply
+
+    inst = _institution(institution_id)
+    root = str(req.root_threads_id or "").strip()
+    if not root:
+        raise HTTPException(400, "需要 root_threads_id")
+
+    rows = mention_store.thread(db, root)
+    if not rows:
+        raise HTTPException(404, f"查無這一串通報 {root}")
+    head = rows[0]
+    if head["threads_id"] != root:
+        # 只抓到回覆、主貼文不在庫裡。要回的那個人不在手上，草稿沒有收件人。
+        raise HTTPException(
+            409, f"主貼文 {root} 不在庫裡（只同步到串下回覆），無法擬定回覆")
+    if head["institution_id"] and head["institution_id"] != inst["full_id"]:
+        raise HTTPException(
+            409, f"這一串歸屬到 {_title_of(head['institution_id']) or '另一家機構'}，"
+                 f"不是 {inst['title']}；請從該園的面板擬定回覆")
+
+    kind = (req.backend or "").strip().lower() or (
+        "bedrock" if _reply.available() else "template")
+    backend = _reply.get_backend(kind)
+    # 標題取自那一串自己的歸屬。拒配的那些照樣可以擬稿，但草稿會說「未歸屬」
+    # ——比在草稿上印一個猜出來的園名誠實。
+    title = _title_of(head["institution_id"]) if head["institution_id"] else ""
+    result = _reply.draft({"title": title}, rows, backend=backend)
+
+    return {
+        "institution": inst,
+        "root_threads_id": root,
+        "permalink": head["permalink"],
+        "posts_used": len(rows),
+        "attributed": bool(head["institution_id"]),
+        "draft": result.text,
+        # 可送出的那一段單獨給一次，讓前端不必自己切字串——切錯的後果是把
+        # 「承辦人須知」連同園名一起貼到公開平台上。
+        "sendable": result.sendable,
+        "sendable_mark": _reply.SENDABLE_MARK,
+        "backend": result.backend,
+        "verified": result.verified,
+        "problems": result.problems,
+        "fell_back": result.fell_back,
+        "fallback_reason": result.fallback_reason,
+        "checklist": list(_reply.CHECKLIST),
+        # 前端不得把這個值畫成「已送出」「已受理」或任何完成狀態。
+        "auto_send": False,
+        "note": ("草稿未送出，也不會自動送出：本系統對 Threads 只有讀取，"
+                 "沒有任何發文路徑。送出與否、用什麼身分送，由承辦人決定。"),
         "disclaimer": DISCLAIMER,
     }

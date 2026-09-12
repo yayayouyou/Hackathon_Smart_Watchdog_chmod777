@@ -38,10 +38,31 @@ def _our_scripts() -> list[pathlib.Path]:
     return sorted(p for p in WEBAPP.glob("*.js"))
 
 
+def _script_order() -> list[str]:
+    """index.html 裡的載入順序，也就是瀏覽器建立全域範圍的順序。"""
+    return re.findall(r'<script src="/static/([a-z]+)\.js"></script>', _html())
+
+
+def _pollutes_global(src: str) -> bool:
+    """這支腳本有沒有把頂層宣告丟進共用的全域範圍（IIFE 包起來的就沒有）。"""
+    return not re.match(r"\s*(?:/\*.*?\*/\s*)*\(function\s*\(\)\s*\{", src, re.S)
+
+
 def _html() -> str:
     return (WEBAPP / "index.html").read_text(encoding="utf-8")
 
 
+def _without_comments(text: str) -> str:
+    """去掉 /* ... */ 與整行的 // 註解。
+
+    「這個檔案不得寫 X」問的是程式有沒有寫 X，不是註解有沒有提到 X。整份原始碼
+    直接 grep 的話，一支把理由寫清楚的檔案會因為在註解裡寫了「不可以
+    `tone || "neutral"`」而被自己的測試判紅——這兩條測試的第一版正是這樣。
+    只吃整行的 //：行內的 `https://` 一併吃掉的話，連結會被切一半。
+    """
+    out = re.sub(r"/\*.*?\*/", " ", text, flags=re.S)
+    kept = [ln for ln in out.splitlines() if not ln.strip().startswith("//")]
+    return "\n".join(kept)
 def _code(js: str) -> str:
     """拿掉註解。
 
@@ -523,15 +544,27 @@ def test_switching_between_rooms_does_not_refit_the_map() -> None:
     )
 
 
-def test_social_panel_sits_above_the_scan_console() -> None:
-    """輿情室的順序即是使用順序：先看已經收到的，再決定要不要花錢掃。
+def test_social_panel_comes_before_the_scan_console() -> None:
+    """輿情室左右分欄，社群聲音在左（也就是原始碼在前）。
 
-    `socialwrap` 讀庫是免費的；`scanwrap` 底下每一次執行都會計費。把花錢的
-    那一塊放在上面，等於請人先付錢再看手上有什麼。
+    `socialwrap` 讀庫是免費的；`scanwrap` 底下每一次執行都會計費。讀順序是
+    先看手上已經收到什麼，再決定要不要花錢再找——把付費那欄擺前面，等於
+    請人先付錢再看手上有什麼。窄螢幕會退回上下排，順序同樣由原始碼決定。
     """
     html = _html()
     assert "socialwrap" in html and "scanwrap" in html
     assert html.index('id="socialwrap"') < html.index('id="scanwrap"')
+
+
+def test_the_remaining_budget_is_visible_without_scrolling() -> None:
+    """右欄頂端常駐剩餘額度。
+
+    掃描台每一次執行都會花錢，而金額只印在捲到底的按鈕上時，決定要不要按的
+    人不一定看得到自己還剩多少。欄頭那一格是唯一不會被捲走的位置。
+    """
+    assert 'id="scanfold-budget"' in _html()
+    app = (WEBAPP / "app.js").read_text(encoding="utf-8")
+    assert "scanfold-budget" in app, "額度欄位沒有人填值"
 
 
 def test_social_panel_is_opened_when_the_room_is_entered() -> None:
@@ -573,6 +606,287 @@ def test_no_signal_is_never_rendered_as_a_pass() -> None:
         assert banned not in src, f"社群面板不得用「{banned}」把無訊號畫成合格"
 
 
+def test_scripts_do_not_collide_in_the_shared_global_scope() -> None:
+    """傳統 <script> 共用一個全域範圍，兩支各宣告一次同名 const 就是 SyntaxError。
+
+    實際發生過：social.js 跟著 scan.js 寫 `const S = window.SW;` 放在頂層，
+    兩個 `const S` 撞在一起，**後載入的 scan.js 整支解析失敗**——
+    `Uncaught SyntaxError: Identifier 'S' has already been declared`。
+    症狀是掃描主控台永遠停在「載入中…」，而 scan.js 自己一個字都沒改。
+
+    `node --check` 是逐檔跑的，看不到這件事。把所有腳本照 index.html 的載入
+    順序接起來再檢查一次，就是瀏覽器實際會遇到的那個範圍。
+    """
+    node = shutil.which("node")
+    if not node:
+        pytest.skip("沒有 node，跳過全域衝突檢查")
+    order = _script_order()
+    joined = "\n".join(
+        (WEBAPP / f"{name}.js").read_text(encoding="utf-8")
+        for name in order if (WEBAPP / f"{name}.js").exists()
+    )
+    merged = WEBAPP.parent / "tmp" / "_merged_scripts_check.js"
+    merged.parent.mkdir(parents=True, exist_ok=True)
+    merged.write_text(joined, encoding="utf-8")
+    try:
+        r = subprocess.run([node, "--check", str(merged)],
+                           capture_output=True, text=True)
+        assert r.returncode == 0, (
+            "腳本在共用的全域範圍裡衝突（把重複的頂層宣告包進 IIFE）：\n"
+            + r.stderr[:600]
+        )
+    finally:
+        merged.unlink(missing_ok=True)
+
+
+def test_no_two_scripts_declare_the_same_global_name() -> None:
+    """頂層 `function` 重名是**靜默覆蓋**，比 const 衝突更難查。
+
+    實際發生過：scan.js 與 timeline.js 都宣告 `function render()`，而
+    timeline.js 載入在後——於是 scan.js 裡呼叫的 `render()` 跑的是 timeline
+    的那一個。掃描主控台永遠停在「載入中…」，`open()` 回報成功，Console
+    一個字都不印，因為沒有任何錯誤發生：只是叫錯了函式。
+
+    `const` 衝突會丟 SyntaxError，上面那條測試抓得到；function 宣告不會，
+    所以要另外比對名字。修法一律是把該腳本包進 IIFE，不是改名字——改名字
+    只是把同一顆地雷留給下一個檔案。
+    """
+    seen: dict[str, list[str]] = {}
+    for name in _script_order():
+        path = WEBAPP / f"{name}.js"
+        if not path.exists():
+            continue
+        src = path.read_text(encoding="utf-8")
+        if not _pollutes_global(src):
+            continue
+        for pattern in (r"^(?:async\s+)?function\s+([A-Za-z_$][\w$]*)",
+                        r"^(?:const|let|var)\s+([A-Za-z_$][\w$]*)"):
+            for m in re.finditer(pattern, src, re.M):
+                seen.setdefault(m.group(1), []).append(name)
+
+    clashes = {k: v for k, v in seen.items() if len(set(v)) > 1}
+    detail = "；".join(
+        f"{k} ← {'、'.join(dict.fromkeys(v))}" for k, v in sorted(clashes.items()))
+    assert not clashes, (
+        "這些名字在共用的全域範圍裡被多支腳本宣告，後載入的會靜默覆蓋前面的："
+        f"{detail}。修法：把其中一支包進 IIFE。"
+    )
+
+
+def test_no_duplicate_element_ids() -> None:
+    """`getElementById` 只回第一個，第二個從此是死的。
+
+    實際發生過：改版面時舊的 `<div id="socialwrap">` 沒刪、新的又加了一個，
+    於是畫面上多出一塊永遠停在「載入中…」的空白，而 JS 完全正常——它寫進了
+    第一個。標籤數量是平衡的，語法是合法的，只有肉眼看得出不對。
+    """
+    ids = re.findall(r'id="([a-zA-Z0-9_-]+)"', _html())
+    dupes = sorted({i for i in ids if ids.count(i) > 1})
+    assert not dupes, f"index.html 有重複的 id（第二個之後都取不到）：{dupes}"
+
+
+def test_no_font_size_drops_below_fifteen_pixels() -> None:
+    """使用者是中年稽查員。全站最小 15px，這條把它釘住。
+
+    `webapp/*.css` 全掃，不只掃新加的那幾條——字級是整站一起調的，一個檔案
+    偷偷放回 13px 的結果是那一塊在會場投影上沒有人讀得到。
+    """
+    small = re.compile(r"font-size:\s*(\d+(?:\.\d+)?)px")
+    for path in sorted(WEBAPP.glob("*.css")):
+        sizes = [float(v) for v in small.findall(path.read_text(encoding="utf-8"))]
+        tiny = sorted({v for v in sizes if v < 15})
+        assert not tiny, f"{path.name} 有小於 15px 的字級：{tiny}"
+
+
+def test_tone_colours_do_not_borrow_the_other_two_scales() -> None:
+    """語氣是第三套語意，不得沿用另外兩套的色階。
+
+    `--c1~c4` 是「建議查核密度」（我們算出來的），`--k0~k4` 是「歷史裁罰件數」
+    （主管機關已經開罰的公開事實）。style.css 的 --k0 註解已經說明了為什麼這
+    兩族在色相上必須分得開；第三套借用它們，同一張畫面上就會有三套顏色互相
+    解釋，而讀的人分不出自己在看哪一套。
+    """
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    block = _without_comments(css[css.index("/* ── 語氣上色"):])
+    for banned in ("--c1", "--c2", "--c3", "--c4",
+                   "--k0", "--k1", "--k2", "--k3", "--k4"):
+        assert banned not in block, f"語氣色不得沿用 {banned}"
+
+
+def test_every_tone_colour_has_a_text_label_next_to_it() -> None:
+    """不得出現沒有說明的色點。
+
+    這個畫面上的紅色最容易被猜成「這園有問題」，而它實際上只代表「這一則貼文
+    的語氣是負面的」。所以有顏色的地方都要帶字：貼文用 toneTags() 配一顆帶
+    文字的膠囊，機構列用 toneComposition() 印「N 則語氣負面」。
+
+    第一版是數 `"t-neg"` 出現幾次，要求只能有一處。那是拿出現次數當代理指標：
+    組成列各段上色後自然變成兩處，測試就紅了——但那次改動並沒有違反這條規則，
+    紅的是斷言本身。改成檢查**兩個產生顏色的函式都會輸出文字**。
+    """
+    src = _without_comments((WEBAPP / "social.js").read_text(encoding="utf-8"))
+    assert "function toneTags" in src and "function toneComposition" in src
+    assert "tone_label" in src, "語氣膠囊要印後端給的中文標籤"
+
+    # 兩支函式的本體裡，凡是寫出顏色 class 的那一段，同一段也要有文字輸出。
+    for fn in ("toneTags", "toneComposition"):
+        body = src[src.index(f"function {fn}"):]
+        body = body[:body.index("\nfunction ") if "\nfunction " in body else len(body)]
+        if "t-neg" in body or "t-warn" in body:
+            assert "labels" in body or "tone_label" in body or "則" in body, (
+                f"{fn}() 上了色卻沒有輸出文字標籤"
+            )
+
+
+def test_the_panel_never_defaults_an_unclassified_post_to_neutral() -> None:
+    """`tone || "neutral"` 那一行會讓一批沒有人看過的貼文一次變成中性。
+
+    後端已經把「跑過但看不出來」與「從來沒跑過」分開放進 tone_bucket，
+    前端照著畫；自己用 p.tone 重推一次就是把那個分別丟掉。
+    """
+    src = _without_comments((WEBAPP / "social.js").read_text(encoding="utf-8"))
+    assert "tone_bucket" in src
+    for banned in ('tone || "neutral"', "tone || 'neutral'",
+                   'p.tone === "neutral"'):
+        assert banned not in src, f"未分類不得被當成中性（{banned}）"
+    assert '"unclassified"' in src
+
+
+def test_the_draft_reply_button_hands_off_to_the_letters_room() -> None:
+    """草稿要出現在文書室，而且是走換室那條路——只換 pane 的話，室頭與樓層
+    索引還停在「03 輿情室」，內容卻已經是文書室的了。
+    """
+    src = (WEBAPP / "social.js").read_text(encoding="utf-8")
+    assert 'Lobby.go("letters")' in src
+    assert 'showPane("memos")' in src, "Lobby 不在時要有退路"
+    assert "SWMemos" in src
+    # 問的是「有沒有匯出這兩支」，不是「只匯出這兩支」。原本比對字面，
+    # 助理需要的 open／focus 一加上去就紅了——而那次改動並沒有違反這條規則。
+    memos = (WEBAPP / "memos.js").read_text(encoding="utf-8")
+    exported = re.search(r"window\.SWMemos\s*=\s*\{([^}]*)\}", memos)
+    assert exported, "memos.js 沒有匯出任何東西"
+    for fn in ("showDraft", "showDraftError"):
+        assert re.search(rf"\b{fn}\b", exported.group(1)), (
+            f"memos.js 沒有匯出 {fn}，輿情室的草稿送不過去"
+        )
+    assert 'go, back' in (WEBAPP / "lobby.js").read_text(encoding="utf-8")
+
+
+def test_the_draft_is_never_shown_as_something_already_sent() -> None:
+    """草稿不是公文。文書室裡它要說自己沒有被送出。"""
+    src = _without_comments((WEBAPP / "memos.js").read_text(encoding="utf-8"))
+    assert "草稿" in src
+    for banned in ("已送出", "已受理", "已回覆", "送出成功"):
+        assert banned not in src, f"草稿不得被畫成「{banned}」"
+
+
+def test_the_news_labels_never_borrow_the_tone_vocabulary() -> None:
+    """新聞那一族的膠囊不得寫「語氣負面」。
+
+    「教育局開罰 39 萬」是一件**已經作成的官方行動**被報導出來，
+    「多收教材費想問這樣合理嗎」是一句**未經查證的民眾陳述**。兩者都掛
+    「語氣負面」的話，稽查員就分不出該先看哪一則——而那個分別正是他判斷
+    輕重的依據。顏色可以共用（這個介面只有 --seal 與 --warn 兩個語意色），
+    詞彙不行。
+    """
+    src = _without_comments((WEBAPP / "social.js").read_text(encoding="utf-8"))
+    assert "function reportTags" in src and "function reportComposition" in src
+    for fn in ("reportTags", "reportComposition", "reportClass"):
+        body = src[src.index(f"function {fn}"):]
+        body = body[:body.index("\nfunction ") if "\nfunction " in body else len(body)]
+        for banned in ("語氣", "負面", "情緒"):
+            assert banned not in body, f"{fn}() 不得沿用語氣詞彙（{banned}）"
+    # 上了色就要有字，判準與語氣那兩支同一條。
+    for fn in ("reportTags", "reportComposition"):
+        body = src[src.index(f"function {fn}"):]
+        body = body[:body.index("\nfunction ") if "\nfunction " in body else len(body)]
+        if "r-event" in body or "r-dispute" in body:
+            assert "report_label" in body or "labels" in body or "則" in body, (
+                f"{fn}() 上了色卻沒有輸出文字標籤"
+            )
+
+
+def test_the_news_counts_are_never_merged_into_the_tone_counts() -> None:
+    """兩個組成分兩行印，各自帶抬頭，永遠不加在一起。
+
+    後端刻意把它們分成 `tone` 與 `news` 兩個欄位（api/social.py）。前端把它們
+    併成一串數字，就是把未查證的抱怨與已經起訴的案件數成同一類。
+    """
+    src = _without_comments((WEBAPP / "social.js").read_text(encoding="utf-8"))
+    assert "reportComposition(it.news)" in src, "機構列要讀後端分開回的 news"
+    assert "soc-cap" in src, "兩個組成要各自帶抬頭，否則會讀成同一串"
+    # 沒有任何一處把兩份 counts 相加或合併。
+    for banned in ("Object.assign(it.tone", "...it.tone", "tone.counts +"):
+        assert banned not in src, f"兩份組成不得合併（{banned}）"
+
+
+def test_the_news_colours_never_borrow_the_density_or_penalty_scales() -> None:
+    """--c1~c4（建議查核密度）與 --k0~k4（歷史裁罰件數）已經各有語意。
+
+    第三套借用它們的色階，同一張畫面上就會有三套顏色互相解釋。
+    """
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    block = css[css.index(".soc-rep{"):css.index(".soc-cap{")]
+    assert "--seal" in block and "--warn" in block
+    assert not re.search(r"var\(--[ck]\d\)", block), "語氣／報導色不得沿用密度或裁罰色階"
+    # 字級不得低於 15px。
+    for size in re.findall(r"font-size:(\d+)px", block):
+        assert int(size) >= 15, f"字級 {size}px 低於 15px"
+
+
+def test_the_list_can_be_sorted_but_does_not_default_to_attention() -> None:
+    """排序控制要在，而預設**不是**「關注程度」。
+
+    這個面板的資料有一個已知偏誤：抱怨的人會把園名寫完整（要讓機關找得到），
+    稱讚的人寫得隨意，所以歸屬成功率本身就與語氣相關。把「負面優先」設成永久
+    預設，等於讓一個部分由歸屬規則造成的排序每次開啟都排在最前面——那會讓人
+    以為輿情比實際更負面。做成選項讓人主動選，跟做成預設，是兩件事。
+    """
+    src = _without_comments((WEBAPP / "social.js").read_text(encoding="utf-8"))
+    assert 'id="socsort"' in src, "缺排序控制"
+    for label in ("關注程度", "最新活動", "機構名稱"):
+        assert label in src, f"缺排序選項「{label}」"
+    assert 'DEFAULT_SORT = "recent"' in src, "預設必須是最新活動"
+    assert 'DEFAULT_SORT = "attention"' not in src
+    # 排序偏好記在 localStorage，讀寫都要能吞掉例外（Brave 會直接丟）。
+    assert "localStorage" in src and src.count("catch") >= 2
+
+
+def test_the_unclassified_rows_get_their_own_group_in_the_attention_sort() -> None:
+    """「未分類」不得沉到底下跟「無負面」混在一起。
+
+    tone_bucket 為 unclassified 代表**沒有人看過**，不是「看過了沒問題」。
+    這與 docs/api/social-panel.md §7.7 是同一條原則：我們沒看過的東西，
+    畫面上不可以長得像我們看過而且沒事。
+
+    第一版寫死找「無負面」這個組名，分組改名成「未見負面訊號」之後就紅了——
+    但那次改動沒有違反這條規則。斷言改成問「未分類那一段有沒有排在
+    『查過而且沒事』那一段之前」，組名怎麼寫由版面決定。
+    """
+    src = _without_comments((WEBAPP / "social.js").read_text(encoding="utf-8"))
+    groups = src[src.index("ATTENTION_GROUPS = ["):]
+    groups = groups[:groups.index("]")]
+    assert "尚未分類" in groups, "關注程度排序要有未分類自己的一段"
+    settled = [g for g in ("未見負面訊號", "無負面") if g in groups]
+    assert settled, "要有一段代表「查過而且沒有負面訊號」"
+    assert groups.index("尚未分類") < groups.index(settled[0]), (
+        "未分類要排在「查過而且沒事」那一段之前，不可以混在一起或沉到最後"
+    )
+    assert "ATTENTION_WHY" in src, "未分類那一段要有一句話說明它不是「沒事」"
+
+
+def test_sorting_only_reorders_and_never_recomputes_a_count() -> None:
+    """排序不得改變任何計數或標籤，也不得原地改動後端給的清單。
+
+    Array.prototype.sort 是原地排序：直接排 social.list.items 會把後端給的
+    時間順序改掉，於是「最新活動」再也回不去了。
+    """
+    src = _without_comments((WEBAPP / "social.js").read_text(encoding="utf-8"))
+    body = src[src.index("function sortedItems"):]
+    body = body[:body.index("\nfunction ")]
+    assert "slice()" in body, "要先複製再排，不可以原地排後端給的清單"
+    for banned in ("counts =", "tone =", "labels ="):
+        assert banned not in body, f"排序不得改動計數或標籤（{banned}）"
 def test_no_two_scripts_declare_the_same_global() -> None:
     """傳統腳本共用同一個全域詞法作用域，同名的頂層 const 會讓後載入的那支
     **整支 SyntaxError 而不執行**。
@@ -744,3 +1058,65 @@ def test_the_memo_query_reaches_the_screen() -> None:
     assert '"memo_query"' in tools, "list_memos 沒有把查詢字串送給畫面"
     agent = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
     assert "SWMemos.focus" in agent, "分派器沒有把查詢字串套到畫面上"
+
+
+def _css_files() -> list[pathlib.Path]:
+    return sorted(p for p in WEBAPP.glob("*.css"))
+
+
+def test_no_css_rule_swallows_the_rest_of_the_stylesheet() -> None:
+    """一條沒關好的規則會把後面幾百行整個吃掉，而瀏覽器**不會報任何錯**。
+
+    實際發生過兩次，都是合併時新舊兩版交錯：新版開了 `{` 卻少了後半段與 `}`，
+    於是它一路吞到某段孤兒的 `}` 才收——中間 248 行規則全部失效，包括登入層的
+    `.authwrap{position:fixed;z-index:9000}`。表徵是登入畫面被中庭整片蓋住、
+    **完全無法登入**，而且帶著既有 cookie 測不會遇到，所以它躺了好幾個 commit
+    沒被發現。
+
+    括號總數是平衡的，所以單純數括號抓不到。這裡看的是「一條規則跨幾行」：
+    `@media` 與 `:root` 本來就長，其餘超過 40 行幾乎一定是吞掉了別人。
+    """
+    for path in _css_files():
+        raw = path.read_text(encoding="utf-8")
+        clean = re.sub(r"/\*.*?\*/", lambda m: "\n" * m.group(0).count("\n"),
+                       raw, flags=re.S)
+        lines = raw.splitlines()
+        depth, opened = 0, []
+        for i, line in enumerate(clean.splitlines(), 1):
+            for ch in line:
+                if ch == "{":
+                    depth += 1
+                    opened.append(i)
+                elif ch == "}":
+                    depth -= 1
+                    assert depth >= 0, f"{path.name} 第 {i} 行有多餘的 }}"
+                    start = opened.pop()
+                    head = lines[start - 1].lstrip()
+                    if head.startswith(("@media", "@supports", ":root")):
+                        continue
+                    assert i - start <= 40, (
+                        f"{path.name} 第 {start} 行的規則跨了 {i - start} 行才關："
+                        f"{head[:60]} —— 多半是少了 }}，後面全被吞掉"
+                    )
+        assert depth == 0, f"{path.name} 檔尾還有 {depth} 個未閉合的 {{"
+
+
+def test_no_orphan_declaration_lines_in_css() -> None:
+    """孤兒宣告行：`  padding:…;gap:12px}` 這種沒有選擇器的尾巴。
+
+    合併時舊版的開頭被刪掉、尾巴留下來就會變成這樣。它自己不會報錯，但那個
+    `}` 會關掉不屬於它的區塊，於是錯位一路傳下去。兩次事故都伴隨著它。
+    """
+    for path in _css_files():
+        raw = path.read_text(encoding="utf-8")
+        clean = re.sub(r"/\*.*?\*/", lambda m: "\n" * m.group(0).count("\n"),
+                       raw, flags=re.S)
+        depth = 0
+        for i, line in enumerate(clean.splitlines(), 1):
+            stripped = line.strip()
+            # 深度 0 時，一行若含 `:` 又以 `}` 結尾卻沒有 `{`，就是孤兒尾巴
+            if (depth == 0 and stripped.endswith("}") and "{" not in stripped
+                    and ":" in stripped):
+                raise AssertionError(
+                    f"{path.name} 第 {i} 行是沒有選擇器的孤兒宣告：{stripped[:70]}")
+            depth += line.count("{") - line.count("}")

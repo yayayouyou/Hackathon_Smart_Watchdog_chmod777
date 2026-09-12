@@ -22,10 +22,14 @@
 「吉尼爾幼兒園也這樣」的那一則，主體就是吉尼爾——串是討論的容器，不是主體的
 容器。哪一種算出來的，記在 `attribution_source`，不是記在文案裡。
 
-歸屬只吃**第一行**，不吃全文——理由見 `_headline()`。
+歸屬依「指名意圖由強到弱」逐個試：**hashtag → 第一行 → 全文**，理由見
+`attribution_candidates()`。第一版只吃第一行，於是一則標了 `#文德幼兒園` 的
+貼文因為第一行是「原來平衡感不是天生的」而拒配——園名在第 7 行的 hashtag 裡。
 """
 
 from __future__ import annotations
+
+import re
 
 from sqlalchemy import func, or_, select
 
@@ -70,15 +74,68 @@ def _headline(text: str) -> str:
     return str(text).strip().split("\n")[0] if text else ""
 
 
+#: 抓 hashtag 的本體。允許中英數與底線，遇到空白或標點就停。
+_HASHTAG = re.compile(r"#([0-9A-Za-z_一-鿿]{2,40})")
+
+
+def _hashtags(text: str) -> str:
+    """把貼文裡的 hashtag 串成一段，給歸屬優先比對。
+
+    `#文德幼兒園` 是發文者**刻意**指名的機構——比內文任何一句話都明確。
+    第一版只看第一行，於是一則標了 `#文德幼兒園` 的貼文因為第一行是
+    「原來平衡感不是天生的」而拒配；園名在第 7 行的 hashtag 裡。
+
+    串成一段而不是逐個比對，是為了讓 `attribute()` 的唯一性規則仍然作用：
+    同時標了兩所園的貼文應該拒配，逐個比對會變成「第一個標到的贏」。
+    """
+    tags = _HASHTAG.findall(str(text))
+    return " ".join(tags)
+
+
+def attribution_candidates(text: str) -> list[str]:
+    """依「指名意圖由強到弱」排出要拿去比對的候選字串。
+
+    1. **hashtag**——發文者明確標記的機構
+    2. **第一行**——最接近 `attribute()` 調校時的那種標題
+    3. **全文**——最後才用；內文裡順帶提到的園名也算指名，這與回覆的處理
+       一致（`record_replies()` 的說明：串是討論的容器，不是主體的容器）
+
+    逐個試、取第一個配得上的。**不放寬 `attribute()` 的任何規則**——
+    跨縣市否決、唯一候選、名稱要緊貼「幼兒園」前，每個候選都照樣要過。
+    這裡改的只是「拿哪段文字去問」，不是「問得寬鬆一點」。
+    """
+    out = []
+    tags = _hashtags(text)
+    if tags:
+        out.append(tags)
+    head = _headline(text)
+    if head and head not in out:
+        out.append(head)
+    body = " ".join(str(text).split())
+    if body and body not in out:
+        out.append(body)
+    return out
+
+
 def attribute_post(post, institutions: list[dict]):
     """跑一次歸屬。回傳 `alerts.Attribution`，拒配時 `institution_id` 是 None。
 
     `institutions` 的每一筆要有 `id`／`title`／`town`，與 `run_realtime_sweep.py`
     餵給其他管道的是同一份清單。
+
+    依 `attribution_candidates()` 的順序逐個試，取第一個配得上的；全部拒配時
+    回傳**第一個候選**的拒配理由，因為那是意圖最強的那一段——回「hashtag 裡
+    沒有可辨識的機構名」比回「全文第 37 個字不對」有用得多。
     """
     from ..features.alerts import attribute
 
-    return attribute(_headline(post.text), institutions)
+    first = None
+    for candidate in attribution_candidates(post.text):
+        result = attribute(candidate, institutions)
+        if result.attributed:
+            return result
+        first = first or result
+    return first or attribute("", institutions)
 
 
 def record(db, posts, institutions: list[dict] | None = None,
@@ -264,6 +321,16 @@ def _as_dict(row) -> dict:
         "reply_to_threads_id": row.reply_to_threads_id,
         "is_reply": row.is_reply,
         "observed_at": row.observed_at.isoformat() if row.observed_at else None,
+        # 分類結果（`realtime/classify.py`）。六欄一起帶，因為呼叫端要判斷的
+        # 是「跑過沒有」而不是「tone 有沒有值」——`classified_at` 是那個判準，
+        # 少帶它的話，`tone` 為 NULL 的舊列在畫面上會被讀成中性。
+        "event_category": row.event_category,
+        "tone": row.tone,
+        "specificity": row.specificity,
+        "stance": row.stance,
+        "contains_minor_identifiers": row.contains_minor_identifiers,
+        "classified_at": (row.classified_at.isoformat()
+                          if row.classified_at else None),
     }
 
 

@@ -103,22 +103,22 @@
 /* ── 身分資訊：右上角 ──────────────────────────────────── */
 .who-pod{display:flex;align-items:center;gap:10px;padding:5px 7px 5px 10px;
   border:1px solid var(--rule);border-radius:20px;background:var(--panel);
-  font-size:12px;color:var(--ink-3);cursor:pointer}
+  font-size:15px;color:var(--ink-3);cursor:pointer}
 .who-pod:hover{border-color:var(--ink-4)}
 .who-av{width:26px;height:26px;border-radius:50%;background:var(--seal-soft);
   border:1px solid var(--seal);display:grid;place-items:center;flex:none;
-  color:var(--seal);font-size:11px;font-weight:600}
+  color:var(--seal);font-size:15px;font-weight:600}
 .who-name{color:var(--ink);font-weight:500}
-.who-role{font-size:10.5px;color:var(--ink-4)}
+.who-role{font-size:15px;color:var(--ink-4)}
 
 /* 身分浮層：沿用 .pop 的殼，只加內容排版 */
 .pop.who{width:268px}
 .pop.who .row{display:flex;justify-content:space-between;gap:12px;padding:5px 0;
-  font-size:11.5px;border-bottom:1px dashed var(--rule)}
+  font-size:15px;border-bottom:1px dashed var(--rule)}
 .pop.who .row:last-of-type{border-bottom:0}
 .pop.who .row b{color:var(--ink);font-weight:500}
 .pop.who .towns{display:flex;gap:4px;flex-wrap:wrap;margin-top:3px}
-.pop.who .towns span{font-size:10.5px;color:var(--ink-2);border:1px solid var(--rule);
+.pop.who .towns span{font-size:15px;color:var(--ink-2);border:1px solid var(--rule);
   border-radius:2px;padding:0 5px}
 
 /* ── 室內：左側樓層索引 ────────────────────────────────── */
@@ -130,27 +130,45 @@
    用 --seal（守護犬項圈、品牌主色）而不是任何一間室的顏色——它不屬於任何
    一間室，而五間室的顏色刻意都避開紅色系，兩者不會被讀混。 */
 .rail-back{display:flex;align-items:center;gap:8px;padding:10px 11px;
-  border:0;border-radius:6px;font-size:13.5px;font-weight:600;color:#fff;
+  border:0;border-radius:6px;font-size:15px;font-weight:600;color:#fff;
   background:var(--seal);width:100%;cursor:pointer;transition:filter .12s}
 .rail-back:hover{filter:brightness(1.12)}
 .rail-back svg{opacity:.9}
-.rail-eyebrow{font-size:11px;letter-spacing:.1em;color:var(--ink-4);padding:0 4px 4px}
+.rail-eyebrow{font-size:15px;letter-spacing:.1em;color:var(--ink-4);padding:0 4px 4px}
 .rail-list{display:flex;flex-direction:column;gap:3px}
 /* 每一列左緣一條該室的色條，與中庭平面圖的門楣同色。未選中時淡、選中時實心，
    所以「我在哪一間」不必靠讀字。 */
 .rail-item{display:flex;align-items:center;gap:10px;padding:10px 11px;
-  border-radius:5px;font-size:14.5px;color:var(--ink-2);width:100%;
+  border-radius:5px;font-size:15px;color:var(--ink-2);width:100%;
   text-align:left;position:relative;overflow:hidden;
   box-shadow:inset 3px 0 0 color-mix(in srgb, var(--rc, var(--ink-4)) 42%, transparent);
   transition:background .12s,color .12s,box-shadow .12s}
 .rail-item:hover{background:color-mix(in srgb, var(--rc, var(--ink-4)) 9%, var(--panel));
   color:var(--ink);box-shadow:inset 3px 0 0 var(--rc, var(--ink-4))}
 /* 室號留著：它對得上中庭平面圖上的編號，「我在哪一間」才是連續的 */
-.rail-no{font-family:var(--mono);font-size:11.5px;font-weight:600;
+.rail-no{font-family:var(--mono);font-size:15px;font-weight:600;
   color:var(--rc, var(--ink-4));width:19px;flex:none}
 .rail-item[aria-current="true"]{
   background:color-mix(in srgb, var(--rc, var(--ink-4)) 13%, var(--panel));
   color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--rc, var(--ink-4))}
+.rail-back{display:flex;align-items:center;gap:8px;padding:9px 10px;
+  border:1px solid var(--rule);border-radius:5px;font-size:16px;color:var(--ink-2);
+  background:var(--panel);width:100%}
+.rail-back:hover{border-color:var(--seal);color:var(--ink)}
+.rail-eyebrow{font-size:15px;letter-spacing:.1em;color:var(--ink-4);padding:0 4px 4px}
+.rail-list{display:flex;flex-direction:column;gap:2px}
+.rail-item{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:5px;
+  font-size:17px;color:var(--ink-2);width:100%;text-align:left}
+.rail-item:hover{background:var(--paper);color:var(--ink)}
+/* 室號留著：它對得上中庭平面圖上的編號，「我在哪一間」才是連續的 */
+.rail-no{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ink-4);
+  width:19px;flex:none}
+/* 右側是數量，是這一列真正要被讀到的東西——加粗、放大、等寬對齊 */
+.rail-n{margin-left:auto;font-family:var(--mono);font-size:15px;font-weight:600;
+  color:var(--ink-2);font-variant-numeric:tabular-nums}
+.rail-item[aria-current="true"]{background:var(--seal-soft);color:var(--ink);
+  font-weight:500;box-shadow:inset 0 0 0 1px var(--seal)}
+.rail-item[aria-current="true"] .rail-no{color:var(--seal)}
 
 /* 室內工具：只屬於這一室的控制項。現在那個到處飄的圖層面板，去處就是這裡。 */
 .rail-tools{display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--rule);
@@ -161,6 +179,9 @@
    不是「消失再出現」。 */
 .rail-kennel{margin-top:auto;display:flex;align-items:flex-end;justify-content:center;
   padding:9px;background:var(--paper);border-radius:6px;position:relative;overflow:hidden}
+.rail-kennel{margin-top:auto;display:flex;align-items:flex-end;gap:8px;padding:9px;
+  background:var(--paper);border-radius:6px;position:relative;overflow:hidden}
+.rail-kennel .txt{font-size:15px;color:var(--ink-3);line-height:1.5;padding-bottom:2px}
 /* 躺下的姿勢：進房是「到家了」，不是「立正待命」。 */
 .kennel-dog{animation:kennel-in .42s cubic-bezier(.33,.9,.34,1) both}
 @keyframes kennel-in{from{transform:translateX(-26px);opacity:0}to{transform:none;opacity:1}}
@@ -176,6 +197,20 @@
 }
 
 /* 待設計的室：外殼一致，內容誠實說明現況。 */
+.todo{padding:20px 22px;overflow-y:auto;min-height:0;display:flex;
+  flex-direction:column;gap:15px}
+.todo-head{display:flex;align-items:baseline;gap:10px}
+.todo-head b{font-size:18px}
+.todo-head span{font-size:15px;color:var(--ink-4)}
+.todo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:11px}
+.todo-tile{border:1px solid var(--rule);border-radius:6px;padding:11px 13px;
+  background:var(--panel);display:flex;flex-direction:column;gap:3px}
+.todo-tile .k{font-size:15px;color:var(--ink-3);letter-spacing:.06em}
+.todo-tile .v{font-family:var(--mono);font-size:21px;font-weight:500;
+  font-variant-numeric:tabular-nums}
+.todo-tile .s{font-size:15px;color:var(--ink-4)}
+.todo-note{margin:0;font-size:15px;color:var(--ink-3);line-height:1.6;
+  border-top:1px solid var(--rule);padding-top:12px}
 
 /* 對話泡泡跟著守護犬移動；進房時淡出（不然它會一路飄進房間） */
 #dogtip{transition:transform .42s cubic-bezier(.33,.9,.34,1),opacity .2s}
