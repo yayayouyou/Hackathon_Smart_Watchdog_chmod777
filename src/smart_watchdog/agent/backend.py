@@ -110,7 +110,10 @@ class BedrockAgentBackend(AgentBackend):
         self,
         model_id: Optional[str] = None,
         region: Optional[str] = None,
-        max_tokens: int = 1024,
+        # 1024 不夠：一個回合可能載入 SOP、逐區取排序、再逐筆說明理由，
+        # 實測「幫我排這週的稽查」在 1024 下會以 stop_reason=max_tokens 中斷，
+        # 而且是斷在最後一個 tool 呼叫的參數上（參數缺一半，驗證直接擋下）。
+        max_tokens: int = 4096,
     ) -> None:
         from .. import bedrock as _bedrock
 

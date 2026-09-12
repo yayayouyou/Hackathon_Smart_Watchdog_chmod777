@@ -25,6 +25,9 @@ const state = {
   payload: null, points: [], byId: {}, proposal: [], selected: null,
   cap: 20, cluster: true, flaggedOnly: false, types: new Set([0, 1, 2]),
   map: null, layer: null, districtLayer: null, base: null, googleKey: null,
+  // agent 這一輪點名的機構 id（Set）。非 null 時地圖只顯示這幾筆，
+  // 讓「我把這幾筆標在地圖上了」這句話對得上畫面。清除就設回 null。
+  agentIds: null,
   // 時間軸模式（timeline.js 設定）。非 null 時地圖改畫「當時的排序」與
   // 「後來實際受罰」，而不是今天的派工提案。
   timeline: null,
@@ -220,6 +223,7 @@ function drawMarkers() {
   const flagged = new Set(state.proposal.map((o) => o.i));
   let shown = state.points.filter((p) => state.types.has(p.t));
   if (state.flaggedOnly && !tl) shown = shown.filter((p) => flagged.has(p.i));
+  if (state.agentIds && !tl) shown = shown.filter((p) => state.agentIds.has(p.i));
 
   // 時間軸模式不做群集：群集會把「命中／落空」的顏色對比吃掉，
   // 而那個對比正是這個畫面唯一要講的事。
@@ -245,7 +249,9 @@ function drawMarkers() {
   state.layer.addLayer(group);
   $("mapbadge").textContent = tl
     ? tlBadge(tl)
-    : `顯示 ${shown.length} / ${state.points.length} 園　紅圈 ${flagged.size} 家為本批提案`;
+    : state.agentIds
+      ? `助理標記 ${shown.length} 筆（共 ${state.points.length} 園）`
+      : `顯示 ${shown.length} / ${state.points.length} 園　紅圈 ${flagged.size} 家為本批提案`;
 }
 
 function tlBadge(tl) {
@@ -449,42 +455,6 @@ function realtimeBlock(rt) {
       公開內容不改寫風險分數、不作違規標籤。</p></div>`;
 }
 
-/* ── 查詢 ─────────────────────────────────────────────── */
-async function ask(question) {
-  const log = $("chatlog");
-  log.insertAdjacentHTML("beforeend", `<div class="msg me">${esc(question)}</div>`);
-  log.scrollTop = log.scrollHeight;
-
-  let r;
-  try {
-    r = await api("/api/chat", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question }),
-    });
-  } catch (e) {
-    log.insertAdjacentHTML("beforeend",
-      `<div class="msg bot">查詢失敗：${esc(e.message)}</div>`);
-    return;
-  }
-
-  const rows = r.results.map((x) => `
-    <button class="row" data-i="${x.id}">
-      <span class="r">#${x.rank}</span>
-      <span>${esc(x.title)}</span>
-      <span class="m">${x.compliance_failed ? "法遵" + x.compliance_failed + " " : ""}${
-        x.penalties ? "罰" + x.penalties : ""}</span>
-    </button>`).join("");
-  log.insertAdjacentHTML("beforeend", `<div class="msg bot">
-    <p class="sum">${esc(r.summary)}</p>
-    <div class="rows">${rows}</div>
-    <div class="cav">${esc(r.caveat)}</div>
-    <div class="plan">planner=${esc(r.planner)}　${esc(JSON.stringify(r.plan.filters))}</div>
-  </div>`);
-  log.querySelectorAll(".row").forEach((el) =>
-    el.addEventListener("click", () => openDossier(el.dataset.i)));
-  log.scrollTop = log.scrollHeight;
-}
-
 /* ── 綁定 ─────────────────────────────────────────────── */
 $("cap").addEventListener("input", (e) => {
   state.cap = Math.max(1, Math.min(200, +e.target.value || 20));
@@ -517,17 +487,6 @@ document.querySelectorAll(".tabs button").forEach((b) =>
     });
     if (b.dataset.t === "scan" && window.SWScan) window.SWScan.open();
   }));
-$("chatform").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const q = $("q").value.trim();
-  if (!q) return;
-  $("q").value = "";
-  ask(q);
-});
-document.addEventListener("click", (e) => {
-  const eg = e.target.closest(".eg");
-  if (eg) ask(eg.textContent.trim());
-});
 
 /* 掃描分頁（scan.js）需要這些；集中匯出一次，不要讓它去翻全域變數。 */
 window.SW = { api, post, $, esc, nf, state, openDossier, TYPE, drawMarkers, refresh };

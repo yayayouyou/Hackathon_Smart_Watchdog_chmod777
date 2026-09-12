@@ -101,7 +101,7 @@
     <div class="side">
       <div class="tabs">
         <button data-t="list" aria-pressed="true">派工提案</button>
-        <button data-t="chat">查詢</button>
+        <button data-t="chat">助理</button>
         <button data-t="scan">掃描</button>
         <button data-t="timeline">時間軸</button>
       </div>
@@ -111,21 +111,26 @@
       </div>
 
       <div class="pane" id="pane-chat" hidden>
-        <div class="chatlog" id="chatlog">
+        <div class="agentbar">
+          <span class="who" id="whoami">未登入</span>
+          <button type="button" id="agentclear" class="mini">清除地圖標記</button>
+          <button type="button" id="logout" class="mini" hidden>登出</button>
+        </div>
+        <div class="chatlog" id="agentlog">
           <div class="msg bot">
-            <p>可以這樣問：</p>
+            <p>我可以操作這個畫面。說一句話，我會邊做邊講。</p>
             <div class="egs">
-              <button class="eg">三重區有哪些幼兒園財報法遵沒通過？</button>
-              <button class="eg">板橋區私立幼兒園有幾間有裁罰紀錄？</button>
-              <button class="eg">最近有新聞在講哪幾間？</button>
-              <button class="eg">哪些園沒有公開財報但排在前 20 名？</button>
+              <button class="eg">幫我排這週的稽查，先看板橋區</button>
+              <button class="eg">三重區財報法遵沒通過的有哪些？</button>
+              <button class="eg">資遣費準備金的規定寫在財報哪一頁？</button>
+              <button class="eg">你這個排序準不準？</button>
             </div>
           </div>
         </div>
-        <form class="chatbar" id="chatform">
-          <input id="q" placeholder="用中文問，例如：新莊區近兩年評鑑沒過的有哪些？"
+        <form class="chatbar" id="agentform">
+          <input id="aq" placeholder="例如：把板橋區有前科的前十筆列出來"
                  autocomplete="off">
-          <button type="submit">送出</button>
+          <button type="submit" id="agentsend">送出</button>
         </form>
       </div>
 
@@ -151,10 +156,23 @@
   </footer>
 </div>
 
+<div class="authwrap" id="authwrap" hidden>
+  <form class="authbox" id="authform">
+    <h2>稽查派工台</h2>
+    <p>本系統含 1,213 所真實機構的查核優先序，僅供內部稽查使用。</p>
+    <label>帳號 <input id="email" type="email" autocomplete="username" required></label>
+    <label>密碼 <input id="password" type="password" autocomplete="current-password" required></label>
+    <div class="autherr" id="autherr"></div>
+    <button type="submit">登入</button>
+  </form>
+</div>
+
 <script src="/static/vendor/leaflet.js"></script>
 <script src="/static/vendor/leaflet.markercluster.js"></script>
 <script src="/static/app.js"></script>
 <script src="/static/scan.js"></script>
 <script src="/static/timeline.js"></script>
+<script src="/static/auth.js"></script>
+<script src="/static/agent.js"></script>
 </body>
 </html>

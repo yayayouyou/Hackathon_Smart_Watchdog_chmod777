@@ -26,16 +26,28 @@ from .. import config
 from ..agent.backend import BedrockAgentBackend
 from ..agent.loop import run_turn
 from ..agent.memory import remember
-from ..agent.tools import build_registry
 from ..db.models import AgentMessage, AgentSession, User
 from ..db.session import get_db
 from .auth import get_current_user
 
 router = APIRouter(prefix="/api/agent", tags=["agent"])
 
-_REGISTRY = build_registry()
+_REGISTRY: Any = None
 _RATE: dict[int, list[float]] = {}
 RATE_LIMIT_PER_MIN = 6
+
+
+def _registry() -> Any:
+    """延後建立 registry，因為 `agent/tools.py` 會匯入 `api.server`，而
+    `api.server` 又匯入這支模組——模組層級匯入時哪邊先進來就會決定成敗
+    （實測：先匯入 `agent.tools` 會 ImportError）。建一次後快取。
+    """
+    global _REGISTRY
+    if _REGISTRY is None:
+        from ..agent.tools import build_registry
+
+        _REGISTRY = build_registry()
+    return _REGISTRY
 
 
 class MessageIn(BaseModel):
@@ -106,7 +118,7 @@ def post_message(
             for ev in run_turn(
                 db=db, user=user, session_id=session_id, turn=turn,
                 text=body.text, view=body.view,
-                backend=backend, registry=_REGISTRY,
+                backend=backend, registry=_registry(),
             ):
                 yield {"event": ev.event, "data": json.dumps(ev.data, ensure_ascii=False)}
         except Exception as exc:  # noqa: BLE001 - 任何失敗都要變成一則 error 事件
@@ -123,4 +135,39 @@ def post_message(
 def list_tools(user: User = Depends(get_current_user)) -> dict:
     """agent 目前能用的 tool。讓前端與稽查員看得見「它能做什麼」。"""
     del user
-    return {"count": len(_REGISTRY.names()), "tools": _REGISTRY.schemas()}
+    reg = _registry()
+    return {"count": len(reg.names()), "tools": reg.schemas()}
+
+
+MCP_TOKEN_TTL_HOURS = 12
+
+
+@router.post("/mcp-token")
+def mint_mcp_token(
+    db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+) -> dict:
+    """發一個給 MCP 客戶端用的 bearer token。
+
+    刻意**另發一列** `user_session` 而不是回傳瀏覽器那一顆：撤掉 MCP 的存取
+    （刪掉這一列）就不會把人踢出登入狀態，兩者的生命週期分開。
+
+    這是唯一會把可用憑證交出去的端點，所以它要求已登入，且只回傳一次——
+    token 沒有保存在任何可再讀取的地方。
+    """
+    from ..db.models import UserSession
+    from ..security import new_token
+
+    token = new_token()
+    db.add(UserSession(
+        token=token, user_id=user.id,
+        expires_at=dt.datetime.now(dt.UTC) + dt.timedelta(hours=MCP_TOKEN_TTL_HOURS),
+    ))
+    db.commit()
+    return {
+        "token": token,
+        "expires_in_hours": MCP_TOKEN_TTL_HOURS,
+        "usage": "在 MCP 客戶端設定 Authorization: Bearer <token>",
+        "mcp_url": "/mcp",
+        "note": "這顆權杖等同你的身分，不要外流；它與瀏覽器的登入各自獨立。",
+    }

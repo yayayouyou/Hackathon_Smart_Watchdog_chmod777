@@ -344,6 +344,18 @@ def chat(req: ChatRequest) -> dict:
     return answer(req.question, payload(), institution_id=req.institution_id)
 
 
+# ── MCP ──────────────────────────────────────────────────────────────
+# 同一組 tool 的第二條入口：瀏覽器走 /api/agent/messages，MCP 客戶端走 /mcp。
+# 白名單與稽核都在 ToolRegistry.execute()，所以兩條路徑不可能有不同的權限。
+# 掛載失敗不讓整個服務起不來——MCP 是額外通道，派工台本身不依賴它。
+try:
+    from ..agent.mcp_server import build_mcp as _build_mcp
+
+    app.mount("/mcp", _build_mcp().http_app(path="/"))
+except Exception as _mcp_exc:  # noqa: BLE001 - 缺 fastmcp 或版本不符都只停用這條
+    print(f"MCP 未掛載：{_mcp_exc}")
+
+
 # ── 靜態前端 ─────────────────────────────────────────────────────────
 if WEBAPP.exists():
     app.mount("/static", StaticFiles(directory=str(WEBAPP)), name="static")
