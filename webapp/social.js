@@ -59,6 +59,11 @@
  * already been declared），掃描主控台連帶死掉。memos.js／agent.js／lobby.js
  * 都是這樣包的，換一個沒被用的字母只是把同一顆地雷留給下一個人。
  */
+/* 補一點 main 的說明沒涵蓋的：撞名的**函式宣告是靜默互相覆蓋**的，不像同名
+ * 的 `const` 會讓後載入的那支整支 SyntaxError、吵得看得見。這一支與
+ * timeline.js 都有 `function render()`，包起來之前 social 叫到的其實是
+ * timeline 那一支：資料抓到了，畫面卻停在「載入中…」，沒有任何錯誤訊息。
+ */
 (function () {
 const S = window.SW;
 
@@ -740,5 +745,26 @@ async function open() {
   render();
 }
 
-window.SWSocial = { open };
+/* 讓助理指到某一所的社群串。
+ *
+ * `toggle()` 是「點一下開、再點一下收」，直接拿來用的話助理連講兩次同一所
+ * 會把它收起來——使用者看到的是「它說要看這一所，結果畫面把它關掉了」。
+ * 所以這裡只負責「打開」，已經開著就維持開著。
+ *
+ * `full_id` 是完整的 UUID，而助理手上的 `institution_id` 是 8 碼短碼
+ * （`/api/social` 兩個都回）。兩個都接受，找不到就安靜不動——那代表這一所
+ * 目前沒有社群訊號，面板上本來就沒有那一列。
+ */
+async function focus(id) {
+  await open();
+  if (!id) return;
+  const hit = ((social.list || {}).items || []).find(
+    (it) => it.full_id === id || it.institution_id === id);
+  if (!hit) return;
+  if (social.open !== hit.full_id) await toggle(hit.full_id);
+  const row = document.querySelector(`.soc-row[data-id="${hit.full_id}"]`);
+  if (row) row.scrollIntoView({ block: "nearest" });
+}
+
+window.SWSocial = { open, focus };
 })();

@@ -84,7 +84,7 @@ def test_the_whitelist_is_exactly_these_tools(reg) -> None:
     """白名單逐一列出，不用數量代替。
 
     改成列舉是因為數量對不上時，「多了什麼」與「少了什麼」一樣重要：註冊表
-    是安全邊界，每加一個都是一次決定，而一個 `== 24` 看不出被換掉的是哪一個。
+    是安全邊界，每加一個都是一次決定，而一個 `== 28` 看不出被換掉的是哪一個。
 
     這份清單同時是「agent 能操作畫面上的每一件事」的檢查表。少一個 tool 的
     表徵不是報錯，是 agent 說「我做不到」——而使用者會以為是模型不夠聰明，
@@ -103,8 +103,9 @@ def test_the_whitelist_is_exactly_these_tools(reg) -> None:
         "set_time_machine", "get_model_card",
         # 地圖控制項
         "set_map_view",
-        # 掃描：只估算，不發動（見下一支測試）
-        "scan_estimate",
+        # 輿情蒐集：讀已經收進來的，以及帳本。掃描只估算不發動（見下一支測試）
+        "scan_estimate", "list_scan_jobs", "get_scan_budget", "start_scan",
+        "list_social_mentions", "get_social_mentions",
         # 證據
         "search_documents", "load_skill",
         # 資料室：只回答「這份文件上印的是什麼」，不做判讀
@@ -115,16 +116,42 @@ def test_the_whitelist_is_exactly_these_tools(reg) -> None:
     }
 
 
-def test_scanning_can_be_priced_but_not_launched(reg) -> None:
-    """讓對話能直接發動掃描，等於讓 agent 自己花錢。刻意只給估算。
+def test_the_agent_can_only_launch_scans_that_cost_nothing(reg) -> None:
+    """助理可以按「執行」，但只限**結構上不花錢**的管道。
 
-    列舉白名單擋不住這件事：新增一個 `scan_start` 只會讓上一支測試紅一次，
-    而「補上去讓它變綠」是最自然的反應。這一支把理由寫在斷言旁邊。
+    七條管道裡只有新聞與 PTT 是真的沒有金錢成本（`pricing.free_meter`）。
+    其餘要嘛按次計價（Apify），要嘛靠免費額度（Google Places）。
+
+    閘門刻意**不是寫死的管道名單**：它跑一次真正的 `estimate()`，逐條檢查。
+    定價會變，寫死的名單不會——哪天 RSS 開始收費，這道閘門自己就會開始擋。
+    """
+    ctx = _ctx()
+    spec = reg._specs["start_scan"]
+
+    def run(channels, town="平溪區"):
+        out = spec.handler(ctx, spec.params.model_validate(
+            {"channels": channels, "scope": "district", "town": town}))
+        return out.payload
+
+    assert run(["apify_threads"], "蘆洲區").get("error"), "按次計價的管道沒被擋下"
+    # 額度內 `usd_max` 確實是 0，但那個額度是本機計數算的，而它自己的註記
+    # 寫著「同一把金鑰若被其他程式使用，本機計數會低估」——可能其實已經超額。
+    # 「現在算出 0」不等於「不花錢」。
+    assert run(["places_reviews"]).get("error"), "靠免費額度的管道沒被擋下"
+    assert run(["news_rss", "places_reviews"]).get("error"), (
+        "混著一條要錢的就該整個擋下，不可以只跑免費那幾條"
+    )
+    assert not run(["news_rss", "ptt"]).get("error"), "免費管道不該被擋"
+
+
+def test_adopting_scan_findings_is_still_the_humans_call(reg) -> None:
+    """掃到一則報導之後把它「採用」成正式訊號，是改變資料的決定，留給人。
+
+    發動免費掃描只是花時間，採用是寫入——兩者的可逆性不同。
     """
     names = set(reg.names())
-    assert "scan_estimate" in names
-    for forbidden in ("scan_start", "scan", "run_scan", "scan_adopt"):
-        assert forbidden not in names, f"{forbidden} 會讓 agent 花錢"
+    for forbidden in ("adopt_scan", "scan_adopt", "adopt_findings", "adopt"):
+        assert forbidden not in names, f"{forbidden} 讓助理替人做了採用的決定"
 
 
 def test_unregistered_tool_is_denied(reg) -> None:

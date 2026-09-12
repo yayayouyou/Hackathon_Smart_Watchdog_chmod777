@@ -707,7 +707,9 @@ def _list_memos(_ctx: ToolContext, a: ListMemosArgs) -> ToolOutcome:
     out = _dos().list_memos(q=a.q, limit=a.limit)
     return ToolOutcome(
         payload=out,
-        ui_action={"type": "navigate", "tab": "memos"},
+        # 查詢字串要一起送。只切室不帶條件的話，助理講「提到三重的那幾份」
+        # 而畫面列出全部 130 份——它講的跟畫面上的不是同一批。
+        ui_action={"type": "navigate", "tab": "memos", "memo_query": a.q},
     )
 
 
@@ -950,7 +952,11 @@ def _list_table_types(_ctx: ToolContext, a: TableTypesArgs) -> ToolOutcome:
             "count": len(items), "items": items,
             "note": "「未分類明細」是標題無法歸類的表，刻意保留成一項而不藏起來。",
         },
-        ui_action={"type": "open_table", "sections": [i["section"] for i in items[:8]]},
+        # 帶上園所與學年度：只給 section 的話，畫面會列出全 132 園的同一種表，
+        # 跟助理剛才講的那一所對不起來。
+        ui_action={"type": "open_table",
+                   "sections": [i["section"] for i in items[:8]],
+                   "institution": a.institution, "year": a.year},
     )
 
 
@@ -1009,7 +1015,11 @@ def _get_table(_ctx: ToolContext, a: GetTableArgs) -> ToolOutcome:
             "note": "數值為 null 代表原件那一格空白（未編列），不是 0。"
                     "本表為原件轉錄，不含任何判讀。",
         },
-        ui_action={"type": "open_table", "uid": t["uid"]},
+        # uid 前端用不到——資料室是按「園所＋學年度＋表單類型」在瀏覽的，
+        # 沒有「只顯示這一張」的畫面。所以把那三個維度一起送過去。
+        ui_action={"type": "open_table", "uid": t["uid"],
+                   "section": t["section"], "institution": t["institution"],
+                   "year": t["academic_year"]},
     )
 
 
@@ -1058,6 +1068,224 @@ def _get_extraction_notes(_ctx: ToolContext, a: ExtractionNotesArgs) -> ToolOutc
 
 
 # ── 註冊 ─────────────────────────────────────────────────────────────
+
+# ── 25–28. 輿情蒐集 ──────────────────────────────────────────────────
+#
+# 這一室有兩塊，性質完全不同，講的時候不可以混：
+#   上半「社群聲音」讀的是**已經收進來的**東西——民眾在 Threads 上 @標註官方
+#   帳號的通報、新聞與 PTT 的提及。讀庫不花錢。
+#   下半「掃描主控台」是**去外面抓新的**，每一次執行都計費。
+#
+# 這四個 tool 全部屬於上半與帳本，都是唯讀、都不花錢。發動掃描與採用結果
+# 刻意不給，理由見 `scan_estimate` 與 test_agent_tools 的那兩支測試。
+
+
+def _soc():
+    from ..api import social
+
+    return social
+
+
+class SocialListArgs(BaseModel):
+    town: Optional[str] = Field(default=None, description="行政區全名，例如「板橋區」")
+    channel: Optional[str] = Field(
+        default=None,
+        description="管道：apify_threads、news_rss、ptt、vendor_feed。不給就是全部",
+    )
+    since: Optional[str] = Field(
+        default=None, description="只看這個日期之後的，格式 YYYY-MM-DD")
+    limit: int = Field(default=20, ge=1, le=MAX_LIMIT)
+
+
+def _list_social(_ctx: ToolContext, a: SocialListArgs) -> ToolOutcome:
+    """目前有公開社群訊號的機構。
+
+    ⚠️ 這不是聲量排行榜，排序依據是時間不是分數；社群聲量刻意不併入風險分數。
+
+    ⚠️ 這裡查無不代表沒事。`coverage` 會講清楚只列出「本系統已取得公開社群
+    內容」的機構——1,213 所裡目前只有個位數有訊號，其餘是**沒抓到**，不是
+    **沒問題**。回傳一定帶著 coverage 與 disclaimer，講的時候要一起講。
+    """
+    out = _soc().browse(limit=a.limit, town=a.town, channel=a.channel,
+                        since=a.since, db=_ctx.db)
+    return ToolOutcome(
+        payload={
+            "count": out.get("count"), "matched": out.get("matched"),
+            "items": out.get("items"), "coverage": out.get("coverage"),
+            "swept_at": out.get("snapshot_swept_at"),
+            "note": out.get("disclaimer"),
+        },
+        ui_action={"type": "open_voice"},
+    )
+
+
+def _get_social(_ctx: ToolContext, a: InstitutionArgs) -> ToolOutcome:
+    """一所機構的社群串：主貼文、底下的回覆、新聞與 PTT 提及、Google 評論。
+
+    回覆要與主貼文分開講。縮排會讓人把回覆讀成「也是在講這一園」，而指名別家
+    的那一則後端已經標了出去向——講的時候不可以把它算進這一所。
+
+    Google 評分**不是風險訊號**：裁罰 ≥5 件的園評分中位 4.20、無裁罰者 4.60
+    （p=0.061，不顯著），個案更完全不具鑑別力（16 件裁罰的園 4.7 星）。
+    它是稽查員到場前值得看一眼的家長觀感，不入庫、不進特徵、不影響排序。
+
+    ⚠️ 這一支會即時查一次 Google 評論，**那是計費的**（`realtime/ledger.py`
+    有額度閘門，超支會被擋下而不是靜默多花）。走的是與使用者自己點開那一列
+    完全相同的路徑——兩邊看到同一份資料，才不會出現「助理說的跟畫面不一樣」。
+    """
+    p = _point(a.institution_id)
+    if not p:
+        return _not_found(a.institution_id)
+    out = _soc().institution_social(a.institution_id, live=True, db=_ctx.db)
+    return ToolOutcome(
+        payload={
+            "institution": p["full"],
+            "has_signal": out.get("has_signal"),
+            "reason": out.get("reason"),
+            "counts": out.get("counts"),
+            "threads": out.get("threads"), "mentions": out.get("mentions"),
+            "reviews": out.get("reviews"),
+            "note": out.get("disclaimer"),
+        },
+        ui_action={"type": "open_voice", "institution_id": a.institution_id},
+    )
+
+
+class ScanJobsArgs(BaseModel):
+    job_id: Optional[str] = Field(
+        default=None, description="指定一次掃描的代號；不給就是列出最近幾次")
+    limit: int = Field(default=10, ge=1, le=30)
+
+
+def _list_scan_jobs(_ctx: ToolContext, a: ScanJobsArgs) -> ToolOutcome:
+    """過去掃描的紀錄與抽到了什麼。**唯讀，不會發動新的掃描。**
+
+    「上次掃到什麼」是這一室最常被問的問題，而在這之前助理只能算錢——
+    它講得出一次掃描要多少錢，卻講不出上一次花的錢換到了什麼。
+    """
+    from ..api import scan as scan_api
+
+    if a.job_id:
+        try:
+            job = scan_api.get_job(a.job_id)
+        except Exception as exc:  # noqa: BLE001 - 查無要變成可讀訊息，不是 500
+            return ToolOutcome(payload={"error": f"查無這次掃描：{exc}"})
+        return ToolOutcome(payload=job, ui_action={"type": "navigate", "tab": "scan"})
+    out = scan_api.list_jobs(limit=a.limit)
+    jobs = out.get("jobs", [])
+    return ToolOutcome(
+        payload={
+            "count": len(jobs), "items": jobs,
+            "note": "這是已經執行過的掃描紀錄。要知道再掃一次要多少錢用 "
+                    "scan_estimate；本 tool 與那一支都不會真的發動掃描。",
+        },
+        ui_action={"type": "navigate", "tab": "scan"},
+    )
+
+
+def _get_scan_budget(_ctx: ToolContext, _a: NoArgs) -> ToolOutcome:
+    """掃描的預算與已花費。唯讀。
+
+    被問「你們這樣要花多少錢」時要答得出實際數字，而不是只答單次估價。
+    """
+    from ..api import scan as scan_api
+
+    out = scan_api.budget()
+    return ToolOutcome(
+        payload={**out, "note": "金額以本機帳本為準，供應商自報結算可能有出入。"},
+        ui_action={"type": "navigate", "tab": "scan"},
+    )
+
+
+class StartScanArgs(BaseModel):
+    channels: list[str] = Field(
+        default_factory=lambda: ["news_rss", "ptt"],
+        min_length=1, max_length=6,
+        description="管道。**只能用不花錢的**：news_rss 新聞、ptt。"
+                    "apify_threads 與 places_reviews 要付費，本 tool 會拒絕，"
+                    "那兩條請估價後請使用者自己到畫面上按執行。",
+    )
+    scope: str = Field(
+        default="proposal",
+        description="範圍：city 全市、proposal 本批提案、compliance_fail 法遵未通過、"
+                    "evaluation 評鑑、top_risk 前段班、district 指定行政區",
+    )
+    town: Optional[str] = Field(default=None, description="scope=district 時的行政區")
+
+
+def _start_scan(_ctx: ToolContext, a: StartScanArgs) -> ToolOutcome:
+    """真的發動一次掃描——**但只限不花錢的管道**。
+
+    為什麼不是寫死「news_rss 與 ptt 可以」：定價會變，而寫死的名單不會。
+    這裡先跑一次真正的 `estimate()`，只有**每一條管道都估出剛好 0 元**才放行。
+    哪天 RSS 開始收費，這道閘門會自己開始擋，不必有人記得回來改。
+
+    `usd_max` 是 `None` 時一律擋下。那代表「價格未知」，不是「免費」——
+    `pricing.unpriced_meter` 的註解已經講過：顯示編造的數字比留白更糟，
+    而拿不確定的價格去花錢比兩者都糟。
+
+    要付費的管道請用 `scan_estimate` 報價，然後請使用者自己按。那顆鈕會把畫面
+    上的金額原樣回押給伺服器重驗（`confirm_ceiling_usd`），是一道 TOCTOU 保護
+    ——由對話代按就繞過了它。
+    """
+    from ..api.scan import ScanRequest, estimate
+    from ..api.scan import start as _start
+
+    req = ScanRequest(scope=a.scope, district=a.town or "", channels=list(a.channels))
+    try:
+        plan = estimate(req)
+    except Exception as exc:  # noqa: BLE001 - 估算失敗要變成可讀訊息，不是 500
+        return ToolOutcome(payload={"error": f"估算失敗：{exc}"})
+
+    charged = []
+    for line in plan.get("lines", []):
+        meter = line.get("meter") or {}
+        usd = meter.get("usd_max")
+        if usd is None:
+            charged.append(f"{line.get('label')}（價格未知）")
+        elif usd > 0:
+            charged.append(f"{line.get('label')}（US${usd}）")
+        elif meter.get("free_remaining") is not None:
+            # ⚠️ 「現在算出 0」與「結構上不花錢」是兩回事。
+            # Google Places 有每月免費額度，額度內 usd_max 確實是 0——但那個
+            # 額度是**本機計數**算的，而它自己的註記寫著「同一把金鑰若被其他
+            # 程式使用，本機計數會低估」。也就是說它可能其實已經超額而不自知，
+            # 這時放行就是在用一個承認自己可能算錯的數字決定要不要花錢。
+            # 只有 `free_meter`（新聞、PTT）不帶 free_remaining，那才是真的
+            # 沒有金錢成本。
+            charged.append(f"{line.get('label')}（靠免費額度，額度用完就開始計費）")
+    if charged:
+        return ToolOutcome(payload={
+            "error": "這些管道要付費，我不會替你按下去：" + "、".join(charged),
+            "note": "免費的是新聞（news_rss）與 PTT。要掃付費管道，我可以先用 "
+                    "scan_estimate 報價，再請你自己到掃描主控台按執行——"
+                    "那顆鈕會把畫面上的金額回押給伺服器重驗，由我代按會繞過它。",
+        }, ui_action={"type": "navigate", "tab": "scan"})
+
+    try:
+        job = _start(req)
+    except Exception as exc:  # noqa: BLE001 - 被預算或前置條件擋下都要說人話
+        detail = getattr(exc, "detail", None)
+        return ToolOutcome(payload={
+            "error": f"發動失敗：{detail or exc}",
+            "note": "常見原因是管道前置條件未備妥，或撞到單次／每日／本期上限。",
+        }, ui_action={"type": "navigate", "tab": "scan"})
+
+    return ToolOutcome(
+        payload={
+            "job_id": job.get("id") or job.get("job_id"),
+            "status": job.get("status"),
+            "deduplicated": job.get("deduplicated", False),
+            "scope": plan.get("scope_label"),
+            "channels": list(a.channels),
+            "usd_max": plan.get("usd_max"),
+            "note": "已發動，這是不花錢的管道。掃描是背景工作，結果用 "
+                    "list_scan_jobs 查。抓到的東西是**未經查證的公開內容**，"
+                    "供研判參考，不是違法認定，也不計入風險分數。",
+        },
+        ui_action={"type": "navigate", "tab": "scan"},
+    )
+
 
 _SPECS = [
     ("list_institutions",
@@ -1112,6 +1340,22 @@ _SPECS = [
      CompareYearsArgs, _compare_table_across_years, False),
     ("get_extraction_notes", "取抽取過程自報的疑點（不是機構的稽查發現）",
      ExtractionNotesArgs, _get_extraction_notes, False),
+    ("list_social_mentions",
+     "列出目前有公開社群訊號的機構（民眾 Threads 通報、新聞、PTT）。"
+     "唯讀，不發動掃描；查無代表未取得公開內容，不代表無異常",
+     SocialListArgs, _list_social, False),
+    ("get_social_mentions",
+     "取一所機構的社群全貌：Threads 串與回覆、新聞／PTT 提及、Google 評論"
+     "（評分不是風險訊號，且會即時查詢一次、計費）",
+     InstitutionArgs, _get_social, False),
+    ("list_scan_jobs", "查過去執行過的輿情掃描與抽到了什麼（唯讀，不會發動掃描）",
+     ScanJobsArgs, _list_scan_jobs, False),
+    ("get_scan_budget", "查掃描的預算與已花費（唯讀）",
+     NoArgs, _get_scan_budget, False),
+    ("start_scan",
+     "真的發動一次輿情掃描，**但只限不花錢的管道**（新聞、PTT）。"
+     "要付費的管道會被拒絕——那些請用 scan_estimate 報價後請使用者自己按",
+     StartScanArgs, _start_scan, True),
 ]
 
 
