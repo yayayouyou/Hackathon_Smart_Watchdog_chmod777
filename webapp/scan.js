@@ -6,6 +6,13 @@
  * 前端不算錢。所有金額、公式、剩餘額度都由 /api/scan/estimate 回傳——
  * 價目表只能有一份，複製一份到瀏覽器就等於埋一個遲早會對不上的第二答案。
  */
+/* **整支包在 IIFE 裡。** 傳統 <script> 共用一個全域範圍，而頂層的 `function`
+ * 宣告是**靜默覆蓋**——不像 `const` 會丟 SyntaxError，所以壞掉時完全沒有線索。
+ * scan.js 與 timeline.js 都宣告了 `function render()`，timeline.js 載入在後，
+ * 於是 scan.js 裡呼叫的 render 其實是 timeline 的：掃描主控台永遠停在
+ * 「載入中…」，Console 一個字都不會印。`boot` 也在 app.js 與 timeline.js
+ * 之間重名。包起來就沒有這回事。 */
+(function () {
 const S = window.SW;
 const scan = {
   opts: null, plan: null, job: null, poll: null,
@@ -421,3 +428,4 @@ async function adopt() {
 }
 
 window.SWScan = { open: open_ };
+})();

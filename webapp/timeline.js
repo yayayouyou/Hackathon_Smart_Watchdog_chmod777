@@ -11,6 +11,13 @@
  *   2. 即時格不顯示任何命中率。沒發生的事不是 0。
  *   3. 命中率永遠跟當期基準率並列。35% 聽起來普通，除非旁邊寫著隨機是 16.8%。
  */
+/* **整支包在 IIFE 裡。** 傳統 <script> 共用一個全域範圍，而頂層的 `function`
+ * 宣告是**靜默覆蓋**——不像 `const` 會丟 SyntaxError，所以壞掉時完全沒有線索。
+ * scan.js 與 timeline.js 都宣告了 `function render()`，timeline.js 載入在後，
+ * 於是 scan.js 裡呼叫的 render 其實是 timeline 的：掃描主控台永遠停在
+ * 「載入中…」，Console 一個字都不會印。`boot` 也在 app.js 與 timeline.js
+ * 之間重名。包起來就沒有這回事。 */
+(function () {
 const T = window.SW;
 
 const tl = {
@@ -150,4 +157,5 @@ function exit() {
 (function waitForPayload() {
   if (T.state.points && T.state.points.length) boot();
   else setTimeout(waitForPayload, 120);
+})();
 })();

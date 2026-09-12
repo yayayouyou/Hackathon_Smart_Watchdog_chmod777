@@ -160,20 +160,10 @@
     dogArt(dog);
     moveDog(state.dogX, state.dogY, false);
 
-    /* 提示泡泡跟著守護犬。用 SVG 而不是 HTML，是因為它要跟平面圖用同一套
-       座標，否則視窗一縮放兩者就對不上。 */
-    const tip = el("g", { id: "dogtip" }, svg);
-    el("rect", { x: 0, y: 0, width: 196, height: 40, rx: 9,
-      fill: cssv("--panel"), stroke: cssv("--rule"), "stroke-width": 1.2 }, tip);
-    const l1 = el("text", { x: 14, y: 18, "font-size": 11.5,
-      fill: cssv("--ink-2") }, tip);
-    l1.textContent = "滑鼠帶我在中庭走，";
-    const l2 = el("text", { x: 14, y: 32, "font-size": 11.5,
-      fill: cssv("--ink-2") }, tip);
-    l2.textContent = "點一間房我就進去。";
-    positionTip();
   }
 
+  /* 提示泡泡已移除（使用者要求）。三處呼叫點都有 null 檢查，所以這支留成
+     無操作而不是刪掉——泡泡要回來時只需要重建那個 <g id="dogtip">。 */
   function positionTip() {
     const t = $("dogtip");
     if (!t) return;
@@ -495,6 +485,28 @@
     });
   }
 
+  /* 換到另一室，不經過中庭。樓層索引的按鈕走這條，程式（social.js 把草稿
+     送進文書室）也走這條——各寫一份的話，其中一份遲早會忘了換室頭或樓層索引，
+     於是畫面顯示「03 輿情室」而內容是文書室的。
+     已經在那一室就什麼都不做；還在中庭的話走完整進場動畫。 */
+  function go(id) {
+    const r = ROOMS.find((x) => x.id === id);
+    if (!r) return false;
+    if (state.where !== "room") { enter(id); return true; }
+    if (state.room && state.room.id === r.id) return true;
+    state.room = r;
+    setRail(r);
+    dressRoom(r);
+    if (window.SW && window.SW.showPane) window.SW.showPane(r.pane);
+    if (r.map && window.SW && window.SW.state.map) {
+      setTimeout(() => {
+        window.SW.state.map.invalidateSize();
+        if (window.SW.fitNTPC) window.SW.fitNTPC();
+      }, 40);
+    }
+    return true;
+  }
+
   /* ── 左側樓層索引 ──────────────────────────────────── */
   function setRail(current) {
     const list = $("rail-list");
@@ -507,19 +519,7 @@
       if (r.id === current.id) b.setAttribute("aria-current", "true");
       b.innerHTML = `<span class="rail-no">${r.no}</span>${r.name}`
         + `<span class="rail-n">${counts[r.id] || ""}</span>`;
-      b.addEventListener("click", () => {
-        if (r.id === current.id) return;
-        state.room = r;
-        setRail(r);
-        dressRoom(r);
-        if (window.SW && window.SW.showPane) window.SW.showPane(r.pane);
-        if (r.map && window.SW && window.SW.state.map) {
-          setTimeout(() => {
-            window.SW.state.map.invalidateSize();
-            if (window.SW.fitNTPC) window.SW.fitNTPC();
-          }, 40);
-        }
-      });
+      b.addEventListener("click", () => go(r.id));
       list.appendChild(b);
     });
   }
@@ -612,5 +612,6 @@
       + `<span class="v">${v}</span><span class="s">${note}</span></div>`).join("");
   }
 
-  window.Lobby = { start, enter, back, paintWho, get where() { return state.where; } };
+  window.Lobby = { start, enter, go, back, paintWho,
+    get where() { return state.where; } };
 })();

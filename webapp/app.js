@@ -81,6 +81,9 @@ async function boot() {
   api("/api/scan/budget").then((b) => {
     $("s-budget").textContent =
       `US$${b.month_spent_usd.toFixed(2)}/${b.caps.month.toFixed(2)}`;
+    // 摺疊列也印一次：收起來的時候，額度是唯一還看得見的成本訊號。
+    const fold = $("scanfold-budget");
+    if (fold) fold.textContent = `本月尚可 US$${b.month_remaining_usd.toFixed(2)}`;
   }).catch(() => { $("s-budget").textContent = "—"; });
 
   initMap();
@@ -1245,6 +1248,7 @@ function showPane(name) {
 
 document.querySelectorAll(".tabs button").forEach((b) =>
   b.addEventListener("click", () => showPane(b.dataset.t)));
+
 
 /* 查詢頁籤（main 的 Bedrock planner）。助理頁籤是另一個面板、另一組 id，
    兩者並存：查詢回名單，助理會實際操作畫面。 */
