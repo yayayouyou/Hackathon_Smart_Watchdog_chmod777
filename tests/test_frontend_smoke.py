@@ -42,6 +42,18 @@ def _html() -> str:
     return (WEBAPP / "index.html").read_text(encoding="utf-8")
 
 
+def _code(js: str) -> str:
+    """拿掉註解。
+
+    這一檔有好幾支測試是在比對「某一行有沒有出現在另一行之前」，而這個 repo
+    的註解裡常常引用程式碼原文（那是刻意的，註解要講清楚在講哪一行）。
+    不先拿掉註解的話，會比對到註解裡那一份——實際發生過：
+    `turnHead()` 的註解裡寫著 `mood("think")`，順序測試於是永遠是紅的。
+    """
+    js = re.sub(r"/\*.*?\*/", "", js, flags=re.S)
+    return re.sub(r"(?m)^\s*//.*$", "", js)
+
+
 def test_every_script_parses() -> None:
     node = shutil.which("node")
     if not node:
@@ -293,17 +305,19 @@ def test_every_mood_the_agent_sets_is_one_the_stylesheet_draws() -> None:
     """
     js = (WEBAPP / "agent.js").read_text(encoding="utf-8")
     css = (WEBAPP / "style.css").read_text(encoding="utf-8")
-    html = _html()
 
     set_in_js = set(re.findall(r'\bmood\("([a-z]+)"\)', js))
     assert set_in_js, "agent.js 沒有設定任何表情"
+    # 凍住舊頭像時也會指定一個表情，那個值同樣必須畫得出來。
+    set_in_js |= set(re.findall(r'dataset\.mood\s*=\s*"([a-z]+)"', js))
     drawn = set(re.findall(r'\[data-mood="([a-z]+)"\]', css)) | {"idle"}
     unknown = sorted(set_in_js - drawn)
     assert not unknown, f"agent.js 設了樣式表畫不出來的表情：{unknown}"
 
-    # 預設值也要是畫得出來的，否則一進站頭像就是死的。
-    default = re.search(r'id="agentdog"[^>]*data-mood="([a-z]+)"', html, re.S)
-    assert default, "index.html 的頭像沒有預設表情"
+    # 預設值也要是畫得出來的，否則一進站頭像就是死的。頭像的標記在 agent.js
+    # 裡（每一輪都要長一個，所以是 JS 產生的，不是 index.html 的靜態標記）。
+    default = re.search(r'class="agentdog[^"]*"[^>]*data-mood="([a-z]+)"', js, re.S)
+    assert default, "agent.js 的頭像樣板沒有預設表情"
     assert default.group(1) in drawn
 
 
@@ -351,4 +365,35 @@ def test_the_avatar_honours_reduced_motion() -> None:
     assert blocks, "整份樣式表沒有任何 prefers-reduced-motion 區塊"
     assert any(".ad-all" in b for b in blocks), (
         "頭像的動畫沒有被 prefers-reduced-motion 關掉"
+    )
+
+
+def test_the_turn_gets_its_avatar_before_the_mood_is_set() -> None:
+    """每一輪自己長一個頭像，而表情要設在**這一輪**那隻身上。
+
+    順序反過來不會報錯，只會安靜地做錯事：`mood("think")` 設到上一輪那隻，
+    `turnHead()` 下一行就把牠凍回 idle，新的那隻停在預設值——於是送出之後到
+    第一個事件抵達之間（實測 2.3 秒）頭像顯示「待命」，而它其實在思考。
+    """
+    js = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    body = js[js.index("async function send("):]
+    body = body[:body.index("let res;")]
+    assert "turnHead()" in body, "send() 沒有替這一輪長出頭像"
+    assert body.index("turnHead()") < body.index('mood("think")'), (
+        "先設表情再長頭像：表情會設到上一輪那隻，然後被凍住"
+    )
+
+
+def test_only_the_newest_avatar_is_animated() -> None:
+    """五隻狗同時搖尾巴是雜訊，而且會讓人以為上面那幾輪的步驟也還在跑。
+
+    兩邊都要守：JS 要把舊的 `live` 拿掉，CSS 要把動畫限定在 `live` 上。
+    只做其中一邊都會留下一堆還在動的舊頭像。
+    """
+    js = (WEBAPP / "agent.js").read_text(encoding="utf-8")
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    assert 'classList.remove("live")' in js, "開新一輪時沒有把舊頭像停掉"
+    tight = css.replace(" ", "")
+    assert ".agentdog:not(.live)*{animation:none" in tight, (
+        "樣式表沒有把非最新的頭像的動畫關掉"
     )

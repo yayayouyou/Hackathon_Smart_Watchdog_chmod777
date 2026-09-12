@@ -273,6 +273,51 @@
       summary ? `${label}　${summary}` : label;
   }
 
+  /* 助理的頭像就是中庭那隻守護犬。耳朵、眼睛、鼻子、尾巴的路徑是從 lobby.js
+   * 的 `dogArt()` 原樣搬來的，所以兩邊是同一隻狗，不是兩個長得像的角色。
+   *
+   * 為什麼寫成 JS 字串而不是 index.html 裡的一段標記：每一輪對話都要長出一個
+   * 自己的頭像（像 Kiro 那樣，頭像跟著訊息走），所以它需要被重複產生。放在
+   * HTML 裡就會變成「靜態那份」與「JS 複製的那份」兩份會各自漂移的markup。
+   *
+   * viewBox 收在狗的實際邊界上（頭 9–35、耳頂 10、下巴 34、尾尖 41），不留
+   * 空邊——留空邊的話同樣的 width 會把狗畫小，線寬跟著被壓細，耳朵在小尺寸
+   * 下會從花瓣變成兩根天線。 */
+  const DOG = `<svg class="agentdog live" viewBox="8.5 9 33 26" width="30" height="24"
+       data-mood="idle" aria-hidden="true"><g class="ad-all">
+    <path class="ad-head" d="M9 19c0-2.4 1.4-3.8 3.2-2.9L16 18h12l3.8-1.9C33.6 15.2 35 16.6 35 19v9c0 3.3-2.7 6-6 6H15c-3.3 0-6-2.7-6-6z"
+      fill="var(--panel)" stroke="var(--edge)" stroke-width="1.6" stroke-linejoin="round"/>
+    <path class="ad-ear ad-l" d="M11 17c-1.6-3.2-1.2-6.4.6-6.9 1.7-.5 3.6 1.4 4.4 4.3z"
+      fill="var(--paper)" stroke="var(--edge)" stroke-width="1.5"/>
+    <path class="ad-ear ad-r" d="M33 17c1.6-3.2 1.2-6.4-.6-6.9-1.7-.5-3.6 1.4-4.4 4.3z"
+      fill="var(--paper)" stroke="var(--edge)" stroke-width="1.5"/>
+    <g class="ad-eyes" fill="var(--edge)">
+      <circle cx="17.5" cy="24" r="1.7"/><circle cx="26.5" cy="24" r="1.7"/></g>
+    <path class="ad-mouth" d="M20.4 28.6h3.2" stroke="var(--edge)" stroke-width="1.6"
+      stroke-linecap="round" fill="none"/>
+    <ellipse class="ad-yap" cx="22" cy="29.4" rx="2.3" ry="1.7" fill="var(--edge)"/>
+    <circle class="ad-nose" cx="22" cy="26.6" r="1.5" fill="var(--seal)"/>
+    <path class="ad-tail" d="M35 22 q6 -3 5 -9" stroke="var(--edge)" stroke-width="1.6"
+      fill="none" stroke-linecap="round"/>
+  </g></svg>`;
+
+  /* 「這一段是助理在講」的抬頭：頭像 ＋ 名字，底下接這一輪的步驟。
+   *
+   * 每一輪自己一個，但**只有最新那一隻會動**（class `live`）。上面幾輪的狗
+   * 留在原地不動——五隻狗同時搖尾巴會變成一片雜訊，而且會讓人以為上面那些
+   * 步驟也還在跑。 */
+  function turnHead() {
+    log().querySelectorAll(".agentdog.live").forEach((d) => {
+      d.classList.remove("live");
+      d.dataset.mood = "idle";
+      delete d.dataset.talking;
+    });
+    log().insertAdjacentHTML("beforeend",
+      `<div class="turnhead">${DOG}<b>助理</b></div>`);
+  }
+
+  const liveDog = () => log().querySelector(".agentdog.live");
+
   /* 頭像的狀態分成兩軸，因為它們是**同時**發生的兩件事。
    *
    * `data-mood` 是身體在幹嘛：idle 待命／think 思考／work 動手／blocked 被擋下。
@@ -295,7 +340,7 @@
   let moodTimer = null;
 
   function mood(name) {
-    const el = $("agentdog");
+    const el = liveDog();
     if (!el) return;
     clearTimeout(moodTimer);
     const left = MIN_WORK_MS - (Date.now() - moodAt);
@@ -312,7 +357,7 @@
   /* 嘴巴動 `ms` 毫秒。`type()` 是每 12ms 吐 2 個字，所以一句話大約
      `長度 × 6` 毫秒講得完，尾巴多留一點才不會話還沒說完嘴就閉上。 */
   function yap(ms) {
-    const el = $("agentdog");
+    const el = liveDog();
     if (!el) return;
     el.dataset.talking = "1";
     clearTimeout(yapTimer);
@@ -323,7 +368,7 @@
      不清掉的話串流都結束了狗還在對著空氣說話。 */
   function hush() {
     clearTimeout(yapTimer);
-    const el = $("agentdog");
+    const el = liveDog();
     if (el) delete el.dataset.talking;
   }
 
@@ -377,9 +422,14 @@
     // 上一輪的步驟區塊留在畫面上，但不要再被這一輪的 step_id 認領——
     // 後端每輪都從 1 重新編號。
     steps = new Map();
-    mood("think");
     $("agentsend").disabled = true;
     bubble(esc(text), "me");
+    /* ⚠️ 順序：先長出這一輪的抬頭，再設表情。
+       反過來的話 `mood("think")` 設到的是**上一輪**那隻狗，而 `turnHead()`
+       下一行就把牠凍回 idle，新的那隻則停在預設的 idle——於是送出後到第一個
+       事件抵達之間（實測 2.3 秒）頭像顯示「待命」，而它其實在思考。 */
+    turnHead();
+    mood("think");
     thinking(true, "連線中");
 
     let res;
@@ -491,6 +541,14 @@
   }
 
   /* ── 綁定 ────────────────────────────────────────────── */
+
+  /* 開場白也要有抬頭，否則一進站畫面上沒有狗，使用者不會知道有這隻角色，
+     也看不出那段話是誰講的。它是 `live` 的，所以在等第一句話的期間就在
+     呼吸、偶爾眨眼——第一輪開始時 `turnHead()` 會把它凍住。 */
+  if (log() && !log().querySelector(".turnhead")) {
+    log().insertAdjacentHTML("afterbegin",
+      `<div class="turnhead">${DOG}<b>助理</b></div>`);
+  }
 
   const form = $("agentform");
   if (form) {

@@ -556,56 +556,67 @@ main{display:grid;grid-template-columns:214px minmax(0,1fr);min-height:0}
      talk    講話——嘴巴開合，取代那條閉著的嘴線
      blocked 被擋下——耳朵垂下、眼睛變成兩條線
    五個以外的值一律當 idle（CSS 的預設就是 idle 那組）。            */
+/* 「這一段是助理在講」的抬頭：頭像 ＋ 名字。每一輪一個，訊息接在下面。 */
+.turnhead{display:flex;align-items:center;gap:8px;margin:2px 0 8px}
+.turnhead b{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--ink-3)}
+/* 第一輪之外的抬頭上面要留白，不然兩輪會黏在一起看不出分界。 */
+.turnhead:not(:first-child){margin-top:14px;padding-top:14px;
+  border-top:1px solid var(--rule)}
+
 .agentdog{flex:none;overflow:visible}
 .agentdog *{transform-box:fill-box;transform-origin:center}
+/* 只有最新那一輪的狗會動。舊的留在原地——五隻狗同時搖尾巴是雜訊，
+   而且會讓人以為上面那些步驟也還在跑。 */
+.agentdog:not(.live) *{animation:none!important}
 
 /* 呼吸。幅度刻意很小——頭像只有 30px，再大就變成在抖。 */
-.ad-all{animation:ad-breathe 3.4s ease-in-out infinite}
+.agentdog.live .ad-all{animation:ad-breathe 3.4s ease-in-out infinite}
 @keyframes ad-breathe{0%,100%{transform:none}50%{transform:translateY(-.6px) scale(1.025)}}
 
 /* 眨眼。用 scaleY 壓扁，不是換圖，所以兩顆眼睛各自在原地闔上。
    8 秒一次、只佔其中 4%，才像偶爾眨一下而不是在閃。 */
-.ad-eyes{animation:ad-blink 8s steps(1,end) infinite}
+.agentdog.live .ad-eyes{animation:ad-blink 8s steps(1,end) infinite}
 @keyframes ad-blink{0%,96%{transform:none}97%,99%{transform:scaleY(.12)}100%{transform:none}}
 
 /* 尾巴。轉軸在尾巴根部（右下），不是尾尖，不然會像鐘擺盪。 */
-.ad-tail{transform-origin:left bottom;animation:ad-wag 2.6s ease-in-out infinite}
+.ad-tail{transform-origin:left bottom}
+.agentdog.live .ad-tail{animation:ad-wag 2.6s ease-in-out infinite}
 @keyframes ad-wag{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(7deg)}}
 
 .ad-yap{opacity:0}
 
 /* 思考：歪頭。歪的是整隻，因為頭就是身體。 */
-.agentdog[data-mood="think"] .ad-all{animation:ad-tilt 1.6s ease-in-out infinite}
+.agentdog.live[data-mood="think"] .ad-all{animation:ad-tilt 1.6s ease-in-out infinite}
 @keyframes ad-tilt{0%,100%{transform:rotate(0)}50%{transform:rotate(-9deg)}}
-.agentdog[data-mood="think"] .ad-tail{animation-duration:4s}
-.agentdog[data-mood="think"] .ad-ear{animation:ad-twitch 1.6s ease-in-out infinite}
+.agentdog.live[data-mood="think"] .ad-tail{animation-duration:4s}
+.agentdog.live[data-mood="think"] .ad-ear{animation:ad-twitch 1.6s ease-in-out infinite}
 @keyframes ad-twitch{0%,100%{transform:none}45%{transform:rotate(-6deg)}}
 
 /* 做事：耳朵豎起、尾巴快搖。這是唯一「牠在動手」的訊號，
    要比思考明顯，因為使用者這時最想知道「它到底有沒有在跑」。 */
-.agentdog[data-mood="work"] .ad-all{animation:ad-bob .62s ease-in-out infinite}
+.agentdog.live[data-mood="work"] .ad-all{animation:ad-bob .62s ease-in-out infinite}
 @keyframes ad-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.4px)}}
-.agentdog[data-mood="work"] .ad-tail{animation-duration:.34s}
-.agentdog[data-mood="work"] .ad-l{transform:rotate(-14deg) scaleY(1.12)}
-.agentdog[data-mood="work"] .ad-r{transform:rotate(14deg) scaleY(1.12)}
+.agentdog.live[data-mood="work"] .ad-tail{animation-duration:.34s}
+.agentdog.live[data-mood="work"] .ad-l{transform:rotate(-14deg) scaleY(1.12)}
+.agentdog.live[data-mood="work"] .ad-r{transform:rotate(14deg) scaleY(1.12)}
 
 /* 講話：嘴巴開合。那條閉著的嘴線讓位給一顆會開的嘴。
    這一軸與 data-mood **正交**——它一邊講「正在調閱蘆洲區名單」一邊真的在
    調閱，所以講話不可以蓋掉身體的狀態，反之亦然。合併成一個屬性試過，
    結果是嘴巴一次都沒動過（text 事件設的值被下一個 tool_call 立刻蓋掉）。 */
-.agentdog[data-talking] .ad-mouth{opacity:0}
-.agentdog[data-talking] .ad-yap{opacity:1;animation:ad-yap .3s ease-in-out infinite}
+.agentdog.live[data-talking] .ad-mouth{opacity:0}
+.agentdog.live[data-talking] .ad-yap{opacity:1;animation:ad-yap .3s ease-in-out infinite}
 @keyframes ad-yap{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
 
 /* 被擋下：耳朵垂下、眼睛闔成線。不用紅色——這不是錯誤，
    是「這件事我不做」，跟畫面其他地方的用詞界線一致。 */
-.agentdog[data-mood="blocked"] .ad-l{transform:rotate(38deg) translateY(1px)}
-.agentdog[data-mood="blocked"] .ad-r{transform:rotate(-38deg) translateY(1px)}
-.agentdog[data-mood="blocked"] .ad-eyes{animation:none;transform:scaleY(.12)}
-.agentdog[data-mood="blocked"] .ad-tail{animation:none;transform:rotate(16deg)}
-.agentdog[data-mood="blocked"] .ad-all{animation:none}
-.agentdog[data-mood="blocked"] .ad-yap{opacity:0;animation:none}
-.agentdog[data-mood="blocked"] .ad-mouth{opacity:1}
+.agentdog.live[data-mood="blocked"] .ad-l{transform:rotate(38deg) translateY(1px)}
+.agentdog.live[data-mood="blocked"] .ad-r{transform:rotate(-38deg) translateY(1px)}
+.agentdog.live[data-mood="blocked"] .ad-eyes{animation:none;transform:scaleY(.12)}
+.agentdog.live[data-mood="blocked"] .ad-tail{animation:none;transform:rotate(16deg)}
+.agentdog.live[data-mood="blocked"] .ad-all{animation:none}
+.agentdog.live[data-mood="blocked"] .ad-yap{opacity:0;animation:none}
+.agentdog.live[data-mood="blocked"] .ad-mouth{opacity:1}
 
 /* 耳朵與尾巴的姿勢用 transition 銜接，狀態切換才不是硬跳一格。 */
 .ad-ear,.ad-tail{transition:transform .28s cubic-bezier(.33,.9,.34,1)}
