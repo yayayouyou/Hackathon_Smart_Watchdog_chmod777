@@ -1,0 +1,250 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    body{margin:0;background:#EFF3F5;color:#14202A;
+      font-family:"IBM Plex Sans","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+      font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+    a{color:#3D4E5C}a:hover{color:#14202A}
+    .mono{font-family:"IBM Plex Mono","PingFang TC",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  </style>
+</helmet>
+
+<div style="width:1440px;height:900px;position:relative;overflow:hidden;background:#EFF3F5">
+
+  <!-- 功能列 -->
+  <div style="position:absolute;left:0;right:0;top:0;z-index:5;display:flex;align-items:center;
+    gap:16px;padding:11px 24px;background:#FFFFFF;border-bottom:1px solid #CFD9E0">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 9c0-1 .6-1.6 1.4-1.2L8 9h8l2.6-1.2C19.4 7.4 20 8 20 9v6.5c0 2.5-2 4.5-4.5 4.5h-7A4.5 4.5 0 0 1 4 15.5z"
+        stroke="#B23A2F" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="9.5" cy="13" r="1.1" fill="#B23A2F"/><circle cx="14.5" cy="13" r="1.1" fill="#B23A2F"/>
+      <path d="M11 16.4h2" stroke="#B23A2F" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <div style="font-size:15px;font-weight:600">小小守護員</div>
+    <div style="color:#6B7C8A;font-size:12px">稽查中心 · 新北市教保機構</div>
+    <div style="margin-left:auto;display:flex;gap:20px;font-size:12px;color:#6B7C8A;align-items:center">
+      <span>全市 <b class="mono" style="color:#14202A;font-size:13px">1,213</b></span>
+      <span>本批提案 <b class="mono" style="color:#14202A;font-size:13px">20</b></span>
+      <span style="color:#93A2AE">示範稽查員</span>
+    </div>
+  </div>
+
+  <!-- 平面圖 -->
+  <svg viewBox="0 0 1440 830" style="position:absolute;left:0;top:70px;width:1440px;height:830px">
+    <defs>
+      <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+        <path d="M24 0H0V24" fill="none" stroke="#CFD9E0" stroke-width=".6" opacity=".45"/>
+      </pattern>
+      <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <line x1="0" y1="0" x2="0" y2="7" stroke="#CFD9E0" stroke-width="1.4"/>
+      </pattern>
+    </defs>
+
+    <rect width="1440" height="830" fill="url(#grid)"/>
+
+    <!-- 外牆 -->
+    <rect x="96" y="46" width="1248" height="720" rx="4" fill="#FFFFFF" stroke="#243542" stroke-width="3"/>
+
+    <!-- ── 地圖室（左上，最大間）────────────────────────────── -->
+    <rect x="96" y="46" width="470" height="352" fill="#B23A2F" opacity=".07"/>
+    <rect x="96" y="46" width="470" height="352" fill="none" stroke="#243542" stroke-width="2.2"/>
+    <text x="130" y="90" font-size="11" fill="#93A2AE" letter-spacing="2.4">01</text>
+    <text x="130" y="122" font-size="24" font-weight="600" fill="#14202A" letter-spacing="2">地圖室</text>
+    <text x="130" y="150" font-size="12.5" fill="#6B7C8A">全市 1,213 園 · 點一園看判斷原因與紀錄</text>
+    <g font-family="IBM Plex Mono, ui-monospace, monospace">
+      <text x="130" y="186" font-size="30" font-weight="500" fill="#B23A2F">20</text>
+      <text x="176" y="186" font-size="12" fill="#6B7C8A">家待派工</text>
+    </g>
+    <!-- 室內：小地圖輪廓 -->
+    <g transform="translate(318 168) scale(.82)">
+      <path d="M44 36 L96 22 L146 44 L188 32 L216 74 L204 134 L150 168 L92 156 L52 110 Z"
+        fill="#DCA6A1" stroke="#243542" stroke-width="1.5"/>
+      <path d="M96 22 L146 44 L144 92 L96 84 Z" fill="#C9756D"/>
+      <path d="M92 156 L150 168 L146 116 L98 108 Z" fill="#B23A2F"/>
+      <g fill="#4A1D78"><circle cx="112" cy="112" r="4.4"/><circle cx="126" cy="130" r="4.4"/></g>
+      <g stroke="#B23A2F" stroke-width="1.8" fill="none"><circle cx="112" cy="112" r="9"/></g>
+    </g>
+    <!-- 門（開口 + 弧線） -->
+    <rect x="540" y="196" width="52" height="4" fill="#EFF3F5"/>
+    <path d="M566 196 a26 26 0 0 1 26 26" fill="none" stroke="#93A2AE" stroke-width="1.4" stroke-dasharray="3 3"/>
+
+    <!-- ── 資料室（左下）──────────────────────────────────── -->
+    <rect x="96" y="446" width="470" height="320" fill="#2A78D6" opacity=".055"/>
+    <rect x="96" y="446" width="470" height="320" fill="none" stroke="#243542" stroke-width="2.2"/>
+    <text x="130" y="490" font-size="11" fill="#93A2AE" letter-spacing="2.4">02</text>
+    <text x="130" y="522" font-size="24" font-weight="600" fill="#14202A" letter-spacing="2">資料室</text>
+    <text x="130" y="550" font-size="12.5" fill="#6B7C8A">PDF 提取與外部蒐集的存放處</text>
+    <!-- 書架：檔案櫃立面 -->
+    <g>
+      <rect x="130" y="578" width="128" height="140" fill="#FFFFFF" stroke="#243542" stroke-width="1.6"/>
+      <line x1="130" y1="614" x2="258" y2="614" stroke="#243542" stroke-width="1.2"/>
+      <line x1="130" y1="650" x2="258" y2="650" stroke="#243542" stroke-width="1.2"/>
+      <line x1="130" y1="686" x2="258" y2="686" stroke="#243542" stroke-width="1.2"/>
+      <g fill="#EB6834"><rect x="138" y="586" width="7" height="20"/><rect x="148" y="586" width="7" height="20"/>
+        <rect x="158" y="586" width="7" height="20"/><rect x="168" y="586" width="7" height="20"/></g>
+      <g fill="#2A78D6"><rect x="138" y="622" width="7" height="20"/><rect x="148" y="622" width="7" height="20"/>
+        <rect x="158" y="622" width="7" height="20"/></g>
+      <g fill="#1BAF7A"><rect x="138" y="658" width="7" height="20"/><rect x="148" y="658" width="7" height="20"/></g>
+    </g>
+    <g font-size="12.5">
+      <circle cx="298" cy="592" r="4" fill="#EB6834"/>
+      <text x="312" y="597" fill="#3D4E5C">非營利財報</text>
+      <text x="470" y="597" fill="#6B7C8A" text-anchor="end"
+        font-family="IBM Plex Mono, ui-monospace, monospace">132</text>
+      <circle cx="298" cy="626" r="4" fill="#2A78D6"/>
+      <text x="312" y="631" fill="#3D4E5C">公校決算書</text>
+      <text x="470" y="631" fill="#6B7C8A" text-anchor="end"
+        font-family="IBM Plex Mono, ui-monospace, monospace">30</text>
+      <circle cx="298" cy="660" r="4" fill="#1BAF7A"/>
+      <text x="312" y="665" fill="#3D4E5C">外部快照</text>
+      <text x="470" y="665" fill="#6B7C8A" text-anchor="end"
+        font-family="IBM Plex Mono, ui-monospace, monospace">7</text>
+    </g>
+    <text x="312" y="700" font-size="11" fill="#93A2AE">每個數字可回溯到來源頁碼</text>
+    <rect x="540" y="586" width="52" height="4" fill="#EFF3F5"/>
+    <path d="M566 586 a26 26 0 0 1 26 26" fill="none" stroke="#93A2AE" stroke-width="1.4" stroke-dasharray="3 3"/>
+
+    <!-- ── 中庭 ──────────────────────────────────────────── -->
+    <rect x="566" y="46" width="330" height="720" fill="#E6EDF0" opacity=".55"/>
+    <line x1="566" y1="46" x2="566" y2="766" stroke="#243542" stroke-width="2.2"/>
+    <line x1="896" y1="46" x2="896" y2="766" stroke="#243542" stroke-width="2.2"/>
+    <text x="731" y="86" font-size="11" fill="#93A2AE" letter-spacing="3.4" text-anchor="middle">中庭</text>
+
+    <!-- 腳印動線：守護犬走過的路 -->
+    <g fill="#93A2AE" opacity=".5">
+      <ellipse cx="700" cy="620" rx="3.4" ry="4.6" transform="rotate(-14 700 620)"/>
+      <ellipse cx="716" cy="606" rx="3.4" ry="4.6" transform="rotate(-14 716 606)"/>
+      <ellipse cx="702" cy="588" rx="3.4" ry="4.6" transform="rotate(-14 702 588)"/>
+      <ellipse cx="718" cy="572" rx="3.4" ry="4.6" transform="rotate(-14 718 572)"/>
+      <ellipse cx="706" cy="552" rx="3.4" ry="4.6" transform="rotate(-8 706 552)"/>
+      <ellipse cx="722" cy="536" rx="3.4" ry="4.6" transform="rotate(-8 722 536)"/>
+    </g>
+
+    <!-- 今日摘要立牌 -->
+    <g>
+      <rect x="600" y="150" width="262" height="150" rx="5" fill="#FFFFFF"
+        stroke="#CFD9E0" stroke-width="1.4"/>
+      <text x="620" y="178" font-size="10.5" fill="#93A2AE" letter-spacing="1.6">今天要做什麼</text>
+      <text x="620" y="208" font-size="15" font-weight="600" fill="#14202A">名單已排好，20 家。</text>
+      <text x="620" y="232" font-size="13" fill="#3D4E5C">其中</text>
+      <text x="654" y="232" font-size="13" font-weight="600" fill="#B23A2F">4 家</text>
+      <text x="688" y="232" font-size="13" fill="#3D4E5C">帶高嚴重度</text>
+      <text x="620" y="252" font-size="13" fill="#3D4E5C">財務發現，建議優先排訪。</text>
+      <line x1="620" y1="266" x2="842" y2="266" stroke="#CFD9E0" stroke-width="1"/>
+      <text x="620" y="286" font-size="11" fill="#6B7C8A">前 100 名命中率 2.29× · AUC 0.658</text>
+    </g>
+
+    <!-- ── 輿情室（右上）──────────────────────────────────── -->
+    <rect x="896" y="46" width="448" height="252" fill="#2C7A5B" opacity=".055"/>
+    <rect x="896" y="46" width="448" height="252" fill="none" stroke="#243542" stroke-width="2.2"/>
+    <text x="930" y="90" font-size="11" fill="#93A2AE" letter-spacing="2.4">03</text>
+    <text x="930" y="122" font-size="24" font-weight="600" fill="#14202A" letter-spacing="2">輿情室</text>
+    <text x="930" y="150" font-size="12.5" fill="#6B7C8A">新聞、PTT、評鑑；Threads 待接</text>
+    <g>
+      <rect x="930" y="170" width="66" height="21" rx="10" fill="none" stroke="#2C7A5B" stroke-width="1.2"/>
+      <text x="963" y="185" font-size="11" fill="#2C7A5B" text-anchor="middle">新聞</text>
+      <rect x="1004" y="170" width="60" height="21" rx="10" fill="none" stroke="#2C7A5B" stroke-width="1.2"/>
+      <text x="1034" y="185" font-size="11" fill="#2C7A5B" text-anchor="middle">PTT</text>
+      <rect x="1072" y="170" width="66" height="21" rx="10" fill="none" stroke="#2C7A5B" stroke-width="1.2"/>
+      <text x="1105" y="185" font-size="11" fill="#2C7A5B" text-anchor="middle">評鑑</text>
+      <rect x="1146" y="170" width="86" height="21" rx="10" fill="none" stroke="#CFD9E0"
+        stroke-width="1.2" stroke-dasharray="3 3"/>
+      <text x="1189" y="185" font-size="11" fill="#93A2AE" text-anchor="middle">Threads</text>
+    </g>
+    <g font-family="IBM Plex Mono, ui-monospace, monospace">
+      <text x="930" y="236" font-size="30" font-weight="500" fill="#14202A">31</text>
+      <text x="972" y="236" font-size="12" fill="#6B7C8A" font-family="IBM Plex Sans, sans-serif">則 · 涉 8 園</text>
+    </g>
+    <text x="930" y="266" font-size="11" fill="#B07A16">⚠ 提前量 0，定位是即時監看不是預測</text>
+    <rect x="896" y="170" width="4" height="52" fill="#EFF3F5"/>
+    <path d="M896 196 a26 26 0 0 0 -26 26" fill="none" stroke="#93A2AE" stroke-width="1.4" stroke-dasharray="3 3"/>
+
+    <!-- ── 回測室（右中）──────────────────────────────────── -->
+    <rect x="896" y="298" width="448" height="234" fill="#B07A16" opacity=".05"/>
+    <rect x="896" y="298" width="448" height="234" fill="none" stroke="#243542" stroke-width="2.2"/>
+    <text x="930" y="340" font-size="11" fill="#93A2AE" letter-spacing="2.4">04</text>
+    <text x="930" y="372" font-size="24" font-weight="600" fill="#14202A" letter-spacing="2">回測室</text>
+    <text x="930" y="400" font-size="12.5" fill="#6B7C8A">每年重訓一次，看當時的排序後來對不對</text>
+    <g>
+      <rect x="930" y="420" width="46" height="52" fill="#DCA6A1"/>
+      <rect x="986" y="404" width="46" height="68" fill="#C9756D"/>
+      <rect x="1042" y="412" width="46" height="60" fill="#C9756D"/>
+      <rect x="1098" y="392" width="46" height="80" fill="#B23A2F"/>
+      <g font-size="10.5" fill="#93A2AE" font-family="IBM Plex Mono, ui-monospace, monospace">
+        <text x="953" y="490" text-anchor="middle">2021</text>
+        <text x="1009" y="490" text-anchor="middle">2022</text>
+        <text x="1065" y="490" text-anchor="middle">2023</text>
+        <text x="1121" y="490" text-anchor="middle">2024</text>
+      </g>
+      <text x="1190" y="440" font-size="26" font-weight="500" fill="#14202A"
+        font-family="IBM Plex Mono, ui-monospace, monospace">2.29×</text>
+      <text x="1190" y="460" font-size="11" fill="#6B7C8A">前 100 名命中率</text>
+    </g>
+    <rect x="896" y="392" width="4" height="52" fill="#EFF3F5"/>
+    <path d="M896 418 a26 26 0 0 0 -26 26" fill="none" stroke="#93A2AE" stroke-width="1.4" stroke-dasharray="3 3"/>
+
+    <!-- ── 文書室（右下）──────────────────────────────────── -->
+    <rect x="896" y="532" width="448" height="234" fill="#6B7C8A" opacity=".05"/>
+    <rect x="896" y="532" width="448" height="234" fill="none" stroke="#243542" stroke-width="2.2"/>
+    <text x="930" y="574" font-size="11" fill="#93A2AE" letter-spacing="2.4">05</text>
+    <text x="930" y="606" font-size="24" font-weight="600" fill="#14202A" letter-spacing="2">文書室</text>
+    <text x="930" y="634" font-size="12.5" fill="#6B7C8A">稽核建議書草稿與派工單</text>
+    <!-- 紙疊 -->
+    <g>
+      <rect x="930" y="654" width="74" height="94" fill="#FFFFFF" stroke="#243542" stroke-width="1.4"/>
+      <rect x="938" y="646" width="74" height="94" fill="#FFFFFF" stroke="#243542" stroke-width="1.4"/>
+      <rect x="946" y="638" width="74" height="94" fill="#FFFFFF" stroke="#243542" stroke-width="1.4"/>
+      <g stroke="#CFD9E0" stroke-width="1.4">
+        <line x1="956" y1="656" x2="1010" y2="656"/><line x1="956" y1="668" x2="1010" y2="668"/>
+        <line x1="956" y1="680" x2="994" y2="680"/><line x1="956" y1="700" x2="1010" y2="700"/>
+        <line x1="956" y1="712" x2="1002" y2="712"/></g>
+      <circle cx="1004" cy="722" r="11" fill="none" stroke="#B23A2F" stroke-width="1.6"/>
+      <text x="1004" y="726" font-size="9" fill="#B23A2F" text-anchor="middle">核</text>
+    </g>
+    <g font-family="IBM Plex Mono, ui-monospace, monospace">
+      <text x="1060" y="684" font-size="30" font-weight="500" fill="#2C7A5B">143</text>
+      <text x="1060" y="706" font-size="12" fill="#6B7C8A" font-family="IBM Plex Sans, sans-serif">／143 通過驗證</text>
+    </g>
+    <text x="1060" y="732" font-size="11" fill="#93A2AE">未通過的草稿不會寫出來</text>
+    <rect x="896" y="626" width="4" height="52" fill="#EFF3F5"/>
+    <path d="M896 652 a26 26 0 0 0 -26 26" fill="none" stroke="#93A2AE" stroke-width="1.4" stroke-dasharray="3 3"/>
+  </svg>
+
+  <!-- 守護犬站在中庭，跟著游標走；走到門口就進去 -->
+  <div style="position:absolute;left:698px;top:560px">
+    <svg width="66" height="60" viewBox="0 0 44 40" aria-hidden="true">
+      <ellipse cx="22" cy="37" rx="12.5" ry="2.8" fill="#14202A" opacity=".15"/>
+      <path d="M9 19c0-2.4 1.4-3.8 3.2-2.9L16 18h12l3.8-1.9C33.6 15.2 35 16.6 35 19v9c0 3.3-2.7 6-6 6H15c-3.3 0-6-2.7-6-6z"
+        fill="#FFFFFF" stroke="#243542" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M11 17c-1.6-3.2-1.2-6.4.6-6.9 1.7-.5 3.6 1.4 4.4 4.3z" fill="#EFF3F5" stroke="#243542" stroke-width="1.5"/>
+      <path d="M33 17c1.6-3.2 1.2-6.4-.6-6.9-1.7-.5-3.6 1.4-4.4 4.3z" fill="#EFF3F5" stroke="#243542" stroke-width="1.5"/>
+      <circle cx="17.5" cy="24" r="1.7" fill="#243542"/><circle cx="26.5" cy="24" r="1.7" fill="#243542"/>
+      <path d="M20.4 28.6h3.2" stroke="#243542" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="22" cy="26.6" r="1.5" fill="#B23A2F"/>
+      <path d="M35 22 q6 -3 5 -9" stroke="#243542" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div style="position:absolute;left:770px;top:566px;background:#FFFFFF;border:1px solid #CFD9E0;
+    border-radius:14px 14px 14px 3px;padding:8px 13px;font-size:11.5px;color:#3D4E5C;
+    max-width:196px;line-height:1.55">
+    今天先去地圖室吧，<br>那 4 家在等你。</div>
+
+  <!-- 中庭底部：跟守護犬說話 -->
+  <div style="position:absolute;left:600px;bottom:26px;width:262px;display:flex;align-items:center;
+    gap:9px;padding:9px 12px;background:#FFFFFF;border:1px solid #CFD9E0;border-radius:6px">
+    <span style="width:8px;height:8px;border-radius:50%;background:#2C7A5B;flex:none"></span>
+    <div style="font-size:12px;color:#6B7C8A;flex:1">跟守護犬說一句話⋯⋯</div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

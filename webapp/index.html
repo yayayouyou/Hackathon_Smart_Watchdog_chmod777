@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,18 +12,21 @@
      Noto Sans TC／微軟正黑），斷線只會換字體，不會讓畫面壞掉。 -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/lobby.css">
 </head>
 <body>
-<div class="app">
+<div class="app" id="app">
   <!-- 功能列：切換功能、設派工容量、看全域狀態。地圖自己的設定不放這裡，
        那些綁在地圖上（右上角的「圖層」鈕），因為它們只對地圖有意義。 -->
   <header>
     <h1>稽查派工台<span>新北市教保機構 · 建議查核優先序</span></h1>
 
-    <nav class="tabs" id="tabs">
+    <!-- 分頁列改由左側「樓層索引」取代（見 lobby.js::setRail）。
+         這一列留著但隱藏：既有程式仍靠 data-t 切 pane，拿掉會連帶動到
+         scan.js／timeline.js／memos.js 三處，決賽前不值得。 -->
+    <nav class="tabs" id="tabs" hidden>
       <button data-t="list" aria-pressed="true">派工提案</button>
       <button data-t="chat">查詢</button>
-      <button data-t="agent">助理</button>
       <button data-t="scan">掃描</button>
       <button data-t="timeline">時間軸</button>
       <button data-t="memos">建議書</button>
@@ -45,12 +48,113 @@
       <button class="costbtn" id="costbtn" aria-expanded="false"
         title="本掃描週期已花費／自訂上限。點開看各道上限與最近幾筆帳。"
         >本期花費 <b id="s-budget">—</b><i class="caret"></i></button>
+      <!-- 頁尾拿掉了，但頁尾上那兩件事不能跟著消失：一是輸出定位（建議查核、
+           非違法認定），二是 CC-BY 要求的來源標註——後者是**授權條件**。
+           收進這顆鈕：畫面乾淨，但兩者都還在一次點擊之內。 -->
+      <button class="costbtn" id="aboutbtn" aria-expanded="false"
+        title="這份排序是什麼、不是什麼，以及資料來源與授權">ⓘ 說明</button>
+      <!-- 身分常駐右上角：agent 的回饋記錄的是「哪一位稽查員認同這條建議」，
+           看得到自己是誰，那句話才有重量。 -->
+      <button class="who-pod" id="whopod" aria-expanded="false" hidden>
+        <span class="who-av">—</span>
+        <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.25">
+          <span class="who-name">—</span>
+          <span class="who-role"></span>
+        </span>
+      </button>
+    </div>
+
+    <div class="pop who" id="whopop" hidden>
+      <h4>稽查員</h4>
+      <div class="whopop-body"></div>
+      <button type="button" id="logout" class="mini" style="margin-top:10px;width:100%"
+        hidden>登出</button>
     </div>
 
     <div class="pop" id="costpop" hidden>載入中…</div>
+
+    <div class="pop about" id="aboutpop" hidden>
+      <h4>這份排序是什麼</h4>
+      <p>本表為<b>建議查核的優先序</b>，不是違法認定。時序切分逐年回測
+        （2021–2024 四個完整觀察年度，每年各自重新訓練）平均 AUC 0.658，
+        前 100 名命中率為隨機抽查的 2.29 倍；詳見「時間軸」分頁。</p>
+      <p>全市 <b>94.8%</b> 的園無公開財報。對這些園而言那是<b>涵蓋範圍限制</b>，
+        不是合規證明——沒有出現財務發現，代表資料不足，不代表低風險。</p>
+      <h4>資料來源與授權</h4>
+      <p class="src">機構基本資料、裁罰紀錄與收費明細來源：<a
+          href="https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx"
+          target="_blank" rel="noopener">全國教保資訊網</a>（教育部），
+        經 <a href="https://github.com/kiang/ap.ece.moe.edu.tw" target="_blank"
+          rel="noopener">kiang/ap.ece.moe.edu.tw</a> 鏡像取得（江明宗維護，
+        程式碼 MIT、資料 CC-BY）。<br>
+        地圖圖磚 © <a href="https://www.openstreetmap.org/copyright"
+          target="_blank" rel="noopener">OpenStreetMap</a> 貢獻者。</p>
+    </div>
   </header>
 
   <main>
+    <!-- 左側樓層索引。室號 01–05 與中庭平面圖上的編號一致——
+         「我在哪一間」在兩個畫面之間必須是連續的，否則進房就等於換了一個 app。 -->
+    <aside class="rail">
+      <button type="button" class="rail-back" id="rail-back">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M9.5 3.5 5 8l4.5 4.5" stroke="currentColor" stroke-width="1.4"
+            stroke-linecap="round" stroke-linejoin="round"/></svg>
+        回中庭
+        <svg width="17" height="16" viewBox="0 0 44 40" style="margin-left:auto" aria-hidden="true">
+          <path d="M9 19c0-2.4 1.4-3.8 3.2-2.9L16 18h12l3.8-1.9C33.6 15.2 35 16.6 35 19v9c0 3.3-2.7 6-6 6H15c-3.3 0-6-2.7-6-6z"
+            fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+          <circle cx="17.5" cy="24" r="2.2" fill="currentColor"/>
+          <circle cx="26.5" cy="24" r="2.2" fill="currentColor"/></svg>
+      </button>
+
+      <div>
+        <div class="rail-eyebrow">樓層索引</div>
+        <div class="rail-list" id="rail-list"></div>
+      </div>
+
+      <!-- 狗窩：守護犬進房後坐的地方。牠從中庭跑進來，就停在這裡。 -->
+      <!-- 狗窩在左下角，與中庭平面圖上各室左下角的狗窩對得起來。
+           進房後守護犬就躺在裡面——「到家了」，不是「立正待命」。 -->
+      <div class="rail-kennel">
+        <svg class="kennel-dog" width="74" height="52" viewBox="0 0 74 52"
+             aria-hidden="true">
+          <!-- 窩 -->
+          <path d="M4 46 v-20 l17 -15 17 15 v20 z" fill="var(--panel)"
+            stroke="var(--ink-4)" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M13 46 v-13 a8 8 0 0 1 16 0 v13 z" fill="var(--sunk)"
+            stroke="var(--ink-4)" stroke-width="1.3"/>
+          <!-- 躺著的守護犬：身體是一顆橫躺的膠囊，頭靠在窩口 -->
+          <ellipse cx="48" cy="43" rx="22" ry="3" fill="var(--ink)" opacity=".12"/>
+          <path d="M32 41 h26 a9 9 0 0 0 0 -12 h-26 a6 6 0 0 0 0 12 z"
+            fill="var(--panel)" stroke="var(--edge)" stroke-width="1.6"
+            stroke-linejoin="round"/>
+          <circle cx="30" cy="33" r="8" fill="var(--panel)" stroke="var(--edge)"
+            stroke-width="1.6"/>
+          <path d="M24 28c-2.6-1.4-3.4-4-2.2-5 1.2-1 3.6 0 4.6 2.2z"
+            fill="var(--paper)" stroke="var(--edge)" stroke-width="1.4"/>
+          <!-- 閉著的眼睛：在窩裡是休息 -->
+          <path d="M26.5 32.5 a2 2 0 0 0 3 0" fill="none" stroke="var(--edge)"
+            stroke-width="1.3" stroke-linecap="round"/>
+          <circle cx="23.5" cy="35.5" r="1.4" fill="var(--seal)"/>
+          <path d="M62 33 q7 -2 6 -8" stroke="var(--edge)" stroke-width="1.5"
+            fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="txt">守護犬在這一室<br>說一句話就行</span>
+      </div>
+    </aside>
+
+    <div class="roomwrap">
+      <!-- 室頭：五間房共用同一條。室號、室名、一句說明、右側來源膠囊——
+           把「我在哪一間、這裡的數字哪來的」做成每一室都有的常駐元件。 -->
+      <div class="roomhead">
+        <span class="rh-no" id="rh-no">01</span>
+        <b class="rh-name" id="rh-name">地圖室</b>
+        <span class="rh-desc" id="rh-desc"></span>
+        <span class="rh-src" id="rh-src"></span>
+      </div>
+
+      <div class="roombody" id="roombody">
     <div class="mapwrap">
       <div id="map"></div>
 
@@ -197,28 +301,16 @@
         </form>
       </div>
 
-      <div class="pane" id="pane-agent" hidden>
-        <div class="agentbar">
-          <span class="who" id="whoami">未登入</span>
-          <button type="button" id="agentclear" class="mini">清除地圖標記</button>
-          <button type="button" id="logout" class="mini" hidden>登出</button>
-        </div>
-        <div class="chatlog" id="agentlog">
-          <div class="msg bot">
-            <p>我可以操作這個畫面。說一句話，我會邊做邊講。</p>
-            <div class="egs">
-              <button class="eg">幫我排這週的稽查，先看板橋區</button>
-              <button class="eg">三重區財報法遵沒通過的有哪些？</button>
-              <button class="eg">資遣費準備金的規定寫在財報哪一頁？</button>
-              <button class="eg">你這個排序準不準？</button>
-            </div>
+      <div class="pane" id="pane-data" hidden>
+        <div class="todo">
+          <div class="todo-head">
+            <b>資料提取存放區</b>
+            <span>外殼已就位，內容待設計</span>
           </div>
+          <div class="todo-grid" id="data-grid"></div>
+          <p class="todo-note">每一筆抽取都帶著來源 PDF 的頁碼，所以這一室之後
+            可以直接從清單跳到證據頁。實際的瀏覽與分析介面由組員接手。</p>
         </div>
-        <form class="chatbar" id="agentform">
-          <input id="aq" placeholder="例如：把板橋區有前科的前十筆列出來"
-                 autocomplete="off">
-          <button type="submit" id="agentsend">送出</button>
-        </form>
       </div>
 
       <div class="pane" id="pane-scan" hidden>
@@ -244,27 +336,78 @@
 
       <div class="dossier" id="dossier" hidden></div>
     </div>
+
+    <!-- 助理獨立成第三欄而不是分頁之一：它會**操作這個畫面**（篩選、標記、
+         開卷宗），塞在分頁裡的話，一講話就看不到自己造成的結果——
+         那等於把「邊做邊講」變成「講完再自己去找」。
+         中間那條 grip 可拖曳改寬度，標題列可收成細條。 -->
+    <div class="agentgrip" id="agentgrip" role="separator" aria-orientation="vertical"
+         aria-label="調整助理欄寬度" tabindex="0"></div>
+
+    <aside class="agentcol" id="agentcol">
+      <div class="agenthead">
+        <b class="agenttitle">助理</b>
+        <!-- 「我是誰」與「登出」已移到右上角身分鈕：同一件事在畫面上出現兩次，
+             人會以為它們是兩個不同的東西。 -->
+        <span class="who" id="whoami" hidden></span>
+        <button type="button" id="agentclear" class="mini">清除標記</button>
+        <button type="button" id="agentfold" class="mini fold"
+                aria-expanded="true" title="收合助理欄">‹</button>
+      </div>
+      <div class="agentbody">
+        <div class="chatlog" id="agentlog">
+          <div class="msg bot">
+            <p>我可以操作這個畫面。說一句話，我會邊做邊講。</p>
+            <div class="egs">
+              <button class="eg">幫我排這週的稽查，先看板橋區</button>
+              <button class="eg">三重區財報法遵沒通過的有哪些？</button>
+              <button class="eg">資遣費準備金的規定寫在財報哪一頁？</button>
+              <button class="eg">你這個排序準不準？</button>
+            </div>
+          </div>
+        </div>
+        <form class="chatbar" id="agentform">
+          <input id="aq" placeholder="例如：把板橋區有前科的前十筆列出來"
+                 autocomplete="off">
+          <button type="submit" id="agentsend">送出</button>
+        </form>
+      </div>
+    </aside>
+      </div>
+    </div>
   </main>
 
-  <footer>
-    本表為<b>建議查核的優先序</b>，不是違法認定。時序切分逐年回測（2021–2024
-    四個完整觀察年度，每年各自重新訓練）平均 AUC 0.658，前 100 名命中率為隨機
-    抽查的 2.29 倍；詳見「時間軸」分頁。全市 94.8% 的園無公開財報，對這些園
-    而言那是涵蓋範圍限制，不是合規證明。
-    <!-- CC-BY 的標註是授權條件不是禮貌：上游明訂「Data is compatible with CC-BY
-         license. When using this data, please attribute to ap.ece.moe.edu.tw」。
-         標註要出現在使用者看得到的地方，不能只寫在 repo 的 markdown 裡。 -->
-    <span class="src">
-      機構基本資料、裁罰紀錄與收費明細來源：<a
-        href="https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx"
-        target="_blank" rel="noopener">全國教保資訊網</a>（教育部），
-      經 <a href="https://github.com/kiang/ap.ece.moe.edu.tw" target="_blank"
-        rel="noopener">kiang/ap.ece.moe.edu.tw</a> 鏡像取得（江明宗維護，
-      程式碼 MIT、資料 CC-BY）。地圖圖磚 © <a
-        href="https://www.openstreetmap.org/copyright" target="_blank"
-        rel="noopener">OpenStreetMap</a> 貢獻者。
-    </span>
-  </footer>
+</div>
+
+<!-- 中庭。登入完先看到這裡，走進某一室才會看到上面那個 app。 -->
+<div class="lobby" id="lobby">
+  <header>
+    <h1>小小守護員<span>稽查中心 · 新北市教保機構</span></h1>
+    <div class="hstat">
+      <span>全市 <b id="lb-all">—</b></span>
+      <span>本批提案 <b id="lb-sel">—</b></span>
+      <span>即時管道 <b id="lb-ch">—</b></span>
+      <button class="who-pod" id="lbwho" aria-expanded="false" hidden>
+        <span class="who-av">—</span>
+        <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.25">
+          <span class="who-name">—</span>
+          <span class="who-role"></span>
+        </span>
+      </button>
+    </div>
+
+    <!-- 大廳自己的身分浮層。內容與 app 那一份相同，由 paintWho 一起填。 -->
+    <div class="pop who" id="lbwhopop" hidden
+      style="position:absolute;right:20px;top:52px;z-index:10">
+      <h4>稽查員</h4>
+      <div class="whopop-body"></div>
+    </div>
+  </header>
+  <div class="planwrap">
+    <div class="planstage" id="planstage">
+      <svg class="plan" id="plan" role="group" aria-label="稽查中心平面圖"></svg>
+    </div>
+  </div>
 </div>
 
 <div class="authwrap" id="authwrap" hidden>
@@ -286,5 +429,6 @@
 <script src="/static/auth.js"></script>
 <script src="/static/agent.js"></script>
 <script src="/static/memos.js"></script>
+<script src="/static/lobby.js"></script>
 </body>
 </html>

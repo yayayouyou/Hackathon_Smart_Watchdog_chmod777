@@ -35,16 +35,25 @@ function estimate() {
 }
 
 /* ── 版面 ──────────────────────────────────────────────── */
+/* ⚠️ `if (scan.opts) return` 擋不住**併發**進入：第一次的 fetch 還在路上時，
+   `scan.opts` 仍是 undefined，第二次呼叫照樣往下走。兩個 render() 會互相蓋掉
+   scanwrap 的 DOM，於是先排定的 doEstimate 醒來時 #costbox 已經是別人的了
+   （症狀：Cannot set properties of null）。用一個 in-flight 的 promise 擋住。 */
+let opening = null;
 async function open_() {
   if (scan.opts) return;
-  try {
-    scan.opts = await S.api("/api/scan/options");
-  } catch (e) {
-    S.$("scanwrap").innerHTML = `<p class="scanerr">載入失敗：${S.esc(e.message)}</p>`;
-    return;
-  }
-  render();
-  estimate();
+  if (opening) return opening;
+  opening = (async () => {
+    try {
+      scan.opts = await S.api("/api/scan/options");
+    } catch (e) {
+      S.$("scanwrap").innerHTML = `<p class="scanerr">載入失敗：${S.esc(e.message)}</p>`;
+      return;
+    }
+    render();
+    estimate();
+  })().finally(() => { opening = null; });
+  return opening;
 }
 
 function render() {
@@ -182,11 +191,14 @@ async function doEstimate() {
     plan = await S.post("/api/scan/estimate", request());
   } catch (e) {
     if (mine !== seq) return;
-    S.$("costbox").innerHTML = `<p class="scanerr">估算失敗：${S.esc(e.message)}</p>`;
-    btn.textContent = "估算失敗";
+    const box0 = S.$("costbox");
+    if (box0) box0.innerHTML = `<p class="scanerr">估算失敗：${S.esc(e.message)}</p>`;
+    if (btn) btn.textContent = "估算失敗";
     return;
   }
   if (mine !== seq) return;      // 已有更新的估算在路上，這份是舊的
+  // 估算是 250ms 後才醒的非同步工作；期間畫面可能已被重繪或切走。
+  if (!S.$("costbox")) return;
   scan.plan = plan;
   const busy = scan.job && ["queued", "running"].includes(scan.job.state);
   const p = scan.plan;
