@@ -306,6 +306,53 @@ function drawList() {
     el.addEventListener("click", () => openDossier(el.dataset.i)));
 }
 
+/* ── 同儕財務差異 ──────────────────────────────────────
+ * 與「法遵未通過」刻意分開呈現：那是對一份申報文件的陳述，這是對「同年度其他
+ * 非營利園長什麼樣」的比較。兩者的顏色、標題、句型都不共用——共用會讓「跟別人
+ * 不一樣」被讀成「做錯事」。
+ *
+ * 只呈現最新學年度作為現況，歷年另畫趨勢。取歷史最高分當現在狀態會讓一所園為
+ * 三年前的申報一直被標記。                                              */
+function peerBlock(peer) {
+  if (!peer) return "";
+  const pct = peer.pct == null ? null : Math.round(peer.pct);
+  const bar = peer.history.map((p) => {
+    const v = p.pct == null ? 0 : p.pct;
+    return `<div class="ptrend-col" title="${p.y} 學年度：同年第 ${p.rank}/${p.peers}">
+      <div class="ptrend-bar" style="height:${Math.max(2, v * 0.6)}px"></div>
+      <div class="ptrend-y">${p.y}</div></div>`;
+  }).join("");
+
+  let body = `<dl class="kv">
+    <dt>同年度位置</dt><dd>第 ${peer.rank} / ${peer.peers} 所非營利園${
+      pct == null ? "" : `（第 ${pct} 百分位）`}</dd>
+    <dt>比較基礎</dt><dd>${peer.nfeat} 項比率指標</dd>
+  </dl>`;
+
+  if (peer.anomalies.length) {
+    body += `<div class="peer-list"><div class="peer-cap">達統計異常門檻的項目</div>` +
+      peer.anomalies.map((t) => `<div class="peer-item">${esc(t)}</div>`).join("") +
+      `</div>`;
+  } else {
+    body += `<div class="peer-list"><div class="peer-cap">無單項達統計異常門檻。
+      以下為分數的主要構成，僅說明排名由何而來，<b>不是異常發現</b>。</div>` +
+      peer.contributions.map((t) => `<div class="peer-item">${esc(t)}</div>`).join("") +
+      `</div>`;
+  }
+
+  if (peer.history.length > 1) {
+    body += `<div class="peer-cap" style="margin-top:10px">歷年同儕位置（百分位）</div>
+      <div class="ptrend">${bar}</div>`;
+  }
+
+  return `<div class="sec"><h4>同儕財務差異<span class="badge">${peer.y} 學年度</span></h4>
+    ${body}
+    <p class="note" style="margin-top:8px">與同一學年度的其他非營利園比較，
+    全部使用比率與每生指標，不受園所規模影響。<b>差異可能完全合法</b>——
+    新設園、小型園、契約結構不同都會造成差異。此欄僅供安排人工查核的先後順序，
+    不構成違規認定，也不併入左側的優先序分數。</p></div>`;
+}
+
 /* ── 卷宗 ─────────────────────────────────────────────── */
 async function openDossier(id) {
   const d = await api(`/api/institutions/${id}`);
@@ -357,6 +404,8 @@ async function openDossier(id) {
       dos.gaps.map((g) => `<div class="finding${g.v.includes("擴大") ? "" : " w"}">
         <div class="r">${esc(g.res)}・${g.y0}→${g.y1} 學年度：${esc(g.v)}</div>
         <div class="d">${esc(g.note)}</div></div>`).join("") + `</div>`);
+
+    h += peerBlock(dos?.peer);
 
     const st = (dos?.staff || []).filter((s) => s.st && s.cost);
     if (st.length) {

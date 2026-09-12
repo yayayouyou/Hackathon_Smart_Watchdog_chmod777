@@ -41,9 +41,12 @@ import math
 #: Scale factor making MAD comparable to a standard deviation under normality.
 MAD_TO_SD = 1.4826
 
-#: Robust z beyond which a feature is reported as a reason. 3.5 is the usual
-#: Iglewicz-Hoaglin cutoff for modified z-scores; it is a reporting threshold, not
-#: a decision boundary -- nothing is flagged or cleared by crossing it.
+#: Robust z beyond which a feature may be called an *anomaly*. 3.5 is the usual
+#: Iglewicz-Hoaglin cutoff for modified z-scores. It is a reporting threshold, not
+#: a decision boundary: crossing it names a line item worth looking at, and not
+#: crossing it is the normal state -- 97 of the panel's 132 園-年 have no single
+#: feature past it. A row below the threshold still has a score and a rank, but
+#: what it reports are *contributions to that score*, not findings.
 REASON_Z = 3.5
 
 #: Cap on |z| before aggregation. One feature that is wildly off should raise a
@@ -144,13 +147,30 @@ class Reason:
     percentile: float | None
     peer_median: float | None
 
+    #: How many peers actually reported this feature. A share computed from 90
+    #: of 132 rows is a weaker comparison than one computed from all of them, and
+    #: the cohort size alone does not show that.
+    n_peers_with_feature: int = 0
+
+    @property
+    def is_anomalous(self) -> bool:
+        return self.z is not None and abs(self.z) >= REASON_Z
+
     def as_text(self) -> str:
+        """Reader-facing wording. Deliberately carries no raw z.
+
+        A modified z-score of −21 is arithmetically right and rhetorically
+        useless: it says the cohort's middle is tight, which a reader will hear as
+        "twenty-one times worse than normal". The raw value, the peer median and
+        the percentile say the same thing in units the filed report uses, and a
+        稽查員 can check every one of them against the page. The z stays in the
+        machine-readable output for scoring and audit.
+        """
         pos = "高" if (self.z or 0) > 0 else "低"
         med = "—" if self.peer_median is None else f"{self.peer_median:,.3f}"
-        z = "—" if self.z is None else f"{self.z:+.1f}"
-        pct = "—" if self.percentile is None else f"{self.percentile:.0f}"
-        return (f"{self.label} {self.value:,.3f}（同年中位 {med}，"
-                f"偏{pos} z={z}、第 {pct} 百分位）")
+        pct = "—" if self.percentile is None else f"第 {self.percentile:.0f} 百分位"
+        return (f"{self.label} {self.value:,.3f}（同年中位 {med}，偏{pos}，"
+                f"{pct}；同儕 {self.n_peers_with_feature} 園）")
 
 
 @dataclasses.dataclass
@@ -163,9 +183,14 @@ class Scored:
     score: float | None
     n_features: int
     n_peers: int
-    reasons: list[Reason]
+    #: Features past REASON_Z. These may be called 異常; an empty list is the
+    #: ordinary case and must be shown as such rather than padded.
+    anomalies: list[Reason]
+    #: The three largest contributors to the score, whatever their magnitude.
+    #: Not findings -- they explain the number, and are labelled that way.
+    contributions: list[Reason]
     change_score: float | None = None
-    change_reasons: list[Reason] = dataclasses.field(default_factory=list)
+    change_contributions: list[Reason] = dataclasses.field(default_factory=list)
 
 
 def score_cohort(rows: list[dict], features: dict[str, str],
@@ -201,7 +226,8 @@ def score_cohort(rows: list[dict], features: dict[str, str],
             pct = percentile_of(v, pool)
             if z is not None:
                 zs.append(min(abs(z), Z_CAP))
-            reasons.append(Reason(col, label, float(v), z, pct, median(pool)))
+            reasons.append(Reason(col, label, float(v), z, pct, median(pool),
+                                  n_peers_with_feature=len(pool)))
         score = sum(zs) / len(zs) if zs else None
         ranked = sorted(
             [x for x in reasons if x.z is not None],
@@ -210,7 +236,8 @@ def score_cohort(rows: list[dict], features: dict[str, str],
             code=r["code"], short_name=r.get("short_name", ""),
             academic_year=str(r["academic_year"]),
             score=score, n_features=len(zs), n_peers=len(rows),
-            reasons=ranked[:3]))
+            anomalies=[x for x in ranked if x.is_anomalous],
+            contributions=ranked[:3]))
     return out
 
 
@@ -254,7 +281,8 @@ def change_scores(by_year: dict[str, list[dict]], features: dict[str, str],
                 if z is not None:
                     zs.append(min(abs(z), Z_CAP))
                 reasons.append(Reason(col, f"{label} 年變動", d[col], z, pct,
-                                      median(pools[col])))
+                                      median(pools[col]),
+                                      n_peers_with_feature=len(pools[col])))
             if zs:
                 ranked = sorted([x for x in reasons if x.z is not None],
                                 key=lambda x: -abs(x.z or 0.0))

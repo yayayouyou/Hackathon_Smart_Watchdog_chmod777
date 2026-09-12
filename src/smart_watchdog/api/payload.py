@@ -21,6 +21,7 @@ it does not understand rather than silently mis-render one.
 from __future__ import annotations
 
 import json
+import math
 import pathlib
 import re
 import statistics as st
@@ -166,12 +167,73 @@ def personnel_spend(report: dict) -> tuple[float | None, float]:
     return filed, float(subsidy)
 
 
+def peer_difference(anomaly) -> dict[str, Any]:
+    """Per-報告代號 peer-relative financial difference, latest year plus history.
+
+    Kept separate from ``findings`` in the payload on purpose. A compliance
+    finding is a statement about a filed document; this is a statement about how a
+    園 compares to the others that filed the same year, and the two must not share
+    a colour, a heading or a sentence. See ``features/anomaly.py``.
+
+    Only the latest 學年度 is the 園's current position. Earlier years go into a
+    trend, never into a maximum -- taking a 園's worst historical year as its
+    present state would keep a 園 flagged for something it filed three years ago.
+    """
+    if anomaly is None or len(anomaly) == 0:
+        return {}
+    out: dict[str, Any] = {}
+    for code, group in anomaly.groupby("code"):
+        rows = group.sort_values("academic_year")
+        history = [
+            {"y": int(r.academic_year),
+             "pct": None if _isna(r.percentile_in_year) else float(r.percentile_in_year),
+             "rank": None if _isna(r.rank_in_year) else int(r.rank_in_year),
+             "peers": int(r.n_peers)}
+            for r in rows.itertuples(index=False)
+        ]
+        last = rows.iloc[-1]
+        # An empty cell arrives from pandas as NaN, and str(NaN) is the truthy
+        # string "nan". Filtering on truthiness alone therefore published three
+        # fabricated 異常 entries for every 園 that had none -- the exact failure
+        # the anomaly/contribution split exists to prevent.
+        anomalies = [t for t in (_text(last[c])
+                                 for c in ("anomaly_1", "anomaly_2", "anomaly_3")) if t]
+        contributions = [t for t in (
+            _text(last[c])
+            for c in ("contribution_1", "contribution_2", "contribution_3")) if t]
+        out[str(code)] = {
+            "y": int(last["academic_year"]),
+            "pct": None if _isna(last["percentile_in_year"])
+            else float(last["percentile_in_year"]),
+            "rank": None if _isna(last["rank_in_year"]) else int(last["rank_in_year"]),
+            "peers": int(last["n_peers"]),
+            "nfeat": int(last["n_features"]),
+            "anomalies": anomalies,
+            "contributions": contributions,
+            "history": history,
+        }
+    return out
+
+
+def _isna(v: Any) -> bool:
+    return v is None or (isinstance(v, float) and math.isnan(v))
+
+
+def _text(v: Any) -> str:
+    """A CSV cell as a display string, with NaN and the literal "nan" as empty."""
+    if _isna(v):
+        return ""
+    s = str(v).strip()
+    return "" if s.lower() == "nan" else s
+
+
 def dossiers(
     extract_dir: pathlib.Path,
     crosswalk,
     findings,
     timeseries,
     is_opening_year,
+    anomaly=None,
 ) -> dict[str, Any]:
     """Per-報告代號 forensic detail for the 園 that file financial statements."""
     code_ids: dict[str, set[str]] = {}
@@ -219,6 +281,8 @@ def dossiers(
             "v": r.verdict, "note": str(r.note)[:200],
         })
 
+    peer = peer_difference(anomaly)
+
     return {
         code: {
             "ids": sorted(ids),
@@ -228,6 +292,7 @@ def dossiers(
             "findings": sorted(per_code.get(code, []),
                                key=lambda f: (-f["y"], f["st"] != "fail")),
             "gaps": gaps.get(code, []),
+            "peer": peer.get(code),
         }
         for code, ids in code_ids.items()
     }

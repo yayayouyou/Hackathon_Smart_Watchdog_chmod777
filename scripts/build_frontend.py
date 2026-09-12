@@ -70,6 +70,17 @@ def _coords() -> dict[str, tuple[float, float]]:
     return out
 
 
+def _read_optional(path: str):
+    """Read a CSV that the pipeline may not have produced yet.
+
+    The anomaly ranking needs the page-level extraction, which is an optional
+    deepening rather than a dependency -- a clone without it must still build a
+    frontend, just without the 同儕財務差異 block.
+    """
+    p = ROOT / path
+    return pd.read_csv(p) if p.exists() else None
+
+
 def main() -> None:
     coords = _coords()
     priority = pd.read_csv("data/processed/audit_priority_ntpc.csv")
@@ -85,6 +96,7 @@ def main() -> None:
         pd.read_csv("data/processed/compliance_findings.csv"),
         pd.read_csv("data/processed/reserve_timeseries.csv"),
         is_opening_year,
+        anomaly=_read_optional("data/processed/nonprofit_anomaly.csv"),
     )
     bench = benchmarks(dossier)
     boundary = json.loads(

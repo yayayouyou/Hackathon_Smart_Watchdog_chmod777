@@ -340,3 +340,18 @@ footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel)
 .tlm.miss{background:var(--sunk);color:var(--ink-3)}
 .tlm.live{background:var(--warn-soft);color:var(--warn)}
 .tlnote{padding:14px;color:var(--ink-3);font-size:12px}
+
+/* ── 同儕財務差異 ──────────────────────────────────────────────────
+ * 刻意使用中性的 --ink-3 灰藍，不用 --seal（法遵未通過的紅）或 --warn。
+ * 「與同儕不同」和「違反自述的會計政策」是兩種強度完全不同的陳述，
+ * 共用顏色會讓讀者把前者讀成後者。                                     */
+.peer-list{margin-top:9px}
+.peer-cap{font-size:11px;color:var(--ink-3);line-height:1.5;margin-bottom:6px}
+.peer-item{border-left:2px solid var(--ink-4);padding:5px 0 5px 10px;
+  margin-bottom:6px;font-size:12px;color:var(--ink-2);line-height:1.55}
+.ptrend{display:flex;align-items:flex-end;gap:8px;height:76px;
+  padding:6px 2px 0;border-bottom:1px solid var(--rule)}
+.ptrend-col{display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-end;gap:4px}
+.ptrend-bar{width:22px;background:var(--ink-4);border-radius:2px 2px 0 0;opacity:.75}
+.ptrend-y{font-size:10px;color:var(--ink-3);font-family:var(--mono)}

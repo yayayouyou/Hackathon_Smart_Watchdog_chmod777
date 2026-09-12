@@ -35,7 +35,12 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 import pandas as pd
 
 from smart_watchdog.console import use_utf8
-from smart_watchdog.features.anomaly import change_scores, score_cohort
+from smart_watchdog.features.anomaly import (
+    REASON_Z,
+    Z_CAP,
+    change_scores,
+    score_cohort,
+)
 
 PANEL = pathlib.Path("data/processed/nonprofit_panel.csv")
 FACTS = pathlib.Path("data/processed/nonprofit_pagewise_facts.csv")
@@ -179,18 +184,24 @@ def main() -> None:
     for s in scored:
         hit = changes.get((s.code, s.academic_year))
         if hit:
-            s.change_score, s.change_reasons = hit
+            s.change_score, s.change_contributions = hit
 
     # Rank within 學年度: a score is only comparable to its own cohort's scores.
     per_year: dict[str, list] = collections.defaultdict(list)
     for s in scored:
         per_year[s.academic_year].append(s)
     rank: dict[tuple, int] = {}
+    pct_in_year: dict[tuple, float] = {}
     for year, group in per_year.items():
         ordered = sorted([g for g in group if g.score is not None],
                          key=lambda g: -g.score)
+        n = len(ordered)
         for i, g in enumerate(ordered, start=1):
             rank[(g.code, year)] = i
+            # Percentile within the cohort. Raw scores are not comparable across
+            # 學年度 -- cohort size and spread both move -- but a position within
+            # one's own year is, which is what the dossier and the validation use.
+            pct_in_year[(g.code, year)] = round(100.0 * (n - i) / max(n - 1, 1), 1)
 
     out_rows = []
     reason_rows = []
@@ -200,20 +211,33 @@ def main() -> None:
             "academic_year": s.academic_year,
             "anomaly_score": None if s.score is None else round(s.score, 4),
             "rank_in_year": rank.get((s.code, s.academic_year)),
+            "percentile_in_year": pct_in_year.get((s.code, s.academic_year)),
             "n_peers": s.n_peers, "n_features": s.n_features,
             "change_score": None if s.change_score is None else round(s.change_score, 4),
-            "top_reason_1": s.reasons[0].as_text() if len(s.reasons) > 0 else "",
-            "top_reason_2": s.reasons[1].as_text() if len(s.reasons) > 1 else "",
-            "top_reason_3": s.reasons[2].as_text() if len(s.reasons) > 2 else "",
+            # 達到 REASON_Z 的項目才是「異常」；其餘只是分數的主要構成。
+            "n_anomalies": len(s.anomalies),
+            "anomaly_1": s.anomalies[0].as_text() if len(s.anomalies) > 0 else "",
+            "anomaly_2": s.anomalies[1].as_text() if len(s.anomalies) > 1 else "",
+            "anomaly_3": s.anomalies[2].as_text() if len(s.anomalies) > 2 else "",
+            "contribution_1": s.contributions[0].as_text() if s.contributions else "",
+            "contribution_2": (s.contributions[1].as_text()
+                               if len(s.contributions) > 1 else ""),
+            "contribution_3": (s.contributions[2].as_text()
+                               if len(s.contributions) > 2 else ""),
         })
-        for kind, group in (("level", s.reasons), ("change", s.change_reasons)):
+        for kind, group in (("level", s.contributions),
+                            ("change", s.change_contributions)):
             reason_rows.extend(
                 {"code": s.code, "short_name": s.short_name,
                  "academic_year": s.academic_year, "kind": kind,
                  "feature": r.feature, "label": r.label, "value": r.value,
-                 "z": None if r.z is None else round(r.z, 3),
+                 "z_raw": None if r.z is None else round(r.z, 3),
+                 "z_capped": (None if r.z is None
+                              else round(min(abs(r.z), Z_CAP), 3)),
+                 "is_anomalous": r.is_anomalous,
                  "percentile": None if r.percentile is None else round(r.percentile, 1),
-                 "peer_median": r.peer_median}
+                 "peer_median": r.peer_median,
+                 "n_peers_with_feature": r.n_peers_with_feature}
                 for r in group
             )
 
@@ -241,9 +265,15 @@ def main() -> None:
         print(f"  {r['anomaly_score']:.2f}  {r['code']} {r['short_name'][:6]:<8}"
               f"{r['academic_year']}　同年第 {r['rank_in_year']}/{r['n_peers']}　"
               f"特徵 {r['n_features']}")
-        for key in ("top_reason_1", "top_reason_2", "top_reason_3"):
-            if r[key]:
-                print(f"       · {r[key]}")
+        if r["n_anomalies"]:
+            for key in ("anomaly_1", "anomaly_2", "anomaly_3"):
+                if r[key]:
+                    print(f"       ⚠ {r[key]}")
+        else:
+            print(f"       （無單項達異常門檻 |z|≥{REASON_Z}；以下為分數主要構成）")
+            for key in ("contribution_1", "contribution_2", "contribution_3"):
+                if r[key]:
+                    print(f"       · {r[key]}")
     print()
     print(f"寫入 {OUT}")
     print(f"寫入 {REASONS_OUT}")
