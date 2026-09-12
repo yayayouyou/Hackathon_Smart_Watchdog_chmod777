@@ -68,7 +68,11 @@ def _backend() -> Any:
     kind = (config.get("AGENT_BACKEND") or "bedrock").lower()
     if kind not in ("bedrock", "claude_code"):
         raise HTTPException(500, f"未知的 AGENT_BACKEND：{kind}")
-    return BedrockAgentBackend()
+    from ..agent.loop import STEP_TIMEOUT_S
+
+    # 逾時要跟迴圈同一個值，而且只能在建 client 時設——各寫一份就會出現
+    # 「迴圈以為 45 秒會中止，實際上 botocore 等了三分鐘」。
+    return BedrockAgentBackend(timeout_s=STEP_TIMEOUT_S)
 
 
 def _check_rate(now: float, user_id: int) -> None:

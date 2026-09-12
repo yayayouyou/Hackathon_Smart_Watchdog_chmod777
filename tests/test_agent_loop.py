@@ -322,3 +322,32 @@ def test_a_tool_that_returns_an_error_is_not_shown_as_success(db) -> None:
     result = next(e for e in events if e.event == "tool_result")
     assert result.data["ok"] is False
     assert result.data["summary"] == "查無機構 deadbeef", "摘要要講出錯在哪，不是「完成」"
+
+
+def test_bedrock_client_is_built_with_a_real_timeout() -> None:
+    """逾時必須真的生效，不是只在簽名裡出現。
+
+    botocore 的預設是 60 秒讀取逾時加上預設重試——實測一次沒回應的呼叫會卡
+    約三分鐘，而畫面上只停在「整理中」，使用者看到的是系統當掉。
+    先前 `stream()` 收下 timeout_s 卻標成 noqa 直接忽略，註解寫「由 botocore
+    設定控制」，但建 client 時根本沒設 Config。
+    """
+    pytest.importorskip("boto3")
+    from smart_watchdog.agent.backend import BedrockAgentBackend
+
+    b = BedrockAgentBackend(timeout_s=7, region="us-west-2")
+    cfg = b._get_client().meta.config
+    assert cfg.read_timeout == 7, "讀取逾時沒有套用"
+    assert cfg.connect_timeout <= 15
+    # 串流重試沒有意義：前面吐過的字已經送出去了，而多次重試正是卡住的來源。
+    # botocore 會把 max_attempts 正規化成 total_max_attempts（＝重試次數 + 1）。
+    assert cfg.retries.get("total_max_attempts", 99) <= 2
+
+
+def test_the_loop_and_the_backend_agree_on_the_timeout() -> None:
+    """兩邊各寫一份就會出現「迴圈以為會中止、實際上還在等」。"""
+    pytest.importorskip("boto3")
+    from smart_watchdog.agent.loop import STEP_TIMEOUT_S
+    from smart_watchdog.api.agent import _backend
+
+    assert _backend().timeout_s == STEP_TIMEOUT_S

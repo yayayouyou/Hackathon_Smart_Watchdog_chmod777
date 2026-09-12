@@ -36,7 +36,9 @@ from .protocol import AgentBackend, TextDelta, ToolDone, ToolUse, TurnEnd
 from .registry import ToolContext, ToolDenied, ToolInvalid, ToolRegistry
 
 MAX_STEPS = 8
-STEP_TIMEOUT_S = 10
+# 每一步的逾時。實測一步約 2 秒，45 秒是給長篇收尾留的餘裕；
+# 真正生效的地方是 BedrockAgentBackend 建 client 時的 Config。
+STEP_TIMEOUT_S = 45
 
 SYSTEM_PROMPT = """你是新北市教育局風險預警系統的操作助手。
 
@@ -113,6 +115,8 @@ class SSEEvent:
 
 
 def _summarise(payload: dict) -> str:
+    if "error" in payload:
+        return payload["error"]
     if "count" in payload:
         return f"取得 {payload['count']} 筆"
     if "items" in payload:
@@ -225,8 +229,12 @@ def run_turn(
                 })
             else:
                 content = json.dumps(outcome.payload, ensure_ascii=False, default=str)
+                # tool 自己回的錯誤（查無機構、類別名稱不合法）不是例外，但也不是
+                # 成功。ok 送 True 的話步驟軌道會顯示綠色打勾配一句「完成」，
+                # 與模型接下來要講的「查無這筆」自相矛盾。
+                ok = "error" not in outcome.payload
                 yield SSEEvent("tool_result", {
-                    "step_id": step, "id": call.id, "name": call.name, "ok": True,
+                    "step_id": step, "id": call.id, "name": call.name, "ok": ok,
                     "summary": _summarise(outcome.payload),
                 })
                 if outcome.ui_action:
