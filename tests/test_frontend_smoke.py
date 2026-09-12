@@ -324,6 +324,13 @@ def test_the_avatar_reacts_to_the_states_that_matter() -> None:
     seg = seg[:seg.index("break;")]
     assert "mood(" in seg and "?" in seg, "tool_result 沒有區分成功與被擋下"
 
+    # 嘴巴是**另一軸**，不是一種 mood。合併過一次，結果講解句設的值被下一個
+    # tool_call 立刻蓋掉，嘴巴一次都沒動過（實測 talk 每次只存在 0 毫秒）。
+    seg = body[body.index('case "text":'):]
+    seg = seg[:seg.index("break;")]
+    assert "yap(" in seg, "講解句沒有讓嘴巴動起來"
+    assert 'mood("' not in seg, "講話被寫成一種 mood，會被下一個事件立刻蓋掉"
+
 
 def test_the_avatar_honours_reduced_motion() -> None:
     """整份樣式表其他會動的東西都有這道開關（中庭的狗、房間轉場），

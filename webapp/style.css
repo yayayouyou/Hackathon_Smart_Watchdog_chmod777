@@ -589,11 +589,13 @@ main{display:grid;grid-template-columns:214px minmax(0,1fr);min-height:0}
 .agentdog[data-mood="work"] .ad-l{transform:rotate(-14deg) scaleY(1.12)}
 .agentdog[data-mood="work"] .ad-r{transform:rotate(14deg) scaleY(1.12)}
 
-/* 講話：嘴巴開合。那條閉著的嘴線讓位給一顆會開的嘴。 */
-.agentdog[data-mood="talk"] .ad-mouth{opacity:0}
-.agentdog[data-mood="talk"] .ad-yap{opacity:1;animation:ad-yap .3s ease-in-out infinite}
+/* 講話：嘴巴開合。那條閉著的嘴線讓位給一顆會開的嘴。
+   這一軸與 data-mood **正交**——它一邊講「正在調閱蘆洲區名單」一邊真的在
+   調閱，所以講話不可以蓋掉身體的狀態，反之亦然。合併成一個屬性試過，
+   結果是嘴巴一次都沒動過（text 事件設的值被下一個 tool_call 立刻蓋掉）。 */
+.agentdog[data-talking] .ad-mouth{opacity:0}
+.agentdog[data-talking] .ad-yap{opacity:1;animation:ad-yap .3s ease-in-out infinite}
 @keyframes ad-yap{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
-.agentdog[data-mood="talk"] .ad-all{animation:ad-bob 1.2s ease-in-out infinite}
 
 /* 被擋下：耳朵垂下、眼睛闔成線。不用紅色——這不是錯誤，
    是「這件事我不做」，跟畫面其他地方的用詞界線一致。 */
@@ -602,6 +604,8 @@ main{display:grid;grid-template-columns:214px minmax(0,1fr);min-height:0}
 .agentdog[data-mood="blocked"] .ad-eyes{animation:none;transform:scaleY(.12)}
 .agentdog[data-mood="blocked"] .ad-tail{animation:none;transform:rotate(16deg)}
 .agentdog[data-mood="blocked"] .ad-all{animation:none}
+.agentdog[data-mood="blocked"] .ad-yap{opacity:0;animation:none}
+.agentdog[data-mood="blocked"] .ad-mouth{opacity:1}
 
 /* 耳朵與尾巴的姿勢用 transition 銜接，狀態切換才不是硬跳一格。 */
 .ad-ear,.ad-tail{transition:transform .28s cubic-bezier(.33,.9,.34,1)}

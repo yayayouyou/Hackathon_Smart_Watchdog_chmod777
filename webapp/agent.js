@@ -273,28 +273,58 @@
       summary ? `${label}　${summary}` : label;
   }
 
-  /* 頭像的表情。`data-mood` 的五個值與 style.css 的選擇器一一對應。
+  /* 頭像的狀態分成兩軸，因為它們是**同時**發生的兩件事。
    *
-   * 為什麼要有這個而不是只靠「思考中」那行字：那行字只有兩態（在／不在），
-   * 而使用者最想分辨的是「它在想」還是「它在動手」——後者才代表畫面等一下
-   * 會變。狗的耳朵與尾巴把這件事講得比一行字快。
+   * `data-mood` 是身體在幹嘛：idle 待命／think 思考／work 動手／blocked 被擋下。
+   * `data-talking` 是嘴巴在不在動。
    *
-   * 講話是**短暫**的：打字動畫跑完就回上一個狀態，所以 talk 帶自動回復，
-   * 其餘狀態都是設了就留著，等下一個事件覆蓋。 */
+   * ⚠️ 這兩軸一開始是同一個屬性（talk 也是一種 mood），結果 talk 實測**永遠
+   * 只存在 0 毫秒**：後端把講解句與 tool 呼叫連著送，`text` 才剛設成 talk，
+   * 下一個事件 `tool_call` 就把它蓋成 work，嘴巴一次都沒動過。而句子還在逐字
+   * 打——畫面上明明在講話，狗卻閉著嘴。
+   *
+   * 合併成一軸就是在說「講話與做事互斥」，但它們不互斥：它一邊講「正在調閱
+   * 蘆洲區名單」一邊真的在調閱。分兩軸之後，嘴巴跟著打字動畫走，身體跟著
+   * 事件走，各自都不會被對方打斷。 */
+  /* work 的最短停留。tool 本身跑得極快（實測全部 <6ms，最慢的
+     search_documents 5.6ms），一輪 7 秒裡 99% 是模型在想。所以 `work` 若不給
+     下限，它每次都只存在 **0 毫秒**——耳朵豎起那個狀態實際上一次都沒被看見，
+     等於沒做。600ms 讓它看得見，而且不說謊：tool 確實跑過了。 */
+  const MIN_WORK_MS = 600;
+  let moodAt = 0;
+  let moodTimer = null;
+
   function mood(name) {
     const el = $("agentdog");
-    if (el) el.dataset.mood = name;
+    if (!el) return;
+    clearTimeout(moodTimer);
+    const left = MIN_WORK_MS - (Date.now() - moodAt);
+    if (el.dataset.mood === "work" && left > 0) {
+      moodTimer = setTimeout(() => mood(name), left);
+      return;
+    }
+    el.dataset.mood = name;
+    moodAt = Date.now();
   }
 
   let yapTimer = null;
 
+  /* 嘴巴動 `ms` 毫秒。`type()` 是每 12ms 吐 2 個字，所以一句話大約
+     `長度 × 6` 毫秒講得完，尾巴多留一點才不會話還沒說完嘴就閉上。 */
   function yap(ms) {
-    mood("talk");
+    const el = $("agentdog");
+    if (!el) return;
+    el.dataset.talking = "1";
     clearTimeout(yapTimer);
-    // 講完回「思考中」而不是「待命」：一輪還沒結束，下一步馬上要來。
-    yapTimer = setTimeout(() => {
-      if ($("agentdog").dataset.mood === "talk") mood("think");
-    }, ms);
+    yapTimer = setTimeout(() => { delete el.dataset.talking; }, ms);
+  }
+
+  /* 一輪結束時把嘴也收掉。最後一句通常是整輪最長的，`yap()` 的計時器還在跑，
+     不清掉的話串流都結束了狗還在對著空氣說話。 */
+  function hush() {
+    clearTimeout(yapTimer);
+    const el = $("agentdog");
+    if (el) delete el.dataset.talking;
   }
 
   /* 「思考中」。一則真的 tool 呼叫來回要數秒到數十秒，沒有這個指示，
@@ -403,6 +433,8 @@
     }
     thinking(false);
     mood("idle");
+    // 這裡刻意不呼叫 hush()：串流結束時最後一句通常還在逐字打，
+    // 立刻閉嘴就會變成「字還在跑、嘴已經閉了」。讓 yap() 自己的計時器收尾。
     busy = false;
     $("agentsend").disabled = false;
   }
@@ -443,6 +475,7 @@
         break;
       case "error":
         thinking(false);
+        hush();
         mood("blocked");
         bubble(`出錯：${esc(d.message)}`, "bot err");
         break;
