@@ -129,6 +129,8 @@ TASKS = [
          _s("analyse_personnel_to_reserve.py"), in_pipeline=True),
     Task("identity", "驗證每份抽取確實屬於檔名所指的那所園",
          _s("verify_extraction_identity.py"), in_pipeline=True),
+    Task("anomaly", "非營利園同儕財務異常排序（同年度、同類型，僅比率）",
+         _s("build_nonprofit_anomaly.py"), in_pipeline=True),
     Task("cohort", "挑出 9 案例加 9 對照的配對設計",
          _s("select_forensic_cohort.py"), in_pipeline=True),
     Task("forensic", "測試 12 個鑑識訊號（全部未通過，保留為否證紀錄）",
@@ -160,6 +162,8 @@ TASKS = [
          _s("score_extraction.py"), group="量測", needs_raw=True),
     Task("validate-extraction", "以會計恆等式量化抽取品質",
          _s("validate_extraction.py"), group="量測", needs_raw=True),
+    Task("validate-anomaly", "異常排序的三項驗證：Top-K、穩定性、LOO 敏感度",
+         _s("validate_nonprofit_anomaly.py"), group="量測"),
 
     # ── 外部（需要網路）──────────────────────────────────────────
     Task("fee-table", "重抓 109 到 114 學年度收費明細（約 10 分鐘）",
