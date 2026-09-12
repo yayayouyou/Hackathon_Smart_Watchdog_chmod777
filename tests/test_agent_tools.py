@@ -261,3 +261,22 @@ def test_search_results_link_to_a_page_image_when_the_pdf_is_present(reg) -> Non
     assert linked, "有原始 PDF 卻沒掛上證據頁網址"
     # 路徑含中文與斜線，一定要編碼過：未編碼會被 uvicorn 以 400 擋掉。
     assert all("%2F" in r["image_url"] for r in linked)
+
+
+def test_mcp_lifespan_is_wired_into_the_app() -> None:
+    """MCP 的 session manager 靠自己的 lifespan 初始化 task group。
+
+    只 `app.mount("/mcp", …)` 而不把它的 lifespan 接進父 app 的話：掛載會成功、
+    `list_mcp_tools()` 也列得出 12 個，但**協定層的 initialize 會 500**
+    （`Task group is not initialized`）——也就是「函式測得過、真的用 MCP 客戶端
+    連就連不上」。這個組合實測踩過，所以這裡直接檢查接線本身。
+    """
+    pytest.importorskip("fastmcp")
+    from smart_watchdog.api import server
+
+    assert server._mcp_app is not None, "MCP 沒建起來，看啟動時的『MCP 未掛載』訊息"
+    assert "/mcp" in [getattr(r, "path", "") for r in server.app.routes]
+    # 自訂 lifespan 一旦傳進 FastAPI，on_event 的處理器就不再跑，所以啟動工作
+    # （載 payload、bind 掃描、重啟對帳）必須在同一支 lifespan 裡。
+    assert server.app.router.lifespan_context is not None
+    assert server.app.router.on_startup == [], "on_event 與自訂 lifespan 不能並存"

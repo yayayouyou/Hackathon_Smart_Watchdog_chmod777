@@ -28,6 +28,7 @@ web app 沒有這些限制，所以這一層一上來，Google 地圖、滾輪�
 
 from __future__ import annotations
 
+import contextlib
 import json
 import pathlib
 from typing import Any, Optional
@@ -44,10 +45,57 @@ ROOT = pathlib.Path(__file__).resolve().parents[3]
 WEBAPP = ROOT / "webapp"
 PAYLOAD_PATH = ROOT / "dist/data/payload.json"
 
+# ── MCP ──────────────────────────────────────────────────────────────
+# 同一組 tool 的第二條入口：瀏覽器走 /api/agent/messages，MCP 客戶端走 /mcp。
+# 白名單與稽核都在 ToolRegistry.execute()，所以兩條路徑不可能有不同的權限。
+#
+# ⚠️ **必須在建立 app 之前先建好**，因為 FastMCP 的 StreamableHTTPSessionManager
+# 要靠它自己的 lifespan 初始化 task group——只 mount 不接 lifespan 的話，
+# mount 成功、tools/list 也列得出來，但**協定層的 initialize 會 500**
+# （`Task group is not initialized`）。這個組合實測踩過。
+#
+# 掛載失敗不讓整個服務起不來：MCP 是額外通道，派工台本身不依賴它。
+_mcp_app = None
+try:
+    from ..agent.mcp_server import build_mcp as _build_mcp
+
+    _mcp_app = _build_mcp().http_app(path="/")
+except Exception as _mcp_exc:  # noqa: BLE001 - 缺 fastmcp 或版本不符都只停用這條
+    print(f"MCP 未掛載：{_mcp_exc}")
+
+
+@contextlib.asynccontextmanager
+async def _lifespan(app_: FastAPI):
+    """啟動工作 + MCP 的 lifespan。
+
+    改成 lifespan 而不是 `@app.on_event("startup")`，是因為 Starlette 一旦收到
+    自訂 lifespan 就不再跑 on_event 的處理器——兩者不能並存。內容與原本那支
+    `_startup` 完全相同，只是多包了 MCP 那一層。
+    """
+    try:
+        load_payload()
+    except FileNotFoundError as exc:  # keep the server up so /api/health can say why
+        print(f"⚠️ {exc}")
+    _scan.bind(payload, get_proposal)
+    # 重啟對帳：進行中的任務標為中斷，且**不釋放**已預留的額度。
+    from ..realtime.jobs import STORE
+
+    n = STORE.sweep_interrupted()
+    if n:
+        print(f"⚠️ {n} 個掃描任務因重啟中斷；預留額度維持佔用（當機的執行照樣花了錢）")
+
+    if _mcp_app is None:
+        yield
+    else:
+        async with _mcp_app.lifespan(app_):
+            yield
+
+
 app = FastAPI(
     title="小小守護員 Smart Watchdog",
     description="新北市教保機構稽查優先序。輸出為建議查核，非違法認定。",
     version="1.0",
+    lifespan=_lifespan,
 )
 # The console may be served from a different origin during development.
 app.add_middleware(
@@ -90,19 +138,6 @@ def payload() -> dict[str, Any]:
     return _state["payload"]
 
 
-@app.on_event("startup")
-def _startup() -> None:
-    try:
-        load_payload()
-    except FileNotFoundError as exc:  # keep the server up so /api/health can say why
-        print(f"⚠️ {exc}")
-    _scan.bind(payload, get_proposal)
-    # 重啟對帳：進行中的任務標為中斷，且**不釋放**已預留的額度。
-    from ..realtime.jobs import STORE
-
-    n = STORE.sweep_interrupted()
-    if n:
-        print(f"⚠️ {n} 個掃描任務因重啟中斷；預留額度維持佔用（當機的執行照樣花了錢）")
 
 
 # ── 讀取 ────────────────────────────────────────────────────────────
@@ -346,16 +381,8 @@ def chat(req: ChatRequest) -> dict:
     return answer(req.question, payload(), institution_id=req.institution_id)
 
 
-# ── MCP ──────────────────────────────────────────────────────────────
-# 同一組 tool 的第二條入口：瀏覽器走 /api/agent/messages，MCP 客戶端走 /mcp。
-# 白名單與稽核都在 ToolRegistry.execute()，所以兩條路徑不可能有不同的權限。
-# 掛載失敗不讓整個服務起不來——MCP 是額外通道，派工台本身不依賴它。
-try:
-    from ..agent.mcp_server import build_mcp as _build_mcp
-
-    app.mount("/mcp", _build_mcp().http_app(path="/"))
-except Exception as _mcp_exc:  # noqa: BLE001 - 缺 fastmcp 或版本不符都只停用這條
-    print(f"MCP 未掛載：{_mcp_exc}")
+if _mcp_app is not None:
+    app.mount("/mcp", _mcp_app)
 
 
 # ── 靜態前端 ─────────────────────────────────────────────────────────
