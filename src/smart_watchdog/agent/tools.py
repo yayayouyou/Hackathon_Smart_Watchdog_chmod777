@@ -950,7 +950,11 @@ def _list_table_types(_ctx: ToolContext, a: TableTypesArgs) -> ToolOutcome:
             "count": len(items), "items": items,
             "note": "「未分類明細」是標題無法歸類的表，刻意保留成一項而不藏起來。",
         },
-        ui_action={"type": "open_table", "sections": [i["section"] for i in items[:8]]},
+        # 帶上園所與學年度：只給 section 的話，畫面會列出全 132 園的同一種表，
+        # 跟助理剛才講的那一所對不起來。
+        ui_action={"type": "open_table",
+                   "sections": [i["section"] for i in items[:8]],
+                   "institution": a.institution, "year": a.year},
     )
 
 
@@ -1009,7 +1013,11 @@ def _get_table(_ctx: ToolContext, a: GetTableArgs) -> ToolOutcome:
             "note": "數值為 null 代表原件那一格空白（未編列），不是 0。"
                     "本表為原件轉錄，不含任何判讀。",
         },
-        ui_action={"type": "open_table", "uid": t["uid"]},
+        # uid 前端用不到——資料室是按「園所＋學年度＋表單類型」在瀏覽的，
+        # 沒有「只顯示這一張」的畫面。所以把那三個維度一起送過去。
+        ui_action={"type": "open_table", "uid": t["uid"],
+                   "section": t["section"], "institution": t["institution"],
+                   "year": t["academic_year"]},
     )
 
 

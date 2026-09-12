@@ -73,9 +73,11 @@ def tables(section: Optional[str] = None, institution: Optional[str] = None,
            limit: int = Query(50, ge=1, le=400)) -> dict:
     """符合條件的表頭清單。列要用 /table 另取。"""
     _need_slice()
-    rows = store.find_tables(section=section, institution=institution,
-                             year=year, limit=limit)
-    return {"count": len(rows), "tables": rows}
+    total, rows = store.count_tables(section=section, institution=institution,
+                                     year=year, limit=limit)
+    # `count` 是這一次回傳幾張，`total` 是符合條件的總數。兩個一樣時畫面不必
+    # 多說一句；不一樣時就必須說，否則「顯示 12 張」會被讀成「只有 12 張」。
+    return {"count": len(rows), "total": total, "tables": rows}
 
 
 @router.get("/table")

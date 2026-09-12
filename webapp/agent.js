@@ -147,6 +147,24 @@
         if (a.evidence_query) showEvidence(a);
         break;
 
+      /* 資料室。⚠️ 這個 case 一度不存在：後端白名單放行、資料室那五個 tool
+         也在送，但前端整份 webapp 都沒有 `open_table` 這個字。結果是助理
+         照樣說「已列在畫面上」，而畫面停在上一室、`#dr-tables` 一個元素都
+         沒有——它在講一件沒發生的事。實測過。 */
+      case "open_table": {
+        const then = () => {
+          if (!window.SWData || !window.SWData.focus) return;
+          window.SWData.focus({
+            institution: a.institution, year: a.year,
+            // sections 是一份清單（list_table_types），開第一種就好——
+            // 把八種表一次全攤開，等於什麼都沒指出來。
+            section: a.section || (Array.isArray(a.sections) ? a.sections[0] : null),
+          });
+        };
+        switchTab("data", then);
+        break;
+      }
+
       case "close_drawer": {
         const d = $("dossier");
         if (d) d.hidden = true;

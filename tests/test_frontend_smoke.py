@@ -631,3 +631,41 @@ def test_dataroom_class_names_are_namespaced_or_deliberately_reused() -> None:
         f"這些 class 既沒有 dr／mx／ftab 前綴，也不在刻意復用的清單裡：{stray}。"
         "全域 CSS 可能已經有同名規則——加前綴，或確認復用是安全的。"
     )
+
+
+def test_every_allowed_ui_action_is_handled_by_the_dispatcher() -> None:
+    """後端放行的每一種 ui_action，前端都必須真的接。
+
+    漏接**不會報錯**：tool 照樣成功、助理照樣說「已列在畫面上」，而畫面停在
+    上一室什麼都沒發生。實測過——`open_table` 在白名單裡、資料室那五個 tool
+    也在送，但整份 webapp 都沒有這個字，助理於是在講一件沒發生的事。
+
+    這條界線兩邊分屬不同語言、不同檔案、不同人寫，沒有任何編譯期檢查會抓到
+    它，所以釘在這裡。
+    """
+    registry = (ROOT / "src/smart_watchdog/agent/registry.py").read_text(encoding="utf-8")
+    m = re.search(r"UI_ACTION_TYPES\s*=\s*frozenset\((.*?)\)", registry, re.S)
+    assert m, "找不到 UI_ACTION_TYPES"
+    allowed = set(re.findall(r'"([a-z_]+)"', m.group(1)))
+    assert allowed, "白名單是空的，正則可能過時了"
+
+    agent = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    body = agent[agent.index("function dispatch("):]
+    handled = set(re.findall(r'case "([a-z_]+)":', body))
+    missing = sorted(allowed - handled)
+    assert not missing, (
+        f"這些 ui_action 後端會送、前端沒接，畫面會靜默不動：{missing}"
+    )
+
+
+def test_the_dataroom_shows_the_true_number_of_tables() -> None:
+    """畫面上的張數要是**總數**，不是這次回傳幾張。
+
+    `/api/dataroom/tables` 的 `count` 是套用 limit 之後的筆數。前端拿它當總數
+    顯示的話，符合 25 張、請求 12 張時畫面會寫「12 張」——而助理用同一份資料
+    講 25 張。兩邊都在講真話，但使用者看到的是系統自相矛盾。
+    """
+    js = (WEBAPP / "dataroom.js").read_text(encoding="utf-8")
+    assert "res.total" in js, "資料室仍把 count 當成總數顯示"
+    api = (ROOT / "src/smart_watchdog/api/dataroom.py").read_text(encoding="utf-8")
+    assert '"total"' in api, "/api/dataroom/tables 沒有回傳總數"
