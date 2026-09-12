@@ -1,0 +1,598 @@
+{
+ "report": "N05_漢翔_113",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 113,
+ "pdf_page": 29,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 29,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "財產編號",
+    "登錄號/分號",
+    "財產名稱",
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "6011206 000645 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000646 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000647 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000648 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000649 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000650 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000651 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000652 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000653 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000654 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000655 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000656 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000657 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000658 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000659 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000660 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000661 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000662 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000663 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000664 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000665 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000666 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000667 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000668 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000669 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000670 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000671 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 000672 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011209 000046 電器用具-熱水器",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6800,
+      1,
+      6800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6011209 000047 電器用具-熱水器",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6800,
+      1,
+      6800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6011209 000048 電器用具-熱水器",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6800,
+      1,
+      6800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6011213 000008 電器用具-電冰箱",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8300,
+      1,
+      8300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6020102 000004 清潔用具-除濕機",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      9000,
+      1,
+      9000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6020102 000005 清潔用具-除濕機",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      9000,
+      1,
+      9000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6020102 000006 清潔用具-除濕機",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      9000,
+      1,
+      9000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6020102 000007 清潔用具-除濕機",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      9000,
+      1,
+      9000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6020102 000008 清潔用具-除濕機",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      9000,
+      1,
+      9000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6020199 000001 清潔用具-其他",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      5000,
+      1,
+      5000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6020199 000002 清潔用具-其他",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      5000,
+      1,
+      5000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6020199 000003 清潔用具-其他",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      2432,
+      1,
+      2432,
+      null,
+      3
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本頁為財產目錄明細，欄位結構為財產編號、登錄號/分號、財產名稱、單價、數量、總金額、購置日期、使用年限，非標準金額表格，values欄位無法對齊period_labels之金融期間標籤，已以各欄位順序填入數值。"
+ ]
+}

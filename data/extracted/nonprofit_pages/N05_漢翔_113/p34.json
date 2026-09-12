@@ -1,0 +1,230 @@
+{
+ "report": "N05_漢翔_113",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 113,
+ "pdf_page": 34,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 34,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "2. 購置財產",
+   "period_labels": [
+    "財產編號",
+    "財產名稱",
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "材漢 105-006-01",
+     "values": [
+      null,
+      null,
+      20710,
+      1,
+      20710,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "材漢 105-007-01",
+     "values": [
+      null,
+      null,
+      55100,
+      1,
+      55100,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "材漢 105-008-01",
+     "values": [
+      null,
+      null,
+      18810,
+      1,
+      18810,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "材漢 105-009-01",
+     "values": [
+      null,
+      null,
+      15010,
+      1,
+      15010,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "材漢 105-089-01",
+     "values": [
+      null,
+      null,
+      26400,
+      1,
+      26400,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "廚漢 105-08-001",
+     "values": [
+      null,
+      null,
+      14500,
+      1,
+      14500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電漢 106-001-01",
+     "values": [
+      null,
+      null,
+      19950,
+      1,
+      19950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電漢 107-001-01",
+     "values": [
+      null,
+      null,
+      29000,
+      1,
+      29000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電漢 109-001-01",
+     "values": [
+      null,
+      null,
+      15937,
+      1,
+      15937,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "教漢 109-001-01",
+     "values": [
+      null,
+      null,
+      43668,
+      1,
+      43668,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "教漢 109-002-01",
+     "values": [
+      null,
+      null,
+      34258,
+      1,
+      34258,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電漢 109-001-01",
+     "values": [
+      null,
+      null,
+      29925,
+      1,
+      29925,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "教漢 110-001",
+     "values": [
+      null,
+      null,
+      15225,
+      1,
+      15225,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電漢 111-001-01",
+     "values": [
+      null,
+      null,
+      16800,
+      1,
+      16800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電漢 112-001-01",
+     "values": [
+      null,
+      null,
+      36000,
+      1,
+      36000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "合計",
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      391293,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "財產編號欄與財產名稱欄為文字，無法放入數值欄位，故 values 中對應位置填 null；購置日期同理。",
+  "電漢 109-001-01 出現兩次（一為投影機，一為筆記型電腦），可能為財產編號重複錯誤，已如實照抄。"
+ ]
+}

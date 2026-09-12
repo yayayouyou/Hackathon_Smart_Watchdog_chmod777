@@ -1,0 +1,102 @@
+{
+ "report": "N10_大觀_111",
+ "code": "N10",
+ "short_name": "大觀",
+ "academic_year": 111,
+ "pdf_page": 8,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N10",
+ "printed_page": 8,
+ "page_kind": "equity_change",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": null,
+   "period_labels": [
+    "累積餘絀",
+    "本期餘絀",
+    "合　　計"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "110 年 8 月 1 日餘額",
+     "note_ref": null,
+     "values": [
+      820962,
+      -157802,
+      663160
+     ]
+    },
+    {
+     "label": "109 學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      -157802,
+      157802,
+      null
+     ]
+    },
+    {
+     "label": "110 學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      167343,
+      167343
+     ]
+    },
+    {
+     "label": "111 年 7 月 31 日餘額",
+     "note_ref": null,
+     "values": [
+      663160,
+      167343,
+      830503
+     ]
+    },
+    {
+     "label": "110 學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      167343,
+      -167343,
+      null
+     ]
+    },
+    {
+     "label": "111 學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      193966,
+      193966
+     ]
+    },
+    {
+     "label": "112 年 7 月 31 日餘額",
+     "note_ref": null,
+     "values": [
+      830503,
+      193966,
+      1024469
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": [
+  "頁面上方紅色關防遮住部分表頭文字，機構名稱及表格標題無法完整辨識"
+ ]
+}

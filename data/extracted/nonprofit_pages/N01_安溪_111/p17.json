@@ -1,0 +1,372 @@
+{
+ "report": "N01_安溪_111",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 111,
+ "pdf_page": 17,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 17,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "3. 業務費",
+   "period_labels": [
+    "111.8.1~112.7.31 預算數",
+    "111.8.1~112.7.31 決算數",
+    "111.8.1~112.7.31 差異",
+    "111.8.1~112.7.31 執行率%"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      115000,
+      60407,
+      -54593,
+      53
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      36000,
+      2800,
+      -33200,
+      8
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      38000,
+      14267,
+      -23733,
+      38
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      324000,
+      132817,
+      -191183,
+      41
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      36000,
+      23590,
+      -12410,
+      66
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      60000,
+      29925,
+      -30075,
+      50
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      30000,
+      3085,
+      -26915,
+      10
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      65000,
+      54177,
+      -10823,
+      83
+     ]
+    },
+    {
+     "label": "電話費（含網路）",
+     "note_ref": null,
+     "values": [
+      54000,
+      35601,
+      -18399,
+      66
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      8400,
+      3046,
+      -5354,
+      36
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      10000,
+      null,
+      -10000,
+      null
+     ]
+    },
+    {
+     "label": "文宣費（園刊）",
+     "note_ref": null,
+     "values": [
+      30000,
+      null,
+      -30000,
+      null
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      10000,
+      null,
+      -10000,
+      null
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      42000,
+      42000,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      25000,
+      null,
+      -25000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      883400,
+      401715,
+      -481685,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "3. 業務費",
+   "period_labels": [
+    "110.8.1~111.7.31 預算數",
+    "110.8.1~111.7.31 決算數",
+    "110.8.1~111.7.31 差異",
+    "110.8.1~111.7.31 執行率%"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      95000,
+      36885,
+      -58115,
+      39
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      24000,
+      null,
+      -24000,
+      null
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      26000,
+      6410,
+      -19590,
+      25
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      204000,
+      80699,
+      -123301,
+      40
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      32000,
+      14850,
+      -17150,
+      46
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      60000,
+      24000,
+      -36000,
+      40
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      18000,
+      12026,
+      -5974,
+      67
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      60000,
+      50284,
+      -9716,
+      84
+     ]
+    },
+    {
+     "label": "電話費（含網路）",
+     "note_ref": null,
+     "values": [
+      45000,
+      33835,
+      -11165,
+      75
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      7200,
+      2415,
+      -4785,
+      34
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      10000,
+      null,
+      -10000,
+      null
+     ]
+    },
+    {
+     "label": "文宣費（園刊）",
+     "note_ref": null,
+     "values": [
+      27500,
+      null,
+      -27500,
+      null
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      9000,
+      null,
+      -9000,
+      null
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      39000,
+      39000,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      20000,
+      null,
+      -20000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      676700,
+      300404,
+      -376296,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.2 業務費：得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限。\n(2) 111 及 110 學年度業務費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": []
+}

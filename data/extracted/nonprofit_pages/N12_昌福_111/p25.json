@@ -1,0 +1,356 @@
+{
+ "report": "N12_昌福_111",
+ "code": "N12",
+ "short_name": "昌福",
+ "academic_year": 111,
+ "pdf_page": 25,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N12",
+ "printed_page": 25,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "各學年收支預決算比較表",
+   "context_heading": "附表三：各學年收支預決算比較表",
+   "period_labels": [
+    "111學年度 預算數",
+    "111學年度 決算數",
+    "111學年度 決算數與預算數之差異",
+    "111學年度 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "收入",
+     "note_ref": null,
+     "values": [
+      11293560,
+      11151427,
+      -142133,
+      99
+     ]
+    },
+    {
+     "label": "教保費收入淨額",
+     "note_ref": null,
+     "values": [
+      11293560,
+      10917230,
+      -376330,
+      97
+     ]
+    },
+    {
+     "label": "教保費收入",
+     "note_ref": null,
+     "values": [
+      11293560,
+      11018441,
+      -275119,
+      98
+     ]
+    },
+    {
+     "label": "教保費收入（家長繳費）",
+     "note_ref": null,
+     "values": [
+      2160000,
+      1436185,
+      -723815,
+      66
+     ]
+    },
+    {
+     "label": "教保費收入（政府學費差額補助）",
+     "note_ref": null,
+     "values": [
+      9133560,
+      9582256,
+      448696,
+      105
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": null,
+     "values": [
+      null,
+      -101211,
+      -101211,
+      null
+     ]
+    },
+    {
+     "label": "五日未上課退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -74990,
+      -74990,
+      null
+     ]
+    },
+    {
+     "label": "轉學/轉出退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -21633,
+      -21633,
+      null
+     ]
+    },
+    {
+     "label": "政府學費差額補助退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -4588,
+      -4588,
+      null
+     ]
+    },
+    {
+     "label": "延後托育收入淨額",
+     "note_ref": null,
+     "values": [
+      null,
+      93400,
+      93400,
+      null
+     ]
+    },
+    {
+     "label": "延後托育收入淨額",
+     "note_ref": null,
+     "values": [
+      null,
+      93400,
+      93400,
+      null
+     ]
+    },
+    {
+     "label": "延後托育收入",
+     "note_ref": null,
+     "values": [
+      null,
+      93400,
+      93400,
+      null
+     ]
+    },
+    {
+     "label": "利息收入",
+     "note_ref": null,
+     "values": [
+      null,
+      35381,
+      35381,
+      null
+     ]
+    },
+    {
+     "label": "其他收入",
+     "note_ref": null,
+     "values": [
+      null,
+      105416,
+      105416,
+      null
+     ]
+    },
+    {
+     "label": "支出",
+     "note_ref": null,
+     "values": [
+      11008953,
+      10831469,
+      -177484,
+      98
+     ]
+    },
+    {
+     "label": "人事費",
+     "note_ref": null,
+     "values": [
+      8488051,
+      7001260,
+      -1486791,
+      82
+     ]
+    },
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      4690360,
+      4354037,
+      -336323,
+      93
+     ]
+    },
+    {
+     "label": "學前特教師、社工人員、護理人員薪資",
+     "note_ref": null,
+     "values": [
+      464157,
+      375024,
+      -89133,
+      81
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1303709,
+      1154906,
+      -148803,
+      89
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      641088,
+      21025,
+      -620063,
+      3
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      812568,
+      716389,
+      -96179,
+      88
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      12000,
+      null,
+      -12000,
+      null
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      344436,
+      330741,
+      -13695,
+      96
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      12000,
+      null,
+      -12000,
+      null
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      1000,
+      1300,
+      300,
+      130
+     ]
+    },
+    {
+     "label": "代課費及廚工代班費",
+     "note_ref": null,
+     "values": [
+      158895,
+      null,
+      -158895,
+      null
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      47838,
+      47838,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "業務費",
+     "note_ref": null,
+     "values": [
+      676700,
+      397097,
+      -279603,
+      59
+     ]
+    },
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      95000,
+      81531,
+      -13469,
+      86
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      24000,
+      null,
+      -24000,
+      null
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      26000,
+      13667,
+      -12333,
+      53
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      204000,
+      153059,
+      -50941,
+      75
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "「延後托育收入淨額」在表中出現兩次（一行為粗體小計，一行為明細），已分別抄錄。",
+  "資遣費差異欄顯示為空白（視覺上無數字），填null；執行率100%已抄錄。"
+ ]
+}

@@ -1,0 +1,188 @@
+{
+ "report": "N13_三多_113",
+ "code": "N13",
+ "short_name": "三多",
+ "academic_year": 113,
+ "pdf_page": 15,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N13",
+ "printed_page": 15,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.8.1~113.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      5500000,
+      4300000
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      2000000,
+      1200000
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      7500000,
+      5500000
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "114 年 7 月 31 日",
+    "113 年 7 月 31 日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "業務發展準備金",
+     "note_ref": null,
+     "values": [
+      5500000,
+      4300000
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      513853,
+      null,
+      -53477,
+      460376
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      624376,
+      null,
+      -110523,
+      513853
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "購置財產",
+     "note_ref": null,
+     "values": [
+      246188,
+      80775,
+      null,
+      326963
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "購置財產",
+     "note_ref": null,
+     "values": [
+      210445,
+      35743,
+      null,
+      246188
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "2. 業務發展準備",
+   "text": "依據非營利幼兒園實施辦法及非營利幼兒園會計財務及經費處理注意事項之規定，提列之業務發展準備金已報經主管機關同意。依該規定，以專戶或定期存款提存之業務發展準備金餘額如下："
+  },
+  {
+   "heading": "1. 代管財產",
+   "text": "113 及 112 學年度代管財產分別減少 53,477 元及 110,523 元，係託管單位財產管理系統，依財產經濟年限攤提折舊所致。"
+  },
+  {
+   "heading": "2. 購置財產",
+   "text": "本幼兒園依契約之規定應辦理保險，截至 114 年 7 月 31 日及 113 年 7 月 31 日止保險金額均為 15,500,000 元。"
+  }
+ ],
+ "issues": [
+  "代管財產表格中「本期增加」欄顯示為「$ -」，視為空白填 null；「本期減少」欄顯示括號負數，已轉為負值。",
+  "購置財產表格中「本期減少」欄顯示為「$ -」，視為空白填 null。",
+  "代管財產兩期表格與購置財產兩期表格各自使用期初餘額/本期增加/本期減少/期末餘額作為 period_labels，因為這些是欄標題而非時間期間，請注意使用時的語意。"
+ ]
+}

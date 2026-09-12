@@ -1,0 +1,70 @@
+{
+ "report": "N07_北大_110",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 110,
+ "pdf_page": 40,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 40,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "考評指標考評方式評分表",
+   "period_labels": [
+    "評分"
+   ],
+   "items": [
+    {
+     "label": "3.編制財務報表：（配分3分）",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(1)依限完成前揭2項考評指標所需各項財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    },
+    {
+     "label": "(2)依會計師查核或簽證意見修改各項財務報表及財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    },
+    {
+     "label": "(3)財產依規定登錄及報廢之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    },
+    {
+     "label": "會計查核簽證情形評分合計：",
+     "note_ref": null,
+     "values": [
+      15
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "誠明聯合會計師事務所\n會計師：張　景　嵐"
+  }
+ ],
+ "issues": [
+  "考評依據及備註欄內容空白，無法確認是否有填寫內容被遮蓋或本身即為空白。"
+ ]
+}

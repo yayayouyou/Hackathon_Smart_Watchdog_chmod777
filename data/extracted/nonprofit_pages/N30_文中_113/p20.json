@@ -1,0 +1,176 @@
+{
+ "report": "N30_文中_113",
+ "code": "N30",
+ "short_name": "文中",
+ "academic_year": 113,
+ "pdf_page": 20,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N30",
+ "printed_page": 20,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "6. 延長照顧服務收支",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.8.1~113.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "延長照顧服務收入",
+     "note_ref": null,
+     "values": [
+      380275,
+      364795
+     ]
+    },
+    {
+     "label": "延長照顧服務收入退費",
+     "note_ref": null,
+     "values": [
+      -7630,
+      -4690
+     ]
+    },
+    {
+     "label": "延長照顧服務收入淨額",
+     "note_ref": null,
+     "values": [
+      372645,
+      360015
+     ]
+    },
+    {
+     "label": "延長照顧服務支出",
+     "note_ref": null,
+     "values": [
+      -215119,
+      -183542
+     ]
+    },
+    {
+     "label": "延長照顧服務收支淨額",
+     "note_ref": null,
+     "values": [
+      157526,
+      176563
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "7. 其他收入及其他支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      868021,
+      868021,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      5880,
+      5880,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      38767,
+      38767,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      912668,
+      912668,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "7. 其他收入及其他支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      373594,
+      373594,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      6360,
+      6360,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      37136,
+      37136,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      417090,
+      417090,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.5 維護費及修繕購置費各細項經費倘有不足，應優先於維護費及修繕購置費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜費及行政管理費）。\n(2) 113 學年度修繕購置費超支預算部分，依上開規定應優先於維護費總預算內相互勻支後，已符合勻支規定。\n(3) 112 學年度修繕購置費超支預算部分，依上開規定應優先於維護費總預算內相互勻支後，已符合勻支規定。\n(4) 113 及 112 學年度維護費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "第7點其他收入及其他支出表格中，「淨　額」欄顯示為「$ -」，依規則視為空白填null。兩張表的期間標題（113.8.1~114.7.31 及 112.8.1~113.7.31）作為 context_heading 補充說明，但 period_labels 採用欄標題（收入、支出、淨額）而非日期，因兩張表期間不同已各自獨立。"
+ ]
+}

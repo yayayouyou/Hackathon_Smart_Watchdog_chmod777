@@ -1,0 +1,48 @@
+{
+ "report": "N01_安溪_113",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 113,
+ "pdf_page": 38,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 38,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "查核項目",
+   "period_labels": [
+    "是",
+    "否",
+    "不適用"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "73 非營利幼兒園專戶之印信，應有幼兒園章及負責人私章或園長私章，且由非營利法人指定之人、園長（或其代理人）、會計或出納人員分別保管，未集中於同一人保管，以符合專戶管理辦法相關法規",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "其他補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "綜合建議事項",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "查核項目73的是欄標記為V，但values陣列因欄位為是/否/不適用的勾選格式而難以用數字表達，已省略數值填寫"
+ ]
+}

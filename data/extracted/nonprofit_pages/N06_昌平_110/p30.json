@@ -1,0 +1,375 @@
+{
+ "report": "N06_昌平_110",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 110,
+ "pdf_page": 30,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 30,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "6110199-000009 教學用具－其他",
+     "note_ref": null,
+     "values": [
+      2288,
+      1,
+      2288,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6110199-000010 教學用具－其他",
+     "note_ref": null,
+     "values": [
+      3898,
+      1,
+      3898,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6110199-000011 教學用具－其他",
+     "note_ref": null,
+     "values": [
+      3898,
+      1,
+      3898,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6110199-000012 教學用具－其他",
+     "note_ref": null,
+     "values": [
+      3898,
+      1,
+      3898,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6110199-000013 教學用具－其他",
+     "note_ref": null,
+     "values": [
+      3898,
+      1,
+      3898,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6110199-000014 教學用具－其他",
+     "note_ref": null,
+     "values": [
+      2366,
+      1,
+      2366,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6110199-000015 教學用具－其他",
+     "note_ref": null,
+     "values": [
+      3536,
+      1,
+      3536,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6110199-000016 教學用具－其他",
+     "note_ref": null,
+     "values": [
+      2975,
+      1,
+      2975,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6110199-000017 教學用具－其他",
+     "note_ref": null,
+     "values": [
+      2363,
+      1,
+      2363,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "總計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1064891,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "2. 購置財產",
+   "period_labels": [
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "106SL033 行動式擴音機",
+     "note_ref": null,
+     "values": [
+      29000,
+      1,
+      29000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "106SL033 投影機",
+     "note_ref": null,
+     "values": [
+      19425,
+      1,
+      19425,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "106SL150 萬象組",
+     "note_ref": null,
+     "values": [
+      11000,
+      1,
+      11000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "107-001-01 單位積木",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      25000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "106SL287 投影機/布幕",
+     "note_ref": null,
+     "values": [
+      24000,
+      1,
+      24000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "107-001-02 快速帳篷組",
+     "note_ref": null,
+     "values": [
+      21000,
+      2,
+      21000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "106SL045-01 電腦",
+     "note_ref": null,
+     "values": [
+      19950,
+      1,
+      19950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "106SL045-02 電腦",
+     "note_ref": null,
+     "values": [
+      19950,
+      1,
+      19950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "106SL037 筆電",
+     "note_ref": null,
+     "values": [
+      24675,
+      1,
+      24675,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "設昌 107-001-06 電腦總機設備",
+     "note_ref": null,
+     "values": [
+      19635,
+      1,
+      19635,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "設昌 109-001-06 帳篷",
+     "note_ref": null,
+     "values": [
+      20000,
+      1,
+      20000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電昌 110-001-01 體溫+消毒機",
+     "note_ref": null,
+     "values": [
+      1383,
+      1,
+      1383,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "廚昌 110-001-01 瞬間電熱水器",
+     "note_ref": null,
+     "values": [
+      3000,
+      1,
+      3000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "廚昌 110-001-03 RO 逆滲透機",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "設昌 110-002-01 雙面白板架",
+     "note_ref": null,
+     "values": [
+      7140,
+      1,
+      7140,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電昌 110-002-06 Wi-Fi 機",
+     "note_ref": null,
+     "values": [
+      1690,
+      1,
+      1690,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電昌 110-002-09 循環扇 220V 吸頂式",
+     "note_ref": null,
+     "values": [
+      3045,
+      1,
+      3045,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "教昌 110-02-01 鐵布軟性白板",
+     "note_ref": null,
+     "values": [
+      14620,
+      1,
+      14620,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      270513,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "附表五：到園檢查表（不適用）"
+  }
+ ],
+ "issues": [
+  "購置日期欄為文字日期格式（如106/08/31），未轉為數值，故填null。",
+  "第一張表無標題，為財產目錄延續頁。",
+  "電昌 110-002-09 循環扇購置日期欄印刷為 1110/3/31，疑為 111/03/31 之誤，照抄原文。"
+ ]
+}

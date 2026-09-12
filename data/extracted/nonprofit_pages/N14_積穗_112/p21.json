@@ -1,0 +1,266 @@
+{
+ "report": "N14_積穗_112",
+ "code": "N14",
+ "short_name": "積穗",
+ "academic_year": 112,
+ "pdf_page": 21,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N14",
+ "printed_page": 21,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "111.8.1~112.7.31 收　入",
+    "111.8.1~112.7.31 支　出",
+    "111.8.1~112.7.31 淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "防疫加班費補助",
+     "note_ref": null,
+     "values": [
+      13800,
+      13800,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      1131955,
+      1131955,
+      null
+     ]
+    },
+    {
+     "label": "特教專業知能補助",
+     "note_ref": null,
+     "values": [
+      10000,
+      10000,
+      null
+     ]
+    },
+    {
+     "label": "公共意外責任險補助",
+     "note_ref": null,
+     "values": [
+      1339,
+      1339,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      80000,
+      80000,
+      null
+     ]
+    },
+    {
+     "label": "招收身心障礙幼兒補助",
+     "note_ref": null,
+     "values": [
+      55000,
+      55000,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      170816,
+      170816,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "note_ref": null,
+     "values": [
+      46000,
+      46000,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      130000,
+      130000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1638910,
+      1638910,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收　入",
+    "112.8.1~113.7.31 支　出",
+    "112.8.1~113.7.31 淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      164948,
+      164948,
+      null
+     ]
+    },
+    {
+     "label": "原住民子女學前教育補助",
+     "note_ref": null,
+     "values": [
+      18000,
+      18000,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      6360,
+      6360,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      189308,
+      189308,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "111.8.1~112.7.31 收　入",
+    "111.8.1~112.7.31 支　出",
+    "111.8.1~112.7.31 淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      412010,
+      412010,
+      null
+     ]
+    },
+    {
+     "label": "原住民子女學前教育補助",
+     "note_ref": null,
+     "values": [
+      41754,
+      41754,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      6360,
+      6360,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      460124,
+      460124,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收　入",
+    "112.8.1~113.7.31 支　出",
+    "112.8.1~113.7.31 淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      29050,
+      29050,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "111.8.1~112.7.31 收　入",
+    "111.8.1~112.7.31 支　出",
+    "111.8.1~112.7.31 淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      27965,
+      27965,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "頁面最上方第一張表無明確的節標題，依內容判斷屬於代收補助收入及支出之111.8.1~112.7.31期間明細，context_heading以『(2) 代收補助收入及支出』填入，如有誤請人工確認。"
+ ]
+}

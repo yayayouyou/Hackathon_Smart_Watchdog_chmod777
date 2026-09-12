@@ -1,0 +1,96 @@
+{
+ "report": "N01_安溪_113",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 113,
+ "pdf_page": 41,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 41,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "114年度業務發展準備金提列申請表(114.1.1~114.7.31)",
+   "period_labels": [
+    "實際收入(A)",
+    "實際支出(B)",
+    "差異數(C=A -B)",
+    "提列數(D)",
+    "提列後餘絀數(E=C-D)"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "金額",
+     "note_ref": null,
+     "values": [
+      11738150,
+      9531087,
+      2207063,
+      2200000,
+      7063
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "限額計算",
+   "period_labels": [
+    "金額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "1.提列數至多為收入總額*20%(F)",
+     "note_ref": null,
+     "values": [
+      2356898
+     ]
+    },
+    {
+     "label": "2.差異數(C)",
+     "note_ref": null,
+     "values": [
+      2207063
+     ]
+    },
+    {
+     "label": "3.業務發展準備金提列上限＝(F)、(C)二者取小",
+     "note_ref": null,
+     "values": [
+      2207063
+     ]
+    },
+    {
+     "label": "4.提列數(D)不得大於第3點數額",
+     "note_ref": null,
+     "values": [
+      2200000
+     ]
+    },
+    {
+     "label": "已符合上限規定",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "備註",
+   "text": "限額計算\n1.提列數至多為收入總額*20%(F)　$2,356,898\n2.差異數(C)　2,207,063\n3.業務發展準備金提列上限＝(F)、(C)二者取小　2,207,063\n4.提列數(D)不得大於第3點數額　2,200,000\n已符合上限規定　V"
+  }
+ ],
+ "issues": [
+  "「已符合上限規定」欄位值為文字「V」，非數字，values填null。"
+ ]
+}

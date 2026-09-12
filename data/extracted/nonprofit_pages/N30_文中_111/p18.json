@@ -1,0 +1,201 @@
+{
+ "report": "N30_文中_111",
+ "code": "N30",
+ "short_name": "文中",
+ "academic_year": 111,
+ "pdf_page": 18,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N30",
+ "printed_page": 18,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "收支餘絀表－功能別",
+   "context_heading": "附表一：收支餘絀表-功能別",
+   "period_labels": [
+    "民國111年9月30日至112年7月31日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保費收入",
+     "note_ref": null,
+     "values": [
+      8687554
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": null,
+     "values": [
+      -1892709
+     ]
+    },
+    {
+     "label": "教保費收入淨額",
+     "note_ref": null,
+     "values": [
+      6794845
+     ]
+    },
+    {
+     "label": "營運成本",
+     "note_ref": null,
+     "values": [
+      -7402272
+     ]
+    },
+    {
+     "label": "教保費收支淨額",
+     "note_ref": null,
+     "values": [
+      -607427
+     ]
+    },
+    {
+     "label": "業務發展費",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "延後托育收支淨額",
+     "note_ref": null,
+     "values": [
+      42568
+     ]
+    },
+    {
+     "label": "利息收入",
+     "note_ref": null,
+     "values": [
+      14171
+     ]
+    },
+    {
+     "label": "其他收支淨額",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "本期稅前餘絀",
+     "note_ref": null,
+     "values": [
+      -550688
+     ]
+    },
+    {
+     "label": "所得稅費用",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "本期稅後餘絀",
+     "note_ref": null,
+     "values": [
+      -550688
+     ]
+    },
+    {
+     "label": "核准招收人數",
+     "note_ref": null,
+     "values": [
+      106
+     ]
+    },
+    {
+     "label": "營運月數",
+     "note_ref": null,
+     "values": [
+      10
+     ]
+    },
+    {
+     "label": "全期核准招生人數",
+     "note_ref": null,
+     "values": [
+      1060
+     ]
+    },
+    {
+     "label": "全期招生人數",
+     "note_ref": null,
+     "values": [
+      690
+     ]
+    },
+    {
+     "label": "招收比率",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "附表一：收支餘絀表-功能別",
+   "period_labels": [
+    "金額",
+    "差異分析"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保費收支預算差額",
+     "note_ref": null,
+     "values": [
+      561520,
+      null
+     ]
+    },
+    {
+     "label": "教保費收入預決算差異金額",
+     "note_ref": null,
+     "values": [
+      -3659255,
+      null
+     ]
+    },
+    {
+     "label": "營運支出預決算差異金額",
+     "note_ref": null,
+     "values": [
+      2490308,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      -607427,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "補充說明",
+   "text": "教保費收支淨額金額為(607,427)元，分析如下：\n\n教保費收入預決算差異金額：主要係幼生收托人數不足、進出異動致教保費收入減少(3,622,784)元及各項退費增加(35,411)元所致\n\n營運支出預決算差異金額：主要係人事費、業務費及材料費結餘所致"
+  }
+ ],
+ "issues": [
+  "補充說明中的差異分析欄為文字說明，無法以數值表示，已填null",
+  "招收比率欄數值為65%，為百分比非一般金額，未轉換為數值，已填null"
+ ]
+}

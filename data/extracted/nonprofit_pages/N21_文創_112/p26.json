@@ -1,0 +1,357 @@
+{
+ "report": "N21_文創_112",
+ "code": "N21",
+ "short_name": "文創",
+ "academic_year": 112,
+ "pdf_page": 26,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N21",
+ "printed_page": 26,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "各學年收支預決算比較表",
+   "context_heading": "附表三：各學年收支預決算比較表",
+   "period_labels": [
+    "112學年度預算數",
+    "112學年度決算數",
+    "112學年度決算數與預算數之差異",
+    "112學年度執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "收入",
+     "note_ref": null,
+     "values": [
+      11915640,
+      12536427,
+      620787,
+      105
+     ]
+    },
+    {
+     "label": "教保費收入淨額",
+     "note_ref": null,
+     "values": [
+      11915640,
+      10969998,
+      -945642,
+      92
+     ]
+    },
+    {
+     "label": "教保費收入",
+     "note_ref": null,
+     "values": [
+      11915640,
+      11259846,
+      -655794,
+      94
+     ]
+    },
+    {
+     "label": "教保費收入（家長繳費）",
+     "note_ref": null,
+     "values": [
+      2160000,
+      1462348,
+      -697652,
+      68
+     ]
+    },
+    {
+     "label": "教保費收入（政府學費差額補助）",
+     "note_ref": null,
+     "values": [
+      9755640,
+      9797498,
+      41858,
+      100
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": null,
+     "values": [
+      null,
+      -289848,
+      -289848,
+      null
+     ]
+    },
+    {
+     "label": "五日未上課退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -110006,
+      -110006,
+      null
+     ]
+    },
+    {
+     "label": "轉學/轉出退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -42699,
+      -42699,
+      null
+     ]
+    },
+    {
+     "label": "政府學費差額補助退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -137143,
+      -137143,
+      null
+     ]
+    },
+    {
+     "label": "延長照顧服務收入淨額",
+     "note_ref": null,
+     "values": [
+      null,
+      170535,
+      170535,
+      null
+     ]
+    },
+    {
+     "label": "延長照顧服務收入淨額",
+     "note_ref": null,
+     "values": [
+      null,
+      170535,
+      170535,
+      null
+     ]
+    },
+    {
+     "label": "延長照顧服務收入",
+     "note_ref": null,
+     "values": [
+      null,
+      170535,
+      170535,
+      null
+     ]
+    },
+    {
+     "label": "利息收入",
+     "note_ref": null,
+     "values": [
+      null,
+      145010,
+      145010,
+      null
+     ]
+    },
+    {
+     "label": "其他收入",
+     "note_ref": null,
+     "values": [
+      null,
+      1250884,
+      1250884,
+      null
+     ]
+    },
+    {
+     "label": "支出",
+     "note_ref": null,
+     "values": [
+      11620898,
+      13088499,
+      1467601,
+      113
+     ]
+    },
+    {
+     "label": "人事費",
+     "note_ref": null,
+     "values": [
+      7875376,
+      6575048,
+      -1300328,
+      83
+     ]
+    },
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      4646957,
+      4297084,
+      -349873,
+      92
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1290317,
+      1122672,
+      -167645,
+      87
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      589380,
+      106368,
+      -483012,
+      18
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      809296,
+      662004,
+      -147292,
+      82
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      11000,
+      10667,
+      -333,
+      97
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      316656,
+      318885,
+      2229,
+      101
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      11000,
+      11000,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      1000,
+      980,
+      -20,
+      98
+     ]
+    },
+    {
+     "label": "代課費及代班費",
+     "note_ref": null,
+     "values": [
+      155790,
+      1408,
+      -154382,
+      1
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      43980,
+      43980,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "業務費",
+     "note_ref": null,
+     "values": [
+      719700,
+      335133,
+      -384567,
+      47
+     ]
+    },
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      95000,
+      80527,
+      -14473,
+      85
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      22000,
+      10000,
+      -12000,
+      45
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      26000,
+      13848,
+      -12152,
+      53
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      229000,
+      80530,
+      -148470,
+      35
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      32000,
+      12539,
+      -19461,
+      39
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "自強活動一列差異欄原表印有破折號，視為空白填null。",
+  "資遣費一列差異欄原表印有破折號，視為空白填null。",
+  "延長照顧服務收入淨額有兩列相同名稱，可能為表格中重複印刷層級，已逐一收錄。"
+ ]
+}

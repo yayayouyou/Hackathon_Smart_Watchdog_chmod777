@@ -1,0 +1,337 @@
+{
+ "report": "N05_漢翔_113",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 113,
+ "pdf_page": 25,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 25,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "經費流用及勻支檢查表",
+   "context_heading": "附表二：經費流用及勻支檢查表",
+   "period_labels": [
+    "A 預算數",
+    "B 決算數",
+    "B-A 差異數",
+    "差異%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "人事費",
+     "note_ref": null,
+     "values": [
+      8784257,
+      6363884,
+      -2420373,
+      -28
+     ]
+    },
+    {
+     "label": "人事費",
+     "note_ref": null,
+     "values": [
+      8076703,
+      6101158,
+      -1975545,
+      -24
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      658416,
+      213588,
+      -444828,
+      -68
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      49138,
+      49138,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "業務費",
+     "note_ref": null,
+     "values": [
+      719700,
+      298788,
+      -420912,
+      -58
+     ]
+    },
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      95000,
+      42887,
+      -52113,
+      -55
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      22000,
+      3600,
+      -18400,
+      -84
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      26000,
+      8855,
+      -17145,
+      -66
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      229000,
+      151354,
+      -77646,
+      -34
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      32000,
+      10756,
+      -21244,
+      -66
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      80000,
+      null,
+      -80000,
+      null
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      18000,
+      13275,
+      -4725,
+      -26
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      60000,
+      20817,
+      -39183,
+      -65
+     ]
+    },
+    {
+     "label": "電話費（含ADSL）",
+     "note_ref": null,
+     "values": [
+      45000,
+      35608,
+      -9392,
+      -21
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      7200,
+      5320,
+      -1880,
+      -26
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      10000,
+      null,
+      -10000,
+      null
+     ]
+    },
+    {
+     "label": "文宣費（園刊）",
+     "note_ref": null,
+     "values": [
+      27500,
+      null,
+      -27500,
+      null
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      9000,
+      96,
+      -8904,
+      -99
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      39000,
+      6220,
+      -32780,
+      -84
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      20000,
+      null,
+      -20000,
+      null
+     ]
+    },
+    {
+     "label": "材料費",
+     "note_ref": null,
+     "values": [
+      1257840,
+      811922,
+      -445918,
+      -35
+     ]
+    },
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      172800,
+      99130,
+      -73670,
+      -43
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      43200,
+      39236,
+      -3964,
+      -9
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      5040,
+      4607,
+      -433,
+      -9
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1036800,
+      668949,
+      -367851,
+      -35
+     ]
+    },
+    {
+     "label": "維護費",
+     "note_ref": null,
+     "values": [
+      118000,
+      127280,
+      9280,
+      8
+     ]
+    },
+    {
+     "label": "修繕購置費",
+     "note_ref": null,
+     "values": [
+      100800,
+      55784,
+      -45016,
+      -45
+     ]
+    },
+    {
+     "label": "雜支",
+     "note_ref": null,
+     "values": [
+      43182,
+      39257,
+      -3925,
+      -9
+     ]
+    },
+    {
+     "label": "行政管理費",
+     "note_ref": null,
+     "values": [
+      197754,
+      197754,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      11221533,
+      7894669,
+      -3326864,
+      -30
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "維護費差異%欄為正數8，預決算檢查結果欄說明『經與修繕購置費勻支後，已符合勻支規定』，非簡單數字，已記錄於表格外。",
+  "保全、文宣費（一般文宣）、文宣費（園刊）、差旅費之決算數欄印有破折號，依規則視為null。",
+  "資遣費及行政管理費之差異數及差異%欄印有破折號，依規則視為null。"
+ ]
+}

@@ -1,0 +1,64 @@
+{
+ "report": "N02_山北_110",
+ "code": "N02",
+ "short_name": "山北",
+ "academic_year": 110,
+ "pdf_page": 35,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N02",
+ "printed_page": 35,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "評分"
+   ],
+   "items": [
+    {
+     "label": "3.編制財務報表：（配分3分）(1)依限完成前揭2項考評指標所需各項財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    },
+    {
+     "label": "(2)依會計師查核或簽證意見修改各項財務報表及財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    },
+    {
+     "label": "(3)財產依規定登錄及報廢之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    },
+    {
+     "label": "會計查核簽證情形評分合計：",
+     "note_ref": null,
+     "values": [
+      15
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "誠明聯合會計師事務所\n會計師：　張　景　嵐"
+  }
+ ],
+ "issues": [
+  "表格中「考評依據」與「備註」欄位內容均為空白，已填null。",
+  "評分合計15分與分項細目不符（僅列3分項目），可能為整頁累計合計，需人工確認。"
+ ]
+}

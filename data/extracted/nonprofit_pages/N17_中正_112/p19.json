@@ -1,0 +1,188 @@
+{
+ "report": "N17_中正_112",
+ "code": "N17",
+ "short_name": "中正",
+ "academic_year": 112,
+ "pdf_page": 19,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N17",
+ "printed_page": 19,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "5. 維護費",
+   "period_labels": [
+    "112.8.1~113.7.31 預算數",
+    "112.8.1~113.7.31 決算數",
+    "112.8.1~113.7.31 差異",
+    "112.8.1~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "修繕費",
+     "note_ref": null,
+     "values": [
+      110000,
+      71594,
+      -38406,
+      65
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      25000,
+      44050,
+      19050,
+      176
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      1696,
+      -6304,
+      21
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      143000,
+      117340,
+      -25660,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費",
+   "period_labels": [
+    "111.8.1~112.7.31 預算數",
+    "111.8.1~112.7.31 決算數",
+    "111.8.1~112.7.31 差異",
+    "111.8.1~112.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "修繕費",
+     "note_ref": null,
+     "values": [
+      110000,
+      42554,
+      -67446,
+      39
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      25000,
+      24000,
+      -1000,
+      96
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      2030,
+      -5970,
+      25
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      143000,
+      68584,
+      -74416,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "6. 延長照顧服務收支",
+   "period_labels": [
+    "112.8.1~113.7.31",
+    "111.8.1~112.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "延長照顧服務收入",
+     "note_ref": null,
+     "values": [
+      380030,
+      389390
+     ]
+    },
+    {
+     "label": "延長照顧服務收入退費",
+     "note_ref": null,
+     "values": [
+      -6100,
+      -7780
+     ]
+    },
+    {
+     "label": "延長照顧服務收入淨額",
+     "note_ref": null,
+     "values": [
+      373930,
+      381610
+     ]
+    },
+    {
+     "label": "延長照顧服務支出",
+     "note_ref": null,
+     "values": [
+      -355622,
+      -343225
+     ]
+    },
+    {
+     "label": "延長照顧服務收支淨額",
+     "note_ref": null,
+     "values": [
+      18308,
+      38385
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.3 材料費各細項經費倘有不足，應優先於材料費總預算內相互勻支，仍有不足，始得依勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費），且至多以勻支不足細項之 20%為上限。但餐點費，不得移作他用。\n(2) 112 及 111 學年度材料費類別總經費並無超支預算之情事。"
+  },
+  {
+   "heading": "5. 維護費",
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.5 維護費及修繕購置費各細項經費倘有不足，應優先於維護費及修繕購置費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費）。\n(2) 112 及 111 學年度維護費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": []
+}

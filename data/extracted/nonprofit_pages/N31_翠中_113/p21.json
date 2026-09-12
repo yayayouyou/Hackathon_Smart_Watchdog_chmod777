@@ -1,0 +1,268 @@
+{
+ "report": "N31_翠中_113",
+ "code": "N31",
+ "short_name": "翠中",
+ "academic_year": 113,
+ "pdf_page": 21,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N31",
+ "printed_page": 21,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收入",
+    "112.8.1~113.7.31 支出",
+    "112.8.1~113.7.31 淨額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "專案補助",
+     "values": [
+      1232544,
+      1232544,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "values": [
+      56550,
+      56550,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "values": [
+      30390,
+      30390,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "values": [
+      1319484,
+      1319484,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收入",
+    "113.8.1~114.7.31 支出",
+    "113.8.1~114.7.31 淨額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "親職講座補助",
+     "values": [
+      6500,
+      6500,
+      null
+     ]
+    },
+    {
+     "label": "專業輔導補助",
+     "values": [
+      60000,
+      60000,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "values": [
+      1066988,
+      1066988,
+      null
+     ]
+    },
+    {
+     "label": "防災校園建置計畫補助",
+     "values": [
+      50000,
+      50000,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "values": [
+      64285,
+      64285,
+      null
+     ]
+    },
+    {
+     "label": "調薪及延長照顧差額補助",
+     "values": [
+      491271,
+      491271,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "values": [
+      110000,
+      110000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "values": [
+      1849044,
+      1849044,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收入",
+    "112.8.1~113.7.31 支出",
+    "112.8.1~113.7.31 淨額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "親職教育補助",
+     "values": [
+      6500,
+      6500,
+      null
+     ]
+    },
+    {
+     "label": "專業輔導補助",
+     "values": [
+      60000,
+      60000,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "values": [
+      801352,
+      801352,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "values": [
+      79628,
+      79628,
+      null
+     ]
+    },
+    {
+     "label": "調薪及延長照顧差額補助",
+     "values": [
+      185064,
+      185064,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "values": [
+      100000,
+      100000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "values": [
+      1232544,
+      1232544,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收入",
+    "113.8.1~114.7.31 支出",
+    "113.8.1~114.7.31 淨額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "兒童節禮物補助",
+     "values": [
+      4920,
+      4920,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收入",
+    "112.8.1~113.7.31 支出",
+    "112.8.1~113.7.31 淨額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "values": [
+      51270,
+      51270,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "values": [
+      5280,
+      5280,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "values": [
+      56550,
+      56550,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": []
+}

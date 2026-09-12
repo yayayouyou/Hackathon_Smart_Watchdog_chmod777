@@ -1,0 +1,232 @@
+{
+ "report": "N34_佳和_112",
+ "code": "N34",
+ "short_name": "佳和",
+ "academic_year": 112,
+ "pdf_page": 16,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N34",
+ "printed_page": 16,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": null,
+   "period_labels": [
+    "112.9.28~113.7.31 預算數",
+    "112.9.28~113.7.31 決算數",
+    "112.9.28~113.7.31 差異數",
+    "112.9.28~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      7000,
+      4797,
+      -2203,
+      69
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      8333,
+      null,
+      -8333,
+      null
+     ]
+    },
+    {
+     "label": "文宣費（園刊）",
+     "note_ref": null,
+     "values": [
+      25000,
+      null,
+      -25000,
+      null
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      8333,
+      null,
+      -8333,
+      null
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      35000,
+      26733,
+      -8267,
+      76
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      20833,
+      3047,
+      -17786,
+      15
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      703666,
+      497683,
+      -205983,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "4.　材料費",
+   "period_labels": [
+    "112.9.28~113.7.31 預算數",
+    "112.9.28~113.7.31 決算數",
+    "112.9.28~113.7.31 差異數",
+    "112.9.28~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      212000,
+      172992,
+      -39008,
+      82
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      53000,
+      52786,
+      -214,
+      100
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      6183,
+      2091,
+      -4092,
+      34
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1272000,
+      828646,
+      -443354,
+      65
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1543183,
+      1056515,
+      -486668,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5.　維護費",
+   "period_labels": [
+    "112.9.28~113.7.31 預算數",
+    "112.9.28~113.7.31 決算數",
+    "112.9.28~113.7.31 差異數",
+    "112.9.28~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "修繕費",
+     "note_ref": null,
+     "values": [
+      91667,
+      60950,
+      -30717,
+      66
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      20833,
+      9000,
+      -11833,
+      43
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      6667,
+      991,
+      -5676,
+      15
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      119167,
+      70941,
+      -48226,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.2 業務費：得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限。\n(2) 112 學年度水費超過勻支上限，已於 113 年 9 月 12 日報經主管機關同意，自電費勻支 8,000 元至水費後，已符合勻支規定。\n(3) 112 學年度業務費類別總經費並無超支預算之情事。"
+  },
+  {
+   "heading": "4.　材料費",
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.3 材料費各細項經費倘有不足，應優先於材料費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費），且至多以勻支不足細項之 20%為上限。但餐點費，不得移作他用。\n(2) 112 學年度材料費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "第一張表（業務費延續）無明確表頭，依頁面上下文判斷為業務費明細表的延續部分，context_heading無法確認具體標題。"
+ ]
+}

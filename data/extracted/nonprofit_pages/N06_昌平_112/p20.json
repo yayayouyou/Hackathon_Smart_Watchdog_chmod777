@@ -1,0 +1,325 @@
+{
+ "report": "N06_昌平_112",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 112,
+ "pdf_page": 20,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 20,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "6. 延長照顧服務收支",
+   "period_labels": [
+    "112.8.1~113.7.31",
+    "111.8.1~112.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "延長照顧服務收入",
+     "note_ref": null,
+     "values": [
+      275006,
+      281880
+     ]
+    },
+    {
+     "label": "延長照顧服務收入退費",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "延長照顧服務收入淨額",
+     "note_ref": null,
+     "values": [
+      275006,
+      281880
+     ]
+    },
+    {
+     "label": "延長照顧服務支出",
+     "note_ref": null,
+     "values": [
+      -266206,
+      -281821
+     ]
+    },
+    {
+     "label": "延長照顧服務收支淨額",
+     "note_ref": null,
+     "values": [
+      8800,
+      59
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "7. 其他收入及其他支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      3027975,
+      3027975,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      120180,
+      120180,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      38005,
+      38005,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      3186160,
+      3186160,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "7. 其他收入及其他支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      1777583,
+      1777583,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      183600,
+      183600,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      39200,
+      39200,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      2000383,
+      2000383,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專業輔導補助",
+     "note_ref": null,
+     "values": [
+      56400,
+      56400,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      758950,
+      758950,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      94964,
+      94964,
+      null
+     ]
+    },
+    {
+     "label": "調薪及延長照顧差額補助",
+     "note_ref": null,
+     "values": [
+      1987661,
+      1987661,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      130000,
+      130000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      3027975,
+      3027975,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專業輔導補助",
+     "note_ref": null,
+     "values": [
+      56720,
+      56720,
+      null
+     ]
+    },
+    {
+     "label": "防疫加班費補助",
+     "note_ref": null,
+     "values": [
+      52900,
+      52900,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      701261,
+      701261,
+      null
+     ]
+    },
+    {
+     "label": "調薪追加補助款",
+     "note_ref": null,
+     "values": [
+      663837,
+      663837,
+      null
+     ]
+    },
+    {
+     "label": "公共意外責任險補助",
+     "note_ref": null,
+     "values": [
+      963,
+      963,
+      null
+     ]
+    },
+    {
+     "label": "英語融入教保計畫補助",
+     "note_ref": null,
+     "values": [
+      30000,
+      30000,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      76902,
+      76902,
+      null
+     ]
+    },
+    {
+     "label": "招收身心障礙幼兒補助",
+     "note_ref": null,
+     "values": [
+      45000,
+      45000,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "第7項其他收入及其他支出的兩張彙總表，淨額欄均顯示為'$-'（即零），已記錄為null。",
+  "第(1)專案補助收入及支出的112.8.1~113.7.31及111.8.1~112.7.31兩張表，淨額欄均顯示為'$-'，已記錄為null。",
+  "111.8.1~112.7.31的專案補助明細表（下方）在頁面底部截斷，可能有更多列未呈現於本頁。"
+ ]
+}

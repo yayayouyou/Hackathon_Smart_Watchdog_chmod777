@@ -1,0 +1,149 @@
+{
+ "report": "N02_山北_110",
+ "code": "N02",
+ "short_name": "山北",
+ "academic_year": 110,
+ "pdf_page": 28,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N02",
+ "printed_page": 28,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "現值",
+    "數量",
+    "總現值"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "兒童輔導教具 信誼彩窗積木組",
+     "note_ref": null,
+     "values": [
+      22243,
+      1,
+      20179
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      735827
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "2.購置財產",
+   "period_labels": [
+    "單價",
+    "數量",
+    "總金額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "無線擴音機乙台",
+     "note_ref": null,
+     "values": [
+      29000,
+      1,
+      29000
+     ]
+    },
+    {
+     "label": "桌上型桌電",
+     "note_ref": null,
+     "values": [
+      16800,
+      1,
+      16800
+     ]
+    },
+    {
+     "label": "空氣清淨機",
+     "note_ref": null,
+     "values": [
+      13030,
+      1,
+      13030
+     ]
+    },
+    {
+     "label": "對講機",
+     "note_ref": null,
+     "values": [
+      1020,
+      1,
+      1020
+     ]
+    },
+    {
+     "label": "紫外線消毒燈",
+     "note_ref": null,
+     "values": [
+      16600,
+      1,
+      16600
+     ]
+    },
+    {
+     "label": "黑色摺疊小推車",
+     "note_ref": null,
+     "values": [
+      1900,
+      1,
+      1900
+     ]
+    },
+    {
+     "label": "結能電風扇",
+     "note_ref": null,
+     "values": [
+      2780,
+      1,
+      2780
+     ]
+    },
+    {
+     "label": "小米手機",
+     "note_ref": null,
+     "values": [
+      6999,
+      1,
+      6999
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      88129
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "附表五：到園檢查表（不適用）"
+  }
+ ],
+ "issues": [
+  "第一張表無表頭標題，推測為財產目錄延續頁（接上頁）；財產編號501030803、登錄號/分號000022列於其中。"
+ ]
+}

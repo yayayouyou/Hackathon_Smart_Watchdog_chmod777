@@ -1,0 +1,383 @@
+{
+ "report": "N07_北大_110",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 110,
+ "pdf_page": 25,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 25,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "各學年收支預決算比較表",
+   "context_heading": "附表三：各學年收支預決算比較表",
+   "period_labels": [
+    "110 學年度 預算數",
+    "110 學年度 決算數",
+    "110 學年度 決算數與預算數之差異",
+    "110 學年度 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "收入",
+     "note_ref": null,
+     "values": [
+      14736600,
+      16159911,
+      1423311,
+      110
+     ]
+    },
+    {
+     "label": "教保費收入淨額",
+     "note_ref": null,
+     "values": [
+      14736600,
+      14112426,
+      -624174,
+      96
+     ]
+    },
+    {
+     "label": "教保費收入",
+     "note_ref": null,
+     "values": [
+      14736600,
+      14247593,
+      -489007,
+      97
+     ]
+    },
+    {
+     "label": "教保費收入(家長繳費)",
+     "note_ref": null,
+     "values": [
+      4500000,
+      2928961,
+      -1571039,
+      65
+     ]
+    },
+    {
+     "label": "教保費收入(政府學費差額補助)",
+     "note_ref": null,
+     "values": [
+      10236600,
+      11318632,
+      1082032,
+      111
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": null,
+     "values": [
+      null,
+      -135167,
+      -135167,
+      null
+     ]
+    },
+    {
+     "label": "五日末上課退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -128619,
+      -128619,
+      null
+     ]
+    },
+    {
+     "label": "轉學/轉出退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -6548,
+      -6548,
+      null
+     ]
+    },
+    {
+     "label": "延後托育收入淨額",
+     "note_ref": null,
+     "values": [
+      null,
+      188370,
+      188370,
+      null
+     ]
+    },
+    {
+     "label": "延後托育收入淨額",
+     "note_ref": null,
+     "values": [
+      null,
+      188370,
+      188370,
+      null
+     ]
+    },
+    {
+     "label": "延後托育收入",
+     "note_ref": null,
+     "values": [
+      null,
+      188370,
+      188370,
+      null
+     ]
+    },
+    {
+     "label": "利息收入",
+     "note_ref": null,
+     "values": [
+      null,
+      27037,
+      27037,
+      null
+     ]
+    },
+    {
+     "label": "其他收入",
+     "note_ref": null,
+     "values": [
+      null,
+      1832078,
+      1832078,
+      null
+     ]
+    },
+    {
+     "label": "支出",
+     "note_ref": null,
+     "values": [
+      14356393,
+      14636905,
+      280512,
+      102
+     ]
+    },
+    {
+     "label": "人事費",
+     "note_ref": null,
+     "values": [
+      10473539,
+      9226416,
+      -1247123,
+      88
+     ]
+    },
+    {
+     "label": "園長及教保服務人員薪資(含職務加給)",
+     "note_ref": null,
+     "values": [
+      6384690,
+      5938705,
+      -445985,
+      93
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1619366,
+      1535215,
+      -84151,
+      95
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      794496,
+      194872,
+      -599624,
+      25
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      948542,
+      871738,
+      -76804,
+      92
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      16000,
+      14791,
+      -1209,
+      92
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      426876,
+      431155,
+      4279,
+      101
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      16000,
+      15000,
+      -1000,
+      94
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      2000,
+      1350,
+      -650,
+      68
+     ]
+    },
+    {
+     "label": "代課費及廚工代班費",
+     "note_ref": null,
+     "values": [
+      206280,
+      164301,
+      -41979,
+      80
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      59289,
+      59289,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "業務費",
+     "note_ref": null,
+     "values": [
+      899400,
+      685944,
+      -213456,
+      76
+     ]
+    },
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      115000,
+      104803,
+      -10197,
+      91
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      32000,
+      32000,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      38000,
+      80249,
+      42249,
+      211
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      324000,
+      248651,
+      -75349,
+      77
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      36000,
+      21760,
+      -14240,
+      60
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      80000,
+      24000,
+      -56000,
+      30
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      30000,
+      31466,
+      1466,
+      105
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      65000,
+      66396,
+      1396,
+      102
+     ]
+    },
+    {
+     "label": "電話費(含網路)",
+     "note_ref": null,
+     "values": [
+      54000,
+      29770,
+      -24230,
+      55
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": []
+}

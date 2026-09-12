@@ -1,0 +1,63 @@
+{
+ "report": "N26_新店及人_110",
+ "code": "N26",
+ "short_name": "新店及人",
+ "academic_year": 110,
+ "pdf_page": 7,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N26",
+ "printed_page": 7,
+ "page_kind": "equity_change",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": null,
+   "period_labels": [
+    "累積餘絀",
+    "本期餘絀",
+    "合　計"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "110年8月1日餘額",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "110學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      1672615,
+      1672615
+     ]
+    },
+    {
+     "label": "111年7月31日餘額",
+     "note_ref": null,
+     "values": [
+      null,
+      1672615,
+      1672615
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "頁面上方有大型紅色關防印章遮蓋部分文字，機構名稱及日期無法完整辨識",
+  "110年8月1日餘額三欄均印為'$-'，依規則視為空白填null",
+  "累積餘絀欄所有列均為'$-'或'-'，視為空白填null"
+ ]
+}

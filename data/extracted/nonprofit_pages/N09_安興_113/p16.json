@@ -1,0 +1,300 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 16,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 16,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "購置財產",
+     "note_ref": null,
+     "values": [
+      126700,
+      null,
+      null,
+      126700
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "購置財產",
+     "note_ref": null,
+     "values": [
+      126700,
+      null,
+      null,
+      126700
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 教保費收入",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.8.1~113.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保費收入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "教保費收入（家長繳費）",
+     "note_ref": null,
+     "values": [
+      762600,
+      1055520
+     ]
+    },
+    {
+     "label": "教保費收入（政府學費差額補助）",
+     "note_ref": null,
+     "values": [
+      5580000,
+      5818118
+     ]
+    },
+    {
+     "label": "小　計",
+     "note_ref": null,
+     "values": [
+      6342600,
+      6873638
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "五日未上課退費",
+     "note_ref": null,
+     "values": [
+      -61703,
+      -40528
+     ]
+    },
+    {
+     "label": "腸病毒退費",
+     "note_ref": null,
+     "values": [
+      -18212,
+      -22704
+     ]
+    },
+    {
+     "label": "轉學/轉出退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -4000
+     ]
+    },
+    {
+     "label": "政府學費差額補助退費",
+     "note_ref": null,
+     "values": [
+      -8090,
+      -98761
+     ]
+    },
+    {
+     "label": "小　計",
+     "note_ref": null,
+     "values": [
+      -88005,
+      -165993
+     ]
+    },
+    {
+     "label": "教保費收入淨額",
+     "note_ref": null,
+     "values": [
+      6254595,
+      6707645
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 人事費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      2869155,
+      2578884,
+      -290271,
+      90
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1225368,
+      1210639,
+      -14729,
+      99
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      406464,
+      93188,
+      -313276,
+      23
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      485245,
+      459814,
+      -25431,
+      95
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      8000,
+      13178,
+      5178,
+      165
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      218364,
+      187315,
+      -31049,
+      86
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      8000,
+      8000,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      8000,
+      1580,
+      -6420,
+      20
+     ]
+    },
+    {
+     "label": "代課費及代班費",
+     "note_ref": null,
+     "values": [
+      96264,
+      66553,
+      -29711,
+      69
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      30329,
+      198404,
+      168075,
+      654
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      5355189,
+      4817555,
+      -537634,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "本幼兒園依契約之規定應辦理保險，截至 114 年 7 月 31 日及 113 年 7 月 31 日止保險金額均為 14,500,000 元。"
+  }
+ ],
+ "issues": [
+  "購置財產表出現兩次相同數字但期間標籤不同（113.8.1~114.7.31 與 112.8.1~113.7.31），已分拆為兩個獨立表格物件。",
+  "人事費表「自強活動」差異欄印有破折號，視為空白填 null。",
+  "人事費表「合　　計」執行率欄空白，填 null。"
+ ]
+}

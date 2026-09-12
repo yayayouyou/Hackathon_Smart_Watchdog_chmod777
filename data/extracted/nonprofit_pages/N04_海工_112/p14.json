@@ -1,0 +1,156 @@
+{
+ "report": "N04_海工_112",
+ "code": "N04",
+ "short_name": "海工",
+ "academic_year": 112,
+ "pdf_page": 14,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N04",
+ "printed_page": 14,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(一) 現金及銀行存款",
+   "period_labels": [
+    "113 年 7 月 31 日",
+    "112 年 7 月 31 日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "現金",
+     "note_ref": null,
+     "values": [
+      24305,
+      20644
+     ]
+    },
+    {
+     "label": "活期存款",
+     "note_ref": null,
+     "values": [
+      3201735,
+      2685786
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      3226040,
+      2706430
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 資遣費準備",
+   "period_labels": [
+    "112.8.1~113.7.31",
+    "111.8.1~112.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      139758,
+      113473
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      26903,
+      26285
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      166661,
+      139758
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 資遣費準備",
+   "period_labels": [
+    "113 年 7 月 31 日",
+    "112 年 7 月 31 日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "資遣費準備金",
+     "note_ref": null,
+     "values": [
+      166661,
+      139758
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "112.8.1~113.7.31",
+    "111.8.1~112.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      2554000,
+      2074000
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      1300000,
+      480000
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      3855000,
+      2554000
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(2) 依前目處理後，仍有賸餘款者，應全數用於繼續辦理契約期間所需之改善該園教學設施、設備項目，並由承辦之非營利法人訂定相關運用計畫報委託單位或直轄市、縣（市）主管機關備查後支用。\n2. 契約期間屆滿未申請繼續辦理，或申請繼續辦理未經同意、契約終止者：\n(1) 優先用於該園教保服務人員及其他服務人員之資遣費。\n(2) 依前目處理後，仍有賸餘款者，由承辦之非營利法人及各該委託單位或直轄市、縣（市）主管機關平均分配。委託單位或直轄市、縣（市）主管機關所獲分配數應全數用於改善該園教學設施、設備或推動擴大公共化教保服務供應量事項；承辦之非營利法人於訂定相關運用計畫報委託單位或直轄市、縣（市）主管機關備查後支用。"
+  },
+  {
+   "heading": "三、重要會計項目說明",
+   "text": "(一) 現金及銀行存款\n(二) 各項基金及準備\n1. 資遣費準備\n依據非營利幼兒園實施辦法之規定，提撥資遣費準備金餘額如下：\n2. 業務發展準備\n依據非營利幼兒園實施辦法及非營利幼兒園會計財務及經費處理注意事項之規定，提列之業務發展準備金已報經主管機關同意。依該規定，以專"
+  }
+ ],
+ "issues": []
+}

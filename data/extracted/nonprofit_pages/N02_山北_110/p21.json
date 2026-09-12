@@ -1,0 +1,115 @@
+{
+ "report": "N02_山北_110",
+ "code": "N02",
+ "short_name": "山北",
+ "academic_year": 110,
+ "pdf_page": 21,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N02",
+ "printed_page": 21,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": "山北幼兒園之賸餘款執行概況表",
+   "period_labels": [
+    "金　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "105~107學年度累積餘絀(105.8.1~108.7.31)",
+     "note_ref": null,
+     "values": [
+      759301
+     ]
+    },
+    {
+     "label": "108學年度當期餘絀(108.8.1~109.7.31)",
+     "note_ref": null,
+     "values": [
+      179742
+     ]
+    },
+    {
+     "label": "109學年度當期餘絀(109.8.1~110.7.31)",
+     "note_ref": null,
+     "values": [
+      -231089
+     ]
+    },
+    {
+     "label": "110學年度當期餘絀(110.8.1~111.7.31)",
+     "note_ref": null,
+     "values": [
+      1065234
+     ]
+    },
+    {
+     "label": "賸餘款餘額",
+     "note_ref": null,
+     "values": [
+      1773188
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "五、關係人交易－(二)1. 行政管理費",
+   "period_labels": [
+    "110.8.1~111.7.31",
+    "109.8.1~110.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "財團法人三之三生命教育基金會",
+     "note_ref": null,
+     "values": [
+      125430,
+      125430
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "五、關係人交易－(二)2. 其他應付款",
+   "period_labels": [
+    "111年7月31日",
+    "110年7月31日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "財團法人三之三生命教育基金會",
+     "note_ref": null,
+     "values": [
+      125430,
+      125430
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "四、賸餘款執行概況說明",
+   "text": "依據非營利幼兒園實施辦法之規定，非營利幼兒園，於契約期間，依經會計師簽證之各該學年度收支餘絀表有賸餘款時，應於次學年度繼續支用。\n\n山北幼兒園之賸餘款執行概況表如下："
+  },
+  {
+   "heading": "五、關係人交易",
+   "text": "(一) 關係人之名稱及關係\n\n關係人名稱　　　　　　　與本幼兒園之關係\n財團法人三之三生命教育基金會　　本幼兒園之受託法人\n\n(二) 與關係人之重大交易事項\n\n1. 行政管理費\n\n2. 其他應付款"
+  },
+  {
+   "heading": "六、質抵押資產",
+   "text": "無。"
+  }
+ ],
+ "issues": []
+}

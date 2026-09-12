@@ -1,0 +1,151 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 15,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 15,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.8.1~113.7.31"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      5305000,
+      3375000
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      1419000,
+      1930000
+     ]
+    },
+    {
+     "label": "轉列其他收入－其它",
+     "note_ref": null,
+     "values": [
+      -6724000,
+      null
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      null,
+      5305000
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "114 年 7 月 31 日",
+    "113 年 7 月 31 日"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "業務發展準備金",
+     "note_ref": null,
+     "values": [
+      null,
+      5305000
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      958198,
+      null,
+      -191468,
+      766730
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      1220512,
+      null,
+      -262314,
+      958198
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "113 學年度支付資遣費 150,459 元之說明，請詳財務報表附註三.（四）.2"
+  },
+  {
+   "heading": "2. 業務發展準備",
+   "text": "依據非營利幼兒園實施辦法及非營利幼兒園會計財務及經費處理注意事項之規定，提列之業務發展準備金已報經主管機關同意。依該規定，以專戶或定期存款提存之業務發展準備金餘額如下：\n\n因新北市政府不同意受託機構-社團法人臺灣兒童教育發展協會繼續辦理本幼兒園，本幼兒園為辦理解約後續相關事宜及支付員工資遣費及不休假薪資等事項申請動支業務發展準備金，已於 114 年 7 月 15 日報經主管機關同意，並已轉列其他收入-其它項下。"
+  },
+  {
+   "heading": "（三）營運資產",
+   "text": ""
+  },
+  {
+   "heading": "1. 代管財產",
+   "text": "113 學年度代管財產減少 191,468 元，其中 9,160 元係由託管單位辦理資產報損，另 182,308 元係託管單位財產管理系統，依財產經濟年限攤提折舊所致。\n\n112 學年度代管財產減少 262,314 元，係託管單位財產管理系統，依財產經濟年限攤提折舊所致。"
+  }
+ ],
+ "issues": [
+  "代管財產兩張表的 period_labels 為欄位名稱（期初餘額、本期增加、本期減少、期末餘額），因表格結構為橫向展開，期間標題分別為 113.8.1~114.7.31 與 112.8.1~113.7.31，已分成兩張表處理。",
+  "業務發展準備表期末餘額 113.8.1~114.7.31 欄位印刷為「$-」，依規則視為空白填 null。"
+ ]
+}

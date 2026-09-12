@@ -1,0 +1,409 @@
+{
+ "report": "N01_安溪_113",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 113,
+ "pdf_page": 31,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 31,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "使用年限",
+    "購置日期"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "6040205 000004 大型煮飯電鍋",
+     "note_ref": null,
+     "values": [
+      8900,
+      1,
+      8900,
+      1,
+      null
+     ]
+    },
+    {
+     "label": "6040212 000001-10 蒸煮鍋",
+     "note_ref": null,
+     "values": [
+      3200,
+      10,
+      32000,
+      2,
+      null
+     ]
+    },
+    {
+     "label": "6070201 000012-13 辦公桌含側桌",
+     "note_ref": null,
+     "values": [
+      5050,
+      2,
+      10100,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070201 000014-17 辦公桌",
+     "note_ref": null,
+     "values": [
+      4000,
+      4,
+      16000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070202 000061-76 辦公椅(藍色)",
+     "note_ref": null,
+     "values": [
+      1000,
+      14,
+      14000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000001-3 三合一杯櫃",
+     "note_ref": null,
+     "values": [
+      9000,
+      3,
+      27000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000004-9 圖書展示板",
+     "note_ref": null,
+     "values": [
+      8500,
+      6,
+      51000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000010-15 弧形櫃",
+     "note_ref": null,
+     "values": [
+      4800,
+      6,
+      28800,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000016-18 圖書櫃",
+     "note_ref": null,
+     "values": [
+      4500,
+      3,
+      13500,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000019-30 凸三邊教具櫃",
+     "note_ref": null,
+     "values": [
+      2600,
+      12,
+      31200,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000031-36 書包櫃、鞋櫃",
+     "note_ref": null,
+     "values": [
+      5250,
+      6,
+      31500,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000037-38 鞋櫃",
+     "note_ref": null,
+     "values": [
+      5334,
+      2,
+      10668,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000039-42 鞋櫃",
+     "note_ref": null,
+     "values": [
+      5333,
+      4,
+      21332,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070209 000043-45 資料櫃",
+     "note_ref": null,
+     "values": [
+      7300,
+      3,
+      21900,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000046 書面紙櫃",
+     "note_ref": null,
+     "values": [
+      9800,
+      1,
+      9800,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000059-60 櫥櫃",
+     "note_ref": null,
+     "values": [
+      9500,
+      2,
+      19000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000061-65 科學櫃",
+     "note_ref": null,
+     "values": [
+      4200,
+      5,
+      21000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000066-67 木質書櫃",
+     "note_ref": null,
+     "values": [
+      6300,
+      2,
+      12600,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000068-71 入口木質書櫃",
+     "note_ref": null,
+     "values": [
+      2500,
+      4,
+      10000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000072-73 電視櫃",
+     "note_ref": null,
+     "values": [
+      2850,
+      2,
+      5700,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000074-81 收納箱",
+     "note_ref": null,
+     "values": [
+      9600,
+      8,
+      76800,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000082-85 木質書櫃",
+     "note_ref": null,
+     "values": [
+      4200,
+      4,
+      16800,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070207 000001-2 備餐桌",
+     "note_ref": null,
+     "values": [
+      5200,
+      2,
+      10400,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070209 000001 沙發椅",
+     "note_ref": null,
+     "values": [
+      3000,
+      1,
+      3000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000142-144 幼兒專用教學課桌椅組(教師)",
+     "note_ref": null,
+     "values": [
+      1400,
+      3,
+      4200,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000145-147 幼兒專用教學課桌椅組(點心圓桌)",
+     "note_ref": null,
+     "values": [
+      3000,
+      3,
+      9000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000148-171 幼兒專用教學課桌椅組(四人學習桌)",
+     "note_ref": null,
+     "values": [
+      1400,
+      24,
+      33600,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000172-174 幼兒專用教學課桌椅組(二人學習桌)",
+     "note_ref": null,
+     "values": [
+      920,
+      3,
+      2760,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000175 親師桌椅組",
+     "note_ref": null,
+     "values": [
+      600,
+      1,
+      600,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000176 親師桌椅組",
+     "note_ref": null,
+     "values": [
+      1000,
+      1,
+      1000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000177-193 幼兒專用教學課桌椅組(四人學習桌)",
+     "note_ref": null,
+     "values": [
+      3600,
+      17,
+      61200,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000194-197 幼兒專用教學課桌椅組(二人學習桌)",
+     "note_ref": null,
+     "values": [
+      2800,
+      4,
+      11200,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000198-199 幼兒專用教學課桌椅組(圓桌)",
+     "note_ref": null,
+     "values": [
+      5200,
+      2,
+      10400,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070225 000221-229 幼兒專用教學課桌椅組(四代椅)",
+     "note_ref": null,
+     "values": [
+      480,
+      9,
+      4320,
+      5,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄位為文字型態(如111/09/12)，未納入數值欄位，僅於label中保留登錄號與財產名稱，購置日期資訊因schema限制無法完整呈現。"
+ ]
+}

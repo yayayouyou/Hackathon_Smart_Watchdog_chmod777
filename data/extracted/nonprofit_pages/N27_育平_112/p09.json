@@ -1,0 +1,183 @@
+{
+ "report": "N27_育平_112",
+ "code": "N27",
+ "short_name": "育平",
+ "academic_year": 112,
+ "pdf_page": 9,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N27",
+ "printed_page": 9,
+ "page_kind": "cash_flow",
+ "tables": [
+  {
+   "title": "現金流量表",
+   "context_heading": null,
+   "period_labels": [
+    "112.8.1~113.7.31",
+    "111.8.1~112.7.31"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "營業活動之現金流量：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "本期稅前餘絀",
+     "note_ref": null,
+     "values": [
+      765704,
+      249182
+     ]
+    },
+    {
+     "label": "調整項目：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "資產/負債淨變動數",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "應收帳款淨額",
+     "note_ref": null,
+     "values": [
+      -12370,
+      -1580
+     ]
+    },
+    {
+     "label": "其他應收款",
+     "note_ref": null,
+     "values": [
+      -33941,
+      62443
+     ]
+    },
+    {
+     "label": "預付款項",
+     "note_ref": null,
+     "values": [
+      3638,
+      4744
+     ]
+    },
+    {
+     "label": "應付帳款",
+     "note_ref": null,
+     "values": [
+      -59628,
+      -34679
+     ]
+    },
+    {
+     "label": "其他應付款",
+     "note_ref": null,
+     "values": [
+      -478428,
+      451293
+     ]
+    },
+    {
+     "label": "預收款項",
+     "note_ref": null,
+     "values": [
+      238021,
+      -231087
+     ]
+    },
+    {
+     "label": "其他流動負債",
+     "note_ref": null,
+     "values": [
+      8464,
+      -7052
+     ]
+    },
+    {
+     "label": "營業活動之淨現金流入",
+     "note_ref": null,
+     "values": [
+      431460,
+      493264
+     ]
+    },
+    {
+     "label": "投資活動之現金流量：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "投資活動之淨現金流入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "籌資活動之現金流量：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "籌資活動之淨現金流入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "本期現金及約當現金增加數",
+     "note_ref": null,
+     "values": [
+      431460,
+      493264
+     ]
+    },
+    {
+     "label": "期初現金及約當現金餘額",
+     "note_ref": null,
+     "values": [
+      6162453,
+      5669189
+     ]
+    },
+    {
+     "label": "期末現金及約當現金餘額",
+     "note_ref": null,
+     "values": [
+      6593913,
+      6162453
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": []
+}

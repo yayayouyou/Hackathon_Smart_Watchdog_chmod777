@@ -1,0 +1,215 @@
+{
+ "report": "N08_鷺江_110",
+ "code": "N08",
+ "short_name": "鷺江",
+ "academic_year": 110,
+ "pdf_page": 20,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N08",
+ "printed_page": 20,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      144445,
+      144445,
+      null
+     ]
+    },
+    {
+     "label": "原住民子女學前教育補助",
+     "note_ref": null,
+     "values": [
+      71456,
+      71456,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      6360,
+      6360,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      222261,
+      222261,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "弱勢幼兒教育津貼",
+     "note_ref": null,
+     "values": [
+      18000,
+      18000,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      113520,
+      113520,
+      null
+     ]
+    },
+    {
+     "label": "原住民子女學前教育補助",
+     "note_ref": null,
+     "values": [
+      9000,
+      9000,
+      null
+     ]
+    },
+    {
+     "label": "學產急難慰問金",
+     "note_ref": null,
+     "values": [
+      3000,
+      3000,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      6360,
+      6360,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      149880,
+      149880,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      30729,
+      30729,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      32654,
+      32654,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "鷺江幼兒園之賸餘款執行概況表",
+   "period_labels": [
+    "金　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "106~109學年度累積餘絀(106.8.1~110.7.31)",
+     "note_ref": null,
+     "values": [
+      190412
+     ]
+    },
+    {
+     "label": "110學年度當期餘絀(110.8.1~111.7.31)",
+     "note_ref": null,
+     "values": [
+      1556346
+     ]
+    },
+    {
+     "label": "賸餘款餘額",
+     "note_ref": null,
+     "values": [
+      1746758
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "四、賸餘款執行概況說明",
+   "text": "(一) 依據非營利幼兒園實施辦法之規定，非營利幼兒園，於契約期間，依經會計師簽證之各該學年度收支餘絀表有賸餘款時，應於次學年度繼續支用。\n鷺江幼兒園之賸餘款執行概況表如下："
+  }
+ ],
+ "issues": [
+  "(2)代收補助收入及支出有兩張表，分別對應110.8.1~111.7.31與109.8.1~110.7.31；已拆為兩個獨立table物件，期間標題印在表頭區而非欄標籤，已以收入/支出/淨額為欄標籤。",
+  "(3)代收代付收入及支出同樣有兩張表，分別對應110.8.1~111.7.31與109.8.1~110.7.31；已拆為兩個獨立table物件。",
+  "淨額欄顯示為'$ -'，視為空白，填null。"
+ ]
+}

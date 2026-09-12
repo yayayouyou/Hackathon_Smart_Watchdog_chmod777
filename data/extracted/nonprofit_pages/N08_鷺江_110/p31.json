@@ -1,0 +1,159 @@
+{
+ "report": "N08_鷺江_110",
+ "code": "N08",
+ "short_name": "鷺江",
+ "academic_year": 110,
+ "pdf_page": 31,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N08",
+ "printed_page": 31,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "帳面價值"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "6100104 000070 護理用具－額溫槍",
+     "note_ref": null,
+     "values": [
+      1500
+     ]
+    },
+    {
+     "label": "總計",
+     "note_ref": null,
+     "values": [
+      1562257
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "2.購置財產",
+   "period_labels": [
+    "單價",
+    "數量",
+    "總金額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "001-1-03-A-01 華碩桌上型電腦",
+     "note_ref": null,
+     "values": [
+      25200,
+      1,
+      25200
+     ]
+    },
+    {
+     "label": "001-1-03-A-02 筆記型電腦",
+     "note_ref": null,
+     "values": [
+      34125,
+      1,
+      34125
+     ]
+    },
+    {
+     "label": "001-1-02-G-04 LUMIX相機",
+     "note_ref": null,
+     "values": [
+      17850,
+      1,
+      17850
+     ]
+    },
+    {
+     "label": "001-1-08-G-18 十層單位積木",
+     "note_ref": null,
+     "values": [
+      13800,
+      1,
+      13800
+     ]
+    },
+    {
+     "label": "001-1-03-A-03 桌上型電腦－勁創",
+     "note_ref": null,
+     "values": [
+      20000,
+      1,
+      20000
+     ]
+    },
+    {
+     "label": "001-1-03-A-04 VPN路由器－勁創",
+     "note_ref": null,
+     "values": [
+      12889,
+      1,
+      12889
+     ]
+    },
+    {
+     "label": "001-1-03-A-05 角鋼架",
+     "note_ref": null,
+     "values": [
+      16000,
+      2,
+      32000
+     ]
+    },
+    {
+     "label": "001-1-03-A-06 移動式變色光桌",
+     "note_ref": null,
+     "values": [
+      12000,
+      1,
+      12000
+     ]
+    },
+    {
+     "label": "001-1-03-A-07 筆記型電腦組(含音箱)",
+     "note_ref": null,
+     "values": [
+      37779,
+      1,
+      37779
+     ]
+    },
+    {
+     "label": "001-1-03-A-08 MIPRO雙頻道迷你無線喊話器",
+     "note_ref": null,
+     "values": [
+      17325,
+      1,
+      17325
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      222968
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "附表五：到園檢查表（不適用）"
+  }
+ ],
+ "issues": []
+}

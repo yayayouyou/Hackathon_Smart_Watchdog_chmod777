@@ -1,0 +1,115 @@
+{
+ "report": "N02_山北_110",
+ "code": "N02",
+ "short_name": "山北",
+ "academic_year": 110,
+ "pdf_page": 33,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N02",
+ "printed_page": 33,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "查核項目－負債部分及其他",
+   "period_labels": [
+    "是否符合－是",
+    "是否符合－否",
+    "是否符合－不適用"
+   ],
+   "items": [
+    {
+     "label": "負債部分",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "66 向辦理單位借款，其資金往來皆透過金融機構，金額為：　-　元",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1
+     ]
+    },
+    {
+     "label": "67 未有以非營利幼兒園之名義向金融機構或其他個人單位借（貸）款之情形",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1
+     ]
+    },
+    {
+     "label": "其他",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "68 本學期（學年度）未有借款予辦理單位或他人之情形。如有借款，其借款金額為　-　元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "69 上學期（學年度）會計師查核所提建議改善事項，非營利幼兒園已完成改善",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "70 非營利幼兒園與關係人間無交易事項，如有交易事項，請於下方補充說明揭露",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "71 非營利幼兒園之財產或代管財產是否均登錄於財產清冊或代管清冊，定期盤點，並依相關規定報廢",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "負債補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "其他補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "綜合建議事項",
+   "text": "無。"
+  }
+ ],
+ "issues": []
+}

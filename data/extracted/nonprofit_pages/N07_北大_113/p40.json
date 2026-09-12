@@ -1,0 +1,222 @@
+{
+ "report": "N07_北大_113",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 113,
+ "pdf_page": 40,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 40,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "是",
+    "否",
+    "不適用"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "34 活動費（親職講座、親子活動、畢業典禮）經費之支用符合工作計畫（或行事曆）、非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "35 研習、進修經費之支用是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "36 水費是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "37 電費是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "38 瓦斯是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "39 保全是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "40 辦公文具是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "41 事務機器耗材是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "42 電話費是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "43 郵資是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "44 文宣費（含一般文宣、園刊）是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      -1
+     ]
+    },
+    {
+     "label": "45 攝影照片是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      -1
+     ]
+    },
+    {
+     "label": "46 園務特支是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "47 差旅費是否符合非營利幼兒園營運成本支用範圍及預算並經園長核准",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      -1
+     ]
+    },
+    {
+     "label": "48 業務費總支出是否符合預算，如有超支，其金額為：－元",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "49 公共事務管理費是否符合非營利幼兒園營運成本支用範圍及預算，如有超支，其金額為：－元",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      -1
+     ]
+    },
+    {
+     "label": "50 土地、建物、設施與設備之租金是否符合非營利幼兒園營運成本支用範圍及預算，如有超支，其金額為：－元",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      -1
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "業務費補充說明",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異數",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "46-1 園務特支",
+     "note_ref": null,
+     "values": [
+      42000,
+      47200,
+      5200,
+      112
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "業務費補充說明",
+   "text": "依非營利幼兒園會計財務及經費處理注意事項第12點規定，業務費各細項得在業務費總預算內相互勻支，至多以勻支不足細項之20%為上限，本細項經核算已符合勻支規定。"
+  },
+  {
+   "heading": "公共事務管理費補充說明",
+   "text": "無。"
+  },
+  {
+   "heading": "土地、建物、設施與設備之租金補充說明",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "查核項目欄中『是』欄的V符號以-1表示，實際上是勾選符號V，非數值，請人工確認轉換方式是否適當。"
+ ]
+}

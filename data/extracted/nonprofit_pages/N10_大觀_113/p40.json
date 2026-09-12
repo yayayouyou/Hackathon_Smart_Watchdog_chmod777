@@ -1,0 +1,92 @@
+{
+ "report": "N10_大觀_113",
+ "code": "N10",
+ "short_name": "大觀",
+ "academic_year": 113,
+ "pdf_page": 40,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N10",
+ "printed_page": 40,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "是否符合－是",
+    "是否符合－否",
+    "是否符合－不適用"
+   ],
+   "items": [
+    {
+     "label": "64 業務發展準備之提列及業務發展準備金之動支均符合規定，提列金額是否以專戶或定期存款方式儲存",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "65 專案補助、代收補助、及代收代付等其他支出是否符合各該項目之支用範圍，如有超支，其金額為：　-　元",
+     "note_ref": null,
+     "values": [
+      null,
+      1,
+      null
+     ]
+    },
+    {
+     "label": "66 本學期（學年度）結算總收入是否大於或等於總支出。如有虧損，其虧損金額為：(523,367)元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "67 向辦理單位借款，其資金往來皆透過金融機構，金額為：　-　元",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1
+     ]
+    },
+    {
+     "label": "68 未有以非營利幼兒園之名義向金融機構或其他個人單位借（貸）款之情形",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "雜支、行政管理費及業務發展費補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "其他支出補充說明：",
+   "text": "65-1 專案補助、代收補助、及代收代付等其他支出與專案補助、代收補助、及代收代付等其他收入之相對應會計項目，兩者金額並不相等。"
+  },
+  {
+   "heading": "虧損補充說明：",
+   "text": "本學年度虧損(523,367)元，主要係依非營利幼兒園實施辦法之規定，提列業務發展費1,709,900元所致，該園未提列業務發展費前之結餘為1,186,533元。"
+  },
+  {
+   "heading": "負債補充說明：",
+   "text": "無。"
+  }
+ ],
+ "issues": []
+}

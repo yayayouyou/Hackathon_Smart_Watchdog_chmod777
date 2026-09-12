@@ -1,0 +1,264 @@
+{
+ "report": "N30_文中_112",
+ "code": "N30",
+ "short_name": "文中",
+ "academic_year": 112,
+ "pdf_page": 18,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N30",
+ "printed_page": 18,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": null,
+   "period_labels": [
+    "111.9.30~112.7.31 預算數",
+    "111.9.30~112.7.31 決算數",
+    "111.9.30~112.7.31 差異數",
+    "111.9.30~112.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      95833,
+      39961,
+      -55872,
+      42
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      21667,
+      1600,
+      -20067,
+      7
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      26667,
+      9990,
+      -16677,
+      37
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      220000,
+      48256,
+      -171744,
+      22
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      28333,
+      null,
+      -28333,
+      null
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      50000,
+      18357,
+      -31643,
+      37
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      20000,
+      22831,
+      2831,
+      114
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      54167,
+      21542,
+      -32625,
+      40
+     ]
+    },
+    {
+     "label": "電話費（含ADSL）",
+     "note_ref": null,
+     "values": [
+      45000,
+      19705,
+      -25295,
+      44
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      7000,
+      1334,
+      -5666,
+      19
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      8333,
+      879,
+      -7454,
+      11
+     ]
+    },
+    {
+     "label": "文宣費（圍刊）",
+     "note_ref": null,
+     "values": [
+      25000,
+      null,
+      -25000,
+      null
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      8333,
+      null,
+      -8333,
+      null
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      35000,
+      34907,
+      -93,
+      100
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      20833,
+      null,
+      -20833,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      666166,
+      219362,
+      -446804,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "112.8.1~113.7.31 預算數",
+    "112.8.1~113.7.31 決算數",
+    "112.8.1~113.7.31 差異",
+    "112.8.1~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      254400,
+      245351,
+      -9049,
+      96
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      63600,
+      53586,
+      -10014,
+      84
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      7420,
+      320,
+      -7100,
+      4
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1272000,
+      1052620,
+      -219380,
+      83
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1597420,
+      1351877,
+      -245543,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.2 業務費：得在業務費總預算內相互勻支，至多以勻支不足細項之20%為上限。\n(2) 111 學年度辦公文具超支預算部分，依上開規定得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限，本細項經核算已符合勻支規定。\n(3) 112 及 111 學年度業務費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "頁面上方第一張表缺乏明確的表標題與context_heading，無法確認其所屬的費用類別（推測為業務費明細，但需人工確認）。"
+ ]
+}

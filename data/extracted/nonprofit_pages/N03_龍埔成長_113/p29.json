@@ -1,0 +1,286 @@
+{
+ "report": "N03_龍埔成長_113",
+ "code": "N03",
+ "short_name": "龍埔成長",
+ "academic_year": 113,
+ "pdf_page": 29,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N03",
+ "printed_page": 29,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "501010610 000108 空調系統",
+     "note_ref": null,
+     "values": [
+      48427,
+      1,
+      1483
+     ]
+    },
+    {
+     "label": "501010610 000109 空調系統",
+     "note_ref": null,
+     "values": [
+      48427,
+      1,
+      1483
+     ]
+    },
+    {
+     "label": "501010610 000110 空調系統",
+     "note_ref": null,
+     "values": [
+      48427,
+      1,
+      1483
+     ]
+    },
+    {
+     "label": "501010610 000111 空調系統",
+     "note_ref": null,
+     "values": [
+      48427,
+      1,
+      1483
+     ]
+    },
+    {
+     "label": "501010610 000112 空調系統",
+     "note_ref": null,
+     "values": [
+      48427,
+      1,
+      1483
+     ]
+    },
+    {
+     "label": "501010610 000113 空調系統",
+     "note_ref": null,
+     "values": [
+      36815,
+      1,
+      1127
+     ]
+    },
+    {
+     "label": "501010701A 000004 冰箱",
+     "note_ref": null,
+     "values": [
+      55200,
+      1,
+      552
+     ]
+    },
+    {
+     "label": "501010820 000001 除濕機",
+     "note_ref": null,
+     "values": [
+      19000,
+      1,
+      190
+     ]
+    },
+    {
+     "label": "501010820 000002 除濕機",
+     "note_ref": null,
+     "values": [
+      19000,
+      1,
+      190
+     ]
+    },
+    {
+     "label": "501010820 000003 除濕機",
+     "note_ref": null,
+     "values": [
+      19000,
+      1,
+      190
+     ]
+    },
+    {
+     "label": "501011007 000001 電鍋",
+     "note_ref": null,
+     "values": [
+      15600,
+      1,
+      156
+     ]
+    },
+    {
+     "label": "501011007 000002 電鍋",
+     "note_ref": null,
+     "values": [
+      15600,
+      1,
+      156
+     ]
+    },
+    {
+     "label": "501011017 000001 瓦斯爐",
+     "note_ref": null,
+     "values": [
+      14400,
+      1,
+      144
+     ]
+    },
+    {
+     "label": "501011017 000002 瓦斯爐",
+     "note_ref": null,
+     "values": [
+      28800,
+      1,
+      288
+     ]
+    },
+    {
+     "label": "501011066A 000001 油煙罩",
+     "note_ref": null,
+     "values": [
+      63600,
+      1,
+      636
+     ]
+    },
+    {
+     "label": "501030301B 000004 櫥櫃",
+     "note_ref": null,
+     "values": [
+      21000,
+      1,
+      210
+     ]
+    },
+    {
+     "label": "501030608 000001 餐具消毒櫃",
+     "note_ref": null,
+     "values": [
+      78000,
+      1,
+      780
+     ]
+    },
+    {
+     "label": "501030795 000002 鐵片放置架",
+     "note_ref": null,
+     "values": [
+      19200,
+      1,
+      192
+     ]
+    },
+    {
+     "label": "501030799 000006 其他康樂設備",
+     "note_ref": null,
+     "values": [
+      10000,
+      1,
+      100
+     ]
+    },
+    {
+     "label": "501030799 000007 其他康樂設備",
+     "note_ref": null,
+     "values": [
+      30240,
+      1,
+      302
+     ]
+    },
+    {
+     "label": "501030799 000008 其他康樂設備",
+     "note_ref": null,
+     "values": [
+      11184,
+      1,
+      112
+     ]
+    },
+    {
+     "label": "501030799 000009 其他康樂設備",
+     "note_ref": null,
+     "values": [
+      11184,
+      1,
+      112
+     ]
+    },
+    {
+     "label": "501030799 000010 其他康樂設備",
+     "note_ref": null,
+     "values": [
+      24500,
+      1,
+      245
+     ]
+    },
+    {
+     "label": "501030799 000011 其他康樂設備",
+     "note_ref": null,
+     "values": [
+      24480,
+      1,
+      245
+     ]
+    },
+    {
+     "label": "6010101 000022 文書用具-白板",
+     "note_ref": null,
+     "values": [
+      4200,
+      1,
+      4200
+     ]
+    },
+    {
+     "label": "6010101 000023 文書用具-白板",
+     "note_ref": null,
+     "values": [
+      4200,
+      1,
+      4200
+     ]
+    },
+    {
+     "label": "6010111 000-3 文書用具-碎紙機",
+     "note_ref": null,
+     "values": [
+      7000,
+      1,
+      7000
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      144960
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "財產編號、登錄號/分號、財產名稱、購置日期、使用年限等欄位未納入values，僅以label文字呈現，因schema限制無法完整呈現所有欄位資訊。",
+  "部分帳面價值數字如302（原始價值30,240）等微小差異可能為折舊計算結果，照表面數字轉錄。"
+ ]
+}

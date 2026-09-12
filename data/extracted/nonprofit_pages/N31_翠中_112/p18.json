@@ -1,0 +1,265 @@
+{
+ "report": "N31_翠中_112",
+ "code": "N31",
+ "short_name": "翠中",
+ "academic_year": 112,
+ "pdf_page": 18,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N31",
+ "printed_page": 18,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "業務費",
+   "period_labels": [
+    "111.9.30~112.7.31 預算數",
+    "111.9.30~112.7.31 決算數",
+    "111.9.30~112.7.31 差異數",
+    "111.9.30~112.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      79167,
+      83618,
+      4451,
+      106
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      18333,
+      null,
+      -18333,
+      null
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      21666,
+      null,
+      -21666,
+      null
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      170000,
+      48113,
+      -121887,
+      28
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      26667,
+      21840,
+      -4827,
+      82
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      50000,
+      null,
+      -50000,
+      null
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      15000,
+      17572,
+      2572,
+      117
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      50000,
+      34442,
+      -15558,
+      69
+     ]
+    },
+    {
+     "label": "電話費（含ADSL）",
+     "note_ref": null,
+     "values": [
+      37500,
+      19709,
+      -17791,
+      53
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      6000,
+      5626,
+      -374,
+      94
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      8333,
+      340,
+      -7993,
+      4
+     ]
+    },
+    {
+     "label": "文宣費（圓刊）",
+     "note_ref": null,
+     "values": [
+      22917,
+      null,
+      -22917,
+      null
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      7500,
+      null,
+      -7500,
+      null
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      32500,
+      32565,
+      65,
+      100
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      16667,
+      null,
+      -16667,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      562250,
+      263825,
+      -298425,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "112.8.1~113.7.31 預算數",
+    "112.8.1~113.7.31 決算數",
+    "112.8.1~113.7.31 差異",
+    "112.8.1~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      216000,
+      214348,
+      -1652,
+      99
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      54000,
+      53800,
+      -200,
+      100
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      6300,
+      6378,
+      78,
+      101
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1080000,
+      1189796,
+      109796,
+      110
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1356300,
+      1464322,
+      108022,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.2 業務費：得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限。\n(2) 112 學年度活動費及辦公文具超支預算部分，依上開規定得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限，上述各細項經核算已符合勻支規定。\n(3) 111 學年度活動費、辦公文具及園務特支超支預算部分，依上開規定得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限，上述各細項經核算已符合勻支規定。\n(4) 112 及 111 學年度業務費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "上方業務費表格的期間標題為111.9.30~112.7.31，但表格上方無明確的章節標題文字，context_heading以推測的「業務費」填入。",
+  "材料費表格的差異欄標題為「差異」（非「差異數」），已依原文照抄。"
+ ]
+}

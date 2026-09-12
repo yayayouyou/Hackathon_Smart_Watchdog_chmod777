@@ -1,0 +1,262 @@
+{
+ "report": "N34_佳和_112",
+ "code": "N34",
+ "short_name": "佳和",
+ "academic_year": 112,
+ "pdf_page": 15,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N34",
+ "printed_page": 15,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "2. 人事費",
+   "period_labels": [
+    "112.9.28~113.7.31 預算數",
+    "112.9.28~113.7.31 決算數",
+    "112.9.28~113.7.31 差異數",
+    "112.9.28~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      4126797,
+      3694939,
+      -431858,
+      90
+     ]
+    },
+    {
+     "label": "學前特教師、社工人員、護理人員（教保員）",
+     "note_ref": null,
+     "values": [
+      429355,
+      389828,
+      -39527,
+      91
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1005571,
+      974578,
+      -30993,
+      97
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      590330,
+      194231,
+      -396099,
+      33
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      810649,
+      661861,
+      -148788,
+      82
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      10833,
+      5960,
+      -4873,
+      55
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      317180,
+      313373,
+      -3807,
+      99
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      10833,
+      9450,
+      -1383,
+      87
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      833,
+      null,
+      -833,
+      null
+     ]
+    },
+    {
+     "label": "代課費及廚工代班費",
+     "note_ref": null,
+     "values": [
+      155790,
+      183763,
+      27973,
+      118
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      44053,
+      44053,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      7502224,
+      6472036,
+      -1030188,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "3. 業務費",
+   "period_labels": [
+    "112.9.28~113.7.31 預算數",
+    "112.9.28~113.7.31 決算數",
+    "112.9.28~113.7.31 差異數",
+    "112.9.28~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      95833,
+      71239,
+      -24594,
+      74
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      21667,
+      20000,
+      -1667,
+      92
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      26667,
+      33996,
+      7329,
+      127
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      240833,
+      203761,
+      -37072,
+      85
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      28333,
+      16524,
+      -11809,
+      58
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      66667,
+      31640,
+      -35027,
+      47
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      20000,
+      18005,
+      -1995,
+      90
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      54167,
+      29408,
+      -24759,
+      54
+     ]
+    },
+    {
+     "label": "電話費（含ADSL）",
+     "note_ref": null,
+     "values": [
+      45000,
+      38533,
+      -6467,
+      86
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.1 人事費總預算內，除資遣費準備金不得移作他用、加班費不得超支，及自強活動以營運成本編列數額為支用上限，超過部分由非營利法人自行支應外，其餘各細項得相互勻支。\n(2) 112 學年度代課費及代班費超支預算部分，依上開規定人事費細項得相互勻支，本細項已符合勻支規定。\n(3) 112 學年度人事費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": []
+}

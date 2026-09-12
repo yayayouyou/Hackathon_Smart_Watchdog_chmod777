@@ -1,0 +1,155 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 22,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 22,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收入",
+    "113.8.1~114.7.31 支出",
+    "113.8.1~114.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      16035,
+      16035,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收入",
+    "112.8.1~113.7.31 支出",
+    "112.8.1~113.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      17182,
+      17182,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "8. 所得稅費用",
+   "period_labels": [
+    "113.8.1~114.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "課稅所得額",
+     "note_ref": null,
+     "values": [
+      6393413
+     ]
+    },
+    {
+     "label": "法定稅率",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "所得稅費用",
+     "note_ref": null,
+     "values": [
+      1278682
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "安興幼兒園之賸餘款執行概況表",
+   "period_labels": [
+    "金額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "107~109 學年度當期餘絀(107.8.1~110.7.31)",
+     "note_ref": null,
+     "values": [
+      840053
+     ]
+    },
+    {
+     "label": "110 學年度當期餘絀(110.8.1~111.7.31)",
+     "note_ref": null,
+     "values": [
+      608783
+     ]
+    },
+    {
+     "label": "111 學年度當期餘絀(111.8.1~112.7.31)",
+     "note_ref": null,
+     "values": [
+      241652
+     ]
+    },
+    {
+     "label": "112 學年度當期餘絀(112.8.1~113.7.31)",
+     "note_ref": null,
+     "values": [
+      76573
+     ]
+    },
+    {
+     "label": "113 學年度當期餘絀(113.8.1~114.7.31)",
+     "note_ref": null,
+     "values": [
+      3913614
+     ]
+    },
+    {
+     "label": "賸餘款餘額",
+     "note_ref": null,
+     "values": [
+      5680675
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "8. 所得稅費用",
+   "text": "因新北市政府不同意受託機構-社團法人臺灣兒童教育發展協會繼續辦理本幼兒園，113 學年度契約期滿，本幼兒園依所得稅法等有關規定核算應認列之所得稅費用屬之。"
+  },
+  {
+   "heading": "四、賸餘款執行概況說明",
+   "text": "(一) 依據非營利幼兒園實施辦法之規定，非營利幼兒園，於契約期間，依經會計師簽證之各該學年度收支餘絀表有賸餘款時，應於次學年度繼續支用。\n安興幼兒園之賸餘款執行概況表如下："
+  }
+ ],
+ "issues": [
+  "所得稅費用表中法定稅率欄位為20%，非金額數字，values填null；百分比未另設percents欄位，以文字說明處理。"
+ ]
+}

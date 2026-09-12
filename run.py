@@ -104,12 +104,19 @@ TASKS = [
     Task("extract-public", "從決算書座標抽出 22 所市立幼兒園財務（零模型成本）",
          _s("extract_public_kindergartens.py"), group="抽取",
          needs_raw=True, in_pipeline=True),
+    # 刻意不放進 pipeline：這一步會花錢且需數小時，不該被 `run.py pipeline` 意外觸發。
+    # 它是可續跑的，重跑只會補上缺的頁，所以人工啟動不會有半途而廢的風險。
+    Task("extract-pages", "Bedrock 視覺模型逐頁抽取 132 份非營利財報（可續跑，數小時）",
+         _s("extract_pages_bedrock.py"), group="抽取",
+         needs_raw=True, needs_network=True),
 
     # ── 整併 ──────────────────────────────────────────────────────
     Task("institution-master", "建立 1,213 筆機構主檔與裁罰標籤表",
          _s("build_institution_master.py"), in_pipeline=True),
     Task("nonprofit-panel", "把 132 份非營利園抽取結果整併成單一面板",
          _s("build_nonprofit_panel.py"), in_pipeline=True),
+    Task("pagewise-facts", "把逐頁抽取正規化成長表（法遵補判的依據）",
+         _s("build_pagewise_facts.py"), in_pipeline=True),
     Task("crosswalk", "財報年度對應登記身分（處理法人更替）",
          _s("build_nonprofit_registry_crosswalk.py"), in_pipeline=True),
 
@@ -152,7 +159,7 @@ TASKS = [
     Task("score-extraction", "以人工基準量測抽取準確率",
          _s("score_extraction.py"), group="量測", needs_raw=True),
     Task("validate-extraction", "以會計恆等式量化抽取品質",
-         _s("validate_extraction.py"), group="量測"),
+         _s("validate_extraction.py"), group="量測", needs_raw=True),
 
     # ── 外部（需要網路）──────────────────────────────────────────
     Task("fee-table", "重抓 109 到 114 學年度收費明細（約 10 分鐘）",

@@ -1,0 +1,240 @@
+{
+ "report": "N02_山北_113",
+ "code": "N02",
+ "short_name": "山北",
+ "academic_year": 113,
+ "pdf_page": 20,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N02",
+ "printed_page": 20,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "6. 延長照顧服務收支",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.8.1~113.7.31"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "延長照顧服務收入",
+     "note_ref": null,
+     "values": [
+      106755,
+      155084
+     ]
+    },
+    {
+     "label": "延長照顧服務收入退費",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "延長照顧服務收入淨額",
+     "note_ref": null,
+     "values": [
+      106755,
+      155084
+     ]
+    },
+    {
+     "label": "延長照顧服務支出",
+     "note_ref": null,
+     "values": [
+      -106755,
+      -143778
+     ]
+    },
+    {
+     "label": "延長照顧服務收支淨額",
+     "note_ref": null,
+     "values": [
+      null,
+      11306
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "7. 其他收入及其他支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      1603095,
+      1603095,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      17160,
+      17160,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      31835,
+      31835,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1652090,
+      1652090,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "7. 其他收入及其他支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      843959,
+      843959,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      61810,
+      61810,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      30070,
+      30070,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      935839,
+      935839,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      796025,
+      796025,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      57896,
+      57896,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "note_ref": null,
+     "values": [
+      23000,
+      23000,
+      null
+     ]
+    },
+    {
+     "label": "調薪及延長照顧差額補助",
+     "note_ref": null,
+     "values": [
+      596174,
+      596174,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      130000,
+      130000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1603095,
+      1603095,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "第6項延長照顧服務收支淨額113.8.1~114.7.31欄印有'$-'視為null；112.8.1~113.7.31欄為$11,306。",
+  "第7項兩張彙總表的period_labels以收入/支出/淨額三欄呈現，淨額欄均印'$-'視為null。",
+  "(1)專案補助明細表期間為113.8.1~114.7.31，頁面未另印112年度對應明細。"
+ ]
+}

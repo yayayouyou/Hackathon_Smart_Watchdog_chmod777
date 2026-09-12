@@ -1,0 +1,230 @@
+{
+ "report": "N03_龍埔成長_113",
+ "code": "N03",
+ "short_name": "龍埔成長",
+ "academic_year": 113,
+ "pdf_page": 21,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N03",
+ "printed_page": 21,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "112.8.1~113.7.31 收入",
+    "112.8.1~113.7.31 支出",
+    "112.8.1~113.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "親職教育補助",
+     "note_ref": null,
+     "values": [
+      6500,
+      6500,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      510933,
+      510933,
+      null
+     ]
+    },
+    {
+     "label": "教育實習指導費補助",
+     "note_ref": null,
+     "values": [
+      8000,
+      8000,
+      null
+     ]
+    },
+    {
+     "label": "防災校園建置計畫補助",
+     "note_ref": null,
+     "values": [
+      50000,
+      50000,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      79520,
+      79520,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      32651,
+      32651,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "note_ref": null,
+     "values": [
+      12000,
+      12000,
+      null
+     ]
+    },
+    {
+     "label": "調薪及延長照顧差額補助",
+     "note_ref": null,
+     "values": [
+      2791169,
+      2791169,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      120000,
+      120000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      3610773,
+      3610773,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收入",
+    "113.8.1~114.7.31 支出",
+    "113.8.1~114.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      4320,
+      4320,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "period_labels": [
+    "112.8.1~113.7.31 收入",
+    "112.8.1~113.7.31 支出",
+    "112.8.1~113.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      78120,
+      78120,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      5400,
+      5400,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      83520,
+      83520,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收入",
+    "113.8.1~114.7.31 支出",
+    "113.8.1~114.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      24400,
+      24400,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "period_labels": [
+    "112.8.1~113.7.31 收入",
+    "112.8.1~113.7.31 支出",
+    "112.8.1~113.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      26970,
+      26970,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "四、賸餘款執行概況說明",
+   "text": "（一）依據非營利幼兒園實施辦法之規定，非營利幼兒園，於契約期間，依經會\n計師簽證之各該學年度收支餘絀表有賸餘款時，應於次學年度繼續支用。"
+  }
+ ],
+ "issues": [
+  "第一張表（112.8.1~113.7.31 代收補助收入及支出）頁面上方未標明小節標題，為延續前頁的項目，淨額欄均顯示 $- 視為 null。"
+ ]
+}

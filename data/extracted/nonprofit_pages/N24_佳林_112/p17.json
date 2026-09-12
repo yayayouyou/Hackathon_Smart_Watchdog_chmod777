@@ -1,0 +1,265 @@
+{
+ "report": "N24_佳林_112",
+ "code": "N24",
+ "short_name": "佳林",
+ "academic_year": 112,
+ "pdf_page": 17,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N24",
+ "printed_page": 17,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": null,
+   "period_labels": [
+    "111.8.1~112.7.31 預算數",
+    "111.8.1~112.7.31 決算數",
+    "111.8.1~112.7.31 差異",
+    "111.8.1~112.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      11000,
+      13200,
+      2200,
+      120
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      11000,
+      6000,
+      -5000,
+      55
+     ]
+    },
+    {
+     "label": "代課費及代班費",
+     "note_ref": null,
+     "values": [
+      149744,
+      2816,
+      -146928,
+      2
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      40943,
+      40943,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      7233624,
+      5930070,
+      -1303554,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "3. 業務費",
+   "period_labels": [
+    "112.8.1~113.7.31 預算數",
+    "112.8.1~113.7.31 決算數",
+    "112.8.1~113.7.31 差異",
+    "112.8.1~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      95000,
+      48398,
+      -46602,
+      51
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      22000,
+      17500,
+      -4500,
+      80
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      26000,
+      14400,
+      -11600,
+      55
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      90000,
+      61383,
+      -28617,
+      68
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      32000,
+      9730,
+      -22270,
+      30
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      60000,
+      48783,
+      -11217,
+      81
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      18000,
+      5762,
+      -12238,
+      32
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      60000,
+      null,
+      -60000,
+      null
+     ]
+    },
+    {
+     "label": "電話費（含ADSL）",
+     "note_ref": null,
+     "values": [
+      45000,
+      27424,
+      -17576,
+      61
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      7200,
+      700,
+      -6500,
+      10
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      10000,
+      8925,
+      -1075,
+      89
+     ]
+    },
+    {
+     "label": "文宣費（園刊）",
+     "note_ref": null,
+     "values": [
+      27500,
+      7500,
+      -20000,
+      27
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      9000,
+      7000,
+      -2000,
+      78
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      39000,
+      3000,
+      -36000,
+      8
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      20000,
+      null,
+      -20000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      560700,
+      260505,
+      -300195,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.1 人事費總預算內，除資遣費準備金不得移作他用、加班費不得超支，及自強活動以營運成本編列數額為支用上限，超過部分由非營利法人自行支應外，其餘各細項得相互勻支。\n(2) 112 學年度健康檢查超支預算部分，依上開規定人事費細項得相互勻支，故本細項已符合勻支規定。\n(3) 111 學年度自強活動超支預算部分，依修正前非營利幼兒園會計財務及經費處理注意事項第 12 點規定，人事費細項得相互勻支，故本細項已符合勻支規定。\n(4) 112 及 111 學年度人事費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "第一張表（111.8.1~112.7.31）上方無明確表頭標題，僅為延續前頁的人事費明細表，context_heading無法從本頁確認，已留空。",
+  "合計列執行率欄位頁面未印數值，填null。"
+ ]
+}

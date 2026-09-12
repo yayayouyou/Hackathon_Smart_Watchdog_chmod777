@@ -1,0 +1,583 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 30,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 30,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "財產編號",
+    "登錄號/分號",
+    "財產名稱",
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "501030101B",
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "501030101B 000010 桌",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      23200,
+      1,
+      232,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030101B 000011 桌",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      23200,
+      1,
+      232,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301A 000083 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      10000,
+      1,
+      3730,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501030301A 000084 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      10000,
+      1,
+      3730,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501030301A 000085 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      12000,
+      1,
+      4476,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501030301B 000013 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      20000,
+      1,
+      200,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000014 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      20000,
+      1,
+      200,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000015 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      20000,
+      1,
+      200,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000016 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      20000,
+      1,
+      200,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000017 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      18000,
+      1,
+      180,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000018 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      18000,
+      1,
+      180,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000019 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      18000,
+      1,
+      180,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000020 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      18000,
+      1,
+      180,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000022 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      14000,
+      1,
+      6839,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000023 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      14000,
+      1,
+      6839,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000024 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      14000,
+      1,
+      6839,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000025 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000026 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000027 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000028 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000029 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000030 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000031 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000032 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000033 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000034 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000035 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000036 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000037 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000038 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000039 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000040 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000041 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      17000,
+      1,
+      8304,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000042 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      13000,
+      1,
+      6350,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000043 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      10500,
+      1,
+      5129,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B 000044 櫥櫃",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      61500,
+      1,
+      30043,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030604 000002 鍋爐台",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      23000,
+      1,
+      230,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030607 000010 調理台",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      18000,
+      1,
+      180,
+      null,
+      6
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本頁為財產目錄列表，欄位包含財產編號、登錄號/分號、財產名稱、原始價值、數量、帳面價值、購置日期、使用年限，因schema要求values為數值陣列，財產編號、登錄號、財產名稱、購置日期等文字欄位無法直接放入values數值欄，已盡量保留文字於label中。"
+ ]
+}

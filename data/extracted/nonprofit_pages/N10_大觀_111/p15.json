@@ -1,0 +1,236 @@
+{
+ "report": "N10_大觀_111",
+ "code": "N10",
+ "short_name": "大觀",
+ "academic_year": 111,
+ "pdf_page": 15,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N10",
+ "printed_page": 15,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": null,
+   "period_labels": [
+    "112 年 7 月 31 日",
+    "111 年 7 月 31 日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "業務發展準備金",
+     "note_ref": null,
+     "values": [
+      3686000,
+      3116000
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      1541530,
+      null,
+      -286912,
+      1254618
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      1876370,
+      null,
+      -334840,
+      1541530
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "購置財產",
+     "note_ref": null,
+     "values": [
+      315730,
+      28000,
+      null,
+      343730
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "購置財產",
+     "note_ref": null,
+     "values": [
+      201800,
+      113930,
+      null,
+      315730
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1.　教保費收入",
+   "period_labels": [
+    "111.8.1~112.7.31",
+    "110.8.1~111.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保費收入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "教保費收入（家長繳費）",
+     "note_ref": null,
+     "values": [
+      1608547,
+      2346116
+     ]
+    },
+    {
+     "label": "教保費收入（政府學費差額補助）",
+     "note_ref": null,
+     "values": [
+      10841640,
+      8365004
+     ]
+    },
+    {
+     "label": "小　計",
+     "note_ref": null,
+     "values": [
+      12450187,
+      10711120
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "五日未上課退費",
+     "note_ref": null,
+     "values": [
+      -99408,
+      -72520
+     ]
+    },
+    {
+     "label": "轉學/轉出退費",
+     "note_ref": null,
+     "values": [
+      -10000,
+      -17945
+     ]
+    },
+    {
+     "label": "政府學費差額補助退費",
+     "note_ref": null,
+     "values": [
+      -15350,
+      null
+     ]
+    },
+    {
+     "label": "小　計",
+     "note_ref": null,
+     "values": [
+      -124758,
+      -90465
+     ]
+    },
+    {
+     "label": "教保費收入淨額",
+     "note_ref": null,
+     "values": [
+      12325429,
+      10620655
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "（三）營運資產",
+   "text": "1. 代管財產\n111 及 110 學年度代管財產分別減少 286,912 元及 334,840 元，係託管單位財產管理系統，依財產經濟年限攤提折舊所致。\n2. 購置財產\n本幼兒園依契約之規定應辦理保險，截至 112 年 7 月 31 日及 111 年 7 月 31 日止保險金額均為 18,000,000 元。"
+  },
+  {
+   "heading": "（四）收支明細表",
+   "text": "1.　教保費收入"
+  }
+ ],
+ "issues": []
+}

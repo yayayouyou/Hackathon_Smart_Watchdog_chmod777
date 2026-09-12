@@ -1,0 +1,266 @@
+{
+ "report": "N30_文中_111",
+ "code": "N30",
+ "short_name": "文中",
+ "academic_year": 111,
+ "pdf_page": 15,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N30",
+ "printed_page": 15,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "3. 業務費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異數",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      95833,
+      39961,
+      -55872,
+      42
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      21667,
+      1600,
+      -20067,
+      7
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      26667,
+      9990,
+      -16677,
+      37
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      220000,
+      48256,
+      -171744,
+      22
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      28333,
+      null,
+      -28333,
+      null
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      50000,
+      18357,
+      -31643,
+      37
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      20000,
+      22831,
+      2831,
+      114
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      54167,
+      21542,
+      -32625,
+      40
+     ]
+    },
+    {
+     "label": "電話費（含網路）",
+     "note_ref": null,
+     "values": [
+      45000,
+      19705,
+      -25295,
+      44
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      7000,
+      1334,
+      -5666,
+      19
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      8333,
+      879,
+      -7454,
+      11
+     ]
+    },
+    {
+     "label": "文宣費（園刊）",
+     "note_ref": null,
+     "values": [
+      25000,
+      null,
+      -25000,
+      null
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      8333,
+      null,
+      -8333,
+      null
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      35000,
+      34907,
+      -93,
+      100
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      20833,
+      null,
+      -20833,
+      null
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      666166,
+      219362,
+      -446804,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異數",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      212000,
+      183200,
+      -28800,
+      86
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      53000,
+      56202,
+      3202,
+      106
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      6183,
+      1796,
+      -4387,
+      29
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1060000,
+      584604,
+      -475396,
+      55
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      1331183,
+      825802,
+      -505381,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "3. 業務費",
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.2 業務費：得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限。\n(2) 111 學年度辦公文具超支預算部分，依上開規定得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限，本細項經核算符合勻支規定。\n(3) 111 學年度業務費類別總經費並無超支預算之情事。"
+  },
+  {
+   "heading": "4. 材料費",
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.3 材料費各細項經費倘有不足，應優先於材料費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費），且至多以勻支不足細項之 20%為上限。但餐點費，不得移作他用。"
+  }
+ ],
+ "issues": []
+}

@@ -1,0 +1,234 @@
+{
+ "report": "N23_菁湖_110",
+ "code": "N23",
+ "short_name": "菁湖",
+ "academic_year": 110,
+ "pdf_page": 19,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N23",
+ "printed_page": 19,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "5. 維護費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "水電修繕",
+     "note_ref": null,
+     "values": [
+      110000,
+      52451,
+      -57549,
+      48
+     ]
+    },
+    {
+     "label": "圍舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      25000,
+      19350,
+      -5650,
+      77
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      1640,
+      -6360,
+      21
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      143000,
+      73441,
+      -69559,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "水電修繕",
+     "note_ref": null,
+     "values": [
+      55000,
+      110000,
+      55000,
+      200
+     ]
+    },
+    {
+     "label": "圍舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      12500,
+      12500,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      4000,
+      584,
+      -3416,
+      15
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      71500,
+      123084,
+      51584,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "6. 其他收入及其他支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      1874229,
+      1874229,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      162960,
+      162960,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      54558,
+      54558,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      2091747,
+      2091747,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "6. 其他收入及其他支出",
+   "period_labels": [
+    "收　入",
+    "支　出",
+    "淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      231220,
+      231220,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      59760,
+      59760,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      42312,
+      42312,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      333292,
+      333292,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 12 點（一）.5 維護費及修繕購置費各細項經費倘有不足，應優先於維護費及修繕購置費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費）。\n(2) 109 學年度維護費超支預算部分，依上開規定應優先於修繕購置費總預算內相互勻支，仍有不足，經與業務費勻支後，已符合勻支規定。\n(3) 110 及 109 學年度維護費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "維護費第一張表（110.8.1~111.7.31）合計列執行率%欄位空白，填null；第二張表（110.2.1~110.7.31）合計列執行率%欄位空白，填null。",
+  "其他收入及其他支出兩張表的淨額欄均顯示為'$ -'，視為空白填null。",
+  "第一張維護費表期間為110.8.1~111.7.31，第二張為110.2.1~110.7.31；第一張其他收入支出表期間為110.8.1~111.7.31，第二張為110.2.1~110.7.31，已分開為獨立表格。"
+ ]
+}

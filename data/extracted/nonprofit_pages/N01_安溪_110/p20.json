@@ -1,0 +1,258 @@
+{
+ "report": "N01_安溪_110",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 110,
+ "pdf_page": 20,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 20,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": null,
+   "period_labels": [
+    "109.8.1~110.7.31 收入",
+    "109.8.1~110.7.31 支出",
+    "109.8.1~110.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      141964,
+      141964,
+      null
+     ]
+    },
+    {
+     "label": "本土語言教學補助",
+     "note_ref": null,
+     "values": [
+      30000,
+      30000,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      34400,
+      34400,
+      null
+     ]
+    },
+    {
+     "label": "招收身心障礙幼兒補助",
+     "note_ref": null,
+     "values": [
+      45000,
+      45000,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "note_ref": null,
+     "values": [
+      22000,
+      22000,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      120000,
+      120000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      393364,
+      393364,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2)  代收補助收入及支出",
+   "period_labels": [
+    "110.8.1~111.7.31 收入",
+    "110.8.1~111.7.31 支出",
+    "110.8.1~111.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      15270,
+      15270,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      5400,
+      5400,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      20670,
+      20670,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2)  代收補助收入及支出",
+   "period_labels": [
+    "109.8.1~110.7.31 收入",
+    "109.8.1~110.7.31 支出",
+    "109.8.1~110.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "弱勢幼兒教育津貼",
+     "note_ref": null,
+     "values": [
+      18000,
+      18000,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      5400,
+      5400,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      23400,
+      23400,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(3)  代收代付收入及支出",
+   "period_labels": [
+    "110.8.1~111.7.31 收入",
+    "110.8.1~111.7.31 支出",
+    "110.8.1~111.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      30304,
+      30304,
+      null
+     ]
+    },
+    {
+     "label": "代購用品",
+     "note_ref": null,
+     "values": [
+      100674,
+      100364,
+      310
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      130978,
+      130668,
+      310
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(3)  代收代付收入及支出",
+   "period_labels": [
+    "109.8.1~110.7.31 收入",
+    "109.8.1~110.7.31 支出",
+    "109.8.1~110.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      30086,
+      30086,
+      null
+     ]
+    },
+    {
+     "label": "代購用品",
+     "note_ref": null,
+     "values": [
+      76186,
+      76186,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      106272,
+      106272,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "頁面最上方的表格（109.8.1~110.7.31期間的補助明細）缺少明確的章節標題，無法確認其所屬小節（推測為代收補助收入及支出的前一節，但頁面頂部被截斷），context_heading留null。",
+  "淨額欄顯示'$ -'（破折號），依規則填null。"
+ ]
+}

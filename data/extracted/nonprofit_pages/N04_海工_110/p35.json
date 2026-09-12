@@ -1,0 +1,122 @@
+{
+ "report": "N04_海工_110",
+ "code": "N04",
+ "short_name": "海工",
+ "academic_year": 110,
+ "pdf_page": 35,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N04",
+ "printed_page": 35,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "110學年度績效考評",
+   "period_labels": [
+    "評分"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "六、會計查核簽證情形：",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "1.前學年度簽證，各查核項目符合之情形：（配分6分）",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(1)基本原則項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(2)收入部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(3)支出部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(4)負債部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(5)其他部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      6
+     ]
+    },
+    {
+     "label": "2.當學年度第1學期查核，各查核項目符合之情形：（配分6分）",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(1)基本原則項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(2)收入部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(3)支出部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(4)負債部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(5)其他部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      6
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本頁為績效考評表，表格結構特殊，考評指標、考評方式、評分、考評依據、備註各欄並非金融數字欄位。評分欄僅第1大項填6分、第2大項填6分，其餘列評分欄空白。考評方式與考評依據欄為文字說明，未轉為數字欄位。"
+ ]
+}

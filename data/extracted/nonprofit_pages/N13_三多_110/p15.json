@@ -1,0 +1,224 @@
+{
+ "report": "N13_三多_110",
+ "code": "N13",
+ "short_name": "三多",
+ "academic_year": 110,
+ "pdf_page": 15,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N13",
+ "printed_page": 15,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "業務發展準備金",
+   "period_labels": [
+    "111 年 7 月 31 日",
+    "110 年 7 月 31 日"
+   ],
+   "unit": "新台幣元",
+   "items": [
+    {
+     "label": "業務發展準備金",
+     "note_ref": null,
+     "values": [
+      2300000,
+      1700000
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(三) 營運資產\n1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": "新台幣元",
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      1007240,
+      null,
+      -213725,
+      793515
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(三) 營運資產\n1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": "新台幣元",
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      1471693,
+      null,
+      -464453,
+      1007240
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": "新台幣元",
+   "items": [
+    {
+     "label": "購置財產",
+     "note_ref": null,
+     "values": [
+      null,
+      37465,
+      null,
+      37465
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "1. 教保費收入",
+   "context_heading": "(四) 收支明細表",
+   "period_labels": [
+    "110.8.1~111.7.31",
+    "109.8.1~110.7.31"
+   ],
+   "unit": "新台幣元",
+   "items": [
+    {
+     "label": "教保費收入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "教保費收入（家長繳費）",
+     "note_ref": null,
+     "values": [
+      1919500,
+      3076527
+     ]
+    },
+    {
+     "label": "教保費收入（政府學費差額補助）",
+     "note_ref": null,
+     "values": [
+      7077980,
+      7149984
+     ]
+    },
+    {
+     "label": "小　　計",
+     "note_ref": null,
+     "values": [
+      8997480,
+      10226511
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "五日未上課退費",
+     "note_ref": null,
+     "values": [
+      -68730,
+      -565903
+     ]
+    },
+    {
+     "label": "腸病毒退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -3593
+     ]
+    },
+    {
+     "label": "轉學/轉出退費",
+     "note_ref": null,
+     "values": [
+      -1732,
+      -937
+     ]
+    },
+    {
+     "label": "政府學費差額補助退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -1223620
+     ]
+    },
+    {
+     "label": "小　　計",
+     "note_ref": null,
+     "values": [
+      -70462,
+      -1794053
+     ]
+    },
+    {
+     "label": "教保費收入淨額",
+     "note_ref": null,
+     "values": [
+      8927018,
+      8432458
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "110 及 109 學年度代管財產分別減少 213,725 元及 464,453 元，係託管單位財產管理系統，依財產經濟年限攤提折舊所致。"
+  },
+  {
+   "heading": null,
+   "text": "109.8.1~110.7.31：無。\n\n本幼兒園依契約之規定應辦理保險，截至 111 年 7 月 31 日及 110 年 7 月 31 日止保險金額均為 15,500,000 元。"
+  }
+ ],
+ "issues": [
+  "代管財產第一張表期間標題為110.8.1~111.7.31，第二張表為109.8.1~110.7.31，兩表period_labels改為期初餘額/本期增加/本期減少/期末餘額，期間資訊以context_heading區分。",
+  "購置財產表期初餘額欄顯示$-，視為null（空白）。",
+  "五日未上課退費、腸病毒退費等減項欄位以括號表示負數，已轉為負值。"
+ ]
+}

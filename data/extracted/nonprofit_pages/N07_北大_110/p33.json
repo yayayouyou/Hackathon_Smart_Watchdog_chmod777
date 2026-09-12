@@ -1,0 +1,282 @@
+{
+ "report": "N07_北大_110",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 110,
+ "pdf_page": 33,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 33,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "帳面價值"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "501030301A-000026 櫥櫃",
+     "note_ref": null,
+     "values": [
+      13000
+     ]
+    },
+    {
+     "label": "501030607-000001 調理台",
+     "note_ref": null,
+     "values": [
+      3915
+     ]
+    },
+    {
+     "label": "501030607-000002 調理台",
+     "note_ref": null,
+     "values": [
+      3915
+     ]
+    },
+    {
+     "label": "501030607-000003 調理台",
+     "note_ref": null,
+     "values": [
+      5234
+     ]
+    },
+    {
+     "label": "501030607-000004 調理台",
+     "note_ref": null,
+     "values": [
+      5220
+     ]
+    },
+    {
+     "label": "501030607-000005 調理台",
+     "note_ref": null,
+     "values": [
+      5958
+     ]
+    },
+    {
+     "label": "501030607-000006 調理台",
+     "note_ref": null,
+     "values": [
+      5872
+     ]
+    },
+    {
+     "label": "501030607-000007 調理台",
+     "note_ref": null,
+     "values": [
+      7341
+     ]
+    },
+    {
+     "label": "501030607-000008 調理台",
+     "note_ref": null,
+     "values": [
+      5220
+     ]
+    },
+    {
+     "label": "501030608-000001 餐具消毒櫃",
+     "note_ref": null,
+     "values": [
+      14362
+     ]
+    },
+    {
+     "label": "501030609-000001 廚餐用車",
+     "note_ref": null,
+     "values": [
+      3447
+     ]
+    },
+    {
+     "label": "501030609-000002 廚餐用車",
+     "note_ref": null,
+     "values": [
+      3447
+     ]
+    },
+    {
+     "label": "501030799-000021 其他康樂設備",
+     "note_ref": null,
+     "values": [
+      90808
+     ]
+    },
+    {
+     "label": "501050420-000058 黑（白）板",
+     "note_ref": null,
+     "values": [
+      11986
+     ]
+    },
+    {
+     "label": "501050420-000059 黑（白）板",
+     "note_ref": null,
+     "values": [
+      11986
+     ]
+    },
+    {
+     "label": "501050420-000060 黑（白）板",
+     "note_ref": null,
+     "values": [
+      11986
+     ]
+    },
+    {
+     "label": "501050420-000061 黑（白）板",
+     "note_ref": null,
+     "values": [
+      11986
+     ]
+    },
+    {
+     "label": "501050420-000062 黑（白）板",
+     "note_ref": null,
+     "values": [
+      11986
+     ]
+    },
+    {
+     "label": "502010216-000013 緩降機",
+     "note_ref": null,
+     "values": [
+      2502
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      2367179
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "2.購置財產",
+   "period_labels": [
+    "總金額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "00001 投影機",
+     "note_ref": null,
+     "values": [
+      27000
+     ]
+    },
+    {
+     "label": "00017 相機",
+     "note_ref": null,
+     "values": [
+      17465
+     ]
+    },
+    {
+     "label": "00018-19 筆記型電腦",
+     "note_ref": null,
+     "values": [
+      57100
+     ]
+    },
+    {
+     "label": "00020 EPSON 投影機 EB-2055 電動布幕",
+     "note_ref": null,
+     "values": [
+      38500
+     ]
+    },
+    {
+     "label": "00033-34 相機",
+     "note_ref": null,
+     "values": [
+      24980
+     ]
+    },
+    {
+     "label": "00062-63 華碩主機",
+     "note_ref": null,
+     "values": [
+      36980
+     ]
+    },
+    {
+     "label": "00069-70 電腦主機",
+     "note_ref": null,
+     "values": [
+      33600
+     ]
+    },
+    {
+     "label": "00071 電腦主機",
+     "note_ref": null,
+     "values": [
+      16800
+     ]
+    },
+    {
+     "label": "00072 電腦主機 intel-10400+螢幕",
+     "note_ref": null,
+     "values": [
+      27300
+     ]
+    },
+    {
+     "label": "00073 電腦主機 intel-10400+螢幕",
+     "note_ref": null,
+     "values": [
+      24150
+     ]
+    },
+    {
+     "label": "00074 電腦主機 intel-10400+螢幕",
+     "note_ref": null,
+     "values": [
+      24150
+     ]
+    },
+    {
+     "label": "00075 電腦主機 intel-10400+螢幕",
+     "note_ref": null,
+     "values": [
+      24150
+     ]
+    },
+    {
+     "label": "00090 MIPRO 無線擴音組",
+     "note_ref": null,
+     "values": [
+      50400
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      402575
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "附表五：到園檢查表（不適用）"
+  }
+ ],
+ "issues": []
+}

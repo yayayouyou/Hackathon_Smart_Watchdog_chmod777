@@ -1,0 +1,199 @@
+{
+ "report": "N19_中園_110",
+ "code": "N19",
+ "short_name": "中園",
+ "academic_year": 110,
+ "pdf_page": 9,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N19",
+ "printed_page": 9,
+ "page_kind": "cash_flow",
+ "tables": [
+  {
+   "title": "現金流量表",
+   "context_heading": null,
+   "period_labels": [
+    "110.8.1~111.7.31",
+    "109.8.1~110.7.31"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "營業活動之現金流量：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "本期稅前餘絀",
+     "note_ref": null,
+     "values": [
+      816893,
+      -78484
+     ]
+    },
+    {
+     "label": "調整項目：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "資產/負債淨變動數",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "應收帳款淨額",
+     "note_ref": null,
+     "values": [
+      159471,
+      31373
+     ]
+    },
+    {
+     "label": "其他應收款",
+     "note_ref": null,
+     "values": [
+      null,
+      1
+     ]
+    },
+    {
+     "label": "預付款項",
+     "note_ref": null,
+     "values": [
+      853,
+      1761
+     ]
+    },
+    {
+     "label": "應付帳款",
+     "note_ref": null,
+     "values": [
+      -367084,
+      -677655
+     ]
+    },
+    {
+     "label": "其他應付款",
+     "note_ref": null,
+     "values": [
+      -190579,
+      742778
+     ]
+    },
+    {
+     "label": "預收款項",
+     "note_ref": null,
+     "values": [
+      204000,
+      507960
+     ]
+    },
+    {
+     "label": "其他流動負債",
+     "note_ref": null,
+     "values": [
+      3165,
+      6914
+     ]
+    },
+    {
+     "label": "資遣費準備淨變動",
+     "note_ref": null,
+     "values": [
+      28279,
+      -23746
+     ]
+    },
+    {
+     "label": "營業活動之淨現金流入",
+     "note_ref": null,
+     "values": [
+      654998,
+      510902
+     ]
+    },
+    {
+     "label": "投資活動之現金流量：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "投資活動之淨現金流入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "籌資活動之現金流量：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "籌資活動之淨現金流入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "本期現金及約當現金增加數",
+     "note_ref": null,
+     "values": [
+      654998,
+      510902
+     ]
+    },
+    {
+     "label": "期初現金及約當現金餘額",
+     "note_ref": null,
+     "values": [
+      5080599,
+      4569697
+     ]
+    },
+    {
+     "label": "期末現金及約當現金餘額",
+     "note_ref": null,
+     "values": [
+      5735597,
+      5080599
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": [
+  "紅色關防印章遮蓋部分表頭文字，但金額欄數字可辨識。",
+  "其他應收款110.8.1~111.7.31欄位印有破折號，視為null；投資活動及籌資活動之淨現金流入欄位同為破折號，視為null。"
+ ]
+}

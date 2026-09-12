@@ -1,0 +1,268 @@
+{
+ "report": "N07_北大_113",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 113,
+ "pdf_page": 22,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 22,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(1) 代辦補助收入及支出（延續上頁）",
+   "period_labels": [
+    "112.8.1~113.7.31 收　入",
+    "112.8.1~113.7.31 支　出",
+    "112.8.1~113.7.31 淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "防災校園建置計畫補助",
+     "note_ref": null,
+     "values": [
+      50000,
+      50000,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      100000,
+      100000,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "note_ref": null,
+     "values": [
+      130000,
+      130000,
+      null
+     ]
+    },
+    {
+     "label": "調薪及延長照顧差額補助",
+     "note_ref": null,
+     "values": [
+      378860,
+      378860,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      230000,
+      230000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      2561929,
+      2561929,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收　入",
+    "113.8.1~114.7.31 支　出",
+    "113.8.1~114.7.31 淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "原住民子女前教育補助",
+     "note_ref": null,
+     "values": [
+      30000,
+      30000,
+      null
+     ]
+    },
+    {
+     "label": "校園急難慰助金",
+     "note_ref": null,
+     "values": [
+      3000,
+      3000,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      8880,
+      8880,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      41880,
+      41880,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收　入",
+    "112.8.1~113.7.31 支　出",
+    "112.8.1~113.7.31 淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "原住民子女前教育補助",
+     "note_ref": null,
+     "values": [
+      71460,
+      71460,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      114205,
+      114205,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      10860,
+      10860,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      196525,
+      196525,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收　入",
+    "113.8.1~114.7.31 支　出",
+    "113.8.1~114.7.31 淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      49666,
+      49666,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收　入",
+    "112.8.1~113.7.31 支　出",
+    "112.8.1~113.7.31 淨　額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      54823,
+      54823,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "8. 所得稅費用",
+   "period_labels": [
+    "113.8.1~114.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "課稅所得額",
+     "note_ref": null,
+     "values": [
+      5549068
+     ]
+    },
+    {
+     "label": "法定稅率",
+     "note_ref": null,
+     "values": [
+      0.2
+     ]
+    },
+    {
+     "label": "所得稅費用",
+     "note_ref": null,
+     "values": [
+      1089813
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "8. 所得稅費用",
+   "text": "因新北市政府不同意受託機構-社團法人中華音樂舞蹈暨表演藝術教育協會繼續辦理本幼兒園，113 學年度契約期滿，本幼兒園依所得稅法等有關規定核算應認列之所得稅費用屬之。"
+  }
+ ],
+ "issues": [
+  "所得稅費用表中「法定稅率」欄位值為 20%，非金額，已以 0.20 表示；「所得稅費用」金額頁面印為 $1,1089,813，疑似排版錯誤，依上下文判讀為 1,089,813，請人工確認。",
+  "第一張表（代辦補助112.8.1~113.7.31）為延續上頁的表格，淨額欄均為破折號，填 null。"
+ ]
+}

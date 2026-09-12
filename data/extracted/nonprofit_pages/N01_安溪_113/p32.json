@@ -1,0 +1,196 @@
+{
+ "report": "N01_安溪_113",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 113,
+ "pdf_page": 32,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 32,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "帳面價值"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "6070225 / 000231-246 幼兒專用教學課桌椅組(四代椅)",
+     "note_ref": null,
+     "values": [
+      7680
+     ]
+    },
+    {
+     "label": "6070225 / 000249-268 幼兒專用教學課桌椅組(四代椅)",
+     "note_ref": null,
+     "values": [
+      9600
+     ]
+    },
+    {
+     "label": "6070225 / 000270-327 幼兒專用教學課桌椅組(四代椅)",
+     "note_ref": null,
+     "values": [
+      27840
+     ]
+    },
+    {
+     "label": "6070225 / 000330-334 幼兒專用教學課桌椅組(加大四代椅)",
+     "note_ref": null,
+     "values": [
+      2400
+     ]
+    },
+    {
+     "label": "6070225 / 000365-410 幼兒專用教學課桌椅組",
+     "note_ref": null,
+     "values": [
+      64400
+     ]
+    },
+    {
+     "label": "6070240 / 000743-748 益智科學櫃(附18個籃子)",
+     "note_ref": null,
+     "values": [
+      27000
+     ]
+    },
+    {
+     "label": "6080107 / 000009-11 喇叭+擴大機(含安裝)",
+     "note_ref": null,
+     "values": [
+      24000
+     ]
+    },
+    {
+     "label": "6080601 / 000008-11 遊具組(籃球架)",
+     "note_ref": null,
+     "values": [
+      25064
+     ]
+    },
+    {
+     "label": "6080601 / 000012-14 遊具組(腳踏車)",
+     "note_ref": null,
+     "values": [
+      25068
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      2572979
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "2. 購置財產",
+   "period_labels": [
+    "總金額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "0001 電腦主機 acer",
+     "note_ref": null,
+     "values": [
+      19940
+     ]
+    },
+    {
+     "label": "0002 電腦主機 acer",
+     "note_ref": null,
+     "values": [
+      17760
+     ]
+    },
+    {
+     "label": "0003 電腦主機 acer",
+     "note_ref": null,
+     "values": [
+      19415
+     ]
+    },
+    {
+     "label": "0004 電腦主機、螢幕",
+     "note_ref": null,
+     "values": [
+      26565
+     ]
+    },
+    {
+     "label": "0005 筆記型電腦",
+     "note_ref": null,
+     "values": [
+      27300
+     ]
+    },
+    {
+     "label": "0006 幼兒保健床",
+     "note_ref": null,
+     "values": [
+      10482
+     ]
+    },
+    {
+     "label": "0007 戶外儲藏屋",
+     "note_ref": null,
+     "values": [
+      17219
+     ]
+    },
+    {
+     "label": "0008 幼兒午睡小床",
+     "note_ref": null,
+     "values": [
+      29700
+     ]
+    },
+    {
+     "label": "0009 拖車",
+     "note_ref": null,
+     "values": [
+      4398
+     ]
+    },
+    {
+     "label": "0010 103教室投影機",
+     "note_ref": null,
+     "values": [
+      19000
+     ]
+    },
+    {
+     "label": "0011 電腦主機",
+     "note_ref": null,
+     "values": [
+      17850
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      170274
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "第一張表為財產清冊延續頁（無明確表頭），欄位包含財產編號、登錄號/分號、財產名稱、原始價值、數量、帳面價值、使用年限、購置日期；values僅收錄帳面價值欄，其餘欄位（原始價值、數量、使用年限、購置日期）未收入values以避免混淆。",
+  "第二張表購置財產欄位包含財產編號、財產名稱、單價、數量、總金額、購置日期、使用年限；values僅收錄總金額欄。"
+ ]
+}

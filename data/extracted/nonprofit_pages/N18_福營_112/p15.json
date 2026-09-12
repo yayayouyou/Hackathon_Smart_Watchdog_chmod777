@@ -1,0 +1,192 @@
+{
+ "report": "N18_福營_112",
+ "code": "N18",
+ "short_name": "福營",
+ "academic_year": 112,
+ "pdf_page": 15,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N18",
+ "printed_page": 15,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "112.8.1~113.7.31",
+    "111.8.1~112.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      2270773,
+      1380773
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      513911,
+      890000
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      2784684,
+      2270773
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "113年7月31日",
+    "112年7月31日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "業務發展準備金",
+     "note_ref": null,
+     "values": [
+      2784684,
+      2270773
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      788336,
+      null,
+      -86171,
+      702165
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      655905,
+      235839,
+      -103408,
+      788336
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "購置財產",
+     "note_ref": null,
+     "values": [
+      334713,
+      139810,
+      null,
+      474523
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "購置財產",
+     "note_ref": null,
+     "values": [
+      309353,
+      25360,
+      null,
+      334713
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "2. 業務發展準備",
+   "text": "依據非營利幼兒園實施辦法及非營利幼兒園會計財務及經費處理注意事項之規定，提列之業務發展準備金已報經主管機關同意。依該規定，以專戶或定期存款提存之業務發展準備金餘額如下："
+  },
+  {
+   "heading": "(三) 營運資產",
+   "text": ""
+  },
+  {
+   "heading": "1. 代管財產",
+   "text": "112及111學年度代管財產分別減少86,171元及103,408元，係託管單位財產管理系統，依財產經濟年限攤提折舊所致。"
+  },
+  {
+   "heading": "2. 購置財產",
+   "text": "本幼兒園依契約之規定應辦理保險，截至113年7月31日及112年7月31日止保險金額均為14,500,000元。"
+  }
+ ],
+ "issues": [
+  "代管財產表（112.8.1~113.7.31）本期增加欄印為「$ -」，視為空白填null。",
+  "購置財產表（112.8.1~113.7.31及111.8.1~112.7.31）本期減少欄印為「$ -」，視為空白填null。",
+  "代管財產與購置財產的各期表格period_labels使用欄位名稱（期初餘額、本期增加、本期減少、期末餘額）而非期間標籤，因為表頭為欄位說明而非日期期間。"
+ ]
+}

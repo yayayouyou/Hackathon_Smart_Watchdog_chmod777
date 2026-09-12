@@ -1,0 +1,151 @@
+{
+ "report": "N01_安溪_110",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 110,
+ "pdf_page": 29,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 29,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "購置財產",
+   "period_labels": [
+    "財產編號",
+    "財產名稱",
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "0001",
+     "values": [
+      null,
+      null,
+      17000,
+      1,
+      19940,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0002",
+     "values": [
+      null,
+      null,
+      16500,
+      1,
+      17760,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0003",
+     "values": [
+      null,
+      null,
+      17000,
+      1,
+      19415,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0004",
+     "values": [
+      null,
+      null,
+      24150,
+      1,
+      26565,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0005",
+     "values": [
+      null,
+      null,
+      27300,
+      1,
+      27300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0006",
+     "values": [
+      null,
+      null,
+      10482,
+      2,
+      10482,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0007",
+     "values": [
+      null,
+      null,
+      17219,
+      1,
+      17219,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0008",
+     "values": [
+      null,
+      null,
+      29700,
+      30,
+      29700,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "合計",
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      168381,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "附表五：到園檢查表（不適用）"
+  }
+ ],
+ "issues": [
+  "購置財產表的欄位含文字（財產名稱、購置日期）無法放入數值陣列，財產名稱與購置日期欄填null處理；如需完整資料需另行處理文字欄位。",
+  "財產編號為文字欄位，values中以null表示，label欄位已記錄編號。"
+ ]
+}

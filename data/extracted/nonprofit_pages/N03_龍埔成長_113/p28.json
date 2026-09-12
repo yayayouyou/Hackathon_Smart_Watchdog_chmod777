@@ -1,0 +1,285 @@
+{
+ "report": "N03_龍埔成長_113",
+ "code": "N03",
+ "short_name": "龍埔成長",
+ "academic_year": 113,
+ "pdf_page": 28,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N03",
+ "printed_page": 28,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "財產清冊",
+   "period_labels": [
+    "民國114年7月31日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "抽風機",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "除濕機",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "工作台",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "工作台",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "工作台",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "工作台",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "工作台",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "工作台",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "工作台",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "加熱器",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "視力檢查器",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "固液分離機",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "油煙分離器",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "個人電腦用硬碟機",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "數位照相機",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "數位攝影機",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "數位投影機",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "數位投影機",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "數位投影機",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "手推車",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "空調系統",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "空調系統",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "空調系統",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "空調系統",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "空調系統",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "空調系統",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "空調系統",
+     "note_ref": null,
+     "values": [
+      null
+     ],
+     "percents": null
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "附表四：財產清冊",
+   "text": "新北市龍埔成長非營利幼兒園\n（委託財團法人成長文教基金會辦理）\n財產清冊\n民國114年7月31日\n1. 代管財產"
+  }
+ ],
+ "issues": [
+  "本頁為財產清冊，包含財產編號、登錄號/分號、財產名稱、原始價值、數量、帳面價值、購置日期、使用年限等多欄位，但schema不支援多欄位財產清冊結構，僅以單一period_labels呈現，各欄數字無法完整對應。建議人工確認財產清冊結構。",
+  "財產清冊各列有原始價值、帳面價值等多個數值欄位，目前schema限制無法完整表達，values欄位填null以避免錯誤歸屬。"
+ ]
+}

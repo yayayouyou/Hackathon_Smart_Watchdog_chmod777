@@ -1,0 +1,359 @@
+{
+ "report": "N21_文創_113",
+ "code": "N21",
+ "short_name": "文創",
+ "academic_year": 113,
+ "pdf_page": 16,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N21",
+ "printed_page": 16,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(四) 收支明細表 1. 教保費收入",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.8.1~113.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保費收入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "教保費收入（家長繳費）",
+     "note_ref": null,
+     "values": [
+      1253454,
+      1462348
+     ]
+    },
+    {
+     "label": "教保費收入（政府學費差額補助）",
+     "note_ref": null,
+     "values": [
+      10760000,
+      9797498
+     ]
+    },
+    {
+     "label": "小　　計",
+     "note_ref": null,
+     "values": [
+      12013454,
+      11259846
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "五日末上課退費",
+     "note_ref": null,
+     "values": [
+      -57850,
+      -110006
+     ]
+    },
+    {
+     "label": "轉學/轉出退費",
+     "note_ref": null,
+     "values": [
+      -1818,
+      -42699
+     ]
+    },
+    {
+     "label": "政府學費差額補助退費",
+     "note_ref": null,
+     "values": [
+      -4802,
+      -137143
+     ]
+    },
+    {
+     "label": "小　　計",
+     "note_ref": null,
+     "values": [
+      -64470,
+      -289848
+     ]
+    },
+    {
+     "label": "教保費收入淨額",
+     "note_ref": null,
+     "values": [
+      11948984,
+      10969998
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(四) 收支明細表 2. 人事費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      4762667,
+      4317521,
+      -445146
+     ],
+     "percents": [
+      91,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1311998,
+      1195069,
+      -116929
+     ],
+     "percents": [
+      91,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      602976,
+      82527,
+      -520449
+     ],
+     "percents": [
+      14,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      828025,
+      674152,
+      -153873
+     ],
+     "percents": [
+      81,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      11000,
+      10253,
+      -747
+     ],
+     "percents": [
+      93,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      323988,
+      320760,
+      -3228
+     ],
+     "percents": [
+      99,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      11000,
+      6680,
+      -4320
+     ],
+     "percents": [
+      61,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      11000,
+      8000,
+      -3000
+     ],
+     "percents": [
+      73,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "代課費及代班費",
+     "note_ref": null,
+     "values": [
+      155790,
+      null,
+      -155790
+     ],
+     "percents": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      44998,
+      44998,
+      null
+     ],
+     "percents": [
+      100,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      8063442,
+      6659960,
+      -1403482
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(四) 收支明細表 2. 人事費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      4646957,
+      4297084,
+      -349873
+     ],
+     "percents": [
+      92,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1290317,
+      1122672,
+      -167645
+     ],
+     "percents": [
+      87,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      589380,
+      106368,
+      -483012
+     ],
+     "percents": [
+      18,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      809296,
+      662004,
+      -147292
+     ],
+     "percents": [
+      82,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      11000,
+      10667,
+      -333
+     ],
+     "percents": [
+      97,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "第二張人事費表（113.8.1~114.7.31）的執行率%欄，視覺上僅呈現第一欄（預算數）旁邊，已按原始數字收錄於percents陣列第一位",
+  "第三張表（112.8.1~113.7.31人事費）僅顯示部分資料（截至保險費一列），頁面未完整，後續列未顯示"
+ ]
+}

@@ -1,0 +1,379 @@
+{
+ "report": "N05_漢翔_111",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 111,
+ "pdf_page": 20,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 20,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "111.8.1~112.7.31 收入",
+    "111.8.1~112.7.31 支出",
+    "111.8.1~112.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "項　目",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "專業輔導補助",
+     "note_ref": null,
+     "values": [
+      49653,
+      49653,
+      null
+     ]
+    },
+    {
+     "label": "防疫加班費補助",
+     "note_ref": null,
+     "values": [
+      16100,
+      16100,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      615668,
+      615668,
+      null
+     ]
+    },
+    {
+     "label": "調薪追加補助款",
+     "note_ref": null,
+     "values": [
+      872415,
+      872415,
+      null
+     ]
+    },
+    {
+     "label": "特教專業知能補助",
+     "note_ref": null,
+     "values": [
+      10000,
+      10000,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      72000,
+      72000,
+      null
+     ]
+    },
+    {
+     "label": "招收身心障礙幼兒補助",
+     "note_ref": null,
+     "values": [
+      50000,
+      50000,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      123237,
+      123237,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "note_ref": null,
+     "values": [
+      3000,
+      3000,
+      null
+     ]
+    },
+    {
+     "label": "教育實習機構指導費補助",
+     "note_ref": null,
+     "values": [
+      8000,
+      8000,
+      null
+     ]
+    },
+    {
+     "label": "教學卓越獎團隊輔導補助",
+     "note_ref": null,
+     "values": [
+      20000,
+      20000,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      110000,
+      110000,
+      null
+     ]
+    },
+    {
+     "label": "合　計",
+     "note_ref": null,
+     "values": [
+      1950073,
+      1950073,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "110.8.1~111.7.31 收入",
+    "110.8.1~111.7.31 支出",
+    "110.8.1~111.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "項　目",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "防疫物資補助",
+     "note_ref": null,
+     "values": [
+      16000,
+      16000,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      654321,
+      654321,
+      null
+     ]
+    },
+    {
+     "label": "調薪追加補助款",
+     "note_ref": null,
+     "values": [
+      624224,
+      624224,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      72000,
+      72000,
+      null
+     ]
+    },
+    {
+     "label": "招收身心障礙幼兒補助",
+     "note_ref": null,
+     "values": [
+      110000,
+      110000,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      109632,
+      109632,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "note_ref": null,
+     "values": [
+      8000,
+      8000,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      110000,
+      110000,
+      null
+     ]
+    },
+    {
+     "label": "合　計",
+     "note_ref": null,
+     "values": [
+      1704177,
+      1704177,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "111.8.1~112.7.31 收入",
+    "111.8.1~112.7.31 支出",
+    "111.8.1~112.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "項　目",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      442080,
+      442080,
+      null
+     ]
+    },
+    {
+     "label": "原住民子女前教育補助",
+     "note_ref": null,
+     "values": [
+      48000,
+      48000,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      4560,
+      4560,
+      null
+     ]
+    },
+    {
+     "label": "合　計",
+     "note_ref": null,
+     "values": [
+      494640,
+      494640,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "110.8.1~111.7.31 收入",
+    "110.8.1~111.7.31 支出",
+    "110.8.1~111.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "項　目",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      496500,
+      496500,
+      null
+     ]
+    },
+    {
+     "label": "原住民子女前教育補助",
+     "note_ref": null,
+     "values": [
+      72000,
+      72000,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      4560,
+      4560,
+      null
+     ]
+    },
+    {
+     "label": "合　計",
+     "note_ref": null,
+     "values": [
+      573060,
+      573060,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "各表「淨額」欄均印有「$ -」符號，視為空白（null）而非0，因為收支相抵淨額為零，但格式為破折號形式。"
+ ]
+}

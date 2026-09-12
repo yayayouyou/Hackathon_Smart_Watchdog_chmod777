@@ -1,0 +1,252 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 19,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 19,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      124800,
+      81398,
+      -43402,
+      65
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      31200,
+      23991,
+      -7209,
+      77
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      3640,
+      2133,
+      -1507,
+      59
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      748800,
+      742555,
+      -6245,
+      99
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      908440,
+      850077,
+      -58363,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異數",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      144000,
+      127721,
+      -16279,
+      89
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      36000,
+      26047,
+      -9953,
+      72
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      4200,
+      2202,
+      -1998,
+      52
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      720000,
+      712867,
+      -7133,
+      99
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      904200,
+      868837,
+      -35363,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費及修繕購置費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "維護費",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "修繕費",
+     "note_ref": null,
+     "values": [
+      60000,
+      83238,
+      23238,
+      139
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      25000,
+      31800,
+      6800,
+      127
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      1856,
+      -6144,
+      23
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      93000,
+      116894,
+      23894,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費及修繕購置費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "修繕購置費",
+     "note_ref": null,
+     "values": [
+      72800,
+      98986,
+      26186,
+      136
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(3) 112 學年度電費及電話費（含 ADSL）超支預算部分，依上開規定得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限，上述各細項經核算已符合勻支規定。\n(4) 113 及 112 學年度業務費類別總經費並無超支預算之情事。"
+  },
+  {
+   "heading": "4. 材料費",
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.3 材料費各細項經費倘有不足，應優先於材料費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費），且至多以勻支不足細項之 20%為上限。但餐點費，不得移作他用。\n(2) 113 及 112 學年度材料費類別總經費並無超支預算之情事。"
+  },
+  {
+   "heading": "5. 維護費及修繕購置費",
+   "text": ""
+  }
+ ],
+ "issues": [
+  "第一張材料費表期間為113.8.1~114.7.31，第二張材料費表期間為112.8.1~113.7.31，兩張表分開處理。",
+  "維護費及修繕購置費下半部（修繕購置費）的期間標題亦為113.8.1~114.7.31，但頁面最下方表格僅顯示修繕購置費一列，確認為同期間獨立表格。",
+  "合計列執行率%欄位表中未印數字，填null。"
+ ]
+}

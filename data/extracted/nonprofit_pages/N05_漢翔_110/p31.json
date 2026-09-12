@@ -1,0 +1,464 @@
+{
+ "report": "N05_漢翔_110",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 110,
+ "pdf_page": 31,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 31,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "6070206 003726 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003727 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003728 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003729 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003730 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003731 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003732 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003733 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003734 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003735 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003736 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003737 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003738 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003739 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003740 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003741 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003742 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003743 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003744 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003745 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003746 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003747 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003748 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003749 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003750 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003751 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003752 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003753 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003754 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003755 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003756 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      5500,
+      1,
+      5500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003757 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      7000,
+      1,
+      7000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 003758 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      7000,
+      1,
+      7000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070214 000001 陳列用具-床",
+     "note_ref": null,
+     "values": [
+      1483,
+      1,
+      1483,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070224 000001 陳列用具-學生桌",
+     "note_ref": null,
+     "values": [
+      2800,
+      1,
+      2800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070224 000002 陳列用具-學生桌",
+     "note_ref": null,
+     "values": [
+      2800,
+      1,
+      2800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070224 000003 陳列用具-學生桌",
+     "note_ref": null,
+     "values": [
+      2800,
+      1,
+      2800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070224 000004 陳列用具-學生桌",
+     "note_ref": null,
+     "values": [
+      2800,
+      1,
+      2800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070224 000005 陳列用具-學生桌",
+     "note_ref": null,
+     "values": [
+      2800,
+      1,
+      2800,
+      null,
+      5
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄位為文字型態（如106/6/3、106/6/15），無法轉為數值，已填null；實際日期請參考原始掃描頁面。"
+ ]
+}

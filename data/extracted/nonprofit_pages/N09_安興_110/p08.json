@@ -1,0 +1,100 @@
+{
+ "report": "N09_安興_110",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 110,
+ "pdf_page": 8,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 8,
+ "page_kind": "equity_change",
+ "tables": [
+  {
+   "title": "淨值變動表",
+   "context_heading": null,
+   "period_labels": [
+    "累積餘絀",
+    "本期餘絀",
+    "合　　計"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "109年8月1日餘額",
+     "note_ref": null,
+     "values": [
+      737036,
+      -56039,
+      680997
+     ]
+    },
+    {
+     "label": "108學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      -56039,
+      56039,
+      null
+     ]
+    },
+    {
+     "label": "109學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      159056,
+      159056
+     ]
+    },
+    {
+     "label": "110年7月31日餘額",
+     "note_ref": null,
+     "values": [
+      680997,
+      159056,
+      840053
+     ]
+    },
+    {
+     "label": "109學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      159056,
+      -159056,
+      null
+     ]
+    },
+    {
+     "label": "110學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      608783,
+      608783
+     ]
+    },
+    {
+     "label": "111年7月31日餘額",
+     "note_ref": null,
+     "values": [
+      840053,
+      608783,
+      1448836
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": []
+}

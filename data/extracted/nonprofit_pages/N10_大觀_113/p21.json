@@ -1,0 +1,310 @@
+{
+ "report": "N10_大觀_113",
+ "code": "N10",
+ "short_name": "大觀",
+ "academic_year": 113,
+ "pdf_page": 21,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N10",
+ "printed_page": 21,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收入",
+    "113.8.1~114.7.31 支出",
+    "113.8.1~114.7.31 淨額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "親職教育補助",
+     "note_ref": null,
+     "values": [
+      7000,
+      7000,
+      null
+     ]
+    },
+    {
+     "label": "幼教之光補助",
+     "note_ref": null,
+     "values": [
+      35000,
+      35000,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      2717131,
+      2717131,
+      null
+     ]
+    },
+    {
+     "label": "專業發展社群補助",
+     "note_ref": null,
+     "values": [
+      32100,
+      32100,
+      null
+     ]
+    },
+    {
+     "label": "特教專業知能補助",
+     "note_ref": null,
+     "values": [
+      10000,
+      10000,
+      null
+     ]
+    },
+    {
+     "label": "牽手共親職計畫補助",
+     "note_ref": null,
+     "values": [
+      3200,
+      3200,
+      null
+     ]
+    },
+    {
+     "label": "童趣學習嘉年華補助",
+     "note_ref": null,
+     "values": [
+      10000,
+      10000,
+      null
+     ]
+    },
+    {
+     "label": "閩南語沉浸式教學補助",
+     "note_ref": null,
+     "values": [
+      193071,
+      193071,
+      null
+     ]
+    },
+    {
+     "label": "防災校園建置計畫補助",
+     "note_ref": null,
+     "values": [
+      50000,
+      50000,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      110000,
+      110000,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "note_ref": null,
+     "values": [
+      100000,
+      100000,
+      null
+     ]
+    },
+    {
+     "label": "調薪及延長照顧差額補助",
+     "note_ref": null,
+     "values": [
+      579829,
+      579829,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      130000,
+      130000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      3977331,
+      3977331,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收入",
+    "112.8.1~113.7.31 支出",
+    "112.8.1~113.7.31 淨額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "親職教育補助",
+     "note_ref": null,
+     "values": [
+      20000,
+      20000,
+      null
+     ]
+    },
+    {
+     "label": "專業輔導補助",
+     "note_ref": null,
+     "values": [
+      56900,
+      56900,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      2773827,
+      2773827,
+      null
+     ]
+    },
+    {
+     "label": "教學卓越獎團隊補助",
+     "note_ref": null,
+     "values": [
+      30000,
+      30000,
+      null
+     ]
+    },
+    {
+     "label": "閩南語沉浸式教學補助",
+     "note_ref": null,
+     "values": [
+      167180,
+      167180,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      120000,
+      120000,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      157794,
+      157794,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "note_ref": null,
+     "values": [
+      100000,
+      100000,
+      null
+     ]
+    },
+    {
+     "label": "調薪及延長照顧差額補助",
+     "note_ref": null,
+     "values": [
+      220580,
+      220580,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      130000,
+      130000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      3776281,
+      3776281,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收入",
+    "113.8.1~114.7.31 支出",
+    "113.8.1~114.7.31 淨額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "原住民子女學前教育補助",
+     "note_ref": null,
+     "values": [
+      36000,
+      36000,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      6000,
+      6000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      42000,
+      42000,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": []
+}

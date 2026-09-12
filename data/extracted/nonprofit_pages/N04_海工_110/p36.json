@@ -1,0 +1,102 @@
+{
+ "report": "N04_海工_110",
+ "code": "N04",
+ "short_name": "海工",
+ "academic_year": 110,
+ "pdf_page": 36,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N04",
+ "printed_page": 36,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "評分",
+    "考評依據",
+    "備註"
+   ],
+   "items": [
+    {
+     "label": "3.編制財務報表：（配分3分）(1)依限完成前揭2項考評指標所需各項財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "1.依注意事項規定期限完成前學年度及當學年度第1學期（或季）各項財務報表：1分。",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "(2)依會計師查核或簽證意見修改各項財務報表及財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "2.各項財務報表經會計師查核無修正意見；或有修正意見，經委託單位或直轄市、縣（市）主管機關通知並已改善：1分。",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "(3)財產依規定登錄及報廢之情形。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "3.財產皆完成登錄或報廢相關程序：1分。",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "會計查核簽證情形評分合計：",
+     "note_ref": null,
+     "values": [
+      15,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "誠明聯合會計師事務所\n會計師： 張 景 嵐"
+  }
+ ],
+ "issues": [
+  "本頁為考評指標表格，非標準財務報表，page_kind以auditor_report近似處理",
+  "表格欄位『考評依據』與『備註』欄內容空白，填null",
+  "評分欄數字依視覺位置抄錄，合計列評分為15"
+ ]
+}

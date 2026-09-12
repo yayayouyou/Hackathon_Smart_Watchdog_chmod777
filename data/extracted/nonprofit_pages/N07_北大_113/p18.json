@@ -1,0 +1,314 @@
+{
+ "report": "N07_北大_113",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 113,
+ "pdf_page": 18,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 18,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "3. 業務費",
+   "period_labels": [
+    "113.8.1~114.7.31 預算數",
+    "113.8.1~114.7.31 決算數",
+    "113.8.1~114.7.31 差異",
+    "113.8.1~114.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      115000,
+      101394,
+      -13606,
+      88
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      46000,
+      46000,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      44000,
+      22728,
+      -21272,
+      52
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      384000,
+      272263,
+      -111737,
+      71
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      38000,
+      27210,
+      -10790,
+      72
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      80000,
+      24000,
+      -56000,
+      30
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      34000,
+      12452,
+      -21548,
+      37
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      65000,
+      15750,
+      -49250,
+      24
+     ]
+    },
+    {
+     "label": "電話費（含ADSL）",
+     "note_ref": null,
+     "values": [
+      54000,
+      23111,
+      -30889,
+      43
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      8400,
+      4519,
+      -3881,
+      54
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      10000,
+      null,
+      -10000,
+      null
+     ]
+    },
+    {
+     "label": "文宣費（園刊）",
+     "note_ref": null,
+     "values": [
+      30000,
+      null,
+      -30000,
+      null
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      10000,
+      null,
+      -10000,
+      null
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      42000,
+      47200,
+      5200,
+      112
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      25000,
+      null,
+      -25000,
+      null
+     ]
+    },
+    {
+     "label": "合　計",
+     "note_ref": null,
+     "values": [
+      985400,
+      596627,
+      -388773,
+      61
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "3. 業務費",
+   "period_labels": [
+    "112.8.1~113.7.31 預算數",
+    "112.8.1~113.7.31 決算數",
+    "112.8.1~113.7.31 差異數",
+    "112.8.1~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      125000,
+      112892,
+      -12108,
+      90
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      46000,
+      44000,
+      -2000,
+      96
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      50000,
+      24924,
+      -25076,
+      50
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      444000,
+      261540,
+      -182460,
+      59
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      40000,
+      22450,
+      -17550,
+      56
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      120000,
+      24000,
+      -96000,
+      20
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      38000,
+      37056,
+      -944,
+      98
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      80000,
+      65940,
+      -14060,
+      82
+     ]
+    },
+    {
+     "label": "電話費（含ADSL）",
+     "note_ref": null,
+     "values": [
+      63000,
+      27322,
+      -35678,
+      43
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      9000,
+      5560,
+      -3440,
+      62
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(4) 113學年度人事費類別總經費超支預算833,226元，主要係支付資遣費所致，已於114年7月23日報經主管機關同意動支業務發展準備金支應。\n(5) 112學年度學前特教師、社工人員、護理人員薪資、會計、總務、廚工、清潔薪資及勞退金提撥超支預算部分，依上開規定人事費細項得相互勻支，上述各細項已符合勻支規定。\n(6) 112學年度人事費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "下半部112.8.1~113.7.31業務費表格僅擷取到郵資列，頁面似乎截斷，後續列（文宣費、攝影照片、園務特支、差旅費、合計等）未顯示於本頁，可能續於下一頁。"
+ ]
+}

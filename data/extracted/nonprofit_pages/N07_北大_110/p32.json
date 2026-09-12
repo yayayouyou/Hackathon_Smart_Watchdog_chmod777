@@ -1,0 +1,493 @@
+{
+ "report": "N07_北大_110",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 110,
+ "pdf_page": 32,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 32,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "財產編號",
+    "財產名稱",
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "501010608-000179",
+     "values": [
+      null,
+      null,
+      29005,
+      1,
+      6033,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000180",
+     "values": [
+      null,
+      null,
+      29005,
+      1,
+      6033,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000181",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000182",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000183",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000184",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000185",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000186",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000187",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000188",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000189",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000190",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000191",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000192",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000193",
+     "values": [
+      null,
+      null,
+      41635,
+      1,
+      8659,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000194",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000195",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000196",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000197",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000198",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000199",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000200",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000201",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000202",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000203",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000204",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000205",
+     "values": [
+      null,
+      null,
+      57322,
+      1,
+      11922,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000206",
+     "values": [
+      null,
+      null,
+      76017,
+      1,
+      15811,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000207",
+     "values": [
+      null,
+      null,
+      76017,
+      1,
+      15811,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010701B-000007",
+     "values": [
+      null,
+      null,
+      68000,
+      1,
+      33639,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "501010701B-000008",
+     "values": [
+      null,
+      null,
+      32000,
+      1,
+      15830,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "501011017-000001",
+     "values": [
+      null,
+      null,
+      52500,
+      1,
+      525,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "501011017-000002",
+     "values": [
+      null,
+      null,
+      58000,
+      1,
+      580,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "501011019-000001",
+     "values": [
+      null,
+      null,
+      12000,
+      1,
+      120,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "501011019-000002",
+     "values": [
+      null,
+      null,
+      47777,
+      1,
+      47777,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "501011066A-000001",
+     "values": [
+      null,
+      null,
+      15000,
+      1,
+      8936,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501030101B-000038",
+     "values": [
+      null,
+      null,
+      25000,
+      1,
+      4787,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301A-000017",
+     "values": [
+      null,
+      null,
+      10940,
+      1,
+      6608,
+      null,
+      10
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "財產名稱欄位為文字，無法放入數值欄位，已將財產編號作為label，財產名稱等文字欄位填null，僅保留數值欄位（原始價值、數量、帳面價值、使用年限）及日期（填null因非數值）。購置日期為文字型態，無法放入values數值陣列，故填null。"
+ ]
+}

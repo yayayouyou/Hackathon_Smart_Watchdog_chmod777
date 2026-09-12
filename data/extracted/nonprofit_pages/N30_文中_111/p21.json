@@ -1,0 +1,303 @@
+{
+ "report": "N30_文中_111",
+ "code": "N30",
+ "short_name": "文中",
+ "academic_year": 111,
+ "pdf_page": 21,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N30",
+ "printed_page": 21,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": null,
+   "period_labels": [
+    "111學年度(111.9.30~112.7.31)預算數",
+    "111學年度(111.9.30~112.7.31)決算數",
+    "111學年度(111.9.30~112.7.31)決算數與預算數之差異",
+    "111學年度(111.9.30~112.7.31)執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      50000,
+      18357,
+      -31643,
+      37
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      20000,
+      22831,
+      2831,
+      114
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      54167,
+      21542,
+      -32625,
+      40
+     ]
+    },
+    {
+     "label": "電話費（含網路）",
+     "note_ref": null,
+     "values": [
+      45000,
+      19705,
+      -25295,
+      44
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      7000,
+      1334,
+      -5666,
+      19
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      8333,
+      879,
+      -7454,
+      11
+     ]
+    },
+    {
+     "label": "文宣費（園刊）",
+     "note_ref": null,
+     "values": [
+      25000,
+      null,
+      -25000,
+      null
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      8333,
+      null,
+      -8333,
+      null
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      35000,
+      34907,
+      -93,
+      100
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      20833,
+      null,
+      -20833,
+      null
+     ]
+    },
+    {
+     "label": "材料費",
+     "note_ref": null,
+     "values": [
+      1331183,
+      825802,
+      -505381,
+      62
+     ]
+    },
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      212000,
+      183200,
+      -28800,
+      86
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      53000,
+      56202,
+      3202,
+      106
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      6183,
+      1796,
+      -4387,
+      29
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1060000,
+      584604,
+      -475396,
+      55
+     ]
+    },
+    {
+     "label": "維護費",
+     "note_ref": null,
+     "values": [
+      119167,
+      21079,
+      -98088,
+      18
+     ]
+    },
+    {
+     "label": "水電修繕",
+     "note_ref": null,
+     "values": [
+      91667,
+      2150,
+      -89517,
+      2
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      20833,
+      15000,
+      -5833,
+      72
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      6667,
+      3929,
+      -2738,
+      59
+     ]
+    },
+    {
+     "label": "修繕購置費",
+     "note_ref": null,
+     "values": [
+      123667,
+      264795,
+      141128,
+      214
+     ]
+    },
+    {
+     "label": "雜支",
+     "note_ref": null,
+     "values": [
+      39970,
+      15878,
+      -24092,
+      40
+     ]
+    },
+    {
+     "label": "行政管理費",
+     "note_ref": null,
+     "values": [
+      199735,
+      null,
+      -199735,
+      null
+     ]
+    },
+    {
+     "label": "延後托育支出",
+     "note_ref": null,
+     "values": [
+      null,
+      126732,
+      126732,
+      null
+     ]
+    },
+    {
+     "label": "其他支出",
+     "note_ref": null,
+     "values": [
+      null,
+      28885,
+      28885,
+      null
+     ]
+    },
+    {
+     "label": "本期稅前餘絀",
+     "note_ref": null,
+     "values": [
+      561520,
+      -550688,
+      -1112208,
+      -98
+     ]
+    },
+    {
+     "label": "所得稅費用",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "本期稅後餘絀",
+     "note_ref": null,
+     "values": [
+      561520,
+      -550688,
+      -1112208,
+      -98
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": []
+}

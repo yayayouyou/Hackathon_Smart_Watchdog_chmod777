@@ -1,0 +1,310 @@
+{
+ "report": "N34_佳和_113",
+ "code": "N34",
+ "short_name": "佳和",
+ "academic_year": 113,
+ "pdf_page": 16,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N34",
+ "printed_page": 16,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(四) 收支明細表 1. 教保費收入",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.9.28~113.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保費收入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "教保費收入（家長繳費）",
+     "note_ref": null,
+     "values": [
+      1874381,
+      1698763
+     ]
+    },
+    {
+     "label": "教保費收入（政府學費差額補助）",
+     "note_ref": null,
+     "values": [
+      11970000,
+      9285492
+     ]
+    },
+    {
+     "label": "小　計",
+     "note_ref": null,
+     "values": [
+      13844381,
+      10984255
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "五日未上課退費",
+     "note_ref": null,
+     "values": [
+      -76053,
+      -107362
+     ]
+    },
+    {
+     "label": "腸病毒退費",
+     "note_ref": null,
+     "values": [
+      -4271,
+      -25668
+     ]
+    },
+    {
+     "label": "轉學/轉出退費",
+     "note_ref": null,
+     "values": [
+      -5000,
+      -3474
+     ]
+    },
+    {
+     "label": "政府學費差額補助退費",
+     "note_ref": null,
+     "values": [
+      -306458,
+      -10646
+     ]
+    },
+    {
+     "label": "小　計",
+     "note_ref": null,
+     "values": [
+      -391782,
+      -147150
+     ]
+    },
+    {
+     "label": "教保費收入淨額",
+     "note_ref": null,
+     "values": [
+      13452599,
+      10837105
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(四) 收支明細表 2. 人事費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "圓長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      5425502,
+      4817452,
+      -608050,
+      89
+     ]
+    },
+    {
+     "label": "學前特教師、社工人員、護理人員（教保員）",
+     "note_ref": null,
+     "values": [
+      565394,
+      592511,
+      27117,
+      105
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1311998,
+      1213596,
+      -98402,
+      92
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      724932,
+      379201,
+      -345731,
+      52
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      995442,
+      791284,
+      -204158,
+      79
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      13000,
+      10228,
+      -2772,
+      79
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      389484,
+      386338,
+      -3146,
+      99
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      13000,
+      9772,
+      -3228,
+      75
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      13000,
+      1000,
+      -12000,
+      8
+     ]
+    },
+    {
+     "label": "代課費及代班費",
+     "note_ref": null,
+     "values": [
+      186948,
+      127103,
+      -59845,
+      68
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      54096,
+      54096,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "合　計",
+     "note_ref": null,
+     "values": [
+      9692796,
+      8382581,
+      -1310215,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(四) 收支明細表 2. 人事費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "圓長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      4126797,
+      3694939,
+      -431858,
+      90
+     ]
+    },
+    {
+     "label": "學前特教師、社工人員、護理人員（教保員）",
+     "note_ref": null,
+     "values": [
+      429355,
+      389828,
+      -39527,
+      91
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1005571,
+      974578,
+      -30993,
+      97
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      590330,
+      194231,
+      -396099,
+      33
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "第二張人事費表（112.9.28~113.7.31）在頁面底部被截斷，僅擷取到「加班費」一列，後續列延伸至下一頁。",
+  "第一張人事費表期間標題為 113.8.1~114.7.31，第二張為 112.9.28~113.7.31，兩張表分別建立。"
+ ]
+}

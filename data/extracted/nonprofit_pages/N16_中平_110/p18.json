@@ -1,0 +1,268 @@
+{
+ "report": "N16_中平_110",
+ "code": "N16",
+ "short_name": "中平",
+ "academic_year": 110,
+ "pdf_page": 18,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N16",
+ "printed_page": 18,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      288000,
+      161021,
+      -126979,
+      56
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      72000,
+      26225,
+      -45775,
+      36
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      8400,
+      784,
+      -7616,
+      9
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1500000,
+      1338185,
+      -161815,
+      89
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      1868400,
+      1526215,
+      -342185,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      288000,
+      283261,
+      -4739,
+      98
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      72000,
+      15987,
+      -56013,
+      22
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      8400,
+      7392,
+      -1008,
+      88
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1500000,
+      1160346,
+      -339654,
+      77
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      1868400,
+      1466986,
+      -401414,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "水電修繕",
+     "note_ref": null,
+     "values": [
+      110000,
+      89166,
+      -20834,
+      81
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      25000,
+      20710,
+      -4290,
+      83
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      1476,
+      -6524,
+      18
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      143000,
+      111352,
+      -31648,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "水電修繕",
+     "note_ref": null,
+     "values": [
+      110000,
+      26185,
+      -83815,
+      24
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      25000,
+      24962,
+      -38,
+      100
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      1476,
+      -6524,
+      18
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      143000,
+      52623,
+      -90377,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 12 點（一）.3 材料費各細項經費倘有不足，應優先於材料費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費），且至多以勻支不足細項之 20%為上限。但餐點費，不得移作他用。\n(2) 110 及 109 學年度材料費類別總經費並無超支預算之情事。"
+  },
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 12 點（一）.5 維護費及修繕購置費各細項經費倘有不足，應優先於維護費及修繕購置費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費）。\n(2) 110 及 109 學年度維護費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "材料費第一張表（110.8.1~111.7.31）合計列執行率欄未印數字，填null。",
+  "材料費第二張表（109.8.1~110.7.31）合計列執行率欄未印數字，填null。",
+  "維護費兩張表合計列執行率欄未印數字，填null。"
+ ]
+}

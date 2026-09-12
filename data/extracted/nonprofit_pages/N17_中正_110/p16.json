@@ -1,0 +1,278 @@
+{
+ "report": "N17_中正_110",
+ "code": "N17",
+ "short_name": "中正",
+ "academic_year": 110,
+ "pdf_page": 16,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N17",
+ "printed_page": 16,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "2. 人事費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      3066795,
+      2631832,
+      -434963,
+      86
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      844804,
+      672775,
+      -172029,
+      80
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      330048,
+      100207,
+      -229841,
+      30
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      440800,
+      442676,
+      1876,
+      100
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      8000,
+      7992,
+      -8,
+      100
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      215640,
+      202056,
+      -13584,
+      94
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      8000,
+      5550,
+      -2450,
+      69
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      8000,
+      1600,
+      -6400,
+      20
+     ]
+    },
+    {
+     "label": "代課費及廚工代班費",
+     "note_ref": null,
+     "values": [
+      48000,
+      900,
+      -47100,
+      2
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      28975,
+      28975,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      4999062,
+      4094563,
+      -904499,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 人事費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      2983365,
+      2823138,
+      -160227,
+      95
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      830898,
+      757611,
+      -73287,
+      91
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      321792,
+      111971,
+      -209821,
+      35
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      428140,
+      415352,
+      -12788,
+      97
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      8000,
+      7327,
+      -673,
+      92
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      209184,
+      197220,
+      -11964,
+      94
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      8000,
+      7715,
+      -285,
+      96
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      1000,
+      null,
+      -1000,
+      null
+     ]
+    },
+    {
+     "label": "代課費及廚工代班費",
+     "note_ref": null,
+     "values": [
+      33600,
+      3840,
+      -29760,
+      11
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      28254,
+      30053,
+      1799,
+      106
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      4852233,
+      4354227,
+      -498006,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 12 點（一）.1 人事費總預算內，除資遣費準備金不得移作他用及加班費不得超支外，其餘各細項得相互勻支。\n(2) 110 學年度勞、健保費超支預算部分，依上開規定人事費細項得相互勻支，故本細項符合勻支規定。\n(3) 109 學年度資遣費超支預算部分，依上開規定人事費細項得相互勻支，故本細項符合勻支規定。\n(4) 110 及 109 學年度人事費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "第一張表期間為110.8.1~111.7.31，第二張表期間為109.8.1~110.7.31，兩表分開處理。",
+  "第一張表合計列差異欄原文為$(904,499)，執行率欄空白，填null。",
+  "第二張表合計列差異欄原文為$(498,006)，執行率欄空白，填null。",
+  "第一張表資遣費差異欄印刷為破折號，視為null。",
+  "第二張表健康檢查決算數欄印刷為破折號，視為null；執行率欄印刷為破折號，視為null。"
+ ]
+}

@@ -1,0 +1,295 @@
+{
+ "report": "N25_碧城_111",
+ "code": "N25",
+ "short_name": "碧城",
+ "academic_year": 111,
+ "pdf_page": 16,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N25",
+ "printed_page": 16,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "2. 人事費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      4973805,
+      4571477,
+      -402328,
+      92
+     ]
+    },
+    {
+     "label": "學前特教師、社工人員、護理人員薪資（教保員）",
+     "note_ref": null,
+     "values": [
+      516645,
+      483203,
+      -33442,
+      94
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1188852,
+      1156079,
+      -32773,
+      97
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      663000,
+      408387,
+      -254613,
+      62
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      791563,
+      714214,
+      -77349,
+      90
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      13000,
+      12012,
+      -988,
+      92
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      356220,
+      345629,
+      -10591,
+      97
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      13000,
+      13000,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      13000,
+      8070,
+      -4930,
+      62
+     ]
+    },
+    {
+     "label": "代課費及廚工代班費",
+     "note_ref": null,
+     "values": [
+      165024,
+      116047,
+      -48977,
+      70
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      49476,
+      49459,
+      -17,
+      100
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      8743585,
+      7877577,
+      -866008,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 人事費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      4534395,
+      4304830,
+      -229565,
+      95
+     ]
+    },
+    {
+     "label": "學前特教師、社工人員、護理人員（教保員）",
+     "note_ref": null,
+     "values": [
+      470155,
+      419709,
+      -50446,
+      89
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1092290,
+      1095627,
+      3337,
+      100
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      647088,
+      303119,
+      -343969,
+      47
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      772595,
+      711347,
+      -61248,
+      92
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      13000,
+      null,
+      -13000,
+      null
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      347700,
+      343141,
+      -4559,
+      99
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      13000,
+      13000,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      1000,
+      1200,
+      200,
+      120
+     ]
+    },
+    {
+     "label": "代課費及廚工代班費",
+     "note_ref": null,
+     "values": [
+      165024,
+      39777,
+      -125247,
+      24
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      48291,
+      48308,
+      17,
+      100
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      8104538,
+      7280058,
+      -824480,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.1 人事費總預算內，除資遣費準備金不得移作他用及加班費不得超支外，其餘各細項得相互勻支。"
+  }
+ ],
+ "issues": [
+  "第一張表（111.8.1~112.7.31）的「自強活動」差異欄顯示為破折號，已填null；「合　　計」列執行率欄無數值，已填null。",
+  "第二張表（110.8.1~111.7.31）的「保險費」決算數欄及執行率欄顯示為破折號，已填null；「自強活動」差異欄顯示為破折號，已填null；「合　　計」執行率欄無數值，已填null。"
+ ]
+}

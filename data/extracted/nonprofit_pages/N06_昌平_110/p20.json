@@ -1,0 +1,324 @@
+{
+ "report": "N06_昌平_110",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 110,
+ "pdf_page": 20,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 20,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(1)  專案補助收入及支出",
+   "period_labels": [
+    "110.8.1~111.7.31 收　入",
+    "110.8.1~111.7.31 支　出",
+    "110.8.1~111.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "防疫物資補助",
+     "note_ref": null,
+     "values": [
+      27000,
+      27000,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      455616,
+      455616,
+      null
+     ]
+    },
+    {
+     "label": "調薪追加補助款",
+     "note_ref": null,
+     "values": [
+      461659,
+      461659,
+      null
+     ]
+    },
+    {
+     "label": "英語融入教保活動計畫",
+     "note_ref": null,
+     "values": [
+      85000,
+      85000,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      70327,
+      70327,
+      null
+     ]
+    },
+    {
+     "label": "招收身心障礙幼兒補助",
+     "note_ref": null,
+     "values": [
+      80000,
+      80000,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      130000,
+      130000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1309602,
+      1309602,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1)  專案補助收入及支出",
+   "period_labels": [
+    "109.8.1~110.7.31 收　入",
+    "109.8.1~110.7.31 支　出",
+    "109.8.1~110.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      138432,
+      138432,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      58438,
+      58438,
+      null
+     ]
+    },
+    {
+     "label": "招收身心障礙幼兒補助",
+     "note_ref": null,
+     "values": [
+      20000,
+      20000,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      130000,
+      130000,
+      null
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      346870,
+      346870,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2)  代收補助收入及支出",
+   "period_labels": [
+    "110.8.1~111.7.31 收　入",
+    "110.8.1~111.7.31 支　出",
+    "110.8.1~111.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      443380,
+      443380,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      7200,
+      7200,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      450580,
+      450580,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2)  代收補助收入及支出",
+   "period_labels": [
+    "109.8.1~110.7.31 收　入",
+    "109.8.1~110.7.31 支　出",
+    "109.8.1~110.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      189600,
+      189600,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      7200,
+      7200,
+      null
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      196800,
+      196800,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(3)  代收代付收入及支出",
+   "period_labels": [
+    "110.8.1~111.7.31 收　入",
+    "110.8.1~111.7.31 支　出",
+    "110.8.1~111.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      39489,
+      39489,
+      null
+     ]
+    },
+    {
+     "label": "代購用品",
+     "note_ref": null,
+     "values": [
+      31110,
+      31110,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      70599,
+      70599,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(3)  代收代付收入及支出",
+   "period_labels": [
+    "109.8.1~110.7.31 收　入",
+    "109.8.1~110.7.31 支　出",
+    "109.8.1~110.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      40596,
+      40596,
+      null
+     ]
+    },
+    {
+     "label": "代購用品",
+     "note_ref": null,
+     "values": [
+      34730,
+      34730,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      75326,
+      75326,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "各表淨額欄顯示為 '$ -'，視為空白（null）而非0，因為這表示收支相抵淨額為零但以破折號表示"
+ ]
+}

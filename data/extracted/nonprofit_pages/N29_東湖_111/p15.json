@@ -1,0 +1,316 @@
+{
+ "report": "N29_東湖_111",
+ "code": "N29",
+ "short_name": "東湖",
+ "academic_year": 111,
+ "pdf_page": 15,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N29",
+ "printed_page": 15,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "人事費明細",
+   "period_labels": [
+    "111.8.30~112.7.31 預算數",
+    "111.8.30~112.7.31 決算數",
+    "111.8.30~112.7.31 差異數",
+    "111.8.30~112.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      2558749,
+      2132893,
+      -425856,
+      83
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      1413808,
+      283478,
+      -1130330,
+      20
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      1792241,
+      1491008,
+      -301233,
+      83
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      26583,
+      18338,
+      -8245,
+      69
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      759715,
+      692256,
+      -67459,
+      91
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      26583,
+      26500,
+      -83,
+      100
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      2750,
+      2615,
+      -135,
+      95
+     ]
+    },
+    {
+     "label": "代課費及廚工代班費",
+     "note_ref": null,
+     "values": [
+      370755,
+      39908,
+      -330847,
+      11
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      105517,
+      105517,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      17819480,
+      14214119,
+      -3605361,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "3.　業務費",
+   "period_labels": [
+    "111.8.30~112.7.31 預算數",
+    "111.8.30~112.7.31 決算數",
+    "111.8.30~112.7.31 差異數",
+    "111.8.30~112.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      123750,
+      91607,
+      -32143,
+      74
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      53166,
+      50000,
+      -3166,
+      94
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      56833,
+      27479,
+      -29354,
+      48
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      517000,
+      318234,
+      -198766,
+      62
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      40333,
+      26284,
+      -14049,
+      65
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      110000,
+      46322,
+      -63678,
+      42
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      42167,
+      44396,
+      2229,
+      105
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      77917,
+      71203,
+      -6714,
+      91
+     ]
+    },
+    {
+     "label": "電話費（含網路）",
+     "note_ref": null,
+     "values": [
+      66000,
+      68979,
+      2979,
+      105
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      8800,
+      4100,
+      -4700,
+      47
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      9167,
+      null,
+      -9167,
+      null
+     ]
+    },
+    {
+     "label": "文宣費（園刊）",
+     "note_ref": null,
+     "values": [
+      32083,
+      24640,
+      -7443,
+      77
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      11000,
+      null,
+      -11000,
+      null
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      44000,
+      44484,
+      484,
+      101
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      22917,
+      null,
+      -22917,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1215133,
+      817728,
+      -397405,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.1 人事費總預算內，除資遣費準備金不得移作他用及加班費不得超支外，其餘各細項得相互勻支。\n(2) 111 學年度人事費類別總經費並無超支預算之情事。"
+  },
+  {
+   "heading": "3.　業務費",
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.2 業務費：得在業務費總預算內相互勻支，至多以勻支不足細項之 20% 為上限。"
+  }
+ ],
+ "issues": []
+}

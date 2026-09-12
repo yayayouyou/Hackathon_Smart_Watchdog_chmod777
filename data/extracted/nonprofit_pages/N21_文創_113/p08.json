@@ -1,0 +1,100 @@
+{
+ "report": "N21_文創_113",
+ "code": "N21",
+ "short_name": "文創",
+ "academic_year": 113,
+ "pdf_page": 8,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N21",
+ "printed_page": 8,
+ "page_kind": "equity_change",
+ "tables": [
+  {
+   "title": "淨值變動表",
+   "context_heading": null,
+   "period_labels": [
+    "累積餘絀",
+    "本期餘絀",
+    "合　計"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "112年8月1日餘額",
+     "note_ref": null,
+     "values": [
+      1593485,
+      716777,
+      2310262
+     ]
+    },
+    {
+     "label": "111學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      716777,
+      -716777,
+      null
+     ]
+    },
+    {
+     "label": "112學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      -552072,
+      -552072
+     ]
+    },
+    {
+     "label": "113年7月31日餘額",
+     "note_ref": null,
+     "values": [
+      2310262,
+      -552072,
+      1758190
+     ]
+    },
+    {
+     "label": "112學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      -552072,
+      552072,
+      null
+     ]
+    },
+    {
+     "label": "113學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      457305,
+      457305
+     ]
+    },
+    {
+     "label": "114年7月31日餘額",
+     "note_ref": null,
+     "values": [
+      1758190,
+      457305,
+      2215495
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": []
+}

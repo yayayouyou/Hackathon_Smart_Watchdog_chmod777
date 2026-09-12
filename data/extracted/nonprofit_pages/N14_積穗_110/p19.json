@@ -1,0 +1,292 @@
+{
+ "report": "N14_積穗_110",
+ "code": "N14",
+ "short_name": "積穗",
+ "academic_year": 110,
+ "pdf_page": 19,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N14",
+ "printed_page": 19,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": null,
+   "period_labels": [
+    "109.8.1~110.7.31 預算數",
+    "109.8.1~110.7.31 決算數",
+    "109.8.1~110.7.31 差異",
+    "109.8.1~110.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "水電修繕",
+     "note_ref": null,
+     "values": [
+      110000,
+      20596,
+      -89404,
+      19
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      25000,
+      28000,
+      3000,
+      112
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      1740,
+      -6260,
+      22
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      143000,
+      50336,
+      -92664,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "6. 其他收入及其他支出",
+   "period_labels": [
+    "110.8.1~111.7.31 收入",
+    "110.8.1~111.7.31 支出",
+    "110.8.1~111.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      2094100,
+      2094100,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      634680,
+      634680,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      50040,
+      50040,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      2778820,
+      2778820,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "6. 其他收入及其他支出",
+   "period_labels": [
+    "109.8.1~110.7.31 收入",
+    "109.8.1~110.7.31 支出",
+    "109.8.1~110.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      1006269,
+      1006269,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      591840,
+      591840,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      55423,
+      55423,
+      null
+     ]
+    },
+    {
+     "label": "其他",
+     "note_ref": null,
+     "values": [
+      22120,
+      null,
+      22120
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1675652,
+      1653532,
+      22120
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "110.8.1~111.7.31 收入",
+    "110.8.1~111.7.31 支出",
+    "110.8.1~111.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "防疫物資補助",
+     "note_ref": null,
+     "values": [
+      27000,
+      27000,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      704555,
+      704555,
+      null
+     ]
+    },
+    {
+     "label": "調薪追加補助款",
+     "note_ref": null,
+     "values": [
+      722775,
+      722775,
+      null
+     ]
+    },
+    {
+     "label": "進修特教專能知識補助",
+     "note_ref": null,
+     "values": [
+      30000,
+      30000,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      69846,
+      69846,
+      null
+     ]
+    },
+    {
+     "label": "招收身心障礙幼兒補助",
+     "note_ref": null,
+     "values": [
+      125000,
+      125000,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      274924,
+      274924,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "note_ref": null,
+     "values": [
+      10000,
+      10000,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      130000,
+      130000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      2094100,
+      2094100,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 12 點（一）.5 維護費及修繕購置費各細項經費倘有不足，應優先於維護費及修繕購置費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費）。"
+  },
+  {
+   "heading": null,
+   "text": "(2) 110 及 109 學年度維護費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": []
+}

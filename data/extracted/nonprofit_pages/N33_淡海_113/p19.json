@@ -1,0 +1,240 @@
+{
+ "report": "N33_淡海_113",
+ "code": "N33",
+ "short_name": "淡海",
+ "academic_year": 113,
+ "pdf_page": 19,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N33",
+ "printed_page": 19,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "材料費各細項經費",
+   "period_labels": [
+    "112.9.28~113.7.31 預算數",
+    "112.9.28~113.7.31 決算數",
+    "112.9.28~113.7.31 差異",
+    "112.9.28~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      333667,
+      326221,
+      -7446,
+      98
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      60667,
+      68854,
+      8187,
+      113
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      9858,
+      11025,
+      1167,
+      112
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      2002000,
+      1303973,
+      -698027,
+      65
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      2406192,
+      1710073,
+      -696119,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "維護費及修繕費購置費",
+   "context_heading": "5. 維護費及修繕費購置費",
+   "period_labels": [
+    "113.8.1~114.7.31 預算數",
+    "113.8.1~114.7.31 決算數",
+    "113.8.1~114.7.31 差異",
+    "113.8.1~114.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "維護費",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "修繕費",
+     "note_ref": null,
+     "values": [
+      135000,
+      31644,
+      -103356,
+      23
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      45000,
+      40900,
+      -4100,
+      91
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      10000,
+      1263,
+      -8737,
+      13
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      190000,
+      73807,
+      -116193,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費及修繕費購置費",
+   "period_labels": [
+    "113.8.1~114.7.31 預算數",
+    "113.8.1~114.7.31 決算數",
+    "113.8.1~114.7.31 差異",
+    "113.8.1~114.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "修繕購置費",
+     "note_ref": null,
+     "values": [
+      212800,
+      304052,
+      91252,
+      143
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費及修繕費購置費",
+   "period_labels": [
+    "112.9.28~113.7.31 預算數",
+    "112.9.28~113.7.31 決算數",
+    "112.9.28~113.7.31 差異",
+    "112.9.28~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "維護費",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "修繕費",
+     "note_ref": null,
+     "values": [
+      112500,
+      16875,
+      -95625,
+      15
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      37500,
+      12600,
+      -24900,
+      34
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8333,
+      1285,
+      -7048,
+      15
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      158333,
+      30760,
+      -127573,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.3 材料費各細項經費倘有不足，應優先於材料費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費），且至多以勻支不足細項之 20%為上限。但餐點費，不得移作他用。\n(2) 112 學年度日常消耗用品及藥品費超支預算部分，依上開規定應優先於材料費總預算內相互勻支，仍有不足，經與業務費勻支後，且至多以勻支不足細項之 20%為上限，上述各細項經核算已符合勻支規定。\n(3) 113 及 112 學年度材料費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": []
+}

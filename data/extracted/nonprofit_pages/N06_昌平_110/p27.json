@@ -1,0 +1,392 @@
+{
+ "report": "N06_昌平_110",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 110,
+ "pdf_page": 27,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 27,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "財產清冊",
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "抽風機",
+     "note_ref": null,
+     "values": [
+      28350,
+      1,
+      22796,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "鍋爐",
+     "note_ref": null,
+     "values": [
+      13650,
+      1,
+      9371,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "鍋爐",
+     "note_ref": null,
+     "values": [
+      24150,
+      1,
+      16579,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "冷氣機",
+     "note_ref": null,
+     "values": [
+      39264,
+      1,
+      30194,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "冷氣機",
+     "note_ref": null,
+     "values": [
+      39264,
+      1,
+      30194,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "冷氣機",
+     "note_ref": null,
+     "values": [
+      39264,
+      1,
+      30194,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "冷氣機",
+     "note_ref": null,
+     "values": [
+      39264,
+      1,
+      30194,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "冷氣機",
+     "note_ref": null,
+     "values": [
+      39264,
+      1,
+      30194,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "冷氣機",
+     "note_ref": null,
+     "values": [
+      39264,
+      1,
+      30194,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "冷氣機",
+     "note_ref": null,
+     "values": [
+      30736,
+      1,
+      23636,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "冷氣機",
+     "note_ref": null,
+     "values": [
+      30736,
+      1,
+      23636,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "冷氣機",
+     "note_ref": null,
+     "values": [
+      30736,
+      1,
+      23636,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "冷氣機",
+     "note_ref": null,
+     "values": [
+      30736,
+      1,
+      23636,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "水槽",
+     "note_ref": null,
+     "values": [
+      15750,
+      1,
+      13281,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "兩用電錶",
+     "note_ref": null,
+     "values": [
+      30000,
+      1,
+      6900,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      16750,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      20000,
+      1,
+      13400,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      20000,
+      1,
+      13400,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      20000,
+      1,
+      13400,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "冰箱",
+     "note_ref": null,
+     "values": [
+      45000,
+      1,
+      32006,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "飲水機",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      250,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "飲水機",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      250,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "飲水機",
+     "note_ref": null,
+     "values": [
+      47500,
+      1,
+      10925,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "油煙罩",
+     "note_ref": null,
+     "values": [
+      52500,
+      1,
+      44271,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "隔屏",
+     "note_ref": null,
+     "values": [
+      80000,
+      1,
+      43040,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "體育訓練用墊",
+     "note_ref": null,
+     "values": [
+      12733,
+      1,
+      6851,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "體育訓練用墊",
+     "note_ref": null,
+     "values": [
+      46690,
+      1,
+      25119,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "其他康樂設備",
+     "note_ref": null,
+     "values": [
+      13568,
+      1,
+      3121,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮陽棚",
+     "note_ref": null,
+     "values": [
+      32500,
+      1,
+      32500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "遮陽棚",
+     "note_ref": null,
+     "values": [
+      66000,
+      1,
+      66000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "放置用具－配膳台／二層板",
+     "note_ref": null,
+     "values": [
+      7665,
+      1,
+      7665,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用品－煮飯鍋置放台",
+     "note_ref": null,
+     "values": [
+      7665,
+      1,
+      7665,
+      null,
+      3
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "附表四：財產清冊",
+   "text": "新北市昌平非營利幼兒園\n（委託財團法人三之三生命教育基金會辦理）\n財產清冊\n民國 111 年 7 月 31 日\n1. 代管財產"
+  }
+ ],
+ "issues": [
+  "購置日期欄位為文字日期格式（如107/05/24），未納入values數值欄，僅記錄為參考資訊；財產編號欄位未納入表格結構中"
+ ]
+}

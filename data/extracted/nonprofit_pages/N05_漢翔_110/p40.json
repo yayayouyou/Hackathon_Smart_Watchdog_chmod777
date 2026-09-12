@@ -1,0 +1,101 @@
+{
+ "report": "N05_漢翔_110",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 110,
+ "pdf_page": 40,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 40,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "查核項目（續）",
+   "period_labels": [
+    "是否符合－是",
+    "是否符合－否",
+    "是否符合－不適用"
+   ],
+   "items": [
+    {
+     "label": "67　未有以非營利幼兒園之名義向金融機構或其他個人單位借（貸）款之情形",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "負債補充說明：",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "68　本學期（學年度）未有借款予辦理單位或他人之情形。如有借款，其借款金額為　　　　　　-　　　　　元",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "69　上學期（學年度）會計師查核所提建議改善事項，非營利幼兒園已完成改善",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "70　非營利幼兒園與關係人間無交易事項，如有交易事項，請於下方補充說明揭露",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "71　非營利幼兒園之財產或代管財產是否均登錄於財產清冊或代管清冊，定期盤點，並依相關規定報廢",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "其他補充說明：",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "查核項目",
+   "text": "67　未有以非營利幼兒園之名義向金融機構或其他個人單位借（貸）款之情形　　不適用：V\n\n負債補充說明：\n無。\n\n其他\n\n68　本學期（學年度）未有借款予辦理單位或他人之情形。如有借款，其借款金額為　　　　　　-　　　　　元　　是：V\n\n69　上學期（學年度）會計師查核所提建議改善事項，非營利幼兒園已完成改善　　是：V\n\n70　非營利幼兒園與關係人間無交易事項，如有交易事項，請於下方補充說明揭露　　是：V\n\n71　非營利幼兒園之財產或代管財產是否均登錄於財產清冊或代管清冊，定期盤點，並依相關規定報廢　　是：V\n\n其他補充說明：\n無。\n\n綜合建議事項\n無。\n\n誠明聯合會計師事務所\n會計師：　張　景　嵐"
+  }
+ ],
+ "issues": [
+  "第67項勾選欄位為「不適用」欄位有V，但表格values無法精確呈現勾選位置，已在text_sections中以文字說明。",
+  "第68~71項勾選均在「是」欄，已於text_sections說明。"
+ ]
+}

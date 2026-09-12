@@ -1,0 +1,217 @@
+{
+ "report": "N01_安溪_111",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 111,
+ "pdf_page": 18,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 18,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      326400,
+      334691,
+      8291,
+      103
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      81600,
+      69960,
+      -11640,
+      86
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      9520,
+      4868,
+      -4652,
+      51
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1632000,
+      1675012,
+      43012,
+      103
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      2049520,
+      2084531,
+      35011,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      216000,
+      177602,
+      -38398,
+      82
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      54000,
+      37967,
+      -16033,
+      70
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      6300,
+      3035,
+      -3265,
+      48
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1125000,
+      1026930,
+      -98070,
+      91
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1401300,
+      1245534,
+      -155766,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "水電修繕",
+     "note_ref": null,
+     "values": [
+      110000,
+      22590,
+      -87410,
+      21
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      25000,
+      17337,
+      -7663,
+      69
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      739,
+      -7261,
+      9
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      143000,
+      40666,
+      -102334,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.3 材料費各細項經費倘有不足，應優先於材料費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費），且至多以勻支不足細項之 20%為上限。但餐點費，不得移作他用。"
+  },
+  {
+   "heading": null,
+   "text": "(2) 111 學年度教保材料費及餐點費超支預算部分，依上開規定應優先於材料費總預算內相互勻支，仍有不足，經與業務費勻支後，且至多以勻支不足細項之 20%為上限，上述各細項經核算均符合勻支規定。"
+  },
+  {
+   "heading": null,
+   "text": "(3) 111 及 110 學年度材料費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "第一張材料費表期間為111.8.1~112.7.31，第二張材料費表期間為110.8.1~111.7.31，兩張表分別建立。",
+  "維護費表格僅含111.8.1~112.7.31期間，無對應的110學年度表格（頁面底部截斷）。"
+ ]
+}

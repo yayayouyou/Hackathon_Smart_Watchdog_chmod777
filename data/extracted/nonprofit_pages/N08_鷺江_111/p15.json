@@ -1,0 +1,248 @@
+{
+ "report": "N08_鷺江_111",
+ "code": "N08",
+ "short_name": "鷺江",
+ "academic_year": 111,
+ "pdf_page": 15,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N08",
+ "printed_page": 15,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "業務發展準備金",
+   "period_labels": [
+    "112 年 7 月 31 日",
+    "111 年 7 月 31 日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "業務發展準備金",
+     "note_ref": null,
+     "values": [
+      6550652,
+      4977012
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      1562257,
+      81502,
+      -288787,
+      1354972
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      1509325,
+      330828,
+      -277896,
+      1562257
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "購置財產",
+     "note_ref": null,
+     "values": [
+      222968,
+      41925,
+      null,
+      264893
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "購置財產",
+     "note_ref": null,
+     "values": [
+      205643,
+      17325,
+      null,
+      222968
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 教保費收入",
+   "period_labels": [
+    "111.8.1~112.7.31",
+    "110.8.1~111.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保費收入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "教保費收入(家長繳費)",
+     "note_ref": null,
+     "values": [
+      1208731,
+      1752980
+     ]
+    },
+    {
+     "label": "教保費收入(政府學費差額補助)",
+     "note_ref": null,
+     "values": [
+      10156368,
+      9617592
+     ]
+    },
+    {
+     "label": "小　　計",
+     "note_ref": null,
+     "values": [
+      11365099,
+      11370572
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "五日未上課退費",
+     "note_ref": null,
+     "values": [
+      -55934,
+      -59336
+     ]
+    },
+    {
+     "label": "腸病毒退費",
+     "note_ref": null,
+     "values": [
+      -2053,
+      null
+     ]
+    },
+    {
+     "label": "轉學/轉出退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -13475
+     ]
+    },
+    {
+     "label": "政府學費差額補助退費",
+     "note_ref": null,
+     "values": [
+      -3421,
+      null
+     ]
+    },
+    {
+     "label": "小　　計",
+     "note_ref": null,
+     "values": [
+      -61408,
+      -72811
+     ]
+    },
+    {
+     "label": "教保費收入淨額",
+     "note_ref": null,
+     "values": [
+      11303691,
+      11297761
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "(三) 營運資產",
+   "text": "1. 代管財產\n\n111 及 110 學年度代管財產分別減少 288,787 元及 277,896 元，係託管單位財產管理系統，依財產經濟年限攤提折舊所致。\n\n2. 購置財產\n\n本幼兒園依契約之規定應辦理保險，截至 111 年 7 月 31 日及 110 年 7 月 31 日止保險金額均為 14,500,000 元。"
+  },
+  {
+   "heading": "(四) 收支明細表",
+   "text": "1. 教保費收入"
+  }
+ ],
+ "issues": [
+  "代管財產與購置財產的本期減少欄位「$-」依規則視為空白填null，但購置財產確實無減少，與代管財產有括號負數不同，請人工確認。",
+  "業務發展準備金表格上方無法確認其所屬章節標題，以「業務發展準備金」作為context_heading。",
+  "代管財產與購置財產各有兩個期間的表格（111.8.1~112.7.31 及 110.8.1~111.7.31），已分別建立獨立table物件。"
+ ]
+}

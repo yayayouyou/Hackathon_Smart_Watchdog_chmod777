@@ -1,0 +1,181 @@
+{
+ "report": "N04_海工_110",
+ "code": "N04",
+ "short_name": "海工",
+ "academic_year": 110,
+ "pdf_page": 28,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N04",
+ "printed_page": 28,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "2.購置財產",
+   "period_labels": [
+    "財產編號",
+    "財產名稱",
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限",
+    "已用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "04607-0206~08",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      10000,
+      3,
+      30000,
+      null,
+      5,
+      3.11
+     ]
+    },
+    {
+     "label": "4607-0309",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      120000,
+      1,
+      120000,
+      null,
+      5,
+      3.11
+     ]
+    },
+    {
+     "label": "4607-0511",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      32970,
+      1,
+      32970,
+      null,
+      5,
+      3.05
+     ]
+    },
+    {
+     "label": "4607-0601",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      12500,
+      1,
+      12500,
+      null,
+      5,
+      3.05
+     ]
+    },
+    {
+     "label": "4607-0418",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      20000,
+      1,
+      20000,
+      null,
+      5,
+      3.04
+     ]
+    },
+    {
+     "label": "4607-0914",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      30818,
+      1,
+      30818,
+      null,
+      5,
+      2.11
+     ]
+    },
+    {
+     "label": "4607-0822",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      10395,
+      1,
+      10395,
+      null,
+      5,
+      1
+     ]
+    },
+    {
+     "label": "467-0720",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      31500,
+      1,
+      31500,
+      null,
+      8,
+      1
+     ]
+    },
+    {
+     "label": "4607-0601",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      28000,
+      1,
+      28000,
+      null,
+      3,
+      0.16
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      316183,
+      null,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "財產編號、財產名稱、購置日期等文字欄位無法以數值表示，values中以null填入對應欄位；表格結構以period_labels列舉所有欄位名稱，數值欄位照實填入",
+  "財產編號04607-0206~08對應財產名稱為32格工作櫃，購置日期105/9/19",
+  "財產編號4607-0309對應財產名稱為遊戲器材，購置日期105/9/30",
+  "財產編號4607-0601出現兩次（百葉棉被櫃106/3/25及電腦110/6/1），可能為資料問題"
+ ]
+}

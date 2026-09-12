@@ -1,0 +1,325 @@
+{
+ "report": "N22_文仁_112",
+ "code": "N22",
+ "short_name": "文仁",
+ "academic_year": 112,
+ "pdf_page": 20,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N22",
+ "printed_page": 20,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "7. 其他收入及其他支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收　入",
+    "112.8.1~113.7.31 支　出",
+    "112.8.1~113.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      1686341,
+      1686341,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      150310,
+      150310,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      28157,
+      28157,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1864808,
+      1864808,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "7. 其他收入及其他支出",
+   "period_labels": [
+    "111.8.1~112.7.31 收　入",
+    "111.8.1~112.7.31 支　出",
+    "111.8.1~112.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      2181774,
+      2181774,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      426120,
+      426120,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      28431,
+      28431,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      2636325,
+      2636325,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收　入",
+    "112.8.1~113.7.31 支　出",
+    "112.8.1~113.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "地震險補助",
+     "note_ref": null,
+     "values": [
+      25241,
+      25241,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      884014,
+      884014,
+      null
+     ]
+    },
+    {
+     "label": "幼教論壇實施計畫補助",
+     "note_ref": null,
+     "values": [
+      3000,
+      3000,
+      null
+     ]
+    },
+    {
+     "label": "英語融入教保計畫補助",
+     "note_ref": null,
+     "values": [
+      300795,
+      300795,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      72000,
+      72000,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      91776,
+      91776,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "note_ref": null,
+     "values": [
+      18000,
+      18000,
+      null
+     ]
+    },
+    {
+     "label": "調薪及延長照顧差額補助",
+     "note_ref": null,
+     "values": [
+      181515,
+      181515,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "note_ref": null,
+     "values": [
+      110000,
+      110000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1686341,
+      1686341,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "111.8.1~112.7.31 收　入",
+    "111.8.1~112.7.31 支　出",
+    "111.8.1~112.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "地震險補助",
+     "note_ref": null,
+     "values": [
+      20192,
+      20192,
+      null
+     ]
+    },
+    {
+     "label": "專業輔導補助",
+     "note_ref": null,
+     "values": [
+      50000,
+      50000,
+      null
+     ]
+    },
+    {
+     "label": "防疫加班費補助",
+     "note_ref": null,
+     "values": [
+      10000,
+      10000,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "note_ref": null,
+     "values": [
+      749491,
+      749491,
+      null
+     ]
+    },
+    {
+     "label": "調薪追加補助款",
+     "note_ref": null,
+     "values": [
+      633701,
+      633701,
+      null
+     ]
+    },
+    {
+     "label": "健康促進活動補助",
+     "note_ref": null,
+     "values": [
+      20000,
+      20000,
+      null
+     ]
+    },
+    {
+     "label": "公共意外責任險補助",
+     "note_ref": null,
+     "values": [
+      1339,
+      1339,
+      null
+     ]
+    },
+    {
+     "label": "教育論壇佈展經費補助",
+     "note_ref": null,
+     "values": [
+      3000,
+      3000,
+      null
+     ]
+    },
+    {
+     "label": "英語融入教保計畫補助",
+     "note_ref": null,
+     "values": [
+      259304,
+      259304,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "note_ref": null,
+     "values": [
+      75000,
+      75000,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "第四張表（111.8.1~112.7.31 專案補助明細）在本頁底部截斷，尚有資料未完整顯示，合計列未出現在本頁"
+ ]
+}

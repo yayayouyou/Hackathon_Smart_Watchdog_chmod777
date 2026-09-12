@@ -1,0 +1,164 @@
+{
+ "report": "N26_新店及人_110",
+ "code": "N26",
+ "short_name": "新店及人",
+ "academic_year": 110,
+ "pdf_page": 13,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N26",
+ "printed_page": 13,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(一) 現金及銀行存款",
+   "period_labels": [
+    "111 年 7 月 31 日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "現　　金",
+     "note_ref": null,
+     "values": [
+      931
+     ]
+    },
+    {
+     "label": "活期存款",
+     "note_ref": null,
+     "values": [
+      6607867
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      6608798
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 資遺費準備",
+   "period_labels": [
+    "110.8.1~111.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      48997
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      48997
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 資遺費準備",
+   "period_labels": [
+    "111 年 7 月 31 日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "資遺費準備金",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "110.8.1~111.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      1166000
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      1166000
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "111 年 7 月 31 日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "業務發展準備金",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "2. 契約期間居滿未申請繼續辦理，或申請繼續辦理未經同意、契約終止者：\n(1) 優先用於該園教保服務人員及其他服務人員之資遺費。\n(2) 依前目處理後，仍有膳餘款者，應於契約期間居滿或終止後二個月內，委託辦理者全數繳回委託辦理之委託單位、申請辦理者全數繳回直轄市、縣（市）主管機關，用於改善該園、公立幼兒園或非營利幼兒園教學設施、設備。"
+  },
+  {
+   "heading": "三、重要會計項目說明",
+   "text": "(一) 現金及銀行存款"
+  },
+  {
+   "heading": null,
+   "text": "(二) 各項基金及準備\n1. 資遺費準備\n依據非營利幼兒園實施辦法之規定，提撥資遺費準備金餘額如下：\n2. 業務發展準備\n依據非營利幼兒園實施辦法及非營利幼兒園會計財務及經費處理注意事項之規定，提列之業務發展準備金已報經主管機關同意。依該規定，以專戶或定期存款提存之業務發展準備金餘額如下："
+  }
+ ],
+ "issues": []
+}

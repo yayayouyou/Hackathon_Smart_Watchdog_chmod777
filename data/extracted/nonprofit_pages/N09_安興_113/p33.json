@@ -1,0 +1,132 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 33,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 33,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "帳面價值"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "6080501 / 000057 攝影用具-攝影機",
+     "note_ref": null,
+     "values": [
+      3640
+     ]
+    },
+    {
+     "label": "6080501 / 000058 攝影用具-攝影機",
+     "note_ref": null,
+     "values": [
+      3640
+     ]
+    },
+    {
+     "label": "6080501 / 000059 攝影用具-攝影機",
+     "note_ref": null,
+     "values": [
+      3640
+     ]
+    },
+    {
+     "label": "6080501 / 000060 攝影用具-攝影機",
+     "note_ref": null,
+     "values": [
+      3640
+     ]
+    },
+    {
+     "label": "6080501 / 000061 攝影用具-攝影機",
+     "note_ref": null,
+     "values": [
+      3640
+     ]
+    },
+    {
+     "label": "6080501 / 000062 攝影用具-攝影機",
+     "note_ref": null,
+     "values": [
+      3640
+     ]
+    },
+    {
+     "label": "6080501 / 000063 攝影用具-攝影機",
+     "note_ref": null,
+     "values": [
+      3640
+     ]
+    },
+    {
+     "label": "6100124 / 000001 護理用具-視力檢查器",
+     "note_ref": null,
+     "values": [
+      5200
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      766730
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "2. 購置財產",
+   "period_labels": [
+    "帳面金額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "9108001-001 冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      48900
+     ]
+    },
+    {
+     "label": "9108001-002 冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      48900
+     ]
+    },
+    {
+     "label": "110-001-01 筆記型電腦",
+     "note_ref": null,
+     "values": [
+      28900
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      126700
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "第一張表無明確表標題，僅為財產目錄延續頁；原始價值與數量欄未納入values因schema僅支援單一金額欄，購置日期與使用年限亦為描述性欄位未抽取。"
+ ]
+}

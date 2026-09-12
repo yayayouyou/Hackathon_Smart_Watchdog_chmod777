@@ -1,0 +1,51 @@
+{
+ "report": "N06_昌平_113",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 113,
+ "pdf_page": 38,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 38,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "查核項目",
+   "period_labels": [
+    "是否符合-是",
+    "是否符合-否",
+    "是否符合-不適用"
+   ],
+   "items": [
+    {
+     "label": "綜合建議事項",
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "無。",
+     "values": [
+      null,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "誠明聯合會計師事務所\n會計師：張　景　嵐"
+  }
+ ],
+ "issues": []
+}

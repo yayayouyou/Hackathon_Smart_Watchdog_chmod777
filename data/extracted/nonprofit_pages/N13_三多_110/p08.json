@@ -1,0 +1,100 @@
+{
+ "report": "N13_三多_110",
+ "code": "N13",
+ "short_name": "三多",
+ "academic_year": 110,
+ "pdf_page": 8,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N13",
+ "printed_page": 8,
+ "page_kind": "equity_change",
+ "tables": [
+  {
+   "title": "淨值變動表",
+   "context_heading": null,
+   "period_labels": [
+    "累積餘絀",
+    "本期餘絀",
+    "合　計"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "109 年 8 月 1 日餘額",
+     "note_ref": null,
+     "values": [
+      170454,
+      180645,
+      351099
+     ]
+    },
+    {
+     "label": "108 學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      180645,
+      -180645,
+      null
+     ]
+    },
+    {
+     "label": "109 學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      164744,
+      164744
+     ]
+    },
+    {
+     "label": "110 年 7 月 31 日餘額",
+     "note_ref": null,
+     "values": [
+      351099,
+      164744,
+      515843
+     ]
+    },
+    {
+     "label": "109 學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      164744,
+      -164744,
+      null
+     ]
+    },
+    {
+     "label": "110 學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      279363,
+      279363
+     ]
+    },
+    {
+     "label": "111 年 7 月 31 日餘額",
+     "note_ref": null,
+     "values": [
+      515843,
+      279363,
+      795206
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": []
+}

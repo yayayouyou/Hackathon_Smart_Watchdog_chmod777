@@ -1,0 +1,69 @@
+{
+ "report": "N01_安溪_110",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 110,
+ "pdf_page": 36,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 36,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "考評指標評分表",
+   "period_labels": [
+    "評分"
+   ],
+   "items": [
+    {
+     "label": "3.編制財務報表：（配分3分）",
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(1)依限完成前揭2項考評指標所需各項財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    },
+    {
+     "label": "(2)依會計師查核或簽證意見修改各項財務報表及財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    },
+    {
+     "label": "(3)財產依規定登錄及報廢之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    },
+    {
+     "label": "會計查核簽證情形評分合計：",
+     "note_ref": null,
+     "values": [
+      14
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（註）前學年度簽證，1.基本原則，因未符合１萬元以上應以銀行轉帳或票據支付，０分\n\n誠明聯合會計師事務所\n\n會計師：　張　景　嵐"
+  }
+ ],
+ "issues": [
+  "紅色關防印章遮蓋部分文字，會計師姓名區域可能有遮蔽，已依可見文字轉錄"
+ ]
+}

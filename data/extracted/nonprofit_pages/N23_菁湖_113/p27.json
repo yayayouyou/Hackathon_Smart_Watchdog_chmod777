@@ -1,0 +1,325 @@
+{
+ "report": "N23_菁湖_113",
+ "code": "N23",
+ "short_name": "菁湖",
+ "academic_year": 113,
+ "pdf_page": 27,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N23",
+ "printed_page": 27,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": null,
+   "period_labels": [
+    "113學年度 預算數",
+    "113學年度 決算數",
+    "113學年度 決算數與預算數之差異",
+    "113學年度 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      34000,
+      15400,
+      -18600,
+      45
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      80000,
+      31500,
+      -48500,
+      39
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      24000,
+      14452,
+      -9548,
+      60
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      65000,
+      54430,
+      -10570,
+      84
+     ]
+    },
+    {
+     "label": "電話費（含ADSL）",
+     "note_ref": null,
+     "values": [
+      54000,
+      51826,
+      -2174,
+      96
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      8400,
+      2358,
+      -6042,
+      28
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      10000,
+      null,
+      -10000,
+      null
+     ]
+    },
+    {
+     "label": "文宣費（園刊）",
+     "note_ref": null,
+     "values": [
+      30000,
+      22320,
+      -7680,
+      74
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      10000,
+      6282,
+      -3718,
+      63
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      42000,
+      20236,
+      -21764,
+      48
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      25000,
+      null,
+      -25000,
+      null
+     ]
+    },
+    {
+     "label": "材料費",
+     "note_ref": null,
+     "values": [
+      1747000,
+      1268187,
+      -478813,
+      73
+     ]
+    },
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      240000,
+      149766,
+      -90234,
+      62
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      60000,
+      48392,
+      -11608,
+      81
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      7000,
+      3577,
+      -3423,
+      51
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1440000,
+      1066452,
+      -373548,
+      74
+     ]
+    },
+    {
+     "label": "維護費",
+     "note_ref": null,
+     "values": [
+      143000,
+      131372,
+      -11628,
+      92
+     ]
+    },
+    {
+     "label": "修繕費",
+     "note_ref": null,
+     "values": [
+      110000,
+      106534,
+      -3466,
+      97
+     ]
+    },
+    {
+     "label": "園含消毒、清潔",
+     "note_ref": null,
+     "values": [
+      25000,
+      23350,
+      -1650,
+      93
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      1488,
+      -6512,
+      19
+     ]
+    },
+    {
+     "label": "修繕購置費",
+     "note_ref": null,
+     "values": [
+      140000,
+      125691,
+      -14309,
+      90
+     ]
+    },
+    {
+     "label": "雜支",
+     "note_ref": null,
+     "values": [
+      50664,
+      19203,
+      -31461,
+      38
+     ]
+    },
+    {
+     "label": "行政管理費",
+     "note_ref": null,
+     "values": [
+      259140,
+      259140,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "業務發展費",
+     "note_ref": null,
+     "values": [
+      null,
+      3005377,
+      3005377,
+      null
+     ]
+    },
+    {
+     "label": "延長照顧服務支出",
+     "note_ref": null,
+     "values": [
+      null,
+      118998,
+      118998,
+      null
+     ]
+    },
+    {
+     "label": "其他支出",
+     "note_ref": null,
+     "values": [
+      null,
+      2197052,
+      2197052,
+      null
+     ]
+    },
+    {
+     "label": "本期稅前餘絀",
+     "note_ref": null,
+     "values": [
+      887661,
+      -626701,
+      -1514362,
+      -71
+     ]
+    },
+    {
+     "label": "所得稅費用",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "本期稅後餘絀",
+     "note_ref": null,
+     "values": [
+      887661,
+      -626701,
+      -1514362,
+      -71
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "行政管理費之決算數與預算數之差異欄顯示為破折號，視為null（差異為0但以破折號表示）"
+ ]
+}

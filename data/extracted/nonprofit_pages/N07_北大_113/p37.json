@@ -1,0 +1,310 @@
+{
+ "report": "N07_北大_113",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 113,
+ "pdf_page": 37,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 37,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "502010216-000013 緩降機",
+     "values": [
+      12033,
+      1,
+      120,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "合計",
+     "values": [
+      null,
+      null,
+      1571292,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "2.購置財產",
+   "period_labels": [
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "00001 投影機",
+     "values": [
+      27000,
+      1,
+      27000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00017 相機",
+     "values": [
+      17465,
+      1,
+      17465,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00018-19 筆記型電腦",
+     "values": [
+      28550,
+      2,
+      57100,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00020 EPSON投影機EB-2055電動布幕",
+     "values": [
+      25500,
+      1,
+      25500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00021 電動布幕",
+     "values": [
+      13000,
+      1,
+      13000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00033-34 相機",
+     "values": [
+      12490,
+      2,
+      24980,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00062-63 華碩主機",
+     "values": [
+      18490,
+      2,
+      36980,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00069-70 電腦主機",
+     "values": [
+      16800,
+      2,
+      33600,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00071 電腦主機",
+     "values": [
+      16800,
+      1,
+      16800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00072 電腦主機intel-10400+螢幕",
+     "values": [
+      27300,
+      1,
+      27300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00073 電腦主機intel-10400+螢幕",
+     "values": [
+      24150,
+      1,
+      24150,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00074 電腦主機intel-10400+螢幕",
+     "values": [
+      24150,
+      1,
+      24150,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00075 電腦主機intel-10400+螢幕",
+     "values": [
+      24150,
+      1,
+      24150,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "00090 MIPRO無限擴音組",
+     "values": [
+      50400,
+      1,
+      50400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0106 電腦主機inteli3-10105+螢幕",
+     "values": [
+      24675,
+      1,
+      24675,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0107 電腦主機inteli3-10105+螢幕",
+     "values": [
+      24675,
+      1,
+      24675,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0108 書櫃-加輪子",
+     "values": [
+      13000,
+      1,
+      13000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0109 書櫃-加輪子",
+     "values": [
+      13000,
+      1,
+      13000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0115 攝影機",
+     "values": [
+      6710,
+      2,
+      13420,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0131 消毒燈",
+     "values": [
+      28000,
+      1,
+      28000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0140 長背版",
+     "values": [
+      12000,
+      1,
+      12000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0141 4人圓桌組",
+     "values": [
+      14416,
+      1,
+      14416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "0142 攝影機",
+     "values": [
+      7010,
+      5,
+      35050,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "合計",
+     "values": [
+      null,
+      null,
+      580811,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄位為民國年月日格式，已照抄但未轉換為數值，故填null以避免錯誤",
+  "財產編號與財產名稱合併於label欄位"
+ ]
+}

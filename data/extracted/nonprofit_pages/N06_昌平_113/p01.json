@@ -1,0 +1,23 @@
+{
+ "report": "N06_昌平_113",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 113,
+ "pdf_page": 1,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 1,
+ "page_kind": "cover",
+ "tables": [],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "新北市昌平非營利幼兒園\n（委託財團法人三之三生命教育基金會辦理）\n財務報表暨會計師查核報告\n民國 113 學年度及民國 112 學年度\n\n地址：新北市新莊區昌平街200號1、2樓\n\n電話：(02) 8521-9488"
+  }
+ ],
+ "issues": []
+}

@@ -1,0 +1,370 @@
+{
+ "report": "N04_海工_113",
+ "code": "N04",
+ "short_name": "海工",
+ "academic_year": 113,
+ "pdf_page": 28,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N04",
+ "printed_page": 28,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "財產清冊",
+   "period_labels": [
+    "總價",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "個人電腦 accer",
+     "note_ref": null,
+     "values": [
+      17500,
+      1,
+      1980,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "個人電腦 accer",
+     "note_ref": null,
+     "values": [
+      17500,
+      1,
+      1980,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      46533,
+      1,
+      8654,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      46533,
+      1,
+      8654,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      46533,
+      1,
+      8654,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      27920,
+      1,
+      5193,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      27920,
+      1,
+      5193,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "兒童輔導教具",
+     "note_ref": null,
+     "values": [
+      189137,
+      1,
+      1891,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "監視機",
+     "note_ref": null,
+     "values": [
+      18500,
+      1,
+      185,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "調色教學版",
+     "note_ref": null,
+     "values": [
+      13000,
+      1,
+      9568,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "體育訓練墊",
+     "note_ref": null,
+     "values": [
+      28000,
+      1,
+      20608,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "液晶螢幕",
+     "note_ref": null,
+     "values": [
+      3600,
+      1,
+      3600,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "對講機",
+     "note_ref": null,
+     "values": [
+      3500,
+      1,
+      3500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "4TB 存儲硬碟",
+     "note_ref": null,
+     "values": [
+      4700,
+      1,
+      4700,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "AHD4 合１攝影機",
+     "note_ref": null,
+     "values": [
+      2300,
+      1,
+      2300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "AHD4 合１攝影機",
+     "note_ref": null,
+     "values": [
+      2300,
+      1,
+      2300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "AHD4 合１攝影機",
+     "note_ref": null,
+     "values": [
+      2300,
+      1,
+      2300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "AHD4 合１攝影機",
+     "note_ref": null,
+     "values": [
+      2300,
+      1,
+      2300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "超廣角彩色攝影機",
+     "note_ref": null,
+     "values": [
+      3600,
+      1,
+      3600,
+      null,
+      5
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "附表四：財產清冊",
+   "text": "新北市海工非營利幼兒園\n（委託社團法人新北市幼兒成長協會辦理）\n財產清冊\n民國 114 年 7 月 31 日\n1.代管財產"
+  }
+ ],
+ "issues": [
+  "購置日期欄位為日期格式，未收入數值欄；各列購置日期已可辨識但本schema values僅收數字，故購置日期填null。"
+ ]
+}

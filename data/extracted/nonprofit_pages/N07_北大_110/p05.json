@@ -1,0 +1,334 @@
+{
+ "report": "N07_北大_110",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 110,
+ "pdf_page": 5,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 5,
+ "page_kind": "balance_sheet",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "111年7月31日金額",
+    "111年7月31日%",
+    "110年7月31日金額",
+    "110年7月31日%"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "流動資產",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "現金及銀行存款",
+     "note_ref": "二、三",
+     "values": [
+      6036334,
+      51,
+      3835528,
+      37
+     ]
+    },
+    {
+     "label": "應收帳款淨額",
+     "note_ref": null,
+     "values": [
+      2351,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "其他應收款",
+     "note_ref": null,
+     "values": [
+      13800,
+      null,
+      328975,
+      3
+     ]
+    },
+    {
+     "label": "預付款項",
+     "note_ref": null,
+     "values": [
+      8930,
+      null,
+      67725,
+      1
+     ]
+    },
+    {
+     "label": "流動資產合計",
+     "note_ref": null,
+     "values": [
+      6061415,
+      51,
+      4232228,
+      41
+     ]
+    },
+    {
+     "label": "非流動資產",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "資遣費準備金",
+     "note_ref": "二、三",
+     "values": [
+      261769,
+      2,
+      202480,
+      2
+     ]
+    },
+    {
+     "label": "業務發展準備金",
+     "note_ref": "二、三",
+     "values": [
+      2687000,
+      24,
+      2588000,
+      25
+     ]
+    },
+    {
+     "label": "代管財產",
+     "note_ref": "二、三",
+     "values": [
+      2367179,
+      20,
+      2994505,
+      29
+     ]
+    },
+    {
+     "label": "購置財產",
+     "note_ref": "二、三",
+     "values": [
+      402575,
+      3,
+      252425,
+      3
+     ]
+    },
+    {
+     "label": "非流動資產合計",
+     "note_ref": null,
+     "values": [
+      5718523,
+      49,
+      6037410,
+      59
+     ]
+    },
+    {
+     "label": "資產總計",
+     "note_ref": null,
+     "values": [
+      11779938,
+      100,
+      10269638,
+      100
+     ]
+    },
+    {
+     "label": "流動負債",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "其他應付款",
+     "note_ref": "五",
+     "values": [
+      1710583,
+      15,
+      1639442,
+      16
+     ]
+    },
+    {
+     "label": "預收款項",
+     "note_ref": null,
+     "values": [
+      2664450,
+      22,
+      2439450,
+      24
+     ]
+    },
+    {
+     "label": "其他流動負債",
+     "note_ref": null,
+     "values": [
+      33899,
+      null,
+      23859,
+      null
+     ]
+    },
+    {
+     "label": "流動負債合計",
+     "note_ref": null,
+     "values": [
+      4408932,
+      37,
+      4102751,
+      40
+     ]
+    },
+    {
+     "label": "非流動負債",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "資遣費準備",
+     "note_ref": "二、三",
+     "values": [
+      261769,
+      2,
+      202480,
+      2
+     ]
+    },
+    {
+     "label": "業務發展準備",
+     "note_ref": "二、三",
+     "values": [
+      2687000,
+      24,
+      2588000,
+      25
+     ]
+    },
+    {
+     "label": "應付代管財產",
+     "note_ref": "二、三",
+     "values": [
+      2367179,
+      20,
+      2994505,
+      29
+     ]
+    },
+    {
+     "label": "應付購置財產",
+     "note_ref": "二、三",
+     "values": [
+      402575,
+      3,
+      252425,
+      3
+     ]
+    },
+    {
+     "label": "非流動負債合計",
+     "note_ref": null,
+     "values": [
+      5718523,
+      49,
+      6037410,
+      59
+     ]
+    },
+    {
+     "label": "負債總額",
+     "note_ref": null,
+     "values": [
+      10127455,
+      86,
+      10140161,
+      99
+     ]
+    },
+    {
+     "label": "餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "累積餘絀",
+     "note_ref": "四",
+     "values": [
+      129477,
+      1,
+      867352,
+      8
+     ]
+    },
+    {
+     "label": "本期餘絀",
+     "note_ref": "四",
+     "values": [
+      1523006,
+      13,
+      -737875,
+      -7
+     ]
+    },
+    {
+     "label": "餘絀總額",
+     "note_ref": null,
+     "values": [
+      1652483,
+      14,
+      129477,
+      1
+     ]
+    },
+    {
+     "label": "負債及餘絀總計",
+     "note_ref": null,
+     "values": [
+      11779938,
+      100,
+      10269638,
+      100
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "頁面有大型紅色關防印章遮蓋表頭部分文字，表格標題（資產負債表）及期間（民國111年7月31日）部分被遮擋，已依可辨識文字與整體格式推斷；111年7月31日欄的「應收帳款淨額」%欄位顯示為破折號，填null。"
+ ]
+}

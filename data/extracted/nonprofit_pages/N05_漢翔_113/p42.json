@@ -1,0 +1,76 @@
+{
+ "report": "N05_漢翔_113",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 113,
+ "pdf_page": 42,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 42,
+ "page_kind": "other",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "評分"
+   ],
+   "items": [
+    {
+     "label": "(2)依第1學期會計師查核修改各項財務報表及財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    },
+    {
+     "label": "(3)前學年度會計師簽證報告揭露缺失之改善情形",
+     "note_ref": null,
+     "values": [
+      2
+     ]
+    },
+    {
+     "label": "(4)財產依規定登錄及報廢之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    },
+    {
+     "label": "會計查核簽證情形評分合計：",
+     "note_ref": null,
+     "values": [
+      17
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "其他特殊情形：（採總分外扣方式，扣至總分０分止）",
+   "period_labels": [
+    "-"
+   ],
+   "items": [
+    {
+     "label": "2.有不當挪用經費之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本頁為考評指標評分表（非財務報表），考評依據欄文字較多，已儘量照錄主要內容；評分欄數字已照錄。",
+  "其他特殊情形表之評分欄標記為'-'（扣分方式），已填null。",
+  "頁尾蓋有誠明聯合會計師事務所及會計師張景嵐之關防印章。"
+ ]
+}

@@ -1,0 +1,287 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 21,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 21,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收　入",
+    "112.8.1~113.7.31 支　出",
+    "112.8.1~113.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "專案補助",
+     "values": [
+      2370184,
+      2370184,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "values": [
+      224610,
+      224610,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "values": [
+      17182,
+      17182,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "values": [
+      2611976,
+      2611976,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收　入",
+    "113.8.1~114.7.31 支　出",
+    "113.8.1~114.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "親職講座補助",
+     "values": [
+      6500,
+      6500,
+      null
+     ]
+    },
+    {
+     "label": "專業輔導補助",
+     "values": [
+      60000,
+      60000,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "values": [
+      929774,
+      929774,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "values": [
+      60000,
+      60000,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "values": [
+      11000,
+      11000,
+      null
+     ]
+    },
+    {
+     "label": "調薪及延長照顧差額補助",
+     "values": [
+      827933,
+      827933,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "values": [
+      70000,
+      70000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "values": [
+      1965207,
+      1965207,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收　入",
+    "112.8.1~113.7.31 支　出",
+    "112.8.1~113.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "專業輔導補助",
+     "values": [
+      59000,
+      59000,
+      null
+     ]
+    },
+    {
+     "label": "教師助理員補助",
+     "values": [
+      676972,
+      676972,
+      null
+     ]
+    },
+    {
+     "label": "防災校園建置計畫補助",
+     "values": [
+      50000,
+      50000,
+      null
+     ]
+    },
+    {
+     "label": "早期療育專業輔導補助",
+     "values": [
+      57000,
+      57000,
+      null
+     ]
+    },
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "values": [
+      29225,
+      29225,
+      null
+     ]
+    },
+    {
+     "label": "特教生托育服務計畫補助",
+     "values": [
+      34000,
+      34000,
+      null
+     ]
+    },
+    {
+     "label": "調薪及延長照顧差額補助",
+     "values": [
+      1383987,
+      1383987,
+      null
+     ]
+    },
+    {
+     "label": "績效獎金",
+     "values": [
+      80000,
+      80000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "values": [
+      2370184,
+      2370184,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收　入",
+    "113.8.1~114.7.31 支　出",
+    "113.8.1~114.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "兒童節禮物補助",
+     "values": [
+      2700,
+      2700,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收　入",
+    "112.8.1~113.7.31 支　出",
+    "112.8.1~113.7.31 淨　額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "values": [
+      221130,
+      221130,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "values": [
+      3480,
+      3480,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "values": [
+      224610,
+      224610,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "頁首第一張表（112.8.1~113.7.31 合計表）的「淨　額」欄顯示為 $- ，視為 null 處理。",
+  "各子表淨額欄均顯示 $- 或空白，統一填 null。"
+ ]
+}

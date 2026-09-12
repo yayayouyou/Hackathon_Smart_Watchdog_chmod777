@@ -1,0 +1,281 @@
+{
+ "report": "N10_大觀_113",
+ "code": "N10",
+ "short_name": "大觀",
+ "academic_year": 113,
+ "pdf_page": 35,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N10",
+ "printed_page": 35,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "501011019-000043 飲水機",
+     "note_ref": null,
+     "values": [
+      24400,
+      1,
+      244,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "501010603-000158 冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      31009,
+      1,
+      9406,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "501030101B-000040 桌",
+     "note_ref": null,
+     "values": [
+      19025,
+      1,
+      190,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "5030990-000001 BBQ廚房組",
+     "note_ref": null,
+     "values": [
+      10200,
+      1,
+      102,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "501050420-000004 黑(白)板",
+     "note_ref": null,
+     "values": [
+      22085,
+      1,
+      19717,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1260719,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "2.購置財產",
+   "period_labels": [
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "65040001 次綠次氯酸生成設備",
+     "note_ref": null,
+     "values": [
+      14000,
+      1,
+      14000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "10900729001 電腦(含22吋螢幕)",
+     "note_ref": null,
+     "values": [
+      16200,
+      4,
+      64800,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "1090731001 組合式體能遊具組",
+     "note_ref": null,
+     "values": [
+      63000,
+      1,
+      63000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "1090731002 小單位積木",
+     "note_ref": null,
+     "values": [
+      15000,
+      3,
+      45000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "1091207001 彩窗積木",
+     "note_ref": null,
+     "values": [
+      15000,
+      1,
+      15000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "1100731001 吸塵器四台",
+     "note_ref": null,
+     "values": [
+      3990,
+      4,
+      15960,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "1100830001 廣播器",
+     "note_ref": null,
+     "values": [
+      58170,
+      1,
+      58170,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "1101124001 戶外不鏽鋼公佈欄",
+     "note_ref": null,
+     "values": [
+      39800,
+      1,
+      39800,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "1120717001 網路伺服器",
+     "note_ref": null,
+     "values": [
+      28000,
+      1,
+      28000,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "1121016002 牙杯櫃",
+     "note_ref": null,
+     "values": [
+      12320,
+      4,
+      49280,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "1140401001 音響麥克風組",
+     "note_ref": null,
+     "values": [
+      23500,
+      1,
+      23500,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "1140626001 搖滾圈",
+     "note_ref": null,
+     "values": [
+      19995,
+      1,
+      19995,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "1140711001 監視器",
+     "note_ref": null,
+     "values": [
+      9676,
+      1,
+      9676,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "1140711002 螢幕",
+     "note_ref": null,
+     "values": [
+      29324,
+      8,
+      29324,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      475505,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "第一張表無標題，推測為財產目錄的延續頁（上接前頁）；購置日期欄為文字格式無法放入數值，故填null",
+  "兩張表的購置日期欄位為日期字串，schema要求數值型別，無法直接填入，故填null"
+ ]
+}

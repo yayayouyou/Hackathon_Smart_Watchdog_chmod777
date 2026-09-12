@@ -1,0 +1,108 @@
+{
+ "report": "N08_鷺江_113",
+ "code": "N08",
+ "short_name": "鷺江",
+ "academic_year": 113,
+ "pdf_page": 23,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N08",
+ "printed_page": 23,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": "行政管理費",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.8.1~113.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "財團法人彭婉如文教基金會",
+     "note_ref": null,
+     "values": [
+      256640,
+      240552
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "專案補助收入",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.8.1~113.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "財團法人彭婉如文教基金會",
+     "note_ref": null,
+     "values": [
+      11515,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "其他應收款",
+   "period_labels": [
+    "114年7月31日",
+    "113年7月31日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "財團法人彭婉如文教基金會",
+     "note_ref": null,
+     "values": [
+      7971,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "其他應付款",
+   "period_labels": [
+    "114年7月31日",
+    "113年7月31日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "財團法人彭婉如文教基金會",
+     "note_ref": null,
+     "values": [
+      256640,
+      240552
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "(二) 與關係人之重大交易事項",
+   "text": "1. 行政管理費\n2. 專案補助收入\n本幼兒園之受託法人，提供每園有依正職人力*4小時*12月代課費專案補助，由各園安排人力，讓專職教保人員有備課時間，各園按實支實付方式向受託法人申請補助。\n3. 其他應收款\n4. 其他應付款"
+  },
+  {
+   "heading": "六、質抵押資產",
+   "text": "無。"
+  },
+  {
+   "heading": "七、重大承諾事項及或有事項",
+   "text": "新北市政府與鷺江幼兒園母機構財團法人彭婉如文教基金會，簽訂委託辦理新北市鷺江非營利幼兒園契約書，委託年限自110年8月1日至114年7月31日，且連續3學年通過績效考評者，依據契約書第18條規定，母機構應於本契約屆滿8個月前向新北市政府提出續辦意願，有續辦意願者，應提具後續4學年之經營計畫書，申請繼續辦理，經新北市政府同意後繼續辦理。母機構已申請延長契約，新北市政府與母機構，已簽訂委託辦理新北市鷺江非營利幼兒園契約書，委託年限自114年8月1日至118年7月31日。"
+  }
+ ],
+ "issues": []
+}

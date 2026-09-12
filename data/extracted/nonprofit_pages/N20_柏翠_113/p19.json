@@ -1,0 +1,260 @@
+{
+ "report": "N20_柏翠_113",
+ "code": "N20",
+ "short_name": "柏翠",
+ "academic_year": 113,
+ "pdf_page": 19,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N20",
+ "printed_page": 19,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "5. 維護費及修繕費購置費",
+   "period_labels": [
+    "113.8.1~114.7.31 預算數",
+    "113.8.1~114.7.31 決算數",
+    "113.8.1~114.7.31 差異",
+    "113.8.1~114.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "維護費",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "修繕費",
+     "note_ref": null,
+     "values": [
+      110000,
+      98740,
+      -11260,
+      90
+     ]
+    },
+    {
+     "label": "圍舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      45000,
+      52578,
+      7578,
+      117
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      1053,
+      -6947,
+      13
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      163000,
+      152371,
+      -10629,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費及修繕費購置費",
+   "period_labels": [
+    "113.8.1~114.7.31 預算數",
+    "113.8.1~114.7.31 決算數",
+    "113.8.1~114.7.31 差異",
+    "113.8.1~114.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "修繕購置費",
+     "note_ref": null,
+     "values": [
+      218400,
+      232239,
+      13839,
+      106
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費及修繕費購置費",
+   "period_labels": [
+    "112.8.1~113.7.31 預算數",
+    "112.8.1~113.7.31 決算數",
+    "112.8.1~113.7.31 差異",
+    "112.8.1~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "維護費",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "修繕費",
+     "note_ref": null,
+     "values": [
+      110000,
+      128393,
+      18393,
+      117
+     ]
+    },
+    {
+     "label": "圍舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      45000,
+      28862,
+      -16138,
+      64
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      1059,
+      -6941,
+      13
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      163000,
+      158314,
+      -4686,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費及修繕費購置費",
+   "period_labels": [
+    "112.8.1~113.7.31 預算數",
+    "112.8.1~113.7.31 決算數",
+    "112.8.1~113.7.31 差異",
+    "112.8.1~113.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "修繕購置費",
+     "note_ref": null,
+     "values": [
+      232400,
+      187888,
+      -44512,
+      81
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "6. 延長照顧服務收支",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.8.1~113.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "延長照顧服務收入",
+     "note_ref": null,
+     "values": [
+      604635,
+      516615
+     ]
+    },
+    {
+     "label": "延長照顧服務收入退費",
+     "note_ref": null,
+     "values": [
+      -54230,
+      -23240
+     ]
+    },
+    {
+     "label": "延長照顧服務收入淨額",
+     "note_ref": null,
+     "values": [
+      550405,
+      493375
+     ]
+    },
+    {
+     "label": "延長照顧服務支出",
+     "note_ref": null,
+     "values": [
+      -294474,
+      -209273
+     ]
+    },
+    {
+     "label": "延長照顧服務收支淨額",
+     "note_ref": null,
+     "values": [
+      255931,
+      284102
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.5 維護費及修繕購置費各細項經費倘有不足，應優先於維護費及修繕購置費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費）。"
+  },
+  {
+   "heading": null,
+   "text": "(2) 113 學年度修繕購置費超支預算部分，依上開規定應優先於維護費總預算內相互勻支，仍有不足，經與業務費勻支後，已符合勻支規定。"
+  },
+  {
+   "heading": null,
+   "text": "(3) 113 及 112 學年度維護費及修繕購置費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": []
+}

@@ -2,6 +2,17 @@
 
 Output: data/processed/compliance_findings.csv -- one row per (園, 學年度, rule).
 
+Two of the seven rules cannot be decided from the statement alone and used to
+return 資料不足 on almost every report. When the page-level facts are present
+(``data/processed/nonprofit_pagewise_facts.csv``, built by
+``build_pagewise_facts.py``) this script resolves them from the 附表二 and 附註三
+tables that answer them -- see ``features/compliance_pagewise.py``. The
+``resolved_by`` column names the table that decided a check and is empty for every
+check the statement decided on its own, so the two layers stay tellable apart.
+
+Without that file the script still runs and those two rules stay 資料不足; the
+page-level extraction is an optional deepening, not a dependency.
+
 The rules come from each report's own 附註二「重大會計政策之彙總說明」, so a finding
 quotes the institution's filed policy rather than a threshold we invented. See
 src/smart_watchdog/features/compliance.py for the quoted rule text.
@@ -23,8 +34,10 @@ from collections import Counter
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
 from smart_watchdog.features.compliance import check_report
+from smart_watchdog.features.compliance_pagewise import resolve_checks
 
 EXTRACT_DIR = pathlib.Path("data/extracted/nonprofit")
+PAGEWISE_FACTS = pathlib.Path("data/processed/nonprofit_pagewise_facts.csv")
 OUT = pathlib.Path("data/processed/compliance_findings.csv")
 TIMESERIES = pathlib.Path("data/processed/reserve_timeseries.csv")
 FILENAME_RE = re.compile(r"^(N\d\d)_(.+?)_(\d{3})$")
@@ -87,6 +100,18 @@ def main() -> None:
                     d["detail"] += f"　⚠️ 但 {cure}，非持續性缺口"
             rows.append(d)
 
+    before = Counter(
+        "資料不足" if r["passed"] is None else ("通過" if r["passed"] else "未通過")
+        for r in rows)
+    if PAGEWISE_FACTS.exists():
+        with PAGEWISE_FACTS.open(encoding="utf-8", newline="") as fh:
+            facts = list(csv.DictReader(fh))
+        rows, resolution_stats = resolve_checks(rows, facts)
+    else:
+        resolution_stats = {}
+        for r in rows:
+            r["resolved_by"] = ""
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
@@ -94,7 +119,21 @@ def main() -> None:
         w.writerows(rows)
 
     reports = len({(r["code"], r["academic_year"]) for r in rows})
-    print(f"wrote {OUT}  ({len(rows)} 項檢核，涵蓋 {reports} 份報告)\n")
+    print(f"wrote {OUT}  ({len(rows)} 項檢核，涵蓋 {reports} 份報告)")
+    if PAGEWISE_FACTS.exists():
+        after = Counter(
+            "資料不足" if r["passed"] is None else ("通過" if r["passed"] else "未通過")
+            for r in rows)
+        moved = [f"{k} {v}" for k, v in sorted(resolution_stats.items()) if "→" in k]
+        print(f"頁級事實補判：資料不足 {before['資料不足']} → {after['資料不足']}"
+              f"，通過 {before['通過']} → {after['通過']}"
+              f"，未通過 {before['未通過']} → {after['未通過']}")
+        if moved:
+            print("  " + "　".join(moved))
+    else:
+        print(f"（{PAGEWISE_FACTS.name} 不存在，未做頁級補判；"
+              f"跑 build_pagewise_facts.py 可解開兩條規則）")
+    print()
 
     by_rule: dict[str, Counter] = {}
     for r in rows:

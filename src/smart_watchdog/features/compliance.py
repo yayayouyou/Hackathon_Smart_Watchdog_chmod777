@@ -63,6 +63,12 @@ SEVERANCE_RESERVE_CAP = 0.10
 # Reserves are whole-NTD; anything above this is a real difference, not rounding.
 TOL = 1.0
 
+#: Relative materiality for 附註五's disclosed amount vs the year-end payable.
+#: These two figures legitimately differ by whatever was settled in cash during
+#: the year, so an absolute tolerance reports routine settlement as a breach.
+#: See the note at the 附註五 check for the distribution this was chosen from.
+NOTE5_MATERIALITY = 0.10
+
 
 @dataclasses.dataclass
 class Check:
@@ -448,16 +454,43 @@ def check_report(payload: dict) -> list[Check]:
         )
     else:
         gap = payable - disclosed
+        # Materiality is relative, not a 1-dollar absolute tolerance.
+        #
+        # The absolute TOL used here originally flagged 17 園-年, and the gaps
+        # split into two populations with nothing in between:
+        #
+        #   real outliers   N01 110 +140.1%   N26 111 +104.4%
+        #                   N26 112 +107.9%   N13 113  +69.9%
+        #   everything else −7.2% … −0.5%, thirteen of them inside ±3%
+        #
+        # The median gap across all 127 園-年 that report both figures is
+        # 0.00%: the normal case is exact equality, and the small negatives are
+        # the year's cash settlements, which ``EXTRACTION_GUIDE.md`` already
+        # records as "差額 = 當年度已現金支付金額，是正常關係". A 1-dollar
+        # tolerance therefore reported N25 碧城 111 -- 0.5% from exact -- as a
+        # compliance failure against a real institution.
+        #
+        # 10% sits inside the empty band between the two populations, so any
+        # threshold from 10% to 50% selects the same four reports; the choice is
+        # not balanced on a knife edge.
+        limit = max(TOL, abs(disclosed) * NOTE5_MATERIALITY)
+        pct = gap / disclosed * 100 if disclosed else 0.0
         paid_in_cash = (
             f"；本年度以現金支付約 {admin_actual - disclosed:,.0f}"
             f"（表列行政管理費 {admin_actual:,.0f} − 揭露數）"
             if admin_actual is not None
             else ""
         )
+        immaterial = (
+            f"；差額 {abs(pct):.1f}% 未達重大性門檻 {NOTE5_MATERIALITY:.0%}，"
+            f"係年度內現金結算之時間差"
+            if abs(gap) <= limit and abs(gap) > TOL
+            else ""
+        )
         add(
-            "附註五揭露 = 年末應付受託法人餘額", text_n5, abs(gap) <= TOL,
+            "附註五揭露 = 年末應付受託法人餘額", text_n5, abs(gap) <= limit,
             f"附註五揭露 {disclosed:,.0f} vs 年末應付受託法人款 {payable:,.0f}，"
-            f"差額 {gap:+,.0f}{paid_in_cash}",
+            f"差額 {gap:+,.0f}（{pct:+.1f}%）{paid_in_cash}{immaterial}",
             "medium",
         )
 

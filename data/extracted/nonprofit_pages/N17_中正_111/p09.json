@@ -1,0 +1,202 @@
+{
+ "report": "N17_中正_111",
+ "code": "N17",
+ "short_name": "中正",
+ "academic_year": 111,
+ "pdf_page": 9,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N17",
+ "printed_page": 9,
+ "page_kind": "cash_flow",
+ "tables": [
+  {
+   "title": "現金流量表",
+   "context_heading": null,
+   "period_labels": [
+    "111.8.1~112.7.31",
+    "110.8.1~111.7.31"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "營業活動之現金流量：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "本期稅前餘絀",
+     "note_ref": null,
+     "values": [
+      1180084,
+      637161
+     ]
+    },
+    {
+     "label": "調整項目：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "資產/負債淨變動數",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "應收帳款淨額",
+     "note_ref": null,
+     "values": [
+      -9510,
+      null
+     ]
+    },
+    {
+     "label": "其他應收款",
+     "note_ref": null,
+     "values": [
+      -36748,
+      -288430
+     ]
+    },
+    {
+     "label": "預付款項",
+     "note_ref": null,
+     "values": [
+      12052,
+      -4870
+     ]
+    },
+    {
+     "label": "應付票據",
+     "note_ref": null,
+     "values": [
+      196683,
+      null
+     ]
+    },
+    {
+     "label": "應付帳款",
+     "note_ref": null,
+     "values": [
+      880054,
+      48135
+     ]
+    },
+    {
+     "label": "其他應付款",
+     "note_ref": null,
+     "values": [
+      -41437,
+      22803
+     ]
+    },
+    {
+     "label": "預收款項",
+     "note_ref": null,
+     "values": [
+      2181178,
+      1198802
+     ]
+    },
+    {
+     "label": "營運產生之現金",
+     "note_ref": null,
+     "values": [
+      null,
+      1613601
+     ]
+    },
+    {
+     "label": "本期支付所得稅",
+     "note_ref": null,
+     "values": [
+      2181178,
+      -25132
+     ]
+    },
+    {
+     "label": "營業活動之淨現金流入",
+     "note_ref": null,
+     "values": [
+      1180084,
+      1588469
+     ]
+    },
+    {
+     "label": "投資活動之現金流量：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "投資活動之淨現金流入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "籌資活動之現金流量：",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "籌資活動之淨現金流入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "本期現金及約當現金增加數",
+     "note_ref": null,
+     "values": [
+      2181178,
+      1588469
+     ]
+    },
+    {
+     "label": "期初現金及約當現金餘額",
+     "note_ref": null,
+     "values": [
+      4985223,
+      3396754
+     ]
+    },
+    {
+     "label": "期末現金及約當現金餘額",
+     "note_ref": null,
+     "values": [
+      7166401,
+      4985223
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "標題部分被紅色關防遮蓋，機構名稱與委託單位名稱部分文字無法完整辨識。",
+  "本期稅前餘絀(111.8.1~112.7.31)與本期支付所得稅同欄位均顯示2,181,178，與營業活動淨現金流入$1,180,084不一致，疑似表格數字排列或印刷有異常，已照原表轉錄。"
+ ]
+}

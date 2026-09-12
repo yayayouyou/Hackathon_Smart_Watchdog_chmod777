@@ -1,0 +1,465 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 31,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 31,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "501030607 / 000011 調理台",
+     "note_ref": null,
+     "values": [
+      12000,
+      1,
+      120,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "501030608 / 000001 餐具消毒櫃",
+     "note_ref": null,
+     "values": [
+      55000,
+      1,
+      550,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030609 / 000002 廚餐用車",
+     "note_ref": null,
+     "values": [
+      10000,
+      1,
+      100,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030612 / 000001 調理台櫥櫃",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      250,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "501030612 / 000002 調理台櫥櫃",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      250,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "501030729B / 000001 展示牌",
+     "note_ref": null,
+     "values": [
+      12000,
+      1,
+      120,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "501030746 / 000001 安全護網",
+     "note_ref": null,
+     "values": [
+      16000,
+      1,
+      160,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030746 / 000002 安全護網",
+     "note_ref": null,
+     "values": [
+      16000,
+      1,
+      160,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501050301 / 000004 教育展示裝置",
+     "note_ref": null,
+     "values": [
+      16815,
+      1,
+      9047,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "502020118 / 000001 監視機",
+     "note_ref": null,
+     "values": [
+      37275,
+      1,
+      18824,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6010101 / 000009 文書用具-白板",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6010101 / 000010 文書用具-白板",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6010604 / 000040 傳音用具-麥克風",
+     "note_ref": null,
+     "values": [
+      3010,
+      1,
+      3010,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6010604 / 000041 傳音用具-麥克風",
+     "note_ref": null,
+     "values": [
+      3010,
+      1,
+      3010,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6010604 / 000042 傳音用具-麥克風",
+     "note_ref": null,
+     "values": [
+      3010,
+      1,
+      3010,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6011206 / 000222 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3000,
+      1,
+      3000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011206 / 000223 電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3000,
+      1,
+      3000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011213 / 000003 電器用具-電冰箱",
+     "note_ref": null,
+     "values": [
+      8000,
+      1,
+      8000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6011243 / 000001 電器用具-空調節用設定器",
+     "note_ref": null,
+     "values": [
+      9600,
+      1,
+      9600,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6020106 / 000001 清潔用具-排油煙機",
+     "note_ref": null,
+     "values": [
+      4700,
+      1,
+      4700,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6040205 / 000011 飲食用具-電鍋",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070201 / 000010 陳列用具-辦公桌",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070201 / 000011 陳列用具-辦公桌",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070201 / 000012 陳列用具-辦公桌",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070202 / 000131 陳列用具-辦公椅",
+     "note_ref": null,
+     "values": [
+      1200,
+      1,
+      1200,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070202 / 000132 陳列用具-辦公椅",
+     "note_ref": null,
+     "values": [
+      1200,
+      1,
+      1200,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 / 000061 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6400,
+      1,
+      6400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 / 000062 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6400,
+      1,
+      6400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 / 000063 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6400,
+      1,
+      6400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 / 000064 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6400,
+      1,
+      6400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 / 000065 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6400,
+      1,
+      6400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 / 000066 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6400,
+      1,
+      6400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 / 000067 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6400,
+      1,
+      6400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 / 000068 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6400,
+      1,
+      6400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 / 000069 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6400,
+      1,
+      6400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070206 / 000070 陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      6400,
+      1,
+      6400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070214 / 000001 陳列用具-床",
+     "note_ref": null,
+     "values": [
+      8000,
+      1,
+      8000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070220 / 000001 陳列用具-穿衣鏡",
+     "note_ref": null,
+     "values": [
+      5000,
+      1,
+      5000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070227 / 000007 陳列用具-活動櫃(桌邊櫃)",
+     "note_ref": null,
+     "values": [
+      1200,
+      1,
+      1200,
+      null,
+      5
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄為文字格式（如107/08/10），未納入數值欄位，僅以label形式記錄於各列。",
+  "表格未含表頭標題（表名），無法確認所屬期間或機構名稱。"
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "report": "N02_山北_113",
+ "code": "N02",
+ "short_name": "山北",
+ "academic_year": 113,
+ "pdf_page": 33,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N02",
+ "printed_page": 33,
+ "page_kind": "other",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "是否符合－是",
+    "是否符合－否",
+    "是否符合－不適用"
+   ],
+   "items": [
+    {
+     "label": "57 園舍消毒、清潔是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "58 火險是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "59 維護費總支出是否符合預算，如有超支，其金額為：　-　元",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "60 電器用品、園舍修繕、廚房設備及教學設施設備是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "61 修繕購置費總支出是否符合預算，如有超支，其金額為：168,108　元",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "62 雜支是否符合非營利幼兒園營運成本支用範圍及預算，如有超支，其金額為：　-　元",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "63 行政管理費是否符合預算，如有超支，其金額為：　-　元",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "64 業務發展準備之提列及業務發展準備金之動支均符合規定，提列金額是否以專戶或定期存款方式儲存",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "65 專案補助、代收補助、及代收代付等其他支出是否符合各該項目之支用範圍，如有超支，其金額為：　-　元",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "維護費補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "修繕購置費補充說明：",
+   "text": "依非營利幼兒園會計財務及經費處理注意事項第 13 點規定，維護費及修繕購置費各細項經費倘有不足，應優先於維護費及修繕購置費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費）。修繕購置費超支預算部分，經與維護費及業務費相互勻支後，已符合勻支規定。"
+  },
+  {
+   "heading": "雜支、行政管理費及業務發展費補充說明：",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "第57至65項查核欄位採用V符號標記「是」欄，本JSON以-1表示V（勾選），僅供辨識用途，實際非數值資料，建議人工確認欄位標記方式。"
+ ]
+}

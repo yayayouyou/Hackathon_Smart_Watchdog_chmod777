@@ -1,0 +1,442 @@
+{
+ "report": "N07_北大_113",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 113,
+ "pdf_page": 36,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 36,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "501010608-000207 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      76017,
+      1,
+      760,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010701B-000007 冰箱",
+     "note_ref": null,
+     "values": [
+      68000,
+      1,
+      8394,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "501010701B-000008 冰箱",
+     "note_ref": null,
+     "values": [
+      32000,
+      1,
+      3950,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "501011017-000001 瓦斯爐",
+     "note_ref": null,
+     "values": [
+      52500,
+      1,
+      525,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "501011017-000002 瓦斯爐",
+     "note_ref": null,
+     "values": [
+      58000,
+      1,
+      580,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "501011019-000001 飲水機",
+     "note_ref": null,
+     "values": [
+      12000,
+      1,
+      120,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "501011019-000002 飲水機",
+     "note_ref": null,
+     "values": [
+      47777,
+      1,
+      7047,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "501011019-000003 飲水機",
+     "note_ref": null,
+     "values": [
+      30800,
+      1,
+      8778,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "501011066A-000001 油煙罩",
+     "note_ref": null,
+     "values": [
+      15000,
+      1,
+      4481,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501030101B-000038 桌",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      250,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301A-000017 櫥櫃",
+     "note_ref": null,
+     "values": [
+      10940,
+      1,
+      3359,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501030301A-000026 櫥櫃",
+     "note_ref": null,
+     "values": [
+      13000,
+      1,
+      9782,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501030301B-000011 櫥櫃",
+     "note_ref": null,
+     "values": [
+      11500,
+      1,
+      6566,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B-000012 櫥櫃",
+     "note_ref": null,
+     "values": [
+      11500,
+      1,
+      6566,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B-000013 櫥櫃",
+     "note_ref": null,
+     "values": [
+      24600,
+      1,
+      14046,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030301B-000014 櫥櫃",
+     "note_ref": null,
+     "values": [
+      24600,
+      1,
+      14046,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030401-000011 沙發椅",
+     "note_ref": null,
+     "values": [
+      10158,
+      1,
+      5801,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030607-000001 調理台",
+     "note_ref": null,
+     "values": [
+      12000,
+      1,
+      120,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "501030607-000002 調理台",
+     "note_ref": null,
+     "values": [
+      12000,
+      1,
+      120,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "501030607-000003 調理台",
+     "note_ref": null,
+     "values": [
+      16046,
+      1,
+      160,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "501030607-000004 調理台",
+     "note_ref": null,
+     "values": [
+      16000,
+      1,
+      160,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "501030607-000005 調理台",
+     "note_ref": null,
+     "values": [
+      18261,
+      1,
+      183,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "501030607-000006 調理台",
+     "note_ref": null,
+     "values": [
+      18000,
+      1,
+      180,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "501030607-000007 調理台",
+     "note_ref": null,
+     "values": [
+      22500,
+      1,
+      225,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "501030607-000008 調理台",
+     "note_ref": null,
+     "values": [
+      16000,
+      1,
+      160,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "501030608-000001 餐具消毒櫃",
+     "note_ref": null,
+     "values": [
+      75000,
+      1,
+      750,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030609-000001 廚餐用車",
+     "note_ref": null,
+     "values": [
+      18000,
+      1,
+      180,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030609-000002 廚餐用車",
+     "note_ref": null,
+     "values": [
+      18000,
+      1,
+      180,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501030799-000022 其他康樂設備",
+     "note_ref": null,
+     "values": [
+      57900,
+      1,
+      579,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "501030799-000023 其他康樂設備",
+     "note_ref": null,
+     "values": [
+      65000,
+      1,
+      650,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "501050420-000058 黑（白）板",
+     "note_ref": null,
+     "values": [
+      19845,
+      1,
+      6091,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501050420-000059 黑（白）板",
+     "note_ref": null,
+     "values": [
+      19845,
+      1,
+      6091,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501050420-000060 黑（白）板",
+     "note_ref": null,
+     "values": [
+      19845,
+      1,
+      6091,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501050420-000061 黑（白）板",
+     "note_ref": null,
+     "values": [
+      19845,
+      1,
+      6091,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501050420-000062 黑（白）板",
+     "note_ref": null,
+     "values": [
+      19845,
+      1,
+      6091,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501050420-000063 黑（白）板",
+     "note_ref": null,
+     "values": [
+      33500,
+      1,
+      26314,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "501050420-000064 黑（白）板",
+     "note_ref": null,
+     "values": [
+      33500,
+      1,
+      26314,
+      null,
+      10
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄為日期格式，未納入數值欄位，僅轉錄於label中以供參考；實際購置日期已記錄於各列label中。"
+ ]
+}

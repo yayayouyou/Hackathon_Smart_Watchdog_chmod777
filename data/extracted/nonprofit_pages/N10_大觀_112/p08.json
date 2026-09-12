@@ -1,0 +1,102 @@
+{
+ "report": "N10_大觀_112",
+ "code": "N10",
+ "short_name": "大觀",
+ "academic_year": 112,
+ "pdf_page": 8,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N10",
+ "printed_page": 8,
+ "page_kind": "equity_change",
+ "tables": [
+  {
+   "title": "淨值變動表",
+   "context_heading": null,
+   "period_labels": [
+    "累積餘絀",
+    "本期餘絀",
+    "合　　計"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "111 年 8 月 1 日餘額",
+     "note_ref": null,
+     "values": [
+      663160,
+      167343,
+      830503
+     ]
+    },
+    {
+     "label": "110 學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      167343,
+      -167343,
+      null
+     ]
+    },
+    {
+     "label": "111 學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      193966,
+      193966
+     ]
+    },
+    {
+     "label": "112 年 7 月 31 日餘額",
+     "note_ref": null,
+     "values": [
+      830503,
+      193966,
+      1024469
+     ]
+    },
+    {
+     "label": "111 學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      193966,
+      -193966,
+      null
+     ]
+    },
+    {
+     "label": "112 學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      760656,
+      760656
+     ]
+    },
+    {
+     "label": "113 年 7 月 31 日餘額",
+     "note_ref": null,
+     "values": [
+      1024469,
+      760656,
+      1785125
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": [
+  "表頭有紅色關防印章遮蓋部分文字，標題『淨值變動表』係依可見文字判讀，期間文字部分被遮蓋：民國112年8月1日至113年7月31日及民國111年8月1日至112年7月31日"
+ ]
+}

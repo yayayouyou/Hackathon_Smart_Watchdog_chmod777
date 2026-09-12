@@ -1,0 +1,259 @@
+{
+ "report": "N08_鷺江_113",
+ "code": "N08",
+ "short_name": "鷺江",
+ "academic_year": 113,
+ "pdf_page": 6,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N08",
+ "printed_page": 6,
+ "page_kind": "income_statement",
+ "tables": [
+  {
+   "title": "收支餘絀表",
+   "period_labels": [
+    "113.8.1~114.7.31 預算數(a)",
+    "113.8.1~114.7.31 決算數(b)",
+    "113.8.1~114.7.31 差異數(c)=(b)-(a)",
+    "113.8.1~114.7.31 執行率(%)(d)=(b)/(a)"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "收入",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "教保費收入",
+     "note_ref": "二、三",
+     "values": [
+      11524800,
+      11529155,
+      4355,
+      100
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": "二、三",
+     "values": [
+      null,
+      -102267,
+      -102267,
+      null
+     ]
+    },
+    {
+     "label": "延長照顧服務收入淨額",
+     "note_ref": "二、三",
+     "values": [
+      null,
+      178000,
+      178000,
+      null
+     ]
+    },
+    {
+     "label": "利息收入",
+     "note_ref": null,
+     "values": [
+      null,
+      178840,
+      178840,
+      null
+     ]
+    },
+    {
+     "label": "其他收入",
+     "note_ref": "三、五",
+     "values": [
+      null,
+      3739546,
+      3739546,
+      null
+     ]
+    },
+    {
+     "label": "收入合計",
+     "note_ref": null,
+     "values": [
+      11524800,
+      15523274,
+      3998474,
+      null
+     ]
+    },
+    {
+     "label": "支出",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "人事費",
+     "note_ref": "二、三",
+     "values": [
+      9054090,
+      7810400,
+      -1243690,
+      86
+     ]
+    },
+    {
+     "label": "業務費",
+     "note_ref": "二、三",
+     "values": [
+      819400,
+      493617,
+      -325783,
+      60
+     ]
+    },
+    {
+     "label": "材料費",
+     "note_ref": "二、三",
+     "values": [
+      1747000,
+      1386265,
+      -360735,
+      79
+     ]
+    },
+    {
+     "label": "維護費",
+     "note_ref": "二、三",
+     "values": [
+      143000,
+      92427,
+      -50573,
+      65
+     ]
+    },
+    {
+     "label": "修繕購置費",
+     "note_ref": "二、三",
+     "values": [
+      140000,
+      130993,
+      -9007,
+      94
+     ]
+    },
+    {
+     "label": "雜支",
+     "note_ref": "二",
+     "values": [
+      49164,
+      2222,
+      -46942,
+      5
+     ]
+    },
+    {
+     "label": "行政管理費",
+     "note_ref": "二、五",
+     "values": [
+      256640,
+      256640,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "業務發展費",
+     "note_ref": "二",
+     "values": [
+      null,
+      2245150,
+      2245150,
+      null
+     ]
+    },
+    {
+     "label": "延長照顧服務支出",
+     "note_ref": "二、三",
+     "values": [
+      null,
+      131674,
+      131674,
+      null
+     ]
+    },
+    {
+     "label": "其他支出",
+     "note_ref": "三",
+     "values": [
+      null,
+      3739546,
+      3739546,
+      null
+     ]
+    },
+    {
+     "label": "支出合計",
+     "note_ref": null,
+     "values": [
+      12209294,
+      16288934,
+      4079640,
+      null
+     ]
+    },
+    {
+     "label": "本期稅前餘絀",
+     "note_ref": null,
+     "values": [
+      -684494,
+      -765660,
+      -81166,
+      null
+     ]
+    },
+    {
+     "label": "所得稅費用",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "本期稅後餘絀",
+     "note_ref": null,
+     "values": [
+      -684494,
+      -765660,
+      -81166,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": [
+  "行政管理費差異數欄目視為空白（預算數與決算數相同，差異數欄印有破折號），填null"
+ ]
+}

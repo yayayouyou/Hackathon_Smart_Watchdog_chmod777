@@ -1,0 +1,343 @@
+{
+ "report": "N08_鷺江_113",
+ "code": "N08",
+ "short_name": "鷺江",
+ "academic_year": 113,
+ "pdf_page": 29,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N08",
+ "printed_page": 29,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "附表四：財產清冊　1.代管財產",
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "301051624-000011　多翼式抽風機",
+     "note_ref": null,
+     "values": [
+      34000,
+      1,
+      3145,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "3070114253-000001　三槽式-不鏽鋼水槽工作台",
+     "note_ref": null,
+     "values": [
+      13130,
+      1,
+      131,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "311010123-000003　BMI 身高體重計(可收式身高尺)",
+     "note_ref": null,
+     "values": [
+      18000,
+      1,
+      8496,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "314010103-000924　華碩-筆記型電腦",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      250,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "314010103-000926　華碩桌上型電腦",
+     "note_ref": null,
+     "values": [
+      21950,
+      1,
+      220,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "314010103-001211　AsusX515 筆記型電腦",
+     "note_ref": null,
+     "values": [
+      33275,
+      1,
+      11314,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "314010103-001212　AsusX515 筆記型電腦",
+     "note_ref": null,
+     "values": [
+      28550,
+      1,
+      9707,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "314010103-001213　AsusX515 筆記型電腦",
+     "note_ref": null,
+     "values": [
+      28550,
+      1,
+      9707,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "314030813-000008　數位照相機佳能 G9X",
+     "note_ref": null,
+     "values": [
+      16500,
+      1,
+      165,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "314030817-000092　投影機(含無線轉接器、基地台等)",
+     "note_ref": null,
+     "values": [
+      56489,
+      1,
+      27595,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "405020201-000001　萬國總機系統",
+     "note_ref": null,
+     "values": [
+      45000,
+      1,
+      450,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "405020802-000002　對講機(含門口機、話機、擴充卡等)",
+     "note_ref": null,
+     "values": [
+      25400,
+      1,
+      9160,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "405030310-000002　擴音機嘉強 MA-707",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      2312,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "405030325-000042　無線麥克風組(含擴大機、喇叭等)",
+     "note_ref": null,
+     "values": [
+      43600,
+      1,
+      30561,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "405030407-000001　消磁版",
+     "note_ref": null,
+     "values": [
+      18000,
+      1,
+      180,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "405040214-000003　海康-4 路高清監控系統(一組)",
+     "note_ref": null,
+     "values": [
+      34000,
+      1,
+      3145,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "501010521-000150　液晶投影機 XGA",
+     "note_ref": null,
+     "values": [
+      19000,
+      1,
+      1758,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "501010521-000151　液晶投影機 XGA",
+     "note_ref": null,
+     "values": [
+      19000,
+      1,
+      1758,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "501010603-000088　變頻分離式-1 對 1",
+     "note_ref": null,
+     "values": [
+      43810,
+      1,
+      8470,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "501010603-000089　變頻分離式-1 對 1",
+     "note_ref": null,
+     "values": [
+      43810,
+      1,
+      8470,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "501010603-000090　變頻分離式-1 對 1",
+     "note_ref": null,
+     "values": [
+      43810,
+      1,
+      8470,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "501010603-000091　變頻分離式-1 對 1",
+     "note_ref": null,
+     "values": [
+      43810,
+      1,
+      8470,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "501010603-000092　變頻分離式-1 對 1",
+     "note_ref": null,
+     "values": [
+      43810,
+      1,
+      8470,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "501010603-000093　變頻分離式-1 對 1",
+     "note_ref": null,
+     "values": [
+      43810,
+      1,
+      8470,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "501010603-000094　變頻分離式-1 對 1",
+     "note_ref": null,
+     "values": [
+      43810,
+      1,
+      8470,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "501010603-000095　變頻分離式-1 對 1",
+     "note_ref": null,
+     "values": [
+      43810,
+      1,
+      8470,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "501010603-000096　變頻分離式-1 對 1",
+     "note_ref": null,
+     "values": [
+      43810,
+      1,
+      8470,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "501010603-000097　變頻分離式-1 對 1",
+     "note_ref": null,
+     "values": [
+      43810,
+      1,
+      8470,
+      null,
+      9
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄位為日期格式，已略去實際日期值（如106/08/02），因schema values僅支援number或null，日期無法正確表示，已填null並於此說明。"
+ ]
+}

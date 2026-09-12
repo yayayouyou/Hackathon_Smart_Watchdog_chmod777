@@ -1,0 +1,584 @@
+{
+ "report": "N05_漢翔_110",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 110,
+ "pdf_page": 34,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 34,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "財產編號",
+    "登錄號/分號",
+    "財產名稱",
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "6070225 / 000070",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      800,
+      1,
+      800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225 / 000071",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      800,
+      1,
+      800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225 / 000072",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      800,
+      1,
+      800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225 / 000073",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      800,
+      1,
+      800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225 / 000074",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      800,
+      1,
+      800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225 / 000075",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      800,
+      1,
+      800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225 / 000076",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      800,
+      1,
+      800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070226 / 000001",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      7000,
+      1,
+      7000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070226 / 000002",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      7000,
+      1,
+      7000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070226 / 000003",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      7000,
+      1,
+      7000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070226 / 000004",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3500,
+      1,
+      3500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070226 / 000005",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      3500,
+      1,
+      3500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070226 / 000006",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      7500,
+      1,
+      7500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070227 / 000001",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8500,
+      1,
+      8500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070227 / 000002",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8500,
+      1,
+      8500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070227 / 000003",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8500,
+      1,
+      8500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070227 / 000004",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8500,
+      1,
+      8500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070227 / 000005",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1250,
+      1,
+      1250,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070227 / 000006",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1250,
+      1,
+      1250,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070227 / 000007",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1250,
+      1,
+      1250,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070227 / 000008",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1250,
+      1,
+      1250,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000143",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000144",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000145",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000146",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000147",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000148",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000149",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8500,
+      1,
+      8500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000150",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8500,
+      1,
+      8500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000151",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      7000,
+      1,
+      7000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000152",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6500,
+      1,
+      6500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000166",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      9600,
+      1,
+      9600,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240 / 000167",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      9600,
+      1,
+      9600,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "301360118 / 000001",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8436,
+      1,
+      8436,
+      null,
+      15
+     ]
+    },
+    {
+     "label": "301360118 / 000002",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8436,
+      1,
+      8436,
+      null,
+      15
+     ]
+    },
+    {
+     "label": "301360118 / 000003",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8436,
+      1,
+      8436,
+      null,
+      15
+     ]
+    },
+    {
+     "label": "301360118 / 000004",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8436,
+      1,
+      8436,
+      null,
+      15
+     ]
+    },
+    {
+     "label": "301360118 / 000005",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8436,
+      1,
+      8436,
+      null,
+      15
+     ]
+    },
+    {
+     "label": "301360118 / 000006",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      8436,
+      1,
+      8436,
+      null,
+      15
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本頁財產目錄欄位為文字與數字混合，財產編號、登錄號/分號、財產名稱、購置日期為文字欄，無法放入 values 數值陣列，已將其合併至 label 欄位，僅將單價、數量、總金額、使用年限放入 values。"
+ ]
+}

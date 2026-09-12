@@ -1,0 +1,456 @@
+{
+ "report": "N01_安溪_113",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 113,
+ "pdf_page": 28,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 28,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "財產清冊",
+   "period_labels": [
+    "民國114年7月31日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "財產編號：301030240 登錄號/分號：000001 廚房不鏽鋼三連水槽工作台",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：$14,686 數量：1 帳面價值：$1,722 使用年限：10 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：301051624 登錄號/分號：000001 直結式抽風機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：19,583 數量：1 帳面價值：196 使用年限：8 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：307040136 登錄號/分號：000001 三層電烤箱(三層半盤)",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：90,800 數量：1 帳面價值：49,600 使用年限：10 購置日期：109/05/18",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：314010103 登錄號/分號：000587 筆記型電腦(AUSU X509FB)",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：23,000 數量：1 帳面價值：230 使用年限：4 購置日期：109/05/08",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：314010103 登錄號/分號：000588 桌上型電腦",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：17,000 數量：1 帳面價值：170 使用年限：4 購置日期：109/05/08",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：314010103 登錄號/分號：000668 教學準備用電腦含螢幕",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：25,500 數量：1 帳面價值：11,300 使用年限：4 購置日期：111/09/12",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：314010103 登錄號/分號：000669 教學準備用電腦含螢幕",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：25,500 數量：1 帳面價值：11,300 使用年限：4 購置日期：111/09/12",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：314010103 登錄號/分號：000837 筆電15吋",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：25,000 數量：1 帳面價值：19,328 使用年限：4 購置日期：113/01/29",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：314010103 登錄號/分號：000838 筆電15吋",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：25,000 數量：1 帳面價值：19,328 使用年限：4 購置日期：113/01/29",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：314030817 登錄號/分號：000043 數位投影機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：35,000 數量：1 帳面價值：28,647 使用年限：5 購置日期：113/01/29",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：405030324 登錄號/分號：000005 廣播控制機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：95,100 數量：1 帳面價值：52,733 使用年限：5 購置日期：111/09/12",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010509 登錄號/分號：000046 銀幕",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：15,000 數量：1 帳面價值：9,431 使用年限：6 購置日期：111/09/12",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010509 登錄號/分號：000047 銀幕",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：15,000 數量：1 帳面價值：9,431 使用年限：6 購置日期：111/09/12",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010521 登錄號/分號：000114 EPSON 3200流明投影機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：23,800 數量：4 帳面價值：238 使用年限：8 購置日期：105/01/13",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010521 登錄號/分號：000115 EPSON 3200流明投影機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：23,800 數量：4 帳面價值：238 使用年限：8 購置日期：105/01/13",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010521 登錄號/分號：000116 EPSON 3200流明投影機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：23,800 數量：4 帳面價值：238 使用年限：8 購置日期：105/01/13",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010521 登錄號/分號：000118 投影機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：28,500 數量：4 帳面價值：20,564 使用年限：8 購置日期：111/09/12",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010521 登錄號/分號：000119 投影機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：28,500 數量：4 帳面價值：20,564 使用年限：8 購置日期：111/09/12",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010557 登錄號/分號：000096 LG 55吋液晶電視機(Y340C)",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：32,978 數量：1 帳面價值：330 使用年限：6 購置日期：105/01/29",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010603 登錄號/分號：000021 HERAN HO-502S冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：31,334 數量：1 帳面價值：600 使用年限：9 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010603 登錄號/分號：000022 HERAN HO-632S冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：41,125 數量：1 帳面價值：788 使用年限：9 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010603 登錄號/分號：000023 HERAN HO-632S冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：41,125 數量：1 帳面價值：788 使用年限：9 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010603 登錄號/分號：000024 HERAN HO-632S冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：41,125 數量：1 帳面價值：788 使用年限：9 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010603 登錄號/分號：000025 HERAN HO-632S冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：41,125 數量：1 帳面價值：788 使用年限：9 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010603 登錄號/分號：000026 HERAN HO-632S冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：41,125 數量：1 帳面價值：788 使用年限：9 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010603 登錄號/分號：000027 HERAN HO-632S冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：41,125 數量：1 帳面價值：788 使用年限：9 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010603 登錄號/分號：000028 HERAN HO-632S冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：41,125 數量：1 帳面價值：788 使用年限：9 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010603 登錄號/分號：000029 HERAN HO-632S冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：41,125 數量：1 帳面價值：788 使用年限：9 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010603 登錄號/分號：000030 HERAN HO-632S冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：41,125 數量：1 帳面價值：788 使用年限：9 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "財產編號：501010603 登錄號/分號：000031 HERAN HO-502S冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "原始價值：31,334 數量：1 帳面價值：600 使用年限：9 購置日期：105/01/25",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "附表四：財產清冊",
+   "text": "新北市安溪非營利幼兒園\n（委託社團法人桃園市教保服務人員協會辦理）\n財產清冊\n民國114年7月31日\n\n1. 代管財產"
+  }
+ ],
+ "issues": [
+  "財產清冊為多欄明細表（財產編號、登錄號/分號、財產名稱、原始價值、數量、帳面價值、使用年限、購置日期），schema tables 結構不適合直接表達此多欄明細，已將各筆資料描述性地轉錄為 label 列，values 填 null。如需結構化財產明細，建議以自訂格式另行處理。"
+ ]
+}

@@ -1,0 +1,119 @@
+{
+ "report": "N01_安溪_113",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 113,
+ "pdf_page": 37,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 37,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "查核項目",
+   "period_labels": [
+    "是",
+    "否",
+    "不適用"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "65 專案補助、代收補助、及代收代付等其他支出是否符合各該項目之支用範圍，如有超支，其金額為：　-　元（如有超支應於下方補充說明敘明）",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "66 本學期（學年度）結算總收入是否大於或等於總支出。如有虧損，其虧損金額為：（1,988,771）元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "67 向辦理單位借款，其資金往來皆透過金融機構，金額為：　-　元",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1
+     ]
+    },
+    {
+     "label": "68 未有以非營利幼兒園之名義向金融機構或其他個人單位借（貸）款之情形",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1
+     ]
+    },
+    {
+     "label": "69 本學期（學年度）未有借款予辦理單位或他人之情形。如有借款，其借款金額為　-　元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "70 上學期（學年度）會計師查核所提建議改善事項，非營利幼兒園已完成改善",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "71 非營利幼兒園與關係人間無交易事項，如有交易事項，請於下方補充說明揭露",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "72 非營利幼兒園之財產或代管財產是否均登錄於財產清冊或代管清冊，定期盤點，並依相關規定報廢",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "其他支出補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "虧損補充說明：",
+   "text": "本學年度虧損(1,988,771)元，主要係依非營利幼兒園實施辦法之規定，提列業務發展費5,420,000元所致，該園未提列業務發展費前之結餘為3,431,229元。"
+  },
+  {
+   "heading": "負債補充說明：",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "第65項查核項目中的V（是）欄位係依版面位置判讀，V符號位置視覺上對應「是」欄。",
+  "第66項虧損金額(1,988,771)為括號負數，表中已標示V於「是」欄。"
+ ]
+}

@@ -1,0 +1,164 @@
+{
+ "report": "N28_新樂_110",
+ "code": "N28",
+ "short_name": "新樂",
+ "academic_year": 110,
+ "pdf_page": 13,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N28",
+ "printed_page": 13,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(一) 現金及銀行存款",
+   "period_labels": [
+    "111 年 7 月 31 日"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "現　金",
+     "note_ref": null,
+     "values": [
+      30000
+     ]
+    },
+    {
+     "label": "活期存款",
+     "note_ref": null,
+     "values": [
+      5406320
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      5436320
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 資遣費準備",
+   "period_labels": [
+    "111.2.1~111.7.31"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      50118
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      50118
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 資遣費準備",
+   "period_labels": [
+    "111 年 7 月 31 日"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "資遣費準備金",
+     "note_ref": null,
+     "values": [
+      50118
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "111.2.1~111.7.31"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 購置財產",
+   "period_labels": [
+    "111.2.1~111.7.31"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "2. 契約期間屆滿未申請繼續辦理，或申請繼續辦理未經同意、契約終止者：\n(1) 優先用於該園教保服務人員及其他服務人員之資遣費。\n(2) 依前目處理後，仍有賸餘款者，應於契約期間屆滿或終止後二個月內，委託辦理者全數繳回委託辦理之委託單位、申請辦理者全數繳回直轄市、縣（市）主管機關，用於改善該園、公立幼兒園或非營利幼兒園教學設施、設備。"
+  },
+  {
+   "heading": "三、重要會計項目說明",
+   "text": "(一) 現金及銀行存款"
+  },
+  {
+   "heading": null,
+   "text": "(二) 各項基金及準備\n1. 資遣費準備\n依據非營利幼兒園實施辦法之規定，提撥資遣費準備金餘額如下："
+  },
+  {
+   "heading": null,
+   "text": "(三) 營運資產\n1. 代管財產\n本幼兒園依契約之規定應辦理保險，截至 111 年 7 月 31 日止保險金額均為 14,500,000 元。\n2. 購置財產"
+  }
+ ],
+ "issues": [
+  "代管財產表格（1.代管財產）有「期初餘額」「本期增加」「本期減少」「期末餘額」四欄，但因表格結構複雜，已將各欄分別抽取：期初餘額=$-（null）、本期增加=$5,276,138、本期減少=$-（null）、期末餘額=$5,276,138。由於schema items每列只有一組values對應period_labels，此處四欄實為同一列不同欄位，無法完整表達，僅記錄期末餘額列。",
+  "購置財產表格同上問題：期初餘額=$-（null）、本期增加=$352,969、本期減少=$-（null）、期末餘額=$352,969，同樣無法完整表達多欄結構。"
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "report": "N08_鷺江_113",
+ "code": "N08",
+ "short_name": "鷺江",
+ "academic_year": 113,
+ "pdf_page": 39,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N08",
+ "printed_page": 39,
+ "page_kind": "other",
+ "tables": [
+  {
+   "title": "查核項目",
+   "period_labels": [
+    "是否符合-是",
+    "是否符合-否",
+    "是否符合-不適用"
+   ],
+   "items": [
+    {
+     "label": "72 非營利幼兒園之財產或代管財產是否均登錄於財產清冊或代管清冊，定期盤點，並依相關規定報廢",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "73 非營利幼兒園專戶之印信，應有幼兒園章及負責人私章或園長私章，且由非營利法人指定之人、園長（或其代理人）、會計或出納人員分別保管，未集中於同一人保管，以符合專戶管理辦法相關法規",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "其他補充說明 71-1 1.專案補助收入",
+   "period_labels": [
+    "113.8.1~114.7.31"
+   ],
+   "items": [
+    {
+     "label": "財團法人彭婉如文教基金會",
+     "note_ref": null,
+     "values": [
+      11515
+     ],
+     "percents": null
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "其他補充說明 71-1 2.其他應收款",
+   "period_labels": [
+    "114年7月31日"
+   ],
+   "items": [
+    {
+     "label": "財團法人彭婉如文教基金會",
+     "note_ref": null,
+     "values": [
+      7971
+     ],
+     "percents": null
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "其他補充說明",
+   "text": "71-1：\n1.專案補助收入\n關係人名稱　　　　　　113.8.1~114.7.31\n財團法人彭婉如文教基金會　　　$11,515\n本幼兒園之受託法人，提供每園有依正職人力*4小時*12月代課費專案補助，由各園安排人力，讓專職教保人員有備課時間，各園按實支實付方式向受託法人申請補助。\n2.其他應收款\n關係人名稱　　　　　　114年7月31日\n財團法人彭婉如文教基金會　　　$7,971"
+  },
+  {
+   "heading": "綜合建議事項",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "查核項目72、73的是/否/不適用欄位勾選符號（V）已辨識，但未以數字值表示，故values留空陣列；該表性質為核查清單而非財務數字表格。"
+ ]
+}

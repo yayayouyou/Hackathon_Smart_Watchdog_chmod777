@@ -11,8 +11,10 @@
 
 ## 在新機器上跑起來
 
-相依清單是 `requirements.txt`，**不是** `pyproject.toml`——後者只列動態版所需的
-三個套件，而且缺 `[project] name`／`version`，`pip install -e .` 會直接失敗。
+相依清單是 `requirements.txt`，**不是** `pyproject.toml`——後者只放 ruff 與
+pytest 的設定，刻意不含 `[project]`，所以 `pip install -e .` 不適用。
+（那張表原本只寫了 `optional-dependencies` 而缺 `name`／`version`，
+會讓 `ruff check .` 整份解析失敗、一行程式都沒檢查。）
 
 macOS／Linux：
 
@@ -51,8 +53,8 @@ $env:PYTHONPATH = "src"
 
 ```bash
 PYTHONPATH=src .venv/bin/python -m pytest tests/ -q
-# 268 passed, 1 skipped   ← 那一條 skip 是正常的，見下方「資料」
-.venv/bin/ruff check src/ tests/ scripts/
+# 320 passed（有 data/raw 時）／319 passed, 1 skipped（沒有時，見下方「資料」）
+.venv/bin/ruff check .
 ```
 
 ## 憑證
@@ -97,7 +99,15 @@ PYTHONPATH=src .venv/bin/python scripts/check_credentials.py
 前 100 名命中率為隨機抽查的 2.17 倍。
 
 **軌 B（深度）** 132 份非營利財報的視覺抽取與法遵檢核，產出可引述條號的
-稽核發現。22 園有發現，其中 4 園屬高嚴重度。
+稽核發現。10 園有發現，其中 4 園屬高嚴重度。
+
+> 這裡曾經寫 22 園。附註五的檢核用一元的絕對容差比對「揭露數」與「年末應付
+> 受託法人餘額」，但這兩個數字本來就會差掉年度內以現金結清的部分——全語料庫
+> 127 個園-年的差額中位數是 0.00%，而被判未通過的 17 筆分成兩群：四筆
+> +70%～+140%，其餘十三筆落在 ±3% 內（最小的只差 0.5%）。改成相對重大性
+> 門檻 10% 後剩 4 筆，**高嚴重度的 4 園一個沒少**——被移除的全是誤判。
+> 見 `features/compliance.py::NOTE5_MATERIALITY` 與
+> `tests/test_compliance_materiality.py`。
 
 兩軌**刻意不混成一個分數**：軌 B 是可引述的事實，軌 A 是統計推論。
 稽查員打電話給園所時，這兩者要講的話完全不同。

@@ -1,0 +1,157 @@
+{
+ "report": "N06_昌平_110",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 110,
+ "pdf_page": 33,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 33,
+ "page_kind": "other",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "是",
+    "否",
+    "不適用"
+   ],
+   "items": [
+    {
+     "label": "46 差旅費是否符合非營利幼兒園營運成本支用範圍及預算並經園長核准",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1
+     ]
+    },
+    {
+     "label": "47 業務費總支出是否符合預算，如有超支，其金額為：－元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "48 公共事務管理費是否符合非營利幼兒園營運成本支用範圍及預算，如有超支，其金額為：－元",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1
+     ]
+    },
+    {
+     "label": "49 土地、建物、設施與設備之租金是否符合非營利幼兒園營運成本支用範圍及預算，如有超支，其金額為：－元",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1
+     ]
+    },
+    {
+     "label": "50 教保材料費是否符合非營利幼兒園營運成本支用範圍及預算，非耗材類之教具玩具已登錄於清冊",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "51 日常消耗用品是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "52 藥品費是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "53 餐點費是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "54 材料費總支出是否符合預算，如有超支，其金額為：－元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "55 水電修繕是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "56 園舍消毒、清潔是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "57 火險是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "業務費補充說明：",
+   "text": "40-1　事務機器耗材　預算數 $65,000　決算數 $74,809　差異數 $9,809　執行率% 115\n依非營利幼兒園會計財務及經費處理注意事項第12點規定，業務費各細項得在業務費總預算內相互勻支，至多以勻支不足額項之20%為上限，本細項經核算符合勻支規定。"
+  },
+  {
+   "heading": "公共事務管理費補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "土地、建物、設施與設備之租金補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "材料費補充說明：",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "查核表中『是』欄以V標記，本JSON以數值1代表勾選，null代表未勾選，僅供參考，原始資料為勾選符號"
+ ]
+}

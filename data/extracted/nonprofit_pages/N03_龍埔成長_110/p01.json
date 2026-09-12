@@ -1,0 +1,23 @@
+{
+ "report": "N03_龍埔成長_110",
+ "code": "N03",
+ "short_name": "龍埔成長",
+ "academic_year": 110,
+ "pdf_page": 1,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N03",
+ "printed_page": 1,
+ "page_kind": "cover",
+ "tables": [],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "新北市龍埔成長非營利幼兒園\n（委託財團法人成長文教基金會辦理）\n財務報表暨會計師查核報告\n民國110學年度及民國109學年度\n\n地址：新北市三峽區大學路6號\n電話：(02) 8671-6711"
+  }
+ ],
+ "issues": []
+}

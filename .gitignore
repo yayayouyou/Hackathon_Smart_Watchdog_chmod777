@@ -44,3 +44,9 @@ data/external/education_bureau_announcements/.listing-update-transaction.json
 .DS_Store
 dist/
 data/runtime/
+
+# 頁級抽取的歷史版本快照。它們是被取代的模型輸出（v1 是 tables[] 之前的
+# schema、pre_context 是加 context_heading 之前），保留在本機供比對，
+# 但不進版控——現行版本在 data/extracted/nonprofit_pages/ 裡。
+data/extracted/_pagewise_v1/
+data/extracted/_pagewise_pre_context/

@@ -1,0 +1,67 @@
+{
+ "report": "N34_佳和_112",
+ "code": "N34",
+ "short_name": "佳和",
+ "academic_year": 112,
+ "pdf_page": 7,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N34",
+ "printed_page": 7,
+ "page_kind": "equity_change",
+ "tables": [
+  {
+   "title": "學值變動表",
+   "context_heading": null,
+   "period_labels": [
+    "累積餘絀",
+    "本期餘絀",
+    "合　　計"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "112年9月28日餘額",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "112學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      145750,
+      145750
+     ]
+    },
+    {
+     "label": "113年7月31日餘額",
+     "note_ref": null,
+     "values": [
+      null,
+      145750,
+      145750
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": [
+  "112年9月28日餘額三欄均印為'$-'，依規則視為空白填null",
+  "紅色關防印章遮蓋表頭部分文字，機構名稱與表名依可辨識部分判讀為『新北市私立非營利幼兒園（委託康寧學校財團法人康寧大學辦理）學值變動表』，實際表名可能為『學值變動表』或類似，請人工確認"
+ ]
+}

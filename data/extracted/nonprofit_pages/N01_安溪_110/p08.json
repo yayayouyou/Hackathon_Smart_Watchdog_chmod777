@@ -1,0 +1,102 @@
+{
+ "report": "N01_安溪_110",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 110,
+ "pdf_page": 8,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 8,
+ "page_kind": "equity_change",
+ "tables": [
+  {
+   "title": "淨值變動表",
+   "context_heading": null,
+   "period_labels": [
+    "累積餘絀",
+    "本期餘絀",
+    "合　計"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "109 年 8 月 1 日餘額",
+     "note_ref": null,
+     "values": [
+      1009891,
+      557708,
+      1567599
+     ]
+    },
+    {
+     "label": "108 學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      557708,
+      -557708,
+      null
+     ]
+    },
+    {
+     "label": "109 學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      -215209,
+      -215209
+     ]
+    },
+    {
+     "label": "110 年 7 月 31 日餘額",
+     "note_ref": null,
+     "values": [
+      1567599,
+      -215209,
+      1352390
+     ]
+    },
+    {
+     "label": "109 學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      -215209,
+      215209,
+      null
+     ]
+    },
+    {
+     "label": "110 學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      218557,
+      218557
+     ]
+    },
+    {
+     "label": "111 年 7 月 31 日餘額",
+     "note_ref": null,
+     "values": [
+      1352390,
+      218557,
+      1570947
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": [
+  "表頭因紅色關防印章遮蓋，部分文字難以辨識，表名推測為『淨值變動表』（或類似名稱），已依可見文字儘量轉錄。"
+ ]
+}

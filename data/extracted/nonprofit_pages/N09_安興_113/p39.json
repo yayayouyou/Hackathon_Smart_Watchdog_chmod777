@@ -1,0 +1,64 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 39,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 39,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "查核項目",
+   "period_labels": [
+    "是",
+    "否",
+    "不適用"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "70 上學期（學年度）會計師查核所提建議改善事項，非營利幼兒園已完成改善",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "70",
+     "note_ref": null,
+     "values": []
+    },
+    {
+     "label": "71 非營利幼兒園與關係人間無交易事項，如有交易事項，請於下方補充說明揭露",
+     "note_ref": null,
+     "values": []
+    },
+    {
+     "label": "72 非營利幼兒園之財產或代管財產是否均登錄於財產清冊或代管清冊，定期盤點，並依相關規定報廢",
+     "note_ref": null,
+     "values": []
+    },
+    {
+     "label": "73 非營利幼兒園專戶之印信，應有幼兒園章及負責人私章或園長私章，且由非營利法人指定之人、園長（或其代理人）、會計或出納人員分別保管，未集中於同一人保管，以符合專戶管理辦法相關法規",
+     "note_ref": null,
+     "values": []
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "查核項目\n70 上學期（學年度）會計師查核所提建議改善事項，非營利幼兒園已完成改善　　　　　　　　　　　　　是:V\n71 非營利幼兒園與關係人間無交易事項，如有交易事項，請於下方補充說明揭露　　　　　　　　　　　是:V\n72 非營利幼兒園之財產或代管財產是否均登錄於財產清冊或代管清冊，定期盤點，並依相關規定報廢　是:V\n73 非營利幼兒園專戶之印信，應有幼兒園章及負責人私章或園長私章，且由非營利法人指定之人、園長（或其代理人）、會計或出納人員分別保管，未集中於同一人保管，以符合專戶管理辦法相關法規　是:V\n其他補充說明：\n無。\n綜合建議事項\n無。\n\n誠明聯合會計師事務所\n會計師：張　景　嵐"
+  }
+ ],
+ "issues": [
+  "查核項目表中各項目的勾選欄位（是/否/不適用）為文字性表格，非金額性資料，無法以數值方式填入 values，改以 text_sections 方式轉錄。"
+ ]
+}

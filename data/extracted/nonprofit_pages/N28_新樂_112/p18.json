@@ -1,0 +1,266 @@
+{
+ "report": "N28_新樂_112",
+ "code": "N28",
+ "short_name": "新樂",
+ "academic_year": 112,
+ "pdf_page": 18,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N28",
+ "printed_page": 18,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "業務費明細（111.8.1~112.7.31）",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      125000,
+      124039,
+      -961,
+      99
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      52000,
+      9800,
+      -42200,
+      19
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      56000,
+      5097,
+      -50903,
+      9
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      504000,
+      508089,
+      4089,
+      101
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      42000,
+      27300,
+      -14700,
+      65
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      120000,
+      122280,
+      2280,
+      102
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      42000,
+      39326,
+      -2674,
+      94
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      80000,
+      88275,
+      8275,
+      110
+     ]
+    },
+    {
+     "label": "電話費（含ADSL）",
+     "note_ref": null,
+     "values": [
+      63000,
+      49913,
+      -13087,
+      79
+     ]
+    },
+    {
+     "label": "郵資",
+     "note_ref": null,
+     "values": [
+      9000,
+      3939,
+      -5061,
+      44
+     ]
+    },
+    {
+     "label": "文宣費（一般文宣）",
+     "note_ref": null,
+     "values": [
+      10000,
+      6432,
+      -3568,
+      64
+     ]
+    },
+    {
+     "label": "文宣費（園刊）",
+     "note_ref": null,
+     "values": [
+      32500,
+      26127,
+      -6373,
+      80
+     ]
+    },
+    {
+     "label": "攝影照片",
+     "note_ref": null,
+     "values": [
+      11000,
+      null,
+      -11000,
+      null
+     ]
+    },
+    {
+     "label": "園務特支",
+     "note_ref": null,
+     "values": [
+      45000,
+      48931,
+      3931,
+      109
+     ]
+    },
+    {
+     "label": "差旅費",
+     "note_ref": null,
+     "values": [
+      25000,
+      null,
+      -25000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1216500,
+      1059548,
+      -156952,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      466400,
+      355636,
+      -110764,
+      76
+     ]
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      84800,
+      66102,
+      -18698,
+      78
+     ]
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      13780,
+      11035,
+      -2745,
+      80
+     ]
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      2289600,
+      2194528,
+      -95072,
+      96
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      2854580,
+      2627301,
+      -227279,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.2 業務費：得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限。\n(2) 112 學年度保全及電話費（含 ADSL）超支預算部分，依上開規定得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限，上述各細項經核算已符合勻支規定。\n(3) 111 學年度電費、保全、事務機耗材及園務特支超支預算部分，依上開規定得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限，上述各細項經核算已符合勻支規定。\n(4) 112 及 111 學年度業務費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "上方業務費明細表表頭未印期間標題，依頁面文字判斷為111.8.1~112.7.31；下方材料費表頭印有112.8.1~113.7.31，兩張表期間不同已分開處理。",
+  "攝影照片及差旅費執行率欄為破折號，視為null。",
+  "合計列執行率欄無印刷數值，填null。"
+ ]
+}

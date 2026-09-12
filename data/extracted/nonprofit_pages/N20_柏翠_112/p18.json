@@ -1,0 +1,228 @@
+{
+ "report": "N20_柏翠_112",
+ "code": "N20",
+ "short_name": "柏翠",
+ "academic_year": 112,
+ "pdf_page": 18,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N20",
+ "printed_page": 18,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      365200,
+      290949,
+      -74251,
+      80
+     ],
+     "percents": null
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      66400,
+      62299,
+      -4101,
+      94
+     ],
+     "percents": null
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      10790,
+      10390,
+      -400,
+      96
+     ],
+     "percents": null
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      2191200,
+      1872456,
+      -318744,
+      85
+     ],
+     "percents": null
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      2633590,
+      2236094,
+      -397496,
+      null
+     ],
+     "percents": null
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "4. 材料費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保材料費",
+     "note_ref": null,
+     "values": [
+      365200,
+      334785,
+      -30415,
+      92
+     ],
+     "percents": null
+    },
+    {
+     "label": "日常消耗用品",
+     "note_ref": null,
+     "values": [
+      66400,
+      65370,
+      -1030,
+      98
+     ],
+     "percents": null
+    },
+    {
+     "label": "藥品費",
+     "note_ref": null,
+     "values": [
+      10790,
+      7304,
+      -3486,
+      68
+     ],
+     "percents": null
+    },
+    {
+     "label": "餐點費",
+     "note_ref": null,
+     "values": [
+      1867500,
+      1684559,
+      -182941,
+      90
+     ],
+     "percents": null
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      2309890,
+      2092018,
+      -217872,
+      null
+     ],
+     "percents": null
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 維護費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "修繕費",
+     "note_ref": null,
+     "values": [
+      110000,
+      128393,
+      18393,
+      117
+     ],
+     "percents": null
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      45000,
+      28862,
+      -16138,
+      64
+     ],
+     "percents": null
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      8000,
+      1059,
+      -6941,
+      13
+     ],
+     "percents": null
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      163000,
+      158314,
+      -4686,
+      null
+     ],
+     "percents": null
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.2 業務費：得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限。\n(2) 112 學年度電話費（含 ADSL）超支預算部分，依上開規定得在業務費總預算內相互勻支，至多以勻支不足細項之 20%為上限，本細項經核算已符合勻支規定。\n(3) 112 及 111 學年度業務費類別總經費並無超支預算之情事。"
+  },
+  {
+   "heading": "4. 材料費",
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.3 材料費各細項經費倘有不足，應優先於材料費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費），且至多以勻支不足細項之 20%為上限。但餐點費，不得移作他用。\n(2) 112 及 111 學年度材料費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "4. 材料費第一張表（112.8.1~113.7.31）合計列執行率欄位頁面未印數值，填null",
+  "4. 材料費第二張表（111.8.1~112.7.31）合計列執行率欄位頁面未印數值，填null",
+  "5. 維護費合計列執行率欄位頁面未印數值，填null"
+ ]
+}

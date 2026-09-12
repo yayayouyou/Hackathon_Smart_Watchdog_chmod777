@@ -14,9 +14,18 @@ ignore = [
     "RUF001", "RUF002", "RUF003",
 ]
 
-[project.optional-dependencies]
-# 動態版所需；靜態版與分析管線不需要這些即可運作。
-web = ["fastapi>=0.110", "uvicorn[standard]>=0.29", "httpx>=0.27"]
+# ── 這裡刻意沒有 [project] ────────────────────────────────────────────
+# 本檔只做工具設定（ruff / pytest），不做封裝。相依清單在 requirements.txt。
+#
+# 曾經有一張只寫了 optional-dependencies 的 [project] 表，用來記錄動態版所需的
+#   fastapi>=0.110、uvicorn[standard]>=0.29、httpx>=0.27
+# （靜態版與分析管線不需要它們即可運作）。但 [project] 缺 name/version 會讓
+# **整份 pyproject.toml 解析失敗**，於是 `ruff check .` 一律回 RUF200 而不檢查
+# 任何程式碼——lint 看起來「沒事」其實是根本沒跑。
+#
+# 要補 name/version 讓 `pip install -e .` 可用是另一件事，那會改變安裝方式，
+# 依 docs/OVERNIGHT_PLAN.md 的決策「決賽前不動封裝」暫不處理。
+# 安裝步驟見 README「在新機器上跑起來」。
 
 [tool.ruff.lint.per-file-ignores]
 # FastAPI 在執行期解析函式簽名；Python 3.9 無法 evaluate `X | None`，

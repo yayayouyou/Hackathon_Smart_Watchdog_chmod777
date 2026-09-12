@@ -1,0 +1,180 @@
+{
+ "report": "N28_新樂_110",
+ "code": "N28",
+ "short_name": "新樂",
+ "academic_year": 110,
+ "pdf_page": 16,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N28",
+ "printed_page": 16,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "維護費",
+   "context_heading": "5. 維護費",
+   "period_labels": [
+    "111.2.1~111.7.31 預算數",
+    "111.2.1~111.7.31 決算數",
+    "111.2.1~111.7.31 差異",
+    "111.2.1~111.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "水電修繕",
+     "note_ref": null,
+     "values": [
+      67500,
+      2250,
+      -65250,
+      3
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      22500,
+      21485,
+      -1015,
+      95
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      5000,
+      1710,
+      -3290,
+      34
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      95000,
+      25445,
+      -69555,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "6. 其他收入及其他支出",
+   "period_labels": [
+    "111.2.1~111.7.31 收入",
+    "111.2.1~111.7.31 支出",
+    "111.2.1~111.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      832037,
+      832037,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      136560,
+      136560,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      123821,
+      123821,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1092418,
+      1092418,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "(1) 專案補助收入及支出",
+   "period_labels": [
+    "111.2.1~111.7.31 收入",
+    "111.2.1~111.7.31 支出",
+    "111.2.1~111.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "環境清消補助",
+     "note_ref": null,
+     "values": [
+      29000,
+      29000,
+      null
+     ]
+    },
+    {
+     "label": "調薪追加補助款",
+     "note_ref": null,
+     "values": [
+      788037,
+      788037,
+      null
+     ]
+    },
+    {
+     "label": "招收身心障礙幼兒補助",
+     "note_ref": null,
+     "values": [
+      15000,
+      15000,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      832037,
+      832037,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(2) 110學年度日常消耗用品超支預算部分，依上開規定應優先於材料費總預算內相互勻支，且至多以勻支不足細項之20%為上限，本細項經核算符合勻支規定。\n(3) 110學年度材料費類別總經費並無超支預算之情事。"
+  },
+  {
+   "heading": "5. 維護費",
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第12點（一）.5 維護費及修繕購置費各細項經費倘有不足，應優先於維護費及修繕購置費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費）。\n(2) 110學年度維護費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": []
+}

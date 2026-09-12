@@ -1,0 +1,120 @@
+{
+ "report": "N07_北大_112",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 112,
+ "pdf_page": 14,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 14,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "(一) 現金及銀行存款",
+   "period_labels": [
+    "113 年 7 月 31 日",
+    "112 年 7 月 31 日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "現　金",
+     "note_ref": null,
+     "values": [
+      8596,
+      25575
+     ]
+    },
+    {
+     "label": "活期存款",
+     "note_ref": null,
+     "values": [
+      9271455,
+      8752538
+     ]
+    },
+    {
+     "label": "合　計",
+     "note_ref": null,
+     "values": [
+      9280051,
+      8778113
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 資遣費準備",
+   "period_labels": [
+    "112.8.1~113.7.31",
+    "111.8.1~112.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      354383,
+      261769
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      94756,
+      92614
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      449139,
+      354383
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 資遣費準備",
+   "period_labels": [
+    "113 年 7 月 31 日",
+    "112 年 7 月 31 日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "資遣費準備金",
+     "note_ref": null,
+     "values": [
+      449139,
+      354383
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "非營利幼兒園於契約期間屆滿時，經依會計師簽證之最後學年度資產負債表之累計餘絀有賸餘，於清償債務後仍有結餘者，其處理程序應依下列規定辦理：\n1. 經同意由原非營利法人繼續辦理，或契約屆滿、終止而重新依規定完成委託辦理程序，仍委託原非營利法人繼續辦理者：\n(1) 優先用於該園教保服務人員及其他服務人員之資遣費，及繼續辦理契約期間教保服務人員及其他服務人員晉薪之人事費。\n(2) 依前目處理後，仍有賸餘款，應全數用於繼續辦理契約期間所需之改善該園教學設施、設備項目，並由承辦之非營利法人訂定相關運用計畫，委託辦理者報委託單位、申請辦理者報直轄市、縣（市）主管機關備查後支用。\n2. 契約期間屆滿未申請繼續辦理，或申請繼續辦理未經同意、契約終止者：\n(1) 優先用於該園教保服務人員及其他服務人員之資遣費。\n(2) 依前目處理後，仍有賸餘款者，應於契約期間屆滿或終止後二個月內，委託辦理者全數繳回委託辦理之委託單位、申請辦理者全數繳回直轄市、縣（市）主管機關，用於改善該園、公立幼兒園或非營利幼兒園教學設施、設備。"
+  },
+  {
+   "heading": "三、重要會計項目說明",
+   "text": "依據非營利幼兒園實施辦法之規定，提撥資遣費準備金餘額如下："
+  }
+ ],
+ "issues": []
+}

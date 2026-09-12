@@ -1,0 +1,385 @@
+{
+ "report": "N05_漢翔_110",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 110,
+ "pdf_page": 28,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 28,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "財產清冊",
+   "period_labels": [
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "文書用具-護貝機",
+     "note_ref": null,
+     "values": [
+      5000,
+      1,
+      5000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      5000,
+      1,
+      5000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      5000,
+      1,
+      5000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      5000,
+      1,
+      5000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      5000,
+      1,
+      5000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      6382,
+      1,
+      6382,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      6382,
+      1,
+      6382,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-衣帽架",
+     "note_ref": null,
+     "values": [
+      4558,
+      1,
+      4558,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332,
+      1,
+      3332,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-拉門",
+     "note_ref": null,
+     "values": [
+      9000,
+      1,
+      9000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "遮蔽用具-拉門",
+     "note_ref": null,
+     "values": [
+      9000,
+      1,
+      9000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008,
+      1,
+      3008,
+      null,
+      3
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "附表四：財產清冊",
+   "text": "新北市漢翔非營利幼兒園\n（委託財團法人三之三生命教育基金會辦理）\n財產清冊\n民國 111 年 7 月 31 日\n\n1.代管財產"
+  },
+  {
+   "heading": null,
+   "text": "財產編號欄位對應登錄號/分號如下（由上而下）：\n6010109/000005、6010711/000002~000007、6010720/000001、6011003/000001~000015、6011007/000001~000002、6011206/000635~000640"
+  }
+ ],
+ "issues": [
+  "購置日期欄為文字（如106/6/15），無法填入數值型欄位，故以null代替，並已在issues說明"
+ ]
+}

@@ -1,0 +1,199 @@
+{
+ "report": "N03_龍埔成長_113",
+ "code": "N03",
+ "short_name": "龍埔成長",
+ "academic_year": 113,
+ "pdf_page": 38,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N03",
+ "printed_page": 38,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "考評指標",
+    "考評方式",
+    "評分",
+    "考評依據",
+    "備註"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "(2)依第1學期會計師查核修改各項財務報表及財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "2. 第1學期各項財務報表經會計師查核且依法規規定須修正及調整，經委託單位或直轄市、縣（市）主管機關通知並已改善；或無須修正及調整：1分。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "評分",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "(3)前學年度會計師簽證報告揭露缺失之改善情形",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "3. 前學年度會計師簽證報告缺失情形已改善；或無缺失情形：2分。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "評分",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      0,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "(4)財產依規定登錄及報廢之情形。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "4. 財產皆完成登錄或報廢相關程序：1分。\n5. 特殊情形：\n(1) 當學年度第2學期開辦者，第1項至第3項之分數共4分，以到園或到中心檢查細項4之得分計算。\n(2) 當學年度新開辦者，第3項以第1項及第2項之得分加總計算。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "評分",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "會計查核簽證情形評分合計：",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      13,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "其他特殊情形：（採總分外扣方式，扣至總分0分止）",
+   "period_labels": [
+    "考評指標",
+    "考評方式",
+    "評分",
+    "考評依據"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "2.有不當挪用經費之情形。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "經委託單位、直轄市、縣（市）主管機關或會計師查有不當挪用經費者，任查有一次扣總分2分。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "評分",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "1. 前學年度及當學年度第1學期會計師依會計師查核附表進行查核及簽證之結果（幼兒園或中心提供）。\n2. 委託單位、直轄市、縣（市）主管機關或會計師查有相關情事之相關證明資料（委託單位或各級主管機關提供）。\n3. 其他相關證明文件。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本頁為考評表格，非標準財務報表，以other/auditor_report頁面型態處理；表格內容為考評指標與評分，已盡量照實轉錄，但部分欄位合併與跨列結構複雜，可能有對齊誤差。",
+  "頁尾紅色關防印章遮蓋部分文字，但關鍵數字未受遮蔽。"
+ ]
+}

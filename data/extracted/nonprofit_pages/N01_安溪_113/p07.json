@@ -1,0 +1,270 @@
+{
+ "report": "N01_安溪_113",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 113,
+ "pdf_page": 7,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 7,
+ "page_kind": "income_statement",
+ "tables": [
+  {
+   "title": "收支餘絀表",
+   "period_labels": [
+    "112.8.1-113.7.31 預算數(a)",
+    "112.8.1-113.7.31 決算數(b)",
+    "差異數 (c)=(b)-(a)",
+    "執行率(%) (d)=(b)/(a)"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "收入",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "教保費收入",
+     "note_ref": "二、三",
+     "values": [
+      17816544,
+      17324859,
+      -491685,
+      97
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": "二、三",
+     "values": [
+      null,
+      -94176,
+      -94176,
+      null
+     ]
+    },
+    {
+     "label": "延長照顧服務收入淨額",
+     "note_ref": "二、三",
+     "values": [
+      null,
+      337868,
+      337868,
+      null
+     ]
+    },
+    {
+     "label": "利息收入",
+     "note_ref": null,
+     "values": [
+      null,
+      82077,
+      82077,
+      null
+     ]
+    },
+    {
+     "label": "其他收入",
+     "note_ref": "三",
+     "values": [
+      null,
+      1344392,
+      1344392,
+      null
+     ]
+    },
+    {
+     "label": "收入合計",
+     "note_ref": null,
+     "values": [
+      17816544,
+      18995020,
+      1178476,
+      null
+     ]
+    },
+    {
+     "label": "支出",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "人事費",
+     "note_ref": "二、三",
+     "values": [
+      13414768,
+      11797585,
+      -1617183,
+      88
+     ]
+    },
+    {
+     "label": "業務費",
+     "note_ref": "二、三",
+     "values": [
+      883400,
+      394450,
+      -488950,
+      45
+     ]
+    },
+    {
+     "label": "材料費",
+     "note_ref": "二、三",
+     "values": [
+      2375920,
+      2216621,
+      -159299,
+      93
+     ]
+    },
+    {
+     "label": "維護費",
+     "note_ref": "二、三",
+     "values": [
+      143000,
+      51581,
+      -91419,
+      36
+     ]
+    },
+    {
+     "label": "修繕購置費",
+     "note_ref": "二、三",
+     "values": [
+      190400,
+      28074,
+      -162326,
+      15
+     ]
+    },
+    {
+     "label": "雜支",
+     "note_ref": "二",
+     "values": [
+      53004,
+      18950,
+      -34054,
+      36
+     ]
+    },
+    {
+     "label": "行政管理費",
+     "note_ref": "二、五",
+     "values": [
+      325932,
+      325932,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "業務發展費",
+     "note_ref": "二",
+     "values": [
+      null,
+      2388000,
+      2388000,
+      null
+     ]
+    },
+    {
+     "label": "延長照顧服務支出",
+     "note_ref": "二、三",
+     "values": [
+      null,
+      176808,
+      176808,
+      null
+     ]
+    },
+    {
+     "label": "其他支出",
+     "note_ref": "三",
+     "values": [
+      null,
+      1344392,
+      1344392,
+      null
+     ]
+    },
+    {
+     "label": "呆帳損失",
+     "note_ref": null,
+     "values": [
+      null,
+      1828,
+      1828,
+      null
+     ]
+    },
+    {
+     "label": "支出合計",
+     "note_ref": null,
+     "values": [
+      17386424,
+      18744221,
+      1357797,
+      null
+     ]
+    },
+    {
+     "label": "本期稅前餘絀",
+     "note_ref": null,
+     "values": [
+      430120,
+      250799,
+      -179321,
+      null
+     ]
+    },
+    {
+     "label": "所得稅費用",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "本期稅後餘絀",
+     "note_ref": null,
+     "values": [
+      430120,
+      250799,
+      -179321,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": [
+  "紅色關防印章遮蓋部分表頭文字，期間標題 112.8.1-113.7.31 仍可辨識",
+  "行政管理費差異數欄位為空白（預算數與決算數相同，差異數應為0但原表空白），依規則填null"
+ ]
+}

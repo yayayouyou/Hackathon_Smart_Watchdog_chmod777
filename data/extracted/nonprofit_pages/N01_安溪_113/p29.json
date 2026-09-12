@@ -1,0 +1,431 @@
+{
+ "report": "N01_安溪_113",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 113,
+ "pdf_page": 29,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 29,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "使用年限",
+    "購置日期"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "501010603 000046 Panasonic 分離式冷氣機+額外項",
+     "note_ref": null,
+     "values": [
+      45902,
+      2,
+      22761,
+      9,
+      null
+     ]
+    },
+    {
+     "label": "501010603 000047 Panasonic 分離式冷氣機+額外項",
+     "note_ref": null,
+     "values": [
+      45902,
+      2,
+      22761,
+      9,
+      null
+     ]
+    },
+    {
+     "label": "501010603 000054 HERAN冷暖氣機",
+     "note_ref": null,
+     "values": [
+      47857,
+      7,
+      36013,
+      9,
+      null
+     ]
+    },
+    {
+     "label": "501010603 000055 HERAN冷暖氣機",
+     "note_ref": null,
+     "values": [
+      47857,
+      7,
+      36013,
+      9,
+      null
+     ]
+    },
+    {
+     "label": "501010603 000056 HERAN冷暖氣機",
+     "note_ref": null,
+     "values": [
+      47857,
+      7,
+      36013,
+      9,
+      null
+     ]
+    },
+    {
+     "label": "501010603 000057 HERAN冷暖氣機",
+     "note_ref": null,
+     "values": [
+      47857,
+      7,
+      36013,
+      9,
+      null
+     ]
+    },
+    {
+     "label": "501010603 000058 HERAN冷暖氣機",
+     "note_ref": null,
+     "values": [
+      47857,
+      7,
+      36013,
+      9,
+      null
+     ]
+    },
+    {
+     "label": "501010603 000059 HERAN冷暖氣機",
+     "note_ref": null,
+     "values": [
+      47857,
+      7,
+      36013,
+      9,
+      null
+     ]
+    },
+    {
+     "label": "501010603 000060 HERAN冷暖氣機",
+     "note_ref": null,
+     "values": [
+      47858,
+      7,
+      36014,
+      9,
+      null
+     ]
+    },
+    {
+     "label": "501010603 000160 變頻分離式冷氣 8.0kw (含DC循環扇及安裝)",
+     "note_ref": null,
+     "values": [
+      45000,
+      1,
+      40462,
+      9,
+      null
+     ]
+    },
+    {
+     "label": "501010701B 000007 4尺上凍下藏無霜冰箱",
+     "note_ref": null,
+     "values": [
+      45000,
+      1,
+      450,
+      8,
+      null
+     ]
+    },
+    {
+     "label": "501010701B 000008 冰箱",
+     "note_ref": null,
+     "values": [
+      52000,
+      1,
+      37521,
+      8,
+      null
+     ]
+    },
+    {
+     "label": "501011019 000036 樂泉牌 PLUS-103 冰溫熱三用程控式飲水機",
+     "note_ref": null,
+     "values": [
+      24750,
+      1,
+      248,
+      3,
+      null
+     ]
+    },
+    {
+     "label": "501011019 000041 豪星牌 HS-999 冰溫熱三用程控式飲水機",
+     "note_ref": null,
+     "values": [
+      24500,
+      1,
+      245,
+      3,
+      null
+     ]
+    },
+    {
+     "label": "501011019 000042 豪星牌 HS-999 冰溫熱三用程控式飲水機",
+     "note_ref": null,
+     "values": [
+      24500,
+      1,
+      245,
+      3,
+      null
+     ]
+    },
+    {
+     "label": "501011040 000001 開水機 (30加侖)",
+     "note_ref": null,
+     "values": [
+      37208,
+      1,
+      372,
+      3,
+      null
+     ]
+    },
+    {
+     "label": "501011066A 000001 濾網式濾油煙罩",
+     "note_ref": null,
+     "values": [
+      48958,
+      1,
+      5740,
+      10,
+      null
+     ]
+    },
+    {
+     "label": "501030101B 000031 會議桌",
+     "note_ref": null,
+     "values": [
+      20000,
+      1,
+      200,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301A 000037 教學用木質白板櫃",
+     "note_ref": null,
+     "values": [
+      38000,
+      3,
+      4455,
+      10,
+      null
+     ]
+    },
+    {
+     "label": "501030301A 000038 教學用木質白板櫃",
+     "note_ref": null,
+     "values": [
+      38000,
+      3,
+      4455,
+      10,
+      null
+     ]
+    },
+    {
+     "label": "501030301A 000039 教學用木質白板櫃",
+     "note_ref": null,
+     "values": [
+      38000,
+      3,
+      4455,
+      10,
+      null
+     ]
+    },
+    {
+     "label": "501030301A 000040 電視櫃",
+     "note_ref": null,
+     "values": [
+      41000,
+      1,
+      4807,
+      10,
+      null
+     ]
+    },
+    {
+     "label": "501030301A 000042 櫥櫃",
+     "note_ref": null,
+     "values": [
+      54000,
+      1,
+      41971,
+      10,
+      null
+     ]
+    },
+    {
+     "label": "501030301A 000043 櫥櫃",
+     "note_ref": null,
+     "values": [
+      54000,
+      1,
+      41971,
+      10,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000040 器材整理櫃",
+     "note_ref": null,
+     "values": [
+      21000,
+      2,
+      210,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000041 器材整理櫃",
+     "note_ref": null,
+     "values": [
+      21000,
+      2,
+      210,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000042 棉被儲物櫃",
+     "note_ref": null,
+     "values": [
+      13200,
+      10,
+      132,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000043 棉被儲物櫃",
+     "note_ref": null,
+     "values": [
+      13200,
+      10,
+      132,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000044 棉被儲物櫃",
+     "note_ref": null,
+     "values": [
+      13200,
+      10,
+      132,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000045 棉被儲物櫃",
+     "note_ref": null,
+     "values": [
+      13200,
+      10,
+      132,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000046 棉被儲物櫃",
+     "note_ref": null,
+     "values": [
+      13200,
+      10,
+      132,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000047 棉被儲物櫃",
+     "note_ref": null,
+     "values": [
+      13200,
+      10,
+      132,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000048 棉被儲物櫃",
+     "note_ref": null,
+     "values": [
+      13200,
+      10,
+      132,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000049 棉被儲物櫃",
+     "note_ref": null,
+     "values": [
+      13200,
+      10,
+      132,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000050 棉被儲物櫃",
+     "note_ref": null,
+     "values": [
+      13200,
+      10,
+      132,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030301B 000051 棉被儲物櫃",
+     "note_ref": null,
+     "values": [
+      13200,
+      10,
+      132,
+      5,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄為文字格式（如109/05/25），無法填入數值，已省略該欄數值（填null）"
+ ]
+}

@@ -1,0 +1,272 @@
+{
+ "report": "N08_鷺江_113",
+ "code": "N08",
+ "short_name": "鷺江",
+ "academic_year": 113,
+ "pdf_page": 33,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N08",
+ "printed_page": 33,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "2.購置財產",
+   "period_labels": [
+    "財產編號",
+    "財產名稱",
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "001-1-03-A-01",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      25200,
+      1,
+      25200,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "001-1-03-A-02",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      34125,
+      1,
+      34125,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "001-1-02-G-04",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      17850,
+      1,
+      17850,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "001-1-08-G-18",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      13800,
+      1,
+      13800,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "001-1-03-A-03",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      20000,
+      1,
+      20000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "001-1-03-A-04",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      12889,
+      1,
+      12889,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "001-1-03-A-05",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      16000,
+      2,
+      32000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "001-1-03-A-06",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      12000,
+      1,
+      12000,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "001-1-03-A-07",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      37779,
+      1,
+      37779,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "001-1-03-A-08",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      17325,
+      1,
+      17325,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "001-1-03-A-09",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      29925,
+      1,
+      29925,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "001-1-03-A-10",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      12000,
+      1,
+      12000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "001-1-03-A-11",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      38250,
+      1,
+      38250,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "001-1-03-A-12",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      48000,
+      1,
+      48000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "001-1-03-A-13",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      28560,
+      1,
+      28560,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "001-1-03-A-14",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      10500,
+      1,
+      10500,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "001-1-03-A-15",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      38250,
+      1,
+      38250,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      428453,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本表欄位為財產編號、財產名稱、單價、數量、總金額、購置日期、使用年限，非標準金額期間欄，period_labels以欄位名稱代替期間標題；values依序對應各欄位數值，文字欄填null。",
+  "001-1-03-A-10財產名稱為「數位攝影-Canon PowerShot SX740HS」跨兩列，已合併為單一項目。"
+ ]
+}

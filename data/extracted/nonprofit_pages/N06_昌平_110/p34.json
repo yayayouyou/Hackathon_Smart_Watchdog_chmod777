@@ -1,0 +1,177 @@
+{
+ "report": "N06_昌平_110",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 110,
+ "pdf_page": 34,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 34,
+ "page_kind": "other",
+ "tables": [
+  {
+   "title": "查核項目",
+   "period_labels": [
+    "是",
+    "否",
+    "不適用"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "58 維護費總支出是否符合預算，如有超支，其金額為：－元（如有超支應於下方補充說明敘明，並說明是否符合勻支規定）",
+     "note_ref": null,
+     "values": [
+      943,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "維護費補充說明：無。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "59 電器用品、園舍修繕、廚房設備及教學設施設備是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      943,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "60 修繕購置費總支出是否符合預算，如有超支，其金額為：－元（如有超支應於下方補充說明敘明）",
+     "note_ref": null,
+     "values": [
+      943,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "修繕購置費補充說明：無。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "61 雜支是否符合非營利幼兒園營運成本支用範圍及預算，如有超支，其金額為：－元（如有超支應於下方補充說明敘明）",
+     "note_ref": null,
+     "values": [
+      943,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "62 行政管理費是否符合預算，如有超支，其金額為：－元（如有超支應於下方補充說明敘明）",
+     "note_ref": null,
+     "values": [
+      943,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "63 業務發展準備金之提列及業務發展費之動支均符合規定，提列金額是否以專戶或定期存款方式儲存",
+     "note_ref": null,
+     "values": [
+      943,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "雜支、行政管理費及業務發展費補充說明：無。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "64 專案補助、代收補助、及代收代付等其他支出是否符合各該項目之支用範圍，如有超支，其金額為：－元（如有超支應於下方補充說明敘明）",
+     "note_ref": null,
+     "values": [
+      943,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "其他支出補充說明：無。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "65 本學期（學年度）結算總收入是否大於或等於總支出。如有虧損，其虧損金額為：－元",
+     "note_ref": null,
+     "values": [
+      943,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "虧損補充說明：無。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "負債部分",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "66 向辦理單位借款，其資金往來皆透過金融機構，金額為：－元",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      943
+     ]
+    },
+    {
+     "label": "67 未有以非營利幼兒園之名義向金融機構或其他個人單位借（貸）款之情形",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      943
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本頁為查核項目勾選表（是/否/不適用），各項目勾選欄位以V表示，無具體金額數值，values欄位僅以符號表示勾選，無法轉為數值，已填null處理。實際勾選位置：58、59、60、61、62、63、64、65項目勾「是」欄；66、67項目勾「不適用」欄。"
+ ]
+}

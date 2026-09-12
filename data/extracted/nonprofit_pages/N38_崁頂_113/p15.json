@@ -1,0 +1,266 @@
+{
+ "report": "N38_崁頂_113",
+ "code": "N38",
+ "short_name": "崁頂",
+ "academic_year": 113,
+ "pdf_page": 15,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N38",
+ "printed_page": 15,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "4. 人事費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異數",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      9752549,
+      9071564,
+      -680985,
+      93
+     ]
+    },
+    {
+     "label": "學前特教師、社工人員、護理人員（教保員）",
+     "note_ref": null,
+     "values": [
+      1316136,
+      1000396,
+      -315740,
+      76
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      2091901,
+      2091583,
+      -318,
+      100
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      1396800,
+      406386,
+      -990414,
+      29
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      1918196,
+      1648220,
+      -269976,
+      86
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      25000,
+      38503,
+      13503,
+      154
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      750540,
+      726887,
+      -23653,
+      97
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      25000,
+      23670,
+      -1330,
+      95
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      1667,
+      null,
+      -1667,
+      null
+     ]
+    },
+    {
+     "label": "代課費及廚工代班費",
+     "note_ref": null,
+     "values": [
+      391500,
+      115026,
+      -276474,
+      29
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      104243,
+      104244,
+      1,
+      100
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      17773532,
+      15226479,
+      -2547053,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "5. 業務費",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異數",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "活動費",
+     "note_ref": null,
+     "values": [
+      104167,
+      99280,
+      -4887,
+      95
+     ]
+    },
+    {
+     "label": "研習、進修",
+     "note_ref": null,
+     "values": [
+      50000,
+      15245,
+      -34755,
+      30
+     ]
+    },
+    {
+     "label": "水費",
+     "note_ref": null,
+     "values": [
+      46667,
+      25087,
+      -21580,
+      54
+     ]
+    },
+    {
+     "label": "電費",
+     "note_ref": null,
+     "values": [
+      440833,
+      518750,
+      77917,
+      118
+     ]
+    },
+    {
+     "label": "瓦斯費",
+     "note_ref": null,
+     "values": [
+      35000,
+      22283,
+      -12717,
+      64
+     ]
+    },
+    {
+     "label": "保全",
+     "note_ref": null,
+     "values": [
+      100000,
+      32000,
+      -68000,
+      32
+     ]
+    },
+    {
+     "label": "辦公文具",
+     "note_ref": null,
+     "values": [
+      35000,
+      32086,
+      -2914,
+      92
+     ]
+    },
+    {
+     "label": "事務機器耗材",
+     "note_ref": null,
+     "values": [
+      66667,
+      68865,
+      2198,
+      103
+     ]
+    },
+    {
+     "label": "電話費（含ADSL）",
+     "note_ref": null,
+     "values": [
+      52500,
+      37245,
+      -15255,
+      71
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.1 人事費總預算內，除資遣費準備金不得移作他用、加班費不得超支，及自強活動以營運成本編列數額為支用上限，超過部分由非營利法人自行支應外，其餘各細項得相互勻支。\n(2) 113 學年度保險費及資遣費超支預算部分，依上開規定人事費細項得相互勻支，上述各細項已符合勻支規定。\n(3) 113 學年度人事費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "人事費表與業務費表的期間標題列均標示 113.9.27~114.7.31，兩表共用同一期間，已分為兩個獨立 table 物件。",
+  "業務費表底部尚有更多列未顯示（頁面截斷），資料不完整。",
+  "健康檢查執行率欄位印有「-」，視為空白填 null。"
+ ]
+}

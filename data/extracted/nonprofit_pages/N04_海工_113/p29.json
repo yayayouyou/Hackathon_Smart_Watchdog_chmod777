@@ -1,0 +1,215 @@
+{
+ "report": "N04_海工_113",
+ "code": "N04",
+ "short_name": "海工",
+ "academic_year": 113,
+ "pdf_page": 29,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N04",
+ "printed_page": 29,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "總價",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "6080501 000187 室外型槍型-攝影機",
+     "note_ref": null,
+     "values": [
+      2700,
+      1,
+      2700,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      127360,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "2.購置財產",
+   "period_labels": [
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "04607-0206~08 32格工作櫃",
+     "note_ref": null,
+     "values": [
+      10000,
+      3,
+      30000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "04607-0309 遊戲器材",
+     "note_ref": null,
+     "values": [
+      120000,
+      1,
+      120000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "04607-0601 百葉棉被櫃",
+     "note_ref": null,
+     "values": [
+      12500,
+      1,
+      12500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "04607-0418 高溫消毒櫃四層",
+     "note_ref": null,
+     "values": [
+      20000,
+      1,
+      20000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "04607-0914 不銹鋼冷凍櫃",
+     "note_ref": null,
+     "values": [
+      30818,
+      1,
+      30818,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "04607-0822 投影機",
+     "note_ref": null,
+     "values": [
+      10395,
+      1,
+      10395,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "04607-0708 無限擴音機",
+     "note_ref": null,
+     "values": [
+      31500,
+      1,
+      31500,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "04607-0601 ASUS筆電",
+     "note_ref": null,
+     "values": [
+      28000,
+      1,
+      28000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "04607-0716 影印機",
+     "note_ref": null,
+     "values": [
+      39900,
+      1,
+      39900,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "04607-0726 IPAD",
+     "note_ref": null,
+     "values": [
+      14590,
+      1,
+      14590,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "04607-0502 IPAD",
+     "note_ref": null,
+     "values": [
+      19900,
+      1,
+      19900,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "04607-0717 空氣清淨機",
+     "note_ref": null,
+     "values": [
+      14900,
+      1,
+      14900,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      372503,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "第一張表為上頁延續的財產清單（無標題），僅含一筆資料與合計，購置日期欄位為文字格式(110/12/21)無法填入數值欄位，已忽略日期值",
+  "購置日期為文字格式，無法放入數值陣列，已填null並備注"
+ ]
+}

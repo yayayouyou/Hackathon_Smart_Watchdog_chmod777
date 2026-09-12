@@ -1,0 +1,179 @@
+{
+ "report": "N07_北大_113",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 113,
+ "pdf_page": 15,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 15,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "資遣費準備金",
+   "period_labels": [
+    "114年7月31日",
+    "113年7月31日"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "資遣費準備金",
+     "note_ref": null,
+     "values": [
+      null,
+      449139
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.8.1~113.7.31"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      5859000,
+      4087000
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      1170239,
+      1772000
+     ]
+    },
+    {
+     "label": "轉列其他收入-其它",
+     "note_ref": null,
+     "values": [
+      -7029239,
+      null
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      null,
+      5859000
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "114年7月31日",
+    "113年7月31日"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "業務發展準備金",
+     "note_ref": null,
+     "values": [
+      null,
+      5859000
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      1929317,
+      41700,
+      -399725,
+      1571292
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 代管財產",
+   "period_labels": [
+    "期初餘額",
+    "本期增加",
+    "本期減少",
+    "期末餘額"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "代管財產",
+     "note_ref": null,
+     "values": [
+      2329996,
+      null,
+      -400679,
+      1929317
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "依據非營利幼兒園實施辦法之規定，提撥資遣費準備金餘額如下："
+  },
+  {
+   "heading": null,
+   "text": "113學年度支付資遣費449,139元之說明，請詳財務報表附註三.（四）.2"
+  },
+  {
+   "heading": null,
+   "text": "依據非營利幼兒園實施辦法及非營利幼兒園會計財務及經費處理注意事項之規定，提列之業務發展準備金已報經主管機關同意。依該規定，以專戶或定期存款提存之業務發展準備金餘額如下："
+  },
+  {
+   "heading": null,
+   "text": "因新北市政府不同意受託機構-社團法人中華音樂舞蹈暨表演藝術教育協會繼續辦理本幼兒園，本幼兒園為辦理解約後續相關事宜及支付員工資遣費及不休假薪資等事項申請動支業務發展準備金，已於114年7月23日報經主管機關同意，並已轉列其他收入-其它項下。"
+  },
+  {
+   "heading": "(三) 營運資產",
+   "text": "1. 代管財產"
+  },
+  {
+   "heading": null,
+   "text": "113學年度代管財產減少399,725元，其中8,800元係轉回給託管單位，另390,925元係託管單位財產管理系統，依財產經濟年限攤提折舊所致。\n112學年度代管財產減少400,679元，係託管單位財產管理系統，依財產經濟年限攤提折舊所致。"
+  }
+ ],
+ "issues": [
+  "業務發展準備第一張表的113.8.1~114.7.31期末餘額欄顯示為$-，視為null；113年7月31日資遣費準備金欄顯示為$-，視為null（114年7月31日欄）",
+  "代管財產兩張表的period_labels為欄位標題（期初餘額、本期增加、本期減少、期末餘額），而非日期期間，因為表格橫欄是變動明細"
+ ]
+}

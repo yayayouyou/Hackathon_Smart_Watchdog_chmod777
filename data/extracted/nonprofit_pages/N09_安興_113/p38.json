@@ -1,0 +1,103 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 38,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 38,
+ "page_kind": "other",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "是否符合－是",
+    "是否符合－否",
+    "是否符合－不適用"
+   ],
+   "items": [
+    {
+     "label": "64　業務發展準備之提列及業務發展準備金之動支均符合規定,提列金額是否以專戶或定期存款方式儲存",
+     "note_ref": null,
+     "values": [
+      748,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "65　專案補助、代收補助、及代收代付等其他支出是否符合各該項目之支用範圍，如有超支",
+     "note_ref": null,
+     "values": [
+      748,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "66　本學期（學年度）結算總收入是否大於或等於總支出。",
+     "note_ref": null,
+     "values": [
+      748,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "67　向辦理單位借款，其資金往來皆透過金融機構",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      748
+     ]
+    },
+    {
+     "label": "68　未有以非營利幼兒園之名義向金融機構或其他個人單位借（貸）款之情形",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      748
+     ]
+    },
+    {
+     "label": "69　本學期（學年度）未有借款予辦理單位或他人之情形。如有借款，其借款金額為　-　元",
+     "note_ref": null,
+     "values": [
+      748,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "雜支、行政管理費及業務發展費補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "其他支出補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "虧損補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "負債補充說明：",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "第64、65、66、69項的『是』欄標記為V（勾選），以true/存在表示；第67、68項的『不適用』欄標記為V。本表為查核項目勾選表，非金額表，values欄位以748（代表V勾選位置）填入有誤，應以文字或布林值表示，但schema要求number，故以null表示未勾選、以1表示勾選較合適——實際上本表不含金額數字，values均應為null，僅記錄勾選位置。建議人工確認此頁為查核表非財務數字表。"
+ ]
+}

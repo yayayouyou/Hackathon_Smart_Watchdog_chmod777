@@ -1,0 +1,23 @@
+{
+ "report": "N02_山北_110",
+ "code": "N02",
+ "short_name": "山北",
+ "academic_year": 110,
+ "pdf_page": 1,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N02",
+ "printed_page": 1,
+ "page_kind": "cover",
+ "tables": [],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "新北市山北非營利幼兒園\n（委託財團法人三之三生命教育基金會辦理）\n財務報表暨會計師查核報告\n民國110學年度及民國109學年度\n\n地址：新北市中和區莊敬路49巷29弄2號2、3樓\n電話：(02) 2246-8097"
+  }
+ ],
+ "issues": []
+}

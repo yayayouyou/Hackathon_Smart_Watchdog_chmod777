@@ -1,0 +1,23 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 1,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 1,
+ "page_kind": "cover",
+ "tables": [],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "新北市安興非營利幼兒園\n（委託社團法人臺灣兒童教育發展協會辦理）\n財務報表暨會計師查核報告\n民國 113 學年度及民國 112 學年度\n\n地址：新北市新店區安興路129號1、2、3樓\n電話：(02) 2212-6606"
+  }
+ ],
+ "issues": []
+}

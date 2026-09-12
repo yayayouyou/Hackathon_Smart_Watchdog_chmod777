@@ -1,0 +1,23 @@
+{
+ "report": "N11_新林_113",
+ "code": "N11",
+ "short_name": "新林",
+ "academic_year": 113,
+ "pdf_page": 1,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N11",
+ "printed_page": 1,
+ "page_kind": "cover",
+ "tables": [],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "新北市新林非營利幼兒園\n（委託社團法人中華音樂舞蹈暨表演藝術教育協會辦理）\n財務報表暨會計師查核報告\n民國 113 學年度及民國 112 學年度\n\n地址：新北市林口區三民路101號1樓\n\n電話：(02) 2609-9522"
+  }
+ ],
+ "issues": []
+}

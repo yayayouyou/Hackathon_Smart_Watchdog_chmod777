@@ -1,0 +1,262 @@
+{
+ "report": "N25_碧城_113",
+ "code": "N25",
+ "short_name": "碧城",
+ "academic_year": 113,
+ "pdf_page": 16,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N25",
+ "printed_page": 16,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "教保費收入",
+   "context_heading": "(四) 收支明細表",
+   "period_labels": [
+    "113.8.1~114.7.31",
+    "112.8.1~113.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "教保費收入",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "教保費收入（家長繳費）",
+     "note_ref": null,
+     "values": [
+      1791205,
+      1949392
+     ]
+    },
+    {
+     "label": "教保費收入（政府學費差額補助）",
+     "note_ref": null,
+     "values": [
+      10076802,
+      9818240
+     ]
+    },
+    {
+     "label": "小　計",
+     "note_ref": null,
+     "values": [
+      11868007,
+      11767632
+     ]
+    },
+    {
+     "label": "教保費收入減項",
+     "note_ref": null,
+     "values": [
+      null,
+      null
+     ]
+    },
+    {
+     "label": "五日未上課退費",
+     "note_ref": null,
+     "values": [
+      -67936,
+      -61532
+     ]
+    },
+    {
+     "label": "腸病毒退費",
+     "note_ref": null,
+     "values": [
+      -16022,
+      null
+     ]
+    },
+    {
+     "label": "轉學/轉出退費",
+     "note_ref": null,
+     "values": [
+      -11391,
+      -4000
+     ]
+    },
+    {
+     "label": "政府學費差額補助退費",
+     "note_ref": null,
+     "values": [
+      null,
+      -9171
+     ]
+    },
+    {
+     "label": "小　計",
+     "note_ref": null,
+     "values": [
+      -95349,
+      -74703
+     ]
+    },
+    {
+     "label": "教保費收入淨額",
+     "note_ref": null,
+     "values": [
+      11772658,
+      11692929
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "人事費",
+   "context_heading": "(四) 收支明細表",
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "園長及教保服務人員薪資（含職務加給）",
+     "note_ref": null,
+     "values": [
+      5224095,
+      4551723,
+      -672372,
+      87
+     ]
+    },
+    {
+     "label": "學前特教師、社工人員、護理人員薪資（教保員）",
+     "note_ref": null,
+     "values": [
+      544455,
+      506638,
+      -37817,
+      93
+     ]
+    },
+    {
+     "label": "會計、總務、廚工、清潔薪資",
+     "note_ref": null,
+     "values": [
+      1230567,
+      1138547,
+      -92020,
+      93
+     ]
+    },
+    {
+     "label": "加班費",
+     "note_ref": null,
+     "values": [
+      694668,
+      172555,
+      -522113,
+      25
+     ]
+    },
+    {
+     "label": "勞、健保費",
+     "note_ref": null,
+     "values": [
+      829458,
+      761307,
+      -68151,
+      92
+     ]
+    },
+    {
+     "label": "保險費",
+     "note_ref": null,
+     "values": [
+      13000,
+      10615,
+      -2385,
+      82
+     ]
+    },
+    {
+     "label": "勞退金提撥",
+     "note_ref": null,
+     "values": [
+      373284,
+      369561,
+      -3723,
+      99
+     ]
+    },
+    {
+     "label": "自強活動",
+     "note_ref": null,
+     "values": [
+      13000,
+      13000,
+      null,
+      100
+     ]
+    },
+    {
+     "label": "健康檢查",
+     "note_ref": null,
+     "values": [
+      13000,
+      13170,
+      170,
+      101
+     ]
+    },
+    {
+     "label": "代課費及代班費",
+     "note_ref": null,
+     "values": [
+      165024,
+      153656,
+      -11368,
+      93
+     ]
+    },
+    {
+     "label": "資遣費",
+     "note_ref": null,
+     "values": [
+      51845,
+      689545,
+      637700,
+      1330
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      9152396,
+      8380317,
+      -772079,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "本幼兒園依契約之規定應辦理保險，截至 113 年 7 月 31 日及 112 年 7 月 31 日止保險金額均為 22,000,000 元。"
+  }
+ ],
+ "issues": [
+  "人事費表格期間標題僅標示「113.8.1~114.7.31」，涵蓋預算數、決算數、差異、執行率四欄，未標示另一期間，此為正常格式。",
+  "資遣費執行率1,330%數字異常，係照表面數字抄錄。",
+  "合計列執行率欄為空白，填null。"
+ ]
+}

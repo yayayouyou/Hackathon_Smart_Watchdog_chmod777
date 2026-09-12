@@ -1,0 +1,117 @@
+{
+ "report": "N06_昌平_113",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 113,
+ "pdf_page": 37,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 37,
+ "page_kind": "other",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "是否符合-是",
+    "是否符合-否",
+    "是否符合-不適用"
+   ],
+   "items": [
+    {
+     "label": "66 本學期（學年度）結算總收入是否大於或等於總支出。如有虧損，其虧損金額為：(602,513)元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "67 向辦理單位借款，其資金往來皆透過金融機構，金額為：- 元",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1
+     ]
+    },
+    {
+     "label": "68 未有以非營利幼兒園之名義向金融機構或其他個人單位借（貸）款之情形",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1
+     ]
+    },
+    {
+     "label": "69 本學期（學年度）未有借款予辦理單位或他人之情形。如有借款，其借款金額為 - 元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "70 上學期（學年度）會計師查核所提建議改善事項，非營利幼兒園已完成改善",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "71 非營利幼兒園與關係人間無交易事項，如有交易事項，請於下方補充說明揭露",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "72 非營利幼兒園之財產或代管財產是否均登錄於財產清冊或代管清冊，定期盤點，並依相關規定報廢",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "73 非營利幼兒園專戶之印信，應有幼兒園章及負責人私章或園長私章，且由非營利法人指定之人、園長（或其代理人）、會計或出納人員分別保管，未集中於同一人保管，以符合專戶管理辦法相關法規",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "虧損補充說明：",
+   "text": "本學年度虧損(602,513)元，主要係依非營利幼兒園實施辦法之規定，提列業務發展費1,783,086元所致，該園未提列業務發展費前之結餘為1,180,573元。"
+  },
+  {
+   "heading": "負債補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "其他補充說明：",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "第66項查核項目中，虧損原因勾選項目為『有應收未收帳款，於提列業務發展費而造成之虧損』（以黑色方塊標示），已於text_sections記錄但未轉為結構化欄位，請人工確認。"
+ ]
+}

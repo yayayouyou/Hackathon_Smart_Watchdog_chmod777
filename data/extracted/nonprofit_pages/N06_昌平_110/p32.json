@@ -1,0 +1,271 @@
+{
+ "report": "N06_昌平_110",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 110,
+ "pdf_page": 32,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 32,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "是",
+    "否",
+    "不適用"
+   ],
+   "items": [
+    {
+     "label": "20 學前特教師/社工師/護理師薪資是否依核定之人員配置及薪資支付",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "21 社工員/護士薪資是否依核定之人員配置及薪資支付",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "22 會計/總務人員薪資是否依核定之人員配置及薪資支付",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "23 廚工薪資是否依核定之人員配置及薪資支付",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "24 清潔薪資是否依核定之人員配置及薪資支付",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "25 工作人員加班費是否符合規定並經園長核准；園長加班費是否符合規定並經母機構負責人核准",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "26 勞健保及退休金提撥是否符合勞動基準法規定",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "27 自強活動是否符合工作計畫（或行事曆）",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "28 健康檢查是否符合當學年度排定健康檢查之員工名單",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "29 代課費是否符合非營利幼兒園實施辦法等相關規定（限實際帶班之教保服務人員）",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "30 廚工代班費是否符合規定",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "31 檢視依本辦法第十六條第四項提撥之資遣費準備金及於法令規定外額外提撥之勞工退休金準備，是否以專戶或定期存款方式儲存",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "32 人事費總支出是否符合預算，如有超支，其金額為：　　　-　　　元（如有超支應於下方補充說明敘明，並說明是否符合勾支規定）",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "33 活動費（親職講座、親子活動、畢業典禮）經費之支用符合工作計畫（或行事曆）、非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "34 研習、進修經費之支用是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "35 水費是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "36 電費是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "37 瓦斯是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "38 保全是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "39 辦公文具是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "40 事務機器耗材是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "41 電話費是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "42 郵資是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "43 文宣費（含一般文宣、園刊）是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "44 攝影照片是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "45 園務特支是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "人事費補充說明：",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "本頁為查核項目勾選表，各項目之勾選（V）分布於是/否/不適用三欄，但因為這是文字型勾選表而非數值表，values 欄位無法以數字呈現，僅以 null 填入。項目20勾選「不適用」、項目21勾選「不適用」、項目22~31及33~45勾選「是」、項目32勾選「是」。"
+ ]
+}

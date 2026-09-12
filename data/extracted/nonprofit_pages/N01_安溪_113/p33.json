@@ -1,0 +1,240 @@
+{
+ "report": "N01_安溪_113",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 113,
+ "pdf_page": 33,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 33,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "113學年度第2學期會計師查核附表",
+   "period_labels": [
+    "是",
+    "否",
+    "不適用"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "基本原則",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "1 以幼兒園名義開設專戶收支保管及運用各項經費",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "2 依本注意事項及一般公認會計原則取得並保存合法憑證",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "3 以專帳製作財務報表",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "4 傳票製作應由園長、主辦會計人員於傳票上會同簽名或蓋章",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "5 收入及支出均以總額入帳，未有以收支相抵後淨額入帳之情形",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "6 除小額款項（一萬元以下）得以零用金支付外，其餘應付款項均以銀行轉帳或票據支付",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "7 如期結帳並依附件九提供資料檢核表",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "收入部分",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "8 教保費收入依據預算且無漏列或低列情形",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "9 利息收入無漏列或低列情形",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "10 延長照顧服務收入（含逾時照顧服務收入）無漏列或低列情形",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "11 專案補助、代收補助、代收代付、捐贈及租金等其他收入無漏列或低列情形",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "12 各項退費是否符合相關規定，並依退費原因逐列收入減項",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "13 各相關收入項目未有以代收款項或暫收款列帳之情形",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "14 抽查所有以非營利幼兒園名義收取之一切收入，是否列入相關收入項目，且入非營利幼兒園之專戶",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "15 非營利幼兒園以前學年度之結餘款是否存入非營利幼兒園之專戶",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "16 以前學年度已轉列為呆帳之教保費收入於本期收訖是否逐列本期收入",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      -1
+     ]
+    },
+    {
+     "label": "支出部分",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "17 園長薪資是否依規定配置及符合採認薪級之薪資支付",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "18 組長職務加給是否依核定之人員配置及薪資支付",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "19 教師及教保員薪資是否依規定配置及符合採認薪級之薪資支付",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "補充說明（基本原則）",
+   "text": "無。"
+  },
+  {
+   "heading": "補充說明（收入部分）",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "查核表中『是』欄以V符號標示，本JSON以-1表示勾選（是），null表示未勾選，實際數值並非金額，請注意語意差異。"
+ ]
+}

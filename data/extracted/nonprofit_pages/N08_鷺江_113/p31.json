@@ -1,0 +1,453 @@
+{
+ "report": "N08_鷺江_113",
+ "code": "N08",
+ "short_name": "鷺江",
+ "academic_year": 113,
+ "pdf_page": 31,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N08",
+ "printed_page": 31,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "502020315-000006 不鏽鋼塑木格柵管制管制門",
+     "note_ref": null,
+     "values": [
+      65432,
+      1,
+      17927,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "502020315-000007 不鏽鋼塑木格柵管制管制門",
+     "note_ref": null,
+     "values": [
+      156259,
+      1,
+      42815,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "502020315-000008 不鏽鋼塑木格柵管制管制門",
+     "note_ref": null,
+     "values": [
+      78100,
+      1,
+      21399,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "5030990-000002 組合式體能遊具",
+     "note_ref": null,
+     "values": [
+      47570,
+      1,
+      5709,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "5030990-000002 球形屋",
+     "note_ref": null,
+     "values": [
+      30000,
+      1,
+      3600,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "5030990-000004 遊具-原木綁繩區",
+     "note_ref": null,
+     "values": [
+      15750,
+      1,
+      4056,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "5030990-000005 遊具-三角小木屋",
+     "note_ref": null,
+     "values": [
+      73080,
+      1,
+      18818,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6010705-000018 三層塑膠手推車",
+     "note_ref": null,
+     "values": [
+      2600,
+      1,
+      2600,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6011008-000001 鐵捲門",
+     "note_ref": null,
+     "values": [
+      8754,
+      1,
+      8754,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6011229-000063 手提CD音響國際牌",
+     "note_ref": null,
+     "values": [
+      2450,
+      1,
+      2450,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6011408-000034 上升式銀幕(布幕)",
+     "note_ref": null,
+     "values": [
+      4800,
+      1,
+      4800,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "6030103-000001 單口快炒爐",
+     "note_ref": null,
+     "values": [
+      8754,
+      1,
+      8754,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6030303-000001 不鏽鋼蒸籠",
+     "note_ref": null,
+     "values": [
+      2400,
+      1,
+      2400,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6040212-000002 不鏽鋼湯鍋",
+     "note_ref": null,
+     "values": [
+      1350,
+      1,
+      1350,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6040212-000003 平底鍋",
+     "note_ref": null,
+     "values": [
+      1000,
+      1,
+      1000,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6040213-000001 不鏽鋼湯桶",
+     "note_ref": null,
+     "values": [
+      2800,
+      1,
+      2800,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6040213-000002 不鏽鋼湯桶",
+     "note_ref": null,
+     "values": [
+      2800,
+      1,
+      2800,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "6050102-000001 健康中心-床墊",
+     "note_ref": null,
+     "values": [
+      1800,
+      1,
+      1800,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "6070201-000008 木紋辦公桌",
+     "note_ref": null,
+     "values": [
+      2900,
+      1,
+      2900,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070201-000009 木紋辦公桌",
+     "note_ref": null,
+     "values": [
+      2900,
+      1,
+      2900,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070201-000010 木紋辦公桌",
+     "note_ref": null,
+     "values": [
+      3150,
+      1,
+      3150,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070202-000209 中背扶手辦公椅",
+     "note_ref": null,
+     "values": [
+      1500,
+      1,
+      1500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070202-000210 中背扶手辦公椅",
+     "note_ref": null,
+     "values": [
+      1500,
+      1,
+      1500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070202-000211 中背扶手辦公椅",
+     "note_ref": null,
+     "values": [
+      1500,
+      1,
+      1500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070202-000212 高背扶手辦公椅",
+     "note_ref": null,
+     "values": [
+      1800,
+      1,
+      1800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070202-000213 二代幼童椅(一組20張)",
+     "note_ref": null,
+     "values": [
+      7200,
+      1,
+      7200,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070210-000012 塑鋼折合桌",
+     "note_ref": null,
+     "values": [
+      1800,
+      1,
+      1800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070210-000013 塑鋼折合桌",
+     "note_ref": null,
+     "values": [
+      1800,
+      1,
+      1800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070210-000014 塑鋼折合桌",
+     "note_ref": null,
+     "values": [
+      1800,
+      1,
+      1800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070210-000015 塑鋼折合桌",
+     "note_ref": null,
+     "values": [
+      1800,
+      1,
+      1800,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070214-000001 健康中心-床",
+     "note_ref": null,
+     "values": [
+      5000,
+      1,
+      5000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070217-000001 工作台 1000*300*800",
+     "note_ref": null,
+     "values": [
+      5690,
+      1,
+      5690,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070217-000002 下層橫桿式工作台 900*750*800",
+     "note_ref": null,
+     "values": [
+      6653,
+      1,
+      6653,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070217-000003 配膳台-二層版 1200*750*800",
+     "note_ref": null,
+     "values": [
+      7003,
+      1,
+      7003,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070217-000004 配膳台-二層版 1200*750*800",
+     "note_ref": null,
+     "values": [
+      7003,
+      1,
+      7003,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070217-000005 煮飯鍋置放台 1200*600*450",
+     "note_ref": null,
+     "values": [
+      7878,
+      1,
+      7878,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070224-000267 倒圓角幼童桌(一組6張)",
+     "note_ref": null,
+     "values": [
+      7248,
+      1,
+      7248,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070227-000002 木紋高活動櫃",
+     "note_ref": null,
+     "values": [
+      2100,
+      1,
+      2100,
+      null,
+      5
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄位為文字型日期（如106/08/02），未轉為數值，已保留為null以避免格式錯誤；如需日期資料請人工補填。"
+ ]
+}

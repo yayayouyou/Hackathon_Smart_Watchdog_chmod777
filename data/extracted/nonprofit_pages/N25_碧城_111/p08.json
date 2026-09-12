@@ -1,0 +1,93 @@
+{
+ "report": "N25_碧城_111",
+ "code": "N25",
+ "short_name": "碧城",
+ "academic_year": 111,
+ "pdf_page": 8,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N25",
+ "printed_page": 8,
+ "page_kind": "equity_change",
+ "tables": [
+  {
+   "title": "淨值變動表",
+   "context_heading": null,
+   "period_labels": [
+    "累積餘絀",
+    "本期餘絀",
+    "合　計"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "110年8月1日餘額",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "110學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      1780717,
+      1780717
+     ]
+    },
+    {
+     "label": "111年7月31日餘額",
+     "note_ref": null,
+     "values": [
+      null,
+      1780717,
+      1780717
+     ]
+    },
+    {
+     "label": "110學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      1780717,
+      -1780717,
+      null
+     ]
+    },
+    {
+     "label": "111學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      -195372,
+      -195372
+     ]
+    },
+    {
+     "label": "112年7月31日餘額",
+     "note_ref": null,
+     "values": [
+      1780717,
+      -195372,
+      1585345
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": [
+  "110年8月1日餘額三欄均印為「$-」，視為空白（null）而非0"
+ ]
+}

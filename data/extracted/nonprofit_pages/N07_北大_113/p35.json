@@ -1,0 +1,442 @@
+{
+ "report": "N07_北大_113",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 113,
+ "pdf_page": 35,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 35,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "501010608-000170 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      29005,
+      1,
+      290,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000171 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      29005,
+      1,
+      290,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000172 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      29005,
+      1,
+      290,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000173 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      29005,
+      1,
+      290,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000174 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      29005,
+      1,
+      290,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000175 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      29005,
+      1,
+      290,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000176 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      29005,
+      1,
+      290,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000177 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      29005,
+      1,
+      290,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000178 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      29005,
+      1,
+      290,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000179 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      29005,
+      1,
+      290,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000180 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      29005,
+      1,
+      290,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000181 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000182 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000183 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000184 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000185 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000186 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000187 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000188 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000189 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000190 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000191 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000192 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000193 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      41635,
+      1,
+      416,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000194 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000195 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000196 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000197 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000198 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000199 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000200 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000201 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000202 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000203 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000204 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000205 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      57322,
+      1,
+      573,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "501010608-000206 冷氣送風機",
+     "note_ref": null,
+     "values": [
+      76017,
+      1,
+      760,
+      null,
+      5
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄位為日期字串（如106/12/28），無法以數字表示，values中該欄填null，實際日期記錄於label描述中；若需精確日期請參閱原始影像。"
+ ]
+}

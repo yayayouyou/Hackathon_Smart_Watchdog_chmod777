@@ -1,0 +1,66 @@
+{
+ "report": "N03_龍埔成長_113",
+ "code": "N03",
+ "short_name": "龍埔成長",
+ "academic_year": 113,
+ "pdf_page": 37,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N03",
+ "printed_page": 37,
+ "page_kind": "other",
+ "tables": [
+  {
+   "title": "113學年度績效考評",
+   "period_labels": [
+    "評分"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "六、會計查核簽證情形：",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "1.前學年度第2學期會計師查核附表，各查核項目符合之情形。（配分6分）",
+     "note_ref": null,
+     "values": [
+      5
+     ]
+    },
+    {
+     "label": "2.當學年度第1學期會計師查核附表，各查核項目符合之情形。（配分6分）",
+     "note_ref": null,
+     "values": [
+      5
+     ]
+    },
+    {
+     "label": "3.編製財務報表及會計簽證改善情形：（配分5分）",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(1)依限完成前項考評指標所需各項財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本頁為績效考評附表，表格內容含考評指標、考評方式、評分及考評依據等欄位，結構複雜，僅擷取考評指標與評分欄位。考評方式與考評依據欄為大量文字說明，未以數值呈現，已略去。"
+ ]
+}

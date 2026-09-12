@@ -1,0 +1,152 @@
+{
+ "report": "N02_山北_110",
+ "code": "N02",
+ "short_name": "山北",
+ "academic_year": 110,
+ "pdf_page": 32,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N02",
+ "printed_page": 32,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "是",
+    "否",
+    "不適用"
+   ],
+   "items": [
+    {
+     "label": "55 水電修繕是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "56 園舍消毒、清潔是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "57 火險是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "58 維護費總支出是否符合預算，如有超支，其金額為：　　-　　元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "59 電器用品、園舍修繕、廚房設備及教學設施設備是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "60 修繕購置費總支出是否符合預算，如有超支，其金額為：　　-　　元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "61 雜支是否符合非營利幼兒園營運成本支用範圍及預算，如有超支，其金額為：　　-　　元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "62 行政管理費是否符合預算，如有超支，其金額為：　　-　　元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "63 業務發展準備金之提列及業務發展費之動支均符合規定，提列金額是否以專戶或定期存款方式儲存",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "64 專案補助、代收補助、及代收代付等其他支出是否符合各該項目之支用範圍，如有超支，其金額為：　　-　　元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "65 本學期（學年度）結算總收入是否大於或等於總支出。如有虧損，其虧損金額為：　　-　　元",
+     "note_ref": null,
+     "values": [
+      1,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "維護費補充說明",
+   "text": "無。"
+  },
+  {
+   "heading": "修繕購置費補充說明",
+   "text": "無。"
+  },
+  {
+   "heading": "雜支、行政管理費及業務發展費補充說明",
+   "text": "無。"
+  },
+  {
+   "heading": "其他支出補充說明",
+   "text": "無。"
+  },
+  {
+   "heading": "虧損補充說明",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "本頁為查核項目查核表，以V代表符合（是），已轉為數值1表示，實際原始記錄為V符號"
+ ]
+}

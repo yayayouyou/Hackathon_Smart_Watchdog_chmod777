@@ -1,0 +1,66 @@
+{
+ "report": "N01_安溪_113",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 113,
+ "pdf_page": 39,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 39,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "113學年度績效考評",
+   "period_labels": [
+    "評分"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "六、會計查核簽證情形：",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "1.前學年度第2學期會計師查核附表，各查核項目符合之情形。（配分6分）",
+     "note_ref": null,
+     "values": [
+      6
+     ]
+    },
+    {
+     "label": "2.當學年度第1學期會計師查核附表，各查核項目符合之情形。（配分6分）",
+     "note_ref": null,
+     "values": [
+      6
+     ]
+    },
+    {
+     "label": "3.編製財務報表及會計簽證改善情形：（配分5分）",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(1) 依限完成前項考評指標所需各項財務報表之情形。",
+     "note_ref": null,
+     "values": [
+      1
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本頁為績效考評附表，表格內容以文字描述為主，評分欄數字依照視覺位置抄錄，部分列僅有說明文字而無數字，填null。"
+ ]
+}

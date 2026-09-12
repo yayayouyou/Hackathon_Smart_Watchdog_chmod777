@@ -1,0 +1,355 @@
+{
+ "report": "N07_北大_113",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 113,
+ "pdf_page": 29,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 29,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "財產清冊",
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "文書用具-白板",
+     "note_ref": null,
+     "values": [
+      3600,
+      1,
+      3600,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "傳音用具-電話機",
+     "note_ref": null,
+     "values": [
+      4000,
+      1,
+      4000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "傳音用具-電話機",
+     "note_ref": null,
+     "values": [
+      4000,
+      1,
+      4000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "傳音用具-電話機",
+     "note_ref": null,
+     "values": [
+      4000,
+      1,
+      4000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "傳音用具-對講機",
+     "note_ref": null,
+     "values": [
+      5049,
+      1,
+      5049,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "傳音用具-綜合擴大機",
+     "note_ref": null,
+     "values": [
+      4628,
+      1,
+      4628,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "傳音用具-綜合擴大機",
+     "note_ref": null,
+     "values": [
+      4628,
+      1,
+      4628,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "傳音用具-綜合擴大機",
+     "note_ref": null,
+     "values": [
+      4628,
+      1,
+      4628,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "傳音用具-綜合擴大機",
+     "note_ref": null,
+     "values": [
+      4628,
+      1,
+      4628,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "傳音用具-綜合擴大機",
+     "note_ref": null,
+     "values": [
+      4628,
+      1,
+      4628,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3718,
+      1,
+      3718,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3000,
+      1,
+      3000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3000,
+      1,
+      3000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "放置用具-物品架",
+     "note_ref": null,
+     "values": [
+      3000,
+      1,
+      3000,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電器用具-熱水器",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電器用具-熱水器",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電器用具-熱水器",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電器用具-熱水器",
+     "note_ref": null,
+     "values": [
+      6000,
+      1,
+      6000,
+      null,
+      5
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄位為文字型態（如106/11/17），無法填入數值，故values對應位置填null；使用年限欄位為整數已正常填入。",
+  "財產編號欄未納入表格結構，僅以財產名稱區分各列，若需財產編號請人工補充。"
+ ]
+}

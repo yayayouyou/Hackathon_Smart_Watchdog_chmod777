@@ -1,0 +1,441 @@
+{
+ "report": "N05_漢翔_113",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 113,
+ "pdf_page": 33,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 33,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "items": [
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      22530,
+      1,
+      21011,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      46905,
+      1,
+      45615,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "電器用具-空調系統",
+     "note_ref": null,
+     "values": [
+      77490,
+      1,
+      2373,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "電器用具-空調系統",
+     "note_ref": null,
+     "values": [
+      77490,
+      1,
+      2373,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "電器用具-空調系統",
+     "note_ref": null,
+     "values": [
+      77490,
+      1,
+      2373,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "電器用具-空調系統",
+     "note_ref": null,
+     "values": [
+      77490,
+      1,
+      2373,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "電器用具-空調系統",
+     "note_ref": null,
+     "values": [
+      77490,
+      1,
+      2373,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "電器用具-空調系統",
+     "note_ref": null,
+     "values": [
+      77490,
+      1,
+      2373,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "電器用具-空調系統",
+     "note_ref": null,
+     "values": [
+      77490,
+      1,
+      2373,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "電器用具-空調系統",
+     "note_ref": null,
+     "values": [
+      77490,
+      1,
+      2373,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "電器用具-冰箱",
+     "note_ref": null,
+     "values": [
+      36750,
+      1,
+      1505,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "電器用具-冰箱",
+     "note_ref": null,
+     "values": [
+      19950,
+      1,
+      817,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "陳列用具-除油煙機",
+     "note_ref": null,
+     "values": [
+      30000,
+      1,
+      300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電器用具-飲水機",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      250,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電器用具-飲水機",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      250,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "電器用具-瓦斯自動控制器",
+     "note_ref": null,
+     "values": [
+      22632,
+      1,
+      226,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "陳列用具-油煙罩",
+     "note_ref": null,
+     "values": [
+      50000,
+      1,
+      12875,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "陳列用具-櫥櫃",
+     "note_ref": null,
+     "values": [
+      14000,
+      1,
+      140,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      21200,
+      1,
+      9307,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      21200,
+      1,
+      9307,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      17030,
+      1,
+      15906,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      17030,
+      1,
+      15906,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      17030,
+      1,
+      15906,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      12876,
+      1,
+      12026,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      11630,
+      1,
+      10862,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      11630,
+      1,
+      10862,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      11630,
+      1,
+      10862,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      13915,
+      1,
+      12997,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      11215,
+      1,
+      10475,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      20768,
+      1,
+      19397,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "陳列用具-鍋爐台",
+     "note_ref": null,
+     "values": [
+      125000,
+      1,
+      1250,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "陳列用具-鐵片",
+     "note_ref": null,
+     "values": [
+      12500,
+      1,
+      12087,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "陳列用具-萬向燈",
+     "note_ref": null,
+     "values": [
+      10500,
+      1,
+      9634,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "陳列用具-萬向燈",
+     "note_ref": null,
+     "values": [
+      10500,
+      1,
+      9634,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "陳列用具-萬向燈",
+     "note_ref": null,
+     "values": [
+      10500,
+      1,
+      9634,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "陳列用具-鐵捲門",
+     "note_ref": null,
+     "values": [
+      47250,
+      1,
+      10997,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      941471,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄為文字型日期（如113/8/21），無法填入數值欄，已填null；使用年限為整數年限，填入數值欄"
+ ]
+}

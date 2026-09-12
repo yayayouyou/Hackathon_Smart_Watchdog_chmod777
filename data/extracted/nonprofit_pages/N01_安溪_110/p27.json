@@ -1,0 +1,206 @@
+{
+ "report": "N01_安溪_110",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 110,
+ "pdf_page": 27,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 27,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "財產清冊",
+   "period_labels": [
+    "民國111年7月31日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "廚房不鏽鋼三連水槽工作台",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "直結式抽風機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "三層電烤箱",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "筆記型電腦（AUSU X509FB）",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "桌上型電腦",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "EPSON 3200 流明投影機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "LG 55吋液晶電視機（Y340C）",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "HERAN HO-502S 冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "HERAN HO-632S 冷氣機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "Panasonic 分離式冷氣機+額外項",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "4 尺上凍下藏無霜冰箱（廚房）",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "豪星牌 HS-999 冰溫熱三用程控式飲水機",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "開水機（30 加侖）",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "濾網式濾油煙罩",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "會議桌",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "教學用木質白板櫃",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "電視櫃",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "器材整理櫃",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "棉被儲物櫃",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "木製矮櫃（附抽屜）",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "雙口快速爐",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "單口湯爐",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "配膳檯（下層板）",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "140 人份雙門高溫餐具消毒櫃",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "不鏽鋼送餐推車",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本頁為財產清冊明細表，各欄包含財產編號、登錄號/分號、財產名稱、原始價值、數量、帳面價值、使用年限、購置日期，未以單一金額欄位呈現，無法直接對應period_labels金額，故values填null；如需完整結構化建議以多欄位schema另行處理。"
+ ]
+}

@@ -1,0 +1,268 @@
+{
+ "report": "N02_山北_110",
+ "code": "N02",
+ "short_name": "山北",
+ "academic_year": 110,
+ "pdf_page": 27,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N02",
+ "printed_page": 27,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "財產清冊",
+   "period_labels": [
+    "現值",
+    "數量",
+    "總現值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "櫥櫃",
+     "note_ref": null,
+     "values": [
+      7602,
+      9,
+      68418,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "圓桌",
+     "note_ref": null,
+     "values": [
+      4966,
+      4,
+      19864,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "圓桌",
+     "note_ref": null,
+     "values": [
+      4714,
+      3,
+      14142,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "學生桌",
+     "note_ref": null,
+     "values": [
+      3650,
+      8,
+      29200,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "學生桌",
+     "note_ref": null,
+     "values": [
+      4562,
+      17,
+      77554,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "置物櫃",
+     "note_ref": null,
+     "values": [
+      6842,
+      6,
+      41052,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "置物櫃",
+     "note_ref": null,
+     "values": [
+      7982,
+      6,
+      47892,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "升降機",
+     "note_ref": null,
+     "values": [
+      4882,
+      1,
+      4882,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "辦公椅",
+     "note_ref": null,
+     "values": [
+      1950,
+      2,
+      3900,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "櫃槳",
+     "note_ref": null,
+     "values": [
+      6351,
+      6,
+      38106,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "安全活門",
+     "note_ref": null,
+     "values": [
+      380,
+      1,
+      380,
+      null,
+      2
+     ]
+    },
+    {
+     "label": "冷(暖)冷氣 禾聯 H1-N501/HO-N501",
+     "note_ref": null,
+     "values": [
+      39900,
+      1,
+      39900,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)冷氣 禾聯 H1-N801/HO-N801",
+     "note_ref": null,
+     "values": [
+      30760,
+      1,
+      26958,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)冷氣 禾聯 H1-N801/HO-N801",
+     "note_ref": null,
+     "values": [
+      41431,
+      1,
+      36310,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)冷氣 禾聯 H1-N281/HM3-N741",
+     "note_ref": null,
+     "values": [
+      41431,
+      1,
+      36310,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)冷氣 禾聯 H1-N281/HM3-N741",
+     "note_ref": null,
+     "values": [
+      29860,
+      1,
+      26169,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)冷氣 禾聯 H1-C72/HO2-C150",
+     "note_ref": null,
+     "values": [
+      29861,
+      1,
+      26170,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)冷氣 禾聯 H1-C72/HO2-C150",
+     "note_ref": null,
+     "values": [
+      47431,
+      1,
+      41569,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)冷氣 禾聯 H1-C72/HO2-C150",
+     "note_ref": null,
+     "values": [
+      47431,
+      1,
+      41569,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷(暖)冷氣 禾聯 H1-C72/HO2-C150",
+     "note_ref": null,
+     "values": [
+      47432,
+      1,
+      41570,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "投影機 思益禧 NEC NP-MC401XG 液晶投影機",
+     "note_ref": null,
+     "values": [
+      47432,
+      1,
+      41570,
+      null,
+      5
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄位為文字型態（如106/1/18），無法存為數值，已填null；財產編號與登錄號/分號欄未納入表格values，僅記錄於items label中。",
+  "部分財產名稱相同但登錄號不同，可能為不同批次，已逐一列出。",
+  "購置日期欄未能對應period_labels數值型態，該欄填null。"
+ ]
+}

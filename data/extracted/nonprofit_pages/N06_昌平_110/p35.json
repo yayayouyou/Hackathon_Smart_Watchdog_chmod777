@@ -1,0 +1,133 @@
+{
+ "report": "N06_昌平_110",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 110,
+ "pdf_page": 35,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 35,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "查核項目",
+   "period_labels": [
+    "是",
+    "否",
+    "不適用"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "負債補充說明：",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "無。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "其他",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "68 本學期（學年度）未有借款予辦理單位或他人之情形。如有借款，其借款金額為　-　元",
+     "note_ref": null,
+     "values": [
+      832,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "69 上學期（學年度）會計師查核所提建議改善事項，非營利幼兒園已完成改善",
+     "note_ref": null,
+     "values": [
+      832,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "70 非營利幼兒園與關係人間無交易事項，如有交易事項，請於下方補充說明揭露",
+     "note_ref": null,
+     "values": [
+      832,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "71 非營利幼兒園之財產或代管財產是否均登錄於財產清冊或代管清冊，定期盤點，並依相關規定報廢",
+     "note_ref": null,
+     "values": [
+      832,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "其他補充說明：",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "無。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "綜合建議事項",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "無。",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "第68至71項查核項目「是」欄標記為V，但values欄位以數字832表示V符號，實際上應為勾選符號而非數字，請人工確認原表格打勾情況。",
+  "查核項目表格中「是」「否」「不適用」欄為勾選符號V，非數值，已標記為null並在issues說明。"
+ ]
+}

@@ -1,0 +1,399 @@
+{
+ "report": "N01_安溪_110",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 110,
+ "pdf_page": 28,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 28,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "使用年限",
+    "購置日期"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "5030990 000008 綜合遊具組",
+     "note_ref": null,
+     "values": [
+      44062,
+      1,
+      441,
+      3,
+      null
+     ]
+    },
+    {
+     "label": "5030990 000013-14 扮演廚房組（１式３組）",
+     "note_ref": null,
+     "values": [
+      16666,
+      2,
+      334,
+      3,
+      null
+     ]
+    },
+    {
+     "label": "5030990 000015 扮演廚房組（１式３組）",
+     "note_ref": null,
+     "values": [
+      16668,
+      1,
+      167,
+      3,
+      null
+     ]
+    },
+    {
+     "label": "501030803 000001-2 萬象組",
+     "note_ref": null,
+     "values": [
+      12500,
+      2,
+      17162,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "501030803 00003 水谷式教具",
+     "note_ref": null,
+     "values": [
+      36800,
+      1,
+      25264,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6010131 000051-66 壁面作品展示板",
+     "note_ref": null,
+     "values": [
+      3000,
+      16,
+      48000,
+      3,
+      null
+     ]
+    },
+    {
+     "label": "6010711 000016-19 儲藏室置物架",
+     "note_ref": null,
+     "values": [
+      9800,
+      4,
+      39200,
+      3,
+      null
+     ]
+    },
+    {
+     "label": "6011209 000003 儲熱型電熱水器",
+     "note_ref": null,
+     "values": [
+      4504,
+      1,
+      4504,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6011209 000004 瓦斯熱水器",
+     "note_ref": null,
+     "values": [
+      4406,
+      1,
+      4406,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6011408 111133-36 電動軸心布幕(６呎*8呎)",
+     "note_ref": null,
+     "values": [
+      6460,
+      4,
+      25840,
+      6,
+      null
+     ]
+    },
+    {
+     "label": "6070201 000012-13 辦公桌含側桌",
+     "note_ref": null,
+     "values": [
+      5050,
+      2,
+      10100,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070201 000014-17 辦公桌含側桌",
+     "note_ref": null,
+     "values": [
+      4000,
+      4,
+      16000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070202 000061-76 辦公椅（藍色）",
+     "note_ref": null,
+     "values": [
+      1000,
+      16,
+      16000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000001-3 三合一杯櫃",
+     "note_ref": null,
+     "values": [
+      9000,
+      3,
+      27000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000004-9 圖書展示板",
+     "note_ref": null,
+     "values": [
+      8500,
+      6,
+      51000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000010-15 弧形櫃",
+     "note_ref": null,
+     "values": [
+      4800,
+      6,
+      28800,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000016-18 圖書櫃",
+     "note_ref": null,
+     "values": [
+      4500,
+      3,
+      13500,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000019-30 凸三邊教具櫃",
+     "note_ref": null,
+     "values": [
+      2600,
+      12,
+      31200,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000031-36 書包櫃、鞋櫃",
+     "note_ref": null,
+     "values": [
+      5250,
+      6,
+      31500,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000037-38 鞋櫃",
+     "note_ref": null,
+     "values": [
+      5334,
+      2,
+      10668,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000039-42 鞋櫃",
+     "note_ref": null,
+     "values": [
+      5333,
+      4,
+      21332,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070209 000043-45 資料櫃",
+     "note_ref": null,
+     "values": [
+      7300,
+      3,
+      21900,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070206 000046 書面紙櫃",
+     "note_ref": null,
+     "values": [
+      9800,
+      1,
+      9800,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000142-144 幼兒專用教學課桌椅組（教師）",
+     "note_ref": null,
+     "values": [
+      1400,
+      3,
+      4200,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000145-147 幼兒專用教學課桌椅組（點心圓桌）",
+     "note_ref": null,
+     "values": [
+      3000,
+      3,
+      9000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000148-171 幼兒專用教學課桌椅組（四人學習桌）",
+     "note_ref": null,
+     "values": [
+      1400,
+      24,
+      33600,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070224 000172-174 幼兒專用教學課桌椅組（二人學習桌）",
+     "note_ref": null,
+     "values": [
+      920,
+      3,
+      2760,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070225 000221-328 幼兒專用教學課桌椅組（四代椅）",
+     "note_ref": null,
+     "values": [
+      480,
+      105,
+      50400,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070225 000329-334 幼兒專用教學課桌椅組（加大四代椅）",
+     "note_ref": null,
+     "values": [
+      600,
+      4,
+      2400,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6070240 000743-748 益智科學櫃（附18個籃子）",
+     "note_ref": null,
+     "values": [
+      4500,
+      6,
+      27000,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6080601 000008-11 遊具組（籃球架）",
+     "note_ref": null,
+     "values": [
+      6266,
+      4,
+      25064,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "6080601 000012-14 遊具組（腳踏車）",
+     "note_ref": null,
+     "values": [
+      8356,
+      3,
+      25068,
+      5,
+      null
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      1119608,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄為文字（如105/01/25），非數值，values中以null填入該欄位",
+  "財產編號、登錄號/分號、財產名稱已合併入label欄位，因表格結構特殊無法分欄處理"
+ ]
+}

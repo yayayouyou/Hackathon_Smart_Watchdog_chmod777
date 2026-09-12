@@ -1,0 +1,23 @@
+{
+ "report": "N01_安溪_113",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 113,
+ "pdf_page": 1,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 1,
+ "page_kind": "cover",
+ "tables": [],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "新北市安溪非營利幼兒園\n（委託社團法人桃園市教保服務人員協會辦理）\n財務報表暨會計師查核報告\n民國 113 學年度及民國 112 學年度\n\n地址：新北市三峽區中華路42號\n\n電話：(02) 2671-8607"
+  }
+ ],
+ "issues": []
+}

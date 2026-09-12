@@ -1,0 +1,75 @@
+{
+ "report": "N07_北大_110",
+ "code": "N07",
+ "short_name": "北大",
+ "academic_year": 110,
+ "pdf_page": 36,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N07",
+ "printed_page": 36,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "預算數",
+    "決算數",
+    "差異數",
+    "執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "35　水費",
+     "note_ref": null,
+     "values": [
+      38000,
+      80249,
+      42249,
+      211
+     ]
+    },
+    {
+     "label": "39　辦公文具",
+     "note_ref": null,
+     "values": [
+      30000,
+      31466,
+      1466,
+      105
+     ]
+    },
+    {
+     "label": "40　事務機器耗材",
+     "note_ref": null,
+     "values": [
+      65000,
+      66396,
+      1396,
+      102
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "業務費補充說明：",
+   "text": "1. 依非營利幼兒園會計財務及經費處理注意事項第12點規定，業務費各細項得在業務費總預算內相互勻支，至多以勻支不足細項之20%為上限，上述各細項（除水費外）經核算均符合勻支規定。\n2. 水費超過勻支上限，已於111年5月6日報經主管機關同意，自保全以50,000元勻支至水費，勻支後水費則無超支。"
+  },
+  {
+   "heading": "公共事務管理費補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "土地、建物、設施與設備之租金補充說明：",
+   "text": "無。"
+  }
+ ],
+ "issues": []
+}

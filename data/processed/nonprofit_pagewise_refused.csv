@@ -1,0 +1,5 @@
+code,short_name,academic_year,pdf_page,page_kind,table_index,section,title,context_heading,n_columns,n_rows,reason
+N14,積穗,112,20,note,2,other_income_expense,,7. 其他收入及其他支出,1,5,values 長度與 period_labels 不符
+N14,積穗,112,20,note,3,other_income_expense,,7. 其他收入及其他支出,1,5,values 長度與 period_labels 不符
+N14,積穗,112,20,note,4,project_subsidy,,(1) 專案補助收入及支出,1,10,values 長度與 period_labels 不符
+N22,文仁,110,25,detail_schedule,1,multiyear_compare,各學年收支預決算比較表,附表三：各學年收支預決算比較表,12,30,values 長度與 period_labels 不符

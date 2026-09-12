@@ -1,0 +1,125 @@
+{
+ "report": "N05_漢翔_110",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 110,
+ "pdf_page": 39,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 39,
+ "page_kind": "other",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "是",
+    "否",
+    "不適用"
+   ],
+   "items": [
+    {
+     "label": "59 電器用品、園舍修繕、廚房設備及教學設施設備是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "60 修繕購置費總支出是否符合預算，如有超支，其金額為：5,254 元",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "61 雜支是否符合非營利幼兒園營運成本支用範圍及預算，如有超支，其金額為：- 元",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "62 行政管理費是否符合預算，如有超支，其金額為：- 元",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "63 業務發展準備金之提列及業務發展費之動支均符合規定，提列金額是否以專戶或定期存款方式儲存",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "64 專案補助、代收補助、及代收代付等其他支出是否符合各該項目之支用範圍，如有超支，其金額為：- 元",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "65 本學期（學年度）結算總收入是否大於或等於總支出。如有虧損，其虧損金額為：- 元",
+     "note_ref": null,
+     "values": [
+      -1,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "66 向辦理單位借款，其資金往來皆透過金融機構，金額為：- 元",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      -1
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "維護費補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "修繕購置費補充說明：",
+   "text": "依非營利幼兒園會計財務及經費處理注意事項第12點規定，維護費及修繕購置費各細項經費倘有不足，應優先於維護費及修繕購置費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費）。修繕購置費超支預算部分，經與維護費勻支後，已符合勻支規定。"
+  },
+  {
+   "heading": "雜支、行政管理費及業務發展費補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "其他支出補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "虧損補充說明：",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "第59至66欄的『是』欄以V符號標記，本JSON以-1代表V（勾選），僅供參考，實際應以布林值或文字處理"
+ ]
+}

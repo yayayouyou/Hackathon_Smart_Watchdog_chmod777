@@ -1,0 +1,586 @@
+{
+ "report": "N05_漢翔_113",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 113,
+ "pdf_page": 32,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 32,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "財產編號",
+    "登錄號/分號",
+    "財產名稱",
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070225",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      1950,
+      1,
+      1950,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      9600,
+      1,
+      9600,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6070240",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      9600,
+      1,
+      9600,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6080501",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6300,
+      1,
+      6300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6080501",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6300,
+      1,
+      6300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6080501",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6300,
+      1,
+      6300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6080501",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6300,
+      1,
+      6300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6080501",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6300,
+      1,
+      6300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6080501",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6300,
+      1,
+      6300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6080501",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      6300,
+      1,
+      6300,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "6080501",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      4200,
+      1,
+      4200,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "301360118",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      12000,
+      1,
+      6060,
+      null,
+      15
+     ]
+    },
+    {
+     "label": "301360118",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      12000,
+      1,
+      6060,
+      null,
+      15
+     ]
+    },
+    {
+     "label": "301360118",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      12000,
+      1,
+      6060,
+      null,
+      15
+     ]
+    },
+    {
+     "label": "301360118",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      12000,
+      1,
+      6060,
+      null,
+      15
+     ]
+    },
+    {
+     "label": "301360118",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      12000,
+      1,
+      6060,
+      null,
+      15
+     ]
+    },
+    {
+     "label": "301360118",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      12000,
+      1,
+      6060,
+      null,
+      15
+     ]
+    },
+    {
+     "label": "3070114253",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      24888,
+      1,
+      249,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "314010103",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      22530,
+      1,
+      20671,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "314010103",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      22530,
+      1,
+      21011,
+      null,
+      4
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "此頁為財產目錄，表格欄位包含文字欄（財產編號、登錄號/分號、財產名稱、購置日期），本schema values僅支援數值，文字欄位（財產名稱、登錄號/分號、購置日期）無法完整呈現於values中，僅記錄數值欄位（單價、數量、總金額、使用年限）。",
+  "各列登錄號/分號與財產名稱為文字，未納入values。",
+  "3070114253/000001 陳列用具-工作台 總金額欄僅249，遠低於單價24888，可能為折舊後帳面值，請人工確認。"
+ ]
+}

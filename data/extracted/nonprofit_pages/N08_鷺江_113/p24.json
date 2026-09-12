@@ -1,0 +1,27 @@
+{
+ "report": "N08_鷺江_113",
+ "code": "N08",
+ "short_name": "鷺江",
+ "academic_year": 113,
+ "pdf_page": 24,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N08",
+ "printed_page": 24,
+ "page_kind": "note",
+ "tables": [],
+ "text_sections": [
+  {
+   "heading": "八、重大之期後事項",
+   "text": "無。"
+  },
+  {
+   "heading": "九、法源依據",
+   "text": "(一) 依據非營利幼兒園實施辦法第 25 條規定，應定期辦理到園檢查及績效考評，並應公告非營利幼兒園財務資訊於資訊網站。\n(二) 非營利幼兒園會計查核主要目的係為維護各園會計與財務管理制度，非營利幼兒園會計及財務應依據以下規定辦理：\n1. 非營利幼兒園實施辦法。\n2. 非營利幼兒園會計財務及經費處理注意事項暨會計師查核附表。\n3. 非營利幼兒園營運成本規定。\n4. 非營利幼兒園契約書及其他議定事項。\n5. 一般公認會計原則及其他有關法令。"
+  }
+ ],
+ "issues": []
+}

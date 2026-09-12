@@ -1,0 +1,100 @@
+{
+ "report": "N19_中園_113",
+ "code": "N19",
+ "short_name": "中園",
+ "academic_year": 113,
+ "pdf_page": 8,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N19",
+ "printed_page": 8,
+ "page_kind": "equity_change",
+ "tables": [
+  {
+   "title": "淨值變動表",
+   "context_heading": null,
+   "period_labels": [
+    "累積餘絀",
+    "本期餘絀",
+    "合　　計"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "112年8月1日餘額",
+     "note_ref": null,
+     "values": [
+      1689026,
+      186833,
+      1875859
+     ]
+    },
+    {
+     "label": "111學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      186833,
+      -186833,
+      null
+     ]
+    },
+    {
+     "label": "112學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      292370,
+      292370
+     ]
+    },
+    {
+     "label": "113年7月31日餘額",
+     "note_ref": null,
+     "values": [
+      1875859,
+      292370,
+      2168229
+     ]
+    },
+    {
+     "label": "112學年度餘絀轉入累積餘絀",
+     "note_ref": null,
+     "values": [
+      292370,
+      -292370,
+      null
+     ]
+    },
+    {
+     "label": "113學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      -295085,
+      -295085
+     ]
+    },
+    {
+     "label": "114年7月31日餘額",
+     "note_ref": null,
+     "values": [
+      2168229,
+      -295085,
+      1873144
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": []
+}

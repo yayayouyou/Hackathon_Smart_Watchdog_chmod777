@@ -1,0 +1,196 @@
+{
+ "report": "N06_昌平_113",
+ "code": "N06",
+ "short_name": "昌平",
+ "academic_year": 113,
+ "pdf_page": 21,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N06",
+ "printed_page": 21,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收入",
+    "113.8.1~114.7.31 支出",
+    "113.8.1~114.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "校園急難慰助金",
+     "note_ref": null,
+     "values": [
+      2000,
+      2000,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      6660,
+      6660,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      8660,
+      8660,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "(2) 代收補助收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收入",
+    "112.8.1~113.7.31 支出",
+    "112.8.1~113.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "弱勢幼兒課後留園補助",
+     "note_ref": null,
+     "values": [
+      112980,
+      112980,
+      null
+     ]
+    },
+    {
+     "label": "兒童節禮物補助",
+     "note_ref": null,
+     "values": [
+      7200,
+      7200,
+      null
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      120180,
+      120180,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "113.8.1~114.7.31 收入",
+    "113.8.1~114.7.31 支出",
+    "113.8.1~114.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      40491,
+      40491,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "(3) 代收代付收入及支出",
+   "period_labels": [
+    "112.8.1~113.7.31 收入",
+    "112.8.1~113.7.31 支出",
+    "112.8.1~113.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "團保費",
+     "note_ref": null,
+     "values": [
+      38005,
+      38005,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "昌平幼兒園之賸餘款執行概況表",
+   "period_labels": [
+    "金額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "106~109學年度累積餘絀(106.8.1~110.7.31)",
+     "note_ref": null,
+     "values": [
+      207443
+     ]
+    },
+    {
+     "label": "110學年度當期餘絀(110.8.1~111.7.31)",
+     "note_ref": null,
+     "values": [
+      1611855
+     ]
+    },
+    {
+     "label": "111學年度當期餘絀(111.8.1~112.7.31)",
+     "note_ref": null,
+     "values": [
+      -67044
+     ]
+    },
+    {
+     "label": "112學年度當期餘絀(112.8.1~113.7.31)",
+     "note_ref": null,
+     "values": [
+      187142
+     ]
+    },
+    {
+     "label": "113學年度當期餘絀(113.8.1~114.7.31)",
+     "note_ref": null,
+     "values": [
+      -602513
+     ]
+    },
+    {
+     "label": "賸餘款餘額",
+     "note_ref": null,
+     "values": [
+      1336883
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "四、賸餘款執行概況說明",
+   "text": "(一) 依據非營利幼兒園實施辦法之規定，非營利幼兒園，於契約期間，依經會計師簽證之各該學年度收支餘絀表有賸餘款時，應於次學年度繼續支用。\n\n昌平幼兒園之賸餘款執行概況表如下："
+  }
+ ],
+ "issues": []
+}

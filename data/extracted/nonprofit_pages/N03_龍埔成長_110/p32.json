@@ -1,0 +1,135 @@
+{
+ "report": "N03_龍埔成長_110",
+ "code": "N03",
+ "short_name": "龍埔成長",
+ "academic_year": 110,
+ "pdf_page": 32,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N03",
+ "printed_page": 32,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "查核項目",
+   "period_labels": [
+    "是否符合－是",
+    "是否符合－否",
+    "是否符合－不適用"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "42 郵資是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "43 文宣費（含一般文宣、圈刊） 是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "44 攝影照片是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "45 園務特支是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "46 差旅費是否符合非營利幼兒園營運成本支用範圍及預算並經園長核准",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "47 業務費總支出是否符合預算，如有超支，其金額為：　-　元",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "48 公共事務管理費是否符合非營利幼兒園營運成本支用範圍及預算，如有超支，其金額為：　-　元",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "49 土地、建物、設施與設備之租金是否符合非營利幼兒園營運成本支用範圍及預算，如有超支，其金額為：　-　元",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "50 教保材料費是否符合非營利幼兒園營運成本支用範圍及預算，非耗材類之教具玩具已登錄於清冊",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "51 日常消耗用品是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "52 藥品費是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "53 餐點費是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "54 材料費總支出是否符合預算，如有超支，其金額為：　-　元",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    },
+    {
+     "label": "55 水電修繕是否符合非營利幼兒園營運成本支用範圍及預算",
+     "note_ref": null,
+     "values": [],
+     "percents": null
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "業務費補充說明：",
+   "text": "預算數　　　　決算數　　　差異數　　　執行率%\n35-1　水費　$26,000　　$26,102　　$102　　100\n依非營利幼兒園會計財務及經費處理注意事項第12點規定，業務費各細項得在業務費總預算內相互勻支，至多以勻支不足細項之20%為上限，本細項經核算符合勻支規定。"
+  },
+  {
+   "heading": "公共事務管理費補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "土地、建物、設施與設備之租金補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "材料費補充說明：",
+   "text": "無。"
+  }
+ ],
+ "issues": [
+  "本頁查核項目表中『是否符合』欄位以V符號表示，未轉為數值，表格items的values欄位因無數值型態資料而留空，建議人工確認各項勾選結果。",
+  "42~55各查核項目之是/否/不適用欄勾選情形：42-V(是)、43-V(是)、44-V(是)、45-V(是)、46-V(不適用)、47-V(是)、48-V(不適用)、49-V(不適用)、50-V(是)、51-V(是)、52-V(是)、53-V(是)、54-V(是)、55-V(是)，此為文字敘述供人工參考，非數值抽取。"
+ ]
+}

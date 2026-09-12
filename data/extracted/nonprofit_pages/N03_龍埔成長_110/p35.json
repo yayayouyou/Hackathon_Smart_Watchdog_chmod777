@@ -1,0 +1,122 @@
+{
+ "report": "N03_龍埔成長_110",
+ "code": "N03",
+ "short_name": "龍埔成長",
+ "academic_year": 110,
+ "pdf_page": 35,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N03",
+ "printed_page": 35,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "110學年度績效考評",
+   "period_labels": [
+    "評分"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "六、會計查核簽證情形：",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "1.前學年度簽證，各查核項目符合之情形：（配分6分）",
+     "note_ref": null,
+     "values": [
+      6
+     ]
+    },
+    {
+     "label": "(1)基本原則項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(2)收入部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(3)支出部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(4)負債部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(5)其他部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "2.當學年度第1學期查核，各查核項目符合之情形：（配分6分）",
+     "note_ref": null,
+     "values": [
+      6
+     ]
+    },
+    {
+     "label": "(1)基本原則項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(2)收入部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(3)支出部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(4)負債部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    },
+    {
+     "label": "(5)其他部分項目符合之情形。",
+     "note_ref": null,
+     "values": [
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "本頁為績效考評附表，表格內容包含考評指標、考評方式、評分、考評依據、備註等欄位，非標準財務報表，已盡量結構化呈現評分欄數值，考評方式與考評依據文字詳細內容未納入表格items。"
+ ]
+}

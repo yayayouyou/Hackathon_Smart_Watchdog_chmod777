@@ -1,0 +1,188 @@
+{
+ "report": "N01_安溪_110",
+ "code": "N01",
+ "short_name": "安溪",
+ "academic_year": 110,
+ "pdf_page": 14,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N01",
+ "printed_page": 14,
+ "page_kind": "note",
+ "tables": [
+  {
+   "title": null,
+   "context_heading": "（一）現金及銀行存款",
+   "period_labels": [
+    "111 年 7 月 31 日",
+    "110 年 7 月 31 日"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "現金",
+     "note_ref": null,
+     "values": [
+      29825,
+      15673
+     ]
+    },
+    {
+     "label": "活期存款",
+     "note_ref": null,
+     "values": [
+      5601630,
+      5118285
+     ]
+    },
+    {
+     "label": "支票存款",
+     "note_ref": null,
+     "values": [
+      172296,
+      214043
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      5803751,
+      5348001
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 資遣費準備",
+   "period_labels": [
+    "110.8.1~111.7.31",
+    "109.8.1~110.7.31"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      520040,
+      476443
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      44678,
+      43597
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      564718,
+      520040
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "1. 資遣費準備",
+   "period_labels": [
+    "111 年 7 月 31 日",
+    "110 年 7 月 31 日"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "資遣費準備金",
+     "note_ref": null,
+     "values": [
+      564718,
+      520040
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "110.8.1~111.7.31",
+    "109.8.1~110.7.31"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "期初餘額",
+     "note_ref": null,
+     "values": [
+      5692844,
+      4100000
+     ]
+    },
+    {
+     "label": "本期提列",
+     "note_ref": null,
+     "values": [
+      1099000,
+      1592844
+     ]
+    },
+    {
+     "label": "期末餘額",
+     "note_ref": null,
+     "values": [
+      6791844,
+      5692844
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "2. 業務發展準備",
+   "period_labels": [
+    "111 年 7 月 31 日",
+    "110 年 7 月 31 日"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "業務發展準備金",
+     "note_ref": null,
+     "values": [
+      6791844,
+      5692844
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "2. 契約期間屆滿未申請繼續辦理，或申請繼續辦理未經同意、契約終止者：\n(1) 優先用於該園教保服務人員及其他服務人員之資遣費。\n(2) 依前目處理後，仍有賸餘款者，由承辦之非營利法人及各該委託單位或直轄市、縣（市）主管機關平均分配。委託單位或直轄市、縣（市）主管機關所獲分配款應全數用於改善該園教學設施、設備或推動擴大公共化教保服務供應量事項；承辦之非營利法人於訂定相關運用計畫報委託單位或直轄市、縣（市）主管機關備查後支用。"
+  },
+  {
+   "heading": "三、重要會計項目說明",
+   "text": "（一）現金及銀行存款"
+  },
+  {
+   "heading": null,
+   "text": "（二）各項基金及準備\n1. 資遣費準備\n依據非營利幼兒園實施辦法之規定，提撥資遣費準備金餘額如下：\n2. 業務發展準備\n依據非營利幼兒園實施辦法及非營利幼兒園會計財務及經費處理注意事項之規定，提列之業務發展準備金已報經主管機關同意。依該規定，以專戶或定期存款提存之業務發展準備金餘額如下："
+  }
+ ],
+ "issues": []
+}

@@ -1,0 +1,377 @@
+{
+ "report": "N09_安興_113",
+ "code": "N09",
+ "short_name": "安興",
+ "academic_year": 113,
+ "pdf_page": 29,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N09",
+ "printed_page": 29,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "財產清冊",
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "洗槽",
+     "note_ref": null,
+     "values": [
+      17000,
+      1,
+      5157,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "連續蒸飯機",
+     "note_ref": null,
+     "values": [
+      55000,
+      1,
+      550,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "流動控制門",
+     "note_ref": null,
+     "values": [
+      10000,
+      1,
+      3730,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "貯藏箱",
+     "note_ref": null,
+     "values": [
+      28000,
+      1,
+      280,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "手動加壓機",
+     "note_ref": null,
+     "values": [
+      29484,
+      1,
+      295,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "排氣裝置",
+     "note_ref": null,
+     "values": [
+      22500,
+      1,
+      6536,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電子身高體重器",
+     "note_ref": null,
+     "values": [
+      15000,
+      1,
+      150,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      20000,
+      1,
+      200,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      20000,
+      1,
+      200,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      20000,
+      1,
+      200,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      17000,
+      1,
+      170,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      17000,
+      1,
+      170,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "個人電腦",
+     "note_ref": null,
+     "values": [
+      24000,
+      1,
+      10140,
+      null,
+      4
+     ]
+    },
+    {
+     "label": "投影機",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      250,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "投影機",
+     "note_ref": null,
+     "values": [
+      25000,
+      1,
+      250,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "電話系統",
+     "note_ref": null,
+     "values": [
+      50000,
+      1,
+      500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "擴音機",
+     "note_ref": null,
+     "values": [
+      19991,
+      1,
+      4322,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "音響設備",
+     "note_ref": null,
+     "values": [
+      17000,
+      1,
+      6341,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "音響設備",
+     "note_ref": null,
+     "values": [
+      17000,
+      1,
+      6341,
+      null,
+      10
+     ]
+    },
+    {
+     "label": "監視器",
+     "note_ref": null,
+     "values": [
+      70000,
+      1,
+      700,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "電視機",
+     "note_ref": null,
+     "values": [
+      35000,
+      1,
+      21525,
+      null,
+      6
+     ]
+    },
+    {
+     "label": "冷（暖）氣機",
+     "note_ref": null,
+     "values": [
+      31296,
+      1,
+      8919,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷（暖）氣機",
+     "note_ref": null,
+     "values": [
+      31296,
+      1,
+      8919,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷（暖）氣機",
+     "note_ref": null,
+     "values": [
+      31296,
+      1,
+      8919,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷（暖）氣機",
+     "note_ref": null,
+     "values": [
+      31296,
+      1,
+      8919,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷（暖）氣機",
+     "note_ref": null,
+     "values": [
+      31296,
+      1,
+      8919,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冷（暖）氣機",
+     "note_ref": null,
+     "values": [
+      31296,
+      1,
+      8919,
+      null,
+      9
+     ]
+    },
+    {
+     "label": "冰箱",
+     "note_ref": null,
+     "values": [
+      70000,
+      1,
+      15137,
+      null,
+      8
+     ]
+    },
+    {
+     "label": "飲水機",
+     "note_ref": null,
+     "values": [
+      20000,
+      1,
+      200,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "油煙罩控制盤",
+     "note_ref": null,
+     "values": [
+      24000,
+      1,
+      6972,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "多異式風車",
+     "note_ref": null,
+     "values": [
+      18400,
+      1,
+      11872,
+      null,
+      10
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄位為日期格式（如107/08/10），已記錄為null因不符合數值型態；各財產編號及登錄號/分號欄位未納入values，僅作為識別用途",
+  "財產清冊中多項財產名稱相同但登錄號不同（如個人電腦、冷（暖）氣機），已分別列為獨立列"
+ ]
+}

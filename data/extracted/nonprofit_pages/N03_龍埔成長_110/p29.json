@@ -1,0 +1,222 @@
+{
+ "report": "N03_龍埔成長_110",
+ "code": "N03",
+ "short_name": "龍埔成長",
+ "academic_year": 110,
+ "pdf_page": 29,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N03",
+ "printed_page": 29,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "2.購置財產",
+   "period_labels": [
+    "財產編號",
+    "財產名稱",
+    "單價",
+    "數量",
+    "總金額",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "W28",
+     "values": [
+      null,
+      null,
+      11846,
+      4,
+      47384,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "W29",
+     "values": [
+      null,
+      null,
+      11846,
+      4,
+      47385,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "W31",
+     "values": [
+      null,
+      null,
+      41790,
+      1,
+      41790,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "E60",
+     "values": [
+      null,
+      null,
+      21000,
+      1,
+      21000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "W32",
+     "values": [
+      null,
+      null,
+      8190,
+      3,
+      24570,
+      null,
+      3
+     ]
+    },
+    {
+     "label": "W33",
+     "values": [
+      null,
+      null,
+      6500,
+      6,
+      39000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "W34",
+     "values": [
+      null,
+      null,
+      5927,
+      12,
+      71121,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "E66",
+     "values": [
+      null,
+      null,
+      14000,
+      1,
+      14000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "I023",
+     "values": [
+      null,
+      null,
+      16855,
+      1,
+      16855,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "W36",
+     "values": [
+      null,
+      null,
+      10415,
+      1,
+      10415,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "E69",
+     "values": [
+      null,
+      null,
+      30000,
+      1,
+      30000,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "E70",
+     "values": [
+      null,
+      null,
+      31500,
+      1,
+      31500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "E81",
+     "values": [
+      null,
+      null,
+      36750,
+      1,
+      36750,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "E82",
+     "values": [
+      null,
+      null,
+      28900,
+      1,
+      28900,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "合計",
+     "values": [
+      null,
+      null,
+      null,
+      null,
+      460670,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "附表五：到園檢查表（不適用）"
+  }
+ ],
+ "issues": [
+  "財產名稱欄為文字，無法以數值呈現，已於values中填null；財產編號與購置日期同理。表格結構以期間標籤列出所有欄位名稱，但values僅能儲存數值，文字欄位填null。"
+ ]
+}

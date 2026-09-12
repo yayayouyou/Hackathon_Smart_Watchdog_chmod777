@@ -1,0 +1,219 @@
+{
+ "report": "N37_清水高中_113",
+ "code": "N37",
+ "short_name": "清水高中",
+ "academic_year": 113,
+ "pdf_page": 17,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N37",
+ "printed_page": 17,
+ "page_kind": "detail_schedule",
+ "tables": [
+  {
+   "title": "維護費及修繕購置費",
+   "context_heading": "5. 維護費及修繕購置費",
+   "period_labels": [
+    "113.9.27~114.7.31 預算數",
+    "113.9.27~114.7.31 決算數",
+    "113.9.27~114.7.31 差異數",
+    "113.9.27~114.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "維護費",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "修繕費",
+     "note_ref": null,
+     "values": [
+      70833,
+      71408,
+      575,
+      101
+     ]
+    },
+    {
+     "label": "園舍消毒、清潔",
+     "note_ref": null,
+     "values": [
+      20833,
+      8200,
+      -12633,
+      39
+     ]
+    },
+    {
+     "label": "火險",
+     "note_ref": null,
+     "values": [
+      6667,
+      3038,
+      -3629,
+      46
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      98333,
+      82646,
+      -15687,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "修繕購置費",
+   "context_heading": "5. 維護費及修繕購置費",
+   "period_labels": [
+    "113.9.27~114.7.31 預算數",
+    "113.9.27~114.7.31 決算數",
+    "113.9.27~114.7.31 差異數",
+    "113.9.27~114.7.31 執行率%"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "修繕購置費",
+     "note_ref": null,
+     "values": [
+      84000,
+      168062,
+      84062,
+      200
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "6. 延長照顧服務收支",
+   "period_labels": [
+    "113.9.27~114.7.31"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "延長照顧服務收入",
+     "note_ref": null,
+     "values": [
+      143619
+     ]
+    },
+    {
+     "label": "延長照顧服務收入退費",
+     "note_ref": null,
+     "values": [
+      -438
+     ]
+    },
+    {
+     "label": "延長照顧服務收入淨額",
+     "note_ref": null,
+     "values": [
+      143181
+     ]
+    },
+    {
+     "label": "延長照顧服務支出",
+     "note_ref": null,
+     "values": [
+      -100373
+     ]
+    },
+    {
+     "label": "延長照顧服務收支淨額",
+     "note_ref": null,
+     "values": [
+      42808
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": null,
+   "context_heading": "7. 其他收入及其他支出",
+   "period_labels": [
+    "113.9.27~114.7.31 收入",
+    "113.9.27~114.7.31 支出",
+    "113.9.27~114.7.31 淨額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "專案補助",
+     "note_ref": null,
+     "values": [
+      1100609,
+      1100609,
+      null
+     ]
+    },
+    {
+     "label": "代收補助",
+     "note_ref": null,
+     "values": [
+      26140,
+      26140,
+      null
+     ]
+    },
+    {
+     "label": "代收代付",
+     "note_ref": null,
+     "values": [
+      21680,
+      21680,
+      null
+     ]
+    },
+    {
+     "label": "其　他",
+     "note_ref": null,
+     "values": [
+      200,
+      null,
+      200
+     ]
+    },
+    {
+     "label": "合　　計",
+     "note_ref": null,
+     "values": [
+      1148629,
+      1148429,
+      200
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "5. 維護費及修繕購置費",
+   "text": "(1) 依據非營利幼兒園會計財務及經費處理注意事項第 13 點（一）.5 維護費及修繕購置費各細項經費倘有不足，應優先於維護費及修繕購置費總預算內相互勻支，仍有不足，始得勻支其他項目經費（業務費、公共事務管理費、雜支及行政管理費）。\n(2) 113 學年度修繕購置費超支預算部分，依上開規定應優先於維護費總預算內相互勻支，仍有不足，經與業務費勻支後，已符合勻支規定。\n(3) 113 學年度維護費類別總經費並無超支預算之情事。"
+  }
+ ],
+ "issues": [
+  "維護費（第一列）僅有標題無數字，四欄均為空白，依規則填null。",
+  "修繕購置費表中差異數84,062為正（決算168,062超支預算84,000），執行率200%，數字照實抄錄。"
+ ]
+}

@@ -1,0 +1,256 @@
+{
+ "report": "N05_漢翔_113",
+ "code": "N05",
+ "short_name": "漢翔",
+ "academic_year": 113,
+ "pdf_page": 28,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N05",
+ "printed_page": 28,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "財產清冊",
+   "period_labels": [
+    "民國114年7月31日"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "傳音用具-電話機",
+     "note_ref": null,
+     "values": [
+      2100
+     ]
+    },
+    {
+     "label": "傳音用具-電話機",
+     "note_ref": null,
+     "values": [
+      2100
+     ]
+    },
+    {
+     "label": "傳音用具-電話機",
+     "note_ref": null,
+     "values": [
+      2100
+     ]
+    },
+    {
+     "label": "傳音用具-電話機",
+     "note_ref": null,
+     "values": [
+      2100
+     ]
+    },
+    {
+     "label": "傳音用具-電話機",
+     "note_ref": null,
+     "values": [
+      2100
+     ]
+    },
+    {
+     "label": "傳音用具-電話機",
+     "note_ref": null,
+     "values": [
+      2100
+     ]
+    },
+    {
+     "label": "傳音用具-電話機",
+     "note_ref": null,
+     "values": [
+      2100
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "遮蔽用具-窗簾",
+     "note_ref": null,
+     "values": [
+      3332
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008
+     ]
+    },
+    {
+     "label": "電器用具-電風扇",
+     "note_ref": null,
+     "values": [
+      3008
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "此頁財產清冊包含財產編號、登錄號/分號、財產名稱、單價、數量、總金額、購置日期、使用年限等欄位，但本schema僅擷取總金額作為values，其他欄位（單價、數量、購置日期、使用年限）未納入結構化資料。",
+  "同一財產名稱有多筆登錄號不同的記錄，均逐筆列出。"
+ ]
+}

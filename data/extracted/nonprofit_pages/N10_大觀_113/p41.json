@@ -1,0 +1,92 @@
+{
+ "report": "N10_大觀_113",
+ "code": "N10",
+ "short_name": "大觀",
+ "academic_year": 113,
+ "pdf_page": 41,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N10",
+ "printed_page": 41,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "查核項目（其他）",
+   "period_labels": [
+    "是否符合－是",
+    "是否符合－否",
+    "是否符合－不適用"
+   ],
+   "items": [
+    {
+     "label": "69 本學期（學年度）未有借款予辦理單位或他人之情形。如有借款，其借款金額為　　－　　元",
+     "note_ref": null,
+     "values": [
+      487,
+      null,
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "70 上學期（學年度）會計師查核所提建議改善事項，非營利幼兒園已完成改善",
+     "note_ref": null,
+     "values": [
+      null,
+      487,
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "71 非營利幼兒園與關係人間無交易事項，如有交易事項，請於下方補充說明揭露",
+     "note_ref": null,
+     "values": [
+      487,
+      null,
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "72 非營利幼兒園之財產或代管財產是否均登錄於財產清冊或代管清冊，定期盤點，並依相關規定報廢",
+     "note_ref": null,
+     "values": [
+      487,
+      null,
+      null
+     ],
+     "percents": null
+    },
+    {
+     "label": "73 非營利幼兒園專戶之印信，應有幼兒園章及負責人私章或園長私章，且由非營利法人指定之人、園長（或其代理人）、會計或出納人員分別保管，未集中於同一人保管，以符合專戶管理辦法相關法規",
+     "note_ref": null,
+     "values": [
+      487,
+      null,
+      null
+     ],
+     "percents": null
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": "其他補充說明：",
+   "text": "無。"
+  },
+  {
+   "heading": "綜合建議事項",
+   "text": "1. 學期結算時，其他收入與其他支出相對應會計項目發生異常時，應及時檢視並找出原因予以調整（例如專案補助收入及專案補助支出、代收代付收入及代收代付支出，原則上收入應與支出相等）。\n2. 本學年度經會計師查核，有多達40多個調整分錄，請確實依非營利幼兒園會計財務及經費處理注意事項第13點及第14點規定，每學期結束後應自行製作財務報表並檢查無誤後，才將財務報表及相關資料送會計師查核或簽證；母機構亦應盡到協力及督導之責任。"
+  }
+ ],
+ "issues": [
+  "查核項目表中各列的勾選欄（是／否／不適用）以「V」標記，無實際數字；本JSON以487作為placeholder但實際應為勾選記號，無法以數值表達。建議此表以文字方式記錄而非數值。",
+  "第69項借款金額欄顯示為破折號（-），表示無金額，已視為null。"
+ ]
+}

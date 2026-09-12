@@ -1,0 +1,216 @@
+{
+ "report": "N02_山北_113",
+ "code": "N02",
+ "short_name": "山北",
+ "academic_year": 113,
+ "pdf_page": 29,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N02",
+ "printed_page": 29,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "6070224 000437-444 學生桌",
+     "note_ref": null,
+     "values": [
+      3650,
+      8,
+      29200
+     ]
+    },
+    {
+     "label": "6070224 000445 學生桌",
+     "note_ref": null,
+     "values": [
+      4562,
+      1,
+      4562
+     ]
+    },
+    {
+     "label": "6070240 000156-159 置物櫃",
+     "note_ref": null,
+     "values": [
+      7982,
+      4,
+      31928
+     ]
+    },
+    {
+     "label": "6070240 000160-165 置物櫃",
+     "note_ref": null,
+     "values": [
+      6842,
+      6,
+      41052
+     ]
+    },
+    {
+     "label": "6070240 000166-167 置物櫃",
+     "note_ref": null,
+     "values": [
+      7982,
+      2,
+      15964
+     ]
+    },
+    {
+     "label": "6080107 000017-18 喇叭",
+     "note_ref": null,
+     "values": [
+      1050,
+      2,
+      2100
+     ]
+    },
+    {
+     "label": "6080107 000019-20 喇叭",
+     "note_ref": null,
+     "values": [
+      4725,
+      2,
+      9450
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      602285
+     ]
+    }
+   ],
+   "aligned": true
+  },
+  {
+   "title": "2.購置財產",
+   "period_labels": [
+    "單價",
+    "數量",
+    "總金額"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "北電 107-01-001 電腦",
+     "note_ref": null,
+     "values": [
+      16800,
+      1,
+      16800
+     ]
+    },
+    {
+     "label": "北電 107-01-002 無限擴音機",
+     "note_ref": null,
+     "values": [
+      29000,
+      1,
+      29000
+     ]
+    },
+    {
+     "label": "北電 107-01-003 空氣清淨機",
+     "note_ref": null,
+     "values": [
+      13030,
+      1,
+      13030
+     ]
+    },
+    {
+     "label": "北電 110-01-001 對講機",
+     "note_ref": null,
+     "values": [
+      1020,
+      1,
+      1020
+     ]
+    },
+    {
+     "label": "北電 110-01-002 紫外線消毒燈",
+     "note_ref": null,
+     "values": [
+      16600,
+      1,
+      16600
+     ]
+    },
+    {
+     "label": "北電 110-01-003 黑色摺疊小推車",
+     "note_ref": null,
+     "values": [
+      1900,
+      1,
+      1900
+     ]
+    },
+    {
+     "label": "北電 110-01-004 節能電風扇",
+     "note_ref": null,
+     "values": [
+      2780,
+      1,
+      2780
+     ]
+    },
+    {
+     "label": "北電 110-01-005 小米手機",
+     "note_ref": null,
+     "values": [
+      6999,
+      1,
+      6999
+     ]
+    },
+    {
+     "label": "北廚 112-01-01 2.5呎冰櫃一台",
+     "note_ref": null,
+     "values": [
+      13550,
+      1,
+      13550
+     ]
+    },
+    {
+     "label": "北電 113-02-01 電腦主機",
+     "note_ref": null,
+     "values": [
+      17325,
+      1,
+      17325
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      119004
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "第一張表無標題，僅有財產編號與登錄號/分號欄位，已將財產編號、登錄號與財產名稱合併至label欄位，原始價值、數量、帳面價值作為period_labels。購置日期與使用年限未納入數值欄，因schema不支援非金額欄位。"
+ ]
+}

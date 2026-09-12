@@ -1,0 +1,358 @@
+{
+ "report": "N04_海工_110",
+ "code": "N04",
+ "short_name": "海工",
+ "academic_year": 110,
+ "pdf_page": 27,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N04",
+ "printed_page": 27,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": "財產清冊　民國111年7月31日　1.代管財產",
+   "period_labels": [
+    "總價",
+    "數量",
+    "帳面價值"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "財產編號　登錄號/分號　財產名稱",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "405030224　000001　錄影系統",
+     "note_ref": null,
+     "values": [
+      12500,
+      5,
+      125
+     ]
+    },
+    {
+     "label": "501010603　000668　冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      46533,
+      1,
+      20939
+     ]
+    },
+    {
+     "label": "501010603　000669　冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      46533,
+      1,
+      20939
+     ]
+    },
+    {
+     "label": "501010603　000670　冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      46533,
+      1,
+      20939
+     ]
+    },
+    {
+     "label": "501010603　000671　冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      27920,
+      1,
+      12564
+     ]
+    },
+    {
+     "label": "501010603　000672　冷(暖)氣機",
+     "note_ref": null,
+     "values": [
+      27920,
+      1,
+      12564
+     ]
+    },
+    {
+     "label": "501030803　000002　兒童輔導教具",
+     "note_ref": null,
+     "values": [
+      189137,
+      1,
+      1891
+     ]
+    },
+    {
+     "label": "502020118　000016　監視機",
+     "note_ref": null,
+     "values": [
+      18500,
+      1,
+      2627
+     ]
+    },
+    {
+     "label": "314010103　005916　個人電腦 accer",
+     "note_ref": null,
+     "values": [
+      17500,
+      1,
+      14973
+     ]
+    },
+    {
+     "label": "314010103　005917　個人電腦 accer",
+     "note_ref": null,
+     "values": [
+      17500,
+      1,
+      14973
+     ]
+    },
+    {
+     "label": "6080501　000034　紅外線攝影機",
+     "note_ref": null,
+     "values": [
+      2800,
+      1,
+      2800
+     ]
+    },
+    {
+     "label": "6080501　000034　紅外線攝影機",
+     "note_ref": null,
+     "values": [
+      2800,
+      1,
+      2800
+     ]
+    },
+    {
+     "label": "6080501　000034　紅外線攝影機",
+     "note_ref": null,
+     "values": [
+      2800,
+      1,
+      2800
+     ]
+    },
+    {
+     "label": "6080501　000034　紅外線攝影機",
+     "note_ref": null,
+     "values": [
+      2800,
+      1,
+      2800
+     ]
+    },
+    {
+     "label": "6010142　000140　液晶螢幕",
+     "note_ref": null,
+     "values": [
+      3600,
+      1,
+      3600
+     ]
+    },
+    {
+     "label": "6080501　00057　彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500
+     ]
+    },
+    {
+     "label": "6080501　00058　彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500
+     ]
+    },
+    {
+     "label": "6080501　00059　彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500
+     ]
+    },
+    {
+     "label": "6080501　00060　彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500
+     ]
+    },
+    {
+     "label": "6080501　00061　彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500
+     ]
+    },
+    {
+     "label": "6080501　00062　彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500
+     ]
+    },
+    {
+     "label": "6080501　00063　彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500
+     ]
+    },
+    {
+     "label": "6080501　00064　彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500
+     ]
+    },
+    {
+     "label": "6080501　00065　彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500
+     ]
+    },
+    {
+     "label": "6080501　00066　彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500
+     ]
+    },
+    {
+     "label": "6080501　00067　彩色攝影機",
+     "note_ref": null,
+     "values": [
+      2500,
+      1,
+      2500
+     ]
+    },
+    {
+     "label": "6010605　000024　對講機",
+     "note_ref": null,
+     "values": [
+      3500,
+      1,
+      3500
+     ]
+    },
+    {
+     "label": "6080501　000172　AHD4合１攝影機",
+     "note_ref": null,
+     "values": [
+      2300,
+      1,
+      2300
+     ]
+    },
+    {
+     "label": "6080501　000173　AHD4合１攝影機",
+     "note_ref": null,
+     "values": [
+      2300,
+      1,
+      2300
+     ]
+    },
+    {
+     "label": "6080501　000174　AHD4合１攝影機",
+     "note_ref": null,
+     "values": [
+      2300,
+      1,
+      2300
+     ]
+    },
+    {
+     "label": "6080501　000175　AHD4合１攝影機",
+     "note_ref": null,
+     "values": [
+      2300,
+      1,
+      2300
+     ]
+    },
+    {
+     "label": "6011428　000261　4TB存儲硬碟",
+     "note_ref": null,
+     "values": [
+      4700,
+      1,
+      4700
+     ]
+    },
+    {
+     "label": "6080501　000186　超廣角彩色攝影機",
+     "note_ref": null,
+     "values": [
+      3600,
+      1,
+      3600
+     ]
+    },
+    {
+     "label": "6080501　000187　室外型槍型-攝影機",
+     "note_ref": null,
+     "values": [
+      2700,
+      1,
+      2700
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      188534
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "財產清冊欄位包含購置日期與使用年限，但schema無對應欄位，該兩欄資料未收錄於values中",
+  "表中有多筆登錄號/分號相同（000034）但應為不同財產，已逐筆列出"
+ ]
+}

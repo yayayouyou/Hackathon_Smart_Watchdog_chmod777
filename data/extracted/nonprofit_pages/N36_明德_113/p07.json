@@ -1,0 +1,67 @@
+{
+ "report": "N36_明德_113",
+ "code": "N36",
+ "short_name": "明德",
+ "academic_year": 113,
+ "pdf_page": 7,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N36",
+ "printed_page": 7,
+ "page_kind": "equity_change",
+ "tables": [
+  {
+   "title": "淨值變動表",
+   "context_heading": null,
+   "period_labels": [
+    "累積餘絀",
+    "本期餘絀",
+    "合　計"
+   ],
+   "unit": "新臺幣元",
+   "items": [
+    {
+     "label": "113年9月27日餘額",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "113學年度餘絀",
+     "note_ref": null,
+     "values": [
+      null,
+      1385443,
+      1385443
+     ]
+    },
+    {
+     "label": "114年7月31日餘額",
+     "note_ref": null,
+     "values": [
+      null,
+      1385443,
+      1385443
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "（請參閱後附財務報表附註）"
+  }
+ ],
+ "issues": [
+  "113年9月27日餘額三欄均印有 $- 符號，視為空白（null）而非0",
+  "累積餘絀欄114年7月31日餘額印有 $-，視為null"
+ ]
+}

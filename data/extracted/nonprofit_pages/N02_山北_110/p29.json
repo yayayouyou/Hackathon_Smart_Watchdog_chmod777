@@ -1,0 +1,42 @@
+{
+ "report": "N02_山北_110",
+ "code": "N02",
+ "short_name": "山北",
+ "academic_year": 110,
+ "pdf_page": 29,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N02",
+ "printed_page": 29,
+ "page_kind": "auditor_report",
+ "tables": [
+  {
+   "title": "110學年度第2學期會計師查核附表",
+   "period_labels": [
+    "是否符合－是",
+    "是否符合－否",
+    "是否符合－不適用"
+   ],
+   "items": [
+    {
+     "label": "基本原則",
+     "values": [
+      null,
+      null,
+      null
+     ]
+    },
+    {
+     "label": "1 以幼兒園名義開設專戶收支保管及運用各項經費",
+     "values": []
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": []
+}

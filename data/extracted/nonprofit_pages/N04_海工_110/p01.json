@@ -1,0 +1,23 @@
+{
+ "report": "N04_海工_110",
+ "code": "N04",
+ "short_name": "海工",
+ "academic_year": 110,
+ "pdf_page": 1,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N04",
+ "printed_page": 1,
+ "page_kind": "cover",
+ "tables": [],
+ "text_sections": [
+  {
+   "heading": null,
+   "text": "新北市海工非營利幼兒園\n（委託社團法人新北市幼兒成長協會辦理）\n財務報表暨會計師查核報告\n民國 110 學年度及民國 109 學年度\n\n地址：新北市土城區學府路一段241號1、2樓\n\n電話：(02) 2273-0517"
+  }
+ ],
+ "issues": []
+}

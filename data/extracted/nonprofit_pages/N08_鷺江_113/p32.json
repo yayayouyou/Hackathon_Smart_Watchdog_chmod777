@@ -1,0 +1,465 @@
+{
+ "report": "N08_鷺江_113",
+ "code": "N08",
+ "short_name": "鷺江",
+ "academic_year": 113,
+ "pdf_page": 32,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": true,
+ "schema_problems": [],
+ "footer_code": "N08",
+ "printed_page": 32,
+ "page_kind": "property_list",
+ "tables": [
+  {
+   "title": null,
+   "period_labels": [
+    "原始價值",
+    "數量",
+    "帳面價值",
+    "購置日期",
+    "使用年限"
+   ],
+   "unit": null,
+   "items": [
+    {
+     "label": "木紋高活動櫃",
+     "note_ref": null,
+     "values": [
+      2100,
+      1,
+      2100,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "木紋高活動櫃",
+     "note_ref": null,
+     "values": [
+      2100,
+      1,
+      2100,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "木紋高活動櫃",
+     "note_ref": null,
+     "values": [
+      2100,
+      1,
+      2100,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "茶桶櫃",
+     "note_ref": null,
+     "values": [
+      637,
+      1,
+      637,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "茶桶櫃",
+     "note_ref": null,
+     "values": [
+      637,
+      1,
+      637,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "茶桶櫃",
+     "note_ref": null,
+     "values": [
+      637,
+      1,
+      637,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "茶桶櫃",
+     "note_ref": null,
+     "values": [
+      637,
+      1,
+      637,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "棉被櫃(16格)",
+     "note_ref": null,
+     "values": [
+      9830,
+      1,
+      9830,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "棉被櫃(16格)",
+     "note_ref": null,
+     "values": [
+      9830,
+      1,
+      9830,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "棉被櫃(16格)",
+     "note_ref": null,
+     "values": [
+      9830,
+      1,
+      9830,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "棉被櫃(16格)",
+     "note_ref": null,
+     "values": [
+      9830,
+      1,
+      9830,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "棉被櫃(16格)",
+     "note_ref": null,
+     "values": [
+      9830,
+      1,
+      9830,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "棉被櫃(16格)",
+     "note_ref": null,
+     "values": [
+      9830,
+      1,
+      9830,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "棉被櫃(16格)",
+     "note_ref": null,
+     "values": [
+      9830,
+      1,
+      9830,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "牙刷茶杯櫃(16人份)",
+     "note_ref": null,
+     "values": [
+      5078,
+      1,
+      5078,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "牙刷茶杯櫃(30人份)",
+     "note_ref": null,
+     "values": [
+      5081,
+      1,
+      5081,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "牙刷茶杯櫃(30人份)",
+     "note_ref": null,
+     "values": [
+      5081,
+      1,
+      5081,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "牙刷茶杯櫃(30人份)",
+     "note_ref": null,
+     "values": [
+      5081,
+      1,
+      5081,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "拖鞋櫃(10人份)",
+     "note_ref": null,
+     "values": [
+      1400,
+      1,
+      1400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "拖鞋櫃(10人份)",
+     "note_ref": null,
+     "values": [
+      1400,
+      1,
+      1400,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "拖鞋櫃(32人份)",
+     "note_ref": null,
+     "values": [
+      4250,
+      1,
+      4250,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "拖鞋櫃(32人份)",
+     "note_ref": null,
+     "values": [
+      4250,
+      1,
+      4250,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "拖鞋櫃(32人份)",
+     "note_ref": null,
+     "values": [
+      4250,
+      1,
+      4250,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(8人份)",
+     "note_ref": null,
+     "values": [
+      4463,
+      1,
+      4463,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(10人份)",
+     "note_ref": null,
+     "values": [
+      4743,
+      1,
+      4743,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三格書包置物櫃(10人份)",
+     "note_ref": null,
+     "values": [
+      4743,
+      1,
+      4743,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "三折式屏風-不鏽鋼骨架",
+     "note_ref": null,
+     "values": [
+      4500,
+      1,
+      4500,
+      null,
+      5
+     ]
+    },
+    {
+     "label": "合計",
+     "note_ref": null,
+     "values": [
+      null,
+      null,
+      803020,
+      null,
+      null
+     ]
+    }
+   ],
+   "aligned": true
+  }
+ ],
+ "text_sections": [],
+ "issues": [
+  "購置日期欄位為文字格式（106/08/07），無法表示為數值，values中以null填入該欄位",
+  "財產編號欄位未納入表格欄位（僅列入財產名稱）"
+ ]
+}
