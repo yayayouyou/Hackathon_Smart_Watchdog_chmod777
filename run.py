@@ -160,6 +160,8 @@ TASKS = [
          _s("eda_signal_strength.py"), group="量測"),
     Task("baseline", "軌 A 基線模型：AUC 與前 100 名命中率",
          _s("baseline_model.py"), group="量測"),
+    Task("panel-model", "非營利面板建模：量化「這個資料量撐不起監督式模型」",
+         _s("model_nonprofit_panel.py"), group="量測"),
     Task("score-extraction", "以人工基準量測抽取準確率",
          _s("score_extraction.py"), group="量測", needs_raw=True),
     Task("validate-extraction", "以會計恆等式量化抽取品質",
