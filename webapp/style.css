@@ -577,9 +577,17 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 /* ── 助理面板 ─────────────────────────────────────────────
    .msg／.chatlog／.egs／.chatbar 沿用查詢頁籤原有的樣式，
    這裡只加助理新增的四類元素。 */
-/* 助理欄本體。常駐第三欄，不是分頁——它會操作畫面，看不到結果就沒有意義。 */
+/* 助理欄本體。常駐第三欄，不是分頁——它會操作畫面，看不到結果就沒有意義。
+ *
+ * 底色與內容區分開。原本兩邊都是 `--panel` 純白，只靠一條 1px 邊線隔開，
+ * 於是「哪一塊是我在讀的資料、哪一塊是它在講話」要靠找邊線才分得出來。
+ * 用 `--paper`（畫面其他地方的「底」色）而不是某一室的主題色：助理跨五間房
+ * 都在，掛上任何一室的顏色都會讓它看起來屬於那一間。
+ *
+ * 輸入列維持白色——那是唯一可以動手的地方，讓它從底色浮出來。 */
 .agentcol{display:flex;flex-direction:column;min-height:0;min-width:0;
-  background:var(--panel);border-left:1px solid var(--rule)}
+  background:var(--paper);border-left:1px solid var(--rule)}
+.agentcol .chatbar{background:var(--panel)}
 .agenthead{display:flex;align-items:center;gap:8px;padding:8px 12px;
   border-bottom:1px solid var(--rule);font-size:16px;color:var(--ink-3)}
 .agenttitle{font-size:15px;font-weight:600;letter-spacing:.1em;
@@ -893,8 +901,6 @@ body.resizing{user-select:none;cursor:col-resize}
 
 
 /* ── 助理：常駐欄位 ─────────────────────────────────────── */
-.agentcol{display:flex;flex-direction:column;min-height:0;min-width:0;
-  background:var(--panel);border-left:1px solid var(--rule)}
 .agentcol .chatlog{flex:1}
 
 /* 清單被助理篩選時要說出來，否則「畫面上這幾筆是哪來的」沒有答案。 */
