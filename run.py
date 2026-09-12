@@ -129,6 +129,8 @@ TASKS = [
          _s("analyse_personnel_to_reserve.py"), in_pipeline=True),
     Task("identity", "驗證每份抽取確實屬於檔名所指的那所園",
          _s("verify_extraction_identity.py"), in_pipeline=True),
+    Task("ml-features", "把頁級事實整理成園×學年度的寬表（ML 可直接讀）",
+         _s("build_ml_features.py"), in_pipeline=True),
     Task("anomaly", "非營利園同儕財務異常排序（同年度、同類型，僅比率）",
          _s("build_nonprofit_anomaly.py"), in_pipeline=True),
     Task("cohort", "挑出 9 案例加 9 對照的配對設計",
