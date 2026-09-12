@@ -178,7 +178,7 @@
       </div>`);
     });
     if (!rows.length) {
-      step('<span class="tag no">證據</span>這份索引查不到，屬資料不足');
+      bubble("這份索引查不到，屬資料不足。", "bot");
       return;
     }
     log().insertAdjacentHTML("beforeend",
@@ -195,56 +195,61 @@
     log().scrollTop = log().scrollHeight;
   }
 
-  /* 每個 tool 在軌道上顯示成一句人話。
-     稽查員看到「list_institutions」只會困惑——畫面上其他地方都已經有中文，
-     這條軌道是唯一會漏掉的地方。找不到對照就退回 tool 名稱，不要顯示空白。 */
-  const RAIL_LABEL = {
-    list_institutions: "正在調閱區域",
-    get_ranking: "正在排定查核順序",
-    open_institution: "正在開啟卷宗",
-    get_penalties: "正在調閱裁罰紀錄",
-    get_findings: "正在核對財報法遵",
-    get_staffing: "正在比對人力配置",
-    get_rank_track: "正在追蹤名次變化",
-    get_realtime: "正在查看公開提及",
-    get_peer_comparison: "正在與同儕比較",
-    open_memo: "正在調閱建議書",
-    list_memos: "正在整理建議書清單",
-    set_time_machine: "正在回到指定時點",
-    get_model_card: "正在調出模型指標",
-    search_documents: "正在翻查財報原文",
-    set_map_view: "正在調整地圖",
-    export_schedule: "正在整理稽查排程",
-    scan_estimate: "正在試算掃描費用",
-    record_feedback: "正在記錄您的回饋",
-    load_skill: "正在載入作業指引",
+  /* 每一步一個區塊，用後端的 step_id 綁定。
+   *
+   * 先前把 tool 的狀態獨立成一條灰底軌道，結果同一件事被說兩遍——軌道寫
+   * 「正在調閱區域」，講解句又寫「正在調閱蘆洲區名單」，而灰底方塊比講解句
+   * 還搶眼，主從顛倒。
+   *
+   * 現在**講解句自己就是那一步的標籤**，tool 名稱降成底下的小字。一個點、
+   * 一條細線，讀起來是一條流程而不是幾張卡片。
+   */
+  const TOOL_LABEL = {
+    list_institutions: "調閱名單", get_ranking: "排定查核順序",
+    open_institution: "開啟卷宗", get_penalties: "調閱裁罰紀錄",
+    get_findings: "核對財報法遵", get_staffing: "比對人力配置",
+    get_rank_track: "追蹤名次變化", get_realtime: "查看公開提及",
+    get_peer_comparison: "與同儕比較", open_memo: "調閱建議書",
+    list_memos: "整理建議書清單", set_time_machine: "回到指定時點",
+    get_model_card: "調出模型指標", search_documents: "翻查財報原文",
+    set_map_view: "調整地圖", export_schedule: "整理稽查排程",
+    scan_estimate: "試算掃描費用", record_feedback: "記錄回饋",
+    load_skill: "載入作業指引",
   };
 
-  /* 軌道的一節。`state` 決定左側圓點的樣子：
-     run 進行中（空心＋脈動）、ok 完成（實心）、no 被擋下（紅）。 */
-  function rail(id, label, st) {
-    let el = document.getElementById(id);
+  /* 取得（或建立）某一步的區塊。`st` 決定圓點：
+     run 進行中、ok 完成、no 被擋下、done 收尾（沒有 tool 的純敘述）。 */
+  function stepBlock(id, st) {
+    let el = document.getElementById(`step-${id}`);
     if (!el) {
       el = document.createElement("div");
-      el.id = id;
-      el.className = "rail";
-      el.innerHTML = '<i class="dot"></i><span class="lb"></span><span class="sub"></span>';
+      el.id = `step-${id}`;
+      el.className = "astep";
+      el.innerHTML = '<i class="dot"></i><div class="say"></div><div class="act"></div>';
       log().appendChild(el);
     }
-    el.dataset.st = st;
-    el.querySelector(".lb").textContent = label;
+    if (st) el.dataset.st = st;
     log().scrollTop = log().scrollHeight;
     return el;
   }
 
-  function railSub(id, text) {
-    const el = document.getElementById(id);
-    if (el) el.querySelector(".sub").textContent = text;
+  function stepSay(id, text, softened) {
+    const el = stepBlock(id);
+    const box = el.querySelector(".say");
+    if (softened && softened.length) {
+      const flag = document.createElement("span");
+      flag.className = "soft";
+      flag.textContent = `（已替換認定性用語：${softened.join("、")}）`;
+      el.appendChild(flag);
+    }
+    type(box, text);
   }
 
-  function step(html) {
-    log().insertAdjacentHTML("beforeend", `<div class="astep">${html}</div>`);
-    log().scrollTop = log().scrollHeight;
+  function stepAct(id, name, st, summary) {
+    const el = stepBlock(id, st);
+    const label = TOOL_LABEL[name] || name;
+    el.querySelector(".act").textContent =
+      summary ? `${label}　${summary}` : label;
   }
 
   /* 「思考中」。一則真的 tool 呼叫來回要數秒到數十秒，沒有這個指示，
@@ -278,21 +283,6 @@
       log().scrollTop = log().scrollHeight;
     };
     tick();
-  }
-
-  function say(text, softened) {
-    const wrap = document.createElement("div");
-    wrap.className = "msg bot";
-    const p = document.createElement("p");
-    wrap.appendChild(p);
-    if (softened && softened.length) {
-      const flag = document.createElement("span");
-      flag.className = "soft";
-      flag.textContent = `（已替換認定性用語：${softened.join("、")}）`;
-      wrap.appendChild(flag);
-    }
-    log().appendChild(wrap);
-    type(p, text);
   }
 
   /* ── 一輪對話 ────────────────────────────────────────── */
@@ -384,15 +374,14 @@
         thinking(true, "思考中");
         break;
       case "text":
-        say(d.text, d.softened);
+        stepSay(d.step_id, d.text, d.softened);
         break;
       case "tool_call":
-        thinking(false);           // 軌道自己會顯示進行中，不必再有第二個指示
-        rail(`rail-${d.id}`, RAIL_LABEL[d.name] || d.name, "run");
+        thinking(false);       // 圓點自己會顯示進行中，不必再有第二個指示
+        stepAct(d.step_id, d.name, "run", "");
         break;
       case "tool_result":
-        rail(`rail-${d.id}`, RAIL_LABEL[d.name] || d.name, d.ok ? "ok" : "no");
-        railSub(`rail-${d.id}`, d.summary);
+        stepAct(d.step_id, d.name, d.ok ? "ok" : "no", d.summary);
         thinking(true, "整理中");
         break;
       case "ui_action":
@@ -405,7 +394,7 @@
       case "done":
         thinking(false);
         if (d.stop_reason === "max_steps") {
-          step('<span class="tag no">停止</span>已達單輪步數上限');
+          bubble("已達單輪步數上限，先停在這裡。", "bot err");
         }
         break;
       default:
