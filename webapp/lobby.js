@@ -697,7 +697,16 @@
       pod.querySelector(".who-name").textContent = u.name || u.email || "";
       pod.querySelector(".who-role").textContent = role;
     });
-    if (!u) return;
+    if (!u) {
+      /* 登出後要把浮層一起收掉並清空。只藏身分鈕的話，剛才打開的那張卡會
+         留在畫面上——登入視窗已經蓋回來了，右上角卻還印著上一位使用者的
+         Email 與單位。實測過。 */
+      document.querySelectorAll(".pop.who").forEach((pop) => { pop.hidden = true; });
+      document.querySelectorAll(".whopop-body").forEach((b) => { b.innerHTML = ""; });
+      document.querySelectorAll(".who-pod").forEach((pod) =>
+        pod.setAttribute("aria-expanded", "false"));
+      return;
+    }
     const towns = (u.towns || []).map((t) => `<span>${esc(t)}</span>`).join("");
     const html =
       `<div class="row"><span>帳號</span><b>${esc(u.email) || "—"}</b></div>`

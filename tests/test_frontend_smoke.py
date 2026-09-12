@@ -1198,3 +1198,51 @@ def test_no_orphan_declaration_lines_in_css() -> None:
                 raise AssertionError(
                     f"{path.name} 第 {i} 行是沒有選擇器的孤兒宣告：{stripped[:70]}")
             depth += line.count("{") - line.count("}")
+
+
+def test_every_identity_popup_has_a_way_out() -> None:
+    """每一張身分卡都要有登出鈕。
+
+    中庭一張、室內一張，而原本只有室內那張有——在中庭打開身分卡只看得到帳號、
+    身分、單位，沒有出口，**登不出去**。
+
+    綁定必須用屬性而不是 id：`id` 只能有一個，所以第二張卡的按鈕不可能共用。
+    這是同一類問題的又一次（前面是 `.eg` 範例鈕、`SWMemos` 的匯出），
+    規則寫成通則：身分卡有幾張都行，登出鈕一律靠 `[data-logout]` 綁。
+    """
+    html = _html()
+    auth = _code((WEBAPP / "auth.js").read_text(encoding="utf-8"))
+
+    popups = re.findall(r'<div class="pop who"[^>]*id="([a-zA-Z0-9_-]+)"(.*?)</div>\s*</div>',
+                        html, re.S)
+    # 上面的貪婪切法不可靠，改成逐一定位每張卡的區塊
+    ids = re.findall(r'<div class="pop who"[^>]*id="([a-zA-Z0-9_-]+)"', html)
+    assert len(ids) >= 2, f"預期至少兩張身分卡（中庭與室內），只找到 {ids}"
+    del popups
+
+    for pid in ids:
+        start = html.index(f'id="{pid}"')
+        # 下一張卡（或檔尾）之前的內容就是這一張
+        nxt = html.find('<div class="pop who"', start + 1)
+        block = html[start:nxt if nxt > 0 else len(html)]
+        assert "data-logout" in block, f"身分卡 #{pid} 沒有登出鈕，從那裡登不出去"
+
+    assert '[data-logout]' in auth, "auth.js 沒有用屬性綁登出，多一張卡就會漏掉"
+    assert '$("logout")' not in auth, (
+        "auth.js 仍用 id 綁登出；id 只能有一個，第二張身分卡的按鈕會是死的"
+    )
+
+
+def test_logging_out_clears_the_identity_popup() -> None:
+    """登出後不可以還留著上一位使用者的 Email 與單位。
+
+    `paintWho()` 原本只把身分鈕藏起來，剛才打開的那張卡會留在畫面上——登入視窗
+    已經蓋回來了，右上角卻還印著誰剛剛登入過。
+    """
+    lobby = _code((WEBAPP / "lobby.js").read_text(encoding="utf-8"))
+    fn = lobby[lobby.index("function paintWho()"):]
+    fn = fn[:fn.index("\n  function ")]
+    assert '.pop.who' in fn and "hidden = true" in fn, (
+        "paintWho 在沒有使用者時沒有把身分浮層收掉"
+    )
+    assert 'innerHTML = ""' in fn, "paintWho 沒有清掉浮層裡的帳號與單位"

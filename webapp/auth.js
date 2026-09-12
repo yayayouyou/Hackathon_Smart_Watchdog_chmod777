@@ -41,8 +41,10 @@
   function paint() {
     const box = $("whoami");
     if (box) box.textContent = me ? `${me.name}（${roleLabel(me.role)}）` : "未登入";
-    const out = $("logout");
-    if (out) out.hidden = !me;
+    /* ⚠️ 用屬性而不是 id：登出鈕有兩顆（中庭一顆、室內一顆），而 id 只能有一個。
+       原本只綁室內那顆，於是在中庭**登不出去**——身分卡打開只有資訊，沒有出口。
+       之後再多一處身分卡也不必回來改這裡。 */
+    document.querySelectorAll("[data-logout]").forEach((b) => { b.hidden = !me; });
     /* 右上角的身分鈕由 lobby.js 畫。從這裡通知它，而不是讓它自己輪詢。 */
     if (window.Lobby && window.Lobby.paintWho) window.Lobby.paintWho();
   }
@@ -148,8 +150,8 @@
     document.querySelectorAll("[data-quick-role]").forEach((button) => {
       button.addEventListener("click", () => quickLogin(button.dataset.quickRole));
     });
-    const out = $("logout");
-    if (out) out.addEventListener("click", logout);
+    document.querySelectorAll("[data-logout]").forEach((b) =>
+      b.addEventListener("click", logout));
     loadOptions();
     check();
   });
