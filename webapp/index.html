@@ -473,12 +473,21 @@
     <div class="autherr" id="autherr" role="alert"></div>
     <button type="submit" id="loginbtn">登入</button>
 
+    <!-- 只有後端 QUICK_LOGIN_ENABLED=true 且對應 seed 帳號存在時才會出現；
+         auth.js 依 /api/auth/options 決定要不要顯示、顯示哪幾顆。
+         這件事是寫給開發者的，所以放在註解裡而不是畫面上——使用者看到這一段
+         的時候它本來就已經啟用了，再告訴他「沒啟用時不會顯示」沒有用。 -->
     <section class="quicklogin" id="quicklogin" hidden>
-      <div class="authdivider"><span>展示環境快速登入</span></div>
-      <p>免輸入帳密；後端未啟用時不會顯示。</p>
+      <div class="authdivider"><span>或用展示帳號</span></div>
+      <!-- 按鈕上要有動詞。原本只寫「稽查人員」「系統管理員」，跟上面那組
+           單選的標籤一模一樣，看起來像「再選一次身分」而不是「按下去就進去」
+           ——使用者回報看不出可以直接點。 -->
+      <p>不必輸入帳號密碼，點一下就直接進入。</p>
       <div class="quickrole-grid">
-        <button type="button" class="quickrole" data-quick-role="inspector">稽查人員</button>
-        <button type="button" class="quickrole" data-quick-role="admin">系統管理員</button>
+        <button type="button" class="quickrole" data-quick-role="inspector">
+          以稽查人員登入</button>
+        <button type="button" class="quickrole" data-quick-role="admin">
+          以系統管理員登入</button>
       </div>
     </section>
   </form>
