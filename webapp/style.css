@@ -580,3 +580,48 @@ footer .src a{color:var(--ink-3)}
 .memo{margin:0;padding:10px 11px;background:var(--sunk);border-radius:5px;
   font-family:var(--sans);font-size:11.5px;line-height:1.75;color:var(--ink-2);
   white-space:pre-wrap;max-height:320px;overflow:auto}
+
+
+/* ── 助理：步驟軌道 ───────────────────────────────────────
+   一步一節，左側一條連接線把它們串起來，讓「它正在依序做事」看得出來。
+   圓點三態：進行中（空心＋脈動）、完成（實心）、被擋下（紅）。 */
+.rail{position:relative;display:grid;grid-template-columns:auto 1fr;
+  column-gap:10px;padding:5px 0 5px 2px;align-items:baseline}
+/* 連接線畫在圓點的正下方，接到下一節。最後一節不畫（:last-child）。 */
+.rail::before{content:"";position:absolute;left:6px;top:17px;bottom:-6px;
+  width:1px;background:var(--rule)}
+.rail:last-child::before{display:none}
+.rail .dot{grid-row:1;width:11px;height:11px;border-radius:50%;
+  border:2px solid var(--rule);background:var(--panel);
+  position:relative;z-index:1;margin-top:3px}
+.rail .lb{grid-row:1;font-size:12.5px;color:var(--ink-2);letter-spacing:.01em}
+.rail .sub{grid-column:2;grid-row:2;font-size:11px;color:var(--ink-4);
+  font-family:var(--mono);margin-top:2px}
+
+/* 進行中：圓點空心、標籤較深，並以光暈脈動。 */
+.rail[data-st="run"] .dot{border-color:var(--seal);animation:wd-pulse 1.2s infinite}
+.rail[data-st="run"] .lb{color:var(--ink);font-weight:500}
+@keyframes wd-pulse{
+  0%,100%{box-shadow:0 0 0 0 var(--seal-soft)}
+  50%{box-shadow:0 0 0 5px var(--seal-soft)}
+}
+/* 完成：實心。 */
+.rail[data-st="ok"] .dot{border-color:var(--good);background:var(--good)}
+/* 被擋下：紅，且標籤也轉紅——白名單擋下來是要被看見的，不是背景雜訊。 */
+.rail[data-st="no"] .dot{border-color:var(--seal);background:var(--seal)}
+.rail[data-st="no"] .lb{color:var(--seal)}
+.rail[data-st="no"] .sub{color:var(--seal)}
+
+@media (prefers-reduced-motion:reduce){
+  .rail[data-st="run"] .dot{animation:none}
+}
+
+/* ── 助理：對話文字 ───────────────────────────────────────
+   講解句是要被讀的，比軌道的狀態文字重一級。 */
+#agentlog .msg.bot p{font-size:13.5px;line-height:1.85;color:var(--ink);
+  margin:0 0 6px;letter-spacing:.01em}
+#agentlog .msg.me{font-size:13px;line-height:1.7;padding:7px 12px;border-radius:14px}
+#agentlog{gap:3px;padding:14px 15px 18px}
+/* 使用者訊息與助理回覆之間留白多一點，一輪一輪分得開。 */
+#agentlog .msg.me{margin-top:10px}
+#agentlog .msg.bot{margin-bottom:2px}

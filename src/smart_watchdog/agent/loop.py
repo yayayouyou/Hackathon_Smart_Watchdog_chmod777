@@ -173,7 +173,7 @@ def run_turn(
                 # 再執行一次，只把結果轉成 SSE 事件推給前端。
                 content = json.dumps(ev.payload, ensure_ascii=False, default=str)
                 yield SSEEvent("tool_result", {
-                    "step_id": step, "id": call.id, "ok": True,
+                    "step_id": step, "id": call.id, "name": call.name, "ok": True,
                     "summary": _summarise(ev.payload),
                 })
                 if ev.ui_action:
@@ -187,12 +187,13 @@ def run_turn(
             except (ToolDenied, ToolInvalid) as exc:
                 content = json.dumps({"error": str(exc)}, ensure_ascii=False)
                 yield SSEEvent("tool_result", {
-                    "step_id": step, "id": call.id, "ok": False, "summary": str(exc),
+                    "step_id": step, "id": call.id, "name": call.name,
+                    "ok": False, "summary": str(exc),
                 })
             else:
                 content = json.dumps(outcome.payload, ensure_ascii=False, default=str)
                 yield SSEEvent("tool_result", {
-                    "step_id": step, "id": call.id, "ok": True,
+                    "step_id": step, "id": call.id, "name": call.name, "ok": True,
                     "summary": _summarise(outcome.payload),
                 })
                 if outcome.ui_action:

@@ -150,6 +150,9 @@ def _list_institutions(_ctx: ToolContext, a: ListInstitutionsArgs) -> ToolOutcom
                 "town": a.town, "type": a.type, "has_penalty": a.has_penalty,
                 "has_compliance_failure": a.has_compliance_failure,
             }.items() if v is not None},
+            # 指定行政區時把地圖真的飛過去——「調閱蘆洲區」應該看起來像有人
+            # 把地圖放大到蘆洲，而不是只有標記變少。
+            "focus_town": a.town,
             "ids": [r["id"] for r in rows],
         },
     )
@@ -174,7 +177,8 @@ def _get_ranking(_ctx: ToolContext, a: GetRankingArgs) -> ToolOutcome:
     } for p in res.get("proposal", [])]
     return ToolOutcome(
         payload={"count": len(rows), "items": rows, "note": CAVEAT},
-        ui_action={"type": "navigate", "tab": "list", "ids": [r["id"] for r in rows]},
+        ui_action={"type": "navigate", "tab": "list", "focus_town": a.town,
+                   "ids": [r["id"] for r in rows]},
     )
 
 
@@ -675,6 +679,9 @@ class SetMapViewArgs(BaseModel):
     mask: Optional[bool] = Field(default=None, description="新北以外反灰")
     choropleth: Optional[bool] = Field(default=None, description="行政區底色")
     flagged_only: Optional[bool] = Field(default=None, description="只顯示本批建議查核")
+    focus_town: Optional[str] = Field(
+        default=None, description="把地圖飛到這個行政區，例如「蘆洲區」"
+    )
     capacity: Optional[int] = Field(
         default=None, ge=1, le=200, description="本月可稽查家數，會改變本批提案的筆數"
     )

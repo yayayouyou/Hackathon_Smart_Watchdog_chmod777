@@ -49,7 +49,29 @@
     el.dispatchEvent(new Event(type, { bubbles: true }));
   }
 
+  /* 把地圖飛到某個行政區。
+   *
+   * 「調閱蘆洲區」應該看起來像有人把地圖放大到蘆洲，而不是只有標記變少。
+   * 邊界資料是 [lng, lat]，Leaflet 要 [lat, lng]——這裡跟 app.js 的
+   * toggleDistricts 用同一個換法，弄反會飛到地球另一邊。
+   */
+  function flyToDistrict(name) {
+    if (!name || !SW.state.payload) return;
+    const b = (SW.state.payload.boundary || []).find((f) => f.d === name);
+    let ring = b && b.poly ? b.poly.flat() : null;
+    if (!ring) {
+      const d = (SW.state.payload.districts || []).find((x) => x.d === name);
+      ring = d && d.hull ? d.hull : null;
+    }
+    if (!ring || !ring.length) return;
+    const bounds = L.latLngBounds(ring.map(([x, y]) => [y, x]));
+    /* maxBounds 是開場取景時以整個新北設的；飛進某一區一定在範圍內，
+       但保險起見先放寬，回全市時 app.js 的 fitNTPC 會再設回來。 */
+    SW.state.map.flyToBounds(bounds, { padding: [40, 40], duration: 1.1 });
+  }
+
   function applyMapView(v) {
+    if (v.focus_town) flyToDistrict(v.focus_town);
     for (const [key, id] of Object.entries(TOGGLES)) {
       if (typeof v[key] !== "boolean") continue;
       const box = $(id);
@@ -72,6 +94,7 @@
     switch (a.type) {
       case "navigate":
         if (a.tab) switchTab(a.tab);
+        if (a.focus_town) flyToDistrict(a.focus_town);
         if (a.institution_id) SW.openDossier(a.institution_id);
         if (Array.isArray(a.ids) && a.ids.length) {
           SW.state.agentIds = new Set(a.ids);
@@ -83,6 +106,7 @@
         if (a.tab) switchTab(a.tab);
         const f = a.filters || {};
         if (f.type) applyTypeFilter(f.type);
+        if (a.focus_town) flyToDistrict(a.focus_town);
         if (a.map) applyMapView(a.map);
         if (Array.isArray(a.ids)) {
           SW.state.agentIds = a.ids.length ? new Set(a.ids) : null;
@@ -169,6 +193,53 @@
   function bubble(html, cls) {
     log().insertAdjacentHTML("beforeend", `<div class="msg ${cls}">${html}</div>`);
     log().scrollTop = log().scrollHeight;
+  }
+
+  /* 每個 tool 在軌道上顯示成一句人話。
+     稽查員看到「list_institutions」只會困惑——畫面上其他地方都已經有中文，
+     這條軌道是唯一會漏掉的地方。找不到對照就退回 tool 名稱，不要顯示空白。 */
+  const RAIL_LABEL = {
+    list_institutions: "正在調閱區域",
+    get_ranking: "正在排定查核順序",
+    open_institution: "正在開啟卷宗",
+    get_penalties: "正在調閱裁罰紀錄",
+    get_findings: "正在核對財報法遵",
+    get_staffing: "正在比對人力配置",
+    get_rank_track: "正在追蹤名次變化",
+    get_realtime: "正在查看公開提及",
+    get_peer_comparison: "正在與同儕比較",
+    open_memo: "正在調閱建議書",
+    list_memos: "正在整理建議書清單",
+    set_time_machine: "正在回到指定時點",
+    get_model_card: "正在調出模型指標",
+    search_documents: "正在翻查財報原文",
+    set_map_view: "正在調整地圖",
+    export_schedule: "正在整理稽查排程",
+    scan_estimate: "正在試算掃描費用",
+    record_feedback: "正在記錄您的回饋",
+    load_skill: "正在載入作業指引",
+  };
+
+  /* 軌道的一節。`state` 決定左側圓點的樣子：
+     run 進行中（空心＋脈動）、ok 完成（實心）、no 被擋下（紅）。 */
+  function rail(id, label, st) {
+    let el = document.getElementById(id);
+    if (!el) {
+      el = document.createElement("div");
+      el.id = id;
+      el.className = "rail";
+      el.innerHTML = '<i class="dot"></i><span class="lb"></span><span class="sub"></span>';
+      log().appendChild(el);
+    }
+    el.dataset.st = st;
+    el.querySelector(".lb").textContent = label;
+    log().scrollTop = log().scrollHeight;
+    return el;
+  }
+
+  function railSub(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.querySelector(".sub").textContent = text;
   }
 
   function step(html) {
@@ -316,17 +387,15 @@
         say(d.text, d.softened);
         break;
       case "tool_call":
-        thinking(true, `執行 ${d.name}`);
-        step(`<span class="tag">呼叫</span>${esc(d.name)}
-              <code>${esc(JSON.stringify(d.arguments))}</code>`);
+        thinking(false);           // 軌道自己會顯示進行中，不必再有第二個指示
+        rail(`rail-${d.id}`, RAIL_LABEL[d.name] || d.name, "run");
         break;
       case "tool_result":
-        thinking(true, "思考中");
-        step(`<span class="tag ${d.ok ? "ok" : "no"}">${d.ok ? "結果" : "擋下"}</span>${
-          esc(d.summary)}`);
+        rail(`rail-${d.id}`, RAIL_LABEL[d.name] || d.name, d.ok ? "ok" : "no");
+        railSub(`rail-${d.id}`, d.summary);
+        thinking(true, "整理中");
         break;
       case "ui_action":
-        step(`<span class="tag ui">畫面</span>${esc(d.type)}`);
         dispatch(d);
         break;
       case "error":
