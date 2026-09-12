@@ -1529,3 +1529,153 @@ body.resizing{user-select:none;cursor:col-resize}
 .sm-i .f{fill:var(--fam-core);stroke:none}
 .sm-legend b{margin-left:auto;font-family:var(--mono);color:var(--ink)}
 .sm-legend div{display:flex;align-items:center}
+
+/* ══ 05 答詢擬稿 ═══════════════════════════════════════════
+   顏色帶資訊、文字不帶：來源＝色點，狀態＝色框，數量＝等寬數字。
+   說明句一律一行以內，長的收進 title 或 <details>。 */
+:root{
+  --src-th:#2A78D6; --src-news:#EB6834; --src-ptt:#1BAF7A; --src-vendor:#7A5AA8;
+  --ex-fill:#B23A2F;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --src-th:#5A9BE8; --src-news:#F0824F; --src-ptt:#3FC390; --src-vendor:#A487D4;
+  --ex-fill:#E4695A;
+}}
+:root[data-theme="dark"]{
+  --src-th:#5A9BE8; --src-news:#F0824F; --src-ptt:#3FC390; --src-vendor:#A487D4;
+  --ex-fill:#E4695A;
+}
+
+.dkwrap{flex:1;min-height:0;display:grid;grid-template-columns:332px minmax(0,1fr)}
+@media(max-width:1200px){.dkwrap{grid-template-columns:264px minmax(0,1fr)}}
+.dklist{min-height:0;overflow-y:auto;border-right:1px solid var(--rule);
+  background:var(--panel)}
+.dkrow{display:grid;grid-template-columns:1fr auto;gap:4px 10px;width:100%;
+  text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule);
+  background:none;border-left:3px solid transparent;cursor:pointer}
+.dkrow:hover{background:var(--sunk)}
+.dkrow.on{background:var(--sunk);border-left-color:var(--room-letters)}
+.dkname{font-size:15px;font-weight:500;color:var(--ink);line-height:1.35}
+.dkchips{display:flex;gap:4px;align-items:center}
+.dkchip{font-style:normal;font-family:var(--mono);font-size:15px;color:#fff;
+  background:var(--c);border-radius:9px;padding:1px 7px;min-width:22px;
+  text-align:center;line-height:1.5}
+.dkchip.mark{background:var(--room-letters)}
+.dkmeta{grid-column:1/-1;display:flex;gap:10px;font-size:15px;color:var(--ink-3)}
+.dkmeta b{font-family:var(--mono);font-weight:400;color:var(--ink-4)}
+
+.dkwork{min-height:0;overflow-y:auto;padding:16px 20px 28px}
+.dkempty{padding:26px 20px;font-size:15px;color:var(--ink-3);line-height:1.7}
+.dkempty.sm{padding:10px 0}
+.dknote{font-size:15px;color:var(--ink-4);line-height:1.6}
+.dkhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  padding-bottom:11px;border-bottom:1px solid var(--rule)}
+.dkhead b{font-size:19px;font-weight:600}
+.dkfacts{display:flex;gap:10px;font-size:15px;color:var(--ink-3)}
+.dkfacts .bad{color:var(--seal);font-weight:500}
+.dksec{margin-top:16px}
+.dksec>h4{display:flex;align-items:baseline;gap:8px;margin:0 0 9px;font-size:15px;
+  letter-spacing:.1em;color:var(--ink-3);font-weight:600}
+.dksec>h4 i{font-style:normal;font-family:var(--mono);color:var(--ink-4)}
+
+/* 一串 @標註通報。主貼文與回覆共用同一條藍色縱線——它們是同一件事。 */
+.dkthread{border-left:3px solid var(--src-th);padding:2px 0 2px 12px;
+  margin-bottom:16px}
+.dkt-post{margin-bottom:9px}
+.dkt-post p{margin:3px 0 0;font-size:15px;line-height:1.65;color:var(--ink);
+  white-space:pre-wrap;max-height:8.4em;overflow-y:auto}
+.dkt-post.reply{padding-left:13px;border-left:2px solid var(--rule);
+  margin-left:2px}
+.dkt-post.reply p{color:var(--ink-2)}
+.dkt-who{font-size:15px;font-weight:600;color:var(--src-th)}
+.dkt-post.reply .dkt-who{color:var(--ink-3);font-weight:500}
+.dkt-date{font-size:15px;color:var(--ink-4);font-family:var(--mono);margin-left:8px}
+.dkt-post a{font-size:15px;color:var(--ink-3);margin-left:8px}
+.dkt-replies{margin-top:4px}
+.dkt-n{display:block;font-size:15px;color:var(--ink-4);margin-bottom:5px}
+.dkt-act{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-top:4px}
+.dkdemo{font-style:normal;font-size:15px;color:var(--room-back);
+  border:1px solid var(--room-back);border-radius:3px;padding:0 5px;margin-left:7px}
+.dkchip.rep{background:var(--ink-3)}
+
+/* 一則聲音＝左邊一條來源色。色條是唯一標示來源的東西，省掉「來源：新聞」 */
+.dkvoice{border-left:3px solid var(--c);padding:3px 0 3px 11px;margin-bottom:11px}
+.dkvoice p{margin:3px 0 2px;font-size:15px;line-height:1.6;color:var(--ink-2)}
+.dkv-src{font-size:15px;font-weight:600;color:var(--c)}
+.dkv-date{font-size:15px;color:var(--ink-4);font-family:var(--mono);margin-left:8px}
+.dkvoice a{font-size:15px;color:var(--ink-3)}
+
+.dkact{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap}
+.dkgo{background:var(--room-letters);color:#fff;border:0;border-radius:6px;
+  padding:9px 20px;font-size:15px;font-weight:600;cursor:pointer}
+.dkgo:hover{filter:brightness(1.08)}
+.dkgo[disabled]{background:var(--sunk);color:var(--ink-4);cursor:not-allowed}
+/* 第二顆鈕是對內的那一份，用外框而不是實心——實心的那顆是會出去見人的。 */
+.dkgo.alt{background:var(--panel);color:var(--room-letters);
+  box-shadow:inset 0 0 0 1.5px var(--room-letters)}
+.dkgo.alt:hover{background:var(--sunk);filter:none}
+.dkdraft.internal{border-top-color:var(--ink-3)}
+.dkd-tag{font-size:15px;font-weight:600;color:#fff;background:var(--ink-2);
+  border-radius:3px;padding:1px 7px}
+
+/* 草稿卡：狀態用色框講，不用一段字。未過檢核時整張卡變紅框。 */
+.dkdraft{margin-top:18px;border:1px solid var(--rule);border-radius:8px;
+  border-top:3px solid var(--good);background:var(--panel);padding:13px 15px}
+.dkdraft.bad{border-top-color:var(--seal)}
+.dkd-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:9px}
+.dkd-state{font-size:15px;font-weight:600;color:var(--good)}
+.dkd-state.bad{color:var(--seal)}
+.dkd-by{font-size:15px;color:var(--ink-4)}
+.dkcopy{margin-left:auto;border:1px solid var(--rule);border-radius:5px;
+  padding:4px 12px;font-size:15px;color:var(--ink-2);background:var(--paper);
+  cursor:pointer}
+.dkd-body{margin:0;white-space:pre-wrap;font-family:var(--sans);font-size:15px;
+  line-height:1.75;color:var(--ink)}
+.dkd-body.sm{font-size:15px;color:var(--ink-2)}
+.dkd-more{margin-top:10px}
+.dkd-more summary{font-size:15px;color:var(--ink-3);cursor:pointer}
+.dkd-foot{margin-top:10px;font-size:15px;color:var(--ink-4);line-height:1.6}
+.dkbad{border-left:3px solid var(--seal);padding:7px 11px;font-size:15px;
+  color:var(--seal);background:var(--seal-soft);border-radius:0 4px 4px 0}
+
+/* ── 首長答詢 ─────────────────────────────────────────── */
+.dkexec{flex:1;min-height:0;display:flex;flex-direction:column}
+.exlog{flex:1;min-height:0;overflow-y:auto;padding:18px 20px;display:flex;
+  flex-direction:column;gap:14px}
+.exhint b{font-size:15px}
+.exhint .egs{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.exq{align-self:flex-end;max-width:76%;background:var(--room-letters);color:#fff;
+  border-radius:12px 12px 3px 12px;padding:8px 14px;font-size:15px}
+.excard{border:1px solid var(--rule);border-top:3px solid var(--room-letters);
+  border-radius:8px;background:var(--panel);padding:15px 17px}
+.excard.wait,.excard.bad{color:var(--ink-3);font-size:15px}
+.excard.bad{border-top-color:var(--seal);color:var(--seal)}
+.ex-lead{font-size:17px;line-height:1.6;color:var(--ink);font-weight:500}
+/* 數字磚不吃滿寬：四塊拉到 1600px 寬的話，四個數字彼此離得比它們跟自己的
+   標籤還遠，一眼掃不成一組。 */
+.ex-tiles{display:flex;gap:10px;margin:13px 0;flex-wrap:wrap}
+.ex-tiles div{flex:0 1 118px;background:var(--sunk);border-radius:6px;
+  padding:9px 11px;display:flex;flex-direction:column;gap:1px}
+.ex-tiles b{font-family:var(--mono);font-size:24px;line-height:1.1;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.ex-tiles span{font-size:15px;color:var(--ink-3)}
+.ex-tiles .warn b{color:var(--seal)}
+.exmap{display:block;max-width:100%;height:auto;margin:2px 0 13px}
+.ex-rows{display:flex;flex-direction:column;gap:3px}
+.exrow{display:flex;align-items:center;gap:9px;width:100%;text-align:left;
+  padding:7px 9px;border:0;border-radius:5px;background:var(--sunk);cursor:pointer;
+  font-size:15px}
+.exrow:hover{outline:1px solid var(--room-letters)}
+.exrow .r{font-family:var(--mono);font-size:15px;color:var(--ink-3);flex:none}
+.exrow .n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.exrow .t{font-size:15px;color:var(--ink-3);flex:none}
+.exdot{width:9px;height:9px;border-radius:50%;flex:none}
+.exdot.bad{background:var(--seal)}
+.exdot.warn{background:var(--warn)}
+.ex-foot{display:flex;align-items:center;gap:12px;margin-top:12px;
+  font-size:15px;color:var(--ink-4)}
+.excopy{margin-left:auto;border:1px solid var(--rule);border-radius:5px;
+  padding:4px 12px;font-size:15px;color:var(--ink-2);background:var(--paper);
+  cursor:pointer}
+
+.dkmemo{flex:1;min-height:0;display:flex;flex-direction:column}

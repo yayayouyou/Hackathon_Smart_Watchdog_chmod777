@@ -171,6 +171,73 @@ def _echoes(generated: str, sources) -> str:
     return ""
 
 
+def verify_brief(
+    draft: str,
+    *,
+    title: str,
+    generated: str = "",
+    sources=(),
+    known_titles: set[str] | None = None,
+) -> VerificationResult:
+    """Gate an internal 說明稿 — the thing a 承辦人 reads aloud when a 局長、處長
+    or 議員 asks "why this 園".
+
+    Third document, third audience, and the failure modes are a mix of the other
+    two rather than a new set:
+
+    * **Named institution is allowed here** (unlike ``verify_reply``): the answer
+      is about one 園 and the person asking already said its name. What is not
+      allowed is naming a *different* one — an answer that drags a second 園 into
+      a councillor's question harms a party who was never asked about.
+    * **The generated prose must not echo the外部 posts** (like ``verify_reply``):
+      an unverified allegation repeated inside 本局's own briefing reads as the
+      bureau confirming it, and it is the same prompt-injection stop.
+    * **Both sentences must survive** (like both): ``REQUIRED_DISCLAIMER`` because
+      an audit-priority ranking is not a finding of illegality, and
+      ``REQUIRED_UNVERIFIED`` whenever外界 voices are cited at all.
+
+    Figures follow the letter rule: four digits or more must come from
+    ``sources`` — our own facts and the mentions' dates and links. An invented
+    件數 in a briefing is worse than in a letter, because it gets said out loud
+    in a chamber before anybody can check it.
+    """
+    problems: list[str] = []
+    sources = list(sources)
+
+    problems.extend(f"使用違法認定字眼「{word}」" for word in verdict_words(draft))
+
+    if REQUIRED_DISCLAIMER not in draft:
+        problems.append(f"缺少「{REQUIRED_DISCLAIMER}」聲明")
+    if sources and REQUIRED_UNVERIFIED not in draft:
+        problems.append(f"引用了外界反映卻缺少「{REQUIRED_UNVERIFIED}」聲明")
+
+    allowed = _allowed_from(sources)
+    for m in _NUM.finditer(draft):
+        digits = m.group(0).replace(",", "")
+        if len(digits) < SIGNIFICANT_DIGITS:
+            continue
+        value = int(digits)
+        # 求助專線與民國年同 `verify_reply`：固定的公開號碼不是本案的事實。
+        # 少了這條，承辦人清單裡那句「1999」會讓樣板自己退掉自己。
+        if value in allowed or value in HOTLINES or 100 <= value <= 130:
+            continue
+        problems.append(f"出現無來源的數字 {m.group(0)}")
+
+    for name in set(_INSTITUTION.findall(draft)):
+        if title and (name in title or title in name):
+            continue
+        known = known_titles and any(name in t or t in name for t in known_titles)
+        problems.append(
+            f"提及其他機構「{name}」" if known else f"提及非本案機構「{name}」")
+
+    if generated:
+        echo = _echoes(generated, sources)
+        if echo:
+            problems.append(f"生成段落照抄了外界內容「{echo}」")
+
+    return VerificationResult(ok=not problems, problems=problems)
+
+
 def verify_reply(
     draft: str,
     *,

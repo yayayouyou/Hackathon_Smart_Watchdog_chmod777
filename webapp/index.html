@@ -388,18 +388,60 @@
         </div>
       </div>
 
+      <!-- 05 答詢擬稿：兩種收件人，兩個分頁。
+           待答擬稿→民眾（草稿，走用詞閘門、絕不自動送出）
+           首長答詢→局長／處長／議員（一句結論＋三個數字＋一張圖）
+           建議書→本批公文清單（原有功能，不動） -->
       <div class="pane" id="pane-memos" hidden>
-        <div class="agentbar">
-          <span class="who" id="memocount">—</span>
+        <div class="smbar">
+          <div class="drseg" id="dk-view">
+            <button type="button" data-v="reply" aria-pressed="true">待答擬稿 <i id="dk-n">—</i></button>
+            <button type="button" data-v="exec">首長答詢</button>
+            <button type="button" data-v="memo">建議書</button>
+          </div>
+          <span class="rh-src" id="dk-src">草稿一律未送出，也沒有送出的程式路徑</span>
         </div>
-        <!-- 從輿情室按「擬定回覆」送過來的草稿落在這裡。預設收起：文書室
-             平常是看本批建議書的地方，沒有草稿時不該多一塊空白。 -->
-        <div class="memodraft" id="memodraft" hidden></div>
-        <form class="chatbar" id="memoform">
-          <input id="memoq" placeholder="搜尋園名或行政區，例如：三重" autocomplete="off">
-          <button type="submit">搜尋</button>
-        </form>
-        <div class="list" id="memolist"></div>
+
+        <!-- A 待答擬稿 -->
+        <div class="dkwrap" id="dk-reply">
+          <div class="dklist" id="dklist"><div class="dkempty">載入中…</div></div>
+          <div class="dkwork" id="dkwork">
+            <div class="dkempty">左側選一則，這裡會顯示手上有什麼、以及可不可以擬稿。</div>
+          </div>
+        </div>
+
+        <!-- B 首長答詢 -->
+        <div class="dkexec" id="dk-exec" hidden>
+          <div class="exlog" id="exlog">
+            <div class="exhint">
+              <b>要交代什麼？</b>
+              <div class="egs">
+                <button type="button" class="eg">這個月為什麼先查這幾家？</button>
+                <button type="button" class="eg">三重區有哪些幼兒園財報法遵沒通過？</button>
+                <button type="button" class="eg">哪些園沒有公開財報但排在前 20 名？</button>
+                <button type="button" class="eg">板橋區有裁罰紀錄的私立幼兒園有幾間？</button>
+              </div>
+            </div>
+          </div>
+          <form class="chatbar" id="exform">
+            <input id="exq" autocomplete="off"
+                   placeholder="用一句話問，例如：為什麼這個月排三重？">
+            <button type="submit">答詢</button>
+          </form>
+        </div>
+
+        <!-- C 建議書（原本的清單，id 全部保留給 memos.js） -->
+        <div class="dkmemo" id="dk-memo" hidden>
+          <div class="agentbar">
+            <span class="who" id="memocount">—</span>
+          </div>
+          <div class="memodraft" id="memodraft" hidden></div>
+          <form class="chatbar" id="memoform">
+            <input id="memoq" placeholder="搜尋園名或行政區，例如：三重" autocomplete="off">
+            <button type="submit">搜尋</button>
+          </form>
+          <div class="list" id="memolist"></div>
+        </div>
       </div>
 
       <div class="dossier" id="dossier" hidden></div>
@@ -539,6 +581,7 @@
 <script src="/static/dataroom.js"></script>
 <script src="/static/signalmap.js"></script>
 <script src="/static/memos.js"></script>
+<script src="/static/desk.js"></script>
 <script src="/static/lobby.js"></script>
 </body>
 </html>

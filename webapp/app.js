@@ -1369,7 +1369,10 @@ function showPane(name) {
   if (name === "data" && window.SWData) window.SWData.open();
   if (name === "scan" && window.SWSocial) window.SWSocial.open();
   if (name === "scan" && window.SWScan) window.SWScan.open();
-  if (name === "memos" && window.SWMemos) window.SWMemos.open();
+  if (name === "memos") {
+    if (window.SWDesk) window.SWDesk.open();
+    if (window.SWMemos) window.SWMemos.open();
+  }
   if (name === "timeline") {
     // 綁在 showPane 而不是分頁列的 click：#tabs 是 hidden，從中庭進來的人
     // 不會去點它，綁在那裡的結果就是進來一片空白（memos.js 踩過）。
