@@ -119,6 +119,151 @@ def _hull(points: list[tuple[float, float]]) -> list[tuple[float, float]]:
     return half(p)[:-1] + half(list(reversed(p)))[:-1]
 
 
+# ── 行政區派工優先序 ──────────────────────────────────────────────────
+#
+# ⚠️ **不做型態校正的區級排名，實質上是在排「哪一區私立園比較多」。**
+# 實測 corr(私立占比, 區平均風險分數) = 0.93、corr(私立占比, 原始進榜率) = 0.59；
+# 型態別進榜率差 16 倍（公立 0.68% ／ 非營利 5.77% ／ 私立 10.96%）。
+# 全市 7 個最小的區（坪林、烏來、平溪、石碇、雙溪、石門、貢寮）是 100% 公立，
+# 它們墊底不是因為安全，是因為組成不同。
+# 這是 CLAUDE.md「任何在公立／非營利／私立間有結構性差異的特徵，分層前都會
+# 看起來很強」在區級的重演——繼 `monthly`（p 0.00066→0.050）與 `max_jump`
+# （rbc +0.399→+0.097）之後的第三次。
+#
+# 所以這裡算的是**間接標準化的建議查核密度比（SIR）**：以全市的型態別進榜率
+# 當標準人口，算出「這一區的型態組成，在全市平均水準下該有幾家進榜」，再跟
+# 實際家數比。
+#
+# 兩道機制缺一不可，壓力測試證明過：
+#   * 只用信賴下界擋不住小區暴衝——坪林（2 園、全公立、exp=0.0136）只要多
+#     1 家進榜，點估 73.5×，取 Byar 下界仍有 12.6。所以要有曝險閘門。
+#   * 只用曝險閘門擋不住「大但不確定」——八里（exp=1.13）若有 3 家進榜，
+#     點估 2.65× 會排到第 2，但下界只有 0.68。所以要用下界排序。
+#
+# 合起來：大區不會因為家數多而自動奪冠（板橋 13 家全市最多，SIR 0.87 排第 10），
+# 小區不會因為 1 家而衝第一（exp<1 直接不給名次）。
+
+#: 曝險閘門。`exp < 1` 的意思是「在全市平均水準下，這一區連一家都不該出現」，
+#: 此時看到 0 家或 1 家都無法區分是真的沒問題還是我們沒看到。
+#: ⚠️ 這是**人選的門檻**，沒有經過外部驗證，而且是唯一一個會把整個區移出榜單
+#: 的參數。1.0 的好處是它是可解釋的自然刻度，不是調參結果。
+#: 敏感度：門檻放寬到 0.5 會多放進瑞芳（exp 0.66）與三芝（0.68），兩者 obs 都
+#: 是 0，名次不變。
+MIN_EXPECTED = 1.0
+
+#: 帶別的排序權重。**資料不足永遠排在最後，但不隱藏**——全市 41% 的行政區
+#: 落在這一帶，把它們收進「顯示更多」等於用介面把不確定性藏起來。
+BAND_ORDER = {"高於全市": 0, "與全市相當": 1, "低於全市": 2, "資料不足": 3}
+
+
+def _byar(obs: int, exp: float) -> tuple[float, float]:
+    """Poisson 計數的 Byar 95% 信賴區間（封閉解，不必模擬）。
+
+    用 Byar 而不是常態近似，是因為多數區的 obs 是個位數——鶯歌 6 家、五股 5 家。
+    常態近似在 obs<10 時下界會掉到負的。
+    """
+    if exp <= 0:
+        return (0.0, 0.0)
+    lo = 0.0 if obs == 0 else (
+        obs * (1 - 1 / (9 * obs) - 1 / (3 * math.sqrt(obs))) ** 3 / exp)
+    o1 = obs + 1
+    hi = o1 * (1 - 1 / (9 * o1) + 1 / (3 * math.sqrt(o1))) ** 3 / exp
+    return (max(0.0, lo), hi)
+
+
+def district_board(points: list[dict], *, k: int = 100,
+                   heat: dict | None = None) -> dict[str, Any]:
+    """各行政區的建議查核密度，已扣除公立／非營利／私立的組成差異。
+
+    ``k`` 是本期派工容量（政策數字，不是統計門檻）。前端做成滑桿，因為排序對
+    它敏感：Spearman 相對 k=100，k=50 是 0.972、k=150 掉到 0.721、k=200 是
+    0.589。前三名在 k=50~300 都穩定，第 4–15 名會洗牌。把敏感度攤開來看，
+    比藏起來誠實。
+
+    ⚠️ **這是關於「我們這份派工名單」的陳述，不是關於一個地方的陳述。**
+    29 個行政區是有居民、有園所、有名譽的真實地點，資料完全不支持「某區的
+    孩子比較不安全」這種地理性斷言。所有面向使用者的措辭都要守住這條線。
+
+    ⚠️ 前 100 名有 94% 帶既有裁罰紀錄（401 名之後只有 14.8%），所以這張榜
+    實質上是「型態校正後的既有裁罰集中度」，是**回顧不是預測**。
+    """
+    heat = heat or {}
+    big = 10 ** 9
+    flagged = [p for p in points if (p.get("r") or big) <= k]
+
+    # 標準人口＝全市，依機構類別分層。
+    n_by_t: dict[int, int] = {}
+    f_by_t: dict[int, int] = {}
+    for p in points:
+        n_by_t[p["t"]] = n_by_t.get(p["t"], 0) + 1
+    for p in flagged:
+        f_by_t[p["t"]] = f_by_t.get(p["t"], 0) + 1
+    base = {t: (f_by_t.get(t, 0) / n) if n else 0.0 for t, n in n_by_t.items()}
+
+    by: dict[str, list[dict]] = {}
+    for p in points:
+        by.setdefault(p["d"], []).append(p)
+
+    rows = []
+    for name, rs in by.items():
+        obs = sum(1 for p in rs if (p.get("r") or big) <= k)
+        exp = sum(base.get(p["t"], 0.0) for p in rs)
+        lo, hi = _byar(obs, exp)
+        if exp < MIN_EXPECTED:
+            band = "資料不足"
+            sir = lo = hi = None
+        else:
+            sir = obs / exp
+            band = ("高於全市" if lo > 1 else
+                    "低於全市" if hi < 1 else "與全市相當")
+        rows.append({
+            "d": name, "n": len(rs), "obs": obs, "exp": round(exp, 2),
+            "sir": None if sir is None else round(sir, 2),
+            "lo": None if lo is None else round(lo, 2),
+            "hi": None if hi is None else round(hi, 2),
+            "band": band,
+            "pub": sum(1 for p in rs if p["t"] == 0),
+            "npo": sum(1 for p in rs if p["t"] == 1),
+            "prv": sum(1 for p in rs if p["t"] == 2),
+            "pen": sum(1 for p in rs if (p.get("np") or 0) > 0),
+            "fin": sum(1 for p in rs if p.get("fin")),
+            # 輿情只當旗標，不進排序：全市只有 3 園 tier>0，樣本量撐不起區級
+            # 排序，而且即時層本來就不回答「誰未來會違規」。
+            "hot": sum(1 for p in rs if (heat.get(p["i"]) or {}).get("tier")),
+            # exp 的分項展開，讓人當場心算驗證得了名次是怎麼來的。
+            "exp_parts": [
+                {"t": t,
+                 "n": sum(1 for p in rs if p["t"] == t),
+                 "base": round(base.get(t, 0.0), 4),
+                 "exp": round(sum(base.get(t, 0.0) for p in rs if p["t"] == t), 2)}
+                for t in sorted(n_by_t)],
+        })
+
+    rows.sort(key=lambda r: (BAND_ORDER[r["band"]], -(r["lo"] or 0), -r["obs"]))
+    rank = 0
+    for r in rows:
+        if r["band"] == "資料不足":
+            r["rank"] = None
+        else:
+            rank += 1
+            r["rank"] = rank
+
+    return {
+        "k": k,
+        "population": len(points),
+        "flagged": len(flagged),
+        "base": {str(t): round(v, 4) for t, v in sorted(base.items())},
+        "min_expected": MIN_EXPECTED,
+        "ranked": rank,
+        "insufficient": sum(1 for r in rows if r["band"] == "資料不足"),
+        "rows": rows,
+        # 這句要印在表格下方，不是埋在 docs。
+        "caveat": ("名次代表建議先看的順序，不是違法認定。密度已扣除公立／"
+                   "非營利／私立的組成差異；前 100 名有 94% 帶既有裁罰紀錄，"
+                   "所以這張榜是既有紀錄的集中度，不是對未來的預測。"),
+    }
+
+
 def district_summary(points: list[dict]) -> list[dict]:
     """Per-行政區 counts used for the choropleth and the district filter.
 

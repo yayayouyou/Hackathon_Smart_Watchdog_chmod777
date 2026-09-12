@@ -368,22 +368,45 @@
         </div>
       </div>
 
+      <!-- 04 分析驗證：兩個分頁。
+           排行榜 → 這一期該先往哪幾個行政區走（型態校正後的建議查核密度）
+           訊號圖 → 我們手上有哪些資料、哪些真的進了分數
+
+           ⚠️ 原本第二頁是「時間軸回測」，已移除：`#tlbar` 住在 `.mapwrap` 裡，
+           而這一室是 no-map（style.css 的 .roombody.no-map .mapwrap{display:none}），
+           所以那一頁底下根本沒有地圖，只剩一句「拖動地圖下方的時間軸」的佔位字。
+           回測功能一點都沒少，它完整活在 01 全市監看室的抽屜裡。 -->
       <div class="pane" id="pane-timeline" hidden>
         <div class="smbar">
           <div class="drseg" id="sm-view">
-            <button type="button" data-v="map" aria-pressed="true">訊號圖</button>
-            <button type="button" data-v="time">時間軸回測</button>
+            <button type="button" data-v="board" aria-pressed="true">行政區排行 <i id="db-n">—</i></button>
+            <button type="button" data-v="map">訊號圖</button>
           </div>
-          <span class="rh-src" id="sm-src">signal_map · 時序切分</span>
+          <span class="rh-src" id="sm-src">audit_priority · 型態校正</span>
         </div>
 
-        <div class="smwrap" id="sm-pane">
+        <!-- A 行政區排行榜 -->
+        <div class="dbwrap" id="db-pane">
+          <div class="dbbar">
+            <label class="dbk" for="db-k">本期派工容量
+              <input type="range" id="db-k" min="20" max="300" step="10" value="100">
+              <b id="db-kv">100</b> 件
+            </label>
+            <span class="dbnote" id="db-base">—</span>
+          </div>
+          <div class="dblist" id="db-list"><div class="soc-load">計算中…</div></div>
+          <p class="note dbcaveat" id="db-caveat"></p>
+        </div>
+
+        <!-- B 訊號圖。模型的三個數字排在畫布上方的橫條，不再占用右側 404px；
+             詳情改成覆蓋式抽屜，沒點節點時整室的寬度都是圖的。 -->
+        <div class="smstrip" id="sm-strip" hidden></div>
+        <div class="smwrap" id="sm-pane" hidden>
           <div class="smcanvas" id="sm-canvas"></div>
-          <div class="smdetail" id="sm-detail"></div>
-        </div>
-
-        <div class="tllist" id="tllist" hidden>
-          <div class="tlnote">拖動地圖下方的時間軸，看那一年的排序與事後結果。</div>
+          <div class="smdetail" id="sm-detail" hidden>
+            <button type="button" id="sm-close" class="smclose"
+                    aria-label="關閉說明">關閉</button>
+          </div>
         </div>
       </div>
 
@@ -578,6 +601,7 @@
 <script src="/static/auth.js"></script>
 <script src="/static/agent.js"></script>
 <script src="/static/dataroom.js"></script>
+<script src="/static/districts.js"></script>
 <script src="/static/signalmap.js"></script>
 <script src="/static/memos.js"></script>
 <script src="/static/desk.js"></script>

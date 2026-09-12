@@ -1350,3 +1350,103 @@ def test_the_dataroom_halves_share_the_same_inset() -> None:
     assert left == right, (
         f"原始資料層左右兩半的水平內距不一致：.drcol={left}、.drside={right}"
     )
+
+
+# ── 04 分析驗證室：行政區排行 + 心智圖 ────────────────────────────────
+
+def _js_without_comments(name: str) -> str:
+    """去掉註解之後的程式碼。（不能叫 `_code`——這個檔已經有一個同名 helper，
+    傳統 def 是靜默覆蓋，症狀是別的測試拿到完全錯的引數。）
+
+    ⚠️ 這一節的測試釘的是「不可以再出現某個寫法」，而這個 repo 的註解習慣正是
+    **把踩過的坑原樣寫下來**——`signalmap.js` 的註解裡就寫著
+    `Math.max(780, host.clientWidth - 6)` 是元凶。直接掃原始碼會掃到那段說明，
+    於是測試在抱怨一段正在警告不要這樣做的文字。
+    """
+    src = (WEBAPP / name).read_text(encoding="utf-8")
+    src = re.sub(r"/\*.*?\*/", " ", src, flags=re.S)
+    return re.sub(r"(?m)^\s*//.*$", "", src)
+
+
+def test_the_analysis_room_has_a_board_tab_and_a_signal_tab() -> None:
+    """兩個分頁，排行榜在前。
+
+    ⚠️ 原本第二頁是「時間軸回測」，已移除——`#tlbar` 住在 `.mapwrap` 裡，
+    而這一室是 no-map（`.roombody.no-map .mapwrap{display:none}`），所以那一頁
+    底下根本沒有地圖，只剩一句「拖動地圖下方的時間軸」的佔位字。回測功能本身
+    一點都沒少，它完整活在 01 全市監看室的抽屜裡。
+    """
+    html = (WEBAPP / "index.html").read_text(encoding="utf-8")
+    assert 'data-v="board"' in html and 'data-v="map"' in html
+    assert 'data-v="time"' not in html, "時間軸分頁鈕還在"
+    assert 'id="tllist"' not in html, "#tllist 還在 DOM 裡"
+    assert 'id="db-pane"' in html and 'id="db-list"' in html
+    # 排行榜要排在訊號圖前面——這一室先回答的是「這期先去哪」。
+    assert html.index('data-v="board"') < html.index('data-v="map"')
+
+
+def test_nothing_still_reaches_for_the_removed_timeline_list() -> None:
+    """`#tllist` 從 DOM 拿掉之後，不可以再有人 getElementById 它。
+
+    `timeline.js::exit()` 原本會寫 `T.$("tllist").innerHTML = ""`，而 exit 是
+    「收起抽屜＝離開回測模式」的唯一出口。元素消失後那行會 TypeError，
+    下一行的 `T.drawMarkers()` 就不會執行——地圖停在回測著色、看不出哪裡壞了。
+    """
+    for name in ("timeline.js", "signalmap.js", "app.js", "districts.js"):
+        assert "tllist" not in _js_without_comments(name), f"{name} 還在引用 #tllist"
+
+
+def test_the_signal_map_has_no_hard_width_floor() -> None:
+    """SVG 不可以有寫死的最小寬度下限以外的硬地板。
+
+    `Math.max(780, clientWidth - 6)` 是「心智圖根本看不清楚」的元凶：畫布在
+    1600 的視窗下只有 590px，SVG 硬撐 780 就永遠溢出 190px，右邊的 `1.57×`
+    被裁成「1.5」、`無法量測` 剩「無法量」。
+    現在只保留一個由實測字串寬度推出來的 MIN_W，而且是內容需求不是樣式偏好。
+    """
+    src = _js_without_comments("signalmap.js")
+    assert "Math.max(780" not in src, "780px 的硬地板又回來了"
+    assert re.search(r"const MIN_W = \d+", src), "MIN_W 不見了"
+    # viewBox 等比縮放會讓 15px 變 6px，等於繞過全站字級底線。
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    m = re.search(r"\.smsvg\{([^}]*)\}", css)
+    assert m and "width:100%" not in m.group(1), (
+        ".smsvg 加了 width:100%，SVG 會依 viewBox 等比縮放，字會跟著變小"
+    )
+
+
+def test_the_signal_map_redraws_when_its_container_changes() -> None:
+    """畫完就不再畫的圖，在可調欄寬的版面裡一定會是錯的。
+
+    訊號圖變成第二分頁之後，`open()` 被呼叫時容器還是 hidden，clientWidth 是
+    0——不重畫的話它永遠是最窄版。助理欄收合與拖 #railgrip 都不發 window
+    resize 事件，只有 ResizeObserver 抓得到。
+    """
+    src = (WEBAPP / "signalmap.js").read_text(encoding="utf-8")
+    assert "ResizeObserver" in src
+    assert "sm-pane" in src, "要觀察 #sm-pane 而不是捲動容器 #sm-canvas"
+    assert "document.fonts" in src, "字體載入前量到的是備援字體寬度"
+
+
+def test_the_board_never_hides_the_districts_it_cannot_rank() -> None:
+    """資料不足的區要列在表上，不可以折疊或預設隱藏。
+
+    那是全市 41% 的行政區。收進「顯示更多」等於用介面把不確定性藏起來，
+    而這個閘門存在的唯一理由就是「我們選擇說不知道」要被看見。
+    """
+    src = (WEBAPP / "districts.js").read_text(encoding="utf-8")
+    assert "資料不足，不排名" in src
+    code = _js_without_comments("districts.js")
+    assert "<details" not in code and "顯示更多" not in code
+    # 案件本身照常可點——不給名次不等於把案件藏起來。
+    assert "一件都沒有被藏起來" in src
+
+
+def test_the_board_does_not_print_the_nan_string() -> None:
+    """`why` 有 1069/1213 筆的值是字串 "nan"，直接印會出現在畫面上。
+
+    成因在 payload.py 的 `str(r.review_reason or "")`：pandas 讀回空值是
+    float('nan')，而 nan 是 truthy，所以 `nan or ""` 回的是 nan 本身。
+    """
+    src = (WEBAPP / "districts.js").read_text(encoding="utf-8")
+    assert '"nan"' in src, "沒有擋 nan 字串"

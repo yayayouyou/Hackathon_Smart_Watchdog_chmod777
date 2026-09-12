@@ -1376,8 +1376,14 @@ function showPane(name) {
   if (name === "timeline") {
     // 綁在 showPane 而不是分頁列的 click：#tabs 是 hidden，從中庭進來的人
     // 不會去點它，綁在那裡的結果就是進來一片空白（memos.js 踩過）。
+    // open() 會先開排行榜、再視需要載訊號圖。
+    // ⚠️ 這裡原本還有一句 timelineDock(true)：那是為了舊的「時間軸回測」分頁
+    // 開抽屜用的，而 #tlbar 住在 .mapwrap 裡、這一室是 no-map，抽屜根本看不見。
+    // 分頁移除後這句只剩副作用——它會在使用者離開 01 室時把回測模式關掉。
+    // 兩個分頁的模組都在這裡叫醒，不要讓其中一個靠另一個轉呼叫——
+    // 轉呼叫在改版時很容易斷，而斷掉的症狀是「進來一片空白、沒有錯誤訊息」。
+    if (window.SWDistricts) window.SWDistricts.open();
     if (window.SWSignalMap) window.SWSignalMap.open();
-    timelineDock(true);
   }
 }
 

@@ -73,21 +73,43 @@
 
   const clip = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
 
+  /* 內容真正需要的最小寬度，由 15px 下最長的字串量出來：
+       來源名  228px（輿情：新聞／PTT／Threads @標註）
+       訊號名  241px（交叉比對：家長月均實繳 ≤ 登記月費）
+       訊號值   60px（無法量測）
+       中心     156px（2 × CORE_R）
+     SRC_OUT(34+228+12) + 間隙 44 + PILL(12+241+16+60+12) + 間隙 72 + 156 + 14
+     窄於這個寬度時才會出現橫向捲動——而那是資訊被截斷的替代方案裡最誠實的
+     一個：捲得到，總比把字裁掉好。 */
+  const MIN_W = 901;
+
   function draw() {
     const host = $("sm-canvas");
     if (!host || !state.data) return;
     host.textContent = "";
 
-    const W = Math.max(780, Math.floor(host.clientWidth) - 6);
-    const rows = Math.max(state.data.signals.length, state.data.sources.length);
-    const H = Math.max(560, Math.floor(host.clientHeight) - 6, rows * 46 + 40);
+    /* ⚠️ 這裡曾經是 `Math.max(780, host.clientWidth - 6)`，而那個 780 的下限
+       就是「心智圖根本看不清楚」的元凶：這一室是 no-map，`.side` 寬
+       ＝ innerWidth − 606，再被 `.smwrap` 的 404px 詳情欄切一刀，1600 的視窗
+       下畫布只剩 590px。SVG 硬撐 780 就永遠比容器寬 190px，`overflow:auto`
+       把它變成橫向捲動——右邊的 `1.57×` 剩「1.5」、`無法量測` 剩「無法量」。
 
+       現在詳情欄改成覆蓋式抽屜（見 style.css 的 .smdetail），畫布吃滿整室，
+       而且**寧可縮排版也不縮字**：下面的 W 只夾到內容真正需要的最小寬，
+       絕不用 viewBox 等比縮放把 15px 變成 6px。 */
+    const rows = Math.max(state.data.signals.length, state.data.sources.length);
+    const avail = Math.floor(host.clientWidth) - 6;
+    const W = Math.max(MIN_W, avail);
+    const H = Math.max(rows * 44 + 36, Math.floor(host.clientHeight) - 6);
+
+    // 三欄的寬度依實際可用寬按比例放，但每一欄都有內容決定的下限。
+    const grow = Math.max(0, W - MIN_W);
     const SRC_X = 16;                                  // 來源圓點
     const SRC_TEXT = SRC_X + 16;
-    const SRC_OUT = Math.min(226, Math.round(W * 0.27));   // 連線從這裡出發
-    const PILL_W = Math.min(306, Math.round(W * 0.37));
-    const PILL_X = SRC_OUT + 34;
-    const CORE_R = Math.min(86, Math.round(H / 7));
+    const SRC_OUT = 274 + Math.round(grow * 0.30);      // 連線從這裡出發
+    const PILL_W = 341 + Math.round(grow * 0.42);
+    const PILL_X = SRC_OUT + 44;
+    const CORE_R = Math.max(78, Math.min(96, Math.round(H / 7)));
     const CORE_X = W - CORE_R - 14;
     const PILL_H = 38;
 
@@ -168,10 +190,6 @@
       b.textContent = st.lift ? num(st.lift) : v.zh;
     });
 
-    host.addEventListener("click", onPick);
-    host.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") onPick(e);
-    });
   }
 
   function onPick(e) {
@@ -186,11 +204,25 @@
 
   /* ── 右側說明 ──────────────────────────────────────────────────── */
 
+  /* 收起詳情。
+     ⚠️ 只用 transform 推出畫面不夠：`.sm-node` 帶 tabindex="0"，這一室是
+     鍵盤走得到的，收起的面板若不設 hidden，Tab 會走進一塊看不見的面板。 */
+  function closeDetail() {
+    state.sel = null;
+    const box = $("sm-detail");
+    if (box) box.hidden = true;
+    document.querySelectorAll(".sm-node").forEach((x) => x.classList.remove("on"));
+    redraw();   // 抽屜收掉之後畫布變寬，要重排
+  }
+
   function detail() {
     const box = $("sm-detail");
     if (!box || !state.data) return;
     const d = state.data;
-    if (!state.sel) { box.innerHTML = summary(); return; }
+    // 摘要原本畫在這塊常駐欄裡，現在那三個數字搬到上方的 .smbar，
+    // 沒有選取節點時整塊收起來，把 404px 還給畫布。
+    if (!state.sel) { closeDetail(); return; }
+    box.hidden = false;
     if (state.sel.kind === "source") {
       const s = d.sources.find((x) => x.id === state.sel.id);
       if (!s) return;
@@ -238,6 +270,9 @@
       + '<path d="M3 10.4 10 14l7-3.6"/></svg>',
   };
 
+  /* 模型的三個數字與三條圖例改畫在畫布上方的橫條。
+     它們原本住在右側那塊 404px 的常駐欄裡——那塊欄位正是把畫布擠到 590px 的
+     原因。搬上來之後，沒有選取任何節點時整個室的寬度都是圖的。 */
   function summary() {
     const d = state.data;
     const m = d.model;
@@ -262,12 +297,34 @@
       + '<p class="sm-d-note">點任一個節點看它的數字。</p>';
   }
 
+  /* 橫條版：同樣三個數字與三條圖例，排成一列。 */
+  function strip() {
+    const d = state.data;
+    if (!d) return;
+    const box = $("sm-strip");
+    if (!box) return;
+    const m = d.model;
+    const n = (v) => d.signals.filter((s) => s.verdict === v).length;
+    const off = n("context") + n("disproven") + n("unmeasured");
+    box.innerHTML =
+      '<span class="sm-sv"><b>' + m.features.length + '</b> 個特徵</span>'
+      + '<span class="sm-sv"><b>' + m.auc + '</b> AUC</span>'
+      + '<span class="sm-sv"><b>' + m.p_at_100 + '×</b> 前 100 名</span>'
+      + '<span class="sm-sl"><i class="sm-lg sm-lg-solid"></i>已計分 <b>'
+      + n("scored") + '</b></span>'
+      + '<span class="sm-sl"><i class="sm-lg sm-lg-dash"></i>候選 <b>'
+      + n("candidate") + '</b></span>'
+      + '<span class="sm-sl"><i class="sm-lg sm-lg-off"></i>未連線 <b>'
+      + off + '</b></span>';
+  }
+
   /* ── 進場 ────────────────────────────────────────────────────────
      綁在 showPane 而不是分頁列的 click：#tabs 是 hidden，從中庭進來的人
      不會去點它，綁在那裡的結果就是進來一片空白（memos.js 踩過）。 */
 
   async function open() {
-    if (state.loaded) return;
+    // 排行榜由 app.js::showPane 直接叫醒，這裡不轉呼叫。
+    if (state.loaded) { redraw(); return; }
     const box = $("sm-canvas");
     if (box) box.innerHTML = '<div class="soc-load">載入中…</div>';
     try {
@@ -286,12 +343,56 @@
       return;
     }
     state.loaded = true;
-    draw();
+    strip();
+    redraw();
     detail();
   }
 
-  /* 訊號圖／時間軸回測切換。時間軸那一側要同時開抽屜，不然拖桿在收起來的
-     狀態下拖不到（app.js::timelineDock 的既有行為）。 */
+  /* 重畫的唯一入口。
+     ⚠️ 容器 hidden 時 clientWidth 是 0（style.css 的 [hidden]{display:none}），
+     那時畫出來的是 MIN_W 的最窄版，而且不會自己修正——訊號圖變成第二分頁之後
+     這是預設狀況。所以切到這一頁、拖欄寬、收合助理欄都要重來一次。 */
+  function redraw() {
+    if (!state.loaded) return;
+    const pane = $("sm-pane");
+    if (!pane || pane.hidden) return;
+    draw();
+  }
+
+  /* ⚠️ 字體走 Google Fonts CDN。第一次 draw() 若早於 IBM Plex 載完，量到的是
+     備援字體的寬度，整張圖會偏。 */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(redraw);
+  }
+
+  /* ⚠️ 觀察 #sm-pane 而不是 #sm-canvas：捲動容器若在降級態開了 overflow-x，
+     觀察它會形成「捲軸出現→clientWidth 變小→重畫→塞得下→捲軸消失→重畫」
+     的無窮迴圈。助理欄收合與拖 #railgrip 都不發 window resize 事件，
+     只有 ResizeObserver 抓得到。 */
+  if (window.ResizeObserver) {
+    let raf = null;
+    new ResizeObserver(() => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(redraw);
+    }).observe(document.getElementById("sm-pane") || document.body);
+  }
+
+  // 監聽器只綁一次。原本寫在 draw() 裡，加上重畫之後每畫一次多綁一組，
+  // onPick 會跑 N 次、state.sel 被覆寫 N 次。
+  document.addEventListener("DOMContentLoaded", () => {
+    const host = $("sm-canvas");
+    if (!host) return;
+    host.addEventListener("click", onPick);
+    host.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") onPick(e);
+    });
+    const close = $("sm-close");
+    if (close) close.addEventListener("click", closeDetail);
+  });
+
+  /* 行政區排行／訊號圖切換。
+     ⚠️ 原本第二頁是「時間軸回測」，已移除——`#tlbar` 住在 `.mapwrap` 裡，
+     而這一室是 no-map，所以那一頁底下沒有地圖，只剩一句佔位字。 */
   document.addEventListener("click", (e) => {
     const b = e.target.closest("#sm-view button");
     if (!b) return;
@@ -299,17 +400,19 @@
     document.querySelectorAll("#sm-view button").forEach((x) =>
       x.setAttribute("aria-pressed", String(x.dataset.v === on)));
     const pane = $("sm-pane");
-    const tl = $("tllist");
+    const db = $("db-pane");
+    if (db) db.hidden = on !== "board";
+    const strp = $("sm-strip");
+    if (strp) strp.hidden = on !== "map";
     if (pane) pane.hidden = on !== "map";
-    if (tl) tl.hidden = on !== "time";
-    if (on === "time" && window.SW && window.SW.timelineDock) {
-      window.SW.timelineDock(true);
-    }
+    // 解除 hidden 之後才量得到寬度，所以重畫排在後面。
+    if (on === "map") { strip(); redraw(); }
+    if (on === "board" && window.SWDistricts) window.SWDistricts.open();
     const src = $("sm-src");
-    if (src && state.data) {
-      src.textContent = on === "map"
-        ? "signal_map · as_of " + state.data.as_of
-        : "timeline · 逐年重訓";
+    if (src) {
+      src.textContent = on === "board"
+        ? "audit_priority · 型態校正"
+        : "signal_map · as_of " + ((state.data || {}).as_of || "—");
     }
   });
 

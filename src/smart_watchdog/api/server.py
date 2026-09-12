@@ -12,6 +12,7 @@ web app 沒有這些限制，所以這一層一上來，Google 地圖、滾輪�
 端點：
 
     GET  /api/payload            完整 payload（同 dist/data/payload.json）
+    GET  /api/district-board?k=100  各行政區的建議查核密度（型態校正後）
     GET  /api/institutions       地圖用的精簡點位
     GET  /api/institutions/{id}  單園卷宗（含財報發現、員工、即時聲音）
     GET  /api/proposal?n=20      派工提案，與前端同一套分層規則
@@ -209,6 +210,24 @@ def payload() -> dict[str, Any]:
 @app.get("/api/payload")
 def get_payload() -> dict[str, Any]:
     return payload()
+
+
+@app.get("/api/district-board")
+def get_district_board(k: int = 100) -> dict[str, Any]:
+    """各行政區的建議查核密度（型態校正後）。
+
+    即時算而不是烤進 payload 檔，因為 `k` 是畫面上的滑桿——本期要派幾件是
+    政策數字，不是統計門檻，使用者要能當場拉動看排序怎麼變。全市 1,213 園
+    的計算實測 3 ms 以內，沒有快取的必要。
+
+    `k` 夾在 10–1213 之間：0 會讓每一區的 obs 都是 0（整張表沒有資訊），
+    超過總園數則等於全選。
+    """
+    from . import payload as _p
+
+    k = max(10, min(int(k), len(payload().get("points", [])) or 1213))
+    heat = (payload().get("realtime") or {}).get("heat") or {}
+    return _p.district_board(payload().get("points", []), k=k, heat=heat)
 
 
 @app.get("/api/institutions")

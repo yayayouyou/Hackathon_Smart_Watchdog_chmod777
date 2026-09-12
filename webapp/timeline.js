@@ -124,36 +124,11 @@ async function apply() {
   T.drawMarkers();
   T.timelineDock(true);          // 收起來的話，回測模式會沒有任何畫面反應
   T.$("tlbar").classList.add("active");
-  drawRankList();
-}
-
-function drawRankList() {
-  const ranks = tl.cache[point().as_of];
-  const rows = Object.values(ranks)
-    .filter((e) => e.rank <= tl.topN)
-    .sort((a, b) => a.rank - b.rank);
-  const html = rows.map((e) => {
-    const p = T.state.byId[e.i];
-    if (!p) return "";
-    const mark = e.hit === 1 ? `<i class="tlm hit">後來受罰</i>`
-      : e.hit === null ? `<i class="tlm live">待觀察</i>`
-        : `<i class="tlm miss">未受罰</i>`;
-    return `<div class="tlrow" data-i="${e.i}">
-      <span class="tlr">${e.rank}</span>
-      <span class="tln">${T.esc(p.n)}</span>
-      <span class="tlt">${T.TYPE[p.t]}·${T.esc(p.d)}</span>
-      ${mark}</div>`;
-  }).join("");
-  const box = T.$("tllist");
-  box.innerHTML = html || `<div class="tlnote">這一格沒有排序資料</div>`;
-  box.querySelectorAll(".tlrow").forEach((el) =>
-    el.addEventListener("click", () => T.openDossier(el.dataset.i)));
 }
 
 function exit() {
   T.state.timeline = null;
   T.$("tlbar").classList.remove("active");
-  T.$("tllist").innerHTML = "";
   T.drawMarkers();
 }
 
