@@ -106,18 +106,41 @@ input[type=range]{accent-color:var(--seal)}
 .pop .led span{display:flex;justify-content:space-between;gap:10px}
 .pop .src{margin:8px 0 0;font-size:10.5px;color:var(--ink-4);line-height:1.5}
 
-/* 三欄：地圖 / 分頁 / 助理。助理**常駐**而不是分頁——它會操作前兩欄，
-   自己是分頁的話，一動作就把自己藏起來，使用者看不到它在講什麼。 */
-main{display:grid;grid-template-columns:minmax(0,1fr) 390px 360px;min-height:0}
-/* 收起助理時回到兩欄。地圖拿回空間，其餘不變。 */
-main.noagent{grid-template-columns:minmax(0,1fr) 390px;--rightcols:430px}
+/* 三欄：地圖 / 閱讀 / 助理。
+ *
+ * 中間那欄是**閱讀區**——卷宗、建議書全文、法遵發現都在那裡，所以它要比
+ * 地圖寬。先前把它設成固定 390px，結果最需要寬度的那一欄最窄，公文擠成
+ * 一條，而地圖佔著最大的空間卻不是每次都要看。
+ *
+ * 兩欄都用 fr 讓它們一起伸縮，中間略大（1.15）；助理固定寬，因為對話的
+ * 行長超過約 45 字就不好讀，給它更多寬度沒有好處。
+ */
+main{display:grid;min-height:0;
+  grid-template-columns:minmax(300px,1fr) minmax(420px,1.15fr) 350px;
+  --rightcols:800px}
+/* 收起助理：剩下的寬度兩欄分掉。 */
+main.noagent{grid-template-columns:minmax(300px,1fr) minmax(420px,1.15fr);
+  --rightcols:450px}
 main.noagent .agentcol{display:none}
-/* 窄螢幕：助理讓位給地圖與分頁，改用收合鈕臨時叫出來。 */
-@media (max-width:1280px){
-  main{grid-template-columns:minmax(0,1fr) 360px;--rightcols:400px}
+/* 筆電（約 1150–1380）：三欄保留，但各自收緊。助理是這個系統的主要互動
+   方式，能維持三欄就不要把它藏起來——藏起來使用者就看不到它在講什麼。
+   助理最窄到 310px：再窄下去步驟軌道的標籤會折行。 */
+@media (max-width:1380px){
+  main{grid-template-columns:minmax(260px,0.85fr) minmax(380px,1.1fr) 310px;
+    --rightcols:720px}
+  main.noagent{grid-template-columns:minmax(260px,0.85fr) minmax(380px,1.1fr);
+    --rightcols:410px}
+}
+/* 真的太窄（<1150）才退成兩欄，助理改用收合鈕臨時叫出來。 */
+@media (max-width:1150px){
+  main{grid-template-columns:minmax(240px,1fr) minmax(340px,1.15fr);
+    --rightcols:400px}
   .agentcol{display:none}
-  main.showagent{grid-template-columns:minmax(0,1fr) 360px 340px;--rightcols:740px}
+  main.showagent{grid-template-columns:minmax(0,0.7fr) minmax(320px,1fr) 300px;
+    --rightcols:680px}
   main.showagent .agentcol{display:flex}
+}
+}
 }
 @media(max-width:1100px){main{grid-template-columns:minmax(0,1fr) 330px}}
 @media(max-width:860px){main{grid-template-columns:1fr;grid-template-rows:46vh 1fr}}
@@ -661,3 +684,33 @@ footer .src a{color:var(--ink-3)}
 .listnote button{border:1px solid var(--seal);border-radius:11px;padding:2px 9px;
   font-size:11px;color:var(--seal);background:transparent;cursor:pointer}
 .listnote button:hover{background:var(--seal);color:#fff}
+
+
+/* ── 中間欄：閱讀區 ───────────────────────────────────────
+   這一欄變寬之後，原本照 390px 設計的內容要跟著調，否則只是把同樣的東西
+   拉長，行長過寬反而更難讀。 */
+
+/* 卷宗內文限制行長。公文與財報原文一行超過約 45 個中文字就開始要用手指
+   指著讀，所以給它一個上限並置中，兩側留白不是浪費。 */
+.dbody{padding:0 24px 30px}
+.dbody>*{max-width:760px}
+.dhead{padding:15px 24px}
+.dhead h3{font-size:16px}
+
+/* 建議書全文是這一欄最主要的閱讀內容：放大、加行高、限制行長。 */
+.memo{font-size:13px;line-height:1.95;padding:14px 18px;max-height:none}
+
+/* 名單列變寬之後，讓機構名稱有更多空間，理由標籤排在同一行右側。 */
+.item{padding:10px 20px}
+.item .nm{font-size:14px}
+
+/* 法遵發現與同儕比較的說明文字。 */
+.finding .d,.peer-item{font-size:12.5px;line-height:1.7}
+.quote{font-size:12px;line-height:1.75;padding:9px 13px}
+
+/* 證據截圖在寬欄裡可以放大看，不必再擠成縮圖。 */
+.ev img{max-width:640px}
+
+/* ── 助理欄：行長 ─────────────────────────────────────────
+   對話的行長超過約 45 字就不好讀，所以即使欄位變寬也限制內文寬度。 */
+#agentlog .msg.bot p{max-width:46em}

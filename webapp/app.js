@@ -1197,7 +1197,7 @@ document.querySelectorAll(".tabs button").forEach((b) =>
 (function () {
   const main = document.querySelector("main");
   const btn = $("agenttoggle");
-  const narrow = () => window.matchMedia("(max-width:1280px)").matches;
+  const narrow = () => window.matchMedia("(max-width:1150px)").matches;
   const set = (on) => {
     main.classList.toggle("noagent", !on && !narrow());
     main.classList.toggle("showagent", on && narrow());
