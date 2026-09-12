@@ -13,10 +13,15 @@
 ```bash
 python run.py setup            # 建 venv、裝相依（有 uv 就用 uv，快很多）
 cp .env.example .env           # 然後把憑證填進去，見 §2
+python run.py seed-users       # ⚠️ 建帳號。沒有帳號連地圖都看不到
 python run.py bedrock-check    # 確認 AWS 打得通
 python run.py frontend         # 產生前端資料
 python run.py serve            # → http://127.0.0.1:8000
 ```
+
+⚠️ **`seed-users` 不是選配。** 動態版有全螢幕登入牆，沒有帳號時地圖、
+派工提案、時間軸一個都看不到。帳密取自 `.env` 的 `SEED_INSPECTOR_EMAIL`
+與 `SEED_INSPECTOR_PASSWORD`。
 
 `python run.py --list` 會列出全部任務。
 
@@ -35,7 +40,7 @@ python run.py serve            # → http://127.0.0.1:8000
 
 ```bash
 python run.py setup
-python run.py test        # 367 passed, 1 skipped
+python run.py test        # 379 passed（POSIX 上 378 passed + 1 skipped）
 python run.py serve
 ```
 

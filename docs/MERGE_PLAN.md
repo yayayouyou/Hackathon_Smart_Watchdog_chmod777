@@ -210,7 +210,7 @@ RDS／ECR／ECS／Amplify／S3／Lambda／CloudFormation | 建立權限都有；
 7 證據 | `data/raw` 還原（162 份）；隨用隨渲染，文字與原始頁面核對一致 |
 8 部署 | ECS Fargate 跑起來，雲端 agent 走 Bedrock 正常 |
 
-**367 passed, 1 skipped**（唯一的 skip 是 POSIX 沒有逾時可測的 flock）。
+**379 passed**（POSIX 上 378 passed + 1 skipped——唯一的 skip 是 POSIX 沒有逾時可測的 flock；Windows 走另一條實作，不 skip）。
 之後又與 main 合併（版面以 main 為準，助理與建議書加進上方功能列），
 並補了前端靜態健檢。
 

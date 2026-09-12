@@ -46,7 +46,7 @@ log 寫 `no such table: user_session`」那個狀況不會再發生。`seed-user
 | **帳號登入**（agent 回饋要記得是誰） | ✅ | [MERGE_PLAN.md](MERGE_PLAN.md) §1 |
 | 容器化與 ECS 部署（目前縮到 0） | ✅ | [DEPLOY.md](DEPLOY.md) |
 
-驗證狀態：`python run.py test` → **367 passed, 1 skipped**。
+驗證狀態：`python run.py test` → **379 passed**（本機 Windows）。
 那一條 skip 是 POSIX 的 flock 沒有逾時可測，與資料無關。
 `python run.py lint` → 全過。
 
