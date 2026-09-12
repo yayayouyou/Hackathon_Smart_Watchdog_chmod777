@@ -99,6 +99,10 @@ def options() -> dict:
                 "places_reviews": "逐園查詢；成本與範圍成正比，每月前 1,000 次免費",
                 "news_rss": "無金錢成本；成本是被限流的風險",
                 "ptt": "無金錢成本；成本是被限流的風險",
+                # 沒有這一行的話會落到預設的「需採購」，而這條管道恰恰是唯一
+                # 拿到權杖當天就免費可用的——照預設顯示等於叫人去編預算。
+                "threads_mentions": "無金錢成本；官方 API，收件匣式取得，"
+                                    "一次取回全部後在本機過濾，與範圍無關",
             }.get(c.key, "需採購，價格未知"),
             "per_institution_supported": c.key != "apify_threads",
         } for c in chans],

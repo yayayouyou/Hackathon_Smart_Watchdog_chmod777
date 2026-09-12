@@ -193,6 +193,11 @@ TASKS = [
          _s("download_mirror_extras.py"), group="外部", needs_network=True),
     Task("sweep", "掃一次即時管道並記錄提及",
          _s("run_realtime_sweep.py"), group="外部", needs_network=True),
+    # 標 needs_network 是給人看的前置條件，講的是預設路徑：沒有網路時
+    # `-- --fixture tests/fixtures/threads_mentions.json` 一樣跑得完，
+    # 決賽現場的主線其實是那一條。
+    Task("threads-sync", "同步 Threads 上 @標註官方帳號的民眾通報進資料庫",
+         _s("sync_threads_mentions.py"), group="外部", needs_network=True),
 
     # ── 開發 ──────────────────────────────────────────────────────
     Task("test", "跑測試套件", ["-m", "pytest", "tests/", "-q"], group="開發"),

@@ -335,6 +335,107 @@ class ThreadsKeywordChannel(Channel):
         raise NotImplementedError("待 threads_keyword_search 權限核准後接上")
 
 
+class ThreadsMentionChannel(Channel):
+    """Threads @標註：民眾主動寄給我們的，不是我們去找的。
+
+    與上面那個 `ThreadsKeywordChannel` **刻意並存**，因為兩者是不同性質的東西，
+    而畫面上要看得出差別：
+
+    * 關鍵字搜尋是我方去搜別人的貼文，需要 `threads_keyword_search` 的 App
+      Review，所以是 `needs_approval`。
+    * `@標註` 是別人指名寄給我方的收件匣，只要帳號授權就能讀，所以有 token
+      就是 `live`。
+
+    兩個一起顯示，操作的人才會知道「等審核」與「填一把金鑰」是兩種不同的
+    待辦事項——這正是模組說明講的 availability 是一等公民。
+
+    **這個管道不回覆、不發文。** 取用層 `scrape/threads.py` 根本沒有那些函式，
+    理由寫在那支模組的說明裡：官方帳號自動回「已收到您的通報」，是在任何人
+    讀過內容之前就做出的公開受理表態。
+
+    **歸屬沿用 `alerts.attribute()`，與新聞、PTT 同一套規則。** 拒配時
+    `institution_id` 是 None，那是「認不出是哪一園」，不是「與機構無關」。
+
+    **串下的回覆不從這裡出去。** `scrape/threads.py::replies_of()` 會抓、
+    `realtime/mention_store.py::record_replies()` 會存，但這個管道只回主貼文：
+    回覆的人沒有標註官方帳號，把一串十則「+1」當成十筆 mention 交出去，就是
+    `06-plan` §6 不准的重複加權。要看整串請查 `mention_store.thread()`。
+    """
+
+    key = "threads_mentions"
+    label = "Threads（@標註官方帳號）"
+    legal_basis = (
+        "Meta 官方 Threads API `/me/mentions`。只讀取主動 @標註本帳號的公開貼文，"
+        "不搜尋、不爬取、不進入私人社團；不需 threads_keyword_search 權限。"
+    )
+    status = NEEDS_KEY
+    may_store = True
+    how_to_enable = (
+        "以教育局名義建立 Meta 開發者應用程式並取得使用者存取權杖，填入 .env 的 "
+        "THREADS_ACCESS_TOKEN；另建議設 THREADS_MENTIONS_NOT_BEFORE，"
+        "否則首次同步會把帳號歷年被標註的貼文全部當成新通報匯入。"
+    )
+
+    def __init__(self, access_token: str | None = None) -> None:
+        self.access_token = access_token
+        if access_token:
+            self.status = LIVE
+
+    def _posts(self) -> list:
+        from ..scrape import threads
+
+        if not self.access_token:
+            return []
+        return [p for p in threads.mentions(self.access_token) if p.addressed_to_us]
+
+    def _mention(self, post, institution_id: str | None, basis: str) -> Mention:
+        from ..realtime.mention_store import _headline
+
+        return Mention(
+            channel=self.key, institution_id=institution_id,
+            headline=_headline(post.text)[:120], url=post.permalink,
+            published=post.posted_at[:10], publisher=f"Threads @{post.username}",
+            attribution_basis=basis, stored=True)
+
+    def search(self, institution: dict, limit: int = 20) -> list[Mention]:
+        """One 園's mentions.
+
+        The inbox is a single collection, so this fetches the same one page set
+        as ``sweep`` and filters locally. Asking the API per-institution would be
+        1,213 requests against one endpoint that already returned everything.
+        """
+        from ..features.alerts import attribute
+        from .mention_store import _headline
+
+        out: list[Mention] = []
+        for post in self._posts():
+            att = attribute(_headline(post.text), [institution])
+            if not att.attributed:
+                continue
+            out.append(self._mention(post, institution["id"], att.basis))
+            if len(out) >= limit:
+                break
+        return out
+
+    def sweep(self, institutions: list[dict], limit: int = 200) -> list[Mention]:
+        """The whole inbox, including the posts we could not attribute.
+
+        Unattributed mentions are returned rather than dropped. A report we
+        cannot match to a 園 is a queue item for a person, and silently removing
+        it would make the panel claim nobody wrote in.
+        """
+        from ..features.alerts import attribute
+        from .mention_store import _headline
+
+        out: list[Mention] = []
+        for post in self._posts():
+            if len(out) >= limit:
+                break
+            att = attribute(_headline(post.text), institutions)
+            out.append(self._mention(post, att.institution_id, att.basis))
+        return out
+
+
 class VendorFeedChannel(Channel):
     """第三方社群資料服務：Apify、QSearch、OpView、KEYPO 等。
 
@@ -491,5 +592,8 @@ def default_channels(*, use_env: bool = True, **credentials) -> list[Channel]:
         ApifyThreadsChannel(token=credentials.get("apify_token")),
         PlacesReviewChannel(api_key=credentials.get("places_api_key")),
         ThreadsKeywordChannel(access_token=credentials.get("threads_token")),
+        # 同一把 token 開兩個管道：搜尋要 App Review（needs_approval），
+        # @標註不用（有 token 就 live）。兩個都列出來，差別才看得見。
+        ThreadsMentionChannel(access_token=credentials.get("threads_token")),
         VendorFeedChannel(feed_path=credentials.get("vendor_feed_path")),
     ]
