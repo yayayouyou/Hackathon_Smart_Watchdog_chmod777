@@ -38,7 +38,13 @@ from smart_watchdog.api import social
 from smart_watchdog.api.server import app
 from smart_watchdog.db.models import Base
 from smart_watchdog.db.session import get_db
-from smart_watchdog.realtime import mention_store, monitor
+from smart_watchdog.realtime import (
+    classify,
+    mention_store,
+    monitor,
+    news_classify,
+)
+from smart_watchdog.report import reply as reply_mod
 from smart_watchdog.scrape import threads
 
 WENDE = "00957c83-0061-4581-a587-97629968f371"
@@ -137,20 +143,30 @@ def db():
 
 
 @pytest.fixture
-def offline(db, monkeypatch):
+def offline(db, monkeypatch, tmp_path):
     """把所有會連外或會讀到真實檔案的東西導開。"""
     monkeypatch.setattr(social, "_payload", lambda: PAYLOAD)
     monkeypatch.setattr(social, "_master", lambda: MASTER)
     monkeypatch.setattr(monitor, "watch", _fake_watch)
+    # 新聞標籤的 sidecar 也就地決定，不讀 data/runtime/：讀真的那一份的話，
+    # 同一條測試在「跑過分類」與「沒跑過」的機器上會得到相反的結論。
+    monkeypatch.setattr(news_classify, "DIR", tmp_path)
+    monkeypatch.setattr(news_classify, "PATH", tmp_path / "news_labels.jsonl")
+    monkeypatch.setattr(news_classify, "LOCK", tmp_path / "news_labels.lock")
+    news_classify.reload()
     # 憑證就地決定，不讀 .env：否則同一條測試在有金鑰與沒金鑰的機器上結論相反。
     monkeypatch.setattr(config, "credentials", lambda: dict(NO_CREDENTIALS))
     monkeypatch.setenv("GOOGLE_MAPS_API_KEY", "")
     monkeypatch.setattr(social, "PLACE_IDS", pathlib.Path("no-such-place-ids.csv"))
+    # 回覆草稿的後端就地決定，不看 .env：否則這幾條測試會在有 AWS 憑證的機器上
+    # 真的去打 Bedrock，測出來的東西就不是離線那條路了。
+    monkeypatch.setattr(reply_mod, "available", lambda: False)
     app.dependency_overrides[get_db] = lambda: db
     try:
         yield db
     finally:
         app.dependency_overrides.pop(get_db, None)
+        news_classify.reload()
 
 
 @pytest.fixture
@@ -173,7 +189,11 @@ def test_one_institution_returns_every_block_the_panel_needs(client):
                          "reviews", "counts", "disclaimer"}
     assert body["institution"] == {
         "id": WENDE[:8], "full_id": WENDE,
-        "title": "新北市私立文德幼兒園", "town": "蘆洲區"}
+        "title": "新北市私立文德幼兒園", "town": "蘆洲區",
+        # 真實機構的旗標是 false，而且**一定要在**：缺欄位時前端寫的
+        # `it.is_demo` 是 undefined，那與 false 在畫面上長得一樣，於是
+        # 哪天真的漏掉示範標記也不會有人發現。
+        "is_demo": False}
     assert body["disclaimer"]
     for block in ("threads", "mentions", "reviews"):
         # 每一段都要能單獨回答「有沒有訊號」與「為什麼沒有」。
@@ -188,6 +208,30 @@ def test_either_id_form_resolves_to_the_same_institution(client):
     「這一園沒有資料」。
     """
     assert _one(client, WENDE)["institution"] == _one(client, WENDE[:8])["institution"]
+
+
+def test_a_demo_institution_opens_a_panel_instead_of_404ing_on_the_reviews_block(
+        client, monkeypatch):
+    """示範機構不在 payload 上（那是刻意的），面板照樣要開得起來。
+
+    `reviews_of()` 對不在 payload 上的 id 丟 404，而 `_reviews_block()` 原本
+    照原樣往外丟——於是第三個區塊會讓**整個面板**變成 404，看起來像這一園
+    不存在，而不是「這一段不適用」。示範機構也不對外查新聞與 PTT：拿一個
+    虛構園名去查，回來若不是空的，就是把一篇關於真實機構的報導掛到假園名下。
+    """
+    from smart_watchdog.realtime import demo_data
+
+    inst = demo_data.institutions()[0]
+    monkeypatch.setattr(social, "_master",
+                        lambda: {**MASTER, inst["id"][:8]: dict(inst)})
+
+    body = _one(client, inst["id"][:8])
+    assert body["institution"]["is_demo"] is True
+    assert body["demo_note"]
+    assert body["reviews"]["available"] is False
+    assert "示範機構" in body["reviews"]["reason"]
+    assert body["mentions"]["ran"] == []
+    assert all("示範機構" in s["reason"] for s in body["mentions"]["skipped"])
 
 
 def test_an_unknown_institution_is_404_not_an_empty_panel(client):
@@ -309,7 +353,8 @@ def test_a_reply_naming_another_institution_is_marked_not_silently_merged(client
     assert other["institution_id"] == GINEER
     assert other["is_this_institution"] is False
     assert thread["other_institutions"] == [
-        {"institution_id": GINEER, "title": "新北市私立吉尼爾幼兒園", "posts": 1}]
+        {"institution_id": GINEER, "title": "新北市私立吉尼爾幼兒園",
+         "is_demo": False, "posts": 1}]
     # 繼承下來的那些照樣標明是繼承的，不是自己掙來的。
     inherited = next(r for r in thread["replies"] if r["threads_id"] == "R1")
     assert inherited["attribution_source"] == "inherited"
@@ -471,3 +516,238 @@ def test_live_false_skips_the_outbound_query_and_says_it_did(client):
     assert body["ran"] == []
     assert body["available"] is False
     assert all(s["reason"] for s in body["skipped"])
+
+
+# ── 語氣分類：上色在貼文，不在機構 ────────────────────────────────────
+
+
+def _classify_seeded(db, mapping) -> None:
+    """替已入庫的幾則貼上分類。走真正的寫入路徑，不手刻資料列。"""
+    from smart_watchdog.db.models import ThreadsMention
+
+    for threads_id, payload in mapping.items():
+        row = db.query(ThreadsMention).filter_by(threads_id=threads_id).one()
+        classify.apply(row, classify.from_payload(payload, backend="test"))
+    db.commit()
+
+
+NEGATIVE = {"event_category": "財務收費", "tone": "negative",
+            "specificity": "specific", "stance": "first_hand",
+            "contains_minor_identifiers": False, "issues": []}
+QUESTION = {**NEGATIVE, "tone": "question", "specificity": "vague"}
+NEUTRAL = {**NEGATIVE, "tone": "neutral"}
+
+
+def test_each_post_carries_its_own_closed_labels(client, db):
+    """分類跟著**貼文**走。機構那一層拿不到任何一個語氣欄位。"""
+    _classify_seeded(db, {"M1": NEGATIVE})
+    body = _one(client, WENDE[:8])["threads"]
+    root = body["items"][0]["root"]
+    assert root["tone"] == "negative"
+    assert root["tone_bucket"] == "negative"
+    assert root["tone_label"] == "語氣負面"
+    assert root["event_category"] == "財務收費"
+    assert root["classified_at"]
+    # 模型寫的自由文字不出現在 API 上。
+    assert "issues" not in root
+
+
+def test_an_unclassified_post_says_so_instead_of_looking_neutral(client, db):
+    """`tone` 為 null 的那些要回 `unclassified`，不是 `neutral`。
+
+    前端若自己寫 `tone || "neutral"`，一批沒有人看過的貼文會一次變成中性。
+    所以這個判斷在後端做一次。
+    """
+    body = _one(client, WENDE[:8])["threads"]
+    root = body["items"][0]["root"]
+    assert root["tone"] is None and root["classified_at"] is None
+    assert root["tone_bucket"] == "unclassified"
+    assert root["tone_label"] == "未分類"
+    del db
+
+
+def test_the_institution_row_gets_a_composition_not_one_colour(client, db):
+    """「3 則語氣負面 · 1 則中性」——機構那一層沒有單一語氣欄位，也不會有。"""
+    _classify_seeded(db, {"M1": NEGATIVE, "R1": NEGATIVE, "R2": QUESTION,
+                          "R3": NEUTRAL})
+    row = next(i for i in client.get("/api/social").json()["items"]
+               if i["full_id"] == WENDE)
+    tone = row["tone"]
+    assert tone["counts"]["negative"] == 2
+    assert tone["counts"]["neutral"] == 1
+    assert tone["counts"]["unclassified"] == 0
+    assert tone["labels"]["negative"] == "語氣負面"
+    # 沒有任何一個「這一園的語氣是什麼」的欄位，counts 也還是純計數。
+    assert row["counts"]["threads"] == {"threads": 1, "mentions": 1, "replies": 2}
+    assert not {"sentiment", "dominant_tone", "risk", "level"} & set(row)
+    assert "dominant" not in tone and "score" not in tone
+
+
+def test_the_composition_keeps_unclassified_visible(client, db):
+    """未分類自成一項。把它藏起來，分母就少了一截。"""
+    _classify_seeded(db, {"M1": NEGATIVE})
+    tone = _one(client, WENDE[:8])["threads"]["tone"]
+    assert tone["counts"]["negative"] == 1
+    assert tone["counts"]["unclassified"] >= 1
+    assert tone["unclassified"] == tone["counts"]["unclassified"]
+    assert "未分類" in tone["note"]
+
+
+def test_the_tone_note_forbids_colouring_the_whole_institution(client):
+    body = _one(client, WENDE[:8])
+    note = body["threads"]["tone_note"]
+    assert "不是對機構的評價" in note
+    assert client.get("/api/social").json()["tone_note"] == note
+
+
+# ── 擬定回覆 ──────────────────────────────────────────────────────────
+
+
+def _draft(client, institution_id, root, **body):
+    return client.post(f"/api/social/{institution_id}/draft-reply",
+                       json={"root_threads_id": root, **body})
+
+
+def test_a_draft_reply_is_text_only_and_never_sent(client):
+    r = _draft(client, WENDE[:8], "M1")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["auto_send"] is False
+    assert body["verified"] is True, body["problems"]
+    assert body["backend"] == "template"      # 離線沒有憑證時的地板
+    assert "不會自動送出" in body["draft"]
+    assert body["posts_used"] == 4            # 主貼文 + 三則回覆
+
+
+def test_the_draft_carries_the_permalink_and_the_unverified_declaration(client):
+    body = _draft(client, WENDE[:8], "M1").json()
+    assert body["permalink"]
+    assert body["permalink"] in body["draft"]
+    assert "未經查證" in body["draft"]
+    assert "非違法認定" in body["draft"]
+    assert body["checklist"]
+
+
+def test_the_sendable_half_is_handed_over_separately(client):
+    """前端不自己切字串：切錯會把園名連同「這是未查證的通報」一起貼出去。"""
+    body = _draft(client, WENDE[:8], "M1").json()
+    assert body["sendable"]
+    assert body["sendable_mark"] in body["draft"]
+    assert body["draft"].endswith(body["sendable"])
+    assert "文德幼兒園" in body["draft"]
+    assert "文德幼兒園" not in body["sendable"]
+
+
+def test_drafting_for_a_thread_that_belongs_to_another_institution_is_refused(client):
+    """從 A 園的面板去回 B 園的串，會讓草稿宣稱一個沒有人做出來的歸屬。"""
+    r = _draft(client, QUIET[:8], "M1")
+    assert r.status_code == 409
+    assert "文德" in r.json()["detail"]
+
+
+def test_drafting_for_a_thread_that_is_not_in_the_store_is_404(client):
+    assert _draft(client, WENDE[:8], "NOPE").status_code == 404
+
+
+def test_an_unknown_institution_cannot_be_drafted_for(client):
+    assert _draft(client, "zzzzzzzz", "M1").status_code == 404
+
+
+# ── 新聞／PTT 的標籤：與 Threads 的語氣**不共用、不合併** ────────────
+
+
+def _label(url: str, headline: str, kind: str, category: str,
+           channel: str = "news_rss") -> None:
+    """把一筆標籤寫進（被導到 tmp_path 的）sidecar，走真正的寫入路徑。"""
+    news_classify.record(
+        {"channel": channel, "url": url, "headline": headline},
+        news_classify.NewsLabel(report_kind=kind, event_category=category,
+                                backend="fake"))
+
+
+def test_news_items_carry_their_own_labels_not_a_tone(client):
+    """新聞那一則帶的是 `report_kind`，不是 `tone`。
+
+    「教育局開罰 39 萬」是一件**已經作成的官方行動**被報導出來，不是語氣負面。
+    共用同一個欄位的那天，就是稽查員分不出「有人抱怨」與「已經起訴」的那天。
+    """
+    _label("https://news.example/wende-1", "蘆洲文德幼兒園收費爭議 家長投訴",
+           "爭議未定", "財務收費")
+    item = _one(client, WENDE[:8])["mentions"]["items"][0]
+    assert item["report_kind"] == "爭議未定"
+    assert item["event_category"] == "財務收費"
+    assert item["report_bucket"] == "爭議未定"
+    assert item["report_label"] == "爭議未定"
+    assert item["news_classified_at"]
+    # 語氣那一族的欄位不得出現在新聞項目上。
+    assert "tone" not in item and "tone_bucket" not in item
+
+
+def test_the_keyword_verdict_is_kept_next_to_the_model_verdict(client):
+    """`kind`（關鍵字表）與 `report_kind`（模型）是兩個欄位，不互相覆蓋。
+
+    兩者不一致的那幾則正是最該由人看一眼的——合併成一欄就再也分不出來。
+    """
+    _label("https://news.example/gineer-1",
+           "違反幼照法遭罰 新莊吉尼爾幼兒園罰 30 萬", "事件報導", "兒少安全")
+    item = _one(client, GINEER[:8])["mentions"]["items"][0]
+    assert item["kind"] == "unclear"        # 快照當時關鍵字表判的
+    assert item["report_kind"] == "事件報導"  # 模型判的
+
+
+def test_an_unlabelled_news_item_reads_as_unclassified_not_as_routine(client):
+    """sidecar 沒有這一則時，畫面上要說「未分類」，不是「例行報導」。
+
+    這是 §7.7 的第二個形態：我們沒看過的東西，畫面上不可以長得像我們看過而且
+    沒事。沒有 Bedrock 憑證的機器上，整份 sidecar 就是空的。
+    """
+    body = _one(client, WENDE[:8])
+    item = body["mentions"]["items"][0]
+    assert item["report_kind"] is None
+    assert item["report_bucket"] == "unclassified"
+    assert item["report_label"] == "未分類"
+    labels = body["mentions"]["labels"]
+    assert labels["classified"] == 0 and labels["unclassified"] == 1
+    assert labels["counts"]["例行報導"] == 0
+
+
+def test_the_news_composition_is_separate_from_the_tone_composition(client):
+    """機構那一列的兩個組成是兩個欄位，計數永遠不合併。
+
+    那邊數的是未查證的民眾陳述，這邊數的是已經見報的報導。加起來就是把兩者
+    數成同一類——`06-plan` §6 不准的重複加權的另一個形態。
+    """
+    _label("https://news.example/gineer-1",
+           "違反幼照法遭罰 新莊吉尼爾幼兒園罰 30 萬", "事件報導", "兒少安全")
+    rows = {r["institution_id"]: r for r in client.get("/api/social").json()["items"]}
+    gineer = rows[GINEER[:8]]
+    assert gineer["news"]["counts"]["事件報導"] == 1
+    assert gineer["tone"]["counts"]["negative"] == 0
+    # 兩份 counts 的 key 只在「不知道」那兩個上重疊，其餘完全不同。
+    shared = set(gineer["tone"]["counts"]) & set(gineer["news"]["counts"])
+    assert shared == {"unclear", "unclassified"}
+    assert "事件報導" not in gineer["tone"]["counts"]
+
+
+def test_both_endpoints_say_the_two_label_families_do_not_merge(client):
+    """話寫在後端，前端照印。彙總時被換掉一次，這條界線就沒了。"""
+    for note in (_one(client, WENDE[:8])["mentions"]["label_note"],
+                 client.get("/api/social").json()["label_note"]):
+        assert "不共用" in note
+        assert "合併計數" in note or "不合併" in note
+
+
+def test_the_news_labels_add_no_score_and_no_tone_field(client):
+    """新增欄位不得把一個分數或一個語氣偷渡進來。
+
+    `test_no_endpoint_returns_a_score_or_a_risk_level` 擋的是名字；這一條擋的
+    是值域：新聞的標籤裡不得出現 `negative` 這種語氣值。
+    """
+    _label("https://news.example/gineer-1",
+           "違反幼照法遭罰 新莊吉尼爾幼兒園罰 30 萬", "事件報導", "兒少安全")
+    body = _one(client, GINEER[:8])
+    # 只看資料本身，不看 `label_note`——那句話正是在解釋兩族不共用，它**必須**
+    # 提到「語氣」才講得清楚這件事。
+    blob = str(body["mentions"]["items"]) + str(body["mentions"]["labels"]["counts"])
+    for banned in ("negative", "sentiment", "語氣", "情緒"):
+        assert banned not in blob, f"新聞那一段的資料不得出現 {banned}"
