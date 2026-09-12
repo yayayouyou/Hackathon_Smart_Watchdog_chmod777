@@ -50,7 +50,7 @@ log 寫 `no such table: user_session`」那個狀況不會再發生。`seed-user
 | **帳號登入**（agent 回饋要記得是誰） | ✅ | [MERGE_PLAN.md](MERGE_PLAN.md) §1 |
 | 容器化與 ECS 部署（目前縮到 0） | ✅ | [DEPLOY.md](DEPLOY.md) |
 
-驗證狀態：`python run.py test` → **525 passed, 12 skipped**（2026-09-12，本機 Windows）。
+驗證狀態：`python run.py test` → **707 passed**（2026-09-13，本機 Windows）。少了 `dataroom-slice` 那份產物時是 697 passed, 10 skipped——資料室那 10 條會安靜跳過，不會紅。
 `python run.py lint` → 全過。
 
 ---

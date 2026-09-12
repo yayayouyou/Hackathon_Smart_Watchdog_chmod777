@@ -49,7 +49,12 @@ async function boot() {
     render();
     apply();
   });
-  T.$("tloff").addEventListener("click", exit);
+  /* 「離開」那顆鈕拿掉了：收起面板就等於離開回測模式。
+     兩個動作分開時，使用者收起面板後地圖還停在回測著色，而唯一的出口藏在
+     已經被收起來的那塊面板裡——那顆鈕存在的理由，就是這個設計的後果。
+     掛在共用物件上而不是自己監聽 tlpill：監聽的話會跟 app.js 那支搶順序，
+     而「面板是開是關」在兩支監聽器之間的那一刻是不確定的。 */
+  T.onTimelineClose = exit;
 }
 
 function point() {

@@ -114,6 +114,9 @@
          地圖視野——不等就位就飛，飛行會被拉回全市。 */
       case "navigate": {
         const then = () => {
+          if (a.memo_query !== undefined && window.SWMemos && window.SWMemos.focus) {
+            window.SWMemos.focus(a.memo_query);
+          }
           if (a.focus_town) flyToDistrict(a.focus_town);
           if (a.institution_id) SW.openDossier(a.institution_id);
           if (Array.isArray(a.ids) && a.ids.length) {
@@ -146,6 +149,36 @@
            因為第一次開要現場渲染 PDF，先把文字與出處顯示出來。 */
         if (a.evidence_query) showEvidence(a);
         break;
+
+      /* 資料室。⚠️ 這個 case 一度不存在：後端白名單放行、資料室那五個 tool
+         也在送，但前端整份 webapp 都沒有 `open_table` 這個字。結果是助理
+         照樣說「已列在畫面上」，而畫面停在上一室、`#dr-tables` 一個元素都
+         沒有——它在講一件沒發生的事。實測過。 */
+      case "open_table": {
+        const then = () => {
+          if (!window.SWData || !window.SWData.focus) return;
+          window.SWData.focus({
+            institution: a.institution, year: a.year,
+            // sections 是一份清單（list_table_types），開第一種就好——
+            // 把八種表一次全攤開，等於什麼都沒指出來。
+            section: a.section || (Array.isArray(a.sections) ? a.sections[0] : null),
+          });
+        };
+        switchTab("data", then);
+        break;
+      }
+
+      /* 輿情蒐集室。社群面板與掃描主控台同在這一室，`showPane("scan")` 會把
+         兩塊都叫醒，所以這裡只要再指到某一所就好。 */
+      case "open_voice": {
+        const then = () => {
+          if (window.SWSocial && window.SWSocial.focus) {
+            window.SWSocial.focus(a.institution_id);
+          }
+        };
+        switchTab("scan", then);
+        break;
+      }
 
       case "close_drawer": {
         const d = $("dossier");
@@ -632,18 +665,67 @@
     if (SW.state.map) SW.state.map.invalidateSize();
   }
 
+  /* 收合列要藏哪些東西。`.mini.fold` 是那顆展開鈕本身，留著。 */
+  const HIDE_WHEN_FOLDED = ".agentbody, .who, .mini:not(.fold)";
+
+  /* 收合後整條欄位都能點開，不是只有上面那顆 24px 的小圓鈕。
+   *
+   * 一條 42px 寬、整個視窗高的細欄，滑鼠過去時使用者的預期是「點它會打開」；
+   * 把唯一的觸發點藏在最上緣一顆小鈕裡，等於要人先找到那顆鈕。中間那個大
+   * 箭頭只是**指示**，真正吃點擊的是整條欄位。
+   *
+   * 建一次、之後靠 display 切換：每次收合都重建的話，展開動畫進行中會閃一下。
+   * 樣式全部 inline——這個瀏覽器對 style.css 的更新沒有反應，理由見 fold()。 */
+  let expandStrip = null;
+
+  function ensureExpandStrip() {
+    if (expandStrip) return expandStrip;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "agentexpand";
+    b.setAttribute("aria-label", "展開助理欄");
+    b.title = "展開助理欄";
+    b.textContent = "‹";
+    Object.assign(b.style, {
+      position: "absolute", inset: "0", width: "100%", height: "100%",
+      border: "0", background: "transparent", cursor: "pointer",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      font: "inherit", fontSize: "22px", color: "var(--ink-4)", padding: "0",
+    });
+    b.addEventListener("mouseenter", () => { b.style.color = "var(--seal)"; });
+    b.addEventListener("mouseleave", () => { b.style.color = "var(--ink-4)"; });
+    b.addEventListener("click", () => fold(false));
+    col.appendChild(b);
+    expandStrip = b;
+    return b;
+  }
+
   function fold(on) {
-    col.classList.toggle("fold", on);
     const btn = $("agentfold");
-    btn.textContent = on ? "›" : "‹";
+    col.classList.toggle("fold", on);
+    /* 收合時整顆收起來：整條欄位已經是可點的展開區（見 ensureExpandStrip），
+       再擺一顆 24px 的小鈕等於把同一件事講兩次，而且比整條難點。 */
+    if (btn) btn.style.display = on ? "none" : "";
+    // 整片點擊區靠 col 定位，所以收合時 col 必須是 positioned。
+    col.style.position = on ? "relative" : "";
+    const strip = ensureExpandStrip();
+    strip.style.display = on ? "flex" : "none";
+
+    /* 箭頭指向**按下去之後會往哪個方向動**：展開狀態按它會把欄位收到右邊，
+       所以是 ›；收合狀態下那條展開區按了會往左長出來，所以是 ‹。
+       先前兩個都反了，於是「清除標記」旁邊那顆看起來像要把欄位拉得更開。 */
+    btn.textContent = on ? "‹" : "›";
     btn.setAttribute("aria-expanded", String(!on));
     btn.title = on ? "展開助理欄" : "收合助理欄";
     // ⚠️ 不可用 display:none。grip 是 grid 的第 3 格，藏掉之後 aside 會遞補
     // 進那一格（6px），收合狀態就變成一條看不見也點不到的線——實測過。
     // visibility:hidden 保留格位，只是不顯示也不吃事件。
     grip.style.visibility = on ? "hidden" : "";
+    /* 42px 不是 34px：收合後那條直排「助理」是 15px（全站字級地板，給中年
+       稽查員），34px 是 10.5px 時代的寬度，字放大之後會擠到溢出。
+       欄寬要跟著字級走，不是反過來。 */
     document.querySelector("main").style.setProperty(
-      "--agentw", on ? "34px" : (restoreWidth() + "px"));
+      "--agentw", on ? "42px" : (restoreWidth() + "px"));
     try { localStorage.setItem("sw.agentfold", on ? "1" : "0"); } catch { /* 同上 */ }
     // Leaflet 要被告知容器變了，否則地圖會停在舊尺寸、滑鼠座標整個對不上。
     if (SW.state.map) setTimeout(() => SW.state.map.invalidateSize(), 210);
@@ -702,9 +784,15 @@
       const saved = localStorage.getItem("sw.agentfold");
       if (saved !== null) folded = saved === "1";
     } catch { /* 私密視窗：用預設 */ }
-    if (folded) fold(true);
-    else document.querySelector("main").style
-      .setProperty("--agentw", restoreWidth() + "px");
+    /* 兩條路都要走 fold()。原本展開時只設欄寬就結束，於是那些「展開該長什麼
+       樣」的 inline style（標題列內距、底線、橫排標題）一次都沒被套上——
+       一載入就是展開的人看到的是沒有樣式的標題列。fold(false) 會把欄寬一起
+       設好，所以那一行併進去。 */
+    fold(folded);
+    if (!folded) {
+      document.querySelector("main").style
+        .setProperty("--agentw", restoreWidth() + "px");
+    }
   }
 
   window.Agent = { send, dispatch };

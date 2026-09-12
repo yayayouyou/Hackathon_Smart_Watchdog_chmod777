@@ -574,8 +574,13 @@ def test_social_panel_is_opened_when_the_room_is_entered() -> None:
     """
     app = (WEBAPP / "app.js").read_text(encoding="utf-8")
     assert "window.SWSocial" in app, "showPane 沒有喚醒社群聲音面板"
-    assert "window.SWSocial = { open }" in \
-        (WEBAPP / "social.js").read_text(encoding="utf-8")
+    # 問的是「有沒有匯出 open」，不是「只匯出 open」。原本比對字面
+    # `= { open }`，助理需要的 `focus` 一加上去就紅了——而那次改動並沒有
+    # 違反這條規則，紅的是斷言把「有這一支」寫成了「只有這一支」。
+    assert re.search(r"window\.SWSocial\s*=\s*\{[^}]*\bopen\b",
+                     (WEBAPP / "social.js").read_text(encoding="utf-8")), (
+        "social.js 沒有匯出 open，showPane 叫不動它"
+    )
 
 
 def test_the_voice_room_no_longer_advertises_threads_as_pending() -> None:
@@ -755,8 +760,15 @@ def test_the_draft_reply_button_hands_off_to_the_letters_room() -> None:
     assert 'Lobby.go("letters")' in src
     assert 'showPane("memos")' in src, "Lobby 不在時要有退路"
     assert "SWMemos" in src
-    assert "window.SWMemos = { showDraft, showDraftError }" in \
-        (WEBAPP / "memos.js").read_text(encoding="utf-8")
+    # 問的是「有沒有匯出這兩支」，不是「只匯出這兩支」。原本比對字面，
+    # 助理需要的 open／focus 一加上去就紅了——而那次改動並沒有違反這條規則。
+    memos = (WEBAPP / "memos.js").read_text(encoding="utf-8")
+    exported = re.search(r"window\.SWMemos\s*=\s*\{([^}]*)\}", memos)
+    assert exported, "memos.js 沒有匯出任何東西"
+    for fn in ("showDraft", "showDraftError"):
+        assert re.search(rf"\b{fn}\b", exported.group(1)), (
+            f"memos.js 沒有匯出 {fn}，輿情室的草稿送不過去"
+        )
     assert 'go, back' in (WEBAPP / "lobby.js").read_text(encoding="utf-8")
 
 
@@ -887,7 +899,13 @@ def test_no_two_scripts_declare_the_same_global() -> None:
     """
     import collections
 
-    top = re.compile(r"^(?:const|let|var)\s+([A-Za-z_$][\w$]*)", re.M)
+    # ⚠️ `function` 也要算。同名的 `const` 至少會讓後載入的那支整支
+    # SyntaxError，吵得看得見；同名的**函式宣告是靜默互相覆蓋**的——
+    # social.js 與 timeline.js 都宣告了 `render()`，於是社群面板呼叫的
+    # `render()` 其實是 timeline 的那一支：資料抓到了（count=8），畫面卻永遠
+    # 停在「載入中…」，沒有任何錯誤。原本這條只認 const/let/var，漏掉了它。
+    top = re.compile(
+        r"^(?:const|let|var|(?:async\s+)?function)\s+([A-Za-z_$][\w$]*)", re.M)
     owners: dict[str, list[str]] = collections.defaultdict(list)
     for js in sorted(WEBAPP.glob("*.js")):
         src = js.read_text(encoding="utf-8")
@@ -1014,3 +1032,243 @@ def test_the_realtime_layer_never_claims_to_be_a_risk_score() -> None:
     blk = html[html.index('id="rt-grp"'):html.index('id="rt-grp"') + 1400]
     assert "不寫入風險分數" in blk
     assert "不等於" in blk, "缺「沒有報導不等於沒有問題」這句"
+def test_every_stylesheet_has_balanced_braces() -> None:
+    """CSS 壞掉不會有錯誤訊息——瀏覽器從那一行起把剩下的整份丟棄。
+
+    實際發生過：合併時衝突切在 `.roomhead{...}` 規則中間，一側已經收尾、另一側
+    是同一條規則的後半段宣告，接起來就多出一個 `}`。症狀是那一行之後的每一條
+    規則都失效——助理欄收合變成一團擠在 34px 裡的文字、頂部按鈕掉樣式——而
+    Console 一個字都不印，因為這不是錯誤，是「瀏覽器照規範放棄剖析」。
+
+    JS 有 `node --check` 擋這件事，CSS 沒有。數括號是最便宜的等價物：
+    多一個或少一個都代表某處被切開過。
+    """
+    for path in sorted(WEBAPP.glob("*.css")):
+        raw = path.read_text(encoding="utf-8")
+        # 用等量換行取代註解，報錯的行號才對得上原始檔
+        text = re.sub(r"/\*.*?\*/",
+                      lambda m: "\n" * m.group(0).count("\n"), raw, flags=re.S)
+        depth, line, stray = 0, 1, []
+        for ch in text:
+            if ch == "\n":
+                line += 1
+            elif ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth < 0:
+                    stray.append(line)
+                    depth = 0
+        assert not stray, f"{path.name} 第 {stray} 行有多餘的 }}（規則被切開過）"
+        assert depth == 0, f"{path.name} 少了 {depth} 個 }}"
+
+
+def test_no_stylesheet_rule_is_left_unclosed() -> None:
+    """規則沒收尾就接下一條——**括號總數仍然平衡**，所以上一條測試抓不到。
+
+    實際發生過，而且是今天最貴的一個 bug。合併時衝突切在 `.tlbar{...}` 中間，
+    接起來變成：
+
+        .tlbar{position:static;width:min(72vw,720px);
+          max-width:calc(100vw - var(--rightcols, 460px));
+        .tlpillsub{color:var(--ink-4);font-size:15px}
+        .tlbar{...完整的那份...}
+
+    第一條 `.tlbar` 沒有 `}`。CSS 剖析器在宣告區塊裡遇到 `{` 會開始吞，一路吞到
+    能恢復為止——**那一行之後的一大段規則全部消失**，而括號數量是平衡的、
+    沒有任何錯誤訊息、`node --check` 也管不到 CSS。
+
+    症狀分散得看不出關聯：時間軸回測的底色不見（背景是被吞掉的宣告之一）、
+    助理欄收合後整塊內文擠在細欄裡、按鈕沒有邊框。我一度判定是瀏覽器快取，
+    又一度懷疑是合併把規則刪掉了，來回六七輪。真正的原因是這四行。
+
+    只回報**第一個**：之後的全是連鎖誤報（剖析器已經在錯誤的巢狀層裡）。
+    """
+    for path in sorted(WEBAPP.glob("*.css")):
+        raw = path.read_text(encoding="utf-8")
+        text = re.sub(r"/\*.*?\*/",
+                      lambda m: "\n" * m.group(0).count("\n"), raw, flags=re.S)
+        stack: list[str] = []
+        buf, line = "", 1
+        for ch in text:
+            if ch == "\n":
+                line += 1
+            if ch == "{":
+                head = " ".join(buf.split())
+                buf = ""
+                assert not (stack and stack[-1] == "decl"), (
+                    f"{path.name} 第 {line} 行：上一條規則沒有收尾就接了 "
+                    f"「{head[:60]}」——括號總數仍然平衡，但那一行之後的規則"
+                    f"會被剖析器吞掉"
+                )
+                stack.append("at" if head.startswith("@") else "decl")
+            elif ch == "}":
+                if stack:
+                    stack.pop()
+                buf = ""
+            else:
+                buf += ch
+
+def test_every_allowed_ui_action_is_handled_by_the_dispatcher() -> None:
+    """後端放行的每一種 ui_action，前端都必須真的接。
+
+    漏接**不會報錯**：tool 照樣成功、助理照樣說「已列在畫面上」，而畫面停在
+    上一室什麼都沒發生。實測過——`open_table` 在白名單裡、資料室那五個 tool
+    也在送，但整份 webapp 都沒有這個字，助理於是在講一件沒發生的事。
+
+    這條界線兩邊分屬不同語言、不同檔案、不同人寫，沒有任何編譯期檢查會抓到
+    它，所以釘在這裡。
+    """
+    registry = (ROOT / "src/smart_watchdog/agent/registry.py").read_text(encoding="utf-8")
+    m = re.search(r"UI_ACTION_TYPES\s*=\s*frozenset\((.*?)\)", registry, re.S)
+    assert m, "找不到 UI_ACTION_TYPES"
+    allowed = set(re.findall(r'"([a-z_]+)"', m.group(1)))
+    assert allowed, "白名單是空的，正則可能過時了"
+
+    agent = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    body = agent[agent.index("function dispatch("):]
+    handled = set(re.findall(r'case "([a-z_]+)":', body))
+    missing = sorted(allowed - handled)
+    assert not missing, (
+        f"這些 ui_action 後端會送、前端沒接，畫面會靜默不動：{missing}"
+    )
+
+
+def test_the_dataroom_shows_the_true_number_of_tables() -> None:
+    """畫面上的張數要是**總數**，不是這次回傳幾張。
+
+    `/api/dataroom/tables` 的 `count` 是套用 limit 之後的筆數。前端拿它當總數
+    顯示的話，符合 25 張、請求 12 張時畫面會寫「12 張」——而助理用同一份資料
+    講 25 張。兩邊都在講真話，但使用者看到的是系統自相矛盾。
+    """
+    js = (WEBAPP / "dataroom.js").read_text(encoding="utf-8")
+    assert "res.total" in js, "資料室仍把 count 當成總數顯示"
+    api = (ROOT / "src/smart_watchdog/api/dataroom.py").read_text(encoding="utf-8")
+    assert '"total"' in api, "/api/dataroom/tables 沒有回傳總數"
+
+
+def test_every_room_module_is_woken_when_its_pane_is_shown() -> None:
+    """每一間室的模組都要由 `showPane()` 叫醒。
+
+    這些模組刻意延後載入（答詢擬稿室有 144 筆建議書，不必在開站時就抓），
+    所以「進到這一室」必須有人通知它們。漏掉的表徵是**那一室永遠是空的**，
+    而且沒有任何錯誤——助理說「已列在畫面上」，畫面上什麼都沒有。
+
+    這個坑踩過三次。前兩次（資料室、輿情室）在 showPane 裡補上了；第三次是
+    答詢擬稿室，它原本只綁在那顆**隱藏的分頁鈕**的 click 上，而導覽改走房間
+    系統之後那顆鈕根本不會被點到。
+
+    所以規則寫成通則：凡是對外開了 `open()` 的室模組，`showPane()` 都要叫它。
+    """
+    app = (WEBAPP / "app.js").read_text(encoding="utf-8")
+    pane = app[app.index("function showPane("):]
+    pane = pane[:pane.index("\n}")]
+
+    providers = []
+    for js in sorted(WEBAPP.glob("*.js")):
+        if js.name == "app.js":
+            continue
+        src = js.read_text(encoding="utf-8")
+        providers.extend(
+            (m.group(1), js.name)
+            for m in re.finditer(r"window\.(SW[A-Za-z]*)\s*=\s*\{([^}]*)\}", src)
+            if re.search(r"\bopen\b", m.group(2)))
+    assert providers, "找不到任何提供 open() 的室模組，正則可能過時了"
+
+    missing = sorted(f"{g}（{f}）" for g, f in providers if g not in pane)
+    assert not missing, (
+        f"這些室模組沒有被 showPane() 叫醒，進到那一室會是空的：{missing}"
+    )
+
+
+def test_a_late_response_cannot_overwrite_a_newer_one() -> None:
+    """建議書清單的取數要擋掉過期的回應。
+
+    進這一室會先載入全部（`showPane` → `open()`），助理接著又篩「三重」
+    （`focus()`），兩個請求並行。全部那一份筆數多、回得慢，於是**後到**、
+    把 12 筆蓋回 130 筆——畫面列的是助理沒有在講的那一批，而且沒有任何錯誤。
+
+    `focus()` 也必須把搜尋框一起填：只改清單不改輸入框的話，畫面顯示空的
+    搜尋條件而列出來的只有三重，使用者一按搜尋就把助理設的洗掉了。
+    """
+    src = (WEBAPP / "memos.js").read_text(encoding="utf-8")
+    body = _code(src)
+    assert re.search(r"\bseq\b", body), "memos.js 沒有擋過期回應的機制"
+    assert body.count("mine !== seq") >= 2, (
+        "成功與失敗兩條路都要檢查，否則慢的那個錯誤訊息照樣會蓋掉新結果"
+    )
+    assert 'box.value = q' in body, "focus() 沒有把搜尋框一起填"
+
+
+def test_the_memo_query_reaches_the_screen() -> None:
+    """助理篩了哪幾份，畫面就要列哪幾份。
+
+    `list_memos` 只送「切到答詢擬稿室」而不送查詢字串的話，助理講「提到三重的
+    那 12 份」，畫面卻列出全部 130 份——它講的跟畫面上的不是同一批。
+    """
+    tools = (ROOT / "src/smart_watchdog/agent/tools.py").read_text(encoding="utf-8")
+    assert '"memo_query"' in tools, "list_memos 沒有把查詢字串送給畫面"
+    agent = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    assert "SWMemos.focus" in agent, "分派器沒有把查詢字串套到畫面上"
+
+
+def _css_files() -> list[pathlib.Path]:
+    return sorted(p for p in WEBAPP.glob("*.css"))
+
+
+def test_no_css_rule_swallows_the_rest_of_the_stylesheet() -> None:
+    """一條沒關好的規則會把後面幾百行整個吃掉，而瀏覽器**不會報任何錯**。
+
+    實際發生過兩次，都是合併時新舊兩版交錯：新版開了 `{` 卻少了後半段與 `}`，
+    於是它一路吞到某段孤兒的 `}` 才收——中間 248 行規則全部失效，包括登入層的
+    `.authwrap{position:fixed;z-index:9000}`。表徵是登入畫面被中庭整片蓋住、
+    **完全無法登入**，而且帶著既有 cookie 測不會遇到，所以它躺了好幾個 commit
+    沒被發現。
+
+    括號總數是平衡的，所以單純數括號抓不到。這裡看的是「一條規則跨幾行」：
+    `@media` 與 `:root` 本來就長，其餘超過 40 行幾乎一定是吞掉了別人。
+    """
+    for path in _css_files():
+        raw = path.read_text(encoding="utf-8")
+        clean = re.sub(r"/\*.*?\*/", lambda m: "\n" * m.group(0).count("\n"),
+                       raw, flags=re.S)
+        lines = raw.splitlines()
+        depth, opened = 0, []
+        for i, line in enumerate(clean.splitlines(), 1):
+            for ch in line:
+                if ch == "{":
+                    depth += 1
+                    opened.append(i)
+                elif ch == "}":
+                    depth -= 1
+                    assert depth >= 0, f"{path.name} 第 {i} 行有多餘的 }}"
+                    start = opened.pop()
+                    head = lines[start - 1].lstrip()
+                    if head.startswith(("@media", "@supports", ":root")):
+                        continue
+                    assert i - start <= 40, (
+                        f"{path.name} 第 {start} 行的規則跨了 {i - start} 行才關："
+                        f"{head[:60]} —— 多半是少了 }}，後面全被吞掉"
+                    )
+        assert depth == 0, f"{path.name} 檔尾還有 {depth} 個未閉合的 {{"
+
+
+def test_no_orphan_declaration_lines_in_css() -> None:
+    """孤兒宣告行：`  padding:…;gap:12px}` 這種沒有選擇器的尾巴。
+
+    合併時舊版的開頭被刪掉、尾巴留下來就會變成這樣。它自己不會報錯，但那個
+    `}` 會關掉不屬於它的區塊，於是錯位一路傳下去。兩次事故都伴隨著它。
+    """
+    for path in _css_files():
+        raw = path.read_text(encoding="utf-8")
+        clean = re.sub(r"/\*.*?\*/", lambda m: "\n" * m.group(0).count("\n"),
+                       raw, flags=re.S)
+        depth = 0
+        for i, line in enumerate(clean.splitlines(), 1):
+            stripped = line.strip()
+            # 深度 0 時，一行若含 `:` 又以 `}` 結尾卻沒有 `{`，就是孤兒尾巴
+            if (depth == 0 and stripped.endswith("}") and "{" not in stripped
+                    and ":" in stripped):
+                raise AssertionError(
+                    f"{path.name} 第 {i} 行是沒有選擇器的孤兒宣告：{stripped[:70]}")
+            depth += line.count("{") - line.count("}")

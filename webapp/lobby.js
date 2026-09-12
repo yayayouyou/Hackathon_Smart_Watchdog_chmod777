@@ -642,19 +642,10 @@
   function go(id) {
     const r = ROOMS.find((x) => x.id === id);
     if (!r) return false;
-    if (state.where !== "room") { enter(id); return true; }
-    if (state.room && state.room.id === r.id) return true;
-    state.room = r;
-    setRail(r);
-    dressRoom(r);
-    if (window.SW && window.SW.showPane) window.SW.showPane(r.pane);
-    if (r.map && window.SW && window.SW.state.map) {
-      setTimeout(() => {
-        window.SW.state.map.invalidateSize();
-        if (window.SW.fitNTPC) window.SW.fitNTPC();
-      }, 40);
-    }
-    return true;
+    // 合併時兩邊各自寫了一支換室：這一支吃房間 id（樓層索引與 social.js 用），
+    // `goto_` 吃 pane 名稱（助理用）。實作只留一份——原本這一支在室與室之間
+    // 切換時也會重算地圖視野，而那會把助理剛飛到蘆洲區的畫面拉回全市。
+    return goto_(r.pane);
   }
 
   /* ── 左側樓層索引 ──────────────────────────────────── */

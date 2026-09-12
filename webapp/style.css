@@ -161,12 +161,14 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .roomhead{display:flex;align-items:center;gap:10px;padding:9px 18px;
   background:var(--panel);border-bottom:1px solid var(--rule);flex:none;
   box-shadow:inset 0 3px 0 var(--rc, var(--rule))}
-/* ⚠️ 這裡曾經有一份合併殘留：`.roomhead` 被留了兩份，而第二份的選擇器那一行
-   在解衝突時掉了，只剩一個孤兒的 `}`。CSS 遇到多餘的右括號會**從那裡開始整段
-   停止解析**——實測 751 條規則只認出 581 條，`.authwrap` 等所有後面的規則全部
-   失效，登入層因此變成一大塊沒有樣式的原始表單疊在畫面下方。
-   取捨：室號的顏色用 --rc（跟著該室走，見 lobby.js::dressRoom），字級取兩者中
-   較大的那一組（全站 15px 底線那次調整的結果）。 */
+/* ⚠️ 這一段曾經是兩份疊在一起的：`1cee42c` 加了配色版的 .roomhead／.rh-*，
+   卻沒刪掉舊版的開頭，留下一行沒有選擇器的 `background:…;flex:none}`。
+   CSS 遇到多餘的右括號會**從那裡開始整段停止解析**——實測 751 條規則只認出
+   581 條，後面每一條都沒生效，包括登入層的 `.authwrap{position:fixed;
+   z-index:9000}`。於是登入畫面被中庭整片蓋住，全新的瀏覽器根本登不進來；
+   帶著既有 cookie 測不會遇到，所以它躺了好幾個 commit 沒被發現。
+   兩次改動的意圖都保留：室號的顏色用 --rc（跟著該室走，見 lobby.js::dressRoom），
+   字級取放大後的那一組（全站 15px 底線那次調整的結果）。 */
 .rh-no{font-family:var(--mono);font-size:16px;font-weight:600;
   color:var(--rc, var(--ink-3))}
 .rh-name{font-size:20px;font-weight:600}
@@ -228,7 +230,7 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 /* map */
 .mapwrap{position:relative;min-width:0;min-height:0}
 #map{width:100%;height:100%;background:var(--sunk)}
-.mapbadge{position:absolute;right:12px;bottom:26px;z-index:500;background:var(--panel);
+.mapbadge{background:var(--panel);
   border:1px solid var(--rule);border-radius:3px;padding:3px 9px;font-size:15px;
   color:var(--ink-3);box-shadow:var(--shadow);font-family:var(--mono)}
 .leaflet-container{font-family:var(--sans)}
@@ -518,8 +520,15 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
  * 用同一組顏色講兩件事，就沒人看得懂命中率了。 */
 /* 時間軸是「證明這套排序有效」的證據，不是每天要用的操作面板——預設收成
    左下角一顆小 bar，點開才展開。 */
-.tldock{position:absolute;left:12px;bottom:22px;z-index:600;display:flex;
-  flex-direction:column;align-items:flex-start;gap:7px}
+/* 地圖下緣那一排。撐滿寬度而不是貼左下：裡面兩塊要兩端對齊，而它們的寬度
+   都跟著內容走（園數、批次數會變），寫死位置在地圖變窄時一定會疊。 */
+.tldock{position:absolute;left:12px;right:12px;bottom:22px;z-index:600;
+  display:flex;flex-direction:column;align-items:flex-start;gap:7px;
+  pointer-events:none}
+.tldock>*{pointer-events:auto}
+/* 放不下就換行，寧可佔兩列也不要重疊——兩塊都是要讀的字。 */
+.tlfoot{display:flex;width:100%;align-items:center;justify-content:space-between;
+  gap:10px;flex-wrap:wrap}
 .tlpill{display:flex;align-items:center;gap:7px;font-size:16px;color:var(--ink-2);
   background:var(--panel);border:1px solid var(--rule);border-radius:16px;
   padding:5px 13px 5px 10px;box-shadow:var(--shadow)}
@@ -530,9 +539,11 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .tlpillsub{color:var(--ink-4);font-size:15px}
 /* 寬度用 CSS 變數，跟著右側被佔用的寬度走——寫死的算式在版面改成三欄那天
    就會讓這塊被助理欄蓋住，而且不會有任何錯誤訊息。 */
-/* ⚠️ 合併殘留修正。這條原本被留成兩份，而第一份少了收尾的 `}`，於是它把
-   之後 248 行（含整個登入層 .authwrap/.authbox）全部吞進自己的宣告區塊——
-   那些規則一條都沒生效，登入表單因此在畫面下方變成一大塊沒有樣式的原始表單。
+/* ⚠️ 這條規則曾經沒有結尾。新舊兩版在某次合併時交錯在一起：新版開了 `{`
+   卻少了後半段與 `}`，接著是一行重複的 .tlpillsub，然後才是舊版。於是這個
+   `{` 一路吞到第 744 行才被一段孤兒的 `}` 關掉——中間 248 行規則全部失效，
+   包括登入層的 `.authwrap{position:fixed;z-index:9000}`。表徵是登入畫面被
+   中庭整片蓋住、完全無法登入，而且瀏覽器不會報任何錯。
    合併取捨：寬度用 --rightcols 變數版（上面那段註解說明了為什麼），
    外觀宣告取另一份的。 */
 .tlbar{position:static;width:min(72vw,720px);
@@ -546,9 +557,6 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .tltopsel{font-size:16px;color:var(--ink-2)}
 .tltopsel select{font:inherit;background:var(--sunk);color:var(--ink);
   border:1px solid var(--rule);border-radius:4px;padding:1px 4px}
-#tloff{font-size:16px;color:var(--ink-3);border:1px solid var(--rule);
-  border-radius:4px;padding:2px 8px}
-#tloff:hover{color:var(--ink);border-color:var(--ink-3)}
 
 .tlticks{display:flex;justify-content:space-between;margin:0 2px 2px}
 .tltick{font-size:15px;color:var(--ink-3);cursor:pointer;padding:0 4px;
@@ -725,8 +733,31 @@ body.resizing{user-select:none;cursor:col-resize}
 .agentcol.fold .who,.agentcol.fold .mini:not(.fold){display:none}
 .agentcol.fold .agenthead{flex-direction:column;gap:10px;padding:10px 0;height:100%;
   align-items:center;border-bottom:0}
-.agentcol.fold .agenttitle{writing-mode:vertical-rl;letter-spacing:.28em}
+/* 收合列只剩直排標題與展開鈕。overflow:hidden 是保險：任何一個沒被上面
+   兩條藏掉的子元素，都不該把這條 42px 的欄位撐破——那次爆版的症狀是
+   整塊內文擠在細欄裡直排，而不是某個元素稍微超出。 */
+.agentcol.fold{overflow:hidden}
+.agentcol.fold .agenttitle{writing-mode:vertical-rl;letter-spacing:.28em;
+  white-space:nowrap}
 .mini.fold{padding:3px 7px;line-height:1}
+
+/* ── 收合的第二道：依**實際欄寬**，不依 class ────────────────────
+ *
+ * 上面那幾條全部掛在 `.agentcol.fold` 上，也就是全部依賴 agent.js 把那個
+ * class 加上去。實測遇過一種狀態：欄寬已經縮成一條（`--agentw` 被設過了），
+ * class 卻沒生效，於是整塊對話內容擠在 42px 裡一字一行直排——那比什麼都
+ * 不顯示更糟，而且畫面上看不出原因。
+ *
+ * 容器查詢問的是「這一欄現在幾 px」，那是畫面上的事實，不需要任何人記得
+ * 加 class。兩道並存：class 那道負責語意（使用者按了收合），這道負責保證
+ * 一條讀不了的細欄不會塞滿讀不了的字。 */
+.agentcol{container-type:inline-size}
+@container (max-width:150px){
+  .agentbody,.agentcol .who,.agentcol .mini:not(.fold){display:none}
+  .agenthead{flex-direction:column;gap:10px;padding:10px 0;height:100%;
+    align-items:center;border-bottom:0}
+  .agenttitle{writing-mode:vertical-rl;letter-spacing:.28em;white-space:nowrap}
+}
 
 .agentbar{display:flex;align-items:center;gap:8px;padding:8px 12px;
   border-bottom:1px solid var(--rule);font-size:16px;color:var(--ink-3)}

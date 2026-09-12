@@ -239,8 +239,12 @@
         seen.add(key);
         return tableHTML(dup ? Object.assign({}, t, { page_issues: [] }) : t);
       }).join("");
-      box.innerHTML = '<div class="drcount">' + res.count + " 張"
-        + (res.count > full.length ? "，以下顯示前 " + full.length + " 張" : "")
+      // 總數用 `total`，不是 `count`——後者是套用 limit 之後剩下幾張。
+      // 用 count 的話，符合 25 張、請求 12 張時畫面會寫「12 張」，而助理用
+      // 同一份資料講 25 張，兩邊對不起來。
+      const total = res.total == null ? res.count : res.total;
+      box.innerHTML = '<div class="drcount">' + total + " 張"
+        + (total > full.length ? "，以下顯示前 " + full.length + " 張" : "")
         + "</div>" + html;
     } catch (e) {
       box.innerHTML = '<div class="insuff">讀不到：' + esc(e.message) + "</div>";
@@ -606,5 +610,28 @@
     }
   }
 
-  window.SWData = { open, showKind, showLayer };
+  /* 讓助理把資料室帶到某一處。
+   *
+   * 為什麼不是直接呼叫 `showKind()`：那支只認 section，而助理講的通常是
+   * 「安溪的財產目錄」——園所與學年度也要跟著限定，否則畫面會列出全 132 園
+   * 的同一種表，跟它剛才講的那一所對不起來。
+   *
+   * 篩選下拉也要一起改。只改 `state` 不改下拉的話，畫面顯示「全部園所」
+   * 但列出來的只有安溪——使用者看到的條件與實際套用的不一致，而且他一動
+   * 別的條件就會把助理設的悄悄洗掉。
+   */
+  async function focus(opts) {
+    await open();
+    const o = opts || {};
+    if (o.institution !== undefined) state.report = o.institution || "";
+    if (o.year !== undefined) state.year = o.year == null ? "" : String(o.year);
+    const inst = $("dr-inst"), year = $("dr-year");
+    if (inst) inst.value = state.report;
+    if (year) year.value = state.year;
+    if (o.layer) showLayer(o.layer);
+    if (o.section) await showKind(o.section);
+    else if (state.section) await showKind(state.section);
+  }
+
+  window.SWData = { open, showKind, showLayer, focus };
 })();

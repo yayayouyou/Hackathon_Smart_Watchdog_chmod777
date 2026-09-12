@@ -172,7 +172,20 @@ def loaded_reports(institution: str | None = None,
 def find_tables(section: str | None = None, institution: str | None = None,
                 year: int | None = None, limit: int = 50) -> list[dict]:
     """符合條件的表。回的是表頭資訊不含列，列要用 get_table() 另取。"""
+    return count_tables(section, institution, year, limit)[1]
+
+
+def count_tables(section: str | None = None, institution: str | None = None,
+                 year: int | None = None,
+                 limit: int = 50) -> tuple[int, list[dict]]:
+    """（符合條件的**總數**, 截到 limit 的那幾張）。
+
+    總數與回傳筆數必須分開，否則「符合 25 張、只給你 12 張」會被講成「有 12
+    張」。實際發生過：資料室畫面寫「12 張」，而助理用同一份資料講 25 張——
+    兩邊都在講真話，只是其中一邊的數字是被 limit 截出來的。
+    """
     out: list[dict] = []
+    total = 0
     for meta in loaded_reports(institution, year):
         rep = _report_raw(meta["id"])
         if not rep:
@@ -180,10 +193,10 @@ def find_tables(section: str | None = None, institution: str | None = None,
         for t in rep["tables"]:
             if section and t["section"] != section:
                 continue
-            out.append(_table_head(rep, t))
-            if len(out) >= limit:
-                return out
-    return out
+            total += 1
+            if len(out) < limit:
+                out.append(_table_head(rep, t))
+    return total, out
 
 
 def _table_head(rep: dict, t: dict) -> dict:
