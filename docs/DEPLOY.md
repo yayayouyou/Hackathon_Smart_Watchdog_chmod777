@@ -133,9 +133,17 @@ DATABASE_URL=postgresql+psycopg://watchdog:<pw>@<endpoint>:5432/postgres
 `SESSION_SECRET` | 隨機字串 | — |
 `SEED_INSPECTOR_EMAIL` / `..._PASSWORD` | 自己設 | 稽查人員帳號不會建立 |
 `SEED_ADMIN_EMAIL` / `..._PASSWORD` | 自己設，且 Email 不可與 inspector 相同 | 管理員帳號不會建立 |
-`QUICK_LOGIN_ENABLED` | 正式環境固定 `false` | 不顯示免密碼快速登入（安全預設） |
+`QUICK_LOGIN_ENABLED` | 決賽展示設 `true`，見下方說明 | 不顯示免密碼快速登入（安全預設） |
 `AGENT_BACKEND` | `bedrock` | 預設就是 bedrock，可省略 |
 `DATABASE_URL` | 只有接 RDS 時才設 | 預設 SQLite |
+
+> **`QUICK_LOGIN_ENABLED=true` 等於把整個系統對任何拿到網址的人開放。**
+> 站上是 1,213 所真實機構的查核優先序，而 CLAUDE.md 的輸出定位寫明個別機構
+> 分數不對外公開揭露——這也是這個 repo 私有的理由。決賽期間為了讓評審能一鍵
+> 進來看而打開，是一個**知情的取捨**，不是預設值。
+>
+> 展示結束後把它設回 `false`，或直接停掉服務。要留著給人看又想收斂風險的話，
+> 最小的做法是在 ALB 前面加一層 IP 允許清單或 Cognito，而不是靠這個開關。
 
 > **正式環境應該用任務角色（task role）而不是把金鑰塞進環境變數。**
 > 這裡用環境變數是因為 workshop 給的就是臨時金鑰，而且環境 20 小時後就消失。
