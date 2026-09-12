@@ -442,3 +442,37 @@ def test_peer_scoring_excludes_the_things_it_is_checked_against(reg) -> None:
             assert "訓練過的檢查不算檢查" in out["note"]
             return
     pytest.skip("這批前 30 名都沒有同儕比較資料")
+
+
+def test_agent_absorbed_everything_the_query_tab_could_do() -> None:
+    """查詢頁籤移除前，它有三個篩選與兩種排序是助理沒有的。
+
+    移除一個入口的前提是能力沒有跟著消失——這條測試就是那個前提，
+    哪天有人把這些參數拿掉，這裡會先擋下來。
+    """
+    from smart_watchdog.agent.tools import ListInstitutionsArgs
+
+    fields = set(ListInstitutionsArgs.model_fields)
+    for f in ("town", "type", "has_penalty", "has_compliance_failure",
+              "evaluation_partial", "has_mentions", "no_financial", "sort"):
+        assert f in fields, f"少了 {f}，查詢頁籤原本做得到"
+
+
+def test_no_financial_finds_the_uncovered_majority(reg) -> None:
+    """全市 94.8% 沒有公開財報。查得出來才能誠實說「這些是資料不足」。"""
+    out = _run(reg, "list_institutions", {"no_financial": True, "limit": 3})
+    assert out.payload["matched"] > 1000
+    assert all(not r["has_financial_report"] for r in out.payload["items"])
+
+
+def test_sort_by_penalties_and_by_recency_differ_from_rank(reg) -> None:
+    by_rank = _run(reg, "list_institutions", {"limit": 5}).payload["items"]
+    by_pen = _run(reg, "list_institutions",
+                  {"sort": "penalties", "limit": 5}).payload["items"]
+    pens = [r["penalties"] for r in by_pen]
+    assert pens == sorted(pens, reverse=True), "penalties 要由多到少"
+    by_recent = _run(reg, "list_institutions",
+                     {"sort": "recent", "limit": 5}).payload["items"]
+    dates = [r["last_event_date"] or "" for r in by_recent]
+    assert dates == sorted(dates, reverse=True), "recent 要由新到舊"
+    assert [r["id"] for r in by_rank] != [r["id"] for r in by_pen]

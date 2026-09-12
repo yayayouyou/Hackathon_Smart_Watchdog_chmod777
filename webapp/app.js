@@ -1017,42 +1017,6 @@ function realtimeBlock(rt) {
       公開內容不改寫風險分數、不作違規標籤。</p></div>`;
 }
 
-/* ── 查詢 ─────────────────────────────────────────────── */
-async function ask(question) {
-  const log = $("chatlog");
-  log.insertAdjacentHTML("beforeend", `<div class="msg me">${esc(question)}</div>`);
-  log.scrollTop = log.scrollHeight;
-
-  let r;
-  try {
-    r = await api("/api/chat", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question }),
-    });
-  } catch (e) {
-    log.insertAdjacentHTML("beforeend",
-      `<div class="msg bot">查詢失敗：${esc(e.message)}</div>`);
-    return;
-  }
-
-  const rows = r.results.map((x) => `
-    <button class="row" data-i="${x.id}">
-      <span class="r">#${x.rank}</span>
-      <span>${esc(x.title)}</span>
-      <span class="m">${x.compliance_failed ? "法遵" + x.compliance_failed + " " : ""}${
-        x.penalties ? "罰" + x.penalties : ""}</span>
-    </button>`).join("");
-  log.insertAdjacentHTML("beforeend", `<div class="msg bot">
-    <p class="sum">${esc(r.summary)}</p>
-    <div class="rows">${rows}</div>
-    <div class="cav">${esc(r.caveat)}</div>
-    <div class="plan">planner=${esc(r.planner)}　${esc(JSON.stringify(r.plan.filters))}</div>
-  </div>`);
-  log.querySelectorAll(".row").forEach((el) =>
-    el.addEventListener("click", () => openDossier(el.dataset.i)));
-  log.scrollTop = log.scrollHeight;
-}
-
 /* ── 地圖控制與花費 ───────────────────────────────────── */
 const LAYER_BOXES = ["f-cluster", "f-districts", "f-dnames", "f-mask",
   "f-flagged", "f-choro"];
@@ -1199,20 +1163,6 @@ document.querySelectorAll(".tabs button").forEach((b) =>
     if (b.dataset.t === "scan" && window.SWScan) window.SWScan.open();
     if (b.dataset.t === "timeline") timelineDock(true);
   }));
-
-/* 查詢頁籤（main 的 Bedrock planner）。助理頁籤是另一個面板、另一組 id，
-   兩者並存：查詢回名單，助理會實際操作畫面。 */
-$("chatform").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const q = $("q").value.trim();
-  if (!q) return;
-  $("q").value = "";
-  ask(q);
-});
-/* 只接查詢面板內的範例鈕。助理面板的 .eg 由 agent.js 自己綁——
-   用全域委派會讓助理的範例鈕同時觸發這裡的 ask()。 */
-document.querySelectorAll("#pane-chat .eg").forEach((el) =>
-  el.addEventListener("click", () => ask(el.textContent.trim())));
 
 /* 掃描分頁（scan.js）需要這些；集中匯出一次，不要讓它去翻全域變數。 */
 window.SW = { api, post, $, esc, nf, state, openDossier, TYPE, drawMarkers, refresh,

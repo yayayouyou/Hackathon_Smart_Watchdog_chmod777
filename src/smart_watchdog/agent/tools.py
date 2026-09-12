@@ -111,6 +111,21 @@ class ListInstitutionsArgs(BaseModel):
     has_compliance_failure: Optional[bool] = Field(
         default=None, description="只要財報法遵檢核未通過的登記"
     )
+    evaluation_partial: Optional[bool] = Field(
+        default=None, description="只要近兩年評鑑部分指標未通過的登記"
+    )
+    has_mentions: Optional[bool] = Field(
+        default=None, description="只要近期有可歸屬公開報導的登記"
+    )
+    no_financial: Optional[bool] = Field(
+        default=None,
+        description="只要**沒有**公開財務報告的登記（全市 94.8% 屬此，是涵蓋範圍限制）",
+    )
+    sort: str = Field(
+        default="rank",
+        description="排序：rank 交付順序（預設）、penalties 裁罰件數多的在前、"
+                    "recent 最近有官方事件的在前",
+    )
     limit: int = Field(default=20, ge=1, le=MAX_LIMIT, description="取幾筆，上限 50")
 
 
@@ -132,14 +147,29 @@ def _list_institutions(_ctx: ToolContext, a: ListInstitutionsArgs) -> ToolOutcom
         filters["has_penalty"] = True
     if a.has_compliance_failure:
         filters["has_compliance_failure"] = True
+    if a.evaluation_partial:
+        filters["evaluation_partial"] = True
+    if a.has_mentions:
+        filters["has_mentions"] = True
+    if a.no_financial:
+        filters["no_financial"] = True
 
     hits = [p for p in payload.get("points", []) if _ch()._matches(p, filters, mentions)]
-    hits.sort(key=lambda p: p["r"])
+    # 與查詢頁籤同一組排序鍵。rank 是交付順序（越小越前面），另外兩個是
+    # 「最多」「最近」，所以要反向。
+    if a.sort == "penalties":
+        hits.sort(key=lambda p: -p.get("np", 0))
+    elif a.sort == "recent":
+        hits.sort(key=lambda p: p.get("evd", ""), reverse=True)
+    else:
+        hits.sort(key=lambda p: p["r"])
     rows = [{
         "id": p["i"], "title": p["full"], "type": _ch().TYPE_NAMES.get(p["t"], "?"),
         "town": p["d"], "priority_rank": p["r"], "reason": p.get("why", ""),
         "penalties": p.get("np", 0), "compliance_failed": p.get("cf", 0),
         "has_financial_report": bool(p.get("fin")),
+        "last_event": p.get("ev", ""), "last_event_date": p.get("evd", ""),
+        "mentions": len(mentions.get(p["i"], [])),
     } for p in hits[:a.limit]]
 
     return ToolOutcome(
@@ -149,6 +179,8 @@ def _list_institutions(_ctx: ToolContext, a: ListInstitutionsArgs) -> ToolOutcom
             "filters": {k: v for k, v in {
                 "town": a.town, "type": a.type, "has_penalty": a.has_penalty,
                 "has_compliance_failure": a.has_compliance_failure,
+                "evaluation_partial": a.evaluation_partial,
+                "has_mentions": a.has_mentions, "no_financial": a.no_financial,
             }.items() if v is not None},
             # 指定行政區時把地圖真的飛過去——「調閱蘆洲區」應該看起來像有人
             # 把地圖放大到蘆洲，而不是只有標記變少。
@@ -830,7 +862,9 @@ def _get_peer_comparison(_ctx: ToolContext, a: PeerArgs) -> ToolOutcome:
 
 _SPECS = [
     ("list_institutions",
-     "依行政區、類別、有無前科或財報法遵未通過列出機構，並把畫面帶到派工提案頁籤",
+     "列出機構：可依行政區、類別、有無前科、財報法遵未通過、評鑑部分未通過、"
+     "近期有無公開報導、有無公開財報篩選，並可依交付順序／裁罰件數／最近事件排序。"
+     "會把畫面帶到名單頁並移動地圖",
      ListInstitutionsArgs, _list_institutions, False),
     ("get_ranking", "取現行派工提案的前 N 名，含分層理由（tier）",
      GetRankingArgs, _get_ranking, False),
