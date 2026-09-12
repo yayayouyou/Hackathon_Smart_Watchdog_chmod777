@@ -47,3 +47,11 @@ data/external/education_bureau_announcements/.listing-update-transaction.json
 .DS_Store
 dist/
 data/runtime/
+
+# MCP 客戶端設定：`claude mcp add` 會把 bearer token 明文寫進去。
+# 權杖等同身分，且各人各自發，不該共用也不該進版控。
+# 範本見 .mcp.json.example。
+.mcp.json
+
+# Claude Code 的本機設定（各人自己的 MCP 核准與權限），不進版控。
+.claude/settings.local.json

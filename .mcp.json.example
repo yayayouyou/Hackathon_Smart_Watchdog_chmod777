@@ -1,0 +1,18 @@
+{
+  "_說明": [
+    "MCP 客戶端設定範本。複製成 .mcp.json 並換掉權杖。",
+    "取得權杖：登入後 POST /api/agent/mcp-token，回應裡的 token 欄位。",
+    "權杖等同你的身分、12 小時後過期，且與瀏覽器登入是各自獨立的兩列 session",
+    "——撤掉 MCP（刪那一列）不會把你踢出網頁。",
+    ".mcp.json 已 gitignore，不要把填好的那份提交上去。"
+  ],
+  "mcpServers": {
+    "smart-watchdog": {
+      "type": "http",
+      "url": "http://127.0.0.1:8001/mcp/",
+      "headers": {
+        "Authorization": "Bearer <把 /api/agent/mcp-token 拿到的權杖貼在這裡>"
+      }
+    }
+  }
+}
