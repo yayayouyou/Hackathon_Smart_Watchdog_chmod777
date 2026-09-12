@@ -103,7 +103,10 @@ class BedrockBackend(ExtractionBackend):
             # 延遲建立，讓開發路徑不需要 boto3 也不需要憑證。
             from .. import bedrock as _bedrock
 
-            self._client = _bedrock.client(self.region)
+            # 視覺抽取要送整頁影像、最多吐 16k tokens，逾時給得比聊天寬；
+            # 重試交給驅動程式（它看得到限流字樣才重試，SDK 看不到）。
+            self._client = _bedrock.client(
+                self.region, timeout=_bedrock.TIMEOUT_VISION, max_retries=1)
         return self._client
 
     def extract(self, key: str, image_png: bytes) -> ExtractionResult:

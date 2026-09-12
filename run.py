@@ -104,6 +104,11 @@ TASKS = [
     Task("extract-public", "從決算書座標抽出 22 所市立幼兒園財務（零模型成本）",
          _s("extract_public_kindergartens.py"), group="抽取",
          needs_raw=True, in_pipeline=True),
+    # 不進 pipeline：會真的花錢呼叫模型。預設只跑 5 張人工核對過的基準頁，
+    # 因為那是唯一能量測「抽得對不對」而不只是「抽得出來」的一組。
+    Task("extract-bedrock", "用 Bedrock 視覺模型實跑抽取（預設 5 張基準頁，--dry-run 可試算）",
+         _s("extract_nonprofit_bedrock.py"), group="抽取",
+         needs_raw=True, needs_network=True),
 
     # ── 整併 ──────────────────────────────────────────────────────
     Task("institution-master", "建立 1,213 筆機構主檔與裁罰標籤表",
@@ -139,6 +144,8 @@ TASKS = [
          _s("build_audit_priority.py"), group="輸出", in_pipeline=True),
     Task("letters", "為名單上每一所園草擬稽核建議書",
          _s("build_audit_letters.py"), group="輸出", in_pipeline=True),
+    Task("neighbor-land", "產生鄰縣市陸地輪廓（地圖反灰只灰陸地、不灰海）",
+         _s("build_neighbor_land.py"), group="輸出", needs_network=True),
     Task("frontend", "產生 dist/（靜態單檔版與動態版共用的 payload）",
          _s("build_frontend.py"), group="輸出", in_pipeline=True),
     Task("serve", "啟動動態版稽查派工台，網址 http://127.0.0.1:8000",

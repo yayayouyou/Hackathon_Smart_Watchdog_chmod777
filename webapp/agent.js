@@ -322,7 +322,7 @@
       send(text);
     });
   }
-  document.querySelectorAll("#pane-chat .eg").forEach((b) =>
+  document.querySelectorAll("#pane-agent .eg").forEach((b) =>
     b.addEventListener("click", () => send(b.textContent)));
 
   const clear = $("agentclear");

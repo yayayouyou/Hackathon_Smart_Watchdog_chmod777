@@ -131,7 +131,10 @@ class BedrockBackend(NarrativeBackend):
         if self._client is None:
             from .. import bedrock as _bedrock
 
-            self._client = _bedrock.client(self.region)
+            # 建議書是長文輸出，逾時給得寬；但仍要有上限，否則 143 份的批次
+            # 可能被單一卡住的請求拖住十分鐘以上（SDK 預設 600 秒）。
+            self._client = _bedrock.client(
+                self.region, timeout=_bedrock.TIMEOUT_REASONING, max_retries=1)
         return self._client
 
     def draft(self, facts: AuditFacts) -> str:

@@ -44,6 +44,7 @@ from .. import config
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 WEBAPP = ROOT / "webapp"
 PAYLOAD_PATH = ROOT / "dist/data/payload.json"
+LAND_PATH = ROOT / "data/external/tw_neighbor_land.json"
 
 # ── MCP ──────────────────────────────────────────────────────────────
 # 同一組 tool 的第二條入口：瀏覽器走 /api/agent/messages，MCP 客戶端走 /mcp。
@@ -103,7 +104,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-_state: dict[str, Any] = {"payload": None, "index": {}}
+_state: dict[str, Any] = {"payload": None, "index": {}, "land": None}
 
 # 掃描主控台與證據端點。在此掛載而非讓子模組匯入 server，避免循環匯入。
 from . import agent as _agent  # noqa: E402
@@ -164,6 +165,24 @@ def list_institutions(town: Optional[str] = None,
 def list_districts() -> dict:
     return {"districts": payload().get("districts", []),
             "boundary": payload().get("boundary", [])}
+
+
+@app.get("/api/land")
+def get_land() -> dict:
+    """鄰縣市的陸地輪廓。地圖用它把新北以外的**陸地**反灰，海留原色。
+
+    刻意不進 payload：這是圖磚底圖才有的問題。靜態版自己畫 SVG，畫面上根本沒有
+    別的縣市，把 105 KB 內嵌進去只是讓那一份變胖。檔案不在就回空陣列——前端的
+    遮罩會自己退回舊做法，地圖照常能用。
+    """
+    if _state.get("land") is None:
+        try:
+            _state["land"] = json.loads(LAND_PATH.read_text(encoding="utf-8"))
+        except OSError:
+            print(f"⚠️ {LAND_PATH} 不存在，地圖反灰會連海一起灰掉。"
+                  "重建：python run.py neighbor-land")
+            _state["land"] = []
+    return {"land": _state["land"]}
 
 
 @app.get("/api/institutions/{institution_id}")
@@ -365,9 +384,28 @@ def health() -> dict:
         "channels_live": rt.get("channels_live", 0),
         "channels_total": rt.get("channels_total", 0),
         "schema_version": (data or {}).get("schema_version"),
+        # 自然語言查詢現在實際由誰做計畫。決賽當天要能一眼看出「台上跑的是
+        # Bedrock 還是關鍵字降級版」，而不是等問了一題才從回應裡發現。
+        "chat_planner": _chat_planner_kind(),
         # 缺的是授權不是資料——照實列出，並附上去哪裡申請。
         "credentials": config.status(),
     }
+
+
+def _chat_planner_kind() -> str:
+    """/api/health 用。解析失敗時回報 unknown，不要讓健康檢查自己掛掉。
+
+    `CHAT_PLANNER` 打錯字時要說出來。只顯示退回後的 `keyword` 的話，
+    設定錯誤會看起來像「Bedrock 莫名其妙沒被用到」。
+    """
+    try:
+        from .chat import invalid_kind, resolve_kind
+
+        kind = resolve_kind()
+        bad = invalid_kind()
+        return f"{kind}（CHAT_PLANNER={bad!r} 無法辨識，已退回）" if bad else kind
+    except Exception as exc:  # noqa: BLE001 - 健康檢查必須永遠回得了話
+        return f"unknown ({type(exc).__name__})"
 
 
 # ── 聊天 ────────────────────────────────────────────────────────────
@@ -376,11 +414,41 @@ class ChatRequest(BaseModel):
     institution_id: Optional[str] = None
 
 
+#: Planner 實例依種類快取。`BedrockPlanner` 第一次 `plan()` 時才建 client，
+#: 每次請求重建等於每次查詢多一次 client 初始化。種類本身每次重新解析
+#: （見 `chat.resolve_kind`），所以**啟動時沒憑證、之後才補上 .env** 不必重啟。
+#: ⚠️ 但**換掉一把已載入過的金鑰一定要重啟**——理由見 `chat.resolve_kind`
+#: 與 `bedrock.client` 的說明（.env 不覆寫、botocore 與 SDK 都有快取）。
+_planners: dict[str, Any] = {}
+
+
+def chat_planner() -> Any:
+    from .chat import get_planner, resolve_kind
+
+    kind = resolve_kind()
+    if kind not in _planners:
+        _planners[kind] = get_planner(kind)
+    return _planners[kind]
+
+
 @app.post("/api/chat")
 def chat(req: ChatRequest) -> dict:
-    from .chat import answer
+    from .chat import answer, get_planner
 
-    return answer(req.question, payload(), institution_id=req.institution_id)
+    try:
+        return answer(req.question, payload(),
+                      institution_id=req.institution_id, planner=chat_planner())
+    except Exception as exc:  # noqa: BLE001 - 降級，不是吞錯：原因照實回報給呼叫端
+        # 會場斷網、STS 憑證過期、模型被限流都會走到這裡。示範時讓查詢變慢是
+        # 可以接受的，讓它變成 500 不行——KeywordPlanner 產生的是同一組檢索
+        # 條件，所以降級只影響「問句怎麼被理解」，不影響答案的措辭與界線。
+        from ..bedrock import explain_error
+
+        result = answer(req.question, payload(),
+                        institution_id=req.institution_id,
+                        planner=get_planner("keyword"))
+        result["planner_fallback"] = explain_error(exc)
+        return result
 
 
 if _mcp_app is not None:
@@ -388,9 +456,25 @@ if _mcp_app is not None:
 
 
 # ── 靜態前端 ─────────────────────────────────────────────────────────
+class NoCacheStatic(StaticFiles):
+    """前端檔案一律要求瀏覽器回來驗證。
+
+    StaticFiles 只送 ETag 與 Last-Modified，**沒有** Cache-Control，瀏覽器於是
+    用啟發式快取自己決定要不要問。結果是改了 app.js、重整卻還是舊畫面——這個
+    誤會很貴：看起來像功能沒做出來，實際上是根本沒載到新檔。多一趟 304 的成本
+    可以忽略，示範現場的「怎麼沒生效」不行。
+    """
+
+    def file_response(self, *args, **kwargs):  # type: ignore[override]
+        resp = super().file_response(*args, **kwargs)
+        resp.headers["Cache-Control"] = "no-cache"
+        return resp
+
+
 if WEBAPP.exists():
-    app.mount("/static", StaticFiles(directory=str(WEBAPP)), name="static")
+    app.mount("/static", NoCacheStatic(directory=str(WEBAPP)), name="static")
 
     @app.get("/")
     def index() -> FileResponse:
-        return FileResponse(str(WEBAPP / "index.html"))
+        return FileResponse(str(WEBAPP / "index.html"),
+                            headers={"Cache-Control": "no-cache"})

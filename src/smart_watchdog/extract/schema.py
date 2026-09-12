@@ -99,21 +99,41 @@ EXTRACTION_PROMPT = """你正在把一張掃描的幼兒園財務報表轉成結
    （例如只有上年度有數字），此時前面的欄位必須填 null 讓後面的數字落在正確位置。
    這是最容易出錯的地方，請逐欄對照表頭的垂直位置確認。
 
-5. **看不清楚就說看不清楚。** 若紅色關防遮住文字、數字模糊、或欄位歸屬不確定，
+5. **`period_labels` 的一項＝表頭上的一個欄位；「占比%」不是欄位。**
+   兩種報表的處理不同，差別在於那個百分比是「同一欄金額的附註」還是
+   「表頭上自成一欄」：
+
+   * **資產負債表**——每個基準日印成「金額」與「%」兩小欄，那個 % 是該金額
+     占資產總計的占比。`period_labels` 只放基準日
+     （`["114年7月31日", "113年7月31日"]`，剛好兩項，不是四項），
+     金額放 `values`，占比放 `percents`。
+   * **收支餘絀表**——`預算數`／`決算數`／`差異數`／`執行率(%)` 是表頭上
+     四個並列的欄位。**四項都放進 `period_labels` 與 `values`**，
+     `percents` 留 null。執行率不是占比，它自成一欄。
+
+   判準：把表頭從左到右念一遍，念得出來的欄位才是 `period_labels` 的一項。
+
+   ⚠️ **弄錯這一項自我驗算抓不到。** 若把資產負債表的占比也當成期間塞進
+   `values`，`values[1]` 會變成本期占比而不是比較期金額，**從第二欄起全部
+   錯位**；而占比在同一個分母下同樣滿足加總關係，各明細的 % 加起來就等於
+   小計的 %，所以恆等式照樣全過。實測一次 Bedrock 抽取 79/79 恆等式全通過，
+   逐格準確率卻只有 67.8%，全部來自這一項。
+
+6. **看不清楚就說看不清楚。** 若紅色關防遮住文字、數字模糊、或欄位歸屬不確定，
    把該格填 null 並在 `issues` 說明。**絕對不要猜測數字。**
    寧可回報缺漏讓人工補，也不要產生看似合理的錯誤數字。
 
-6. **包含所有小計與合計列**（流動資產合計、資產總計、負債及餘絀總計等）。
+7. **包含所有小計與合計列**（流動資產合計、資產總計、負債及餘絀總計等）。
    這些是驗算用的，缺了就無法自動檢核。
 
-7. **章節標題列也要收錄**（流動資產、非流動資產、流動負債、餘絀、收入、支出）。
+8. **章節標題列也要收錄**（流動資產、非流動資產、流動負債、餘絀、收入、支出）。
    這些列本身沒有金額，`values` 全填 null。保留它們才能還原表格層級。
 
-8. **`label` 只放項目名稱本身，不要保留階層縮排的前導空白。**
+9. **`label` 只放項目名稱本身，不要保留階層縮排的前導空白。**
    報表用縮排表示層級（明細縮一字、小計縮兩字），但那是版面而非名稱。
    項目名稱內部的全形空白要保留（如「合　　計」），行首的縮排空白要去掉。
 
-9. **貨幣符號 `$` 不計入數值。** 部分列的金額前印有 `$`，那是幣別標記。
+10. **貨幣符號 `$` 不計入數值。** 部分列的金額前印有 `$`，那是幣別標記。
 
 只輸出符合 schema 的 JSON，不要加任何說明文字。"""
 
@@ -252,14 +272,30 @@ def _income_components(items: list[dict], side: str) -> list[tuple[str, ...]]:
     return out
 
 
+def _column_index(labels: list[str], needle: str) -> int | None:
+    """找出標題**含有** needle 的那一欄。
+
+    不能用完全相等：規則 1 要求逐字照抄表頭，而表上印的是
+    `預算數(a)`／`決算數(b)`／`差異數(c)=(b)-(a)`／`執行率(%)(d)=(b)/(a)`。
+    先前用 `labels.index("預算數")` 做全等比對，於是**在真實資料上永遠 ValueError**，
+    整族逐列差異數檢核靜靜變成一筆 skipped——而回報的「恆等式 N/N 通過」
+    不會顯示少驗了什麼。N01_112 因此有 19 列從來沒被驗過，
+    決算數欄與差異數欄整欄互換也照樣「全過」。
+    """
+    for i, label in enumerate(labels):
+        if needle in label:
+            return i
+    return None
+
+
 def _validate_variance(items: list[dict], payload: dict, tol: float) -> ValidationResult:
     """差異數 = 決算數 − 預算數, per line item."""
     res = ValidationResult()
     labels = ["".join(str(c).split()) for c in (payload.get("period_labels") or [])]
-    try:
-        bi, ai = labels.index("預算數"), labels.index("決算數")
-        di = labels.index("差異數")
-    except ValueError:
+    bi = _column_index(labels, "預算數")
+    ai = _column_index(labels, "決算數")
+    di = _column_index(labels, "差異數")
+    if bi is None or ai is None or di is None:
         res.skipped.append("差異數 = 決算數 − 預算數（找不到對應欄位）")
         return res
     for it in items:

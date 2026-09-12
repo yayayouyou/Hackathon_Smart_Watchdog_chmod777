@@ -32,25 +32,37 @@ python run.py serve          # → http://127.0.0.1:8000
 | Bedrock 接通（三個 AI 落點） | ✅ | [ENVIRONMENTS.md](ENVIRONMENTS.md) §2 |
 | 會場斷網降級 | ✅ | [OVERNIGHT_PLAN.md](OVERNIGHT_PLAN.md) §6 |
 
-驗證狀態：`python run.py test` → **294 passed**（有 `data/raw` 時）／
-293 passed + 1 skipped（沒有時）。`python run.py lint` → 全過。
+驗證狀態：`python run.py test` → **311 passed**（有 `data/raw` 時）／
+310 passed + 1 skipped（沒有時，那一條是 `test_every_statement_declares_its_source`）。
+`python run.py lint` → 全過。
 
 ---
 
 ## 待辦（依決賽價值排序）
 
-### 1. VLM 抽取 ← 使用者指定自己處理
+### 1. ~~VLM 抽取~~ ✅ 2026-09-12 已接通並量測
 
-Bedrock 的視覺路徑**已實測可用**：直接讀掃描財報頁，抽出的現金
-8,868,744 與 ground truth 完全一致。
+`BedrockBackend` 以前沒有任何東西呼叫它——132 份財報是開發階段由 subagent
+抽好進版控的，「交付路徑跑在 Bedrock 上」在程式裡是一句宣告而不是一條路。
+現在有驅動程式了：
 
 ```bash
-python run.py bedrock-check -- --full     # 會跑一次真實的視覺抽取
+python run.py extract-bedrock -- --dry-run   # 先看要送幾頁，不花錢
+python run.py extract-bedrock                # 5 張人工核對過的基準頁
+python run.py score-extraction               # 對 ground truth 逐格比對
 ```
 
-現況：132 份非營利財報**已全部抽取完成**並進版控，所以展示不依賴重跑。
-要重跑的是 `src/smart_watchdog/extract/backends.py` 的 `BedrockBackend`，
-已接上正確的 client 與模型 ID。
+實測 **236/236 = 100.00%**，假零 0、錯值 0（見
+[ENVIRONMENTS.md](ENVIRONMENTS.md) §2.7）。
+
+⚠️ **但第一次跑是 67.8%，而恆等式 79/79 全過。** 模型把資產負債表的
+「占比 %」欄當成一個期間塞進 `values`，整表從第二欄起錯位；占比自己也滿足
+加總關係，所以自我驗算抓不到。**恆等式全過不等於抽對了**——ground truth
+那 5 張頁面是唯一能發現這件事的東西。修法已寫進 `EXTRACTION_PROMPT` 規則 5。
+
+批次模式（`-- --year 113`）的頁碼是結構推定、未經表頭確認，產出是待覆核草稿。
+腳本**寫不進 `data/extracted/`**（`_assert_safe_out()` 擋下來）：那 132 份是
+下游每一項法遵發現的依據，要取代必須是人明確做的決定。
 
 ### 2. 簡報敘事
 
@@ -67,6 +79,8 @@ python run.py bedrock-check -- --full     # 會跑一次真實的視覺抽取
 
 - 公校決算書頁內文字未進全文索引（[07](research/07-document-index.md) §6）
 - 問句理解層：`institution`／`year` 還要呼叫端給
+  （planner 本身已接上 Bedrock，`/api/health` 的 `chat_planner` 會說現在是哪一個；
+  見 [ENVIRONMENTS.md](ENVIRONMENTS.md) §2.6）
 - 跨年度比較視圖：「110 到 113 各差多少」要跑四次查詢
 - `pyproject.toml` 缺 `[project] name`／`version`，`pip install -e .` 會失敗
   （README 已改指向 `requirements.txt`；**決賽前不動封裝**）
@@ -88,8 +102,8 @@ python run.py bedrock-check -- --full     # 會跑一次真實的視覺抽取
 
 | | `D:\Hackathon_Smart_Watchdog`（舊） | `D:\Hackathon_Smart_Watchdog_chmod777`（新） |
 |---|---|---|
-| `.venv` | 有 | **無**，要 `python run.py setup` |
-| `data/raw`（1.8 GB） | 有 | 無（不得轉散布，抽取結果已進版控） |
+| `.venv` | 有 | 有（2026-09-12 建，Python 3.11.5） |
+| `data/raw`（1.8 GB） | 有 | 有（2026-09-12 由 `setup-raw` 還原，162 份 PDF；不得轉散布） |
 | git remote | 無 | `yayayouyou/Hackathon_Smart_Watchdog_chmod777`（private） |
 
 **動手前先確認在哪一個。** 新的是主線。

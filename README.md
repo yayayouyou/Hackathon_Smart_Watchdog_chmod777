@@ -55,7 +55,8 @@ $env:PYTHONPATH = "src"
 
 ```bash
 PYTHONPATH=src .venv/bin/python -m pytest tests/ -q
-# 268 passed, 1 skipped   ← 那一條 skip 是正常的，見下方「資料」
+# 310 passed, 1 skipped   ← 那一條 skip 是正常的，見下方「資料」
+#                            （有 data/raw 時為 311 passed）
 .venv/bin/ruff check src/ tests/ scripts/
 ```
 

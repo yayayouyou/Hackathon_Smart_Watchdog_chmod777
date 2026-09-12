@@ -21,11 +21,18 @@
 from __future__ import annotations
 
 import abc
+import os
 import re
 import typing
 from typing import Any
 
 MAX_ROWS = 12
+
+#: 一次回應最多幾列，不論 planner 要求多少。
+#: KeywordPlanner 自己就把 limit 夾在 50，所以這個上限長期沒有被碰到；
+#: BedrockPlanner 的 schema 對 limit 沒有上限，實測回過 limit=100，
+#: 於是「摘要說幾所」與「實際回幾列」第一次出現分歧。兩處必須共用同一個值。
+HARD_LIMIT = 50
 
 TYPE_NAMES = {0: "公立", 1: "非營利", 2: "私立"}
 TYPE_INDEX = {"公立": 0, "非營利": 1, "私立": 2, "私幼": 2, "公幼": 0}
@@ -148,7 +155,12 @@ class BedrockPlanner(Planner):
         if self._client is None:
             from .. import bedrock as _bedrock
 
-            self._client = _bedrock.client(self.region)
+            # 短逾時、少重試：這個落點只是把問句翻成檢索條件，慢到某個程度
+            # 就該直接降級成 KeywordPlanner。SDK 預設 600 秒＋2 次重試，
+            # 在會場「連得上但不回應」的網路下會把 sync 端點的 worker 掛住，
+            # 前端連降級訊息都收不到——那比回一個錯誤更糟。
+            self._client = _bedrock.client(
+                self.region, timeout=_bedrock.TIMEOUT_FAST, max_retries=1)
         resp = self._client.messages.create(
             model=self.model, max_tokens=400, system=self.PROMPT,
             messages=[{"role": "user", "content": question}],
@@ -163,6 +175,76 @@ def get_planner(kind: str = "keyword", **kwargs) -> Planner:
     if kind == "bedrock":
         return BedrockPlanner(**kwargs)
     raise ValueError(f"未知的 planner：{kind}（可用：keyword, bedrock）")
+
+
+# ── 該用哪一個 planner ───────────────────────────────────────────────
+#: 環境變數。`auto`（預設）＝有 Bedrock 就用 Bedrock，沒有就用關鍵字。
+#: 另兩個值 `bedrock`／`keyword` 是強制指定，用於「我就是要測那一條路」。
+PLANNER_ENV = "CHAT_PLANNER"
+
+
+def bedrock_available() -> bool:
+    """Bedrock 這條路現在走不走得通。
+
+    **只看本機條件，不打網路。** 這個函式會在每次請求時被呼叫，若它自己去
+    call Bedrock，聊天介面的延遲就會多一趟往返，而且會場斷網時每一次查詢都
+    要先等一個 timeout 才降級——降級必須是免費的，否則等於沒降級。
+
+    真正打不打得通只有送出請求才知道，所以呼叫端仍必須處理例外
+    （見 ``api/server.py`` 的 ``/api/chat``）。
+    """
+    try:
+        import anthropic  # noqa: F401
+    except ImportError:
+        return False
+    from .. import bedrock as _bedrock
+
+    _bedrock.load_env()
+    return _bedrock.credentials_present()
+
+
+#: `resolve_kind` 允許回傳的值。錯字必須當場被擋，不能一路帶到 `/api/health`。
+KINDS = ("bedrock", "keyword")
+
+
+def resolve_kind(kind: str | None = None) -> str:
+    """把 `auto` 解析成實際要用的 planner 名稱。
+
+    每次請求都重新解析，所以**啟動時沒有憑證、之後才補上 `.env`** 的情況不必
+    重啟就會從 keyword 翻成 bedrock。
+
+    ⚠️ **反方向不成立：換掉一把已經載入過的金鑰一定要重啟。**
+    `bedrock.load_env()` 不覆寫既有的環境變數，botocore 解析一次後會快取靜態
+    憑證，anthropic 1.5.0 對 session 還加了 `lru_cache`。臨時憑證過期後把新的
+    四行貼進 `.env`，這個行程仍然拿著舊的——而 `credentials_present()` 只看
+    key 存不存在，過期的舊 key 依然算存在，所以這裡照樣回 `bedrock`。
+    症狀是每一題都降級並附上「AWS 臨時憑證已過期」。**重啟 `run.py serve`。**
+
+    無法辨識的值退回 `keyword` 而不是拋例外：打錯一個字不該讓聊天整個掛掉，
+    但也不能默默照用——`/api/health` 會把它原樣顯示成 planner，在台上掃一眼
+    `bedrok` 和 `bedrock` 分不出來。
+    """
+    raw = (kind or os.environ.get(PLANNER_ENV) or "auto").strip().lower()
+    if raw == "auto":
+        return "bedrock" if bedrock_available() else "keyword"
+    if raw not in KINDS:
+        return "keyword"
+    return raw
+
+
+def invalid_kind(kind: str | None = None) -> str:
+    """若 `CHAT_PLANNER` 設了一個無法辨識的值，回傳它；否則回空字串。
+
+    給 `/api/health` 用——退回 keyword 這件事必須說得出原因，
+    否則設定打錯字會表現成「Bedrock 莫名其妙沒被用到」。
+    """
+    raw = (kind or os.environ.get(PLANNER_ENV) or "auto").strip().lower()
+    return "" if raw == "auto" or raw in KINDS else raw
+
+
+def resolve_planner(kind: str | None = None, **kwargs) -> Planner:
+    """`resolve_kind` 加上建構。呼叫端若要快取實例，用 `resolve_kind` 當 key。"""
+    return get_planner(resolve_kind(kind), **kwargs)
 
 
 def _matches(p: dict, f: dict, mentions: dict) -> bool:
@@ -203,7 +285,7 @@ def answer(question: str, payload: dict[str, Any], *,
     else:
         hits.sort(key=lambda p: p["r"])
 
-    limit = min(int(plan.get("limit", MAX_ROWS)), 50)
+    limit = max(0, min(int(plan.get("limit", MAX_ROWS)), HARD_LIMIT))
     rows = [{
         "id": p["i"], "title": p["full"], "type": TYPE_NAMES.get(p["t"], "?"),
         "town": p["d"], "rank": p["r"],
@@ -221,7 +303,7 @@ def answer(question: str, payload: dict[str, Any], *,
         "matched": len(hits),
         "returned": len(rows),
         "results": rows,
-        "summary": _summarise(f, hits, plan),
+        "summary": _summarise(f, hits, plan, limit),
         # Every answer carries the same caveat the ranking carries. A chat
         # interface is where "哪間比較危險" gets asked, and the reply must not
         # let a retrieval result read as a finding of wrongdoing.
@@ -232,7 +314,12 @@ def answer(question: str, payload: dict[str, Any], *,
     }
 
 
-def _summarise(f: dict, hits: list[dict], plan: dict) -> str:
+def _summarise(f: dict, hits: list[dict], plan: dict, limit: int) -> str:
+    """`limit` 由呼叫端算好傳進來，不在這裡重算。
+
+    這兩處曾各自算過一次，於是摘要寫「以下為前 70 所」而實際只回了 50 列。
+    使用者看得到的句子必須描述使用者實際拿到的東西。
+    """
     scope = []
     if "town" in f:
         scope.append(f["town"])
@@ -257,6 +344,6 @@ def _summarise(f: dict, hits: list[dict], plan: dict) -> str:
         return f"{where}符合{('「' + cond + '」') if cond else '條件'}的共 {len(hits)} 所。"
     if not hits:
         return f"{where}沒有符合{('「' + cond + '」') if cond else '條件'}的機構。"
-    shown = min(len(hits), int(plan.get("limit", MAX_ROWS)))
+    shown = min(len(hits), limit)
     head = f"{where}{('中' + cond + '的') if cond else ''}共 {len(hits)} 所，"
     return head + f"以稽查優先序排列，以下為前 {shown} 所。"

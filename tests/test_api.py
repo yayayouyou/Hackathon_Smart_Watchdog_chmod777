@@ -55,6 +55,25 @@ def test_health_reports_what_loaded():
     assert h["channels_total"] >= h["channels_live"] >= 0
 
 
+def test_land_outline_excludes_new_taipei():
+    """反灰層畫的是**新北以外**的陸地。
+
+    這份資料一旦混進新北市自己的輪廓，地圖會把新北連同鄰縣市一起灰掉——
+    畫面看起來只是「顏色怪怪的」，但整個視覺論述（這 20 家在新北的哪裡）就沒了。
+    端點允許回空陣列（檔案還沒建），前端會自己退回舊的遮罩做法。
+    """
+    land = TestClient(app).get("/api/land").json()["land"]
+    assert isinstance(land, list)
+    names = {c["c"] for c in land}
+    assert "新北市" not in names
+    if land:                       # 有建檔的話，臺北市一定要在裡面：它是飛地
+        assert "臺北市" in names
+        for county in land:
+            for ring in county["poly"]:
+                assert len(ring) >= 3
+                assert all(len(pt) == 2 for pt in ring)
+
+
 @needs_payload
 def test_proposal_tiers_are_ordered_findings_before_score():
     """財報法遵未通過必須排在分數之前，否則升級管道形同虛設。"""

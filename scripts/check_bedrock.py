@@ -157,9 +157,14 @@ def check_landings() -> None:
     import subprocess
 
     try:
+        # `--out` 不可省：`--limit 1` 搭配預設目錄會把 141 列的 index.csv
+        # 重寫成 1 列。這條指令是決賽當天每天早上要跑的，冒煙測試毀掉正式
+        # 產出等於每天自己砍自己一刀。build_audit_letters.py 現在也會擋，
+        # 但這裡明確指定，讓「寫到哪裡」在呼叫端就看得見。
         proc = subprocess.run(
             [sys.executable, str(pathlib.Path(__file__).parent / "build_audit_letters.py"),
-             "--backend", "bedrock", "--limit", "1"],
+             "--backend", "bedrock", "--limit", "1",
+             "--out", "data/interim/letters_smoke"],
             capture_output=True, text=True, encoding="utf-8", timeout=300)
         tail = (proc.stdout or proc.stderr or "").strip().splitlines()
         if proc.returncode == 0:

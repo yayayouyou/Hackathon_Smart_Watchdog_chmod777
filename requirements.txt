@@ -10,7 +10,12 @@ openpyxl==3.1.5
 
 # --- AWS (Bedrock for extraction/RAG, Textract for OCR, S3 for the lake) ---
 boto3==1.40.32
-anthropic==1.5.0         # AnthropicBedrock：抽取／建議書／查詢三個落點
+# Required, not optional: all three AI landings go through AnthropicBedrock
+# (see src/smart_watchdog/bedrock.py -- the Mantle endpoint 404s on the
+# competition account). Without it `python run.py setup` leaves a venv that
+# passes every test and still cannot reach Bedrock, which is exactly the
+# failure you do not want to discover on stage.
+anthropic==1.5.0
 # agent 的串流走 boto3 的 converse_stream（原生支援文字與 tool 呼叫交錯），
 # 不走 anthropic。兩個 SDK 並存是刻意的——既有三個落點實測可用，不重寫。
 
