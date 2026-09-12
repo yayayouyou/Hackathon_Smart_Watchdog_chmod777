@@ -103,6 +103,18 @@ async def _lifespan(app_: FastAPI):
     if n:
         print(f"⚠️ {n} 個掃描任務因重啟中斷；預留額度維持佔用（當機的執行照樣花了錢）")
 
+    # Threads @標註的背景輪詢。**只有這個管道自動跑**，因為 /me/mentions 沒有
+    # 計費；新聞、PTT、Google 評論那幾條仍然要人按下掃描並授權金額。
+    # 啟動失敗不該讓服務起不來——輪詢是加值，不是前提。
+    try:
+        from ..realtime.mention_poller import start as _start_poller
+
+        state = _start_poller()
+        if not state.enabled and state.reason:
+            print(f"ℹ️ Threads 輪詢未啟動：{state.reason}")
+    except Exception as exc:  # noqa: BLE001
+        print(f"⚠️ Threads 輪詢啟動失敗（其餘功能不受影響）：{exc}")
+
     if _mcp_app is None:
         yield
     else:
@@ -316,6 +328,10 @@ def health() -> dict:
         data = None
     rt = (data or {}).get("realtime", {})
     return {
+        # 輪詢現況照實回報：沒開就說為什麼沒開，不要讓畫面把「管道沒開」
+        # 顯示成「最近沒有人通報」。
+        "threads_poller": __import__(
+            "smart_watchdog.realtime.mention_poller", fromlist=["status"]).status(),
         "payload_loaded": data is not None,
         "payload_path": str(PAYLOAD_PATH),
         "institutions": len((data or {}).get("points", [])),
