@@ -140,3 +140,30 @@ def test_article_kind_sorts_the_queue_without_judging_the_institution():
     assert article_kind("新莊吉尼爾幼兒園爆虐童 教育局重罰24萬") == "incident"
     assert article_kind("某幼兒園辦理親子活動 家長參與踴躍") == "routine"
     assert article_kind("幼兒園招生說明會將於週六舉行") == "routine"
+
+
+def test_another_city_does_not_block_when_the_district_corroborates():
+    """跨縣市否決排在候選比對之後，且只在沒有行政區佐證時生效。
+
+    真實貼文暴露的洞：一位家長寫「台北市那則不當管教的新聞，名字跟板橋的
+    ○○幼兒園好像，到底是不是同一家」。舊規則第一眼看到「台北市」就否決，
+    但那則貼文**正是**本模組說明開頭引的「衰被誤認虐童！林口幼兒園急澄清」
+    那個情境——擋掉它，等於擋掉我們最該看見的那一種。
+
+    「板橋的」把哪一家講明了；另一個縣市是被拿來對比的，不是事件所在地。
+    """
+    a = attribute("剛剛看到台北市那則不當管教的新聞，名字跟新莊的吉尼爾幼兒園好像，"
+                  "到底是不是同一家", INSTITUTIONS)
+    assert a.attributed and a.institution_id == "a1"
+    assert a.corroborated_by_town
+
+
+def test_another_city_still_blocks_a_chain_without_district_corroboration():
+    """何嘉仁那則必須維持拒配——鬆綁不能把記錄在案的誤配放回來。
+
+    連鎖園在多個縣市有分校，文中沒有出現該園登記的行政區（新店）時，
+    光憑名稱無從分辨是哪一家的事，所以否決照樣生效。
+    """
+    a = attribute("何嘉仁幼兒園又被抓！南港分校超收1倍多 北市府罰84萬", INSTITUTIONS)
+    assert not a.attributed
+    assert "其他縣市" in a.basis
