@@ -202,3 +202,50 @@ def test_agent_repaints_both_the_map_and_the_list() -> None:
     assert "SW.drawMarkers()" not in body, (
         "分派器仍單獨呼叫 drawMarkers；應改用同時重畫兩者的 repaint()"
     )
+
+
+def test_list_template_only_reads_fields_that_points_carry() -> None:
+    """清單樣板讀的每個欄位，**點位表**都必須有。
+
+    清單有兩種來源：預設是提案列（`/api/proposal`），助理點名機構時改成拿 id
+    去點位表取列。兩張表的欄位曾經不一樣——`tier` 只有提案列有——於是助理一
+    點名，`tagClass(p.tier)` 就在 `undefined.startsWith` 炸掉，
+    整句 `innerHTML = rows.map(...)` 從未執行，清單**留著上一次的全市提案**。
+
+    使用者看到的是「助理說蘆洲區 20 筆，清單列的是三峽、中和、板橋」，
+    而且畫面上沒有任何錯誤。要靠讀 console 才找得到，所以釘在這裡。
+
+    現在 `server.tier_of()` 會在載入時替每個點位補上 `tier`；這支測試守的是
+    「不要再有第二個只存在於提案列的欄位被樣板讀到」。
+    """
+    # 要看的是**前端實際收到的形狀**，不是磁碟上的檔案：`tier` 是
+    # `load_payload()` 在載入時蓋上去的衍生欄位，檔案裡本來就沒有。
+    # 直接讀檔會讓這支測試紅在一個不存在的問題上。
+    pytest.importorskip("fastapi")
+    import sys
+
+    sys.path.insert(0, str(ROOT / "src"))
+    from smart_watchdog.api.server import load_payload
+
+    try:
+        points = load_payload().get("points", [])
+    except FileNotFoundError:
+        pytest.skip("還沒 build payload")
+    if not points:
+        pytest.skip("payload 沒有點位")
+
+    src = (WEBAPP / "app.js").read_text(encoding="utf-8")
+    start = src.index("function drawList(")
+    body = src[start:src.index("\nfunction ", start + 1)]
+    # 樣板裡的 `p.欄位`。`p.d.replace(...)` 只取 `d`，後面的方法名不是欄位。
+    used = set(re.findall(r"\bp\.([a-zA-Z_][a-zA-Z0-9_]*)", body))
+
+    # 交集而非聯集：只要有一筆點位缺這個欄位，助理點到它就會炸。
+    have = set(points[0])
+    for p in points:
+        have &= set(p)
+    missing = sorted(used - have)
+    assert not missing, (
+        f"drawList 讀了點位表沒有的欄位 {missing}；"
+        "助理點名機構時清單會靜默停在上一次的內容"
+    )
