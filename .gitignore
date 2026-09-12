@@ -12,6 +12,10 @@ data/interim/
 # 提交的是 data/processed/fee_summary_ntpc.csv（104 KB，模型實際消費的彙總）。
 data/processed/fees_ntpc.csv
 data/processed/fee_totals_ntpc.csv
+# 公共化園逐項收費明細 11.5 萬列 13 MB，由 scripts/build_fee_detail_public.py 重抓。
+# 同理只提交彙總：data/processed/fee_basis_public.csv（352 KB，交叉分析實際消費的）
+# 與 fee_detail_public.manifest.json（含兩份產物的 sha256，可離線驗證重抓結果）。
+data/processed/fee_detail_public.csv
 data/processed/*.parquet
 
 # 競賽原始壓縮檔

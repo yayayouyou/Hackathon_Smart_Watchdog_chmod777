@@ -873,6 +873,190 @@ def _get_peer_comparison(_ctx: ToolContext, a: PeerArgs) -> ToolOutcome:
     )
 
 
+# ── 20–24. 資料室 ────────────────────────────────────────────────────
+#
+# 這五個 tool 一律走 `dataroom.store`，與 `/api/dataroom/*` **同一份查詢**。
+# 兩邊各寫一份的那天，就是助理講的數字與畫面上的數字開始不一致的那天。
+#
+# 它們只回答「這份文件上印的是什麼」。同儕比較、風險分數、法遵結論都不在
+# 這裡——那些是判讀，屬於卷宗與派工提案，混進來會讓「原件轉錄」這個定位失效。
+
+
+def _dr():
+    from ..dataroom import store
+
+    return store
+
+
+class DocListArgs(BaseModel):
+    institution: Optional[str] = Field(
+        default=None, description="園名簡稱或代號，例如「安溪」或 N01")
+    year: Optional[int] = Field(default=None, description="學年度，例如 113")
+    limit: int = Field(default=30, ge=1, le=100)
+
+
+def _list_documents(_ctx: ToolContext, a: DocListArgs) -> ToolOutcome:
+    """列出資料室裡有哪些文件。
+
+    既有的 `search_documents` 必須先有查詢字串，所以在它之前沒有任何 tool
+    能回答「我們手上有什麼」。
+    """
+    rows = _dr().loaded_reports(institution=a.institution, year=a.year)
+    items = [{
+        "report": r["id"], "code": r["code"], "institution": r["short_name"],
+        "academic_year": r["academic_year"], "year_kind": "學年度",
+        "extracted_pages": r["pages"], "tables": r["tables"],
+        "n_issues": r.get("n_issues"), "identity_ok": r.get("identity_ok"),
+        "models": r.get("models"), "dpi": r.get("dpi"),
+    } for r in rows[:a.limit]]
+    pend = _dr().pending()
+    return ToolOutcome(
+        payload={
+            "count": len(items), "items": items,
+            "pending": sorted(pend),
+            "note": "非營利園財報為純掃描影像，內容出自視覺抽取而非 PDF 文字層。"
+                    "公校決算書用年度制、一冊含多園，沒有頁級抽取，不在此清單。",
+        },
+        ui_action={"type": "navigate", "tab": "data"},
+    )
+
+
+class TableTypesArgs(BaseModel):
+    institution: Optional[str] = Field(default=None, description="園名簡稱或代號")
+    year: Optional[int] = Field(default=None, description="學年度")
+
+
+def _list_table_types(_ctx: ToolContext, a: TableTypesArgs) -> ToolOutcome:
+    """有哪幾種表單，各幾張。這是資料室選單本身。"""
+    store = _dr()
+    if not a.institution and a.year is None:
+        secs = store.overview()["sections"]
+        items = [{"section": s["key"], "section_zh": s["zh"],
+                  "tables": s["tables"], "reports": s["reports"]} for s in secs]
+    else:
+        rows = store.find_tables(institution=a.institution, year=a.year,
+                                 limit=400)
+        agg: dict[str, dict] = {}
+        for t in rows:
+            e = agg.setdefault(t["section"], {
+                "section": t["section"], "section_zh": t["section_zh"],
+                "tables": 0, "reports": set()})
+            e["tables"] += 1
+            e["reports"].add(t["report"])
+        items = sorted(({**v, "reports": len(v["reports"])} for v in agg.values()),
+                       key=lambda e: -e["tables"])
+    return ToolOutcome(
+        payload={
+            "count": len(items), "items": items,
+            "note": "「未分類明細」是標題無法歸類的表，刻意保留成一項而不藏起來。",
+        },
+        ui_action={"type": "open_table", "sections": [i["section"] for i in items[:8]]},
+    )
+
+
+class GetTableArgs(BaseModel):
+    uid: Optional[str] = Field(default=None, description="表的代號，例如 N01/113/p05/t1")
+    institution: Optional[str] = Field(default=None, description="園名簡稱或代號")
+    year: Optional[int] = Field(default=None, description="學年度")
+    section: Optional[str] = Field(
+        default=None, description="表單類型鍵，例如 personnel_detail")
+    nth: int = Field(default=1, ge=1, le=50, description="同類多張時取第幾張")
+
+
+def _get_table(_ctx: ToolContext, a: GetTableArgs) -> ToolOutcome:
+    """取一張表的全部內容，**含空白格**。
+
+    空白格是這個 tool 存在的理由之一：`nonprofit_pagewise_facts.csv` 對空白
+    是整列跳過，而「業務發展費預算欄空白」＝未編列預算，是一項稽查發現。
+    """
+    store = _dr()
+    uid = a.uid
+    if not uid:
+        rows = store.find_tables(section=a.section, institution=a.institution,
+                                 year=a.year, limit=a.nth)
+        if len(rows) < a.nth:
+            return ToolOutcome(payload={
+                "found": False,
+                "note": "找不到符合條件的表。這代表這份報告沒有抽到這一種表，"
+                        "不代表機構沒有編列——資料不足，不是低風險。",
+            })
+        uid = rows[a.nth - 1]["uid"]
+
+    t = store.get_table(uid)
+    if t is None:
+        return ToolOutcome(payload={"found": False, "uid": uid,
+                                    "note": "這張表不在已載入的資料裡。"})
+    rows_out = [{
+        "item_label": r.get("label"), "note_ref": r.get("note_ref"),
+        "values": r.get("values") or [],
+        # 前端與模型都要能分辨「空白」與「0」，所以另給一條布林陣列，
+        # 不要求讀者自己去判斷 null。
+        "blanks": [v is None for v in (r.get("values") or [])],
+        "percents": r.get("percents"),
+    } for r in t["rows"]]
+    return ToolOutcome(
+        payload={
+            "found": True, "uid": t["uid"], "report": t["report"],
+            "institution": t["institution"], "academic_year": t["academic_year"],
+            "section": t["section"], "section_zh": t["section_zh"],
+            "section_inherited": t["section_inherited"],
+            "title": t["title"], "context_heading": t["context_heading"],
+            "unit": t["unit"], "aligned": t["aligned"],
+            "citation": f'{t["report"]} p.{t["printed_page"]}',
+            "pdf_page": t["pdf_page"], "printed_page": t["printed_page"],
+            "period_labels": t["period_labels"], "rows": rows_out,
+            "page_issues": t["issues"],
+            "note": "數值為 null 代表原件那一格空白（未編列），不是 0。"
+                    "本表為原件轉錄，不含任何判讀。",
+        },
+        ui_action={"type": "open_table", "uid": t["uid"]},
+    )
+
+
+class CompareYearsArgs(BaseModel):
+    institution: str = Field(description="園名簡稱或代號，例如「安溪」")
+    section: str = Field(description="表單類型鍵，例如 personnel_detail")
+    max_rows: int = Field(default=30, ge=1, le=100)
+
+
+def _compare_table_across_years(_ctx: ToolContext, a: CompareYearsArgs) -> ToolOutcome:
+    """同一種表跨學年度對齊。
+
+    ⚠️ 這件事交給模型自己用多次 `get_table` 做一定會錯：學年度 N 的資產負債表
+    基準日是 (N+1)/7/31，而同一份報告裡兩張同名表期間不同是常態。所以這裡
+    **逐年回傳該年自己的 `period_labels` 原文**，不用 `academic_year` 代稱期間。
+    """
+    res = _dr().compare_years(a.institution, a.section, max_rows=a.max_rows)
+    return ToolOutcome(payload={
+        **res,
+        "note": res.get("note", "")
+        + " 期間請以各年度的 period_labels 原文為準，不要用學年度代稱。"
+          " unmatched_items 是只出現在部分年度的科目，不是消失。",
+    })
+
+
+class ExtractionNotesArgs(BaseModel):
+    institution: Optional[str] = Field(default=None, description="園名簡稱或代號")
+    year: Optional[int] = Field(default=None, description="學年度")
+    limit: int = Field(default=20, ge=1, le=50)
+
+
+def _get_extraction_notes(_ctx: ToolContext, a: ExtractionNotesArgs) -> ToolOutcome:
+    """抽取過程自報的疑點。
+
+    「完整抽取」這四個字唯一撐得住的方式，是系統講得出自己哪裡不完整。
+    """
+    rows = _dr().extraction_notes(institution=a.institution, year=a.year,
+                                  limit=a.limit)
+    return ToolOutcome(payload={
+        "count": len(rows), "items": rows,
+        "unresolved": sum(1 for r in rows if r["unresolved"]),
+        "note": "這些是抽取時「這一格看不清楚／自相矛盾」的自報疑點，"
+                "**不是機構的稽查發現**。標 unresolved 的是模型自己寫明"
+                "需要人工確認的，不可當成已確認的事實引用。",
+    })
+
+
 # ── 註冊 ─────────────────────────────────────────────────────────────
 
 _SPECS = [
@@ -918,6 +1102,16 @@ _SPECS = [
      "同儕財務比較：這一所在同年度同類型非營利園中的相對位置與逐項原因"
      "（相對位置，不是違規機率）",
      PeerArgs, _get_peer_comparison, False),
+    ("list_documents", "列出資料室裡有哪些已抽取的財務報告（不需先給查詢字串）",
+     DocListArgs, _list_documents, False),
+    ("list_table_types", "有哪幾種表單、各幾張，並把資料室的類型選單帶到對應位置",
+     TableTypesArgs, _list_table_types, False),
+    ("get_table", "取一張表的全部內容，含空白格（null＝未編列，不是 0）",
+     GetTableArgs, _get_table, False),
+    ("compare_table_across_years", "同一種表跨學年度對齊，期間逐年照抄不改寫",
+     CompareYearsArgs, _compare_table_across_years, False),
+    ("get_extraction_notes", "取抽取過程自報的疑點（不是機構的稽查發現）",
+     ExtractionNotesArgs, _get_extraction_notes, False),
 ]
 
 

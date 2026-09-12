@@ -18,10 +18,14 @@ python run.py frontend
 python run.py serve          # → http://127.0.0.1:8000
 ```
 
-⚠️ **`seed-users` 不可略過。** 動態版有全螢幕登入牆（`webapp/auth.js`），
-沒有帳號時地圖、派工提案、時間軸**一個都看不到**。帳密取自 `.env` 的
-`SEED_INSPECTOR_EMAIL` 與 `SEED_INSPECTOR_PASSWORD`，兩者缺一就不會建帳號
-（腳本會明白說缺什麼，不會預設一組寫死的密碼）。
+⚠️ **`seed-users` 不可略過。** 動態版有全螢幕登入牆（`webapp/auth.js`）。
+`.env` 要分別設定 `SEED_INSPECTOR_EMAIL/PASSWORD` 與
+`SEED_ADMIN_EMAIL/PASSWORD`，兩個 Email 不可相同；腳本會建立固定的
+「稽查人員」與「系統管理員」帳號。兩種身分目前共用相同介面、功能與全市查詢
+範圍，`role` 只作身分顯示與稽核 metadata，尚未作為權限邊界。
+
+本機／受控展示環境可設 `QUICK_LOGIN_ENABLED=true` 顯示兩個一鍵登入入口；正式
+環境維持 `false`。快速登入密碼不會進 HTML 或 JavaScript。
 
 建表本身是冪等的，`run.py serve` 啟動時也會做一次——所以「登入回 500、
 log 寫 `no such table: user_session`」那個狀況不會再發生。`seed-users`
@@ -46,8 +50,7 @@ log 寫 `no such table: user_session`」那個狀況不會再發生。`seed-user
 | **帳號登入**（agent 回饋要記得是誰） | ✅ | [MERGE_PLAN.md](MERGE_PLAN.md) §1 |
 | 容器化與 ECS 部署（目前縮到 0） | ✅ | [DEPLOY.md](DEPLOY.md) |
 
-驗證狀態：`python run.py test` → **379 passed**（本機 Windows）。
-那一條 skip 是 POSIX 的 flock 沒有逾時可測，與資料無關。
+驗證狀態：`python run.py test` → **525 passed, 12 skipped**（2026-09-12，本機 Windows）。
 `python run.py lint` → 全過。
 
 ---

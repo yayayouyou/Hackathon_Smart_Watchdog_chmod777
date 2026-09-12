@@ -119,8 +119,18 @@ def attribute(
 
     text = strip_publisher(headline)
 
+    # 「新北市」 contains 「北市」, which is in OTHER_CITIES to catch 「北市府」.
+    # Left unmasked, the city's own name vetoes attribution for the city's own
+    # institutions -- and every title in the registry begins with 新北市, so the
+    # full official name could never match itself. Masked only for this scan;
+    # `text` stays intact for the name matching below.
+    #
+    # Only 「新北市」 needs masking, not 「新北」: no other entry in OTHER_CITIES
+    # is a substring of it. Keeping the mask minimal means a headline about
+    # 新北投 (which is in 台北市) still hits 台北市 on its own terms.
+    scanned = text.replace("新北市", "")
     for city in OTHER_CITIES:
-        if city in text:
+        if city in scanned:
             return Attribution(None, "", f"標題提及其他縣市（{city}），不予歸屬", False)
 
     hits: list[tuple[dict, str, bool]] = []

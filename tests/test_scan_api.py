@@ -86,7 +86,10 @@ def _sha(path: pathlib.Path) -> str:
 def test_options_lists_every_channel_scope_and_preset(client):
     """主控台的每一個選項都要有來源。少一個管道，操作者就以為那件事沒得做。"""
     o = client.get("/api/scan/options").json()
-    assert len(o["channels"]) == 6
+    # 7 條：新聞、PTT、Apify Threads、Google 評論、Threads 關鍵字、
+    # Threads @標註、第三方服務。關鍵字與 @標註刻意分成兩條——同一把權杖，
+    # 但一條要過 App Review、一條不用，混成一條就看不出差別。
+    assert len(o["channels"]) == 7
     assert len(o["scopes"]) == len(plan.SCOPES) == 7
     assert len(o["keyword_presets"]) == 5
     assert set(o["districts"]) == set(DISTRICTS)

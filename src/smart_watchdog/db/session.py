@@ -63,9 +63,60 @@ def engine() -> Engine:
     return _engine
 
 
+def _add_column_sql(table: str, column, dialect) -> str:
+    """一句 `ALTER TABLE ... ADD COLUMN`，或者拒絕。
+
+    只接受兩種欄位：可為 NULL 的，以及帶 `server_default` 的。其餘（NOT NULL
+    又沒有預設值）在既有列上無解——SQLite 會直接拒絕，而隨手塞一個預設值就是
+    替既有資料編造內容。那種變更要人來決定，所以這裡丟例外而不是安靜跳過。
+    """
+    spec = f'ALTER TABLE "{table}" ADD COLUMN "{column.name}" {column.type.compile(dialect)}'
+    default = getattr(column.server_default, "arg", None)
+    if column.nullable:
+        return spec
+    if isinstance(default, str):
+        return f"{spec} NOT NULL DEFAULT '{default}'"
+    raise RuntimeError(
+        f"{table}.{column.name} 是 NOT NULL 又沒有 server_default，"
+        "無法自動補到既有表上——既有列要填什麼必須由人決定。")
+
+
+def _add_missing_columns(eng: Engine) -> list[str]:
+    """替既有表補上後來才加的欄位，回傳實際執行的 DDL。
+
+    `create_all()` 只建**還不存在的表**；既有表少了欄位它一句話也不會說，
+    於是第一個 SELECT 才會以 `no such column` 炸掉，而那時人已經在 demo 了。
+
+    沒有 alembic（`models.py` 說明第 3 點），而這裡實際需要的一直是同一種變更：
+    加一個新欄位。所以只做加法——不改型別、不改可否為空、不刪任何東西，
+    既有的值一個都不會被碰到。真正的 schema 演進（改型別、搬資料）不在這裡做。
+    """
+    from sqlalchemy import inspect as sa_inspect
+
+    inspector = sa_inspect(eng)
+    existing = set(inspector.get_table_names())
+    applied: list[str] = []
+    for table in Base.metadata.sorted_tables:
+        if table.name not in existing:
+            continue        # create_all 剛建的，欄位必然齊全
+        have = {c["name"] for c in inspector.get_columns(table.name)}
+        for column in table.columns:
+            if column.name in have:
+                continue
+            sql = _add_column_sql(table.name, column, eng.dialect)
+            with eng.begin() as conn:
+                conn.exec_driver_sql(sql)
+            applied.append(sql)
+    return applied
+
+
 def init_db() -> None:
-    """建表。沒有 alembic，理由見 `models.py` 的模組說明第 3 點。"""
-    Base.metadata.create_all(engine())
+    """建表，並替既有表補上新欄位。沒有 alembic，理由見 `models.py` 說明第 3 點。"""
+    eng = engine()
+    Base.metadata.create_all(eng)
+    for sql in _add_missing_columns(eng):
+        # 動到既有資料庫的事情不該安靜發生，即使只是加一欄。
+        print(f"[db] {sql}")
 
 
 def get_db() -> Iterator[Session]:

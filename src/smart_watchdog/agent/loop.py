@@ -35,10 +35,13 @@ from .narration import soften, strip_markup
 from .protocol import AgentBackend, TextDelta, ToolDone, ToolUse, TurnEnd
 from .registry import ToolContext, ToolDenied, ToolInvalid, ToolRegistry
 
-MAX_STEPS = 8
-# 每一步的逾時。實測一步約 2 秒，45 秒是給長篇收尾留的餘裕；
-# 真正生效的地方是 BedrockAgentBackend 建 client 時的 Config。
-STEP_TIMEOUT_S = 45
+MAX_STEPS = 12
+# 這個值是 botocore 的 **read timeout**，也就是「兩個串流片段之間最多等多久」，
+# 不是一整輪的上限。實測一步約 2 秒，10 秒是五倍餘裕。
+# ⚠️ 它真正生效的地方是 `BedrockAgentBackend` 建 client 時的 Config，不是逐次
+# 呼叫時傳的參數——曾經只傳參數而沒設 Config，於是走 botocore 預設的 60 秒
+# 加上重試，一次沒回應會卡住約三分鐘，而畫面只停在「整理中」。
+STEP_TIMEOUT_S = 10
 
 SYSTEM_PROMPT = """你是新北市教育局風險預警系統的操作助手。
 

@@ -171,7 +171,8 @@ def test_scripts_are_loaded_in_dependency_order() -> None:
     """
     html = _html()
     order = re.findall(r'<script src="/static/([a-z]+)\.js"></script>', html)
-    for later, earlier in (("agent", "app"), ("agent", "auth"), ("memos", "app")):
+    for later, earlier in (("agent", "app"), ("agent", "auth"), ("memos", "app"),
+                           ("social", "app")):
         if later in order and earlier in order:
             assert order.index(earlier) < order.index(later), (
                 f"{earlier}.js 必須排在 {later}.js 前面"
@@ -519,4 +520,114 @@ def test_switching_between_rooms_does_not_refit_the_map() -> None:
     fn = fn[:fn.index("\n  function ")]
     assert fn.index("fitNTPC") < fn.index("if (done) done();"), (
         "完成回呼排在重算之前，助理接著做的地圖移動會被拉回全市"
+    )
+
+
+def test_social_panel_sits_above_the_scan_console() -> None:
+    """輿情室的順序即是使用順序：先看已經收到的，再決定要不要花錢掃。
+
+    `socialwrap` 讀庫是免費的；`scanwrap` 底下每一次執行都會計費。把花錢的
+    那一塊放在上面，等於請人先付錢再看手上有什麼。
+    """
+    html = _html()
+    assert "socialwrap" in html and "scanwrap" in html
+    assert html.index('id="socialwrap"') < html.index('id="scanwrap"')
+
+
+def test_social_panel_is_opened_when_the_room_is_entered() -> None:
+    """`SWSocial.open()` 沒被呼叫時，輿情室上半會永遠停在「載入中…」。
+
+    這是 agent.js 那次事故的同一個形狀：檔案載入了、函式定義了，但沒有人叫它。
+    """
+    app = (WEBAPP / "app.js").read_text(encoding="utf-8")
+    assert "window.SWSocial" in app, "showPane 沒有喚醒社群聲音面板"
+    assert "window.SWSocial = { open }" in \
+        (WEBAPP / "social.js").read_text(encoding="utf-8")
+
+
+def test_the_voice_room_no_longer_advertises_threads_as_pending() -> None:
+    """大廳那句室況是給評審與使用者看的第一行字，接完就不能再說「待接」。"""
+    lobby = (WEBAPP / "lobby.js").read_text(encoding="utf-8")
+    assert "Threads 待接" not in lobby
+
+
+def test_no_signal_is_never_rendered_as_a_pass() -> None:
+    """無訊號不是合格。
+
+    style.css 的 --k0 註解已經把同一件事講過：0 件不等於安全，把它畫成綠色
+    等於發了 730 張合格證。社群面板沿用 .insuff（虛線框、中性色），所以這裡
+    釘住「不要哪天有人順手改成綠色或打勾」。
+
+    只擋**視覺上的合格記號**，不擋字詞：面板裡就有一句「這是『此管道無訊號』，
+    不是『全市無異常』」，那是在否定那個說法。用字詞黑名單會把否定句判成違規，
+    第一版就是這樣紅的——斷言要問的是畫面長什麼樣，不是出現過哪些字。
+    """
+    src = (WEBAPP / "social.js").read_text(encoding="utf-8")
+    assert "insuff" in src, "無訊號的樣式應沿用 .insuff，不要另外發明合格樣式"
+    for banned in ("✓", "✔", "☑", "var(--good)"):
+        assert banned not in src, f"社群面板不得用「{banned}」把無訊號畫成合格"
+
+
+def test_no_two_scripts_declare_the_same_global() -> None:
+    """傳統腳本共用同一個全域詞法作用域，同名的頂層 const 會讓後載入的那支
+    **整支 SyntaxError 而不執行**。
+
+    這個坑踩過兩次：第一次是 `usd`（app.js:1087 留了註解），第二次是 `S`
+    —— social.js 與 scan.js 都宣告了它，結果 window.SWScan 是 undefined、
+    掃描主控台整塊是死的，而畫面上完全看不出來，只有主控台一行錯誤。
+
+    修法是把整支包進 IIFE（見 scan.js 檔頭）。這裡守的是「不要再有第三次」。
+    """
+    import collections
+
+    top = re.compile(r"^(?:const|let|var)\s+([A-Za-z_$][\w$]*)", re.M)
+    owners: dict[str, list[str]] = collections.defaultdict(list)
+    for js in sorted(WEBAPP.glob("*.js")):
+        src = js.read_text(encoding="utf-8")
+        # 包在 IIFE 裡的檔案，頂層宣告已經是私有的，不參與全域命名空間。
+        if re.search(r"^\(function\s*\(\)\s*\{", src, re.M):
+            continue
+        for name in set(top.findall(src)):
+            owners[name].append(js.name)
+
+    clashes = {n: f for n, f in owners.items() if len(f) > 1}
+    assert not clashes, (
+        "這些頂層名稱在多支未包 IIFE 的腳本裡重複宣告，後載入的那支不會執行："
+        f"{clashes}"
+    )
+
+
+def test_dataroom_class_names_are_namespaced_or_deliberately_reused() -> None:
+    """資料室自己造的 class 一律帶 dr／mx／ftab 前綴，其餘必須是刻意復用的。
+
+    `<tr class="grp">` 撞上了 style.css 早就有的全域 `.grp{display:flex}`：
+    套到 <tr> 上會讓每個儲存格變成 flex item、各自撐成整列寬再往下堆（實測
+    區段標題列被排成 978x11 三層）。畫面上看起來只是「多了一條細白帶」，
+    很難聯想到是 class 撞名。
+
+    這是同一類問題的第三次（前兩次是 JS 全域的 `usd` 與 `S`），所以釘起來。
+    """
+    js = (WEBAPP / "dataroom.js").read_text(encoding="utf-8")
+    emitted = set()
+    for m in re.finditer(r'class="([^"]*)"', js):
+        for tok in m.group(1).split():
+            if re.fullmatch(r"[a-z][a-z0-9-]*", tok):
+                emitted.add(tok)
+    assert emitted, "抓不到任何 class，正則可能過時了"
+
+    own = re.compile(r"^(dr|mx|ftab)")
+    # 刻意復用既有元件的 class。改這份清單前先確認那個 class 在 style.css 裡
+    # 的定義套到你要用的標籤上不會出事。
+    shared = {
+        "sec", "kv", "insuff", "badge", "row", "r", "m", "list", "item",
+        "ord", "nm", "rk", "why", "ev", "evh", "tag", "p", "w", "g",
+        "soc-load", "thinking", "spinner", "costbtn", "pop", "preset",
+        "rh-src", "rail-eyebrow",
+        # 只出現在 .ftab 內，由父選擇器限定範圍
+        "n", "blank", "neg", "tick", "odd",
+    }
+    stray = sorted(c for c in emitted if not own.match(c) and c not in shared)
+    assert not stray, (
+        f"這些 class 既沒有 dr／mx／ftab 前綴，也不在刻意復用的清單裡：{stray}。"
+        "全域 CSS 可能已經有同名規則——加前綴，或確認復用是安全的。"
     )

@@ -93,9 +93,9 @@ TASKS = [
          _s("setup_raw_data.py"), group="準備"),
     Task("check-credentials", "實測 .env 裡的每一把金鑰",
          _s("check_credentials.py"), group="準備"),
-    # 建表是冪等的，服務啟動時也會做一次；這個任務多做的是**建帳號**
-    # （取 .env 的 SEED_INSPECTOR_EMAIL／PASSWORD）。沒有帳號就登不進助理頁。
-    Task("seed-users", "建立資料表與稽查員帳號（冪等；助理與登入需要）",
+    # 建表是冪等的，服務啟動時也會做一次；這個任務多做的是建立兩個固定身分帳號
+    # （取 .env 的 SEED_INSPECTOR_* 與 SEED_ADMIN_*）。兩者目前同介面、同權限。
+    Task("seed-users", "建立稽查人員與管理員帳號（冪等；登入需要）",
          _s("seed_users.py"), group="準備"),
     Task("bedrock-check", "實測 Bedrock：憑證、可用模型、三個 AI 落點",
          _s("check_bedrock.py"), group="準備", needs_network=True),
@@ -132,6 +132,10 @@ TASKS = [
     # ── 檢核與訊號 ────────────────────────────────────────────────
     Task("compliance", "拿每份報告自己的附註二檢核它自己（軌 B 的核心）",
          _s("run_compliance_checks.py"), in_pipeline=True),
+    # 前一步只讀一份文件，文件自我一致就查不出東西。這一步把決算／財報接上
+    # 收費明細與園所基本資料，算出決算書本身沒有的量（推估在園人數、每生政府投入）。
+    Task("crosscheck", "決算／財報 × 收費明細 × 園所基本資料的跨來源查核",
+         _s("run_crosscheck.py"), in_pipeline=True),
     Task("reserve", "準備金專戶缺口的跨年度走勢（區分時間差與缺口累積）",
          _s("check_reserve_timeseries.py"), in_pipeline=True),
     Task("personnel", "人事費短支與業務發展準備轉列的併存情形",
@@ -153,6 +157,9 @@ TASKS = [
          _s("build_document_index.py"), in_pipeline=True),
     Task("timeline", "時間軸回測：每年重訓一次，看當時的排序後來對不對",
          _s("build_timeline.py"), in_pipeline=True),
+    Task("dataroom-slice",
+         "資料室切片：把 2,245 頁抽取整理成依表單類型分類的可瀏覽形狀",
+         _s("build_dataroom_slice.py"), in_pipeline=True),
 
     # ── 輸出 ──────────────────────────────────────────────────────
     Task("priority", "組裝稽查優先序——系統真正的輸出",
@@ -179,10 +186,16 @@ TASKS = [
          _s("validate_extraction.py"), group="量測", needs_raw=True),
     Task("validate-anomaly", "異常排序的三項驗證：Top-K、穩定性、LOO 敏感度",
          _s("validate_nonprofit_anomaly.py"), group="量測"),
+    Task("validate-crosscheck", "交叉比對的發現有沒有領先後續裁罰（時序切分）",
+         _s("validate_crosscheck_leadtime.py"), group="量測"),
 
     # ── 外部（需要網路）──────────────────────────────────────────
     Task("fee-table", "重抓 109 到 114 學年度收費明細（約 10 分鐘）",
          _s("build_fee_table.py"), group="外部", needs_network=True),
+    # fee-table 只留「全日班／上學期的全學期總收費」一個數字，服務軌 A 的漲幅特徵。
+    # 跟財報對帳需要逐項（公校決算的學雜費只含學費＋雜費），故另抓一份公共化園專用。
+    Task("fee-detail-public", "抓公共化園逐項收費明細（財報交叉分析用，約 5 分鐘）",
+         _s("build_fee_detail_public.py"), group="外部", needs_network=True),
     Task("evaluations", "全量抓取官方評鑑紀錄",
          _s("download_evaluation_ntpc.py"), group="外部", needs_network=True),
     Task("snapshots", "更新或採認外部公開資料快照",
@@ -193,6 +206,11 @@ TASKS = [
          _s("download_mirror_extras.py"), group="外部", needs_network=True),
     Task("sweep", "掃一次即時管道並記錄提及",
          _s("run_realtime_sweep.py"), group="外部", needs_network=True),
+    # 標 needs_network 是給人看的前置條件，講的是預設路徑：沒有網路時
+    # `-- --fixture tests/fixtures/threads_mentions.json` 一樣跑得完，
+    # 決賽現場的主線其實是那一條。
+    Task("threads-sync", "同步 Threads 上 @標註官方帳號的民眾通報進資料庫",
+         _s("sync_threads_mentions.py"), group="外部", needs_network=True),
 
     # ── 開發 ──────────────────────────────────────────────────────
     Task("test", "跑測試套件", ["-m", "pytest", "tests/", "-q"], group="開發"),

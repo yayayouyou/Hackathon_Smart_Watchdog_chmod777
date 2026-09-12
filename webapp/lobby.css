@@ -26,12 +26,46 @@
 
 /* 房間：滑過才亮，點下去才進去 */
 .room-hit{cursor:pointer}
+/* ⚠️ 焦點框不能畫在 <g> 上。SVG 群組的 outline 包的是**所有子元素的 bbox**，
+   而這個群組含門弧線與「進入 ›」文字（都畫在牆外），於是焦點框會往中庭多出
+   一大塊——看起來就是「黑框超出房間」。改成畫在房間矩形本身。 */
+.room-hit:focus{outline:none}
+.room-hit:focus-visible{outline:none}
+.room-hit:focus-visible .room-fill{stroke:var(--seal);stroke-width:3;
+  vector-effect:non-scaling-stroke}
 .room-fill{transition:opacity .18s}
-.room-hit:hover .room-fill{opacity:.16}
-.room-door{opacity:0;transition:opacity .18s}
+.room-hit:hover .room-fill{opacity:.24}
+/* 門與「進入」以前是 opacity:0、滑過才出現——等於要先猜到這裡可以點，
+   才找得到可以點的地方。改成常駐但安靜：平常淡，滑過才實心。 */
+.room-door{opacity:.45;transition:opacity .18s}
 .room-hit:hover .room-door{opacity:1}
-.room-enter{opacity:0;transition:opacity .18s}
+.room-enter{opacity:.6;transition:opacity .18s}
 .room-hit:hover .room-enter{opacity:1}
+/* 門墊在滑過時亮起來，游標還沒進到房間就先看得到「入口在這裡」。 */
+.room-mat{opacity:.55;transition:opacity .18s}
+.room-hit:hover .room-mat{opacity:.95}
+
+/* 進場提示：五個入口依序亮一下再回到常駐狀態，只播一次。
+   第一次看到這張平面圖的人不會知道整格都可以點；常駐的「進入」解決了
+   「找不找得到」，這個依序的動作解決「會不會注意到」。
+   用 CSS animation 而不是 JS 計時器：不佔主執行緒，也不會跟進房的
+   FLIP 過渡搶時間。 */
+@keyframes enter-cue{
+  0%,100%{opacity:.6}
+  35%,65%{opacity:1}
+}
+@keyframes mat-cue{
+  0%,100%{opacity:.55}
+  35%,65%{opacity:1}
+}
+/* ⚠️ 動畫掛在 .lobby.cue 底下，由 JS 播完後把 cue 拿掉，而不是用
+   `.zooming{animation:none}` 去擋。CSS 動畫在 animation 屬性被移除又加回來時
+   會**重新播放**：那樣寫的話每次從房間回中庭，五個入口都會再閃一輪。 */
+.lobby.cue .room-enter{animation:enter-cue 1.1s var(--cue-delay,0s) 2 ease-in-out}
+.lobby.cue .room-mat{animation:mat-cue 1.1s var(--cue-delay,0s) 2 ease-in-out}
+@media (prefers-reduced-motion:reduce){
+  .lobby.cue .room-enter,.lobby.cue .room-mat{animation:none}
+}
 
 /* ⚠️ 縮放做在**外層 HTML 元素**上，不是 SVG 的 <g>。
    第一版對 <g> 的 transform 屬性做過渡：那條路徑瀏覽器每一幀都要重新光柵化
@@ -49,8 +83,19 @@
    最長 67ms。放大本身就會把其他房間推出畫面，那個淡出是純裝飾。 */
 
 /* 守護犬在縮放群組之外：牠要能獨立走位，不跟著房間一起被放大變形 */
-#dog{transition:transform .42s cubic-bezier(.33,.9,.34,1)}
+#dog{transition:transform .42s cubic-bezier(.33,.9,.34,1),opacity .28s}
 #dog.walk{transition-duration:.52s}
+
+/* 放大時整層牆與中庭收掉，只留目標那一間。
+   用 visibility 而不是 opacity 過渡：它們在被縮放的子樹裡，
+   對 opacity 做過渡會讓每一幀重新光柵化整張平面圖（實測掉 13/83 幀）。 */
+/* 放大時整層退出繪製樹，不是只是看不見。中庭遊戲場讓這一層從十幾個元素
+   變成四十幾個，visibility:hidden 仍留在樹裡要參與合成，實測過渡從
+   0 幀掉幀變成 4 幀 33ms。display:none 之後回到 0。
+   （.room-hit 那邊不能這樣做——目標房要留著被放大。） */
+.lobby.zooming #planbg{display:none}
+.lobby.zooming .room-hit{visibility:hidden}
+.lobby.zooming .room-hit.target{visibility:visible}
 
 /* 中庭立牌 */
 .plan-card{fill:var(--panel);stroke:var(--rule);stroke-width:1.4}
@@ -77,23 +122,35 @@
   border-radius:2px;padding:0 5px}
 
 /* ── 室內：左側樓層索引 ────────────────────────────────── */
-.rail{width:214px;flex:none;background:var(--panel);border-right:1px solid var(--rule);
+/* 寬度由 main 的格線決定（--railw），這裡不再自己寫死——寫死的話拖曳
+   會拖到 grip 動、欄不動。右側分隔線也交給 grip，不要畫兩條。 */
+.rail{min-width:0;flex:none;background:var(--panel);overflow:hidden;
   display:flex;flex-direction:column;padding:11px 10px;gap:14px;min-height:0}
-.rail-back{display:flex;align-items:center;gap:8px;padding:7px 9px;
-  border:1px solid var(--rule);border-radius:5px;font-size:12px;color:var(--ink-2);
-  background:var(--panel);width:100%}
-.rail-back:hover{border-color:var(--seal);color:var(--ink)}
-.rail-eyebrow{font-size:10px;letter-spacing:.1em;color:var(--ink-4);padding:0 4px 3px}
-.rail-list{display:flex;flex-direction:column;gap:2px}
-.rail-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:5px;
-  font-size:13px;color:var(--ink-2);width:100%;text-align:left}
-.rail-item:hover{background:var(--paper);color:var(--ink)}
+/* 回中庭：整支索引裡唯一的「離開」動作，所以是唯一填滿顏色的那一顆。
+   用 --seal（守護犬項圈、品牌主色）而不是任何一間室的顏色——它不屬於任何
+   一間室，而五間室的顏色刻意都避開紅色系，兩者不會被讀混。 */
+.rail-back{display:flex;align-items:center;gap:8px;padding:10px 11px;
+  border:0;border-radius:6px;font-size:13.5px;font-weight:600;color:#fff;
+  background:var(--seal);width:100%;cursor:pointer;transition:filter .12s}
+.rail-back:hover{filter:brightness(1.12)}
+.rail-back svg{opacity:.9}
+.rail-eyebrow{font-size:11px;letter-spacing:.1em;color:var(--ink-4);padding:0 4px 4px}
+.rail-list{display:flex;flex-direction:column;gap:3px}
+/* 每一列左緣一條該室的色條，與中庭平面圖的門楣同色。未選中時淡、選中時實心，
+   所以「我在哪一間」不必靠讀字。 */
+.rail-item{display:flex;align-items:center;gap:10px;padding:10px 11px;
+  border-radius:5px;font-size:14.5px;color:var(--ink-2);width:100%;
+  text-align:left;position:relative;overflow:hidden;
+  box-shadow:inset 3px 0 0 color-mix(in srgb, var(--rc, var(--ink-4)) 42%, transparent);
+  transition:background .12s,color .12s,box-shadow .12s}
+.rail-item:hover{background:color-mix(in srgb, var(--rc, var(--ink-4)) 9%, var(--panel));
+  color:var(--ink);box-shadow:inset 3px 0 0 var(--rc, var(--ink-4))}
 /* 室號留著：它對得上中庭平面圖上的編號，「我在哪一間」才是連續的 */
-.rail-no{font-family:var(--mono);font-size:10px;color:var(--ink-4);width:16px;flex:none}
-.rail-n{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
-.rail-item[aria-current="true"]{background:var(--seal-soft);color:var(--ink);
-  font-weight:500;box-shadow:inset 0 0 0 1px var(--seal)}
-.rail-item[aria-current="true"] .rail-no{color:var(--seal)}
+.rail-no{font-family:var(--mono);font-size:11.5px;font-weight:600;
+  color:var(--rc, var(--ink-4));width:19px;flex:none}
+.rail-item[aria-current="true"]{
+  background:color-mix(in srgb, var(--rc, var(--ink-4)) 13%, var(--panel));
+  color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--rc, var(--ink-4))}
 
 /* 室內工具：只屬於這一室的控制項。現在那個到處飄的圖層面板，去處就是這裡。 */
 .rail-tools{display:flex;flex-direction:column;gap:7px;border-top:1px solid var(--rule);
@@ -102,9 +159,8 @@
 /* 狗窩：每一室左下角都有一個，守護犬進房後就躺在裡面。
    位置與中庭平面圖上各室左下角的狗窩對得起來——牠是「跑進那一格」，
    不是「消失再出現」。 */
-.rail-kennel{margin-top:auto;display:flex;align-items:flex-end;gap:8px;padding:9px;
-  background:var(--paper);border-radius:6px;position:relative;overflow:hidden}
-.rail-kennel .txt{font-size:10.5px;color:var(--ink-3);line-height:1.45;padding-bottom:2px}
+.rail-kennel{margin-top:auto;display:flex;align-items:flex-end;justify-content:center;
+  padding:9px;background:var(--paper);border-radius:6px;position:relative;overflow:hidden}
 /* 躺下的姿勢：進房是「到家了」，不是「立正待命」。 */
 .kennel-dog{animation:kennel-in .42s cubic-bezier(.33,.9,.34,1) both}
 @keyframes kennel-in{from{transform:translateX(-26px);opacity:0}to{transform:none;opacity:1}}
@@ -120,20 +176,6 @@
 }
 
 /* 待設計的室：外殼一致，內容誠實說明現況。 */
-.todo{padding:20px 22px;overflow-y:auto;min-height:0;display:flex;
-  flex-direction:column;gap:15px}
-.todo-head{display:flex;align-items:baseline;gap:10px}
-.todo-head b{font-size:15px}
-.todo-head span{font-size:11.5px;color:var(--ink-4)}
-.todo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:11px}
-.todo-tile{border:1px solid var(--rule);border-radius:6px;padding:11px 13px;
-  background:var(--panel);display:flex;flex-direction:column;gap:3px}
-.todo-tile .k{font-size:10.5px;color:var(--ink-3);letter-spacing:.06em}
-.todo-tile .v{font-family:var(--mono);font-size:21px;font-weight:500;
-  font-variant-numeric:tabular-nums}
-.todo-tile .s{font-size:10.5px;color:var(--ink-4)}
-.todo-note{margin:0;font-size:11.5px;color:var(--ink-3);line-height:1.6;
-  border-top:1px solid var(--rule);padding-top:12px}
 
 /* 對話泡泡跟著守護犬移動；進房時淡出（不然它會一路飄進房間） */
 #dogtip{transition:transform .42s cubic-bezier(.33,.9,.34,1),opacity .2s}

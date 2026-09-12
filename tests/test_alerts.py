@@ -75,6 +75,29 @@ def test_another_city_blocks_attribution():
     assert "其他縣市" in a.basis
 
 
+def test_our_own_city_name_does_not_block_attribution():
+    """「新北市」 contains 「北市」, and 「北市」 is on the other-city veto list.
+
+    Unmasked, the veto fired on the city's own name: every institution title in
+    the registry starts with 新北市, so the full official name could never match
+    itself, and any post written 「新北市○○幼兒園」 was refused. News headlines
+    mostly write 「新北」 and rarely tripped it; Threads posts from parents write
+    the full city name constantly, which is how this surfaced.
+    """
+    for headline in ("新北市私立吉尼爾幼兒園遭家長投訴",
+                     "新北市新莊區吉尼爾幼兒園超收教材費"):
+        a = attribute(headline, INSTITUTIONS)
+        assert a.attributed, f"{headline} 應歸屬卻被拒：{a.basis}"
+        assert a.institution_id == "a1"
+
+
+def test_masking_our_city_still_lets_a_real_other_city_veto():
+    """The mask is 「新北市」 only -- it must not swallow a genuine 台北市."""
+    a = attribute("新北市吉尼爾幼兒園與台北市某園同時被查", INSTITUTIONS)
+    assert not a.attributed
+    assert "台北市" in a.basis
+
+
 def test_name_must_sit_before_the_word_kindergarten():
     """A bare occurrence is not a naming; 太平洋新聞網 contains 太平洋."""
     assert not attribute("太平洋沿岸降雨", INSTITUTIONS).attributed

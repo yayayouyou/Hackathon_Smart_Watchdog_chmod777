@@ -16,6 +16,9 @@ web app 沒有這些限制，所以這一層一上來，Google 地圖、滾輪�
     GET  /api/institutions/{id}  單園卷宗（含財報發現、員工、即時聲音）
     GET  /api/proposal?n=20      派工提案，與前端同一套分層規則
     GET  /api/realtime/{id}      即時重新掃描該園（不吃快取）
+    GET  /api/social             最近有社群聲音的機構（依時間，非排行榜）
+    GET  /api/social/{id}        單園社群聲音全貌（契約見 docs/api/social-panel.md）
+    GET  /api/social/unattributed 歸屬拒配的通報佇列（待人工認園）
     POST /api/chat               自然語言查詢
     GET  /api/timeline           時間軸回測：每年重訓一次的實測成績
     GET  /api/timeline/{as_of}   某一格的逐園排序與事後命中
@@ -124,10 +127,12 @@ _state: dict[str, Any] = {"payload": None, "index": {}, "land": None}
 # 掃描主控台與證據端點。在此掛載而非讓子模組匯入 server，避免循環匯入。
 from . import agent as _agent  # noqa: E402
 from . import auth as _auth  # noqa: E402
+from . import dataroom as _dataroom  # noqa: E402
 from . import dossier as _dossier  # noqa: E402
 from . import evidence as _evidence  # noqa: E402
 from . import explore as _explore  # noqa: E402
 from . import scan as _scan  # noqa: E402
+from . import social as _social  # noqa: E402
 
 app.include_router(_scan.router)
 app.include_router(_explore.router)
@@ -135,6 +140,8 @@ app.include_router(_auth.router)
 app.include_router(_agent.router)
 app.include_router(_evidence.router)
 app.include_router(_dossier.router)
+app.include_router(_social.router)
+app.include_router(_dataroom.router)
 
 
 # 優先序梯階。**這是唯一定義**：`/api/proposal` 靠它決定挑選順序，
@@ -304,91 +311,12 @@ def realtime_now(institution_id: str) -> dict:
 def reviews(institution_id: str) -> dict:
     """Google 評論，開卷宗時即時取用。
 
-    量測結果決定了它的定位：裁罰 ≥5 件的園評分中位 4.20、無裁罰者 4.60
-    （p=0.061，不顯著），而個案完全不具鑑別力——16 件裁罰的幼苗國際 4.7 星、
-    13 件的南蒂亞 4.9 星、因虐童停招的吉尼爾 4.4 星。**不是風險訊號**，
-    是稽查員到場前值得看一眼的家長觀感。
+    實作搬到 `api/social.py::reviews_of()`，因為社群面板要用同一份結果。
+    **回傳形狀完全不變**——搬過去是為了不要有第二份：各寫一份的那天，就是
+    卷宗與面板對同一家園講出不同星等的那天。額度閘門與「不是風險訊號」那句
+    定位都在那支函式裡。
     """
-    import csv
-
-    payload()
-    key = config.get("GOOGLE_MAPS_API_KEY")
-    p = _state["index"].get(institution_id)
-    if not p:
-        raise HTTPException(404, f"查無機構 {institution_id}")
-    if not key:
-        return {"available": False, "reason": "未設定 GOOGLE_MAPS_API_KEY",
-                "reviews": []}
-
-    place_id = ""
-    table = ROOT / "data/processed/place_ids_ntpc.csv"
-    if table.exists():
-        with table.open(encoding="utf-8") as fh:
-            for row in csv.DictReader(fh):
-                if row["id"][:8] == institution_id or row["id"] == institution_id:
-                    place_id = row.get("place_id", "")
-                    break
-    if not place_id:
-        return {"available": False,
-                "reason": "尚未解析 place_id（執行 scripts/resolve_place_ids.py）",
-                "reviews": []}
-
-    import json as _json
-    import urllib.error
-    import urllib.request
-
-    # 免費額度是全域的，計費器就必須是全域的——否則「本月 138/1,000」在上線
-    # 第一天就是錯的，而 1,000 次會在某個沒人按過「掃描」的下午被開卷宗耗盡。
-    from ..realtime import ledger as _ledger
-
-    # 記帳不等於管制。開卷宗這條路徑先前只記數不檢查，免費額度用罄後
-    # 每開一次就是一次計費請求，而且完全不受任何上限約束。
-    from ..realtime import pricing as _pricing
-
-    unit = _pricing.PLACES_WITH_REVIEWS[1]
-    gate = _ledger.check(unit)
-    if not gate["ok"]:
-        return {"available": False,
-                "reason": f"查詢額度已用盡：{gate['reason']}",
-                "reviews": [],
-                "note": "這是額度限制，不是「這家園沒有評論」。"}
-    _ledger.note_call("places_reviews", 1, detail=f"dossier:{institution_id}")
-    _rid = _ledger.reserve(unit, "places_reviews", "dossier",
-                           detail=institution_id)
-
-    req = urllib.request.Request(
-        f"https://places.googleapis.com/v1/places/{place_id}",
-        headers={"X-Goog-Api-Key": key,
-                 "X-Goog-FieldMask": "id,displayName,rating,userRatingCount,"
-                                     "googleMapsUri,reviews"})
-    try:
-        with urllib.request.urlopen(req, timeout=20) as r:
-            data = _json.loads(r.read(500_000))
-    except urllib.error.HTTPError as e:
-        # 請求送出了就是計費了，即使回錯誤——所以結算成實付而不是釋放。
-        _ledger.settle(_rid, unit, provider_ref=f"dossier:{institution_id}")
-        return {"available": False, "reason": f"HTTP {e.code}", "reviews": []}
-    _ledger.settle(_rid, unit, provider_ref=f"dossier:{institution_id}")
-
-    return {
-        "available": True,
-        "name": (data.get("displayName") or {}).get("text", ""),
-        "rating": data.get("rating"),
-        "review_count": data.get("userRatingCount"),
-        "maps_uri": data.get("googleMapsUri", ""),
-        "reviews": [{
-            "text": (rv.get("originalText") or rv.get("text") or {}).get("text", ""),
-            "author": (rv.get("authorAttribution") or {}).get("displayName", ""),
-            "author_uri": (rv.get("authorAttribution") or {}).get("uri", ""),
-            "rating": rv.get("rating"),
-            "published": str(rv.get("publishTime", ""))[:10],
-        } for rv in (data.get("reviews") or [])],
-        "note": "家長主觀評價，非法遵指標。實測：裁罰 ≥5 件的園評分中位 4.20，"
-                "無裁罰者 4.60（p=0.061 不顯著），個案不具鑑別力。",
-        "free_remaining": max(
-            0, 1000 - _ledger.budget().places_used_this_month),
-        "meter_source": "本機計數，非 Google 帳單",
-    }
+    return _social.reviews_of(institution_id)
 
 
 @app.get("/api/config")

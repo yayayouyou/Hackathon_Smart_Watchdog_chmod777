@@ -1,17 +1,19 @@
-"""建表並建立稽查員帳號。冪等：重跑只更新密碼與負責行政區，不重複建帳號。
+"""建表並建立兩種固定身分帳號；冪等，重跑會把帳號更新回這份規格。
 
-    PYTHONPATH=src .venv/bin/python scripts/seed_users.py
-    PYTHONPATH=src .venv/bin/python scripts/seed_users.py --reset   # 先砍掉五張表
+    python run.py seed-users
+    python run.py seed-users -- --reset
 
-帳密取自 `.env` 的 `SEED_INSPECTOR_EMAIL` 與 `SEED_INSPECTOR_PASSWORD`。
-兩者缺一就不建帳號並明白說缺什麼——不預設一組寫死的密碼，那種東西會跟著
-專案一路帶到部署環境。
+帳密取自 `.env`，每個身分各有一組變數：
 
-`--reset` 存在的理由是**沒有 alembic**（見 `db/models.py` 模組說明第 3 點）：
-`create_all` 只建不存在的表，不會 ALTER 既有表。所以每次改 `models.py` 的欄位，
-既有的開發資料庫就會少一欄，症狀是 API 回 500 而 log 寫 `no such column`。
-這在本機可以接受（`data/runtime/` 是 gitignore 的開發資料），但**上了 RDS
-之後就要改用 migration**，不能靠 drop。
+    SEED_INSPECTOR_EMAIL / SEED_INSPECTOR_PASSWORD   role=inspector
+    SEED_ADMIN_EMAIL     / SEED_ADMIN_PASSWORD       role=admin
+
+每組缺一就跳過該帳號並明白列出缺項；不提供寫死的預設密碼。兩組 Email 必須不同，
+否則第二個身分會覆蓋第一個固定角色，腳本會在碰資料庫前直接拒絕執行。
+
+`--reset` 只刪除 user 與 agent 的五張開發資料表，再交由 `init_db()` 重建；它不會刪
+`threads_mention` 等持續累積的外部通報資料。這仍只適用本機開發：正式資料庫的 schema
+變更必須使用 migration，不能靠 drop。
 """
 
 from __future__ import annotations
@@ -19,6 +21,7 @@ from __future__ import annotations
 import argparse
 import pathlib
 import sys
+from dataclasses import dataclass, field
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
@@ -26,59 +29,163 @@ from sqlalchemy import select
 
 from smart_watchdog import config
 from smart_watchdog.console import use_utf8
-from smart_watchdog.db.models import Base, User
+from smart_watchdog.db.models import (
+    AgentMessage,
+    AgentSession,
+    AuditFeedback,
+    User,
+    UserSession,
+)
 from smart_watchdog.db.session import engine, init_db, session, url
 from smart_watchdog.security import hash_password
 
 use_utf8()
 
-# 示範帳號負責的行政區。agent 的「使用者沒說行政區就用他負責的」會讀這欄。
-TOWNS = ["板橋區", "三重區", "新莊區"]
+
+@dataclass(frozen=True)
+class Seed:
+    """一個示範帳號的規格。`env_prefix` 決定它讀 `.env` 的哪兩個變數。"""
+
+    env_prefix: str
+    name: str
+    role: str
+    unit: str
+    towns: list[str] = field(default_factory=list)
+
+    @property
+    def email_key(self) -> str:
+        return f"SEED_{self.env_prefix}_EMAIL"
+
+    @property
+    def password_key(self) -> str:
+        return f"SEED_{self.env_prefix}_PASSWORD"
+
+
+# 兩種身分目前同功能、同資料範圍；空 towns 代表預設查詢全新北市。
+ACCOUNTS = [
+    Seed(
+        env_prefix="INSPECTOR",
+        name="示範稽查人員",
+        role="inspector",
+        unit="新北市政府教育局",
+        towns=[],
+    ),
+    Seed(
+        env_prefix="ADMIN",
+        name="系統管理員",
+        role="admin",
+        unit="新北市政府教育局",
+        towns=[],
+    ),
+]
+
+# 依外鍵相依順序由子表往父表刪；ThreadsMention 刻意不在清單裡。
+AUTH_MODELS_IN_DROP_ORDER = (
+    AuditFeedback,
+    AgentMessage,
+    AgentSession,
+    UserSession,
+    User,
+)
+
+
+def _duplicate_email() -> tuple[str, str, str] | None:
+    seen: dict[str, str] = {}
+    for spec in ACCOUNTS:
+        raw = config.get(spec.email_key)
+        if not raw:
+            continue
+        email = raw.strip().lower()
+        previous = seen.get(email)
+        if previous:
+            return email, previous, spec.role
+        seen[email] = spec.role
+    return None
+
+
+def _reset_auth_tables() -> None:
+    bind = engine()
+    for model in AUTH_MODELS_IN_DROP_ORDER:
+        model.__table__.drop(bind, checkfirst=True)
+
+
+def upsert(db, spec: Seed) -> str | None:
+    """建立或更新一個固定身分帳號。缺帳密就回 None，由呼叫端列出缺項。"""
+    email = config.get(spec.email_key)
+    password = config.get(spec.password_key)
+    if not email or not password:
+        return None
+
+    email = email.strip().lower()
+    user = db.execute(select(User).where(User.email == email)).scalar_one_or_none()
+    if user is None:
+        db.add(User(
+            email=email,
+            name=spec.name,
+            role=spec.role,
+            unit=spec.unit,
+            towns=list(spec.towns),
+            password_hash=hash_password(password),
+            is_active=True,
+        ))
+        action = "建立"
+    else:
+        # seed 是這兩個展示帳號的規格真相；重跑時同步固定角色與全市範圍。
+        user.name = spec.name
+        user.role = spec.role
+        user.unit = spec.unit
+        user.towns = list(spec.towns)
+        user.password_hash = hash_password(password)
+        user.is_active = True
+        action = "更新"
+    return f"{action}帳號 {email}｜身分 {spec.role}｜全市"
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--reset", action="store_true",
-                    help="先 drop 五張表再重建（改過 models.py 的欄位後要用）")
-    args = ap.parse_args()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--reset",
+        action="store_true",
+        help="只重建帳號與 agent 五張表；保留 Threads 等外部通報資料",
+    )
+    args = parser.parse_args()
 
     config.load_env()
-    email = config.get("SEED_INSPECTOR_EMAIL")
-    password = config.get("SEED_INSPECTOR_PASSWORD")
+    duplicate = _duplicate_email()
+    if duplicate:
+        email, first_role, second_role = duplicate
+        print(
+            f"✗ {first_role} 與 {second_role} 不可共用 Email：{email}\n"
+            "  請修正 .env 後再執行；資料庫尚未變更。"
+        )
+        return 2
 
     print(f"資料庫：{url()}")
     if args.reset:
-        Base.metadata.drop_all(engine())
-        print("  ⚠️ 已 drop 五張表（含既有的對話稽核軌跡）")
+        _reset_auth_tables()
+        print("  ⚠️ 已重建帳號與 agent 五張表；Threads 外部通報資料保留")
     init_db()
-    print("  ✓ 五張表就緒（user、user_session、agent_session、"
-          "agent_message、audit_feedback）")
+    print(
+        "  ✓ 帳號與 agent 五張表就緒（user、user_session、agent_session、"
+        "agent_message、audit_feedback）"
+    )
 
-    if not email or not password:
-        print("\n  ⬜ 未建帳號：.env 缺 SEED_INSPECTOR_EMAIL 或 SEED_INSPECTOR_PASSWORD")
-        return 0
-
-    email = email.strip().lower()
     db = session()
     try:
-        user = db.execute(select(User).where(User.email == email)).scalar_one_or_none()
-        if user is None:
-            db.add(User(
-                email=email, name="示範稽查員", role="inspector",
-                unit="新北市政府教育局", towns=TOWNS,
-                password_hash=hash_password(password), is_active=True,
-            ))
-            action = "建立"
-        else:
-            user.password_hash = hash_password(password)
-            user.towns = TOWNS
-            user.is_active = True
-            action = "更新"
+        results = [(spec, upsert(db, spec)) for spec in ACCOUNTS]
         db.commit()
     finally:
         db.close()
 
-    print(f"  ✓ {action}帳號 {email}（負責 {'、'.join(TOWNS)}）")
+    print()
+    for spec, line in results:
+        if line is None:
+            print(
+                f"  ⬜ 未建 {spec.role} 帳號：.env 缺 "
+                f"{spec.email_key} 或 {spec.password_key}"
+            )
+        else:
+            print(f"  ✓ {line}")
     return 0
 
 

@@ -27,7 +27,7 @@ pytest.importorskip("pydantic")
 
 from pydantic import BaseModel
 
-from smart_watchdog.agent.loop import run_turn
+from smart_watchdog.agent.loop import MAX_STEPS, run_turn
 from smart_watchdog.agent.memory import load_history
 from smart_watchdog.agent.protocol import (
     AgentBackend,
@@ -180,12 +180,16 @@ def test_unregistered_tool_is_denied_without_killing_the_turn(db, registry) -> N
 
 
 def test_max_steps_stops_the_loop(db, registry) -> None:
-    """模型每步都要求 tool 時，迴圈必須自己停，不能無限打下去。"""
+    """模型每步都要求 tool 時，迴圈必須自己停，不能無限打下去。
+
+    上限對 MAX_STEPS 本身斷言而不是寫死數字：這裡要守的是「會停」，
+    不是「停在第 8 步」。上限本來就會隨註冊的 tool 變多而調整。
+    """
     forever = [[ToolUse(ToolCall(f"c{i}", "do_thing", {})), TurnEnd("tool_use")]
-               for i in range(20)]
+               for i in range(MAX_STEPS * 2)]
     events = _run(db, registry, forever)
     assert events[-1].data["stop_reason"] == "max_steps"
-    assert events[-1].data["steps"] == 8
+    assert events[-1].data["steps"] == MAX_STEPS
 
 
 def test_sse_frames_use_crlf_which_the_frontend_must_normalise() -> None:

@@ -30,32 +30,35 @@
   const ATRIUM = { x: 545, y: 30, w: 350, h: 700 };
   /* 守護犬的活動範圍：中庭再往內縮，免得牠半個身體卡在牆上 */
   const WALK = { x0: 578, x1: 862, y0: 70, y1: 686 };
-  const KENNEL = { x: 118, y: 648 };   // 放大到全螢幕後，狗窩在左下角
 
   /* 每一室。`pane` 對應既有 app 的分頁，`door` 是中庭那一側的開口中心。 */
   /* `map: true` 才會顯示地圖那一欄。地圖跟輿情、資料、建議書沒有關係，
      擺在那裡只是把畫面切碎——這是使用者明確要求的。
      `src` 是室頭右側的來源膠囊：每一室都要說得出自己的數字哪來的。 */
+  /* 名字直接講這一格做什麼，不再是「○○室」。
+     五個名字連起來就是一次稽查的動線：先看現況、再看手上有什麼資料、
+     接住外面進來的訊號、驗證我們的判斷方法站不站得住、最後產出對外的回覆。
+     id 與 pane 不動——那是程式的接縫，改名只改給人看的字。 */
   const ROOMS = [
-    { id: "map", no: "01", name: "地圖室", pane: "list", accent: "--seal", map: true,
+    { id: "map", no: "01", name: "全市監看", pane: "list", accent: "--room-map", map: true,
       x: 40, y: 30, w: 505, h: 350, door: { x: 545, y: 210 }, side: "L",
-      desc: "全市 1,213 園 · 點一園看判斷原因與紀錄",
+      desc: "1,213 園的現況總覽與即時監測",
       src: "registry · 快照 2026-08-10" },
-    { id: "data", no: "02", name: "資料室", pane: "data", accent: "--pub",
+    { id: "data", no: "02", name: "文件控管", pane: "data", accent: "--room-data",
       x: 40, y: 380, w: 505, h: 350, door: { x: 545, y: 550 }, side: "L",
-      desc: "PDF 提取與外部蒐集的存放處",
-      src: "data/extracted · data/external" },
-    { id: "voice", no: "03", name: "輿情室", pane: "scan", accent: "--good",
+      desc: "我們掌握的書面資料：原件、逐頁抽取、依表單分類",
+      src: "data/extracted · 頁級抽取" },
+    { id: "voice", no: "03", name: "輿情蒐集", pane: "scan", accent: "--room-voice",
       x: 895, y: 30, w: 505, h: 234, door: { x: 895, y: 150 }, side: "R",
-      desc: "新聞、PTT、評鑑；Threads 待接",
-      src: "realtime · 掃描於 2026-09-08" },
-    { id: "backtest", no: "04", name: "回測室", pane: "timeline", accent: "--warn",
+      desc: "Threads、新聞、PTT 與民眾 @標註通報；未查證線索",
+      src: "threads · realtime · 讀庫即時" },
+    { id: "backtest", no: "04", name: "分析驗證", pane: "timeline", accent: "--room-back",
       x: 895, y: 264, w: 505, h: 233, door: { x: 895, y: 380 }, side: "R",
-      desc: "每年重訓一次，看當時的排序後來對不對",
+      desc: "掌握哪些數據、跟什麼比對、方法怎麼驗證",
       src: "timeline · 2021–2024" },
-    { id: "letters", no: "05", name: "文書室", pane: "memos", accent: "--ink-3",
+    { id: "letters", no: "05", name: "答詢擬稿", pane: "memos", accent: "--room-letters",
       x: 895, y: 497, w: 505, h: 233, door: { x: 895, y: 613 }, side: "R",
-      desc: "稽核建議書草稿與派工單",
+      desc: "把通報與發現整理成回覆初稿與質詢答復",
       src: "report · 143 份" },
   ];
 
@@ -86,60 +89,91 @@
 
     /* 縮放群組：進房時只動它。守護犬不在裡面，牠要能獨立走位。 */
     const zoom = el("g", { id: "planzoom" }, svg);
-    const rest = el("g", { id: "planrest" }, zoom);   // 除了目標房間以外的一切
+    /* 兩層：牆與中庭（放大時整層收掉）、房間（放大時只留目標那一間）。
+       第一版全部塞在同一層，放大後外牆那條 3px 的線被放大成十幾 px 的黑框
+       橫過整個畫面——看起來就是「黑框超出房間」。 */
+    const rest = el("g", { id: "planbg" }, zoom);
+    const roomLayer = el("g", { id: "planrooms" }, zoom);
 
     el("rect", { x: 40, y: 30, width: 1360, height: 700, rx: 4,
       fill: cssv("--panel"), stroke: cssv("--edge"), "stroke-width": 3 }, rest);
-    el("rect", { ...ATRIUM, fill: cssv("--sunk"), opacity: .55 }, rest);
+    /* ⚠️ 不可寫成 el("rect", {...ATRIUM})。ATRIUM 的鍵是 w／h，而 SVG <rect>
+       要的是 width／height——那樣產出的是 w="350" h="700"、寬高都是 0 的空矩形，
+       中庭的地板從第一版起就沒有畫出來過（看起來一直是全白的走廊）。 */
+    yardArt(rest);
     el("line", { x1: 545, y1: 30, x2: 545, y2: 730, stroke: cssv("--edge"),
       "stroke-width": 2.2 }, rest);
     el("line", { x1: 895, y1: 30, x2: 895, y2: 730, stroke: cssv("--edge"),
       "stroke-width": 2.2 }, rest);
     const at = el("text", { x: 720, y: 62, "font-size": 11, fill: cssv("--ink-4"),
       "letter-spacing": 3.4, "text-anchor": "middle" }, rest);
-    at.textContent = "中庭";
+    at.textContent = "中庭遊戲場";
 
     ROOMS.forEach((r) => {
       // 每一室自己一個 g，進房時把它從 rest 提到 zoom 底下單獨留著
       const g = el("g", { class: "room-hit", "data-room": r.id,
         role: "button", tabindex: "0",
-        "aria-label": `${r.no} ${r.name}，${r.desc}` }, rest);
+        // 進場時五個入口依序亮一下。第一次看到這張平面圖的人不會知道
+        // 整格都可以點，而一個只在 hover 才出現的提示要先猜到才找得到。
+        style: `--cue-delay:${.5 + ROOMS.indexOf(r) * .16}s`,
+        "aria-label": `${r.no} ${r.name}，${r.desc}` }, roomLayer);
       r.g = g;
       el("rect", { x: r.x, y: r.y, width: r.w, height: r.h, class: "room-fill",
-        fill: cssv(r.accent), opacity: .07 }, g);
+        rx: 6, fill: cssv(r.accent), opacity: .15 }, g);
+      /* 門楣：房間頂端一條實心色帶。五間室在平面圖上原本只差一層 7% 的淡底，
+         遠看幾乎一樣；一條實心帶是最省版面又最分得開的識別。
+         放大進房時它正好變成室頭那條線的延伸。 */
+      el("rect", { x: r.x, y: r.y, width: r.w, height: 8, rx: 4,
+        fill: cssv(r.accent) }, g);
       el("rect", { x: r.x, y: r.y, width: r.w, height: r.h, fill: "none",
-        stroke: cssv("--edge"), "stroke-width": 2.2 }, g);
+        rx: 6, stroke: cssv(r.accent), "stroke-width": 2.2, opacity: .62,
+        // 放大時線寬不跟著長。沒有它，2.2px 在 2.8 倍下會變成 6px 的粗黑邊。
+        "vector-effect": "non-scaling-stroke" }, g);
 
       const tx = r.x + 34;
-      const no = el("text", { x: tx, y: r.y + 44, "font-size": 11,
-        fill: cssv("--ink-4"), "letter-spacing": 2.4 }, g);
+      /* 門牌：教室門口那塊號碼牌。編號從 12px 的小字變成牌面上的主角——
+         遠看先數得出有五格，再讀名字。牌子的顏色就是這一格的顏色。 */
+      const py = r.y + 28;
+      el("rect", { x: tx, y: py, width: 54, height: 54, rx: 15,
+        fill: cssv(r.accent) }, g);
+      const no = el("text", { x: tx + 27, y: py + 37, "font-size": 27,
+        "font-weight": 700, fill: cssv("--panel"), "text-anchor": "middle",
+        "font-family": cssv("--mono") }, g);
       no.textContent = r.no;
-      const nm = el("text", { x: tx, y: r.y + 76, "font-size": 24,
+
+      const nx = tx + 70;
+      const nm = el("text", { x: nx, y: py + 26, "font-size": 25,
         "font-weight": 600, fill: cssv("--ink"), "letter-spacing": 2 }, g);
       nm.textContent = r.name;
-      const ds = el("text", { x: tx, y: r.y + 102, "font-size": 12.5,
+      const ds = el("text", { x: nx, y: py + 50, "font-size": 12.5,
         fill: cssv("--ink-3") }, g);
       ds.textContent = r.desc;
 
-      const big = el("text", { x: tx, y: r.y + 148, "font-size": 30,
+      const big = el("text", { x: tx, y: r.y + 152, "font-size": 30,
         "font-weight": 500, fill: cssv(r.accent), "font-family": cssv("--mono") }, g);
       big.textContent = counts[r.id] || "—";
       const unit = el("text", { x: tx + String(counts[r.id] || "—").length * 18 + 8,
-        y: r.y + 148, "font-size": 12, fill: cssv("--ink-3") }, g);
+        y: r.y + 152, "font-size": 12, fill: cssv("--ink-3") }, g);
       unit.textContent = r.unit || "";
 
       /* 門：牆上的開口 + 開門弧線。是真的洞，不是按鈕—— */
       const dx = r.door.x, dy = r.door.y;
       const inward = r.side === "L" ? 1 : -1;
       el("rect", { x: dx - 2, y: dy - 26, width: 4, height: 52,
-        fill: cssv("--paper") }, g);
+        fill: cssv("--yard") }, g);
+      /* 門墊：鋪在中庭那一側，顏色就是這一室的顏色。幼兒園每間教室門口
+         都有一塊自己的墊子，這裡它同時是「哪一間在哪裡」的第四個色點。 */
+      el("rect", { x: inward > 0 ? dx + 5 : dx - 27, y: dy - 19, width: 22,
+        height: 38, rx: 5, class: "room-mat", fill: cssv(r.accent) }, g);
       el("path", { d: `M${dx} ${dy - 26} a26 26 0 0 ${inward > 0 ? 1 : 0} ${26 * inward} 26`,
-        fill: "none", stroke: cssv("--ink-4"), "stroke-width": 1.4,
+        fill: "none", stroke: cssv(r.accent), "stroke-width": 1.6,
         "stroke-dasharray": "3 3", class: "room-door" }, g);
-      const en = el("text", { x: dx + 34 * inward, y: dy + 4, "font-size": 11,
-        fill: cssv("--seal"), class: "room-enter",
+      /* 「點這裡進去」原本只有滑過才看得見，等於要先猜到才找得到。
+         改成常駐但安靜：平常半透明，滑過才實心。 */
+      const en = el("text", { x: dx + 34 * inward, y: dy + 4, "font-size": 12,
+        fill: cssv(r.accent), "font-weight": 600, class: "room-enter",
         "text-anchor": inward > 0 ? "start" : "end" }, g);
-      en.textContent = "進入 ›";
+      en.textContent = inward > 0 ? "進入 ›" : "‹ 進入";
 
       g.addEventListener("click", () => enter(r.id));
       g.addEventListener("keydown", (e) => {
@@ -148,7 +182,6 @@
     });
 
     ROOMS.forEach((r) => { roomArt(r.g, r); kennelArt(r.g, r); });
-    drawBoard(rest);
 
     /* 守護犬：獨立一層，不受縮放影響 */
     const dog = el("g", { id: "dog" }, svg);
@@ -161,12 +194,66 @@
     el("rect", { x: 0, y: 0, width: 196, height: 40, rx: 9,
       fill: cssv("--panel"), stroke: cssv("--rule"), "stroke-width": 1.2 }, tip);
     const l1 = el("text", { x: 14, y: 18, "font-size": 11.5,
-      fill: cssv("--ink-2") }, tip);
-    l1.textContent = "滑鼠帶我在中庭走，";
+      class: "tip-l1", fill: cssv("--ink-2") }, tip);
     const l2 = el("text", { x: 14, y: 32, "font-size": 11.5,
-      fill: cssv("--ink-2") }, tip);
-    l2.textContent = "點一間房我就進去。";
+      class: "tip-l2", fill: cssv("--ink-2") }, tip);
+    [l1.textContent, l2.textContent] = DOG_LINES[0];
     positionTip();
+    startTalking();
+
+    /* 入口提示只播一次：播完就把 cue 拿掉，之後從房間回中庭不會再閃。
+       最後一格的延遲 .5 + 4×.16 = 1.14s，兩輪 2.2s，取 3.6s 收尾。 */
+    const lb = $("lobby");
+    if (lb) {
+      lb.classList.add("cue");
+      setTimeout(() => lb.classList.remove("cue"), 3600);
+    }
+  }
+
+
+  /* 守護犬的台詞。輪播而不是只說一句：中庭是一個會停留的畫面，
+     一句固定的操作說明看第三次就變成雜訊。
+
+     ⚠️ 台詞受同一條用詞界線約束：不可宣稱任何機構有問題，也不可把
+     「建議查核的優先序」講成「抓到了」。牠可以可愛，不可以下判斷。 */
+  const DOG_LINES = [
+    ["今天也在巡邏，", "有事叫我一聲。"],
+    ["五個分區都開著，", "想先去哪一個？"],
+    ["每個數字我都記得", "是從哪一頁來的。"],
+    ["我們排的是查核順序，", "不是誰有罪。"],
+    ["慢慢看，", "我不會催你。"],
+    ["不管進哪一格，", "我都跟著你。"],
+    ["查不到的時候，", "我會說資料不足。"],
+    ["中庭風有點大，", "我先趴一下。"],
+  ];
+
+  let tipIx = 0;
+  let tipTimer = null;
+
+  function sayNext() {
+    const t = $("dogtip");
+    // 進房途中或已經在室內就不要換詞：那時候泡泡正在淡出，換了會閃一下。
+    if (!t || state.where !== "lobby" || state.busy) return;
+    t.style.opacity = "0";
+    setTimeout(() => {
+      if (state.where !== "lobby" || state.busy) return;
+      tipIx = (tipIx + 1) % DOG_LINES.length;
+      const [a, b] = DOG_LINES[tipIx];
+      const e1 = t.querySelector(".tip-l1");
+      const e2 = t.querySelector(".tip-l2");
+      if (e1) e1.textContent = a;
+      if (e2) e2.textContent = b;
+      t.style.opacity = "";
+    }, 220);
+  }
+
+  function startTalking() {
+    stopTalking();
+    tipTimer = setInterval(sayNext, 7000);
+  }
+
+  function stopTalking() {
+    if (tipTimer) { clearInterval(tipTimer); tipTimer = null; }
   }
 
   function positionTip() {
@@ -241,7 +328,7 @@
       });
       /* 左下角那一塊是狗窩的地盤（每一室都有），內容一律讓開。
          輿情室只有 234 高，這行字原本就壓在狗窩上。 */
-      const w = el("text", { x: x + 72, y: y + 210, "font-size": 11,
+      const w = el("text", { x: x + 44, y: y + 208, "font-size": 11.5,
         fill: cssv("--warn") }, g);
       w.textContent = "⚠ 提前量 0，定位是即時監看不是預測";
       return;
@@ -284,42 +371,81 @@
     }
   }
 
-  /* 中庭立牌：回答「今天要做什麼」 */
-  function drawBoard(parent) {
-    const g = el("g", {}, parent);
-    el("rect", { x: 580, y: 150, width: 280, height: 152, rx: 5,
-      class: "plan-card", fill: cssv("--panel"), stroke: cssv("--rule"),
-      "stroke-width": 1.4 }, g);
-    const put = (x, y, s, size, fill, weight) => {
-      const t = el("text", { x, y, "font-size": size, fill,
-        "font-weight": weight || 400 }, g);
-      t.textContent = s;
+
+
+  /* 中庭遊戲場。
+     這一室監理的對象就是幼兒園，所以中庭畫成園裡的中庭是最省力也最貼題的
+     幼兒園化——不必重畫五間房，也不必把平面圖換成插畫。
+
+     分寸拿捏：畫的是**場地裡真的會有的東西**（草皮、樹、跳房子、沙坑），
+     不是卡通角色或高彩度色塊。交給教育局的工具，幼兒園的辨識度要來自
+     「空間裡有什麼」，而不是把介面變成兒童頻道。
+
+     全部畫在 planbg 層：進房放大時整層 visibility:hidden，不參與過渡，
+     所以不會影響已經調到 0 丟幀的那段動畫。也都不是 .room-hit，不吃點擊。 */
+  function yardArt(parent) {
+    const g = el("g", { id: "yard" }, parent);
+    const cx = ATRIUM.x + ATRIUM.w / 2;   // 720
+
+    // 地面
+    el("rect", { x: ATRIUM.x, y: ATRIUM.y, width: ATRIUM.w, height: ATRIUM.h,
+      fill: cssv("--yard") }, g);
+    // 草皮：鋪在下半段，守護犬平常待的位置就在上面
+    el("rect", { x: ATRIUM.x + 21, y: 430, width: ATRIUM.w - 42, height: 272,
+      rx: 30, fill: cssv("--turf") }, g);
+    el("rect", { x: ATRIUM.x + 21, y: 430, width: ATRIUM.w - 42, height: 272,
+      rx: 30, fill: "none", stroke: cssv("--turf-2"), "stroke-width": 2 }, g);
+
+    // 跳房子：六格，單雙格交錯。地面標線，所以只有描邊沒有填色，
+    // 守護犬走過去不會被它蓋住。
+    const cell = 40, gap = 2;
+    let y = 142;
+    [[0], [0], [-1, 1], [0], [-1, 1], [0]].forEach((cols) => {
+      cols.forEach((c) => {
+        el("rect", { x: cx + c * (cell / 2 + gap) - cell / 2, y,
+          width: cell, height: cell, rx: 4, fill: "none",
+          stroke: cssv("--yard-line"), "stroke-width": 2.4 }, g);
+      });
+      y += cell + gap + 2;
+    });
+
+    // 兩棵樹：一棵在上、一棵在右下，把空的兩角收起來
+    const tree = (tx, ty, sc) => {
+      const t = el("g", { transform: `translate(${tx} ${ty}) scale(${sc})` }, g);
+      el("rect", { x: -4, y: 10, width: 8, height: 26, rx: 3,
+        fill: cssv("--bark") }, t);
+      el("circle", { cx: 0, cy: 0, r: 26, fill: cssv("--leaf"), opacity: .82 }, t);
+      el("circle", { cx: -17, cy: 9, r: 17, fill: cssv("--leaf"), opacity: .7 }, t);
+      el("circle", { cx: 17, cy: 8, r: 15, fill: cssv("--leaf"), opacity: .7 }, t);
       return t;
     };
-    put(602, 178, "今天要做什麼", 10.5, cssv("--ink-4")).setAttribute("letter-spacing", 1.6);
-    put(602, 208, "名單已排好，20 家。", 15, cssv("--ink"), 600);
-    put(602, 232, "其中", 13, cssv("--ink-2"));
-    put(636, 232, "4 家", 13, cssv("--seal"), 600);
-    put(672, 232, "帶高嚴重度財務發現，", 13, cssv("--ink-2"));
-    put(602, 252, "建議優先排訪。", 13, cssv("--ink-2"));
-    el("line", { x1: 602, y1: 268, x2: 838, y2: 268, stroke: cssv("--rule"),
-      "stroke-width": 1 }, g);
-    put(602, 288, "前 100 名命中率 2.29× · AUC 0.658", 11, cssv("--ink-3"));
+    tree(ATRIUM.x + 44, 104, 1);
+    tree(ATRIUM.x + ATRIUM.w - 46, 636, .8);
+
+    // 沙坑
+    const sb = el("g", {}, g);
+    el("rect", { x: ATRIUM.x + 26, y: 620, width: 92, height: 74, rx: 10,
+      fill: cssv("--yard-line"), opacity: .75 }, sb);
+    el("rect", { x: ATRIUM.x + 33, y: 627, width: 78, height: 60, rx: 7,
+      fill: cssv("--yard") }, sb);
+    [[22, 18], [46, 30], [62, 16], [34, 44], [60, 46]].forEach(([ox, oy]) => {
+      el("circle", { cx: ATRIUM.x + 33 + ox, cy: 627 + oy, r: 2,
+        fill: cssv("--yard-line") }, sb);
+    });
   }
 
   /* 每一室左下角的狗窩。中庭看得到它，進房後守護犬就躺在對應的位置——
      牠是「跑進那一格」，不是「消失再出現」。 */
   function kennelArt(g, r) {
-    const kx = r.x + 22, ky = r.y + r.h - 52;
-    const k = el("g", { opacity: .55 }, g);
-    el("path", { d: `M${kx} ${ky + 34} v-18 l14 -13 14 13 v18 z`,
-      fill: cssv("--panel"), stroke: cssv("--ink-4"), "stroke-width": 1.4,
+    // 貼著左下角，並且比第一版小一號：它是這一室的固定家具，不是重點，
+    // 站太靠中間就會跟內容搶位置（輿情室那條警語被壓過一次）。
+    const kx = r.x + 16, ky = r.y + r.h - 46;
+    const k = el("g", { opacity: .45 }, g);
+    el("path", { d: `M${kx} ${ky + 28} v-15 l12 -11 12 11 v15 z`,
+      fill: cssv("--panel"), stroke: cssv("--ink-4"), "stroke-width": 1.3,
       "stroke-linejoin": "round" }, k);
-    el("path", { d: `M${kx + 9} ${ky + 34} v-11 a5 5 0 0 1 10 0 v11 z`,
-      fill: cssv("--sunk"), stroke: cssv("--ink-4"), "stroke-width": 1.2 }, k);
-    const t = el("text", { x: kx + 36, y: ky + 32, "font-size": 9.5,
-      fill: cssv("--ink-4"), "letter-spacing": 1.2 }, k);
-    t.textContent = "狗窩";
+    el("path", { d: `M${kx + 8} ${ky + 28} v-9 a4 4 0 0 1 8 0 v9 z`,
+      fill: cssv("--sunk"), stroke: cssv("--ink-4"), "stroke-width": 1.1 }, k);
   }
 
   function dogArt(g) {
@@ -401,23 +527,33 @@
     const lobby = $("lobby");
     const tip = $("dogtip");
     if (tip) tip.style.opacity = "0";
-    // ① 先跑到門口
+    stopTalking();
+
+    /* 順序是：**先走進去躺好，房間才放大。**
+       第一版是邊走邊放大，兩件事同時動，看起來像房間把牠吸進去。
+       先走完再放大，因果才對：是牠進去了，所以我們跟著進去。 */
+    // ① 跑到門口
     moveDog(r.door.x + (r.side === "L" ? -30 : 30), r.door.y, true);
 
-    // ② 房間放大、其餘淡出
+    // ② 進門，走到這一室左下角的狗窩
+    setTimeout(() => moveDog(r.x + 38, r.y + r.h - 34, true), 430);
+
+    // ③ 躺好了，房間才開始放大。牠淡出——放大後的室內有自己的狗窩。
     setTimeout(() => {
+      const d = $("dog");
+      if (d) d.style.opacity = "0";
+      // 只留這一間：其餘房間與整層牆在放大時收掉，不然外牆那條線會被
+      // 放大成橫過畫面的黑框。
+      ROOMS.forEach((x) => x.g.classList.toggle("target", x.id === r.id));
       lobby.classList.add("zooming");
       // 先量、再等一幀才套 transform：量測會觸發 layout，跟套用擠在同一幀
       // 就是那一格掉幀。
       const t = zoomTransform(r);
       requestAnimationFrame(() => { $("planstage").style.transform = t; });
-    }, 240);
+    }, 1000);
 
-    // ③ 走進去，坐到狗窩
-    setTimeout(() => moveDog(KENNEL.x, KENNEL.y, true), 620);
-
-    // ④ 室內介面淡入
-    setTimeout(() => showRoom(r, true, done), 880);
+    // ④ 室內介面
+    setTimeout(() => showRoom(r, true, done), 1560);
   }
 
   /* app 不用 hidden：Leaflet 在 display:none 裡量到的是 0×0，一旦這樣初始化
@@ -426,6 +562,10 @@
   /* 室頭 + 版面。五間房走同一條路，差別只在 `r.map` 與 `r.pane`——
      每一室各寫一次進場邏輯，第六間房出現時就會有一間忘了同步。 */
   function dressRoom(r) {
+    // 室頭掛上這一室的顏色。中庭的門楣、樓層索引的色條、室頭這條線用同一個色，
+    // 「我在哪一間」在三個畫面之間才是連續的。
+    const head = document.querySelector(".roomhead");
+    if (head) head.style.setProperty("--rc", cssv(r.accent));
     $("rh-no").textContent = r.no;
     $("rh-name").textContent = r.name;
     $("rh-desc").textContent = r.desc;
@@ -485,7 +625,10 @@
       lobby.classList.remove("zooming");
       const tip2 = $("dogtip");
       if (tip2) tip2.style.opacity = "";
-      moveDog(720, 560, true);
+      startTalking();
+      const d = $("dog");
+      if (d) d.style.opacity = "";
+      moveDog(720, 560, false);      // 直接歸位，不要讓牠橫越整張圖
       setTimeout(() => { state.busy = false; }, 620);
     });
   }
@@ -500,8 +643,11 @@
       b.type = "button";
       b.className = "rail-item";
       if (r.id === current.id) b.setAttribute("aria-current", "true");
-      b.innerHTML = `<span class="rail-no">${r.no}</span>${r.name}`
-        + `<span class="rail-n">${counts[r.id] || ""}</span>`;
+      // 每一列掛上該室的顏色，樓層索引與中庭平面圖用同一組色。
+      b.style.setProperty("--rc", cssv(r.accent));
+      // 統計數字拿掉了：五個不同單位的數字（園數、份數、則數、倍數）排在
+      // 同一欄互相沒有可比性，只是把索引變吵。真正的數字在各室的室頭。
+      b.innerHTML = `<span class="rail-no">${r.no}</span>${r.name}`;
       b.addEventListener("click", () => {
         if (r.id === current.id) return;
         state.room = r;
@@ -527,21 +673,23 @@
 
   function paintWho() {
     const u = (window.AgentAuth && window.AgentAuth.user) || null;
+    const role = u && window.AgentAuth && window.AgentAuth.roleLabel
+      ? window.AgentAuth.roleLabel(u.role) : (u && u.role) || "";
     document.querySelectorAll(".who-pod").forEach((pod) => {
       pod.hidden = !u;
       if (!u) return;
       pod.querySelector(".who-av").textContent = (u.name || "?").slice(0, 1);
       pod.querySelector(".who-name").textContent = u.name || u.email || "";
-      pod.querySelector(".who-role").textContent = u.role || "";
+      pod.querySelector(".who-role").textContent = role;
     });
     if (!u) return;
     const towns = (u.towns || []).map((t) => `<span>${esc(t)}</span>`).join("");
     const html =
       `<div class="row"><span>帳號</span><b>${esc(u.email) || "—"}</b></div>`
-      + `<div class="row"><span>角色</span><b>${esc(u.role) || "—"}</b></div>`
+      + `<div class="row"><span>身分</span><b>${esc(role) || "—"}</b></div>`
       + `<div class="row"><span>單位</span><b>${esc(u.unit) || "—"}</b></div>`
-      + `<div class="row" style="display:block"><span>負責行政區</span>`
-      + `<div class="towns">${towns || "<span>未指定</span>"}</div></div>`;
+      + `<div class="row" style="display:block"><span>預設查詢範圍</span>`
+      + `<div class="towns">${towns || "<span>全市</span>"}</div></div>`;
     document.querySelectorAll(".whopop-body").forEach((b) => { b.innerHTML = html; });
   }
 
@@ -580,7 +728,6 @@
     drawPlan(counts);
     paintWho();
     bindLobbyWho();
-    fillDataRoom();
     $("plan").addEventListener("pointermove", onPointerMove);
     const b = $("rail-back");
     if (b) b.addEventListener("click", back);
@@ -589,23 +736,6 @@
     });
   }
 
-  /* 資料室的磁磚。數字全部是實際盤點出來的，不是佔位——
-     一間「待設計」的房間如果連現況都說不清楚，接手的人得從頭盤一次。 */
-  function fillDataRoom() {
-    const grid = $("data-grid");
-    if (!grid) return;
-    const tiles = [
-      ["非營利園財報", "132", "已抽取並進版控"],
-      ["公校決算書", "30", "座標抽取，零模型成本"],
-      ["原始 PDF", "162", "data/raw，不進版控"],
-      ["法遵檢核發現", "31", "其中 8 項高嚴重度"],
-      ["外部快照", "7", "含裁罰、登記、界線"],
-      ["文件索引", "148", "問題進，檔案與頁碼出"],
-    ];
-    grid.innerHTML = tiles.map(([k, v, note]) =>
-      `<div class="todo-tile"><span class="k">${k}</span>`
-      + `<span class="v">${v}</span><span class="s">${note}</span></div>`).join("");
-  }
 
   /* 讓助理換房間。回傳「有沒有接下這件事」，接不下時呼叫端才知道要走備援。
    *

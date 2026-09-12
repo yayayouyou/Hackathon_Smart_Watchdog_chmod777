@@ -1230,6 +1230,8 @@ function showPane(name) {
   document.querySelectorAll(".pane").forEach((pane) => {
     pane.hidden = pane.id !== `pane-${name}`;
   });
+  if (name === "data" && window.SWData) window.SWData.open();
+  if (name === "scan" && window.SWSocial) window.SWSocial.open();
   if (name === "scan" && window.SWScan) window.SWScan.open();
   if (name === "timeline") timelineDock(true);
 }
@@ -1263,8 +1265,89 @@ $("listclear").addEventListener("click", () => {
 });
 
 /* 掃描分頁（scan.js）需要這些；集中匯出一次，不要讓它去翻全域變數。 */
+
+/* ── 可拖曳的直分隔條 ──────────────────────────────────────────────
+ *
+ * 三條共用這一支：樓層索引｜室內容、地圖｜清單、清單｜助理。
+ *
+ * 寬度一律寫進 `main` 的自訂屬性，不寫進被拖那一欄的 inline style：grip 自己
+ * 的位置也由同一個 grid 算，改一處兩者一起動；各寫一次的話拖到一半就會錯開
+ * 一格。助理欄那條（agent.js）有收合邏輯要顧，沿用自己那份，但手感與這裡一致。
+ *
+ * `measure(ev)` 回傳「這一欄該有多寬」。方向由呼叫端決定——左欄看游標離左緣
+ * 多遠，右欄看離右緣多遠，中間那欄看它自己的右緣減游標。
+ */
+function makeGrip(grip, opts) {
+  if (!grip) return null;
+  const main = document.querySelector("main");
+  const { cssVar, min, measure, storeKey } = opts;
+  const max = opts.max || (() => Math.round(window.innerWidth * 0.45));
+
+  function setWidth(px) {
+    const w = Math.round(Math.min(max(), Math.max(min, px)));
+    main.style.setProperty(cssVar, w + "px");
+    if (storeKey) {
+      try { localStorage.setItem(storeKey, String(w)); } catch { /* 私密視窗 */ }
+    }
+    // Leaflet 不會自己發現容器變了，不講它就會停在舊尺寸、滑鼠座標整個對不上。
+    if (state.map) state.map.invalidateSize();
+    return w;
+  }
+
+  grip.addEventListener("pointerdown", (e) => {
+    if (opts.disabled && opts.disabled()) return;
+    e.preventDefault();
+    grip.setPointerCapture(e.pointerId);
+    grip.classList.add("drag");
+    document.body.classList.add("resizing");
+    const move = (ev) => setWidth(measure(ev));
+    const up = () => {
+      grip.classList.remove("drag");
+      document.body.classList.remove("resizing");
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+  });
+
+  // 鍵盤也要能調。grip 有 tabindex，只能滑鼠拖等於鍵盤使用者調不了。
+  grip.addEventListener("keydown", (e) => {
+    const cur = opts.current();
+    if (e.key === "ArrowLeft") { e.preventDefault(); setWidth(cur + opts.flip * -24); }
+    if (e.key === "ArrowRight") { e.preventDefault(); setWidth(cur + opts.flip * 24); }
+  });
+
+  if (storeKey) {
+    try {
+      const saved = Number(localStorage.getItem(storeKey));
+      if (saved) setWidth(saved);
+    } catch { /* 私密視窗：用預設 */ }
+  }
+  return { setWidth };
+}
+
+makeGrip($("railgrip"), {
+  cssVar: "--railw", min: 132, storeKey: "sw.railw", flip: 1,
+  max: () => Math.round(window.innerWidth * 0.28),
+  measure: (ev) => ev.clientX,
+  current: () => document.querySelector(".rail").getBoundingClientRect().width,
+});
+
+makeGrip($("sidegrip"), {
+  cssVar: "--sidew", min: 260, storeKey: "sw.sidew", flip: -1,
+  max: () => Math.round(window.innerWidth * 0.5),
+  // 清單的右緣不會因為拖曳而移動，所以用它當基準最穩。
+  measure: (ev) => document.querySelector(".side").getBoundingClientRect().right
+    - ev.clientX,
+  current: () => document.querySelector(".side").getBoundingClientRect().width,
+  // 地圖收掉時清單自己就是主欄，沒有東西可以跟它分配寬度。
+  disabled: () => document.getElementById("roombody")
+    .classList.contains("no-map"),
+});
+
 window.SW = { api, post, $, esc, nf, state, openDossier, TYPE, drawMarkers, refresh,
-  timelineDock, showPane, fitNTPC,
+  timelineDock, showPane, fitNTPC, makeGrip,
   // 助理設了 state.agentIds 之後，地圖與清單都要重畫。少匯出這一支的後果是
   // 地圖篩了、清單沒動——畫面上列出來的不是助理剛才講的那幾筆。
   drawList };

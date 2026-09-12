@@ -42,12 +42,14 @@
     <div class="hstat">
       <span>全市 <b id="s-all">—</b></span>
       <span>有公開財報 <b id="s-fin">—</b></span>
-      <span>本批提案 <b id="s-sel">—</b></span>
-      <span>即時管道 <b id="s-ch">—</b></span>
-      <!-- 花費是會真的扣錢的東西，所以常駐在最上面，而且點得開：
-           只看到一個總額，等於要花錢的人看不到自己花在哪。 -->
-      <button class="costbtn" id="costbtn" aria-expanded="false"
-        title="本掃描週期已花費／自訂上限。點開看各道上限與最近幾筆帳。"
+      <!-- 本批提案、即時管道、本期花費都拿掉了：那三個數字在派工提案、
+           輿情室、掃描主控台裡本來就看得到，擺在最上面是同一件事講兩次。
+           花費的帳本沒有動，只是不再常駐——要看就進輿情室。
+           以下三個節點保留但隱藏：scan.js／app.js 仍會寫進去，
+           拿掉會讓那幾支在找不到節點時靜默失效。 -->
+      <span hidden><b id="s-sel">—</b></span>
+      <span hidden><b id="s-ch">—</b></span>
+      <button class="costbtn" id="costbtn" aria-expanded="false" hidden
         >本期花費 <b id="s-budget">—</b><i class="caret"></i></button>
       <!-- 頁尾拿掉了，但頁尾上那兩件事不能跟著消失：一是輸出定位（建議查核、
            非違法認定），二是 CC-BY 要求的來源標註——後者是**授權條件**。
@@ -66,7 +68,7 @@
     </div>
 
     <div class="pop who" id="whopop" hidden>
-      <h4>稽查員</h4>
+      <h4>使用者身分</h4>
       <div class="whopop-body"></div>
       <button type="button" id="logout" class="mini" style="margin-top:10px;width:100%"
         hidden>登出</button>
@@ -110,47 +112,58 @@
       </button>
 
       <div>
-        <div class="rail-eyebrow">樓層索引</div>
+        <div class="rail-eyebrow">功能分區</div>
         <div class="rail-list" id="rail-list"></div>
+        <div class="rail-tools" id="rail-tools" hidden></div>
       </div>
 
       <!-- 狗窩：守護犬進房後坐的地方。牠從中庭跑進來，就停在這裡。 -->
       <!-- 狗窩在左下角，與中庭平面圖上各室左下角的狗窩對得起來。
            進房後守護犬就躺在裡面——「到家了」，不是「立正待命」。 -->
       <div class="rail-kennel">
-        <svg class="kennel-dog" width="74" height="52" viewBox="0 0 74 52"
+        <!-- 跟中庭平面圖上那個狗窩是同一個形狀（lobby.js::kennelArt），只是放大
+             並多一隻探出頭的守護犬。同形狀才讀得出「牠進的是那一格」——
+             換一個畫法就變成兩隻不同的狗。 -->
+        <svg class="kennel-dog" width="64" height="60" viewBox="0 0 68 62"
              aria-hidden="true">
-          <!-- 窩 -->
-          <path d="M4 46 v-20 l17 -15 17 15 v20 z" fill="var(--panel)"
-            stroke="var(--ink-4)" stroke-width="1.5" stroke-linejoin="round"/>
-          <path d="M13 46 v-13 a8 8 0 0 1 16 0 v13 z" fill="var(--sunk)"
-            stroke="var(--ink-4)" stroke-width="1.3"/>
-          <!-- 躺著的守護犬：身體是一顆橫躺的膠囊，頭靠在窩口 -->
-          <ellipse cx="48" cy="43" rx="22" ry="3" fill="var(--ink)" opacity=".12"/>
-          <path d="M32 41 h26 a9 9 0 0 0 0 -12 h-26 a6 6 0 0 0 0 12 z"
-            fill="var(--panel)" stroke="var(--edge)" stroke-width="1.6"
+          <!-- 窩：與大廳同一條輪廓，比例 ×2 -->
+          <path d="M10 54 v-30 l24 -22 24 22 v30 z" fill="var(--panel)"
+            stroke="var(--ink-4)" stroke-width="1.8" stroke-linejoin="round"/>
+          <!-- 窩口。頭要比它窄，上方留一段暗的凹陷，才看得出是「從裡面探出來」 -->
+          <path d="M25 54 v-17 a9 9 0 0 1 18 0 v17 z" fill="var(--sunk)"
+            stroke="var(--ink-4)" stroke-width="1.5"/>
+          <!-- 探出頭的守護犬：比窩口窄一圈，下緣壓過窩底線 2px -->
+          <path d="M27.6 45c-2.2-3-2-5.8-.4-6.3 1.5-.5 3.2 1.2 4 3.3z"
+            fill="var(--paper)" stroke="var(--edge)" stroke-width="1.5"
             stroke-linejoin="round"/>
-          <circle cx="30" cy="33" r="8" fill="var(--panel)" stroke="var(--edge)"
-            stroke-width="1.6"/>
-          <path d="M24 28c-2.6-1.4-3.4-4-2.2-5 1.2-1 3.6 0 4.6 2.2z"
-            fill="var(--paper)" stroke="var(--edge)" stroke-width="1.4"/>
-          <!-- 閉著的眼睛：在窩裡是休息 -->
-          <path d="M26.5 32.5 a2 2 0 0 0 3 0" fill="none" stroke="var(--edge)"
-            stroke-width="1.3" stroke-linecap="round"/>
-          <circle cx="23.5" cy="35.5" r="1.4" fill="var(--seal)"/>
-          <path d="M62 33 q7 -2 6 -8" stroke="var(--edge)" stroke-width="1.5"
-            fill="none" stroke-linecap="round"/>
+          <path d="M40.4 45c2.2-3 2-5.8.4-6.3-1.5-.5-3.2 1.2-4 3.3z"
+            fill="var(--paper)" stroke="var(--edge)" stroke-width="1.5"
+            stroke-linejoin="round"/>
+          <path d="M27 50c0-4.1 3.1-7 7-7s7 2.9 7 7v2.4c0 2.3-1.8 4.1-4.1 4.1h-5.8
+            c-2.3 0-4.1-1.8-4.1-4.1z" fill="var(--panel)" stroke="var(--edge)"
+            stroke-width="1.8" stroke-linejoin="round"/>
+          <circle cx="31.2" cy="49.6" r="1.5" fill="var(--edge)"/>
+          <circle cx="36.8" cy="49.6" r="1.5" fill="var(--edge)"/>
+          <path d="M32.6 54h2.8" stroke="var(--edge)" stroke-width="1.5"
+            stroke-linecap="round"/>
+          <circle cx="34" cy="52.2" r="1.4" fill="var(--seal)"/>
         </svg>
-        <span class="txt">守護犬在這一室<br>說一句話就行</span>
       </div>
     </aside>
+
+    <!-- 樓層索引與室內容之間的分隔條。三條直的分隔條（這條、地圖與清單之間、
+         清單與助理之間）走同一支 SW.makeGrip，寬度都寫進 main 的自訂屬性，
+         grid 自己算位置——寫進元素的 inline style 會讓 grip 與被拖的欄各算
+         一次，拖到一半就錯開一格。 -->
+    <div class="vgrip" id="railgrip" role="separator" aria-orientation="vertical"
+         aria-label="調整樓層索引寬度" tabindex="0"></div>
 
     <div class="roomwrap">
       <!-- 室頭：五間房共用同一條。室號、室名、一句說明、右側來源膠囊——
            把「我在哪一間、這裡的數字哪來的」做成每一室都有的常駐元件。 -->
       <div class="roomhead">
         <span class="rh-no" id="rh-no">01</span>
-        <b class="rh-name" id="rh-name">地圖室</b>
+        <b class="rh-name" id="rh-name">全市監看</b>
         <span class="rh-desc" id="rh-desc"></span>
         <span class="rh-src" id="rh-src"></span>
       </div>
@@ -277,6 +290,11 @@
       </div>
     </div>
 
+    <!-- 地圖與清單之間的分隔條。只有地圖室兩者同時存在，其他室 .no-map
+         會把它與地圖一起收掉。 -->
+    <div class="vgrip" id="sidegrip" role="separator" aria-orientation="vertical"
+         aria-label="調整清單寬度" tabindex="0"></div>
+
     <!-- 右欄：目前是清單與卷宗，之後這一欄會讓給 AI 側邊欄。 -->
     <div class="side">
       <div class="pane" id="pane-list">
@@ -287,18 +305,39 @@
       </div>
 
       <div class="pane" id="pane-data" hidden>
-        <div class="todo">
-          <div class="todo-head">
-            <b>資料提取存放區</b>
-            <span>外殼已就位，內容待設計</span>
+        <div class="drbar">
+          <div class="drseg" id="dr-layer">
+            <button type="button" data-l="raw">原始資料<i id="dr-n-raw">—</i></button>
+            <button type="button" data-l="num" aria-pressed="true">數字<i id="dr-n-num">—</i></button>
           </div>
-          <div class="todo-grid" id="data-grid"></div>
-          <p class="todo-note">每一筆抽取都帶著來源 PDF 的頁碼，所以這一室之後
-            可以直接從清單跳到證據頁。實際的瀏覽與分析介面由組員接手。</p>
+          <button type="button" class="costbtn" id="drmore" aria-expanded="false">判讀與外部佐證</button>
+          <span class="rh-src" id="dr-src">載入中…</span>
+        </div>
+        <div class="pop dr" id="drmorepop" hidden></div>
+
+        <div class="drlayer drraw" id="dr-raw" hidden>
+          <div class="drcol">
+            <div id="dr-upload"></div>
+            <div id="dr-upresult"></div>
+            <div class="list" id="dr-docs"></div>
+          </div>
+          <div class="drside">
+            <div id="dr-docpages" hidden></div>
+            <div class="ev" id="dr-evidence" hidden></div>
+          </div>
+        </div>
+
+        <div class="drlayer" id="dr-num">
+          <div class="drchips" id="dr-kinds"></div>
+          <div class="drscroll" id="dr-tables"></div>
         </div>
       </div>
 
       <div class="pane" id="pane-scan" hidden>
+        <!-- 輿情室：上半是已經收進來的社群聲音（免費、即時讀庫），
+             下半是掃描主控台（花錢去收集更多）。順序即是使用順序：
+             先看手上有什麼，再決定要不要花錢。 -->
+        <div class="socialwrap" id="socialwrap">載入中…</div>
         <div class="scanwrap" id="scanwrap">載入中…</div>
       </div>
 
@@ -370,9 +409,12 @@
   <header>
     <h1>小小守護員<span>稽查中心 · 新北市教保機構</span></h1>
     <div class="hstat">
+      <!-- 中庭只留「全市多少園」。本批提案與即時管道在各自的房間裡
+           本來就寫著（地圖室 20 家待派工、輿情室 31 則），
+           中庭再寫一次是同一件事講兩次。 -->
       <span>全市 <b id="lb-all">—</b></span>
-      <span>本批提案 <b id="lb-sel">—</b></span>
-      <span>即時管道 <b id="lb-ch">—</b></span>
+      <span hidden><b id="lb-sel">—</b></span>
+      <span hidden><b id="lb-ch">—</b></span>
       <button class="who-pod" id="lbwho" aria-expanded="false" hidden>
         <span class="who-av">—</span>
         <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.25">
@@ -385,7 +427,7 @@
     <!-- 大廳自己的身分浮層。內容與 app 那一份相同，由 paintWho 一起填。 -->
     <div class="pop who" id="lbwhopop" hidden
       style="position:absolute;right:20px;top:52px;z-index:10">
-      <h4>稽查員</h4>
+      <h4>使用者身分</h4>
       <div class="whopop-body"></div>
     </div>
   </header>
@@ -399,21 +441,47 @@
 <div class="authwrap" id="authwrap" hidden>
   <form class="authbox" id="authform">
     <h2>稽查派工台</h2>
-    <p>本系統含 1,213 所真實機構的查核優先序，僅供內部稽查使用。</p>
+    <p>本系統含 1,213 所真實機構的查核優先序，僅供內部使用。</p>
+
+    <fieldset class="authroles">
+      <legend>登入身分</legend>
+      <div class="authrole-grid">
+        <label class="authrole selected">
+          <input type="radio" name="login-role" value="inspector" checked>
+          <span><b>稽查人員</b><small>查核、派工與分析</small></span>
+        </label>
+        <label class="authrole">
+          <input type="radio" name="login-role" value="admin">
+          <span><b>系統管理員</b><small>目前使用相同功能</small></span>
+        </label>
+      </div>
+    </fieldset>
+
     <label>帳號 <input id="email" type="email" autocomplete="username" required></label>
     <label>密碼 <input id="password" type="password" autocomplete="current-password" required></label>
-    <div class="autherr" id="autherr"></div>
-    <button type="submit">登入</button>
+    <div class="autherr" id="autherr" role="alert"></div>
+    <button type="submit" id="loginbtn">登入</button>
+
+    <section class="quicklogin" id="quicklogin" hidden>
+      <div class="authdivider"><span>展示環境快速登入</span></div>
+      <p>免輸入帳密；後端未啟用時不會顯示。</p>
+      <div class="quickrole-grid">
+        <button type="button" class="quickrole" data-quick-role="inspector">稽查人員</button>
+        <button type="button" class="quickrole" data-quick-role="admin">系統管理員</button>
+      </div>
+    </section>
   </form>
 </div>
 
 <script src="/static/vendor/leaflet.js"></script>
 <script src="/static/vendor/leaflet.markercluster.js"></script>
 <script src="/static/app.js"></script>
+<script src="/static/social.js"></script>
 <script src="/static/scan.js"></script>
 <script src="/static/timeline.js"></script>
 <script src="/static/auth.js"></script>
 <script src="/static/agent.js"></script>
+<script src="/static/dataroom.js"></script>
 <script src="/static/memos.js"></script>
 <script src="/static/lobby.js"></script>
 </body>

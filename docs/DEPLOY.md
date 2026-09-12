@@ -131,7 +131,9 @@ DATABASE_URL=postgresql+psycopg://watchdog:<pw>@<endpoint>:5432/postgres
 `AWS_REGION` / `AWS_DEFAULT_REGION` | `us-west-2` | Bedrock 打不通 |
 `AWS_ACCESS_KEY_ID` / `..._SECRET_ACCESS_KEY` / `..._SESSION_TOKEN` | workshop 那四行 | 同上 |
 `SESSION_SECRET` | 隨機字串 | — |
-`SEED_INSPECTOR_EMAIL` / `..._PASSWORD` | 自己設 | 沒有帳號可登入 |
+`SEED_INSPECTOR_EMAIL` / `..._PASSWORD` | 自己設 | 稽查人員帳號不會建立 |
+`SEED_ADMIN_EMAIL` / `..._PASSWORD` | 自己設，且 Email 不可與 inspector 相同 | 管理員帳號不會建立 |
+`QUICK_LOGIN_ENABLED` | 正式環境固定 `false` | 不顯示免密碼快速登入（安全預設） |
 `AGENT_BACKEND` | `bedrock` | 預設就是 bedrock，可省略 |
 `DATABASE_URL` | 只有接 RDS 時才設 | 預設 SQLite |
 
@@ -155,7 +157,8 @@ DATABASE_URL=postgresql+psycopg://watchdog:<pw>@<endpoint>:5432/postgres
 ## 六、上台前的檢查清單
 
 - [ ] `python run.py bedrock-check` → 7/7
-- [ ] 登入頁進得去，帳密可用
+- [ ] 一般登入：稽查人員／系統管理員各自帳密可用，選錯身分會被拒絕
+- [ ] 展示環境：兩個快速登入都可用；正式環境不顯示快速登入
 - [ ] 助理說一句話，**畫面真的跟著動**（頁籤切換、地圖標記）
 - [ ] `幫我排板橋區這週的稽查` → 會載入 SOP、取排序、匯出 CSV
 - [ ] `資遣費準備金寫在哪一頁` → 回得出檔名與頁碼
