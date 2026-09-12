@@ -23,7 +23,6 @@
     <nav class="tabs" id="tabs">
       <button data-t="list" aria-pressed="true">派工提案</button>
       <button data-t="chat">查詢</button>
-      <button data-t="agent">助理</button>
       <button data-t="scan">掃描</button>
       <button data-t="timeline">時間軸</button>
       <button data-t="memos">建議書</button>
@@ -45,9 +44,32 @@
       <button class="costbtn" id="costbtn" aria-expanded="false"
         title="本掃描週期已花費／自訂上限。點開看各道上限與最近幾筆帳。"
         >本期花費 <b id="s-budget">—</b><i class="caret"></i></button>
+      <!-- 頁尾拿掉了，但頁尾上那兩件事不能跟著消失：一是輸出定位（建議查核、
+           非違法認定），二是 CC-BY 要求的來源標註——後者是**授權條件**。
+           收進這顆鈕：畫面乾淨，但兩者都還在一次點擊之內。 -->
+      <button class="costbtn" id="aboutbtn" aria-expanded="false"
+        title="這份排序是什麼、不是什麼，以及資料來源與授權">ⓘ 說明</button>
     </div>
 
     <div class="pop" id="costpop" hidden>載入中…</div>
+
+    <div class="pop about" id="aboutpop" hidden>
+      <h4>這份排序是什麼</h4>
+      <p>本表為<b>建議查核的優先序</b>，不是違法認定。時序切分逐年回測
+        （2021–2024 四個完整觀察年度，每年各自重新訓練）平均 AUC 0.658，
+        前 100 名命中率為隨機抽查的 2.29 倍；詳見「時間軸」分頁。</p>
+      <p>全市 <b>94.8%</b> 的園無公開財報。對這些園而言那是<b>涵蓋範圍限制</b>，
+        不是合規證明——沒有出現財務發現，代表資料不足，不代表低風險。</p>
+      <h4>資料來源與授權</h4>
+      <p class="src">機構基本資料、裁罰紀錄與收費明細來源：<a
+          href="https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx"
+          target="_blank" rel="noopener">全國教保資訊網</a>（教育部），
+        經 <a href="https://github.com/kiang/ap.ece.moe.edu.tw" target="_blank"
+          rel="noopener">kiang/ap.ece.moe.edu.tw</a> 鏡像取得（江明宗維護，
+        程式碼 MIT、資料 CC-BY）。<br>
+        地圖圖磚 © <a href="https://www.openstreetmap.org/copyright"
+          target="_blank" rel="noopener">OpenStreetMap</a> 貢獻者。</p>
+    </div>
   </header>
 
   <main>
@@ -197,30 +219,6 @@
         </form>
       </div>
 
-      <div class="pane" id="pane-agent" hidden>
-        <div class="agentbar">
-          <span class="who" id="whoami">未登入</span>
-          <button type="button" id="agentclear" class="mini">清除地圖標記</button>
-          <button type="button" id="logout" class="mini" hidden>登出</button>
-        </div>
-        <div class="chatlog" id="agentlog">
-          <div class="msg bot">
-            <p>我可以操作這個畫面。說一句話，我會邊做邊講。</p>
-            <div class="egs">
-              <button class="eg">幫我排這週的稽查，先看板橋區</button>
-              <button class="eg">三重區財報法遵沒通過的有哪些？</button>
-              <button class="eg">資遣費準備金的規定寫在財報哪一頁？</button>
-              <button class="eg">你這個排序準不準？</button>
-            </div>
-          </div>
-        </div>
-        <form class="chatbar" id="agentform">
-          <input id="aq" placeholder="例如：把板橋區有前科的前十筆列出來"
-                 autocomplete="off">
-          <button type="submit" id="agentsend">送出</button>
-        </form>
-      </div>
-
       <div class="pane" id="pane-scan" hidden>
         <div class="scanwrap" id="scanwrap">載入中…</div>
       </div>
@@ -244,27 +242,44 @@
 
       <div class="dossier" id="dossier" hidden></div>
     </div>
+
+    <!-- 助理獨立成第三欄而不是分頁之一：它會**操作這個畫面**（篩選、標記、
+         開卷宗），塞在分頁裡的話，一講話就看不到自己造成的結果——
+         那等於把「邊做邊講」變成「講完再自己去找」。
+         中間那條 grip 可拖曳改寬度，標題列可收成細條。 -->
+    <div class="agentgrip" id="agentgrip" role="separator" aria-orientation="vertical"
+         aria-label="調整助理欄寬度" tabindex="0"></div>
+
+    <aside class="agentcol" id="agentcol">
+      <div class="agenthead">
+        <b class="agenttitle">助理</b>
+        <span class="who" id="whoami">未登入</span>
+        <button type="button" id="agentclear" class="mini">清除標記</button>
+        <button type="button" id="logout" class="mini" hidden>登出</button>
+        <button type="button" id="agentfold" class="mini fold"
+                aria-expanded="true" title="收合助理欄">‹</button>
+      </div>
+      <div class="agentbody">
+        <div class="chatlog" id="agentlog">
+          <div class="msg bot">
+            <p>我可以操作這個畫面。說一句話，我會邊做邊講。</p>
+            <div class="egs">
+              <button class="eg">幫我排這週的稽查，先看板橋區</button>
+              <button class="eg">三重區財報法遵沒通過的有哪些？</button>
+              <button class="eg">資遣費準備金的規定寫在財報哪一頁？</button>
+              <button class="eg">你這個排序準不準？</button>
+            </div>
+          </div>
+        </div>
+        <form class="chatbar" id="agentform">
+          <input id="aq" placeholder="例如：把板橋區有前科的前十筆列出來"
+                 autocomplete="off">
+          <button type="submit" id="agentsend">送出</button>
+        </form>
+      </div>
+    </aside>
   </main>
 
-  <footer>
-    本表為<b>建議查核的優先序</b>，不是違法認定。時序切分逐年回測（2021–2024
-    四個完整觀察年度，每年各自重新訓練）平均 AUC 0.658，前 100 名命中率為隨機
-    抽查的 2.29 倍；詳見「時間軸」分頁。全市 94.8% 的園無公開財報，對這些園
-    而言那是涵蓋範圍限制，不是合規證明。
-    <!-- CC-BY 的標註是授權條件不是禮貌：上游明訂「Data is compatible with CC-BY
-         license. When using this data, please attribute to ap.ece.moe.edu.tw」。
-         標註要出現在使用者看得到的地方，不能只寫在 repo 的 markdown 裡。 -->
-    <span class="src">
-      機構基本資料、裁罰紀錄與收費明細來源：<a
-        href="https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx"
-        target="_blank" rel="noopener">全國教保資訊網</a>（教育部），
-      經 <a href="https://github.com/kiang/ap.ece.moe.edu.tw" target="_blank"
-        rel="noopener">kiang/ap.ece.moe.edu.tw</a> 鏡像取得（江明宗維護，
-      程式碼 MIT、資料 CC-BY）。地圖圖磚 © <a
-        href="https://www.openstreetmap.org/copyright" target="_blank"
-        rel="noopener">OpenStreetMap</a> 貢獻者。
-    </span>
-  </footer>
 </div>
 
 <div class="authwrap" id="authwrap" hidden>

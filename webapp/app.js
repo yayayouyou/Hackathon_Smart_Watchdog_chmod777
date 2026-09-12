@@ -1132,16 +1132,30 @@ $("layerbtn").addEventListener("click", () => {
 $("costbtn").addEventListener("click", () => {
   showCost($("costpop").hidden);
   showLayers(false);
+  showAbout(false);
+});
+/* ⓘ 說明。頁尾拿掉之後，「這是建議查核不是違法認定」與 CC-BY 的來源標註
+   都收在這裡——兩者都不是可有可無的裝飾，只是不再常駐佔畫面。 */
+function showAbout(on) {
+  $("aboutpop").hidden = !on;
+  $("aboutbtn").setAttribute("aria-expanded", String(on));
+}
+$("aboutbtn").addEventListener("click", () => {
+  showAbout($("aboutpop").hidden);
+  showCost(false);
+  showLayers(false);
 });
 // 點到別處就收起浮層；Esc 也收。浮層蓋住地圖時要能一鍵回到地圖。
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".mapui")) showLayers(false);
   if (!e.target.closest("#costpop") && !e.target.closest("#costbtn")) showCost(false);
+  if (!e.target.closest("#aboutpop") && !e.target.closest("#aboutbtn")) showAbout(false);
 });
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
   showLayers(false);
   showCost(false);
+  showAbout(false);
 });
 LAYER_BOXES.forEach((id) =>
   $(id).addEventListener("change", syncLayerCount));

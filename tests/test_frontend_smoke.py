@@ -111,20 +111,27 @@ def test_each_submit_form_is_wired_to_something() -> None:
     assert not dead, f"這些表單沒有任何 JS 接它，送出鈕會是死的：{dead}"
 
 
-def test_example_buttons_are_scoped_to_their_own_pane() -> None:
+def test_example_buttons_are_scoped_to_their_own_container() -> None:
     """查詢與助理各有一組範例鈕。
 
-    用全域委派（`document.addEventListener` + `closest(".eg")`）的話，助理面板
-    的範例鈕會同時觸發查詢的 `ask()`——兩個面板各跑一次，畫面會很奇怪。
-    所以兩邊都必須把選擇器限定在自己的 pane 內。
+    用全域委派（`document.addEventListener` + `closest(".eg")`）的話，助理的
+    範例鈕會同時觸發查詢的 `ask()`——兩邊各跑一次，畫面會很奇怪。
+    所以兩邊都必須把選擇器限定在自己的容器內。
+
+    斷言看的是**有沒有限定容器**，不是容器叫什麼名字。原本寫死檢查 `#pane-`，
+    助理從分頁改成獨立欄（`#agentcol`）之後就紅了——但那次改動並沒有違反這條
+    規則，紅的是斷言本身把「限定在自己的容器」誤寫成「限定在某個 pane」。
     """
+    scoped = re.compile(r'querySelectorAll\(\s*"#[a-zA-Z0-9_-]+\s+\.eg"')
     for name in ("app.js", "agent.js"):
         src = (WEBAPP / name).read_text(encoding="utf-8")
         if ".eg" not in src:
             continue
-        assert "#pane-" in src, f"{name} 的 .eg 綁定沒有限定 pane"
+        assert scoped.search(src), (
+            f"{name} 的 .eg 綁定沒有限定容器（應為 querySelectorAll(\"#容器 .eg\")）"
+        )
         assert 'closest(".eg")' not in src, (
-            f"{name} 用了全域委派，會誤觸另一個面板的範例鈕"
+            f"{name} 用了全域委派，會誤觸另一邊的範例鈕"
         )
 
 

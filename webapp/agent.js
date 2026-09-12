@@ -155,7 +155,7 @@
       el = document.createElement("div");
       el.id = "agentthinking";
       el.className = "thinking";
-      el.innerHTML = '<span class="dots"><i></i><i></i><i></i></span><span></span>';
+      el.innerHTML = '<span class="spinner"></span><span></span>';
     }
     el.lastElementChild.textContent = label || "思考中";
     log().appendChild(el);              // 重新 append = 移到最後
@@ -322,7 +322,7 @@
       send(text);
     });
   }
-  document.querySelectorAll("#pane-agent .eg").forEach((b) =>
+  document.querySelectorAll("#agentcol .eg").forEach((b) =>
     b.addEventListener("click", () => send(b.textContent)));
 
   const clear = $("agentclear");
@@ -331,6 +331,85 @@
       SW.state.agentIds = null;
       SW.drawMarkers();
     });
+  }
+
+  /* ── 助理欄的寬度與收合 ──────────────────────────────────
+   *
+   * 寬度寫進 `main` 的 `--agentw`，不是寫進 aside 的 inline style：grip 自己
+   * 的位置也由同一個 grid 算，改一處兩者一起動，拖到一半不會錯開一格。
+   *
+   * 上下限不是美感問題。太窄時對話會斷成一字一行、輸入框的「送出」被擠掉；
+   * 太寬則地圖只剩一條，而助理講「我把這幾筆標在地圖上了」時，那句話要對得上
+   * 看得見的地圖才有意義。所以上限跟著視窗寬度走，不是一個固定 px。 */
+  const col = $("agentcol");
+  const grip = $("agentgrip");
+  const MIN = 280;
+  const maxW = () => Math.max(MIN, Math.round(window.innerWidth * 0.45));
+
+  function setWidth(px) {
+    const w = Math.round(Math.min(maxW(), Math.max(MIN, px)));
+    document.querySelector("main").style.setProperty("--agentw", w + "px");
+    try { localStorage.setItem("sw.agentw", String(w)); } catch { /* 私密視窗 */ }
+    if (SW.state.map) SW.state.map.invalidateSize();
+  }
+
+  function fold(on) {
+    col.classList.toggle("fold", on);
+    const btn = $("agentfold");
+    btn.textContent = on ? "›" : "‹";
+    btn.setAttribute("aria-expanded", String(!on));
+    btn.title = on ? "展開助理欄" : "收合助理欄";
+    // ⚠️ 不可用 display:none。grip 是 grid 的第 3 格，藏掉之後 aside 會遞補
+    // 進那一格（6px），收合狀態就變成一條看不見也點不到的線——實測過。
+    // visibility:hidden 保留格位，只是不顯示也不吃事件。
+    grip.style.visibility = on ? "hidden" : "";
+    document.querySelector("main").style.setProperty(
+      "--agentw", on ? "34px" : (restoreWidth() + "px"));
+    try { localStorage.setItem("sw.agentfold", on ? "1" : ""); } catch { /* 同上 */ }
+    // Leaflet 要被告知容器變了，否則地圖會停在舊尺寸、滑鼠座標整個對不上。
+    if (SW.state.map) setTimeout(() => SW.state.map.invalidateSize(), 210);
+  }
+
+  function restoreWidth() {
+    let w = 380;
+    try { w = Number(localStorage.getItem("sw.agentw")) || 380; } catch { /* 同上 */ }
+    return Math.min(maxW(), Math.max(MIN, w));
+  }
+
+  if (grip) {
+    // pointer 事件而不是 mouse：觸控筆與觸控螢幕走同一條路，不必寫兩套。
+    grip.addEventListener("pointerdown", (e) => {
+      if (col.classList.contains("fold")) return;
+      e.preventDefault();
+      grip.setPointerCapture(e.pointerId);
+      grip.classList.add("drag");
+      document.body.classList.add("resizing");
+      const move = (ev) => setWidth(window.innerWidth - ev.clientX);
+      const up = () => {
+        grip.classList.remove("drag");
+        document.body.classList.remove("resizing");
+        window.removeEventListener("pointermove", move);
+        window.removeEventListener("pointerup", up);
+      };
+      window.addEventListener("pointermove", move);
+      window.addEventListener("pointerup", up);
+    });
+    // 鍵盤也要能調：grip 有 tabindex，只能滑鼠拖等於鍵盤使用者調不了。
+    grip.addEventListener("keydown", (e) => {
+      const cur = col.getBoundingClientRect().width;
+      if (e.key === "ArrowLeft") { e.preventDefault(); setWidth(cur + 24); }
+      if (e.key === "ArrowRight") { e.preventDefault(); setWidth(cur - 24); }
+    });
+  }
+
+  const foldBtn = $("agentfold");
+  if (foldBtn) {
+    foldBtn.addEventListener("click", () => fold(!col.classList.contains("fold")));
+    let folded = false;
+    try { folded = !!localStorage.getItem("sw.agentfold"); } catch { /* 同上 */ }
+    if (folded) fold(true);
+    else document.querySelector("main").style
+      .setProperty("--agentw", restoreWidth() + "px");
   }
 
   window.Agent = { send, dispatch };
