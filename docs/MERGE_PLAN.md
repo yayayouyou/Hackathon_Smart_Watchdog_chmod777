@@ -194,6 +194,46 @@ RDS／ECR／ECS／Amplify／S3／Lambda／CloudFormation | 建立權限都有；
 
 ---
 
+## 9b. 完成狀態（2026-09-12）
+
+八個階段全部完成，四個 commit。實測結果：
+
+| 階段 | 驗收 |
+|---|---|
+0 帳號 | 登入六個案例正確；查無帳號與密碼錯誤回應時間相近（不洩漏帳號存在與否） |
+1 骨架 | `session → text → tool_call → tool_result → ui_action → text → done` |
+2 tool | 12 個註冊，8 個包既有端點 |
+3 前端 | 助理頁籤、登入層、`ui_action` 分派到 `window.SW` |
+4 MCP | `/mcp` 掛載；無 token 與未註冊 tool 都被 registry 擋下 |
+5 寫入 | `record_feedback` 追加式寫入，帶稽查員身分 |
+6 SOP | 五份改寫；實測 agent 會自己 `load_skill` 再照步驟做 |
+7 證據 | `data/raw` 還原（162 份）；隨用隨渲染，文字與原始頁面核對一致 |
+8 部署 | ECS Fargate 跑起來，雲端 agent 走 Bedrock 正常 |
+
+**329 passed, 1 skipped**（唯一的 skip 是 POSIX 沒有逾時可測的 flock）。
+
+### 一個沒有補上的內容缺口
+
+來源專案的 `docs/known-weaknesses.md` 有一份誠實的自評：**無前科子群的
+AUC 是 0.517（2023-12-31 快照），lift 0.60——比隨機還差**。那份文件明寫
+「不可以調參數把這個數字修好」「不可以只展示好看的那兩份快照」。
+
+本 repo 的 `timeline.json` **沒有這個維度**（欄位只有整體 `auc`、`precision_at`、
+`lift_at`，沒有分子群）。所以 `get_model_card` 現在只能報整體指標，被問到
+「無前科的園你們分得出來嗎」時答不出那個對自己不利的數字。
+
+要補的話不是搬程式，是**重算時間軸並加上分子群指標**。在補上之前，
+回答這個問題要靠人，不要讓 agent 用整體 AUC 帶過——那正是來源專案警告的
+「把整體 AUC 拿來當『我們找得到沒前科的高風險園』的證據」。
+
+### 還沒做但知道的事
+
+- **講解句長度沒守住 30 字。** 量詞、禁用詞、界線句都對，但要列多筆時會寫成
+  一長段。SOP 已加「只說明前三筆」，仍需要再收。
+- **證據頁在雲端是 404**，因為 `data/raw` 不進映像（見 `docs/DEPLOY.md`）。
+
+---
+
 ## 10. 待決事項
 
 1. **`pyproject.toml` 的 `target-version = "py39"` 與實際 venv（3.11）不符。**

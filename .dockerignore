@@ -1,0 +1,18 @@
+# 主辦方資料集：1.8 GB 且不得轉散布。後果見 Dockerfile 的說明。
+data/raw/
+data/interim/
+# 機器各自獨立的執行期狀態（含密碼雜湊與對話稽核軌跡）。
+data/runtime/
+# 建映像時會自己產生。
+dist/
+.venv/
+.git/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+# 憑證絕不進映像。容器用環境變數帶。
+.env
+*.zip
+tests/
+docs/
