@@ -114,6 +114,9 @@
          地圖視野——不等就位就飛，飛行會被拉回全市。 */
       case "navigate": {
         const then = () => {
+          if (a.memo_query !== undefined && window.SWMemos && window.SWMemos.focus) {
+            window.SWMemos.focus(a.memo_query);
+          }
           if (a.focus_town) flyToDistrict(a.focus_town);
           if (a.institution_id) SW.openDossier(a.institution_id);
           if (Array.isArray(a.ids) && a.ids.length) {

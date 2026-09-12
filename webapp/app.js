@@ -1233,6 +1233,7 @@ function showPane(name) {
   if (name === "data" && window.SWData) window.SWData.open();
   if (name === "scan" && window.SWSocial) window.SWSocial.open();
   if (name === "scan" && window.SWScan) window.SWScan.open();
+  if (name === "memos" && window.SWMemos) window.SWMemos.open();
   if (name === "timeline") timelineDock(true);
 }
 

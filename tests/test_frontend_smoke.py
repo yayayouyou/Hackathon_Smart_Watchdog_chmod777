@@ -680,3 +680,67 @@ def test_the_dataroom_shows_the_true_number_of_tables() -> None:
     assert "res.total" in js, "資料室仍把 count 當成總數顯示"
     api = (ROOT / "src/smart_watchdog/api/dataroom.py").read_text(encoding="utf-8")
     assert '"total"' in api, "/api/dataroom/tables 沒有回傳總數"
+
+
+def test_every_room_module_is_woken_when_its_pane_is_shown() -> None:
+    """每一間室的模組都要由 `showPane()` 叫醒。
+
+    這些模組刻意延後載入（答詢擬稿室有 144 筆建議書，不必在開站時就抓），
+    所以「進到這一室」必須有人通知它們。漏掉的表徵是**那一室永遠是空的**，
+    而且沒有任何錯誤——助理說「已列在畫面上」，畫面上什麼都沒有。
+
+    這個坑踩過三次。前兩次（資料室、輿情室）在 showPane 裡補上了；第三次是
+    答詢擬稿室，它原本只綁在那顆**隱藏的分頁鈕**的 click 上，而導覽改走房間
+    系統之後那顆鈕根本不會被點到。
+
+    所以規則寫成通則：凡是對外開了 `open()` 的室模組，`showPane()` 都要叫它。
+    """
+    app = (WEBAPP / "app.js").read_text(encoding="utf-8")
+    pane = app[app.index("function showPane("):]
+    pane = pane[:pane.index("\n}")]
+
+    providers = []
+    for js in sorted(WEBAPP.glob("*.js")):
+        if js.name == "app.js":
+            continue
+        src = js.read_text(encoding="utf-8")
+        for m in re.finditer(r"window\.(SW[A-Za-z]*)\s*=\s*\{([^}]*)\}", src):
+            if re.search(r"\bopen\b", m.group(2)):
+                providers.append((m.group(1), js.name))
+    assert providers, "找不到任何提供 open() 的室模組，正則可能過時了"
+
+    missing = sorted(f"{g}（{f}）" for g, f in providers if g not in pane)
+    assert not missing, (
+        f"這些室模組沒有被 showPane() 叫醒，進到那一室會是空的：{missing}"
+    )
+
+
+def test_a_late_response_cannot_overwrite_a_newer_one() -> None:
+    """建議書清單的取數要擋掉過期的回應。
+
+    進這一室會先載入全部（`showPane` → `open()`），助理接著又篩「三重」
+    （`focus()`），兩個請求並行。全部那一份筆數多、回得慢，於是**後到**、
+    把 12 筆蓋回 130 筆——畫面列的是助理沒有在講的那一批，而且沒有任何錯誤。
+
+    `focus()` 也必須把搜尋框一起填：只改清單不改輸入框的話，畫面顯示空的
+    搜尋條件而列出來的只有三重，使用者一按搜尋就把助理設的洗掉了。
+    """
+    src = (WEBAPP / "memos.js").read_text(encoding="utf-8")
+    body = _code(src)
+    assert re.search(r"\bseq\b", body), "memos.js 沒有擋過期回應的機制"
+    assert body.count("mine !== seq") >= 2, (
+        "成功與失敗兩條路都要檢查，否則慢的那個錯誤訊息照樣會蓋掉新結果"
+    )
+    assert 'box.value = q' in body, "focus() 沒有把搜尋框一起填"
+
+
+def test_the_memo_query_reaches_the_screen() -> None:
+    """助理篩了哪幾份，畫面就要列哪幾份。
+
+    `list_memos` 只送「切到答詢擬稿室」而不送查詢字串的話，助理講「提到三重的
+    那 12 份」，畫面卻列出全部 130 份——它講的跟畫面上的不是同一批。
+    """
+    tools = (ROOT / "src/smart_watchdog/agent/tools.py").read_text(encoding="utf-8")
+    assert '"memo_query"' in tools, "list_memos 沒有把查詢字串送給畫面"
+    agent = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    assert "SWMemos.focus" in agent, "分派器沒有把查詢字串套到畫面上"

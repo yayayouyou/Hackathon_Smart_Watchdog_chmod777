@@ -707,7 +707,9 @@ def _list_memos(_ctx: ToolContext, a: ListMemosArgs) -> ToolOutcome:
     out = _dos().list_memos(q=a.q, limit=a.limit)
     return ToolOutcome(
         payload=out,
-        ui_action={"type": "navigate", "tab": "memos"},
+        # 查詢字串要一起送。只切室不帶條件的話，助理講「提到三重的那幾份」
+        # 而畫面列出全部 130 份——它講的跟畫面上的不是同一批。
+        ui_action={"type": "navigate", "tab": "memos", "memo_query": a.q},
     )
 
 
