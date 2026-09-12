@@ -16,8 +16,14 @@ cp .env.example .env           # 然後把憑證填進去，見 §2
 python run.py seed-users       # ⚠️ 建帳號。沒有帳號連地圖都看不到
 python run.py bedrock-check    # 確認 AWS 打得通
 python run.py frontend         # 產生前端資料
+python run.py dataroom-slice   # ⚠️ 文件控管室要這份，少了整室只有一行錯誤訊息
 python run.py serve            # → http://127.0.0.1:8000
 ```
+
+⚠️ **`dataroom-slice` 也不是選配。** 它產出的 `data/interim/dataroom` 有
+gitignore，所以每一台新機器都要自己跑一次；沒跑的話文件控管室會顯示
+「資料室切片不存在」。它在完整 pipeline 裡（`in_pipeline=True`），但照著上面
+這份清單跑的人不會經過完整 pipeline——決賽當天換一台機器就是這個情境。
 
 ⚠️ **`seed-users` 不是選配。** 動態版有全螢幕登入牆。請在 `.env` 分別設定
 `SEED_INSPECTOR_EMAIL/PASSWORD` 與 `SEED_ADMIN_EMAIL/PASSWORD`；兩個 Email
@@ -44,7 +50,8 @@ python run.py serve            # → http://127.0.0.1:8000
 
 ```bash
 python run.py setup
-python run.py test        # 525 passed, 12 skipped（2026-09-12，Windows）
+python run.py test        # 707 passed（2026-09-13，Windows）
+                          # 少了 dataroom-slice 會變成 697 passed, 10 skipped
 python run.py serve
 ```
 

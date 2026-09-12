@@ -30,6 +30,7 @@ python3 -m venv .venv                      # 需要 Python 3.9+
 .venv/bin/pip install "fastapi>=0.110" "uvicorn[standard]>=0.29" "httpx>=0.27"
 
 PYTHONPATH=src .venv/bin/python scripts/build_frontend.py   # 產生 dist/
+PYTHONPATH=src .venv/bin/python scripts/build_dataroom_slice.py  # 文件控管室要這份
 PYTHONPATH=src .venv/bin/python scripts/serve.py            # → :8000
 ```
 
@@ -42,6 +43,7 @@ py -3.11 -m venv .venv
 
 $env:PYTHONPATH = "src"
 .venv\Scripts\python scripts\build_frontend.py
+.venv\Scripts\python scripts\build_dataroom_slice.py
 .venv\Scripts\python scripts\serve.py
 ```
 
@@ -57,7 +59,7 @@ $env:PYTHONPATH = "src"
 
 ```bash
 PYTHONPATH=src .venv/bin/python -m pytest tests/ -q
-# 525 passed, 12 skipped（2026-09-12，Windows）
+# 707 passed（2026-09-13，Windows）；少了 dataroom-slice 會是 697 passed, 10 skipped
 .venv/bin/ruff check .
 ```
 

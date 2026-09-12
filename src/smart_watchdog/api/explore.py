@@ -22,6 +22,7 @@ from ..docindex import search as docsearch
 
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 TIMELINE_PATH = ROOT / "data/processed/timeline.json"
+SIGNAL_MAP_PATH = ROOT / "data/processed/signal_map.json"
 INDEX_PATH = ROOT / "data/processed/document_index.sqlite"
 
 router = APIRouter()
@@ -78,6 +79,23 @@ def timeline_point(as_of: str, n: int = Query(200, ge=1, le=2000)) -> dict:
                 "total": len(p["ranking"]),
             }
     raise HTTPException(404, f"時間軸沒有 {as_of} 這一格")
+
+
+@router.get("/api/signal-map")
+def signal_map() -> dict:
+    """我們有哪些資料、哪些真的進了模型、哪些沒有。
+
+    這個端點回答的是「你憑什麼這樣排」——而誠實的答案包含**沒有用上的東西**：
+    評鑑與交叉比對都還沒進計分，單文件法遵檢核在分層後提升只有 0.42（低於
+    基準）。只回報有效訊號的圖會讓人以為我們什麼都用上了。
+
+    數字由 `python run.py signal-map` 現算，不寫死在前端。
+    """
+    if not SIGNAL_MAP_PATH.exists():
+        raise HTTPException(
+            503, f"{SIGNAL_MAP_PATH.name} 不存在，請先執行 "
+                 "`PYTHONPATH=src python scripts/build_signal_map.py`")
+    return json.loads(SIGNAL_MAP_PATH.read_text(encoding="utf-8"))
 
 
 # ── 文件索引 ──────────────────────────────────────────────────────────

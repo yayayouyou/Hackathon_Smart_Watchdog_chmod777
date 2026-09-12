@@ -186,6 +186,9 @@ TASKS = [
          _s("validate_extraction.py"), group="量測", needs_raw=True),
     Task("validate-anomaly", "異常排序的三項驗證：Top-K、穩定性、LOO 敏感度",
          _s("validate_nonprofit_anomaly.py"), group="量測"),
+    Task("signal-map",
+         "訊號圖：每個資料來源與訊號的提升倍數，以及哪些沒進模型",
+         _s("build_signal_map.py"), group="量測"),
     Task("validate-crosscheck", "交叉比對的發現有沒有領先後續裁罰（時序切分）",
          _s("validate_crosscheck_leadtime.py"), group="量測"),
 

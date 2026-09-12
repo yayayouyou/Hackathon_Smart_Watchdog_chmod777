@@ -248,3 +248,54 @@ def test_entries_are_returned_newest_first():
     ledger.reserve(0.1, APIFY, "first")
     ledger.reserve(0.2, APIFY, "second")
     assert [e["job_id"] for e in ledger.entries()] == ["second", "first"]
+
+
+def test_recording_the_provider_amount_is_not_the_same_as_settling():
+    """`settled` 的意思是「帳本已結算」，不是「供應商已回報金額」。
+
+    這兩件事被當成同一件事的那一版，`api/scan.py` 在拿到供應商金額時就把
+    `settled` 設成 True，於是 `jobs.settle_all()` 的
+    `if r.get("settled"): continue` 把它跳過，`ledger.settle()` 永遠不被呼叫。
+    帳本只留 reserve、沒有 settle，那筆預留就以**上界**永久佔住日／月額度——
+    實測預留 US$0.33、實付 US$0.08，0.25 的額度平白燒掉且不會回來，
+    而 job 與畫面都顯示「已結算」。錢的帳不能靠兩個欄位互相假設。
+    """
+    from smart_watchdog.realtime import jobs
+
+    rid = ledger.reserve(0.33, APIFY, "j1", "sweep")
+    assert ledger.budget().day_spent_usd == pytest.approx(0.33)
+
+    # 供應商回報了金額，但還沒結算——settled 必須仍是 False。
+    job = {"job_id": "j1", "reservations": [
+        {"reservation_id": rid, "channel": "apify_threads", "usd_max": 0.33,
+         "actual_usd": 0.08, "settled": False, "provider_ref": "run-abc"}]}
+
+    jobs.settle_all(job, store=jobs.JobStore())
+    assert job["reservations"][0]["settled"] is True, "結算後才輪到它變 True"
+    assert ledger.budget().day_spent_usd == pytest.approx(0.08), (
+        "帳本要換成實付；停在上界代表 ledger.settle() 沒被呼叫")
+    assert ledger.budget().unsettled == 0
+
+
+def test_settle_all_skips_what_is_already_settled_so_nothing_is_charged_twice():
+    """`settle_all` 跳過已結算的預留——結算兩次會把同一筆錢記兩遍。
+
+    這個性質正是上一支測試要防的那個 bug 的成因：因為 settle_all 信任這個
+    旗標，呼叫端就**絕對不可以**自己提前設它。提前設的後果是靜默的——
+    沒有例外、沒有警告，只有一筆永遠停在上界、回不來的額度。
+
+    這一支同時界定了修法的方向：要修的是呼叫端不要亂設旗標，
+    不是讓 settle_all 忽略旗標（那會引入重複計費）。
+    """
+    from smart_watchdog.realtime import jobs
+
+    rid = ledger.reserve(0.33, APIFY, "j2", "sweep")
+    job = {"job_id": "j2", "reservations": [
+        {"reservation_id": rid, "channel": "apify_threads",
+         "usd_max": 0.33, "actual_usd": 0.08, "settled": False}]}
+
+    jobs.settle_all(job, store=jobs.JobStore())
+    assert ledger.budget().day_spent_usd == pytest.approx(0.08)
+    # 再跑一次：旗標已經是 True，不該再寫一筆。
+    jobs.settle_all(job, store=jobs.JobStore())
+    assert ledger.budget().day_spent_usd == pytest.approx(0.08), "重複結算"

@@ -65,6 +65,10 @@ async function boot() {
   const cfg = await api("/api/config").catch(() => ({}));
   state.googleKey = cfg.google_maps_key || null;
   state.payload = await api("/api/payload");
+  // 發酵程度（近期公開報導的量與新鮮度）。放在模組層級是因為 pinIcon
+  // 每畫一個點就要查一次，而它一輪要畫 1,213 個。
+  SW_HEAT = (state.payload.realtime || {}).heat || {};
+  drawRealtimeLegend();
   // 鄰縣市陸地輪廓。缺了不是致命傷：applyMask 會退回舊的「蓋掉整個世界」版本。
   state.land = (await api("/api/land").catch(() => ({}))).land || [];
   state.points = state.payload.points || [];
@@ -532,15 +536,57 @@ function penaltyVar(np) {
   return (PEN_STEPS.find((s) => (np || 0) >= s.min) || PEN_STEPS[PEN_STEPS.length - 1]).v;
 }
 
+/* 即時圖層的顏色＝事件類別。**不是風險分數的顏色。**
+   兒少安全排在最前面不是模型說的，是幼照法把「不當對待」放在最重的一類，
+   而公共化園 63 筆裁罰裡第 33 條就佔 42 筆。 */
+let SW_HEAT = {};
+
+const RT_COLOR = {
+  兒少安全: "--seal",
+  營運穩定: "--warn",
+  財務收費: "--fam-core",
+};
+/* 級距與大小。門檻印在圖例上——看得到的東西要說得出為什麼是這個大小。
+   0 級不是「沒問題」，是「這個時間窗內沒有公開報導」。
+
+   ⚠️ 第一版是 [10, 20, 27, 34]，全市視角看不出來：有級數的只有 3 園，
+   另外 1,210 個 0 級點每個都帶 2px 白邊——白邊在 10px 的點上佔掉四成面積，
+   一千兩百個疊起來就是一片白，27px 的紅點淹在裡面。所以這一版做兩件事：
+   有級數的整體放大一級以上，0 級的縮到 8px 並在 CSS 裡減邊、降透明度。 */
+const RT_SIZE = [8, 26, 36, 48];
+
+function heatOf(p) {
+  const h = (SW_HEAT || {})[p.i];
+  return h && h.tier ? h : null;
+}
+
 function pinIcon(p, flagged) {
-  // 10px 的點在 1,600px 寬的螢幕上只是雜訊，分不出三類顏色。放大到 12／17，
-  // 白色外圈負責跟底圖分離，紅圈負責跳出來。
+  // 10px 的點在 1,600px 寬的螢幕上只是雜訊，分不出三類顏色。
+  // 2026-09 又整體放大一級：會場投影比螢幕遠得多，14／21 才看得出來。
   const byPen = state.pinBy === "penalty";
+  const byRt = state.pinBy === "realtime";
+
+  if (byRt) {
+    // 即時層：大小＝發酵程度（則數 × 新鮮度），顏色＝事件類別。
+    // 沒有近期報導的縮到最小但不隱藏——它仍然點得開卷宗，只是不搶視覺。
+    const h = heatOf(p);
+    const size = RT_SIZE[h ? h.tier : 0];
+    const v = h ? (RT_COLOR[h.cat] || "--ink-4") : "--k0";
+    const cls = h ? "pin rt rt-t" + h.tier : "pin rt rt-t0";
+    return L.divIcon({
+      className: "",
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
+      html: `<div class="${cls}" style="width:${size}px;
+        height:${size}px;background:${cssv(v)}"></div>`,
+    });
+  }
+
   // 裁罰模式下「無紀錄」縮一級。全市 730 家（60%）是 0 件，同樣大小的話
   // 畫面會被基準線淹掉，有紀錄的那 483 家反而看不出來。縮小不是隱藏——
   // 點還在、還能點開卷宗，只是不搶視覺。
   const quiet = byPen && !flagged && !(p.np > 0);
-  const size = flagged ? 17 : (quiet ? 8 : 12);
+  const size = flagged ? 21 : (quiet ? 10 : 14);
   const v = byPen ? penaltyVar(p.np) : TVAR[p.t];
   return L.divIcon({
     className: "",
@@ -755,9 +801,32 @@ function drawList() {
     rows = [...state.agentIds].map((i) => byId[i]).filter(Boolean);
     // 助理給的順序就是它講的順序，不要重排。
   }
+  /* 即時層開著的時候，把有公開報導的幾家提到最上面。
+     地圖放大了三顆紅點，清單卻照優先序排——那三顆點不在前 20 名裡的話，
+     看的人沒有路徑從「那顆點在閃」走到「打開它的卷宗」。
+     ⚠️ 只改顯示順序，不改 p.r（優先序名次），名次照樣印在每一列右邊。 */
+  let nHot = 0;
+  if (!state.agentIds && state.pinBy === "realtime") {
+    const hot = Object.entries(SW_HEAT || {})
+      .filter(([, h]) => h.tier)
+      .sort((a, b) => b[1].score - a[1].score)
+      .map(([i]) => state.byId[i]).filter(Boolean);
+    const seen = new Set(hot.map((x) => x.i));
+    nHot = hot.length;
+    rows = [...hot, ...rows.filter((x) => !seen.has(x.i))];
+  }
   $("listnote").hidden = !state.agentIds;
+  $("rtnote").hidden = !nHot;
+  if (nHot) $("rtnote-n").textContent = nHot;
   $("list").innerHTML = rows.map((p, i) => {
     const tags = [`<span class="tag ${tagClass(p.tier)}">${esc(p.tier)}</span>`];
+    // 近期報導的標籤在每一種著色模式都出現：兩套標準要並排看得到，
+    // 不是切到即時層才存在。
+    const h = (SW_HEAT || {})[p.i];
+    if (h && h.tier) {
+      tags.push(`<span class="tag rt rt-t${h.tier}">近期報導 ${h.n} 則`
+        + `${h.cat ? " · " + esc(h.cat) : ""}</span>`);
+    }
     if (p.np > 0) tags.push(`<span class="tag p">${p.np} 件裁罰史</span>`);
     if (!p.fin) tags.push(`<span class="tag p">無公開財報</span>`);
     return `<button class="item" data-i="${p.i}">
@@ -1206,6 +1275,57 @@ $("f-dnames").addEventListener("change", (e) => {
 $("f-choro").addEventListener("change", (e) => {
   state.choro = e.target.checked; drawChoro();
 });
+
+/* 即時圖層的圖例。門檻寫在畫面上，不只寫在程式裡——一個看得到大小差異卻
+   說不出為什麼的圖層，只會讓人自己編一套解釋。
+
+   ⚠️ 這一層畫的是「有幾家媒體在談、多久以前談的」，兩者都是既有的公開事實，
+   所以它可以上地圖（aws-architecture.md §6.5 禁止的是把我們**算出來的風險
+   分數**畫上去）。它不是風險評分，也不做回測驗證——它回答的不是「誰未來會
+   違規」而是「現在正在發生什麼」。 */
+function drawRealtimeLegend() {
+  const box = $("rt-legend");
+  if (!box) return;
+  const heat = SW_HEAT || {};
+  const n = (t) => Object.values(heat).filter((h) => h.tier === t).length;
+  const cats = [["兒少安全", "--seal"], ["營運穩定", "--warn"],
+                ["財務收費", "--fam-core"]];
+  // ⚠️ 級數是分數切的，不是日數切的（payload._heat：則數 × 新鮮度，
+  // 7 日 1.0／30 日 0.6／90 日 0.3／一年 0.1）。第一版寫成「近 30 日多則」，
+  // 那是在描述一個程式沒在做的規則——0.6 也可能是一年內六則。
+  const tiers = [[3, "正在發酵", "≥2.0"], [2, "有熱度", "≥0.6"],
+                 [1, "零星提及", ">0"]];
+  // 圖例照地圖的比例縮，不照地圖的絕對大小：48px 的點塞不進 220px 的側欄，
+  // 但級距之間的比例要一樣，不然圖例就在說謊。
+  const leg = (t) => Math.max(6, Math.round(RT_SIZE[t] * 0.46));
+  box.innerHTML =
+    '<div class="rt-row"><b>顏色＝事件類別</b></div>'
+    + cats.map(([zh, v]) =>
+      `<div class="rt-row"><i style="background:${cssv(v)}"></i>${zh}`
+      + `<span>${Object.values(heat).filter((h) => h.cat === zh).length}</span></div>`)
+      .join("")
+    + '<div class="rt-row rt-sep"><b>大小＝發酵程度</b></div>'
+    + tiers.map(([t, zh, th]) =>
+      `<div class="rt-row"><i class="rt-dot" style="width:${leg(t)}px;`
+      + `height:${leg(t)}px"></i>${zh}<em>${th}</em><span>${n(t)}</span></div>`)
+      .join("")
+    + `<div class="rt-row rt-sep"><i class="rt-dot rt-none" `
+    + `style="width:${leg(0)}px;height:${leg(0)}px"></i>`
+    + `近一年無公開報導<span>${1213 - Object.values(heat)
+      .filter((h) => h.tier).length}</span></div>`;
+}
+
+function scrollLegendIntoView(id) {
+  const panel = $("layerpanel");
+  const grp = id && $(id);
+  if (!panel || !grp || grp.hidden || panel.hidden) return;
+  // 用 rect 相減而不是 offsetTop：面板裡的定位脈絡不只一層，
+  // offsetTop 會量到錯的祖先。scrollIntoView 則會連帶捲動外層地圖窗格。
+  const pr = panel.getBoundingClientRect();
+  const gr = grp.getBoundingClientRect();
+  panel.scrollTop += gr.top - pr.top - 8;
+}
+
 /* 切換標記著色依據。圖例跟著換：留著上一個模式的圖例比沒有圖例更糟——
    看的人會拿機構類別的三色去讀裁罰深淺。 */
 document.querySelectorAll("#pinby button").forEach((b) =>
@@ -1214,8 +1334,16 @@ document.querySelectorAll("#pinby button").forEach((b) =>
     document.querySelectorAll("#pinby button")
       .forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
     $("pen-grp").hidden = state.pinBy !== "penalty";
+    $("rt-grp").hidden = state.pinBy !== "realtime";
     drawPenaltyLegend();
+    drawRealtimeLegend();
     drawMarkers();
+    drawList();
+    // 圖例排在面板最下面，展開的內容比面板高一倍多（實測 1,699 / 728），
+    // 所以切著色依據時要把對應的圖例捲進視野——否則按下去畫面變了、
+    // 說明為什麼變的那段還在捲軸外。
+    scrollLegendIntoView(state.pinBy === "penalty" ? "pen-grp"
+      : state.pinBy === "realtime" ? "rt-grp" : null);
   }));
 $("tlpill").addEventListener("click", () => timelineDock($("tlbar").hidden));
 $("f-mask").addEventListener("change", (e) => {
@@ -1242,7 +1370,12 @@ function showPane(name) {
   if (name === "scan" && window.SWSocial) window.SWSocial.open();
   if (name === "scan" && window.SWScan) window.SWScan.open();
   if (name === "memos" && window.SWMemos) window.SWMemos.open();
-  if (name === "timeline") timelineDock(true);
+  if (name === "timeline") {
+    // 綁在 showPane 而不是分頁列的 click：#tabs 是 hidden，從中庭進來的人
+    // 不會去點它，綁在那裡的結果就是進來一片空白（memos.js 踩過）。
+    if (window.SWSignalMap) window.SWSignalMap.open();
+    timelineDock(true);
+  }
 }
 
 document.querySelectorAll(".tabs button").forEach((b) =>

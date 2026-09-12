@@ -983,3 +983,91 @@ def cohort_findings(
             f"{y0}-{y1}", "年度", "公立")
 
     return out
+
+
+# ── 觀察起日與時序特徵 ────────────────────────────────────────────────
+#
+# 交叉比對的發現不是在報表期間結束當天就看得到的。把它當成特徵或標籤前置條件
+# 時，一定要用「外界最早什麼時候看得到」當閘門，否則就是拿未來的資訊回頭預測
+# 過去——那正是 CLAUDE.md「時序切分，不可隨機切分」要擋的事。
+#
+# 這一組原本各自寫在 scripts/validate_crosscheck_leadtime.py 與
+# scripts/build_signal_map.py 裡。同一個定義在兩個地方，改了一邊另一邊就會
+# 靜靜地用舊規則——而兩者算的都是同一個「有沒有預警作用」的問題。
+
+#: 民國與西元的差。
+ROC_OFFSET = 1911
+
+
+def observable_from(year: int, kind: str = "學年度"):
+    """這個年度的發現，外界最早什麼時候看得到。
+
+    非營利財報：學年度 N 涵蓋 N/8/1–(N+1)/7/31，經會計師簽證公告，取
+    **(N+2) 年 1 月 1 日**（民國）——期間結束後約 5 個月，偏保守。
+    公校決算書：年度 N 於次年度審定公告，取 (N+1) 年 7 月 1 日。
+    """
+    import datetime as dt
+
+    if kind == "學年度":
+        return dt.date(year + ROC_OFFSET + 2, 1, 1)
+    return dt.date(year + ROC_OFFSET + 1, 7, 1)
+
+
+def max_observable_year(as_of, kind: str = "學年度") -> int:
+    """``as_of`` 當下，最大看得到的年度。"""
+    y = as_of.year - ROC_OFFSET - (2 if kind == "學年度" else 1)
+    # 公校是 7/1 公告，上半年還看不到當年那一筆。
+    if kind != "學年度" and (as_of.month, as_of.day) < (7, 1):
+        y -= 1
+    return y
+
+
+def features_as_of(as_of, findings, crosswalk):
+    """``as_of`` 當下看得到的交叉比對發現，攤回登記 uuid。
+
+    ``findings`` 是 ``cross_findings.csv``、``crosswalk`` 是
+    ``nonprofit_registry_crosswalk.csv``（兩者皆為 DataFrame）。
+
+    ⚠️ crosswalk 的 ``registry_ids`` 是 **JSON 陣列字串**，不是分號分隔。
+    用 ``split(";")`` 會得到一整串 ``'["uuid"]'``，跟任何 id 都對不上，
+    而且不會報錯——只會靜靜地讓每一個特徵都是 0。
+
+    只取非營利園：公校的發現用分基金代號與**年度**，與登記 uuid 的學年度
+    掛不上；COHORT 不屬於任何一所園。兩者都留在 cross_findings.csv 自己那張表。
+    """
+    import json
+
+    import pandas as pd
+
+    key2ids: dict[tuple, list[str]] = {}
+    for r in crosswalk.itertuples(index=False):
+        try:
+            ids = json.loads(r.registry_ids) if isinstance(r.registry_ids, str) else []
+        except (TypeError, ValueError):
+            ids = []
+        key2ids[(r.code, int(r.academic_year))] = ids
+
+    maxy = max_observable_year(as_of, "學年度")
+    f = findings[(findings["entity_type"] == "非營利") & (findings["code"] != "COHORT")]
+    f = f[f["academic_year"].astype(str).str.isdigit()].copy()
+    f["academic_year"] = f["academic_year"].astype(int)
+    f = f[(f["academic_year"] <= maxy) & (~f["passed"].astype(bool))]
+
+    rows: dict[str, dict] = {}
+    for r in f.itertuples(index=False):
+        for i in key2ids.get((r.code, int(r.academic_year)), []):
+            e = rows.setdefault(i, {"id": i, "cross_fail": 0, "cross_fail_high": 0,
+                                    "cross_rules": set()})
+            e["cross_fail"] += 1
+            e["cross_fail_high"] += int(r.severity == "high")
+            e["cross_rules"].add(r.rule)
+
+    if not rows:
+        return pd.DataFrame(columns=["id", "cross_fail", "cross_fail_high",
+                                     "cross_rules_n", "has_cross_fail"])
+    out = pd.DataFrame([
+        {"id": v["id"], "cross_fail": v["cross_fail"],
+         "cross_fail_high": v["cross_fail_high"],
+         "cross_rules_n": len(v["cross_rules"])} for v in rows.values()])
+    out["has_cross_fail"] = 1
+    return out

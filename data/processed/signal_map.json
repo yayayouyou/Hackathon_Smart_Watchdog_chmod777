@@ -1,0 +1,580 @@
+{
+ "as_of": "2024-01-01",
+ "robustness_as_of": "2025-01-01",
+ "label_end": "2026-07-29",
+ "label_window_days": 940,
+ "observable_academic_year": 111,
+ "population": {
+  "n": 1213,
+  "penalised_after": 226,
+  "base_rate": 0.1863,
+  "by_type": {
+   "私立": {
+    "n": 867,
+    "base_rate": 0.2191
+   },
+   "非營利": {
+    "n": 52,
+    "base_rate": 0.2692
+   },
+   "公立": {
+    "n": 294,
+    "base_rate": 0.0748
+   }
+  }
+ },
+ "model": {
+  "features": [
+   "n_penalties_prior",
+   "sum_severity_prior",
+   "max_severity_prior",
+   "n_severe_prior",
+   "days_since_last_penalty",
+   "count_approved",
+   "age_years",
+   "size_in",
+   "indoor_area_per_child",
+   "n_vehicles",
+   "has_vehicle",
+   "after_care",
+   "monthly",
+   "is_private"
+  ],
+  "auc": 0.641,
+  "p_at_100": 2.17,
+  "note": "時序切分實測。加特徵就要重跑 run.py baseline，否則這兩個數字不再屬於現行配置。"
+ },
+ "sources": [
+  {
+   "id": "raw_pdf",
+   "name": "主辦方資料集（PDF 原件）",
+   "kind": "文件",
+   "count": 162,
+   "unit": "份",
+   "licence": "不得轉散布",
+   "note": "132 份非營利財報是純掃描影像，必須走視覺模型"
+  },
+  {
+   "id": "pagewise",
+   "name": "頁級抽取",
+   "kind": "文件",
+   "count": 177953,
+   "unit": "格數字",
+   "note": "2245 頁 · 4450 張表；空白格保留為 null，不是 0"
+  },
+  {
+   "id": "registry",
+   "name": "全國教保資訊網：園所基本資料",
+   "kind": "登記",
+   "count": 7664,
+   "unit": "所（全國）",
+   "licence": "CC-BY（須標註原始來源）"
+  },
+  {
+   "id": "punish",
+   "name": "全國教保資訊網：裁罰紀錄",
+   "kind": "裁罰",
+   "count": 6982,
+   "unit": "筆",
+   "licence": "CC-BY",
+   "note": "上層 key 是人不是機構，要用 record 內的 id 反轉"
+  },
+  {
+   "id": "penalties",
+   "name": "新北裁罰明細（已正規化）",
+   "kind": "裁罰",
+   "count": 1386,
+   "unit": "筆"
+  },
+  {
+   "id": "vehicles",
+   "name": "幼童專用車",
+   "kind": "登記",
+   "count": 3360,
+   "unit": "輛",
+   "licence": "CC-BY"
+  },
+  {
+   "id": "fees",
+   "name": "收費明細（公共化園逐項）",
+   "kind": "收費",
+   "count": 2076,
+   "unit": "列",
+   "note": "非營利園自 111 學年度起在外部來源歸零"
+  },
+  {
+   "id": "evaluation",
+   "name": "官方評鑑結果",
+   "kind": "評鑑",
+   "count": 1191,
+   "unit": "筆",
+   "licence": "授權條款待確認"
+  },
+  {
+   "id": "mentions",
+   "name": "輿情：新聞／PTT／Threads @標註",
+   "kind": "輿情",
+   "count": 31,
+   "unit": "則",
+   "licence": "新聞為非開放授權，只作 provenance",
+   "note": "未查證線索，不寫入風險分數"
+  },
+  {
+   "id": "procurement",
+   "name": "受託營運決標",
+   "kind": "採購",
+   "count": 12,
+   "unit": "列",
+   "licence": "原始條款待確認"
+  },
+  {
+   "id": "bureau",
+   "name": "教育局公告與處置",
+   "kind": "公告",
+   "count": 98,
+   "unit": "筆"
+  }
+ ],
+ "derived": [
+  {
+   "id": "compliance",
+   "name": "單文件法遵檢核",
+   "from": [
+    "pagewise"
+   ],
+   "count": 924,
+   "unit": "項",
+   "fail": 18,
+   "note": "只讀一份報告自己的附註二——文件內部自我一致就查不出東西"
+  },
+  {
+   "id": "crosscheck",
+   "name": "跨來源交叉比對",
+   "count": 911,
+   "from": [
+    "pagewise",
+    "fees",
+    "registry"
+   ],
+   "unit": "項",
+   "fail": 52,
+   "note": "11 條規則 + 4 條對帳護欄；三方恆等式 教保費收入 = 收費 × 人數"
+  },
+  {
+   "id": "priority",
+   "name": "稽查優先序",
+   "count": 1213,
+   "from": [
+    "penalties",
+    "registry",
+    "vehicles"
+   ],
+   "unit": "園"
+  },
+  {
+   "id": "letters",
+   "name": "稽核建議書",
+   "count": 130,
+   "from": [
+    "priority",
+    "compliance"
+   ],
+   "unit": "份"
+  },
+  {
+   "id": "timeline",
+   "name": "時間軸回測",
+   "from": [
+    "priority",
+    "penalties"
+   ],
+   "count": 7,
+   "unit": "時點"
+  }
+ ],
+ "signals": [
+  {
+   "id": "prior_penalty",
+   "label": "有任何前科",
+   "group": "裁罰",
+   "stratum": "私立",
+   "overall": {
+    "n": 357,
+    "hits": 101,
+    "rate": 0.2829,
+    "base": 0.146,
+    "lift": 1.937,
+    "p": 0.0
+   },
+   "stratified": {
+    "n": 355,
+    "hits": 99,
+    "rate": 0.2789,
+    "base": 0.1777,
+    "lift": 1.569,
+    "p": 0.0003
+   },
+   "robustness": {
+    "n": 402,
+    "hits": 58,
+    "rate": 0.1443,
+    "base": 0.0946,
+    "lift": 1.525,
+    "p": 0.0156
+   },
+   "verdict": "scored",
+   "why": "已在 PRIORITY_FEATURES 中"
+  },
+  {
+   "id": "prior_penalty_3plus",
+   "label": "前科 ≥ 3 件",
+   "group": "裁罰",
+   "stratum": "私立",
+   "overall": {
+    "n": 105,
+    "hits": 40,
+    "rate": 0.381,
+    "base": 0.1679,
+    "lift": 2.269,
+    "p": 0.0
+   },
+   "stratified": {
+    "n": 105,
+    "hits": 40,
+    "rate": 0.381,
+    "base": 0.1969,
+    "lift": 1.935,
+    "p": 0.0
+   },
+   "robustness": {
+    "n": 139,
+    "hits": 23,
+    "rate": 0.1655,
+    "base": 0.1085,
+    "lift": 1.525,
+    "p": 0.0425
+   },
+   "verdict": "scored",
+   "why": "已在 PRIORITY_FEATURES 中"
+  },
+  {
+   "id": "prior_severe",
+   "label": "有嚴重前科",
+   "group": "裁罰",
+   "stratum": "私立",
+   "overall": {
+    "n": 80,
+    "hits": 27,
+    "rate": 0.3375,
+    "base": 0.1756,
+    "lift": 1.922,
+    "p": 0.0006
+   },
+   "stratified": {
+    "n": 79,
+    "hits": 26,
+    "rate": 0.3291,
+    "base": 0.2081,
+    "lift": 1.581,
+    "p": 0.012
+   },
+   "robustness": {
+    "n": 111,
+    "hits": 17,
+    "rate": 0.1532,
+    "base": 0.1124,
+    "lift": 1.362,
+    "p": 0.1396
+   },
+   "verdict": "scored",
+   "why": "已在 PRIORITY_FEATURES 中"
+  },
+  {
+   "id": "eval_partial",
+   "label": "評鑑部分指標未通過",
+   "group": "評鑑",
+   "stratum": "私立",
+   "overall": {
+    "n": 81,
+    "hits": 20,
+    "rate": 0.2469,
+    "base": 0.182,
+    "lift": 1.357,
+    "p": 0.099
+   },
+   "stratified": {
+    "n": 70,
+    "hits": 20,
+    "rate": 0.2857,
+    "base": 0.2133,
+    "lift": 1.339,
+    "p": 0.107
+   },
+   "robustness": {
+    "n": 97,
+    "hits": 17,
+    "rate": 0.1753,
+    "base": 0.1104,
+    "lift": 1.588,
+    "p": 0.0493
+   },
+   "verdict": "context",
+   "why": "有價值但未量到預測力，只作 context"
+  },
+  {
+   "id": "has_mention",
+   "label": "近期有可歸屬公開報導",
+   "group": "輿情",
+   "stratum": "全市",
+   "overall": null,
+   "stratified": null,
+   "robustness": {
+    "n": 5,
+    "hits": 1,
+    "rate": 0.2,
+    "base": 0.1018,
+    "lift": 1.964,
+    "p": 0.4173
+   },
+   "verdict": "unmeasured",
+   "why": "被點到的筆數太少，無法量測"
+  },
+  {
+   "id": "comp_fail",
+   "label": "單文件法遵檢核未通過",
+   "group": "財報",
+   "stratum": "非營利",
+   "overall": {
+    "n": 8,
+    "hits": 1,
+    "rate": 0.125,
+    "base": 0.1867,
+    "lift": 0.669,
+    "p": 0.8089
+   },
+   "stratified": {
+    "n": 8,
+    "hits": 1,
+    "rate": 0.125,
+    "base": 0.2955,
+    "lift": 0.423,
+    "p": 0.935
+   },
+   "robustness": {
+    "n": 10,
+    "hits": 1,
+    "rate": 0.1,
+    "base": 0.119,
+    "lift": 0.84,
+    "p": 0.7423
+   },
+   "verdict": "disproven",
+   "why": "分層後事後受罰率低於基準，不具預測力"
+  },
+  {
+   "id": "cross_fail",
+   "label": "交叉比對任一項未通過",
+   "group": "交叉",
+   "stratum": "非營利",
+   "overall": {
+    "n": 19,
+    "hits": 8,
+    "rate": 0.4211,
+    "base": 0.1826,
+    "lift": 2.306,
+    "p": 0.0147
+   },
+   "stratified": {
+    "n": 19,
+    "hits": 8,
+    "rate": 0.4211,
+    "base": 0.1818,
+    "lift": 2.316,
+    "p": 0.0621
+   },
+   "robustness": {
+    "n": 20,
+    "hits": 2,
+    "rate": 0.1,
+    "base": 0.125,
+    "lift": 0.8,
+    "p": 0.7577
+   },
+   "verdict": "candidate",
+   "why": "分層後量到效果，但尚未納入計分"
+  },
+  {
+   "id": "new_school",
+   "label": "設立未滿 3 年",
+   "group": "登記",
+   "stratum": "私立",
+   "overall": {
+    "n": 53,
+    "hits": 13,
+    "rate": 0.2453,
+    "base": 0.1836,
+    "lift": 1.336,
+    "p": 0.1706
+   },
+   "stratified": {
+    "n": 35,
+    "hits": 9,
+    "rate": 0.2571,
+    "base": 0.2175,
+    "lift": 1.182,
+    "p": 0.353
+   },
+   "robustness": {
+    "n": 27,
+    "hits": 1,
+    "rate": 0.037,
+    "base": 0.1202,
+    "lift": 0.308,
+    "p": 0.9678
+   },
+   "verdict": "scored",
+   "why": "已在 PRIORITY_FEATURES 中"
+  },
+  {
+   "id": "has_shuttle",
+   "label": "有幼童專用車",
+   "group": "登記",
+   "stratum": "私立",
+   "overall": null,
+   "stratified": null,
+   "robustness": null,
+   "verdict": "unmeasured",
+   "why": "被點到的筆數太少，無法量測"
+  },
+  {
+   "id": "x:家長分攤比率 同儕偏離",
+   "label": "交叉比對：家長分攤比率 同儕偏離",
+   "group": "交叉",
+   "stratum": "非營利",
+   "overall": {
+    "n": 6,
+    "hits": 1,
+    "rate": 0.1667,
+    "base": 0.1864,
+    "lift": 0.894,
+    "p": 0.7106
+   },
+   "stratified": {
+    "n": 6,
+    "hits": 1,
+    "rate": 0.1667,
+    "base": 0.2826,
+    "lift": 0.59,
+    "p": 0.8644
+   },
+   "robustness": {
+    "n": 6,
+    "hits": 0,
+    "rate": 0.0,
+    "base": 0.1304,
+    "lift": 0.0,
+    "p": 1.0
+   },
+   "verdict": "disproven",
+   "why": "分層後事後受罰率低於基準，不具預測力"
+  },
+  {
+   "id": "x:家長月均實繳 ≤ 登記月費",
+   "label": "交叉比對：家長月均實繳 ≤ 登記月費",
+   "group": "交叉",
+   "stratum": "非營利",
+   "overall": null,
+   "stratified": null,
+   "robustness": null,
+   "verdict": "unmeasured",
+   "why": "被點到的筆數太少，無法量測"
+  },
+  {
+   "id": "x:師生比貼齊法定上限",
+   "label": "交叉比對：師生比貼齊法定上限",
+   "group": "交叉",
+   "stratum": "非營利",
+   "overall": {
+    "n": 6,
+    "hits": 3,
+    "rate": 0.5,
+    "base": 0.1848,
+    "lift": 2.706,
+    "p": 0.0823
+   },
+   "stratified": {
+    "n": 6,
+    "hits": 3,
+    "rate": 0.5,
+    "base": 0.2391,
+    "lift": 2.091,
+    "p": 0.1893
+   },
+   "robustness": {
+    "n": 6,
+    "hits": 1,
+    "rate": 0.1667,
+    "base": 0.1087,
+    "lift": 1.533,
+    "p": 0.5399
+   },
+   "verdict": "context",
+   "why": "有價值但未量到預測力，只作 context"
+  },
+  {
+   "id": "x:核定人數 財報=登記",
+   "label": "交叉比對：核定人數 財報=登記",
+   "group": "交叉",
+   "stratum": "非營利",
+   "overall": {
+    "n": 7,
+    "hits": 5,
+    "rate": 0.7143,
+    "base": 0.1833,
+    "lift": 3.898,
+    "p": 0.0033
+   },
+   "stratified": {
+    "n": 7,
+    "hits": 5,
+    "rate": 0.7143,
+    "base": 0.2,
+    "lift": 3.571,
+    "p": 0.0114
+   },
+   "robustness": {
+    "n": 7,
+    "hits": 1,
+    "rate": 0.1429,
+    "base": 0.1111,
+    "lift": 1.286,
+    "p": 0.5999
+   },
+   "verdict": "candidate",
+   "why": "分層後量到效果，但尚未納入計分"
+  }
+ ],
+ "disproven": [
+  {
+   "id": "gov_subsidy_cap",
+   "label": "政府補助 ÷ 每生單價 = 生數上限",
+   "why": "非營利園是成本分攤制，政府補助是殘差不是定額"
+  },
+  {
+   "id": "staff_salary",
+   "label": "人事費 ÷ 教保人員數 < 法定薪資 → 人力灌水",
+   "why": "成本分攤制使每人人事費結構性均勻，IQR 外離群 0 份"
+  },
+  {
+   "id": "slip_checksum",
+   "label": "申報表自身不一致 → 超收",
+   "why": "1,724 組「總收費 = 逐項合計」零筆不一致"
+  },
+  {
+   "id": "meal_fee",
+   "label": "餐點費 ÷ 每生每日餐費 → 超收人次",
+   "why": "每生每日餐點費全距 54–78 元，離散度太小無法辨識"
+  }
+ ],
+ "caveat": "這是建議查核的優先序，不是違法認定。查不到資料標「資料不足」，不標「低風險」。"
+}

@@ -314,7 +314,13 @@ def _run_channel(ch, line, job, publish, all_inst, targets, place_ids, req):
                 # 供應商還沒回報就維持上界，並記下 run_id 供 reconcile 查回。
                 r["actual_usd"] = actual
                 r["provider_ref"] = run_id
-                r["settled"] = actual is not None
+                # ⚠️ 這裡**不可以**設 settled。`settled` 的意思是「帳本已經結算」，
+                # 不是「供應商已經回報金額」。提前設成 True 會讓
+                # jobs.settle_all() 的 `if r.get("settled"): continue` 跳過它，
+                # ledger.settle() 永遠不被呼叫，那筆預留就以**上界**永久佔住
+                # 日／月額度——實測預留 0.33、實付 0.08，0.25 的額度平白燒掉
+                # 且不會回來，而畫面與 job 都顯示「已結算」。
+                # 寫 actual_usd 就夠了，settle_all 會據它去寫帳並設旗標。
         if raw == 0:
             reason = ("供應商回傳 0 筆貼文。可能是關鍵字無結果，"
                       "也可能是執行逾時或被中止——不等於這些園沒有負面聲音。")
