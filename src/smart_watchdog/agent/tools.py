@@ -1197,6 +1197,96 @@ def _get_scan_budget(_ctx: ToolContext, _a: NoArgs) -> ToolOutcome:
     )
 
 
+class StartScanArgs(BaseModel):
+    channels: list[str] = Field(
+        default_factory=lambda: ["news_rss", "ptt"],
+        min_length=1, max_length=6,
+        description="管道。**只能用不花錢的**：news_rss 新聞、ptt。"
+                    "apify_threads 與 places_reviews 要付費，本 tool 會拒絕，"
+                    "那兩條請估價後請使用者自己到畫面上按執行。",
+    )
+    scope: str = Field(
+        default="proposal",
+        description="範圍：city 全市、proposal 本批提案、compliance_fail 法遵未通過、"
+                    "evaluation 評鑑、top_risk 前段班、district 指定行政區",
+    )
+    town: Optional[str] = Field(default=None, description="scope=district 時的行政區")
+
+
+def _start_scan(ctx: ToolContext, a: StartScanArgs) -> ToolOutcome:
+    """真的發動一次掃描——**但只限不花錢的管道**。
+
+    為什麼不是寫死「news_rss 與 ptt 可以」：定價會變，而寫死的名單不會。
+    這裡先跑一次真正的 `estimate()`，只有**每一條管道都估出剛好 0 元**才放行。
+    哪天 RSS 開始收費，這道閘門會自己開始擋，不必有人記得回來改。
+
+    `usd_max` 是 `None` 時一律擋下。那代表「價格未知」，不是「免費」——
+    `pricing.unpriced_meter` 的註解已經講過：顯示編造的數字比留白更糟，
+    而拿不確定的價格去花錢比兩者都糟。
+
+    要付費的管道請用 `scan_estimate` 報價，然後請使用者自己按。那顆鈕會把畫面
+    上的金額原樣回押給伺服器重驗（`confirm_ceiling_usd`），是一道 TOCTOU 保護
+    ——由對話代按就繞過了它。
+    """
+    from ..api.scan import ScanRequest, estimate
+    from ..api.scan import start as _start
+
+    req = ScanRequest(scope=a.scope, district=a.town or "", channels=list(a.channels))
+    try:
+        plan = estimate(req)
+    except Exception as exc:  # noqa: BLE001 - 估算失敗要變成可讀訊息，不是 500
+        return ToolOutcome(payload={"error": f"估算失敗：{exc}"})
+
+    charged = []
+    for line in plan.get("lines", []):
+        meter = line.get("meter") or {}
+        usd = meter.get("usd_max")
+        if usd is None:
+            charged.append(f"{line.get('label')}（價格未知）")
+        elif usd > 0:
+            charged.append(f"{line.get('label')}（US${usd}）")
+        elif meter.get("free_remaining") is not None:
+            # ⚠️ 「現在算出 0」與「結構上不花錢」是兩回事。
+            # Google Places 有每月免費額度，額度內 usd_max 確實是 0——但那個
+            # 額度是**本機計數**算的，而它自己的註記寫著「同一把金鑰若被其他
+            # 程式使用，本機計數會低估」。也就是說它可能其實已經超額而不自知，
+            # 這時放行就是在用一個承認自己可能算錯的數字決定要不要花錢。
+            # 只有 `free_meter`（新聞、PTT）不帶 free_remaining，那才是真的
+            # 沒有金錢成本。
+            charged.append(f"{line.get('label')}（靠免費額度，額度用完就開始計費）")
+    if charged:
+        return ToolOutcome(payload={
+            "error": "這些管道要付費，我不會替你按下去：" + "、".join(charged),
+            "note": "免費的是新聞（news_rss）與 PTT。要掃付費管道，我可以先用 "
+                    "scan_estimate 報價，再請你自己到掃描主控台按執行——"
+                    "那顆鈕會把畫面上的金額回押給伺服器重驗，由我代按會繞過它。",
+        }, ui_action={"type": "navigate", "tab": "scan"})
+
+    try:
+        job = _start(req)
+    except Exception as exc:  # noqa: BLE001 - 被預算或前置條件擋下都要說人話
+        detail = getattr(exc, "detail", None)
+        return ToolOutcome(payload={
+            "error": f"發動失敗：{detail or exc}",
+            "note": "常見原因是管道前置條件未備妥，或撞到單次／每日／本期上限。",
+        }, ui_action={"type": "navigate", "tab": "scan"})
+
+    return ToolOutcome(
+        payload={
+            "job_id": job.get("id") or job.get("job_id"),
+            "status": job.get("status"),
+            "deduplicated": job.get("deduplicated", False),
+            "scope": plan.get("scope_label"),
+            "channels": list(a.channels),
+            "usd_max": plan.get("usd_max"),
+            "note": "已發動，這是不花錢的管道。掃描是背景工作，結果用 "
+                    "list_scan_jobs 查。抓到的東西是**未經查證的公開內容**，"
+                    "供研判參考，不是違法認定，也不計入風險分數。",
+        },
+        ui_action={"type": "navigate", "tab": "scan"},
+    )
+
+
 _SPECS = [
     ("list_institutions",
      "列出機構：可依行政區、類別、有無前科、財報法遵未通過、評鑑部分未通過、"
@@ -1262,6 +1352,10 @@ _SPECS = [
      ScanJobsArgs, _list_scan_jobs, False),
     ("get_scan_budget", "查掃描的預算與已花費（唯讀）",
      NoArgs, _get_scan_budget, False),
+    ("start_scan",
+     "真的發動一次輿情掃描，**但只限不花錢的管道**（新聞、PTT）。"
+     "要付費的管道會被拒絕——那些請用 scan_estimate 報價後請使用者自己按",
+     StartScanArgs, _start_scan, True),
 ]
 
 
