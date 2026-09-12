@@ -119,28 +119,32 @@
       <!-- 狗窩在左下角，與中庭平面圖上各室左下角的狗窩對得起來。
            進房後守護犬就躺在裡面——「到家了」，不是「立正待命」。 -->
       <div class="rail-kennel">
-        <svg class="kennel-dog" width="74" height="52" viewBox="0 0 74 52"
+        <!-- 跟中庭平面圖上那個狗窩是同一個形狀（lobby.js::kennelArt），只是放大
+             並多一隻探出頭的守護犬。同形狀才讀得出「牠進的是那一格」——
+             換一個畫法就變成兩隻不同的狗。 -->
+        <svg class="kennel-dog" width="64" height="60" viewBox="0 0 68 62"
              aria-hidden="true">
-          <!-- 窩 -->
-          <path d="M4 46 v-20 l17 -15 17 15 v20 z" fill="var(--panel)"
-            stroke="var(--ink-4)" stroke-width="1.5" stroke-linejoin="round"/>
-          <path d="M13 46 v-13 a8 8 0 0 1 16 0 v13 z" fill="var(--sunk)"
-            stroke="var(--ink-4)" stroke-width="1.3"/>
-          <!-- 躺著的守護犬：身體是一顆橫躺的膠囊，頭靠在窩口 -->
-          <ellipse cx="48" cy="43" rx="22" ry="3" fill="var(--ink)" opacity=".12"/>
-          <path d="M32 41 h26 a9 9 0 0 0 0 -12 h-26 a6 6 0 0 0 0 12 z"
-            fill="var(--panel)" stroke="var(--edge)" stroke-width="1.6"
+          <!-- 窩：與大廳同一條輪廓，比例 ×2 -->
+          <path d="M10 54 v-30 l24 -22 24 22 v30 z" fill="var(--panel)"
+            stroke="var(--ink-4)" stroke-width="1.8" stroke-linejoin="round"/>
+          <!-- 窩口。頭要比它窄，上方留一段暗的凹陷，才看得出是「從裡面探出來」 -->
+          <path d="M25 54 v-17 a9 9 0 0 1 18 0 v17 z" fill="var(--sunk)"
+            stroke="var(--ink-4)" stroke-width="1.5"/>
+          <!-- 探出頭的守護犬：比窩口窄一圈，下緣壓過窩底線 2px -->
+          <path d="M27.6 45c-2.2-3-2-5.8-.4-6.3 1.5-.5 3.2 1.2 4 3.3z"
+            fill="var(--paper)" stroke="var(--edge)" stroke-width="1.5"
             stroke-linejoin="round"/>
-          <circle cx="30" cy="33" r="8" fill="var(--panel)" stroke="var(--edge)"
-            stroke-width="1.6"/>
-          <path d="M24 28c-2.6-1.4-3.4-4-2.2-5 1.2-1 3.6 0 4.6 2.2z"
-            fill="var(--paper)" stroke="var(--edge)" stroke-width="1.4"/>
-          <!-- 閉著的眼睛：在窩裡是休息 -->
-          <path d="M26.5 32.5 a2 2 0 0 0 3 0" fill="none" stroke="var(--edge)"
-            stroke-width="1.3" stroke-linecap="round"/>
-          <circle cx="23.5" cy="35.5" r="1.4" fill="var(--seal)"/>
-          <path d="M62 33 q7 -2 6 -8" stroke="var(--edge)" stroke-width="1.5"
-            fill="none" stroke-linecap="round"/>
+          <path d="M40.4 45c2.2-3 2-5.8.4-6.3-1.5-.5-3.2 1.2-4 3.3z"
+            fill="var(--paper)" stroke="var(--edge)" stroke-width="1.5"
+            stroke-linejoin="round"/>
+          <path d="M27 50c0-4.1 3.1-7 7-7s7 2.9 7 7v2.4c0 2.3-1.8 4.1-4.1 4.1h-5.8
+            c-2.3 0-4.1-1.8-4.1-4.1z" fill="var(--panel)" stroke="var(--edge)"
+            stroke-width="1.8" stroke-linejoin="round"/>
+          <circle cx="31.2" cy="49.6" r="1.5" fill="var(--edge)"/>
+          <circle cx="36.8" cy="49.6" r="1.5" fill="var(--edge)"/>
+          <path d="M32.6 54h2.8" stroke="var(--edge)" stroke-width="1.5"
+            stroke-linecap="round"/>
+          <circle cx="34" cy="52.2" r="1.4" fill="var(--seal)"/>
         </svg>
         <span class="txt">守護犬在這一室<br>說一句話就行</span>
       </div>
