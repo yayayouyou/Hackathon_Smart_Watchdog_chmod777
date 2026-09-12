@@ -1384,23 +1384,10 @@ function showPane(name) {
 document.querySelectorAll(".tabs button").forEach((b) =>
   b.addEventListener("click", () => showPane(b.dataset.t)));
 
-/* 助理欄位的收合。窄螢幕預設收起，寬螢幕預設展開——助理是這個系統的主要
-   互動方式，不該每次都要先按一下才出現。 */
-(function () {
-  const main = document.querySelector("main");
-  const btn = $("agenttoggle");
-  const narrow = () => window.matchMedia("(max-width:1150px)").matches;
-  const set = (on) => {
-    main.classList.toggle("noagent", !on && !narrow());
-    main.classList.toggle("showagent", on && narrow());
-    btn.setAttribute("aria-pressed", String(on));
-    // 欄寬變了，地圖要重新量一次，否則圖磚會留一塊空白。
-    if (state.map) setTimeout(() => state.map.invalidateSize(), 220);
-  };
-  set(!narrow());
-  btn.addEventListener("click", () =>
-    set(btn.getAttribute("aria-pressed") !== "true"));
-})();
+/* 助理欄的收合由 `agent.js` 的 `.agentcol.fold` 負責（欄內右上角那顆鈕）。
+   表頭原本另有一顆「助理」鈕，切 `main` 的 noagent／showagent——但那兩個
+   class **整份樣式表裡一條規則都沒有**，實測按下去欄寬仍是 380px，
+   什麼都不會發生。舊版面留下的死鈕，連同綁定一起移除。 */
 
 /* 清單的「顯示全部」：清掉助理的篩選，地圖與清單一起回到全市。 */
 $("listclear").addEventListener("click", () => {

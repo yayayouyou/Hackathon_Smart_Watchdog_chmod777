@@ -369,6 +369,17 @@
 
   const liveDog = () => log().querySelector(".agentdog.live");
 
+  /* 收合時那條 42px 的直條原本只有一行淡灰的直排「助理」，在同樣淡的底色上
+     幾乎看不出那是什麼——使用者回報「收起來的時候不明顯」。
+     把狗放進去：牠是這個助理的辨識符號，一顆圖比一行字快得多。
+     只在收合時顯示（展開時對話裡每一輪都有牠，再放一隻是重複）。 */
+  function mountFoldedAvatar() {
+    const head = document.querySelector(".agenthead");
+    if (!head || head.querySelector(".agentdog.folded")) return;
+    head.insertAdjacentHTML("afterbegin",
+      DOG.replace('class="agentdog live"', 'class="agentdog folded"'));
+  }
+
   /* 頭像的狀態分成兩軸，因為它們是**同時**發生的兩件事。
    *
    * `data-mood` 是身體在幹嘛：idle 待命／think 思考／work 動手／blocked 被擋下。
@@ -619,6 +630,8 @@
   /* 開場白也要有抬頭，否則一進站畫面上沒有狗，使用者不會知道有這隻角色，
      也看不出那段話是誰講的。它是 `live` 的，所以在等第一句話的期間就在
      呼吸、偶爾眨眼——第一輪開始時 `turnHead()` 會把它凍住。 */
+  mountFoldedAvatar();
+
   if (log() && !log().querySelector(".turnhead")) {
     log().insertAdjacentHTML("afterbegin",
       `<div class="turnhead">${DOG}<b>助理</b></div>`);
