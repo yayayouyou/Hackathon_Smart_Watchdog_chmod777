@@ -756,9 +756,17 @@ body.resizing{user-select:none;cursor:col-resize}
 .astep[data-st="run"] .dot{border-color:var(--seal);animation:wd-pulse 1.2s infinite}
 .astep[data-st="ok"] .dot{border-color:var(--good);background:var(--good)}
 .astep[data-st="no"] .dot{border-color:var(--seal);background:var(--seal)}
-/* 收尾那句沒有 tool，所以不該用綠色（那是「tool 成功」的意思）。實心＝結束了，
-   淡色＝它不是一個結果。空心會被讀成「還在跑」——實際被誤讀過。 */
-.astep[data-st="done"] .dot{border-color:var(--ink-4);background:var(--ink-4)}
+/* 收尾那句用打勾，不用圓點。
+   圓點在這一欄裡一律是「一個動作的狀態」：空心＝還沒跑、閃爍＝進行中、
+   實心綠＝tool 成功、實心紅＝被擋下。而收尾那句沒有 tool，用哪一種實心點都
+   在說一件沒發生的事；空心則被讀成還在跑（實際被誤讀過）。
+   ✓ 不屬於那套語彙，它說的是「這一輪到此為止」，不會被讀成某個工具的結果。
+   畫在同樣 11×11 的格子裡（`.dot` 本來就是 position:relative），
+   文字欄才不會跟著位移。 */
+.astep[data-st="done"] .dot{border-color:transparent;background:none}
+.astep[data-st="done"] .dot::after{content:"✓";position:absolute;
+  left:50%;top:50%;transform:translate(-50%,-50%);
+  font-size:13px;line-height:1;font-weight:700;color:var(--good)}
 /* 流程線到最後一步為止。`:last-child` 在加了每輪抬頭之後不再成立，
    因為最後一步後面接的是下一輪的抬頭。 */
 .astep.tail::before{display:none}

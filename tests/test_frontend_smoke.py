@@ -412,6 +412,17 @@ def test_the_last_step_of_a_turn_is_marked_finished() -> None:
     assert 'dataset.st = "done"' in js, "沒有任何地方把收尾那一步標成完成"
     assert '.astep[data-st="done"]' in css, "樣式表畫不出 done 這個狀態"
 
+    # 必須是打勾，不是又一顆圓點。圓點在這一欄裡一律代表「一個動作的狀態」
+    # （空心＝沒跑、閃爍＝進行中、實心綠＝tool 成功、實心紅＝被擋下），
+    # 而收尾那句沒有 tool——用任何一種圓點都在說一件沒發生的事。
+    tight = css.replace(" ", "").replace("\n", "")
+    assert '.astep[data-st="done"].dot::after{content:"✓"' in tight, (
+        "收尾的記號不是打勾"
+    )
+    assert '.astep[data-st="done"].dot{border-color:transparent;background:none}' in tight, (
+        "打勾底下還留著圓點，會變成兩個記號疊在一起"
+    )
+
     # 收尾必須在串流讀完之後。寫在 handleFrame 裡就等於在「還可能有下一步」
     # 的時候宣告結束。
     body = js[js.index("async function send("):]
