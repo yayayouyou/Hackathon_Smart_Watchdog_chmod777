@@ -34,6 +34,9 @@ __pycache__/
 # Notebooks
 .ipynb_checkpoints/
 
+# 鄰縣市陸地輪廓的原始 TopoJSON（5.9 MB，可由 scripts/build_neighbor_land.py 重下載）
+data/external/.cache_tw_towns_*.topo.json
+
 # Runtime snapshot updater coordination/recovery state
 data/external/.snapshot-update.lock
 data/external/.snapshot-update-transaction.json

@@ -10,6 +10,12 @@ openpyxl==3.1.5
 
 # --- AWS (Bedrock for extraction/RAG, Textract for OCR, S3 for the lake) ---
 boto3==1.40.32
+# Required, not optional: all three AI landings go through AnthropicBedrock
+# (see src/smart_watchdog/bedrock.py -- the Mantle endpoint 404s on the
+# competition account). Without it `python run.py setup` leaves a venv that
+# passes every test and still cannot reach Bedrock, which is exactly the
+# failure you do not want to discover on stage.
+anthropic==1.5.0
 
 # --- scraping the public registries (labels + institution master data) ---
 httpx==0.28.1

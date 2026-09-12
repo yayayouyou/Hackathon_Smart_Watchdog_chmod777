@@ -114,16 +114,41 @@ def credentials_present() -> bool:
                 and os.environ.get("AWS_SECRET_ACCESS_KEY"))
 
 
-def client(region_name: str | None = None) -> Any:
+#: 各落點的逾時（秒）。SDK 預設是 600 秒 read timeout＋2 次重試，也就是最壞
+#: 情況一個請求可以卡十分鐘以上——會場網路「連得上但不回應」（captive portal、
+#: 壟塞）時就是這樣。對聊天而言那比回一個錯誤更糟：`/api/chat` 是 sync 端點，
+#: 卡住的是 threadpool 的 worker，前端連降級訊息都收不到。
+#: 降級必須是快的，否則等於沒有降級。
+TIMEOUT_FAST = 12.0      # 意圖解析：只吐一個小 JSON，超過這個時間就是網路有事
+TIMEOUT_VISION = 180.0   # 視覺抽取：整頁影像 + 最多 16k tokens 輸出
+TIMEOUT_REASONING = 240.0  # 建議書：長文輸出
+
+
+def client(region_name: str | None = None, *,
+           timeout: float | None = None,
+           max_retries: int | None = None) -> Any:
     """建立 Bedrock 的 Anthropic client。
 
     用 `AnthropicBedrock` 而非 `AnthropicBedrockMantle`，理由見模組說明第 2 點。
     延遲匯入，讓沒有裝 `anthropic` 的環境仍能匯入本模組讀模型 ID。
+
+    `timeout`／`max_retries` 不傳就是 SDK 預設（600 秒、2 次）。呼叫端**應該**
+    依落點傳，理由見上面的常數說明。
+
+    ⚠️ **憑證是在第一次建 client 時定案的，之後換 `.env` 不會生效。**
+    `load_env()` 不覆寫既有的環境變數，botocore 解析一次後會把靜態憑證快取起來，
+    而 anthropic 1.5.0 對 session 還加了 `lru_cache`。臨時憑證過期後換新的四行，
+    **必須重啟行程**。
     """
     load_env()
     from anthropic import AnthropicBedrock
 
-    return AnthropicBedrock(aws_region=region_name or region())
+    kwargs: dict[str, Any] = {"aws_region": region_name or region()}
+    if timeout is not None:
+        kwargs["timeout"] = timeout
+    if max_retries is not None:
+        kwargs["max_retries"] = max_retries
+    return AnthropicBedrock(**kwargs)
 
 
 def explain_error(exc: BaseException) -> str:

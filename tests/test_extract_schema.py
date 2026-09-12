@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import pathlib
 import sys
+import typing
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
@@ -172,3 +173,55 @@ class TestContract:
     def test_prompt_states_the_load_bearing_rules(self, rule: str) -> None:
         """These five rules are why the output is safe to act on; none may be dropped."""
         assert rule in EXTRACTION_PROMPT
+
+
+class TestRealPrintedHeaders:
+    """表頭要照抄，所以檢核必須認得照抄後的樣子。
+
+    規則 1 要求 `period_labels` 逐字照抄，而報表上印的是
+    `預算數(a)`／`決算數(b)`／`差異數(c)=(b)-(a)`／`執行率(%)(d)=(b)/(a)`。
+    這個類別裡的 fixture 用的就是真實表頭——其餘測試用的裸名
+    （`預算數`／`決算數`…）在整個語料庫裡一次都沒出現過，所以那些測試
+    全綠也證明不了檢核在真實資料上跑得動。實際上它曾經永遠跑不動。
+    """
+
+    HEADERS: typing.ClassVar[list] = [
+        "預算數(a)", "決算數(b)", "差異數(c)=(b)-(a)", "執行率(%)(d)=(b)/(a)"]
+
+    def statement(self, **overrides: list) -> dict:
+        items = {
+            "學雜費收入": [1000, 950, -50, 95],
+            "收入合計": [1000, 950, -50, 95],
+            "人事費": [800, 700, -100, 88],
+            "行政管理費": [100, 100, None, 100],
+            "支出合計": [900, 800, -100, None],
+            "本期稅前餘絀": [100, 150, 50, None],
+        }
+        items.update(overrides)
+        return {
+            "statement_type": "收支餘絀表",
+            "period_labels": self.HEADERS,
+            "items": [{"label": k, "values": v} for k, v in items.items()],
+            "issues": [],
+        }
+
+    def test_variance_is_actually_checked_with_printed_headers(self) -> None:
+        """以前這裡是 skipped，不是 passed——而摘要只印 passed/(passed+failed)。"""
+        r = validate_statement(self.statement())
+        assert r.ok, r.failed
+        assert any("差異數" in p for p in r.passed), "逐列差異數檢核沒有跑到"
+        assert not any("找不到對應欄位" in s for s in r.skipped)
+
+    def test_a_wrong_variance_is_caught(self) -> None:
+        r = validate_statement(self.statement(人事費=[800, 700, -999, 88]))
+        assert not r.ok
+        assert any("人事費 差異數" in f for f in r.failed)
+
+    def test_swapping_the_actual_and_variance_columns_is_caught(self) -> None:
+        """整欄互換是自我驗算最容易漏掉的一類錯，也是最該抓到的一類。"""
+        swapped = self.statement()
+        for it in swapped["items"]:
+            v = it["values"]
+            v[1], v[2] = v[2], v[1]
+        r = validate_statement(swapped)
+        assert not r.ok, "決算數與差異數整欄互換卻通過了自我驗算"

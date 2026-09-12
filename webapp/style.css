@@ -5,6 +5,10 @@
   --seal:#B23A2F; --seal-soft:#B23A2F14;
   --warn:#B07A16; --warn-soft:#B07A1614; --good:#2C7A5B;
   --shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;
+  /* 新北以外的**陸地**蓋這一層（海不蓋）。不是純灰——留一點藍才壓得住
+     OSM 的黃綠底。--mask-line 是鄰縣市之間的界，--edge 是新北市界本身：
+     市界要比縣市界重，它是這張圖唯一需要一眼認出的邊。 */
+  --mask:#A7B6C1; --mask-op:.84; --mask-line:#6E8090; --edge:#243542;
   --sans:"IBM Plex Sans","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
   --mono:"IBM Plex Mono","PingFang TC",ui-monospace,monospace;
 }
@@ -15,6 +19,7 @@
   --seal:#E4695A; --seal-soft:#E4695A1F;
   --warn:#D4A03C; --warn-soft:#D4A03C1F; --good:#5AAE86;
   --shadow:0 1px 2px #0007, 0 6px 16px #0005;
+  --mask:#070D12; --mask-op:.8; --mask-line:#2F3E4A; --edge:#9FB6C6;
 }}
 /* 作者樣式一律勝過瀏覽器預設樣式，與特異性無關。`.pane{display:flex}` 與
  * `.dossier{display:flex}` 因此蓋掉了 UA 的 `[hidden]{display:none}`：
@@ -31,28 +36,55 @@ input{font:inherit}
 :focus-visible{outline:2px solid var(--seal);outline-offset:2px}
 
 .app{display:grid;grid-template-rows:auto 1fr auto;height:100vh;height:100dvh}
-header{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;padding:11px 20px;
-  border-bottom:1px solid var(--rule);background:var(--panel)}
-h1{margin:0;font-size:15px;font-weight:600}
+header{position:relative;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  padding:8px 18px;border-bottom:1px solid var(--rule);background:var(--panel)}
+h1{margin:0;font-size:15px;font-weight:600;white-space:nowrap}
 h1 span{color:var(--ink-3);font-weight:400;margin-left:9px;font-size:12px}
-.hstat{display:flex;gap:18px;margin-left:auto;font-size:12px;color:var(--ink-3)}
+.hstat{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:12px;
+  color:var(--ink-3)}
 .hstat b{font-family:var(--mono);color:var(--ink);font-weight:500;font-size:13px;
   font-variant-numeric:tabular-nums}
 
-main{display:grid;grid-template-columns:210px minmax(0,1fr) 390px;min-height:0}
-@media(max-width:1100px){main{grid-template-columns:180px minmax(0,1fr) 330px}}
-@media(max-width:860px){main{grid-template-columns:1fr;grid-template-rows:auto 46vh 1fr}}
+/* 功能列上的派工容量。數字框與拖桿並存：拖桿用來示範「多一家少一家名單
+   怎麼變」，數字框用來輸入真正的月容量。 */
+.capbox{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3);
+  white-space:nowrap}
+.capbox input[type=number]{width:52px;padding:3px 6px;text-align:right;
+  border:1px solid var(--rule);border-radius:3px;background:var(--paper);
+  color:var(--ink);font-family:var(--mono);font-size:12px}
+.capbox input[type=range]{width:96px}
+input[type=range]{accent-color:var(--seal)}
 
-/* rail */
-.rail{background:var(--panel);border-right:1px solid var(--rule);overflow-y:auto;
-  padding:14px 14px 22px;display:flex;flex-direction:column;gap:16px}
+/* 花費：常駐在功能列，點開看細目 */
+.costbtn{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--ink-3);
+  border:1px solid transparent;border-radius:4px;padding:3px 7px}
+.costbtn:hover{border-color:var(--rule);background:var(--paper)}
+.costbtn[aria-expanded="true"]{border-color:var(--rule);background:var(--paper)}
+.caret{width:0;height:0;border:3.5px solid transparent;border-top-color:var(--ink-4);
+  margin-top:3px}
+.pop{position:absolute;right:18px;top:calc(100% - 4px);z-index:900;width:330px;
+  background:var(--panel);border:1px solid var(--rule);border-radius:6px;
+  box-shadow:var(--shadow);padding:12px 14px;font-size:12px;color:var(--ink-2)}
+.pop h4{margin:0 0 8px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600}
+.pop .meter{margin-bottom:10px}
+.pop .mlab{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:3px}
+.pop .mlab b{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink)}
+.pop .bar{height:5px;border-radius:3px;background:var(--sunk);overflow:hidden}
+.pop .bar i{display:block;height:100%;background:var(--seal)}
+.pop .bar i.ok{background:var(--good)}
+.pop .led{border-top:1px solid var(--rule);margin-top:10px;padding-top:8px;
+  font-family:var(--mono);font-size:10.5px;color:var(--ink-3);line-height:1.7}
+.pop .led span{display:flex;justify-content:space-between;gap:10px}
+.pop .src{margin:8px 0 0;font-size:10.5px;color:var(--ink-4);line-height:1.5}
+
+main{display:grid;grid-template-columns:minmax(0,1fr) 390px;min-height:0}
+@media(max-width:1100px){main{grid-template-columns:minmax(0,1fr) 330px}}
+@media(max-width:860px){main{grid-template-columns:1fr;grid-template-rows:46vh 1fr}}
+
 .grp{display:flex;flex-direction:column;gap:7px}
 .grp>h2{margin:0;font-size:10.5px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;color:var(--ink-3)}
-.capbox{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
-.capbox input{width:56px;padding:5px 7px;text-align:right;border:1px solid var(--rule);
-  border-radius:3px;background:var(--paper);color:var(--ink);font-family:var(--mono)}
-input[type=range]{width:100%;accent-color:var(--seal)}
 .opt{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2);
   padding:2px 0;cursor:pointer}
 .opt input{accent-color:var(--seal);margin:0}
@@ -67,6 +99,22 @@ input[type=range]{width:100%;accent-color:var(--seal)}
 .seg button[disabled]{opacity:.45;cursor:not-allowed}
 .note{font-size:11px;color:var(--ink-3);line-height:1.5;margin:0}
 
+/* 地圖上的圖層控制：收起來只有一顆鈕，展開才佔畫面。放右上角是因為
+   Leaflet 的縮放鈕固定在左上角，兩個控制不該擠在同一角。 */
+.mapui{position:absolute;right:12px;top:12px;z-index:600;display:flex;
+  flex-direction:column;align-items:flex-end;gap:6px}
+.mapui-btn{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-2);
+  background:var(--panel);border:1px solid var(--rule);border-radius:4px;
+  padding:5px 9px;box-shadow:var(--shadow)}
+.mapui-btn:hover{color:var(--ink)}
+.mapui-btn[aria-expanded="true"]{color:var(--ink);border-color:var(--ink-4)}
+.mapui-n{font-family:var(--mono);font-style:normal;font-size:10.5px;color:var(--ink-3);
+  background:var(--sunk);border-radius:8px;padding:0 5px;min-width:16px;text-align:center}
+.mapui-panel{width:206px;max-height:calc(100vh - 220px);overflow-y:auto;
+  background:var(--panel);border:1px solid var(--rule);border-radius:6px;
+  box-shadow:var(--shadow);padding:12px 13px 14px;display:flex;flex-direction:column;
+  gap:15px}
+
 /* map */
 .mapwrap{position:relative;min-width:0;min-height:0}
 #map{width:100%;height:100%;background:var(--sunk)}
@@ -80,11 +128,13 @@ input[type=range]{width:100%;accent-color:var(--seal)}
 /* right */
 .side{position:relative;display:flex;flex-direction:column;min-height:0;
   background:var(--panel);border-left:1px solid var(--rule)}
-.tabs{display:flex;border-bottom:1px solid var(--rule)}
-.tabs button{flex:1;padding:9px 0;font-size:12px;letter-spacing:.06em;
-  color:var(--ink-3);border-bottom:2px solid transparent}
+/* 分頁在功能列上，不在右欄裡——右欄之後要讓給 AI 側邊欄。 */
+.tabs{display:flex;gap:2px}
+.tabs button{padding:5px 12px;font-size:12.5px;color:var(--ink-3);border-radius:4px;
+  white-space:nowrap}
+.tabs button:hover{color:var(--ink);background:var(--paper)}
 .tabs button[aria-pressed="true"]{color:var(--ink);font-weight:600;
-  border-bottom-color:var(--seal)}
+  background:var(--seal-soft);box-shadow:inset 0 0 0 1px var(--seal)}
 .pane{display:flex;flex-direction:column;min-height:0;flex:1}
 .list{overflow-y:auto;min-height:0;flex:1}
 .item{display:grid;grid-template-columns:26px 1fr auto;gap:3px 9px;width:100%;

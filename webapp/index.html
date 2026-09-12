@@ -15,59 +15,89 @@
 </head>
 <body>
 <div class="app">
+  <!-- 功能列：切換功能、設派工容量、看全域狀態。地圖自己的設定不放這裡，
+       那些綁在地圖上（右上角的「圖層」鈕），因為它們只對地圖有意義。 -->
   <header>
     <h1>稽查派工台<span>新北市教保機構 · 建議查核優先序</span></h1>
+
+    <nav class="tabs" id="tabs">
+      <button data-t="list" aria-pressed="true">派工提案</button>
+      <button data-t="chat">查詢</button>
+      <button data-t="scan">掃描</button>
+      <button data-t="timeline">時間軸</button>
+    </nav>
+
+    <div class="capbox">
+      <label for="cap">本月可稽查</label>
+      <input id="cap" type="number" min="1" max="200" value="20"><span>家</span>
+      <input id="capr" type="range" min="5" max="120" value="20" aria-label="派工容量">
+    </div>
+
     <div class="hstat">
       <span>全市 <b id="s-all">—</b></span>
       <span>有公開財報 <b id="s-fin">—</b></span>
       <span>本批提案 <b id="s-sel">—</b></span>
       <span>即時管道 <b id="s-ch">—</b></span>
-      <span title="本掃描週期已花費／自訂上限。撞自己的牆是不給跑，撞供應商的牆是跑到一半被砍、錢照付。"
-        >本期花費 <b id="s-budget">—</b></span>
+      <!-- 花費是會真的扣錢的東西，所以常駐在最上面，而且點得開：
+           只看到一個總額，等於要花錢的人看不到自己花在哪。 -->
+      <button class="costbtn" id="costbtn" aria-expanded="false"
+        title="本掃描週期已花費／自訂上限。點開看各道上限與最近幾筆帳。"
+        >本期花費 <b id="s-budget">—</b><i class="caret"></i></button>
     </div>
+
+    <div class="pop" id="costpop" hidden>載入中…</div>
   </header>
 
   <main>
-    <aside class="rail">
-      <div class="grp">
-        <h2>派工容量</h2>
-        <label class="capbox">本月可稽查
-          <input id="cap" type="number" min="1" max="200" value="20">家</label>
-        <input id="capr" type="range" min="5" max="120" value="20" aria-label="派工容量">
-      </div>
-
-      <div class="grp">
-        <h2>底圖</h2>
-        <div class="seg" id="basemaps">
-          <button data-b="osm" aria-pressed="true">OpenStreetMap</button>
-          <button data-b="carto">淺色地圖</button>
-          <button data-b="google" id="b-google">Google 地圖</button>
-        </div>
-        <p class="note" id="gnote">Google 底圖需金鑰；未設定時停用。</p>
-      </div>
-
-      <div class="grp">
-        <h2>圖層</h2>
-        <label class="opt"><input type="checkbox" id="f-cluster" checked>標記群集</label>
-        <label class="opt"><input type="checkbox" id="f-districts">行政區界線</label>
-        <label class="opt"><input type="checkbox" id="f-flagged">只顯示複查名單</label>
-      </div>
-
-      <div class="grp">
-        <h2>機構類別</h2>
-        <label class="opt"><input type="checkbox" class="ftype" value="0" checked>
-          <i class="sw" style="background:var(--pub)"></i>公立<span class="n" id="l0"></span></label>
-        <label class="opt"><input type="checkbox" class="ftype" value="1" checked>
-          <i class="sw" style="background:var(--np)"></i>非營利<span class="n" id="l1"></span></label>
-        <label class="opt"><input type="checkbox" class="ftype" value="2" checked>
-          <i class="sw" style="background:var(--prv)"></i>私立<span class="n" id="l2"></span></label>
-        <p class="note">顏色代表<b>機構類別</b>，不是風險高低。<br>
-          紅圈為本批建議查核。</p>
-      </div>
-    </aside>
-
     <div class="mapwrap">
       <div id="map"></div>
+
+      <!-- 地圖設定收在地圖右上角。展開才佔畫面，收起來只剩一顆鈕與目前
+           開著幾層的角標。 -->
+      <div class="mapui">
+        <button class="mapui-btn" id="layerbtn" aria-expanded="false"
+                title="底圖、圖層與機構類別">
+          <svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M8 1.5 15 5 8 8.5 1 5z" fill="none" stroke="currentColor"
+                  stroke-width="1.3" stroke-linejoin="round"/>
+            <path d="M2.4 8 8 10.8 13.6 8M2.4 11 8 13.8 13.6 11" fill="none"
+                  stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+          </svg>
+          圖層<i class="mapui-n" id="layern">—</i>
+        </button>
+
+        <div class="mapui-panel" id="layerpanel" hidden>
+          <div class="grp">
+            <h2>底圖</h2>
+            <div class="seg" id="basemaps">
+              <button data-b="osm" aria-pressed="true">OpenStreetMap</button>
+              <button data-b="google" id="b-google">Google 地圖</button>
+            </div>
+            <p class="note" id="gnote">Google 底圖需金鑰；未設定時停用。</p>
+          </div>
+
+          <div class="grp">
+            <h2>圖層</h2>
+            <label class="opt"><input type="checkbox" id="f-cluster" checked>標記群集</label>
+            <label class="opt"><input type="checkbox" id="f-districts">行政區界線</label>
+            <label class="opt"><input type="checkbox" id="f-mask" checked>新北以外反灰</label>
+            <label class="opt"><input type="checkbox" id="f-flagged">只顯示複查名單</label>
+          </div>
+
+          <div class="grp">
+            <h2>機構類別</h2>
+            <label class="opt"><input type="checkbox" class="ftype" value="0" checked>
+              <i class="sw" style="background:var(--pub)"></i>公立<span class="n" id="l0"></span></label>
+            <label class="opt"><input type="checkbox" class="ftype" value="1" checked>
+              <i class="sw" style="background:var(--np)"></i>非營利<span class="n" id="l1"></span></label>
+            <label class="opt"><input type="checkbox" class="ftype" value="2" checked>
+              <i class="sw" style="background:var(--prv)"></i>私立<span class="n" id="l2"></span></label>
+            <p class="note">顏色代表<b>機構類別</b>，不是風險高低。<br>
+              紅圈為本批建議查核。</p>
+          </div>
+        </div>
+      </div>
+
       <div class="mapbadge" id="mapbadge">—</div>
 
       <!-- 時間軸：把時鐘倒回去，看當時的排序後來對不對。
@@ -98,14 +128,8 @@
       </div>
     </div>
 
+    <!-- 右欄：目前是清單與卷宗，之後這一欄會讓給 AI 側邊欄。 -->
     <div class="side">
-      <div class="tabs">
-        <button data-t="list" aria-pressed="true">派工提案</button>
-        <button data-t="chat">查詢</button>
-        <button data-t="scan">掃描</button>
-        <button data-t="timeline">時間軸</button>
-      </div>
-
       <div class="pane" id="pane-list">
         <div class="list" id="list"></div>
       </div>

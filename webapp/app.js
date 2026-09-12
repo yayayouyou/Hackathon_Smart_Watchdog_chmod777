@@ -25,6 +25,8 @@ const state = {
   payload: null, points: [], byId: {}, proposal: [], selected: null,
   cap: 20, cluster: true, flaggedOnly: false, types: new Set([0, 1, 2]),
   map: null, layer: null, districtLayer: null, base: null, googleKey: null,
+  // 新北以外反灰。ntpcRings 是從區界算出來的市界外框，算一次就快取。
+  mask: true, maskLayer: null, outlineLayer: null, ntpcRings: null, land: [],
   // 時間軸模式（timeline.js 設定）。非 null 時地圖改畫「當時的排序」與
   // 「後來實際受罰」，而不是今天的派工提案。
   timeline: null,
@@ -56,6 +58,8 @@ async function boot() {
   const cfg = await api("/api/config").catch(() => ({}));
   state.googleKey = cfg.google_maps_key || null;
   state.payload = await api("/api/payload");
+  // 鄰縣市陸地輪廓。缺了不是致命傷：applyMask 會退回舊的「蓋掉整個世界」版本。
+  state.land = (await api("/api/land").catch(() => ({}))).land || [];
   state.points = state.payload.points || [];
   state.points.forEach((p) => { state.byId[p.i] = p; });
 
@@ -73,18 +77,17 @@ async function boot() {
   }).catch(() => { $("s-budget").textContent = "—"; });
 
   initMap();
+  syncLayerCount();
   await refresh();
 }
 
 /* ── 地圖 ─────────────────────────────────────────────── */
+/* 底圖收斂成兩家：OpenStreetMap（免金鑰、隨時可用）與 Google（要金鑰）。
+   少一家就少一條會在會場斷掉的外部相依，而底圖美術不是這個系統的賣點。 */
 const BASES = {
   osm: {
     url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     attr: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-  carto: {
-    url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-    attr: '© OpenStreetMap contributors © <a href="https://carto.com/">CARTO</a>',
   },
 };
 
@@ -93,8 +96,16 @@ function initMap() {
     center: NTPC, zoom: 11, zoomControl: true,
     scrollWheelZoom: true, preferCanvas: true,
   });
+  // 反灰層自己一個 pane：疊在圖磚（200）之上、行政區界線與標記（400／600）
+  // 之下——蓋掉的是底圖，不是我們畫上去的東西。
+  state.map.createPane("swmask");
+  Object.assign(state.map.getPane("swmask").style,
+    { zIndex: 350, pointerEvents: "none" });
   setBase("osm");
   state.layer = L.layerGroup().addTo(state.map);
+  fitNTPC();
+  refitOnLayout();
+  applyMask(state.mask);
 
   document.querySelectorAll("#basemaps button").forEach((b) => {
     b.addEventListener("click", async () => {
@@ -180,6 +191,170 @@ function onTileError() {
       + "已自動改以行政區界線提供地理脈絡；標記與所有分析功能不受影響。";
     note.style.color = "var(--warn)";
   }
+}
+
+/* ── 只顯示新北 ───────────────────────────────────────
+ *
+ * 界線資料是 29 個行政區各自的多邊形，裡面沒有「新北市外框」這一條。外框可
+ * 以從區界推出來：相鄰兩區共用的那條邊在資料裡會出現兩次，**只出現一次的邊
+ * 就是市界**。把這些邊接回封閉環，就同時得到外框與台北市那個內孔（台北市被
+ * 新北市整個包住，它不是新北，一樣要反灰）。
+ *
+ * 接完會多出 93 個面積約 1e-6 度² 的碎環——相鄰區界各自簡化後沒對齊留下的縫。
+ * 外框 0.209、台北市孔 0.024，與碎環差五個數量級，取最大環的 1% 當門檻就切
+ * 得乾淨，不必在前端做多邊形聯集。
+ */
+function ntpcRings() {
+  if (state.ntpcRings) return state.ntpcRings;
+  const k = ([x, y]) => x + "," + y;
+  const edges = new Map();
+  ((state.payload && state.payload.boundary) || []).forEach((f) =>
+    (f.poly || []).forEach((ring) => {
+      const pts = ring.slice();
+      if (pts.length > 1 && k(pts[0]) === k(pts[pts.length - 1])) pts.pop();
+      for (let i = 0; i < pts.length; i += 1) {
+        const a = pts[i], b = pts[(i + 1) % pts.length];
+        const id = k(a) < k(b) ? k(a) + "|" + k(b) : k(b) + "|" + k(a);
+        const e = edges.get(id);
+        if (e) e.n += 1; else edges.set(id, { n: 1, a, b });
+      }
+    }));
+
+  const adj = new Map();
+  const link = (p, q) => {
+    if (!adj.has(k(p))) adj.set(k(p), []);
+    adj.get(k(p)).push(q);
+  };
+  edges.forEach((e) => { if (e.n === 1) { link(e.a, e.b); link(e.b, e.a); } });
+
+  const used = new Set();
+  const eid = (p, q) =>
+    (k(p) < k(q) ? k(p) + "|" + k(q) : k(q) + "|" + k(p));
+  const rings = [];
+  adj.forEach((outs, startKey) => outs.forEach((first) => {
+    if (used.has(eid(adj0(startKey), first))) return;
+    const start = adj0(startKey);
+    const ring = [start];
+    let cur = start, nxt = first;
+    used.add(eid(cur, nxt));
+    while (k(nxt) !== k(start)) {
+      ring.push(nxt);
+      const step = (adj.get(k(nxt)) || []).find((v) => !used.has(eid(nxt, v)));
+      if (!step) return;                 // 接不回起點就丟掉（資料破洞時的保險）
+      used.add(eid(nxt, step));
+      cur = nxt; nxt = step;
+    }
+    rings.push(ring);
+  }));
+
+  const area = (r) => Math.abs(r.reduce((sum, [x1, y1], i) => {
+    const [x2, y2] = r[(i + 1) % r.length];
+    return sum + x1 * y2 - x2 * y1;
+  }, 0) / 2);
+  const areas = rings.map(area);
+  const max = areas.length ? Math.max(...areas) : 0;
+  // payload 的座標是 [lng, lat]，Leaflet 吃 [lat, lng]。
+  state.ntpcRings = rings
+    .filter((_, i) => areas[i] >= max * 0.01)
+    .map((r) => r.map(([x, y]) => [y, x]));
+  return state.ntpcRings;
+}
+
+/* adj 的 key 是字串，走訪時要拿回原座標；第一條出邊的起點就是它。 */
+function adj0(key) {
+  return key.split(",").map(Number);
+}
+
+/* 全世界的框。緯度用 ±85 而非 ±90——Web Mercator 在極點會投影到無限遠。
+   只在沒有陸地輪廓時當退路用。 */
+const WORLD = [[-85, -180], [-85, 180], [85, 180], [85, -180]];
+
+/* 反灰：只灰陸地，不灰海。
+ *
+ * 第一版是「整個世界當外框、新北當洞」的 even-odd 多邊形，一次蓋掉除了新北
+ * 以外的所有東西——包含海。海變成一片死灰之後，「新北是個沿海城市」在畫面上
+ * 就消失了：淡水河口、北海岸、東北角全部沒入背景。
+ *
+ * 現在改成把**鄰縣市的陸地面**畫成灰色（`GET /api/land`，來源同新北區界那份
+ * 內政部界線），海就留在底圖原本的顏色。台北市被新北整個包住，它也是鄰縣市，
+ * 一樣反灰——那反而讓新北的甜甜圈形狀更清楚。
+ */
+function applyMask(on) {
+  [state.maskLayer, state.outlineLayer].forEach((l) => {
+    if (l) state.map.removeLayer(l);
+  });
+  state.maskLayer = null;
+  state.outlineLayer = null;
+  if (!on) return;
+  const rings = ntpcRings();
+  if (!rings.length) return;
+  const fill = {
+    pane: "swmask", interactive: false, fillRule: "evenodd",
+    fillColor: cssv("--mask"), fillOpacity: Number(cssv("--mask-op")) || 0.8,
+  };
+  const land = state.land || [];
+  state.maskLayer = land.length
+    // 每個縣市的每個環都是獨立的島，不是彼此的洞——所以要包成
+    // [[環]] 的多重多邊形形式。直接給 [環, 環] 會讓第二個島變成第一個島的洞。
+    ? L.layerGroup(land.map((c) => L.polygon(
+      c.poly.map((r) => [r.map(([x, y]) => [y, x])]),
+      { ...fill, color: cssv("--mask-line"), weight: 0.8, opacity: 0.5 },
+    ))).addTo(state.map)
+    // 沒有陸地輪廓（檔案還沒建）就退回舊版：海會一起灰掉，但畫面仍然只凸顯
+    // 新北，不會變成完全沒有遮罩。
+    : L.polygon([WORLD, ...rings], { ...fill, stroke: false }).addTo(state.map);
+
+  // 市界要比縣市界重。這是整張圖唯一需要一眼認出的邊。
+  state.outlineLayer = L.polygon(rings, {
+    pane: "swmask", interactive: false, fill: false,
+    color: cssv("--edge"), weight: 1.8, opacity: 0.95,
+  }).addTo(state.map);
+}
+
+/* 置中新北，並把可視範圍收在市界附近。這個系統只處理新北市，地圖漂到南投
+   對使用者沒有意義，只會讓人以為資料掉了。 */
+function fitNTPC() {
+  const rings = ntpcRings();
+  const bounds = rings.length
+    ? L.latLngBounds(rings.flat())
+    : L.latLngBounds(NTPC, NTPC).pad(0.5);
+  // 時間軸面板浮在地圖下緣。不把它的高度算進留白，烏來、坪林那一帶就會被它
+  // 蓋住——畫面看起來不是置中，而是「南邊不見了」。
+  const box = state.map.getContainer().getBoundingClientRect();
+  const bar = $("tlbar");
+  const barBox = bar && bar.offsetHeight ? bar.getBoundingClientRect() : null;
+  const bottom = barBox
+    ? Math.min(box.height * 0.4, Math.max(14, box.bottom - barBox.top + 10))
+    : 14;
+  // animate:false——開場取景不需要動畫，動畫還會讓「一開就看到整個新北」
+  // 這件事延後到動畫跑完才成立。
+  state.map.fitBounds(bounds, {
+    paddingTopLeft: [14, 14], paddingBottomRight: [14, bottom], animate: false,
+  });
+  // maxBounds 以「取好景之後的可視範圍」放寬，不能直接拿市界：市界比畫面窄
+  // 時，Leaflet 會把中心強制拉回市界中心，剛好抵銷掉上面為面板讓出的留白，
+  // 取景會被悄悄改掉（這個坑踩過一次，畫面看起來像是設定沒生效）。
+  state.map.setMaxBounds(state.map.getBounds().pad(0.35));
+  state.map.setMinZoom(Math.max(7, state.map.getZoom() - 1));
+}
+
+/* 時間軸面板要等 /api/timeline 回來才長到最終高度，上面算的留白那時就過時了。
+   使用者還沒動過地圖的話重新取景一次；碰過之後就不再插手——會自己跳回去的
+   地圖比沒對齊的留白更惱人。 */
+function refitOnLayout() {
+  const bar = $("tlbar");
+  if (!bar || !window.ResizeObserver) return;
+  let touched = false;
+  const stop = () => { touched = true; };
+  const el = state.map.getContainer();
+  el.addEventListener("pointerdown", stop, { once: true });
+  el.addEventListener("wheel", stop, { once: true, passive: true });
+  let h = bar.offsetHeight;
+  new ResizeObserver(() => {
+    if (touched || bar.offsetHeight === h) return;
+    h = bar.offsetHeight;
+    fitNTPC();
+  }).observe(bar);
 }
 
 function pinIcon(p, flagged) {
@@ -485,7 +660,91 @@ async function ask(question) {
   log.scrollTop = log.scrollHeight;
 }
 
+/* ── 地圖控制與花費 ───────────────────────────────────── */
+const LAYER_BOXES = ["f-cluster", "f-districts", "f-mask", "f-flagged"];
+
+function syncLayerCount() {
+  $("layern").textContent = LAYER_BOXES.filter((id) => $(id).checked).length;
+}
+
+function showLayers(on) {
+  $("layerpanel").hidden = !on;
+  $("layerbtn").setAttribute("aria-expanded", String(on));
+}
+
+// scan.js 也宣告了 usd。傳統腳本共用同一個全域作用域，同名的 const 會讓
+// 後載入的那支整個不執行——掃描頁會無聲消失，所以這裡另取名字。
+const money = (v, d = 2) => `US$${Number(v || 0).toFixed(d)}`;
+
+function meter(label, spent, cap) {
+  const pct = cap ? Math.min(100, (spent / cap) * 100) : 0;
+  return `<div class="meter">
+    <div class="mlab"><span>${label}</span><b>${money(spent)} / ${money(cap)}</b></div>
+    <div class="bar"><i class="${pct < 70 ? "ok" : ""}"
+      style="width:${pct.toFixed(1)}%"></i></div>
+  </div>`;
+}
+
+/* 花費細目。總額只回答「花了多少」，這裡回答「撞到哪一道牆會先停」——
+   三道上限（單次／今日／本週期）哪一道先滿，決定的是掃描按不按得下去。 */
+function costHTML(b, entries) {
+  const caps = b.caps || {};
+  const rows = entries
+    .filter((e) => e.kind === "settle" || e.kind === "reserve")
+    .slice(0, 5)
+    .map((e) => `<span><span>${esc(String(e.ts).slice(5, 16))}　${esc(e.meter)}</span>
+      <b>${money(e.actual_usd != null ? e.actual_usd : e.usd_max, 3)}</b></span>`).join("");
+  return `<h4>掃描花費（本週期起算 ${esc(b.cycle_start || "—")}）</h4>
+    ${meter("本週期", b.month_spent_usd, caps.month)}
+    ${meter("今日", b.day_spent_usd, caps.day)}
+    ${meter("單次掃描上限", caps.run - b.run_remaining_usd, caps.run)}
+    <p class="src">Google Places 本週期已用 ${b.places_used_this_month ?? 0} 次${
+    b.unsettled ? `　·　未結清 ${b.unsettled} 筆` : ""}</p>
+    ${rows ? `<div class="led">${rows}</div>` : ""}
+    <p class="src">${esc(b.source || "")}<br>
+      撞自己的牆是不給跑；撞供應商的牆是跑到一半被砍、錢照付。</p>`;
+}
+
+async function showCost(on) {
+  $("costpop").hidden = !on;
+  $("costbtn").setAttribute("aria-expanded", String(on));
+  if (!on) return;
+  $("costpop").textContent = "載入中…";
+  try {
+    const [b, l] = await Promise.all([
+      api("/api/scan/budget"),
+      api("/api/scan/ledger?limit=12").catch(() => ({ entries: [] })),
+    ]);
+    $("s-budget").textContent =
+      `${money(b.month_spent_usd)}/${Number(b.caps.month).toFixed(2)}`;
+    $("costpop").innerHTML = costHTML(b, l.entries || []);
+  } catch (e) {
+    $("costpop").innerHTML = `<p class="src">讀不到帳本：${esc(e.message)}</p>`;
+  }
+}
+
 /* ── 綁定 ─────────────────────────────────────────────── */
+$("layerbtn").addEventListener("click", () => {
+  showLayers($("layerpanel").hidden);
+  showCost(false);
+});
+$("costbtn").addEventListener("click", () => {
+  showCost($("costpop").hidden);
+  showLayers(false);
+});
+// 點到別處就收起浮層；Esc 也收。浮層蓋住地圖時要能一鍵回到地圖。
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".mapui")) showLayers(false);
+  if (!e.target.closest("#costpop") && !e.target.closest("#costbtn")) showCost(false);
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  showLayers(false);
+  showCost(false);
+});
+LAYER_BOXES.forEach((id) =>
+  $(id).addEventListener("change", syncLayerCount));
+
 $("cap").addEventListener("input", (e) => {
   state.cap = Math.max(1, Math.min(200, +e.target.value || 20));
   $("capr").value = Math.min(120, state.cap);
@@ -501,6 +760,9 @@ $("f-flagged").addEventListener("change", (e) => {
   state.flaggedOnly = e.target.checked; drawMarkers();
 });
 $("f-districts").addEventListener("change", (e) => toggleDistricts(e.target.checked));
+$("f-mask").addEventListener("change", (e) => {
+  state.mask = e.target.checked; applyMask(state.mask);
+});
 document.querySelectorAll(".ftype").forEach((el) =>
   el.addEventListener("change", () => {
     state.types = new Set([...document.querySelectorAll(".ftype:checked")]
@@ -537,3 +799,4 @@ boot().catch((e) => {
     `<div style="padding:1.5rem;color:#B23A2F">啟動失敗：${esc(e.message)}<br>
      請先執行 <code>PYTHONPATH=src .venv/bin/python scripts/build_frontend.py</code></div>`);
 });
+
