@@ -338,8 +338,12 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .msg.bot p{margin:0 0 7px}
 .msg .sum{color:var(--ink);font-weight:500}
 .egs{display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+/* 範例鈕與「清除標記」用同一組顏色：白底、`--ink-3` 的字。
+   它們是同一類東西——可以按的控制項，不是助理講的話。助理欄改成 `--paper`
+   灰底之後，白底讓它們從底色浮出來，一眼看得出可以點；而字色比助理的講解句
+   淡一階，才不會跟內容搶。 */
 .eg{border:1px solid var(--rule);border-radius:14px;padding:4px 11px;font-size:16px;
-  color:var(--ink-2);text-align:left}
+  color:var(--ink-3);background:var(--panel);text-align:left}
 .eg:hover{border-color:var(--seal);color:var(--ink)}
 .rows{display:flex;flex-direction:column;gap:1px;margin-top:8px}
 .row{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:baseline;
