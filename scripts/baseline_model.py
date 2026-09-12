@@ -42,6 +42,7 @@ from sklearn.preprocessing import StandardScaler
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
+from smart_watchdog.features import crosscheck
 from smart_watchdog.features.build import (
     build_features,
     label_future_penalty,
@@ -52,6 +53,16 @@ from smart_watchdog.features.build import (
 
 TRAIN_AS_OF, TRAIN_END = pd.Timestamp("2022-01-01"), pd.Timestamp("2024-01-01")
 TEST_AS_OF, TEST_END = pd.Timestamp("2024-01-01"), pd.Timestamp("2026-01-01")
+
+#: 已公布的 AUC 0.641 / P@100 2.17x 屬於上面那組時窗。`--windows late` 只是
+#: 另一次量測，**不取代**它——換了時窗的數字不能拿去對外講同一件事。
+#: `--windows late` 的警語。做成常數是因為它要被逐字引用，
+#: 而它裡面同時有全形標點與換行。
+WARN_LATE = ("⚠️ --windows late：這一組數字不屬於已公布的 "
+             "AUC 0.641 / P@100 2.17x" + chr(10))
+
+LATE_WINDOWS = (pd.Timestamp("2023-01-01"), pd.Timestamp("2025-01-01"),
+                pd.Timestamp("2025-01-01"), pd.Timestamp("2026-07-29"))
 
 # Nested blocks, so each row's lift over the previous one is that block's contribution.
 BLOCKS: dict[str, list[str]] = {
@@ -86,6 +97,35 @@ BLOCKS: dict[str, list[str]] = {
         "has_evaluation", "eval_partial", "n_partial_prior",
         "days_since_evaluation",
     ],
+    # ⑤ 交叉比對。**量過了，兩種時窗都沒有幫助，保留為記錄在案的負面結果。**
+    #
+    # 已公布時窗：發現要到學年度結束後約 17 個月才公告
+    # （crosscheck.observable_from），所以在 2022-01-01 的訓練切點上**一所園
+    # 都看不到**——那一欄在訓練集裡是常數。實測 ⑤ LR 與 ④ LR 完全相同
+    # （AUC 0.634 / P@100 0.350），因為模型從那四欄學不到任何東西。
+    #
+    # `--windows late`（訓練 2023-01-01、測試 2025-01-01）讓它在訓練時可見
+    # （16 園被點到）。實測 ③ LR AUC 0.589 / P@100 0.170（1.66x）→
+    # ⑤ LR AUC 0.590 / P@100 0.160（1.57x）：AUC +0.001，**P@100 反而降**。
+    #
+    # 原因是盛行率，不是訊號強度。被點到的只有 16–20 園／1,213（約 1.6%），
+    # 而 docs/research/09-crosscheck-leadtime.md 量到它每一筆的提升是 3.57x
+    # （非營利園內，p=0.011）。一個 1.6% 盛行率的特徵推不動全域排序指標，
+    # 即使它對被點到的那幾所非常準。
+    #
+    # 所以它的位置是**升級管道**而不是計分特徵：直接把那 20 所推上去，
+    # 而不是期待模型從四個幾乎全零的欄位裡學會它。
+    # scripts/build_audit_priority.py 的 _with_crosscheck 做的正是這件事。
+    # 這與 ④ 官方評鑑的結論一致，而且理由是同一個：訊號真實但太稀疏。
+    "⑤ +交叉比對": [
+        "n_penalties_prior", "sum_severity_prior", "max_severity_prior",
+        "n_severe_prior", "days_since_last_penalty",
+        "count_approved", "age_years", "size_in", "indoor_area_per_child",
+        "n_vehicles", "has_vehicle", "after_care", "monthly", "is_private",
+        "has_evaluation", "eval_partial", "n_partial_prior",
+        "days_since_evaluation",
+        "has_cross_fail", "cross_fail", "cross_fail_high", "cross_rules_n",
+    ],
 }
 
 
@@ -100,10 +140,24 @@ def recall_at_k(y_true: np.ndarray, scores: np.ndarray, k: int) -> float:
 
 
 def main() -> None:
+    import argparse
+
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--windows", choices=("published", "late"), default="published",
+                    help="published＝已公布配置的時窗；late＝往後推，讓交叉比對"
+                         "在訓練時看得見（另一次量測，不取代已公布數字）")
+    a = ap.parse_args()
+    global TRAIN_AS_OF, TRAIN_END, TEST_AS_OF, TEST_END
+    if a.windows == "late":
+        TRAIN_AS_OF, TRAIN_END, TEST_AS_OF, TEST_END = LATE_WINDOWS
+        print(WARN_LATE)
+
     inst = pd.read_csv("data/processed/institutions_ntpc.csv")
     pen = load_penalties("data/processed/penalties_ntpc.csv")
     veh = load_vehicles("data/external/kids_vehicles.json")
     ev = load_evaluations("data/processed/evaluations_ntpc_full.csv")
+    cross = pd.read_csv("data/processed/cross_findings.csv")
+    crosswalk = pd.read_csv("data/processed/nonprofit_registry_crosswalk.csv")
 
     frames = {}
     for name, (as_of, end) in {
@@ -121,6 +175,17 @@ def main() -> None:
         # 避免被補成「已受評者的平均間隔」而憑空造出一次評鑑。
         f["days_since_evaluation"] = f["days_since_evaluation"].fillna(9999)
         f["eval_partial"] = f["eval_partial"].fillna(0)
+        # 交叉比對：只併入 as_of 當下看得到的發現。沒被點到的是 0 而不是 NaN——
+        # 「查過了、沒被點到」與「這一項沒查」是兩件事，前者是真的 0。
+        xf = crosscheck.features_as_of(as_of, cross, crosswalk)
+        f = f.merge(xf, on="id", how="left")
+        for col in ("has_cross_fail", "cross_fail", "cross_fail_high",
+                    "cross_rules_n"):
+            f[col] = f[col].fillna(0)
+        n_flagged = int(f["has_cross_fail"].sum())
+        print(f"　　交叉比對可觀察學年度 ≤ "
+              f"{crosscheck.max_observable_year(as_of)}　被點到 {n_flagged} 園"
+              + ("　⚠️ 訓練集看不到，這一欄是常數" if not n_flagged else ""))
         frames[name] = f
         print(
             f"{name}: as_of={as_of.date()} label=[{as_of.date()},{end.date()})  "
