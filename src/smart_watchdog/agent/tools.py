@@ -53,8 +53,13 @@ def _dos():
 
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 SKILLS_DIR = pathlib.Path(__file__).resolve().parent / "skills"
-SKILL_NAMES = ("schedule_inspection", "read_memo", "explain_risk",
-               "answer_challenge", "read_evidence")
+SKILL_NAMES = (
+    # 情境：使用者會怎麼開口 → 該照什麼步驟做。講話的通則在 system prompt，
+    # 不重複寫在每一份裡——寫兩份就會有兩套標準。
+    "survey_district", "schedule_inspection", "prepare_visit",
+    "compare_institutions", "track_changes", "follow_mentions",
+    "read_memo", "explain_risk", "answer_challenge", "read_evidence",
+)
 
 # payload 的 `t` 欄位：0 公立、1 非營利、2 私立。與 chat.py 的 TYPE_NAMES 同源。
 TYPE_CODES = {"公立": 0, "非營利": 1, "私立": 2}

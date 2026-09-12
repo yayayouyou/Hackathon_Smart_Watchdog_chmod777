@@ -476,3 +476,51 @@ def test_sort_by_penalties_and_by_recency_differ_from_rank(reg) -> None:
     dates = [r["last_event_date"] or "" for r in by_recent]
     assert dates == sorted(dates, reverse=True), "recent 要由新到舊"
     assert [r["id"] for r in by_rank] != [r["id"] for r in by_pen]
+
+
+# ── SOP 與回答格式 ───────────────────────────────────────────────────
+
+
+def test_every_skill_the_prompt_offers_actually_loads(reg) -> None:
+    """system prompt 列出的指引與 SKILL_NAMES 與檔案，三者必須一致。
+
+    對不上的表徵是 agent 說「我載入 xxx 指引」然後拿到錯誤——那一步會在
+    示範中途壞掉，而且看起來像模型出錯，不像是我們少放一個檔案。
+    """
+    from smart_watchdog.agent.loop import SYSTEM_PROMPT
+    from smart_watchdog.agent.tools import SKILL_NAMES
+
+    for name in SKILL_NAMES:
+        assert name in SYSTEM_PROMPT, f"{name} 沒有寫進 system prompt，模型不知道它存在"
+        out = _run(reg, "load_skill", {"name": name})
+        assert len(out.payload.get("content", "")) > 300, f"{name} 內容太短"
+
+
+def test_response_format_rules_live_in_the_prompt_not_in_each_skill() -> None:
+    """講話的通則只能有一份。
+
+    寫在每一份 SOP 裡的話，改的時候一定會漏掉幾份，然後 agent 的語氣會依
+    「這次載入了哪一份」而不同——那種不一致很難查。
+    """
+    import pathlib
+
+    from smart_watchdog.agent.loop import SYSTEM_PROMPT
+    from smart_watchdog.agent.tools import SKILL_NAMES, SKILLS_DIR
+
+    assert "不要用講的重複一遍" in SYSTEM_PROMPT, "「畫面上看得到的不要念」要在全域"
+    assert "不超過 30 個字" in SYSTEM_PROMPT
+    assert "markdown" in SYSTEM_PROMPT
+
+    # 個別 SOP 不該再各自定義長度規則。
+    for name in SKILL_NAMES:
+        body = (pathlib.Path(SKILLS_DIR) / f"{name}.md").read_text("utf-8")
+        assert "不超過 30 字" not in body, f"{name} 重複了全域的長度規則"
+
+
+def test_each_skill_says_when_to_use_it(reg) -> None:
+    """沒有「何時用」的指引，模型不知道該不該載入它。"""
+    from smart_watchdog.agent.tools import SKILL_NAMES
+
+    for name in SKILL_NAMES:
+        body = _run(reg, "load_skill", {"name": name}).payload["content"]
+        assert "## 何時用" in body, f"{name} 少了「何時用」"
