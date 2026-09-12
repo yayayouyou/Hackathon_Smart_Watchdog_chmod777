@@ -1246,3 +1246,33 @@ def test_logging_out_clears_the_identity_popup() -> None:
         "paintWho 在沒有使用者時沒有把身分浮層收掉"
     )
     assert 'innerHTML = ""' in fn, "paintWho 沒有清掉浮層裡的帳號與單位"
+
+
+def test_the_dataroom_halves_share_the_same_inset() -> None:
+    """文件控管室的原始資料層是左右並排的兩半，內距必須一樣。
+
+    右半（`.drside`）本來就有 `padding:0 16px 18px`，左半（`.drcol`）沒有——
+    於是「上傳財務報告」「園所」那一整欄直接貼在房間左緣，而它上方的工具列
+    是內縮 16px 的。兩者垂直相鄰，差 16px 一眼就看得出來沒對齊（使用者回報
+    「原始資料顯示會太貼邊」）。
+
+    這裡比的是兩半彼此，不是寫死 16px：日後整室改內距時兩邊要一起改，
+    而這條測試守的正是「不要只改一邊」。
+    """
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+
+    def horizontal_padding(selector: str) -> str:
+        m = re.search(rf"(?:^|\}}|\*/)\s*{re.escape(selector)}\s*\{{([^}}]*)\}}",
+                      css, re.S)
+        assert m, f"找不到 {selector} 的規則"
+        pad = re.search(r"padding:\s*([^;}]+)", m.group(1))
+        assert pad, f"{selector} 沒有 padding，內容會貼在容器邊緣"
+        parts = pad.group(1).split()
+        # padding 的 1~4 值寫法裡，水平那一項分別在第 1/2/2/2 個位置
+        return parts[0] if len(parts) == 1 else parts[1]
+
+    left = horizontal_padding(".drcol")
+    right = horizontal_padding(".drside")
+    assert left == right, (
+        f"原始資料層左右兩半的水平內距不一致：.drcol={left}、.drside={right}"
+    )

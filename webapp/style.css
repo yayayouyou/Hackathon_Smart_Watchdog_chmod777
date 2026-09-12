@@ -991,8 +991,12 @@ body.resizing{user-select:none;cursor:col-resize}
 
 .drlayer{display:flex;flex-direction:column;min-height:0;flex:1}
 .drraw{flex-direction:row;gap:0}
+/* 左右兩半用同一組內距。右半（.drside）本來就有，左半沒有，於是「上傳財務
+   報告」「園所」那一欄整個貼在房間左緣，而上方工具列是內縮的——兩者並排時
+   看起來像沒對齊。 */
 .drcol{display:flex;flex-direction:column;min-height:0;
-  flex:1 1 52%;border-right:1px solid var(--rule);overflow-y:auto}
+  flex:1 1 52%;border-right:1px solid var(--rule);overflow-y:auto;
+  padding:0 16px 18px}
 .drraw .list{overflow:visible;flex:none}
 .drside{flex:1 1 48%;min-width:0;overflow-y:auto;padding:0 16px 18px}
 .drlead{margin:0 0 9px;font-size:15px;line-height:1.65;color:var(--ink-2)}
