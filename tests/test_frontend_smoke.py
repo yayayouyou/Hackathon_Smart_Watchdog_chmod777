@@ -938,3 +938,34 @@ def test_dataroom_class_names_are_namespaced_or_deliberately_reused() -> None:
         f"這些 class 既沒有 dr／mx／ftab 前綴，也不在刻意復用的清單裡：{stray}。"
         "全域 CSS 可能已經有同名規則——加前綴，或確認復用是安全的。"
     )
+
+
+def test_every_stylesheet_has_balanced_braces() -> None:
+    """CSS 壞掉不會有錯誤訊息——瀏覽器從那一行起把剩下的整份丟棄。
+
+    實際發生過：合併時衝突切在 `.roomhead{...}` 規則中間，一側已經收尾、另一側
+    是同一條規則的後半段宣告，接起來就多出一個 `}`。症狀是那一行之後的每一條
+    規則都失效——助理欄收合變成一團擠在 34px 裡的文字、頂部按鈕掉樣式——而
+    Console 一個字都不印，因為這不是錯誤，是「瀏覽器照規範放棄剖析」。
+
+    JS 有 `node --check` 擋這件事，CSS 沒有。數括號是最便宜的等價物：
+    多一個或少一個都代表某處被切開過。
+    """
+    for path in sorted(WEBAPP.glob("*.css")):
+        raw = path.read_text(encoding="utf-8")
+        # 用等量換行取代註解，報錯的行號才對得上原始檔
+        text = re.sub(r"/\*.*?\*/",
+                      lambda m: "\n" * m.group(0).count("\n"), raw, flags=re.S)
+        depth, line, stray = 0, 1, []
+        for ch in text:
+            if ch == "\n":
+                line += 1
+            elif ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth < 0:
+                    stray.append(line)
+                    depth = 0
+        assert not stray, f"{path.name} 第 {stray} 行有多餘的 }}（規則被切開過）"
+        assert depth == 0, f"{path.name} 少了 {depth} 個 }}"

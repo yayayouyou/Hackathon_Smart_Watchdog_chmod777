@@ -34,11 +34,12 @@ from __future__ import annotations
 import contextlib
 import json
 import pathlib
+import re
 from typing import Any, Callable, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -462,6 +463,28 @@ if WEBAPP.exists():
     app.mount("/static", NoCacheStatic(directory=str(WEBAPP)), name="static")
 
     @app.get("/")
-    def index() -> FileResponse:
-        return FileResponse(str(WEBAPP / "index.html"),
-                            headers={"Cache-Control": "no-cache"})
+    def index() -> Response:
+        """首頁，並替每個自家靜態檔加上依檔案修改時間產生的版本號。
+
+        `Cache-Control: no-cache` 要求瀏覽器回來驗證，但那是**要求**不是保證：
+        一份在別的標頭條件下被存進磁碟的副本，可能整輪都不回來問。實際後果
+        是「改了 style.css、重整、畫面沒變」——今天為了這件事來回了五次，
+        中間還誤判成合併衝突改壞了。檔名帶版本號之後，改動即換網址，
+        瀏覽器沒有拿到舊檔的餘地。
+
+        只改 `/static/...` 開頭的自家檔案，不動 vendor 之外的絕對網址
+        （Google Fonts 那條有自己的快取策略，加參數只會讓它每次重抓）。
+        mtime 取整數秒：同一次編輯內的多次重整仍然命中快取。
+        """
+        html = (WEBAPP / "index.html").read_text(encoding="utf-8")
+
+        def stamp(m: re.Match[str]) -> str:
+            rel = m.group(2)
+            f = WEBAPP / rel
+            if not f.exists():
+                return m.group(0)
+            return f'{m.group(1)}="/static/{rel}?v={int(f.stat().st_mtime)}"'
+
+        html = re.sub(r'(href|src)="/static/([^"?]+)"', stamp, html)
+        return Response(content=html, media_type="text/html",
+                        headers={"Cache-Control": "no-cache"})

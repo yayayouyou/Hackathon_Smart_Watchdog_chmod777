@@ -164,9 +164,10 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .rh-no{font-family:var(--mono);font-size:15px;font-weight:600;
   color:var(--rc, var(--ink-3))}
 .rh-name{font-size:17px;font-weight:600}
-.rh-desc{font-size:15px;color:var(--ink-3)}
-  background:var(--panel);border-bottom:1px solid var(--rule);flex:none}
-.rh-no{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--seal)}
+/* 室號用該室的 accent（--rc），不是固定的稽查紅：樓層索引、中庭平面圖、
+   室頭三處是同一組顏色，換一處就要三處一起換。字級為無障礙調整後的版本。 */
+.rh-no{font-family:var(--mono);font-size:16px;font-weight:600;
+  color:var(--rc, var(--seal))}
 .rh-name{font-size:20px;font-weight:600}
 .rh-desc{font-size:16px;color:var(--ink-3)}
 /* 來源膠囊永遠在同一個位置：可稽核性是常駐元件，不是註腳。 */
@@ -682,8 +683,31 @@ body.resizing{user-select:none;cursor:col-resize}
 .agentcol.fold .who,.agentcol.fold .mini:not(.fold){display:none}
 .agentcol.fold .agenthead{flex-direction:column;gap:10px;padding:10px 0;height:100%;
   align-items:center;border-bottom:0}
-.agentcol.fold .agenttitle{writing-mode:vertical-rl;letter-spacing:.28em}
+/* 收合列只剩直排標題與展開鈕。overflow:hidden 是保險：任何一個沒被上面
+   兩條藏掉的子元素，都不該把這條 42px 的欄位撐破——那次爆版的症狀是
+   整塊內文擠在細欄裡直排，而不是某個元素稍微超出。 */
+.agentcol.fold{overflow:hidden}
+.agentcol.fold .agenttitle{writing-mode:vertical-rl;letter-spacing:.28em;
+  white-space:nowrap}
 .mini.fold{padding:3px 7px;line-height:1}
+
+/* ── 收合的第二道：依**實際欄寬**，不依 class ────────────────────
+ *
+ * 上面那幾條全部掛在 `.agentcol.fold` 上，也就是全部依賴 agent.js 把那個
+ * class 加上去。實測遇過一種狀態：欄寬已經縮成一條（`--agentw` 被設過了），
+ * class 卻沒生效，於是整塊對話內容擠在 42px 裡一字一行直排——那比什麼都
+ * 不顯示更糟，而且畫面上看不出原因。
+ *
+ * 容器查詢問的是「這一欄現在幾 px」，那是畫面上的事實，不需要任何人記得
+ * 加 class。兩道並存：class 那道負責語意（使用者按了收合），這道負責保證
+ * 一條讀不了的細欄不會塞滿讀不了的字。 */
+.agentcol{container-type:inline-size}
+@container (max-width:150px){
+  .agentbody,.agentcol .who,.agentcol .mini:not(.fold){display:none}
+  .agenthead{flex-direction:column;gap:10px;padding:10px 0;height:100%;
+    align-items:center;border-bottom:0}
+  .agenttitle{writing-mode:vertical-rl;letter-spacing:.28em;white-space:nowrap}
+}
 
 .agentbar{display:flex;align-items:center;gap:8px;padding:8px 12px;
   border-bottom:1px solid var(--rule);font-size:16px;color:var(--ink-3)}

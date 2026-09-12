@@ -632,8 +632,25 @@
     if (SW.state.map) SW.state.map.invalidateSize();
   }
 
+  /* 收合列要藏哪些東西。`.mini.fold` 是那顆展開鈕本身，留著。 */
+  const HIDE_WHEN_FOLDED = ".agentbody, .who, .mini:not(.fold)";
+
   function fold(on) {
     col.classList.toggle("fold", on);
+    /* **同時寫 inline style，不只加 class。**
+     *
+     * class 那條路依賴樣式表是最新的，而那個前提今天破過一次：改了
+     * style.css、伺服器送的是新檔、`Cache-Control: no-cache` 也有送，
+     * 瀏覽器卻整輪沒回來問，於是 class 加上了、規則卻是舊的——畫面上是
+     * 整塊對話擠在一條 42px 的細欄裡一字一行，而 DOM 看起來完全正常。
+     * 那個組合花了五輪才查出來。
+     *
+     * inline style 與這支 JS 在同一份檔案裡：JS 是新的，這段行為就是新的，
+     * 不存在「JS 新、CSS 舊」的中間狀態。class 保留給樣式（直排標題、
+     * 間距那些），可讀性由它負責；能不能讀由這裡負責。 */
+    col.querySelectorAll(HIDE_WHEN_FOLDED).forEach((el) => {
+      el.style.display = on ? "none" : "";
+    });
     const btn = $("agentfold");
     btn.textContent = on ? "›" : "‹";
     btn.setAttribute("aria-expanded", String(!on));
@@ -642,8 +659,11 @@
     // 進那一格（6px），收合狀態就變成一條看不見也點不到的線——實測過。
     // visibility:hidden 保留格位，只是不顯示也不吃事件。
     grip.style.visibility = on ? "hidden" : "";
+    // 42px 不是 34px：收合後那條直排「助理」是 15px（全站字級地板，給中年
+    // 稽查員），34px 是 10.5px 時代的寬度，字放大之後會擠到溢出、把整條
+    // 收合列撐破。欄寬要跟著字級走，不是反過來。
     document.querySelector("main").style.setProperty(
-      "--agentw", on ? "34px" : (restoreWidth() + "px"));
+      "--agentw", on ? "42px" : (restoreWidth() + "px"));
     try { localStorage.setItem("sw.agentfold", on ? "1" : "0"); } catch { /* 同上 */ }
     // Leaflet 要被告知容器變了，否則地圖會停在舊尺寸、滑鼠座標整個對不上。
     if (SW.state.map) setTimeout(() => SW.state.map.invalidateSize(), 210);
