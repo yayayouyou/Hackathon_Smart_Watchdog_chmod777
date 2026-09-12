@@ -750,7 +750,14 @@ body.resizing{user-select:none;cursor:col-resize}
    整塊內文擠在細欄裡直排，而不是某個元素稍微超出。 */
 .agentcol.fold{overflow:hidden}
 .agentcol.fold .agenttitle{writing-mode:vertical-rl;letter-spacing:.28em;
-  white-space:nowrap}
+  white-space:nowrap;color:var(--ink-2)}
+/* 收合時那條直條要看得出是「助理在這裡，點一下打開」。
+   展開時這隻藏起來——對話裡每一輪都有牠，再放一隻是重複。 */
+.agentdog.folded{display:none}
+.agentcol.fold .agentdog.folded{display:block;flex:none}
+/* 整條本來就可以點（agent.js 的 ensureExpandStrip 蓋了一層透明按鈕），
+   這裡只補一個滑過去會變色的回饋，讓「可以點」看得出來。 */
+.agentcol.fold:hover{background:var(--sunk)}
 .mini.fold{padding:3px 7px;line-height:1}
 
 /* ── 收合的第二道：依**實際欄寬**，不依 class ────────────────────
