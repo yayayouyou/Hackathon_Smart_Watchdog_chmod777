@@ -253,8 +253,6 @@
         </div>
       </div>
 
-      <div class="mapbadge" id="mapbadge">—</div>
-
       <!-- 時間軸預設收成左下角一顆小 bar：它是「證明這套排序有效」的證據，
            不是每天要用的操作面板，沒理由常駐吃掉地圖下緣。
            右設限的格子以虛線標出，不與完整觀察的格子連成同一條趨勢線。 -->
@@ -269,7 +267,6 @@
               <option value="100" selected>100</option>
               <option value="200">200</option>
             </select>名</label>
-          <button id="tloff" title="回到今天的派工提案">離開</button>
         </div>
         <div class="tlticks" id="tlticks"></div>
         <input id="tlrange" type="range" min="0" max="6" value="6" step="1"
@@ -283,10 +280,15 @@
           <i class="tlpin tl-out"></i>未排入
         </div>
       </div>
-      <button class="tlpill" id="tlpill" aria-expanded="false">
-        <span class="tldot"></span>時間軸回測
-        <span class="tlpillsub" id="tlpillsub">2021–今天 · 逐年重訓</span>
-      </button>
+      <!-- 膠囊與「目前顯示幾筆」同一排，兩端對齊。原本各自絕對定位貼左下與
+           右下，地圖一窄（助理欄展開、視窗縮小）兩塊就疊在一起。 -->
+      <div class="tlfoot">
+        <button class="tlpill" id="tlpill" aria-expanded="false">
+          <span class="tldot"></span>時間軸回測
+          <span class="tlpillsub" id="tlpillsub">2021–今天 · 逐年重訓</span>
+        </button>
+        <div class="mapbadge" id="mapbadge">—</div>
+      </div>
       </div>
     </div>
 
@@ -383,7 +385,7 @@
         <span class="who" id="whoami" hidden></span>
         <button type="button" id="agentclear" class="mini">清除標記</button>
         <button type="button" id="agentfold" class="mini fold"
-                aria-expanded="true" title="收合助理欄">‹</button>
+                aria-expanded="true" title="收合助理欄">›</button>
       </div>
       <div class="agentbody">
         <div class="chatlog" id="agentlog">

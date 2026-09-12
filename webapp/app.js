@@ -1072,6 +1072,11 @@ function syncLayerCount() {
 function timelineDock(on) {
   $("tlbar").hidden = !on;
   $("tlpill").setAttribute("aria-expanded", String(on));
+  // 收起面板＝離開回測模式。不這樣做的話，地圖會留在回測著色，而唯一的
+  // 出口在已經被收起來的面板裡（timeline.js 掛上這個回呼）。
+  if (!on && typeof window.SW?.onTimelineClose === "function") {
+    window.SW.onTimelineClose();
+  }
 }
 
 function showLayers(on) {

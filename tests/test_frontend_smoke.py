@@ -969,3 +969,50 @@ def test_every_stylesheet_has_balanced_braces() -> None:
                     depth = 0
         assert not stray, f"{path.name} 第 {stray} 行有多餘的 }}（規則被切開過）"
         assert depth == 0, f"{path.name} 少了 {depth} 個 }}"
+
+
+def test_no_stylesheet_rule_is_left_unclosed() -> None:
+    """規則沒收尾就接下一條——**括號總數仍然平衡**，所以上一條測試抓不到。
+
+    實際發生過，而且是今天最貴的一個 bug。合併時衝突切在 `.tlbar{...}` 中間，
+    接起來變成：
+
+        .tlbar{position:static;width:min(72vw,720px);
+          max-width:calc(100vw - var(--rightcols, 460px));
+        .tlpillsub{color:var(--ink-4);font-size:15px}
+        .tlbar{...完整的那份...}
+
+    第一條 `.tlbar` 沒有 `}`。CSS 剖析器在宣告區塊裡遇到 `{` 會開始吞，一路吞到
+    能恢復為止——**那一行之後的一大段規則全部消失**，而括號數量是平衡的、
+    沒有任何錯誤訊息、`node --check` 也管不到 CSS。
+
+    症狀分散得看不出關聯：時間軸回測的底色不見（背景是被吞掉的宣告之一）、
+    助理欄收合後整塊內文擠在細欄裡、按鈕沒有邊框。我一度判定是瀏覽器快取，
+    又一度懷疑是合併把規則刪掉了，來回六七輪。真正的原因是這四行。
+
+    只回報**第一個**：之後的全是連鎖誤報（剖析器已經在錯誤的巢狀層裡）。
+    """
+    for path in sorted(WEBAPP.glob("*.css")):
+        raw = path.read_text(encoding="utf-8")
+        text = re.sub(r"/\*.*?\*/",
+                      lambda m: "\n" * m.group(0).count("\n"), raw, flags=re.S)
+        stack: list[str] = []
+        buf, line = "", 1
+        for ch in text:
+            if ch == "\n":
+                line += 1
+            if ch == "{":
+                head = " ".join(buf.split())
+                buf = ""
+                assert not (stack and stack[-1] == "decl"), (
+                    f"{path.name} 第 {line} 行：上一條規則沒有收尾就接了 "
+                    f"「{head[:60]}」——括號總數仍然平衡，但那一行之後的規則"
+                    f"會被剖析器吞掉"
+                )
+                stack.append("at" if head.startswith("@") else "decl")
+            elif ch == "}":
+                if stack:
+                    stack.pop()
+                buf = ""
+            else:
+                buf += ch

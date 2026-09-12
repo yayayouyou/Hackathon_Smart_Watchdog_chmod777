@@ -635,33 +635,62 @@
   /* 收合列要藏哪些東西。`.mini.fold` 是那顆展開鈕本身，留著。 */
   const HIDE_WHEN_FOLDED = ".agentbody, .who, .mini:not(.fold)";
 
-  function fold(on) {
-    col.classList.toggle("fold", on);
-    /* **同時寫 inline style，不只加 class。**
-     *
-     * class 那條路依賴樣式表是最新的，而那個前提今天破過一次：改了
-     * style.css、伺服器送的是新檔、`Cache-Control: no-cache` 也有送，
-     * 瀏覽器卻整輪沒回來問，於是 class 加上了、規則卻是舊的——畫面上是
-     * 整塊對話擠在一條 42px 的細欄裡一字一行，而 DOM 看起來完全正常。
-     * 那個組合花了五輪才查出來。
-     *
-     * inline style 與這支 JS 在同一份檔案裡：JS 是新的，這段行為就是新的，
-     * 不存在「JS 新、CSS 舊」的中間狀態。class 保留給樣式（直排標題、
-     * 間距那些），可讀性由它負責；能不能讀由這裡負責。 */
-    col.querySelectorAll(HIDE_WHEN_FOLDED).forEach((el) => {
-      el.style.display = on ? "none" : "";
+  /* 收合後整條欄位都能點開，不是只有上面那顆 24px 的小圓鈕。
+   *
+   * 一條 42px 寬、整個視窗高的細欄，滑鼠過去時使用者的預期是「點它會打開」；
+   * 把唯一的觸發點藏在最上緣一顆小鈕裡，等於要人先找到那顆鈕。中間那個大
+   * 箭頭只是**指示**，真正吃點擊的是整條欄位。
+   *
+   * 建一次、之後靠 display 切換：每次收合都重建的話，展開動畫進行中會閃一下。
+   * 樣式全部 inline——這個瀏覽器對 style.css 的更新沒有反應，理由見 fold()。 */
+  let expandStrip = null;
+
+  function ensureExpandStrip() {
+    if (expandStrip) return expandStrip;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "agentexpand";
+    b.setAttribute("aria-label", "展開助理欄");
+    b.title = "展開助理欄";
+    b.textContent = "‹";
+    Object.assign(b.style, {
+      position: "absolute", inset: "0", width: "100%", height: "100%",
+      border: "0", background: "transparent", cursor: "pointer",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      font: "inherit", fontSize: "22px", color: "var(--ink-4)", padding: "0",
     });
+    b.addEventListener("mouseenter", () => { b.style.color = "var(--seal)"; });
+    b.addEventListener("mouseleave", () => { b.style.color = "var(--ink-4)"; });
+    b.addEventListener("click", () => fold(false));
+    col.appendChild(b);
+    expandStrip = b;
+    return b;
+  }
+
+  function fold(on) {
     const btn = $("agentfold");
-    btn.textContent = on ? "›" : "‹";
+    col.classList.toggle("fold", on);
+    /* 收合時整顆收起來：整條欄位已經是可點的展開區（見 ensureExpandStrip），
+       再擺一顆 24px 的小鈕等於把同一件事講兩次，而且比整條難點。 */
+    if (btn) btn.style.display = on ? "none" : "";
+    // 整片點擊區靠 col 定位，所以收合時 col 必須是 positioned。
+    col.style.position = on ? "relative" : "";
+    const strip = ensureExpandStrip();
+    strip.style.display = on ? "flex" : "none";
+
+    /* 箭頭指向**按下去之後會往哪個方向動**：展開狀態按它會把欄位收到右邊，
+       所以是 ›；收合狀態下那條展開區按了會往左長出來，所以是 ‹。
+       先前兩個都反了，於是「清除標記」旁邊那顆看起來像要把欄位拉得更開。 */
+    btn.textContent = on ? "‹" : "›";
     btn.setAttribute("aria-expanded", String(!on));
     btn.title = on ? "展開助理欄" : "收合助理欄";
     // ⚠️ 不可用 display:none。grip 是 grid 的第 3 格，藏掉之後 aside 會遞補
     // 進那一格（6px），收合狀態就變成一條看不見也點不到的線——實測過。
     // visibility:hidden 保留格位，只是不顯示也不吃事件。
     grip.style.visibility = on ? "hidden" : "";
-    // 42px 不是 34px：收合後那條直排「助理」是 15px（全站字級地板，給中年
-    // 稽查員），34px 是 10.5px 時代的寬度，字放大之後會擠到溢出、把整條
-    // 收合列撐破。欄寬要跟著字級走，不是反過來。
+    /* 42px 不是 34px：收合後那條直排「助理」是 15px（全站字級地板，給中年
+       稽查員），34px 是 10.5px 時代的寬度，字放大之後會擠到溢出。
+       欄寬要跟著字級走，不是反過來。 */
     document.querySelector("main").style.setProperty(
       "--agentw", on ? "42px" : (restoreWidth() + "px"));
     try { localStorage.setItem("sw.agentfold", on ? "1" : "0"); } catch { /* 同上 */ }
@@ -722,9 +751,15 @@
       const saved = localStorage.getItem("sw.agentfold");
       if (saved !== null) folded = saved === "1";
     } catch { /* 私密視窗：用預設 */ }
-    if (folded) fold(true);
-    else document.querySelector("main").style
-      .setProperty("--agentw", restoreWidth() + "px");
+    /* 兩條路都要走 fold()。原本展開時只設欄寬就結束，於是那些「展開該長什麼
+       樣」的 inline style（標題列內距、底線、橫排標題）一次都沒被套上——
+       一載入就是展開的人看到的是沒有樣式的標題列。fold(false) 會把欄寬一起
+       設好，所以那一行併進去。 */
+    fold(folded);
+    if (!folded) {
+      document.querySelector("main").style
+        .setProperty("--agentw", restoreWidth() + "px");
+    }
   }
 
   window.Agent = { send, dispatch };
