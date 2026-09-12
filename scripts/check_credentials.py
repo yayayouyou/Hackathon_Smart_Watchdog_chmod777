@@ -101,30 +101,105 @@ def _check_reviews(key: str, place_id: str) -> None:
               f"{text[:52]}")
 
 
+def _threads_get(path: str, token: str, **params) -> tuple[int, dict]:
+    """一次唯讀的 Threads API 呼叫。權杖走 header，不走 query string。
+
+    舊版把 `access_token=` 放在網址裡。網址會進 access log、進 proxy 紀錄、
+    進例外訊息——`urllib` 的 HTTPError 字串就含完整 URL，這支腳本自己
+    印出來就會把權杖印在畫面上。header 不會。
+    """
+    url = f"https://graph.threads.net{path}"
+    if params:
+        url += "?" + urllib.parse.urlencode(params)
+    req = urllib.request.Request(url, headers={
+        "Authorization": f"Bearer {token}", "Accept": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=25) as r:
+            return r.status, json.loads(r.read(500_000))
+    except urllib.error.HTTPError as e:
+        return e.code, json.loads(e.read(20_000) or b"{}")
+    except Exception as exc:  # noqa: BLE001 - 網路問題也要照實回報
+        return 0, {"error": {"message": f"{type(exc).__name__}: {exc}"}}
+
+
+def _threads_error(status: int, data: dict) -> str:
+    return (f"HTTP {status}　"
+            f"{(data.get('error') or {}).get('message', '')[:120]}")
+
+
 def check_threads() -> None:
+    """兩個管道共用一把權杖，但門檻不同——所以分開測，分開報。
+
+    `/me/mentions` 只要帳號授權（`threads_manage_mentions`）就能讀，
+    `keyword_search` 要過 App Review。把兩者混在一起測，會讓「@標註管道
+    其實已經可用」被 keyword_search 的失敗蓋掉。
+    """
     token = config.get("THREADS_ACCESS_TOKEN")
     print("\n── Threads ──")
     if not token:
-        print("  ⬜ 未設定。App Review 需 2–4 週；核准前只能搜自己的貼文")
+        print("  ⬜ 未設定 THREADS_ACCESS_TOKEN")
+        print("     設定後即可讀 @標註通報；關鍵字搜尋另需 App Review（2–4 週）")
         return
-    url = ("https://graph.threads.net/v1.0/keyword_search?"
-           + urllib.parse.urlencode({"q": "幼兒園", "search_type": "TOP",
-                                     "fields": "id,text,permalink,timestamp",
-                                     "access_token": token}))
-    try:
-        with urllib.request.urlopen(url, timeout=25) as r:
-            data = json.loads(r.read(500_000))
+    print(f"  權杖已載入（長度 {len(token)}）")
+
+    # ① 權杖本身。順帶印出帳號名稱——改過名之後，這是確認改動生效的地方。
+    status, data = _threads_get("/me", token, fields="id,username")
+    if status != 200:
+        print(f"  ❌ 權杖無效或已過期：{_threads_error(status, data)}")
+        print("     修法：重新取得使用者存取權杖（短期權杖約 1 小時，"
+              "長期權杖約 60 天）")
+        return
+    print(f"  ✅ threads_basic：@{data.get('username', '(不明)')}")
+
+    # ② @標註收件匣——這是本專案實際使用的端點。
+    status, data = _threads_get(
+        "/me/mentions", token,
+        fields="id,text,username,timestamp,permalink,is_reply", limit=5)
+    if status == 200:
+        rows = data.get("data") or []
+        print(f"  ✅ threads_manage_mentions：可讀，最新一頁 {len(rows)} 則")
+        if rows:
+            newest = str(rows[0].get("timestamp", ""))[:10]
+            print(f"     最新一則 {newest}"
+                  f"　@{rows[0].get('username', '')}")
+        else:
+            # 0 則是正常狀態，不是故障。這個分別要講出來，否則看畫面的人
+            # 會以為管道壞了，而實際上只是沒有人標註過這個帳號。
+            print("     （目前沒有人 @標註這個帳號——這是狀態，不是故障）")
+        _threads_cutoff_note(bool(rows))
+    else:
+        print(f"  ❌ threads_manage_mentions：{_threads_error(status, data)}")
+        print("     修法：在 Meta 應用程式設定裡加入 threads_manage_mentions "
+              "權限並重新授權取得新權杖")
+
+    # ③ 關鍵字搜尋——要過 App Review，未核准是預期狀態而非錯誤。
+    status, data = _threads_get(
+        "/v1.0/keyword_search", token, q="幼兒園", search_type="TOP",
+        fields="id,text,permalink,timestamp")
+    if status == 200:
         n = len(data.get("data") or [])
-        print(f"  ✅ keyword_search 可用，回傳 {n} 筆")
+        print(f"  ✅ threads_keyword_search：可用，回傳 {n} 筆")
         if n == 0:
             print("     ⚠️ 0 筆可能代表：權限未核准（只搜得到自己的貼文），"
                   "或該關鍵字被判定為敏感而回空陣列")
-    except urllib.error.HTTPError as e:
-        body = json.loads(e.read(20_000) or b"{}")
-        print(f"  ❌ HTTP {e.code}　"
-              f"{(body.get('error') or {}).get('message', '')[:120]}")
-    except Exception as exc:  # noqa: BLE001
-        print(f"  ❌ {type(exc).__name__}: {exc}")
+    else:
+        print(f"  ⬜ threads_keyword_search：尚未開通"
+              f"（{_threads_error(status, data)}）")
+        print("     這不影響 @標註管道；兩者是分開的權限")
+
+
+def _threads_cutoff_note(has_rows: bool) -> None:
+    """沒設時間下限的話，第一次同步會把歷年舊貼文全部當成新通報。
+
+    沿用既有帳號時這一點特別要緊：那個帳號過去被標註的每一則，
+    都會以今天的觀測時間進庫。
+    """
+    limit = config.get("THREADS_MENTIONS_NOT_BEFORE")
+    if limit:
+        print(f"     時間下限 THREADS_MENTIONS_NOT_BEFORE={limit}")
+    elif has_rows:
+        print("     ⚠️ 未設 THREADS_MENTIONS_NOT_BEFORE：首次同步會把這個帳號"
+              "歷年被標註的貼文全部匯入，每一則都帶今天的觀測時間")
 
 
 def check_vendor() -> None:

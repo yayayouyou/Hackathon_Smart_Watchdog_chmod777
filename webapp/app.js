@@ -86,6 +86,17 @@ async function boot() {
   initMap();
   syncLayerCount();
   await refresh();
+
+  // 交棒給中庭。app 預設 hidden，走進某一室才顯示——
+  // 先畫地圖再顯示中庭，是因為 Leaflet 在 display:none 裡量不到容器尺寸，
+  // 必須先在可見狀態初始化過一次，之後 invalidateSize() 才有東西可以量。
+  if (window.Lobby) {
+    window.Lobby.start(state.payload);
+    $("lb-all").textContent = state.points.length.toLocaleString("en-US");
+    $("lb-sel").textContent = state.proposal.length;
+    const rt2 = state.payload.realtime || {};
+    $("lb-ch").textContent = `${rt2.channels_live || 0}/${rt2.channels_total || 0}`;
+  }
 }
 
 /* ── 地圖 ─────────────────────────────────────────────── */
@@ -1132,16 +1143,44 @@ $("layerbtn").addEventListener("click", () => {
 $("costbtn").addEventListener("click", () => {
   showCost($("costpop").hidden);
   showLayers(false);
+  showAbout(false);
+});
+/* ⓘ 說明。頁尾拿掉之後，「這是建議查核不是違法認定」與 CC-BY 的來源標註
+   都收在這裡——兩者都不是可有可無的裝飾，只是不再常駐佔畫面。 */
+function showAbout(on) {
+  $("aboutpop").hidden = !on;
+  $("aboutbtn").setAttribute("aria-expanded", String(on));
+}
+$("aboutbtn").addEventListener("click", () => {
+  showAbout($("aboutpop").hidden);
+  showCost(false);
+  showLayers(false);
+  showWho(false);
+});
+/* 身分浮層。內容由 lobby.js::paintWho 填，這裡只管開關。 */
+function showWho(on) {
+  $("whopop").hidden = !on;
+  $("whopod").setAttribute("aria-expanded", String(on));
+}
+$("whopod").addEventListener("click", () => {
+  showWho($("whopop").hidden);
+  showCost(false);
+  showAbout(false);
+  showLayers(false);
 });
 // 點到別處就收起浮層；Esc 也收。浮層蓋住地圖時要能一鍵回到地圖。
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".mapui")) showLayers(false);
   if (!e.target.closest("#costpop") && !e.target.closest("#costbtn")) showCost(false);
+  if (!e.target.closest("#aboutpop") && !e.target.closest("#aboutbtn")) showAbout(false);
+  if (!e.target.closest("#whopop") && !e.target.closest("#whopod")) showWho(false);
 });
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
   showLayers(false);
   showCost(false);
+  showAbout(false);
+  showWho(false);
 });
 LAYER_BOXES.forEach((id) =>
   $(id).addEventListener("change", syncLayerCount));
@@ -1188,17 +1227,25 @@ document.querySelectorAll(".ftype").forEach((el) =>
       .map((x) => +x.value));
     drawMarkers();
   }));
+/* 切換右欄顯示哪一個 pane。
+ *
+ * 抽成函式是因為現在有兩個呼叫端：隱藏的分頁列（scan.js／timeline.js 仍靠它
+ * 的 data-t）與左側樓層索引（lobby.js::setRail）。兩邊各寫一份 pane 切換的
+ * 話，第三個呼叫端出現時就會有一個忘了同步。 */
+function showPane(name) {
+  document.querySelectorAll(".tabs button")
+    .forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.t === name)));
+  document.querySelectorAll(".pane").forEach((pane) => {
+    pane.hidden = pane.id !== `pane-${name}`;
+  });
+  if (name === "data" && window.SWData) window.SWData.open();
+  if (name === "scan" && window.SWSocial) window.SWSocial.open();
+  if (name === "scan" && window.SWScan) window.SWScan.open();
+  if (name === "timeline") timelineDock(true);
+}
+
 document.querySelectorAll(".tabs button").forEach((b) =>
-  b.addEventListener("click", () => {
-    document.querySelectorAll(".tabs button")
-      .forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-    // 依 data-t 找對應的 pane，加分頁不必再回來改這裡。
-    document.querySelectorAll(".pane").forEach((pane) => {
-      pane.hidden = pane.id !== `pane-${b.dataset.t}`;
-    });
-    if (b.dataset.t === "scan" && window.SWScan) window.SWScan.open();
-    if (b.dataset.t === "timeline") timelineDock(true);
-  }));
+  b.addEventListener("click", () => showPane(b.dataset.t)));
 
 /* 查詢頁籤（main 的 Bedrock planner）。助理頁籤是另一個面板、另一組 id，
    兩者並存：查詢回名單，助理會實際操作畫面。 */
@@ -1215,8 +1262,89 @@ document.querySelectorAll("#pane-chat .eg").forEach((el) =>
   el.addEventListener("click", () => ask(el.textContent.trim())));
 
 /* 掃描分頁（scan.js）需要這些；集中匯出一次，不要讓它去翻全域變數。 */
+
+/* ── 可拖曳的直分隔條 ──────────────────────────────────────────────
+ *
+ * 三條共用這一支：樓層索引｜室內容、地圖｜清單、清單｜助理。
+ *
+ * 寬度一律寫進 `main` 的自訂屬性，不寫進被拖那一欄的 inline style：grip 自己
+ * 的位置也由同一個 grid 算，改一處兩者一起動；各寫一次的話拖到一半就會錯開
+ * 一格。助理欄那條（agent.js）有收合邏輯要顧，沿用自己那份，但手感與這裡一致。
+ *
+ * `measure(ev)` 回傳「這一欄該有多寬」。方向由呼叫端決定——左欄看游標離左緣
+ * 多遠，右欄看離右緣多遠，中間那欄看它自己的右緣減游標。
+ */
+function makeGrip(grip, opts) {
+  if (!grip) return null;
+  const main = document.querySelector("main");
+  const { cssVar, min, measure, storeKey } = opts;
+  const max = opts.max || (() => Math.round(window.innerWidth * 0.45));
+
+  function setWidth(px) {
+    const w = Math.round(Math.min(max(), Math.max(min, px)));
+    main.style.setProperty(cssVar, w + "px");
+    if (storeKey) {
+      try { localStorage.setItem(storeKey, String(w)); } catch { /* 私密視窗 */ }
+    }
+    // Leaflet 不會自己發現容器變了，不講它就會停在舊尺寸、滑鼠座標整個對不上。
+    if (state.map) state.map.invalidateSize();
+    return w;
+  }
+
+  grip.addEventListener("pointerdown", (e) => {
+    if (opts.disabled && opts.disabled()) return;
+    e.preventDefault();
+    grip.setPointerCapture(e.pointerId);
+    grip.classList.add("drag");
+    document.body.classList.add("resizing");
+    const move = (ev) => setWidth(measure(ev));
+    const up = () => {
+      grip.classList.remove("drag");
+      document.body.classList.remove("resizing");
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", up);
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+  });
+
+  // 鍵盤也要能調。grip 有 tabindex，只能滑鼠拖等於鍵盤使用者調不了。
+  grip.addEventListener("keydown", (e) => {
+    const cur = opts.current();
+    if (e.key === "ArrowLeft") { e.preventDefault(); setWidth(cur + opts.flip * -24); }
+    if (e.key === "ArrowRight") { e.preventDefault(); setWidth(cur + opts.flip * 24); }
+  });
+
+  if (storeKey) {
+    try {
+      const saved = Number(localStorage.getItem(storeKey));
+      if (saved) setWidth(saved);
+    } catch { /* 私密視窗：用預設 */ }
+  }
+  return { setWidth };
+}
+
+makeGrip($("railgrip"), {
+  cssVar: "--railw", min: 132, storeKey: "sw.railw", flip: 1,
+  max: () => Math.round(window.innerWidth * 0.28),
+  measure: (ev) => ev.clientX,
+  current: () => document.querySelector(".rail").getBoundingClientRect().width,
+});
+
+makeGrip($("sidegrip"), {
+  cssVar: "--sidew", min: 260, storeKey: "sw.sidew", flip: -1,
+  max: () => Math.round(window.innerWidth * 0.5),
+  // 清單的右緣不會因為拖曳而移動，所以用它當基準最穩。
+  measure: (ev) => document.querySelector(".side").getBoundingClientRect().right
+    - ev.clientX,
+  current: () => document.querySelector(".side").getBoundingClientRect().width,
+  // 地圖收掉時清單自己就是主欄，沒有東西可以跟它分配寬度。
+  disabled: () => document.getElementById("roombody")
+    .classList.contains("no-map"),
+});
+
 window.SW = { api, post, $, esc, nf, state, openDossier, TYPE, drawMarkers, refresh,
-  timelineDock };
+  timelineDock, showPane, fitNTPC, makeGrip };
 
 boot().catch((e) => {
   document.body.insertAdjacentHTML("afterbegin",

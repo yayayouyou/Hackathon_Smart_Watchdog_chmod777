@@ -24,7 +24,11 @@ from pydantic import BaseModel, ValidationError
 from ..db.models import AgentMessage
 
 UI_ACTION_TYPES = frozenset(
-    {"navigate", "set_filters", "open_drawer", "close_drawer", "highlight", "download"}
+    # open_table：資料室用。未列在這裡的型別會讓 ToolOutcome.__post_init__ 直接
+    # ValueError，而 loop.py 只 catch ToolDenied/ToolInvalid——漏加的話第一次
+    # 呼叫就是整輪 error，不是降級。
+    {"navigate", "set_filters", "open_drawer", "close_drawer", "highlight",
+     "download", "open_table"}
 )
 
 

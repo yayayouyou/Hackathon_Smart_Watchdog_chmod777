@@ -35,7 +35,7 @@ from .narration import soften
 from .protocol import AgentBackend, TextDelta, ToolDone, ToolUse, TurnEnd
 from .registry import ToolContext, ToolDenied, ToolInvalid, ToolRegistry
 
-MAX_STEPS = 8
+MAX_STEPS = 12
 STEP_TIMEOUT_S = 10
 
 SYSTEM_PROMPT = """你是新北市教育局風險預警系統的操作助手。

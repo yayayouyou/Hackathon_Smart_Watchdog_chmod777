@@ -70,11 +70,22 @@ def test_every_tab_has_a_pane() -> None:
     assert not missing, f"這些頁籤沒有對應的 pane：{missing}"
 
 
-def test_every_pane_has_a_tab() -> None:
+def test_every_pane_is_reachable() -> None:
+    """每個 pane 都要有辦法點到，否則它就是死的。
+
+    到得了的路有兩條，缺一不可地都算數：
+      - 頂部分頁列的 `data-t`（現在隱藏，但 scan.js／timeline.js 仍靠它）
+      - 中庭的樓層索引（`lobby.js` 的 `ROOMS[].pane`）——**現在真正的導覽**
+
+    原本只認分頁列，於是資料室那一間（只從樓層索引進得去）被判成孤兒。
+    測試要問的是「到得了嗎」，不是「有沒有分頁」。
+    """
     html = _html()
     tabs = set(re.findall(r'data-t="([a-z]+)"', html))
+    rail = set(re.findall(r'pane:\s*"([a-z]+)"',
+                          (WEBAPP / "lobby.js").read_text(encoding="utf-8")))
     panes = set(re.findall(r'id="pane-([a-z]+)"', html))
-    orphan = sorted(panes - tabs)
+    orphan = sorted(panes - tabs - rail)
     assert not orphan, f"這些 pane 點不到：{orphan}"
 
 
@@ -83,13 +94,20 @@ def test_element_ids_used_by_scripts_exist_somewhere() -> None:
 
     id 可能在 index.html 裡，也可能是 JS 執行期自己產生的（例如卷宗展開後的
     各段、助理的思考中指示），兩種都算數。
+
+    「自己產生」有三種寫法，全部要認得，否則會把正確的程式碼判成紅燈：
+      1. 樣板字串裡的 `id="x"`（卷宗、掃描面板）
+      2. `el.id = "x"`（助理的思考中指示）
+      3. **屬性物件 `{ id: "x" }`**——`createElementNS` 搭配屬性表時的寫法
+         （中庭的 SVG 節點）。第三種原本沒被認得，中庭一加就紅了，
+         而那些 id 是真的有被建出來的。
     """
     html = _html()
     declared = set(re.findall(r'id="([a-zA-Z0-9_-]+)"', html))
     for path in _our_scripts():
         src = path.read_text(encoding="utf-8")
-        made = set(re.findall(r'id="([a-zA-Z0-9_-]+)"', src))
-        made |= set(re.findall(r'id\s*=\s*"([a-zA-Z0-9_-]+)"', src))
+        made = set(re.findall(r'id\s*=\s*"([a-zA-Z0-9_-]+)"', src))
+        made |= set(re.findall(r'\bid:\s*"([a-zA-Z0-9_-]+)"', src))
         used = set(re.findall(r'\$\("([a-zA-Z0-9_-]+)"\)', src))
         unknown = sorted(used - declared - made)
         assert not unknown, f"{path.name} 取用了不存在也沒產生的 id：{unknown}"
@@ -111,20 +129,27 @@ def test_each_submit_form_is_wired_to_something() -> None:
     assert not dead, f"這些表單沒有任何 JS 接它，送出鈕會是死的：{dead}"
 
 
-def test_example_buttons_are_scoped_to_their_own_pane() -> None:
+def test_example_buttons_are_scoped_to_their_own_container() -> None:
     """查詢與助理各有一組範例鈕。
 
-    用全域委派（`document.addEventListener` + `closest(".eg")`）的話，助理面板
-    的範例鈕會同時觸發查詢的 `ask()`——兩個面板各跑一次，畫面會很奇怪。
-    所以兩邊都必須把選擇器限定在自己的 pane 內。
+    用全域委派（`document.addEventListener` + `closest(".eg")`）的話，助理的
+    範例鈕會同時觸發查詢的 `ask()`——兩邊各跑一次，畫面會很奇怪。
+    所以兩邊都必須把選擇器限定在自己的容器內。
+
+    斷言看的是**有沒有限定容器**，不是容器叫什麼名字。原本寫死檢查 `#pane-`，
+    助理從分頁改成獨立欄（`#agentcol`）之後就紅了——但那次改動並沒有違反這條
+    規則，紅的是斷言本身把「限定在自己的容器」誤寫成「限定在某個 pane」。
     """
+    scoped = re.compile(r'querySelectorAll\(\s*"#[a-zA-Z0-9_-]+\s+\.eg"')
     for name in ("app.js", "agent.js"):
         src = (WEBAPP / name).read_text(encoding="utf-8")
         if ".eg" not in src:
             continue
-        assert "#pane-" in src, f"{name} 的 .eg 綁定沒有限定 pane"
+        assert scoped.search(src), (
+            f"{name} 的 .eg 綁定沒有限定容器（應為 querySelectorAll(\"#容器 .eg\")）"
+        )
         assert 'closest(".eg")' not in src, (
-            f"{name} 用了全域委派，會誤觸另一個面板的範例鈕"
+            f"{name} 用了全域委派，會誤觸另一邊的範例鈕"
         )
 
 
@@ -134,8 +159,119 @@ def test_scripts_are_loaded_in_dependency_order() -> None:
     """
     html = _html()
     order = re.findall(r'<script src="/static/([a-z]+)\.js"></script>', html)
-    for later, earlier in (("agent", "app"), ("agent", "auth"), ("memos", "app")):
+    for later, earlier in (("agent", "app"), ("agent", "auth"), ("memos", "app"),
+                           ("social", "app")):
         if later in order and earlier in order:
             assert order.index(earlier) < order.index(later), (
                 f"{earlier}.js 必須排在 {later}.js 前面"
             )
+
+
+def test_social_panel_sits_above_the_scan_console() -> None:
+    """輿情室的順序即是使用順序：先看已經收到的，再決定要不要花錢掃。
+
+    `socialwrap` 讀庫是免費的；`scanwrap` 底下每一次執行都會計費。把花錢的
+    那一塊放在上面，等於請人先付錢再看手上有什麼。
+    """
+    html = _html()
+    assert "socialwrap" in html and "scanwrap" in html
+    assert html.index('id="socialwrap"') < html.index('id="scanwrap"')
+
+
+def test_social_panel_is_opened_when_the_room_is_entered() -> None:
+    """`SWSocial.open()` 沒被呼叫時，輿情室上半會永遠停在「載入中…」。
+
+    這是 agent.js 那次事故的同一個形狀：檔案載入了、函式定義了，但沒有人叫它。
+    """
+    app = (WEBAPP / "app.js").read_text(encoding="utf-8")
+    assert "window.SWSocial" in app, "showPane 沒有喚醒社群聲音面板"
+    assert "window.SWSocial = { open }" in \
+        (WEBAPP / "social.js").read_text(encoding="utf-8")
+
+
+def test_the_voice_room_no_longer_advertises_threads_as_pending() -> None:
+    """大廳那句室況是給評審與使用者看的第一行字，接完就不能再說「待接」。"""
+    lobby = (WEBAPP / "lobby.js").read_text(encoding="utf-8")
+    assert "Threads 待接" not in lobby
+
+
+def test_no_signal_is_never_rendered_as_a_pass() -> None:
+    """無訊號不是合格。
+
+    style.css 的 --k0 註解已經把同一件事講過：0 件不等於安全，把它畫成綠色
+    等於發了 730 張合格證。社群面板沿用 .insuff（虛線框、中性色），所以這裡
+    釘住「不要哪天有人順手改成綠色或打勾」。
+
+    只擋**視覺上的合格記號**，不擋字詞：面板裡就有一句「這是『此管道無訊號』，
+    不是『全市無異常』」，那是在否定那個說法。用字詞黑名單會把否定句判成違規，
+    第一版就是這樣紅的——斷言要問的是畫面長什麼樣，不是出現過哪些字。
+    """
+    src = (WEBAPP / "social.js").read_text(encoding="utf-8")
+    assert "insuff" in src, "無訊號的樣式應沿用 .insuff，不要另外發明合格樣式"
+    for banned in ("✓", "✔", "☑", "var(--good)"):
+        assert banned not in src, f"社群面板不得用「{banned}」把無訊號畫成合格"
+
+
+def test_no_two_scripts_declare_the_same_global() -> None:
+    """傳統腳本共用同一個全域詞法作用域，同名的頂層 const 會讓後載入的那支
+    **整支 SyntaxError 而不執行**。
+
+    這個坑踩過兩次：第一次是 `usd`（app.js:1087 留了註解），第二次是 `S`
+    —— social.js 與 scan.js 都宣告了它，結果 window.SWScan 是 undefined、
+    掃描主控台整塊是死的，而畫面上完全看不出來，只有主控台一行錯誤。
+
+    修法是把整支包進 IIFE（見 scan.js 檔頭）。這裡守的是「不要再有第三次」。
+    """
+    import collections
+
+    top = re.compile(r"^(?:const|let|var)\s+([A-Za-z_$][\w$]*)", re.M)
+    owners: dict[str, list[str]] = collections.defaultdict(list)
+    for js in sorted(WEBAPP.glob("*.js")):
+        src = js.read_text(encoding="utf-8")
+        # 包在 IIFE 裡的檔案，頂層宣告已經是私有的，不參與全域命名空間。
+        if re.search(r"^\(function\s*\(\)\s*\{", src, re.M):
+            continue
+        for name in set(top.findall(src)):
+            owners[name].append(js.name)
+
+    clashes = {n: f for n, f in owners.items() if len(f) > 1}
+    assert not clashes, (
+        "這些頂層名稱在多支未包 IIFE 的腳本裡重複宣告，後載入的那支不會執行："
+        f"{clashes}"
+    )
+
+
+def test_dataroom_class_names_are_namespaced_or_deliberately_reused() -> None:
+    """資料室自己造的 class 一律帶 dr／mx／ftab 前綴，其餘必須是刻意復用的。
+
+    `<tr class="grp">` 撞上了 style.css 早就有的全域 `.grp{display:flex}`：
+    套到 <tr> 上會讓每個儲存格變成 flex item、各自撐成整列寬再往下堆（實測
+    區段標題列被排成 978x11 三層）。畫面上看起來只是「多了一條細白帶」，
+    很難聯想到是 class 撞名。
+
+    這是同一類問題的第三次（前兩次是 JS 全域的 `usd` 與 `S`），所以釘起來。
+    """
+    js = (WEBAPP / "dataroom.js").read_text(encoding="utf-8")
+    emitted = set()
+    for m in re.finditer(r'class="([^"]*)"', js):
+        for tok in m.group(1).split():
+            if re.fullmatch(r"[a-z][a-z0-9-]*", tok):
+                emitted.add(tok)
+    assert emitted, "抓不到任何 class，正則可能過時了"
+
+    own = re.compile(r"^(dr|mx|ftab)")
+    # 刻意復用既有元件的 class。改這份清單前先確認那個 class 在 style.css 裡
+    # 的定義套到你要用的標籤上不會出事。
+    shared = {
+        "sec", "kv", "insuff", "badge", "row", "r", "m", "list", "item",
+        "ord", "nm", "rk", "why", "ev", "evh", "tag", "p", "w", "g",
+        "soc-load", "thinking", "spinner", "costbtn", "pop", "preset",
+        "rh-src", "rail-eyebrow",
+        # 只出現在 .ftab 內，由父選擇器限定範圍
+        "n", "blank", "neg", "tick", "odd",
+    }
+    stray = sorted(c for c in emitted if not own.match(c) and c not in shared)
+    assert not stray, (
+        f"這些 class 既沒有 dr／mx／ftab 前綴，也不在刻意復用的清單裡：{stray}。"
+        "全域 CSS 可能已經有同名規則——加前綴，或確認復用是安全的。"
+    )

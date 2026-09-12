@@ -38,9 +38,13 @@ CREDENTIALS = (
     Credential(
         key="THREADS_ACCESS_TOKEN",
         label="Threads 使用者存取權杖",
-        enables="Threads 公開貼文關鍵字搜尋",
+        # 同一把 token 開兩個管道，但門檻不同：@標註只要帳號授權就能讀，
+        # 關鍵字搜尋要過 App Review。先拿到 token 就先有一個管道可用。
+        enables="Threads @標註官方帳號的通報（有 token 即可用）；"
+                "另加關鍵字搜尋（須另過 App Review）",
         how="developers.facebook.com 建立應用程式 → 加入 Threads API "
-            "→ 申請 threads_basic 與 threads_keyword_search 權限 → App Review",
+            "→ threads_basic 取得權杖即可讀 @標註；"
+            "關鍵字搜尋另需 threads_keyword_search 權限並過 App Review",
     ),
     Credential(
         key="APIFY_TOKEN",

@@ -6,6 +6,19 @@
  * 前端不算錢。所有金額、公式、剩餘額度都由 /api/scan/estimate 回傳——
  * 價目表只能有一份，複製一份到瀏覽器就等於埋一個遲早會對不上的第二答案。
  */
+/* ⚠️ 整支包在 IIFE 裡，不是風格偏好。
+ *
+ * 傳統腳本共用同一個全域詞法作用域，而 social.js 也宣告了頂層 `const S`
+ * 並且比這支先載入——重複宣告會讓**整支 scan.js 直接 SyntaxError 而不執行**，
+ * 於是 window.SWScan 是 undefined、掃描主控台整塊是死的，而且主控台只印
+ * 一行「Identifier 'S' has already been declared」，畫面上什麼都看不出來。
+ * app.js:1087 那條註解記的是同一個坑的前一次（`usd`）。
+ *
+ * 包起來之後這支的頂層名稱一律私有，只有結尾的 window.SWScan 對外。
+ */
+(function () {
+"use strict";
+
 const S = window.SW;
 const scan = {
   opts: null, plan: null, job: null, poll: null,
@@ -35,16 +48,25 @@ function estimate() {
 }
 
 /* ── 版面 ──────────────────────────────────────────────── */
+/* ⚠️ `if (scan.opts) return` 擋不住**併發**進入：第一次的 fetch 還在路上時，
+   `scan.opts` 仍是 undefined，第二次呼叫照樣往下走。兩個 render() 會互相蓋掉
+   scanwrap 的 DOM，於是先排定的 doEstimate 醒來時 #costbox 已經是別人的了
+   （症狀：Cannot set properties of null）。用一個 in-flight 的 promise 擋住。 */
+let opening = null;
 async function open_() {
   if (scan.opts) return;
-  try {
-    scan.opts = await S.api("/api/scan/options");
-  } catch (e) {
-    S.$("scanwrap").innerHTML = `<p class="scanerr">載入失敗：${S.esc(e.message)}</p>`;
-    return;
-  }
-  render();
-  estimate();
+  if (opening) return opening;
+  opening = (async () => {
+    try {
+      scan.opts = await S.api("/api/scan/options");
+    } catch (e) {
+      S.$("scanwrap").innerHTML = `<p class="scanerr">載入失敗：${S.esc(e.message)}</p>`;
+      return;
+    }
+    render();
+    estimate();
+  })().finally(() => { opening = null; });
+  return opening;
 }
 
 function render() {
@@ -182,11 +204,14 @@ async function doEstimate() {
     plan = await S.post("/api/scan/estimate", request());
   } catch (e) {
     if (mine !== seq) return;
-    S.$("costbox").innerHTML = `<p class="scanerr">估算失敗：${S.esc(e.message)}</p>`;
-    btn.textContent = "估算失敗";
+    const box0 = S.$("costbox");
+    if (box0) box0.innerHTML = `<p class="scanerr">估算失敗：${S.esc(e.message)}</p>`;
+    if (btn) btn.textContent = "估算失敗";
     return;
   }
   if (mine !== seq) return;      // 已有更新的估算在路上，這份是舊的
+  // 估算是 250ms 後才醒的非同步工作；期間畫面可能已被重繪或切走。
+  if (!S.$("costbox")) return;
   scan.plan = plan;
   const busy = scan.job && ["queued", "running"].includes(scan.job.state);
   const p = scan.plan;
@@ -409,3 +434,4 @@ async function adopt() {
 }
 
 window.SWScan = { open: open_ };
+})();

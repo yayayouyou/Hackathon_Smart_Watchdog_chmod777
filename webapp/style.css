@@ -1,4 +1,9 @@
 :root{
+  /* 強制淺色。暗色區塊寫成 :root:not([data-theme="light"])，而 <html> 上掛了
+     data-theme="light"，所以那一段整段失效。這裡再宣告 color-scheme，
+     讓表單控制項、捲軸、預設連結色也一起走淺色——沒有它，深色系統的
+     使用者會拿到深色的 <input> 配淺色頁面。 */
+  color-scheme:light;
   --ink:#14202A; --ink-2:#3D4E5C; --ink-3:#6B7C8A; --ink-4:#93A2AE;
   --paper:#EFF3F5; --panel:#FFFFFF; --sunk:#E6EDF0; --rule:#CFD9E0;
   --pub:#2A78D6; --np:#EB6834; --prv:#1BAF7A;
@@ -20,6 +25,24 @@
   --dlabel:#24323C; --dlabel-halo:#FFFFFFE0;
   --seal:#B23A2F; --seal-soft:#B23A2F14;
   --warn:#B07A16; --warn-soft:#B07A1614; --good:#2C7A5B;
+  /* 資料室的表單家族色。**這是分類不是分級**——六個色的明度刻意相近，
+     不可讓任何一族看起來比另一族「嚴重」。這一室只做原件轉錄，沒有風險判讀。
+     刻意不重用 --seal／--pub／--np／--prv／--k*：那些在地圖與名單上各有語意，
+     借過來會讓「支出明細」被讀成「公立機構」。 */
+  --fam-core:#3E5C8A; --fam-income:#2E7D6B; --fam-expense:#A15C2B;
+  --fam-budget:#6B4E9E; --fam-asset:#4A7A3C; --fam-other:#5C6B78;
+  /* 中庭五間室各自的顏色。**這是識別不是分級**——五個色的明度刻意相近，
+     中庭平面圖、樓層索引、室頭三處用同一個色，「我在哪一間」才是連續的。
+     刻意不重用 --seal／--pub／--np／--prv／--k*／--c*：那些在地圖與名單上
+     各有語意（法遵未通過、公立機構、裁罰件數…），借過來會讓「輿情室」
+     被讀成某種風險等級。五個色都避開紅色系，紅色在這個 app 只屬於 --seal。 */
+  --room-map:#2B5F8F; --room-data:#1E7F72; --room-voice:#B4682A;
+  --room-back:#7A5AA8; --room-letters:#4E7A38;
+  /* 中庭遊戲場。暖色系的地面材質，不帶任何風險語意——它是場地不是狀態。
+     沙地／草皮／樹幹的彩度刻意壓低：這是一份交給教育局的工具，
+     幼兒園的辨識度要來自「空間裡有什麼」，不是來自高彩度的童趣配色。 */
+  --yard:#F7F1E5; --yard-line:#E4D8C1; --turf:#DCE9CF; --turf-2:#C9DCB8;
+  --bark:#A9805E; --leaf:#7EA863;
   --shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;
   /* 新北以外的**陸地**蓋這一層（海不蓋）。不是純灰——留一點藍才壓得住
      OSM 的黃綠底。--mask-line 是鄰縣市之間的界，--edge 是新北市界本身：
@@ -62,14 +85,16 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
 input{font:inherit}
 :focus-visible{outline:2px solid var(--seal);outline-offset:2px}
 
-.app{display:grid;grid-template-rows:auto 1fr auto;height:100vh;height:100dvh}
+/* 兩列而不是三列：頁尾已移除（內容進了 ⓘ 說明），留 auto 會多出一條空白帶。 */
+.app{display:grid;grid-template-rows:auto 1fr;height:100vh;height:100dvh}
 header{position:relative;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
   padding:8px 18px;border-bottom:1px solid var(--rule);background:var(--panel)}
 h1{margin:0;font-size:15px;font-weight:600;white-space:nowrap}
 h1 span{color:var(--ink-3);font-weight:400;margin-left:9px;font-size:12px}
-.hstat{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:12px;
+.hstat{display:flex;align-items:center;gap:18px;margin-left:auto;font-size:13px;
   color:var(--ink-3)}
-.hstat b{font-family:var(--mono);color:var(--ink);font-weight:500;font-size:13px;
+/* 數值一律加粗：這一行上唯一要被讀到的是數字，標籤只是它的名字。 */
+.hstat b{font-family:var(--mono);color:var(--ink);font-weight:600;font-size:15px;
   font-variant-numeric:tabular-nums}
 
 /* 功能列上的派工容量。數字框與拖桿並存：拖桿用來示範「多一家少一家名單
@@ -105,9 +130,53 @@ input[type=range]{accent-color:var(--seal)}
 .pop .led span{display:flex;justify-content:space-between;gap:10px}
 .pop .src{margin:8px 0 0;font-size:10.5px;color:var(--ink-4);line-height:1.5}
 
-main{display:grid;grid-template-columns:minmax(0,1fr) 390px;min-height:0}
-@media(max-width:1100px){main{grid-template-columns:minmax(0,1fr) 330px}}
-@media(max-width:860px){main{grid-template-columns:1fr;grid-template-rows:46vh 1fr}}
+/* 三欄：地圖 │ 派工名單 │ 助理。
+ *
+ * 助理欄寬由 `--agentw` 控制，JS 拖 `.agentgrip` 時改的就是這個變數——
+ * 用 CSS 變數而不是直接寫 inline style 到 aside 上，是因為 grip 自己的位置
+ * 也由同一個 grid 決定；改一處，兩者一起動，不會在拖曳中途錯開一格。
+ *
+ * 收合時把寬度換成 `--agentw-min`（一條細直排），而不是 display:none——
+ * 對話內容留在 DOM 裡，展開回來還在原處，串流中途收合也不會斷。 */
+/* main 只有兩欄：樓層索引 + 房間。房間內部（roombody）才分地圖／名單／助理，
+   這樣「非地圖室不要有地圖」只要換 roombody 的欄定義，不必動 main。 */
+main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
+  min-height:0}
+.roomwrap{display:flex;flex-direction:column;min-width:0;min-height:0}
+.roombody{flex:1;min-height:0;display:grid;
+  grid-template-columns:minmax(0,1fr) 6px var(--sidew,390px) 6px var(--agentw,380px)}
+/* 除了地圖室，其他室不放地圖——地圖跟輿情、資料、建議書沒有關係，
+   擺在那裡只是把畫面切碎。 */
+/* 地圖收掉時，它左邊那條 grip 也要一起收——留著會多出一條拖不動的線，
+   而且會把後面每一欄推移一格。這裡用 display:none 是對的：我們要的就是
+   讓它退出格線。（助理欄收合時不能這樣做，那邊要保住格位，見 agent.js。）*/
+.roombody.no-map .mapwrap,
+.roombody.no-map #sidegrip{display:none}
+.roombody.no-map{grid-template-columns:minmax(0,1fr) 6px var(--agentw,380px)}
+
+/* 室頭：五間房共用。室號與樓層索引、中庭平面圖上的編號是同一組。 */
+/* 上緣那條 3px 的色帶是中庭門楣的延伸——放大進房之後它還在，
+   所以「我從那一格走進來」在視覺上沒有斷掉。 */
+.roomhead{display:flex;align-items:center;gap:10px;padding:9px 18px;
+  background:var(--panel);border-bottom:1px solid var(--rule);flex:none;
+  box-shadow:inset 0 3px 0 var(--rc, var(--rule))}
+.rh-no{font-family:var(--mono);font-size:12px;font-weight:600;
+  color:var(--rc, var(--ink-3))}
+.rh-name{font-size:17px;font-weight:600}
+.rh-desc{font-size:12.5px;color:var(--ink-3)}
+/* 來源膠囊永遠在同一個位置：可稽核性是常駐元件，不是註腳。 */
+.rh-src{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3);
+  border:1px solid var(--rule);border-radius:3px;padding:1px 7px;white-space:nowrap}
+@media(max-width:1400px){main{--sidew:330px;--agentw:330px}}
+@media(max-width:1100px){main{--sidew:290px;--agentw:300px}}
+/* 窄螢幕疊成上下：三欄並排在 860px 以下只會三個都不能用。 */
+@media(max-width:860px){
+  main{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .roombody{grid-template-columns:1fr;grid-template-rows:40vh 1fr auto}
+  .roombody.no-map{grid-template-columns:1fr;grid-template-rows:1fr auto}
+  .agentgrip{display:none}
+  .agentcol{border-left:0;border-top:1px solid var(--rule);max-height:46vh}
+}
 
 .grp{display:flex;flex-direction:column;gap:7px}
 .grp>h2{margin:0;font-size:10.5px;font-weight:600;letter-spacing:.1em;
@@ -277,13 +346,14 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 390px;min-height:0}
 .rtitem a:hover{text-decoration:underline}
 .rtmeta{font-size:10.5px;color:var(--ink-3);font-family:var(--mono);margin-top:2px;
   display:flex;gap:8px;flex-wrap:wrap}
-footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel);
-  font-size:11px;color:var(--ink-3);line-height:1.55}
-/* 來源標註。CC-BY 要求標註要看得見，所以它降一級但不隱藏——分行獨立成一段，
-   讓它跟上面那段「這是建議查核不是違法認定」的界線宣告分開讀。 */
-footer .src{display:block;margin-top:5px;padding-top:5px;
-  border-top:1px dashed var(--rule);font-size:10.5px;color:var(--ink-4)}
-footer .src a{color:var(--ink-3)}
+/* ⓘ 說明。頁尾移除後，輸出定位與 CC-BY 標註搬到這裡——兩者都是有約束力的
+   內容（前者是專案的三條界線之一，後者是授權條件），只是不再常駐佔畫面。 */
+.pop.about{width:376px;color:var(--ink-3);line-height:1.6}
+.pop.about h4{margin-top:12px}
+.pop.about h4:first-child{margin-top:0}
+.pop.about p{margin:0 0 9px;font-size:11.5px}
+.pop.about b{color:var(--ink);font-weight:600}
+.pop.about a{color:var(--ink-2)}
 
 /* ── 掃描主控台 ───────────────────────────────────────────
    金額是這一頁的主角：費用數字用最大的字級，其他一律讓位。
@@ -484,6 +554,39 @@ footer .src a{color:var(--ink-3)}
 /* ── 助理面板 ─────────────────────────────────────────────
    .msg／.chatlog／.egs／.chatbar 沿用查詢頁籤原有的樣式，
    這裡只加助理新增的四類元素。 */
+/* 助理欄本體。常駐第三欄，不是分頁——它會操作畫面，看不到結果就沒有意義。 */
+.agentcol{display:flex;flex-direction:column;min-height:0;min-width:0;
+  background:var(--panel);border-left:1px solid var(--rule)}
+.agenthead{display:flex;align-items:center;gap:8px;padding:8px 12px;
+  border-bottom:1px solid var(--rule);font-size:11.5px;color:var(--ink-3)}
+.agenttitle{font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+.agenthead .who{flex:1;font-family:var(--mono);overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.agentbody{display:flex;flex-direction:column;min-height:0;flex:1}
+
+/* 拖曳把手。6px 太細不好抓，所以用 ::before 往兩側各外擴 4px 當熱區，
+   視覺上仍然只有中間那一條線。 */
+/* 三條直分隔條共用。6px 太細抓不到，所以用 ::before 往左右各外擴 4px
+   當作命中區——視覺仍是 6px，手感是 14px。 */
+.vgrip,.agentgrip{position:relative;cursor:col-resize;background:var(--rule);
+  opacity:.55;transition:opacity .15s,background .15s}
+.vgrip::before,.agentgrip::before{content:"";position:absolute;inset:0 -4px;
+  cursor:col-resize}
+.vgrip:hover,.vgrip:focus-visible,.vgrip.drag,
+.agentgrip:hover,.agentgrip:focus-visible,.agentgrip.drag{opacity:1;background:var(--seal)}
+/* 拖曳中整頁禁止選字，否則會一路把右欄的文字反白起來。 */
+body.resizing{user-select:none;cursor:col-resize}
+
+/* 收合：只留一條直排標題。用寬度而不是 display:none——對話留在 DOM 裡，
+   展開回來還在原處，串流中途收合也不會斷線。 */
+.agentcol.fold .agentbody{display:none}
+.agentcol.fold .who,.agentcol.fold .mini:not(.fold){display:none}
+.agentcol.fold .agenthead{flex-direction:column;gap:10px;padding:10px 0;height:100%;
+  align-items:center;border-bottom:0}
+.agentcol.fold .agenttitle{writing-mode:vertical-rl;letter-spacing:.28em}
+.mini.fold{padding:3px 7px;line-height:1}
+
 .agentbar{display:flex;align-items:center;gap:8px;padding:8px 12px;
   border-bottom:1px solid var(--rule);font-size:11.5px;color:var(--ink-3)}
 .agentbar .who{flex:1;font-family:var(--mono)}
@@ -534,17 +637,19 @@ footer .src a{color:var(--ink-3)}
 
 /* 「思考中」：一則 tool 呼叫來回要數秒到數十秒，沒有這個就與「壞掉了」
    分不出來。三點依序淡入淡出。 */
-.thinking{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--ink-4);
+/* 思考中：轉圈環。沿用 MaiCoin 專案（agent_ui）那一顆——一圈淡色底環，
+   頂端一段實色跟著轉。相對於三顆閃爍的點，轉圈傳達的是「有東西在跑」
+   而不是「在等你」，而一則 tool 來回要數秒到數十秒，那個差別很重要。 */
+.thinking{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-4);
   font-family:var(--mono);padding:2px 0}
-.thinking .dots{display:inline-flex;gap:3px}
-.thinking .dots i{width:5px;height:5px;border-radius:50%;background:var(--seal);
-  opacity:.25;animation:wd-blink 1.05s infinite}
-.thinking .dots i:nth-child(2){animation-delay:.18s}
-.thinking .dots i:nth-child(3){animation-delay:.36s}
-@keyframes wd-blink{0%,70%,100%{opacity:.25}35%{opacity:1}}
-/* 使用者關掉動態效果時就只留靜態的點，不要閃。 */
+.thinking .spinner{width:15px;height:15px;border-radius:50%;flex-shrink:0;
+  border:2px solid color-mix(in srgb, var(--seal) 22%, transparent);
+  border-top-color:var(--seal);
+  animation:wd-spin .7s linear infinite}
+@keyframes wd-spin{to{transform:rotate(360deg)}}
+/* 關掉動態效果時留一個完整的淡環：不轉，但仍看得出「這裡在等」。 */
 @media (prefers-reduced-motion:reduce){
-  .thinking .dots i{animation:none;opacity:.6}
+  .thinking .spinner{animation:none;border-top-color:var(--ink-4)}
 }
 
 /* ── 卷宗：裁罰時間軸 ───────────────────────────────────── */
@@ -580,3 +685,254 @@ footer .src a{color:var(--ink-3)}
 .memo{margin:0;padding:10px 11px;background:var(--sunk);border-radius:5px;
   font-family:var(--sans);font-size:11.5px;line-height:1.75;color:var(--ink-2);
   white-space:pre-wrap;max-height:320px;overflow:auto}
+
+/* ── 社群聲音（輿情室上半）─────────────────────────────────
+   .scanwrap 原本吃滿整個 pane 的高度；上下兩塊並存後改成各自捲動，
+   否則掃描主控台的估價列會被推到看不見的地方。
+   沒有任何一個 class 用綠色或打勾：無訊號不是合格，理由與 --k0 那段
+   註解相同。 */
+#pane-scan{display:flex;flex-direction:column;min-height:0}
+.socialwrap{flex:1 1 55%;min-height:0;overflow-y:auto;padding:12px 14px;
+  border-bottom:1px solid var(--rule)}
+#pane-scan .scanwrap{flex:1 1 45%;min-height:0;height:auto}
+
+.soc-bar{display:flex;align-items:baseline;gap:10px;margin-bottom:9px}
+.soc-title{font-weight:600;font-size:13px}
+.soc-sub{color:var(--ink-3);font-size:11px}
+
+.soc-row{padding:7px 9px;border:1px solid var(--rule);border-radius:3px;
+  margin-bottom:5px;cursor:pointer;background:var(--panel)}
+.soc-row:hover{border-color:var(--ink-4)}
+.soc-row.on{border-color:var(--ink-2)}
+.soc-head{display:flex;align-items:baseline;gap:8px}
+.soc-nm{font-weight:500;flex:1 1 auto;min-width:0;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.soc-town{color:var(--ink-3);font-size:11px;white-space:nowrap}
+/* 計數：主貼文與回覆分開印，中間是「·」不是「+」——見 social.js 檔頭。 */
+.soc-cnt{color:var(--ink-2);font-size:11px;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.soc-day{color:var(--ink-4);font-size:11px;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.soc-latest{color:var(--ink-3);font-size:11.5px;margin-top:3px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.soc-detail{padding:2px 9px 10px}
+.soc-thread{border-left:2px solid var(--rule);padding-left:9px;margin-bottom:9px}
+.soc-post{padding:5px 0}
+/* 回覆縮排。縮排會讓人把回覆讀成「也是在講上面那一園」，所以指名別家的
+   那一則會另外掛 .soc-other 標出去向。 */
+.soc-post.reply{margin-left:14px;border-left:1px solid var(--rule);padding-left:9px}
+.soc-by{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.soc-user{font-size:11px;color:var(--ink-2)}
+.soc-other{font-size:10.5px;color:var(--seal)}
+.soc-link{font-size:10.5px;color:var(--ink-3)}
+.soc-text{font-size:12px;margin-top:2px;white-space:normal;word-break:break-word}
+.soc-empty{color:var(--ink-4)}
+.soc-skip{color:var(--ink-3);font-size:11px;margin-top:5px}
+.soc-rv{font-size:12px;margin-bottom:5px;font-variant-numeric:tabular-nums}
+.soc-dis{margin-top:11px;color:var(--ink-3);font-size:11px;line-height:1.45}
+.soc-load{color:var(--ink-3);font-size:11.5px;padding:6px 0}
+
+.soc-unattr{margin-top:14px;padding-top:11px;border-top:1px solid var(--rule)}
+.soc-unattr>h4{margin:0 0 4px;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3)}
+.soc-unattr-note{color:var(--ink-3);font-size:11px;margin-bottom:7px;line-height:1.45}
+.soc-why{color:var(--ink-3);font-size:10.5px;margin-top:3px}
+
+/* ── 資料室 ──────────────────────────────────────────────────────────
+   兩層（原始資料／數字）＋ 右上角一顆收判讀與外部佐證的鈕。
+   字級比其他室大一階：這一室的主體是表格，而表格是拿來讀數字的。 */
+.drbar{display:flex;align-items:center;gap:12px;padding:9px 16px;flex:none;
+  background:var(--panel);border-bottom:1px solid var(--rule)}
+.drseg{display:flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.drseg button{padding:6px 16px;font-size:14px;font-family:var(--sans);
+  color:var(--ink-2);background:var(--panel);border:0;
+  border-right:1px solid var(--rule);cursor:pointer;display:flex;
+  align-items:baseline;gap:7px;transition:background .12s,color .12s}
+.drseg button:last-child{border-right:0}
+.drseg button:hover{background:var(--sunk);color:var(--ink)}
+.drseg button[aria-pressed="true"]{background:var(--seal);color:#fff;font-weight:600}
+.drseg button[aria-pressed="true"] i{color:#ffffffcc}
+.drseg i{font-style:normal;font-family:var(--mono);font-size:12px;
+  color:var(--ink-4);font-variant-numeric:tabular-nums}
+.drbar .rh-src{margin-left:auto;font-size:12px}
+.drbar .costbtn{font-size:13px;color:var(--fam-core)}
+.drbar .costbtn:hover{color:var(--ink)}
+.pop.dr{right:16px;top:46px;width:390px;max-height:70vh;overflow-y:auto}
+
+.drlayer{display:flex;flex-direction:column;min-height:0;flex:1}
+.drraw{flex-direction:row;gap:0}
+.drcol{display:flex;flex-direction:column;min-height:0;
+  flex:1 1 52%;border-right:1px solid var(--rule);overflow-y:auto}
+.drraw .list{overflow:visible;flex:none}
+.drside{flex:1 1 48%;min-width:0;overflow-y:auto;padding:0 16px 18px}
+.drlead{margin:0 0 9px;font-size:13px;line-height:1.65;color:var(--ink-2)}
+.drlead b{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+/* ── 類型選單：兩層 ─────────────────────────────────────────────────
+   上排是六個家族（常駐），下排只展開選中那一族。31 種攤平要 6 行才放得下，
+   會把表格擠出畫面；兩層之後同族內換表仍是一次點擊，跨族兩次。 */
+.drchips{flex:none;padding:10px 16px 11px;border-bottom:1px solid var(--rule);
+  background:var(--panel)}
+.drfams{display:flex;flex-wrap:wrap;gap:6px}
+.drfambtn{display:inline-flex;align-items:baseline;gap:6px;padding:6px 14px;
+  font-size:13.5px;font-family:var(--sans);font-weight:600;border-radius:7px;
+  cursor:pointer;background:var(--panel);color:var(--fam);
+  border:1px solid color-mix(in srgb, var(--fam) 38%, transparent);
+  transition:background .12s,color .12s,border-color .12s}
+.drfambtn[data-f="core"]{--fam:var(--fam-core)}
+.drfambtn[data-f="income"]{--fam:var(--fam-income)}
+.drfambtn[data-f="expense"]{--fam:var(--fam-expense)}
+.drfambtn[data-f="budget"]{--fam:var(--fam-budget)}
+.drfambtn[data-f="asset"]{--fam:var(--fam-asset)}
+.drfambtn[data-f="other"]{--fam:var(--fam-other)}
+.drfambtn:hover{background:color-mix(in srgb, var(--fam) 10%, var(--panel));
+  border-color:var(--fam)}
+.drfambtn[aria-pressed="true"]{background:var(--fam);border-color:var(--fam);
+  color:#fff}
+.drfambtn i{font-style:normal;font-family:var(--mono);font-size:11.5px;
+  opacity:.72;font-variant-numeric:tabular-nums}
+
+.drtypes{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;padding-top:9px;
+  border-top:1px dashed var(--rule)}
+.drtypes[data-f="core"]{--fam:var(--fam-core)}
+.drtypes[data-f="income"]{--fam:var(--fam-income)}
+.drtypes[data-f="expense"]{--fam:var(--fam-expense)}
+.drtypes[data-f="budget"]{--fam:var(--fam-budget)}
+.drtypes[data-f="asset"]{--fam:var(--fam-asset)}
+.drtypes[data-f="other"]{--fam:var(--fam-other)}
+.drchip{display:inline-flex;align-items:baseline;gap:6px;padding:5px 13px;
+  font-size:13px;font-family:var(--sans);border-radius:15px;cursor:pointer;
+  background:var(--panel);color:var(--ink-2);
+  border:1px solid color-mix(in srgb, var(--fam) 32%, transparent);
+  transition:background .12s,color .12s,border-color .12s}
+.drchip:hover{border-color:var(--fam);color:var(--ink);
+  background:color-mix(in srgb, var(--fam) 9%, var(--panel))}
+.drchip[aria-pressed="true"]{background:var(--fam);border-color:var(--fam);
+  color:#fff;font-weight:600}
+.drchip i{font-style:normal;font-family:var(--mono);font-size:11.5px;
+  color:var(--ink-4);font-variant-numeric:tabular-nums}
+.drchip[aria-pressed="true"] i{color:#ffffffcc}
+.drscroll{flex:1;min-height:0;overflow-y:auto;padding:0 16px 24px}
+.drcount{font-size:12px;color:var(--ink-3);font-family:var(--mono);padding:11px 0 0}
+
+/* ── 涵蓋矩陣：列是園、欄是學年度 ───────────────────────────────── */
+.mxwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:5px;
+  background:var(--panel)}
+.mx{width:100%;border-collapse:collapse;font-size:13px}
+.mx th,.mx td{border-bottom:1px solid var(--rule);padding:3px 9px}
+.mx thead th{position:sticky;top:0;z-index:1;background:var(--sunk);
+  font-size:12px;color:var(--ink-2);font-weight:600;text-align:center}
+.mx .mx-n{text-align:left;font-weight:500;color:var(--ink);white-space:nowrap}
+.mx-code{font-family:var(--mono);font-size:11px;color:var(--ink-4);margin-right:7px}
+.mx-c{text-align:center;font-family:var(--mono);
+  font-variant-numeric:tabular-nums;padding:0}
+.mx-has button{width:100%;padding:6px 0;font-size:13px;font-family:var(--mono);
+  border:0;cursor:pointer;color:var(--fam-core);font-variant-numeric:tabular-nums;
+  background:color-mix(in srgb, var(--fam-core) 10%, transparent);
+  transition:background .12s,color .12s}
+.mx-has button:hover{background:var(--fam-core);color:#fff}
+.mx-none{color:var(--ink-4);background:var(--sunk)}
+.mx-wait{font-size:11.5px;font-family:var(--sans);color:var(--warn);
+  background:var(--warn-soft);font-weight:600}
+.mx-t{color:var(--ink-3);font-size:12px}
+.mx tfoot td,.mx tfoot th{background:var(--sunk);font-weight:600;color:var(--ink-2)}
+
+/* ── 一張表 ─────────────────────────────────────────────────────── */
+.dr-t{margin-top:18px}
+.drth{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:6px}
+.drk{font-size:11.5px;letter-spacing:.05em;color:var(--fam-core);font-weight:600}
+.drv{font-size:15.5px;color:var(--ink);font-weight:600}
+.drpg{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.drpg2{color:var(--ink-4)}
+.draxis,.drrefuse{font-size:12.5px;line-height:1.6;border-radius:5px;
+  padding:8px 11px;margin-bottom:7px}
+.draxis{color:var(--ink-2);background:var(--sunk);border-left:3px solid var(--fam-core)}
+.drrefuse{color:var(--seal);border:1px solid var(--seal);background:var(--seal-soft)}
+
+/* 欄數會爆：非營利頁級表最多 16 個期間欄。捲動由這個容器自己負責，
+   .roombody 與 .side 都沒有 overflow 設定。 */
+.ftabwrap{overflow-x:auto;border:1px solid var(--rule);border-radius:5px;
+  background:var(--panel)}
+.ftab{width:100%;border-collapse:collapse;font-size:13px}
+.ftab th{position:sticky;top:0;z-index:1;background:var(--sunk);padding:7px 10px;
+  text-align:right;font-weight:600;font-size:11.5px;color:var(--ink-2);
+  border-bottom:1px solid var(--rule);white-space:nowrap}
+/* 項目欄吃掉所有剩餘寬度，數字欄才會收在右邊而不是被撐開成一大片。 */
+.ftab th:first-child,.ftab td:first-child{text-align:left;position:sticky;left:0;
+  background:var(--panel);min-width:200px;width:100%}
+.ftab thead th:first-child{background:var(--sunk)}
+.ftab td{padding:5px 10px;border-bottom:1px solid var(--rule);color:var(--ink-2);
+  vertical-align:top}
+.ftab td.n{text-align:right;font-family:var(--mono);color:var(--ink);
+  font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13px}
+/* 空白＝未編列，不是 0。灰字加破折號，與真正的 0 看得出差別。 */
+.ftab td.n.blank{color:var(--ink-4)}
+/* 負數只加括號不上色。--seal 在這個 app 專指法遵未通過，
+   非營利園是成本分攤制，負餘絀是制度設計不是違規。 */
+.ftab td.n.neg{color:var(--ink)}
+.ftab td.n.tick{color:var(--fam-asset);font-size:15px}
+.ftab td.n.odd{color:var(--warn);font-weight:600}
+.ftab tr.drgrp td{background:var(--sunk);font-weight:600;color:var(--ink)}
+.ftab tbody tr:hover td,
+.ftab tbody tr:hover td:first-child{
+  background:color-mix(in srgb, var(--fam-core) 7%, var(--panel))}
+.drpct{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:2px}
+.drnote{font-size:10px;color:var(--fam-core);margin-left:3px}
+.drtm{display:flex;align-items:baseline;gap:10px;margin-top:6px;flex-wrap:wrap}
+.drcite{font-family:var(--mono);font-size:11px;color:var(--ink-4)}
+.drjump{font-size:12.5px;font-family:var(--sans);color:var(--fam-core);
+  background:none;border:0;border-bottom:1px solid currentColor;cursor:pointer;
+  padding:0}
+.drjump:hover{color:var(--ink)}
+.drissues{margin-top:7px;border-left:3px solid var(--warn);padding:3px 0 3px 10px}
+.drissues b{font-size:11.5px;letter-spacing:.05em;color:var(--warn);font-weight:600}
+.drissues p{margin:3px 0 0;font-size:12.5px;line-height:1.65;color:var(--ink-2)}
+
+/* ── 上傳 ───────────────────────────────────────────────────────── */
+.drup{padding:14px 16px;border-bottom:1px solid var(--rule);background:var(--panel)}
+.drup-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.drup-h b{font-size:15px}
+.drup-h span{font-size:12.5px;color:var(--ink-3)}
+.drup-now{margin-top:6px;font-size:13px;color:var(--ink-2);font-family:var(--mono);
+  font-variant-numeric:tabular-nums}
+.drup-now b{color:var(--ink);font-size:15px}
+.drup-btn{display:inline-block;margin-top:10px;padding:7px 18px;font-size:13.5px;
+  font-weight:600;background:var(--seal);color:#fff;border-radius:18px;
+  cursor:pointer;transition:filter .12s}
+.drup-btn:hover{filter:brightness(1.12)}
+.drup-reset{margin-left:10px;font-size:12.5px;color:var(--ink-3);background:none;
+  border:0;cursor:pointer;text-decoration:underline}
+.drup-reset:hover{color:var(--ink)}
+.drup-hint{margin-top:7px;font-size:12.5px;color:var(--warn)}
+.drup-ok{margin-top:12px;border:1px solid var(--fam-asset);border-radius:6px;
+  padding:13px 15px;background:color-mix(in srgb, var(--fam-asset) 7%, var(--panel))}
+.drup-ok>b{font-size:15px;color:var(--ink)}
+.drup-ok .kv{font-size:12.5px;margin-top:6px}
+.drsha{font-family:var(--mono);font-size:11px;word-break:break-all;color:var(--ink-3)}
+.drdiff{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:10px;padding-top:10px;
+  border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-3)}
+.drd{white-space:nowrap}
+.drd i{font-style:normal;font-family:var(--mono);color:var(--ink-4)}
+.drd b{font-family:var(--mono);color:var(--fam-asset);font-size:14px;
+  font-variant-numeric:tabular-nums}
+.drup-sec{margin-top:10px;font-size:12.5px;color:var(--ink-3);display:flex;
+  flex-wrap:wrap;gap:6px;align-items:center}
+.drup-sec .drchip{--fam:var(--fam-asset)}
+
+/* ── 原件頁 ─────────────────────────────────────────────────────── */
+.drimg{width:100%;border:1px solid var(--rule);border-radius:5px;margin-top:8px;
+  background:var(--panel)}
+.drclose{margin-left:auto;font-size:12px;color:var(--ink-3);background:none;
+  border:0;cursor:pointer;text-decoration:underline}
+.ev .evh{display:flex;align-items:baseline;gap:9px;font-size:13.5px}
+.drnotes p{margin:0 0 7px;font-size:12.5px;line-height:1.65;color:var(--ink-2)}
+.drnotes p.un{border-left:3px solid var(--warn);padding-left:9px}
+.drnotes small{font-size:11.5px;color:var(--ink-4)}
+
+/* ── 左欄篩選 ───────────────────────────────────────────────────── */
+.rail-tools{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.rail-tools select{font-size:13px;font-family:var(--sans);padding:6px 8px;
+  border:1px solid var(--rule);border-radius:5px;background:var(--panel);
+  color:var(--ink);cursor:pointer}
+.rail-tools select:hover{border-color:var(--fam-core)}

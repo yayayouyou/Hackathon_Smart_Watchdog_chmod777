@@ -72,9 +72,26 @@ def _run(reg, name, args, ctx=None):
 # ── 白名單與身分 ──────────────────────────────────────────────────────
 
 
-def test_all_twelve_tools_are_registered(reg) -> None:
-    assert len(reg.names()) == 12
-    assert "list_institutions" in reg.names()
+def test_the_whitelist_is_exactly_these_tools(reg) -> None:
+    """白名單逐一列出，不用數量代替。
+
+    改成列舉是因為數量對不上時，「多了什麼」與「少了什麼」一樣重要：註冊表
+    是安全邊界，每加一個都是一次決定，而一個 `== 17` 看不出被換掉的是哪一個。
+    """
+    assert set(reg.names()) == {
+        # 派工與卷宗
+        "list_institutions", "get_ranking", "open_institution",
+        "get_penalties", "get_findings", "open_memo", "export_schedule",
+        # 回測與模型
+        "set_time_machine", "get_model_card",
+        # 證據
+        "search_documents", "load_skill",
+        # 資料室：只回答「這份文件上印的是什麼」，不做判讀
+        "list_documents", "list_table_types", "get_table",
+        "compare_table_across_years", "get_extraction_notes",
+        # 唯一的寫入型
+        "record_feedback",
+    }
     assert "search_documents" in reg.names(), "本 repo 獨有的證據檢索 tool"
 
 

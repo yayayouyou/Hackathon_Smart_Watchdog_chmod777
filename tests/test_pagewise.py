@@ -27,6 +27,7 @@ from smart_watchdog.extract.pagewise import (
     PAGE_SCHEMA,
     has_content,
     identity_ok,
+    split_percent_columns,
     validate_page,
 )
 
@@ -143,3 +144,75 @@ def test_schema_puts_period_labels_on_the_table_not_the_page() -> None:
 def test_schema_is_json_serialisable_for_bedrock() -> None:
     """It is sent over the wire on every call; a non-serialisable schema fails late."""
     json.dumps(PAGE_SCHEMA, ensure_ascii=False)
+
+
+# ── 「占比 %」是子欄還是獨立欄 ──────────────────────────────────────
+#
+# CLAUDE.md 記著一次真實失誤：Bedrock 第一次抽取恆等式 79/79 全過，逐格準確率
+# 卻只有 67.8%——模型把占比當成一個期間塞進 values，整表從第二欄起錯位，而占比
+# 在同一分母下同樣滿足加總關係，所以自我驗算天生抓不到。
+#
+# 這一組測試釘住兩種相反的情形：資產負債表的「金額／%」是同一欄的兩種呈現，
+# 收支餘絀表的「預算數／決算數／差異數／執行率(%)」是並列四欄。搞反任何一邊
+# 都會靜默毀掉資料。
+
+BALANCE_WITH_PCT = {
+    "title": "資產負債表",
+    "period_labels": ["114年7月31日金額", "114年7月31日%",
+                      "113年7月31日金額", "113年7月31日%"],
+    "items": [
+        {"label": "現金及銀行存款", "values": [5803751, 39, 5348001, 41]},
+        {"label": "應收帳款淨額", "values": [17797, None, 54517, None]},
+    ],
+}
+
+INCOME_FOUR_COLUMNS = {
+    "title": "收支餘絀表",
+    "period_labels": ["110.8.1~111.7.31 預算數(a)", "110.8.1~111.7.31 決算數(b)",
+                      "差異數 (c)=(b)-(a)", "執行率(%) (d)=(b)/(a)"],
+    "items": [{"label": "人事費", "values": [7645622, 6763467, -882155, 88]}],
+}
+
+
+def test_paired_percent_moves_out_of_period_labels() -> None:
+    table = json.loads(json.dumps(BALANCE_WITH_PCT))
+    assert split_percent_columns(table) is True
+    assert table["period_labels"] == ["114年7月31日金額", "113年7月31日金額"]
+    row = table["items"][0]
+    assert row["values"] == [5803751, 5348001], "金額留在 values"
+    assert row["percents"] == [39, 41], "占比移到 percents，且對齊同一個基準日"
+    # 沒有占比的列不應被無中生有
+    assert table["items"][1]["values"] == [17797, 54517]
+    assert table["items"][1]["percents"] is None
+
+
+def test_standalone_execution_rate_stays_a_column() -> None:
+    """執行率(%) 沒有「執行率金額」這個兄弟欄，所以它是並列的第四欄。"""
+    table = json.loads(json.dumps(INCOME_FOUR_COLUMNS))
+    assert split_percent_columns(table) is False
+    assert len(table["period_labels"]) == 4
+    assert table["items"][0]["values"] == [7645622, 6763467, -882155, 88]
+
+
+def test_transform_is_idempotent() -> None:
+    table = json.loads(json.dumps(BALANCE_WITH_PCT))
+    split_percent_columns(table)
+    once = json.loads(json.dumps(table))
+    assert split_percent_columns(table) is False, "已轉換過的表不應再被改動"
+    assert table == once
+
+
+def test_transform_keeps_rows_aggregatable() -> None:
+    """轉換後 values 與 period_labels 仍須等長，否則彙整層會拒收整張表。"""
+    table = json.loads(json.dumps(BALANCE_WITH_PCT))
+    split_percent_columns(table)
+    page = {"footer_code": "N01", "page_kind": "balance_sheet",
+            "tables": [table], "text_sections": [], "issues": []}
+    assert validate_page(page) == []
+    assert table["aligned"] is True
+
+
+def test_no_percent_columns_is_left_alone() -> None:
+    table = {"period_labels": ["金　額"], "items": [{"label": "合計", "values": [1]}]}
+    assert split_percent_columns(table) is False
+    assert table["period_labels"] == ["金　額"]
