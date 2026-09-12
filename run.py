@@ -132,6 +132,10 @@ TASKS = [
     # ── 檢核與訊號 ────────────────────────────────────────────────
     Task("compliance", "拿每份報告自己的附註二檢核它自己（軌 B 的核心）",
          _s("run_compliance_checks.py"), in_pipeline=True),
+    # 前一步只讀一份文件，文件自我一致就查不出東西。這一步把決算／財報接上
+    # 收費明細與園所基本資料，算出決算書本身沒有的量（推估在園人數、每生政府投入）。
+    Task("crosscheck", "決算／財報 × 收費明細 × 園所基本資料的跨來源查核",
+         _s("run_crosscheck.py"), in_pipeline=True),
     Task("reserve", "準備金專戶缺口的跨年度走勢（區分時間差與缺口累積）",
          _s("check_reserve_timeseries.py"), in_pipeline=True),
     Task("personnel", "人事費短支與業務發展準備轉列的併存情形",
@@ -179,10 +183,16 @@ TASKS = [
          _s("validate_extraction.py"), group="量測", needs_raw=True),
     Task("validate-anomaly", "異常排序的三項驗證：Top-K、穩定性、LOO 敏感度",
          _s("validate_nonprofit_anomaly.py"), group="量測"),
+    Task("validate-crosscheck", "交叉比對的發現有沒有領先後續裁罰（時序切分）",
+         _s("validate_crosscheck_leadtime.py"), group="量測"),
 
     # ── 外部（需要網路）──────────────────────────────────────────
     Task("fee-table", "重抓 109 到 114 學年度收費明細（約 10 分鐘）",
          _s("build_fee_table.py"), group="外部", needs_network=True),
+    # fee-table 只留「全日班／上學期的全學期總收費」一個數字，服務軌 A 的漲幅特徵。
+    # 跟財報對帳需要逐項（公校決算的學雜費只含學費＋雜費），故另抓一份公共化園專用。
+    Task("fee-detail-public", "抓公共化園逐項收費明細（財報交叉分析用，約 5 分鐘）",
+         _s("build_fee_detail_public.py"), group="外部", needs_network=True),
     Task("evaluations", "全量抓取官方評鑑紀錄",
          _s("download_evaluation_ntpc.py"), group="外部", needs_network=True),
     Task("snapshots", "更新或採認外部公開資料快照",

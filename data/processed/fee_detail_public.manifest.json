@@ -1,0 +1,38 @@
+{
+  "source": "https://kiang.github.io/ap.ece.moe.edu.tw/data/slip{year}/新北市/{title}.json",
+  "source_note": "kiang/ap.ece.moe.edu.tw 鏡像（程式 MIT／資料 CC-BY）；官方端點有保存期限，見 docs/research/03-external-data.md §1.2",
+  "retrieved_on": "2026-09-12T08:19:04Z",
+  "city": "新北市",
+  "years": [
+    109,
+    110,
+    111,
+    112,
+    113,
+    114
+  ],
+  "institution_types": [
+    "公立",
+    "非營利"
+  ],
+  "institutions": 346,
+  "pairs_requested": 2076,
+  "pairs_filed": 1772,
+  "absence_semantics": "slip_status 為「未申報或鏡像未收錄」時，不得讀成收費為零，也不得單獨據以認定違反幼照法第 38 條。",
+  "version_controlled": {
+    "data\\processed\\fee_basis_public.csv": true,
+    "data\\processed\\fee_detail_public.csv": false,
+    "data\\processed\\fee_detail_public.manifest.json": true
+  },
+  "version_control_note": "逐項明細 13 MB、可重抓，依 .gitignore 不進版控；此處仍記其 sha256，重抓後可比對是否與本次一致。上游是鏡像而非釘住快照，內容可能隨上游更新而變動，sha 不符先看 retrieved_on。",
+  "outputs": {
+    "data\\processed\\fee_detail_public.csv": {
+      "sha256": "61bcb3e6a96a777d5fe12b46b0498397c60103aa1f9e91fbcf2d077045bd526b",
+      "byte_length": 13208345
+    },
+    "data\\processed\\fee_basis_public.csv": {
+      "sha256": "8247c0d56d37e0ddd7040371a1d67c4fe0b905d9ab81fbd6bff3dbfef46dbeae",
+      "byte_length": 360050
+    }
+  }
+}

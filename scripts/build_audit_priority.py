@@ -60,7 +60,39 @@ from smart_watchdog.risk.priority import (
 
 FIT_AS_OF, FIT_END = pd.Timestamp("2024-01-01"), pd.Timestamp("2026-01-01")
 OUT = pathlib.Path("data/processed/audit_priority_ntpc.csv")
+CROSS_FINDINGS = pathlib.Path("data/processed/cross_findings.csv")
 TOP_K = 100
+
+
+def _with_crosscheck(findings: pd.DataFrame) -> pd.DataFrame:
+    """把跨來源查核的非營利園發現併進法遵發現，讓它一起走升級管道。
+
+    只併非營利園那一段，而且是刻意的：``compliance_summary`` 透過
+    ``nonprofit_registry_crosswalk`` 的 (code, academic_year) 把發現掛回登記 uuid，
+    公校用的是分基金代號與**年度**（非學年度），母體層級的 COHORT 列則不屬於任何
+    一所園。這三種都掛不上去，靜靜被 join 丟掉會讓人以為它們被納入了，所以在這裡
+    明確篩掉並把數字印出來。公校與 COHORT 的發現留在 cross_findings.csv 自己那張表。
+
+    這不動 ``PRIORITY_FEATURES``，所以已公布的 AUC 0.641 / P@100 2.17x 不受影響——
+    法遵發現走的是獨立升級，不是分數輸入（見 risk/priority.py 模組 docstring）。
+    """
+    if not CROSS_FINDINGS.exists():
+        print(f"（{CROSS_FINDINGS} 不存在，未併入跨來源查核發現；"
+              f"跑 python run.py crosscheck 可產生）")
+        return findings
+    cross = pd.read_csv(CROSS_FINDINGS)
+    keep = cross[(cross["entity_type"] == "非營利") & (cross["code"] != "COHORT")]
+    cols = ["code", "short_name", "academic_year", "rule", "rule_text",
+            "passed", "detail", "severity"]
+    merged = pd.concat([findings, keep[cols]], ignore_index=True)
+    before = int((findings["passed"].astype(str) == "False").sum())
+    after = int((merged["passed"].astype(str) == "False").sum())
+    print(f"併入跨來源查核：非營利園 {len(keep)} 項"
+          f"（未通過 {after - before} 項新增，法遵未通過合計 {before} → {after}）；"
+          f"公校 {int((cross['entity_type'] == '公立').sum())} 項與母體層級 "
+          f"{int((cross['code'] == 'COHORT').sum())} 項不併入"
+          f"（年度與學年度不可對齊／無所屬園），留在 cross_findings.csv")
+    return merged
 
 
 def main() -> None:
@@ -92,6 +124,7 @@ def main() -> None:
     print(f"評分窗：特徵 as_of={score_as_of.date()}　n={len(live)}")
 
     findings = pd.read_csv("data/processed/compliance_findings.csv")
+    findings = _with_crosscheck(findings)
     crosswalk = pd.read_csv("data/processed/nonprofit_registry_crosswalk.csv")
     events = pd.read_csv("data/processed/official_events_ntpc.csv")
     fees = pd.read_csv("data/processed/fee_summary_ntpc.csv")
