@@ -67,7 +67,7 @@
     </div>
 
     <div class="pop who" id="whopop" hidden>
-      <h4>稽查員</h4>
+      <h4>使用者身分</h4>
       <div class="whopop-body"></div>
       <button type="button" id="logout" class="mini" style="margin-top:10px;width:100%"
         hidden>登出</button>
@@ -441,7 +441,7 @@
     <!-- 大廳自己的身分浮層。內容與 app 那一份相同，由 paintWho 一起填。 -->
     <div class="pop who" id="lbwhopop" hidden
       style="position:absolute;right:20px;top:52px;z-index:10">
-      <h4>稽查員</h4>
+      <h4>使用者身分</h4>
       <div class="whopop-body"></div>
     </div>
   </header>
@@ -455,11 +455,35 @@
 <div class="authwrap" id="authwrap" hidden>
   <form class="authbox" id="authform">
     <h2>稽查派工台</h2>
-    <p>本系統含 1,213 所真實機構的查核優先序，僅供內部稽查使用。</p>
+    <p>本系統含 1,213 所真實機構的查核優先序，僅供內部使用。</p>
+
+    <fieldset class="authroles">
+      <legend>登入身分</legend>
+      <div class="authrole-grid">
+        <label class="authrole selected">
+          <input type="radio" name="login-role" value="inspector" checked>
+          <span><b>稽查人員</b><small>查核、派工與分析</small></span>
+        </label>
+        <label class="authrole">
+          <input type="radio" name="login-role" value="admin">
+          <span><b>系統管理員</b><small>目前使用相同功能</small></span>
+        </label>
+      </div>
+    </fieldset>
+
     <label>帳號 <input id="email" type="email" autocomplete="username" required></label>
     <label>密碼 <input id="password" type="password" autocomplete="current-password" required></label>
-    <div class="autherr" id="autherr"></div>
-    <button type="submit">登入</button>
+    <div class="autherr" id="autherr" role="alert"></div>
+    <button type="submit" id="loginbtn">登入</button>
+
+    <section class="quicklogin" id="quicklogin" hidden>
+      <div class="authdivider"><span>展示環境快速登入</span></div>
+      <p>免輸入帳密；後端未啟用時不會顯示。</p>
+      <div class="quickrole-grid">
+        <button type="button" class="quickrole" data-quick-role="inspector">稽查人員</button>
+        <button type="button" class="quickrole" data-quick-role="admin">系統管理員</button>
+      </div>
+    </section>
   </form>
 </div>
 

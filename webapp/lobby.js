@@ -639,21 +639,23 @@
 
   function paintWho() {
     const u = (window.AgentAuth && window.AgentAuth.user) || null;
+    const role = u && window.AgentAuth && window.AgentAuth.roleLabel
+      ? window.AgentAuth.roleLabel(u.role) : (u && u.role) || "";
     document.querySelectorAll(".who-pod").forEach((pod) => {
       pod.hidden = !u;
       if (!u) return;
       pod.querySelector(".who-av").textContent = (u.name || "?").slice(0, 1);
       pod.querySelector(".who-name").textContent = u.name || u.email || "";
-      pod.querySelector(".who-role").textContent = u.role || "";
+      pod.querySelector(".who-role").textContent = role;
     });
     if (!u) return;
     const towns = (u.towns || []).map((t) => `<span>${esc(t)}</span>`).join("");
     const html =
       `<div class="row"><span>帳號</span><b>${esc(u.email) || "—"}</b></div>`
-      + `<div class="row"><span>角色</span><b>${esc(u.role) || "—"}</b></div>`
+      + `<div class="row"><span>身分</span><b>${esc(role) || "—"}</b></div>`
       + `<div class="row"><span>單位</span><b>${esc(u.unit) || "—"}</b></div>`
-      + `<div class="row" style="display:block"><span>負責行政區</span>`
-      + `<div class="towns">${towns || "<span>未指定</span>"}</div></div>`;
+      + `<div class="row" style="display:block"><span>預設查詢範圍</span>`
+      + `<div class="towns">${towns || "<span>全市</span>"}</div></div>`;
     document.querySelectorAll(".whopop-body").forEach((b) => { b.innerHTML = html; });
   }
 

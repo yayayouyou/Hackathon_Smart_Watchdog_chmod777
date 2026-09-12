@@ -19,9 +19,13 @@ python run.py frontend         # 產生前端資料
 python run.py serve            # → http://127.0.0.1:8000
 ```
 
-⚠️ **`seed-users` 不是選配。** 動態版有全螢幕登入牆，沒有帳號時地圖、
-派工提案、時間軸一個都看不到。帳密取自 `.env` 的 `SEED_INSPECTOR_EMAIL`
-與 `SEED_INSPECTOR_PASSWORD`。
+⚠️ **`seed-users` 不是選配。** 動態版有全螢幕登入牆。請在 `.env` 分別設定
+`SEED_INSPECTOR_EMAIL/PASSWORD` 與 `SEED_ADMIN_EMAIL/PASSWORD`；兩個 Email
+必須不同。帳號固定為「稽查人員」與「系統管理員」，但目前共用相同介面、功能與
+全市查詢範圍，`role` 只作身分標記，不是權限邊界。
+
+本機或受控展示站若需要一鍵登入，可另設 `QUICK_LOGIN_ENABLED=true`。正式環境
+必須維持 `false`；快速登入由後端直接建立 session，前端不會取得 seed 密碼。
 
 `python run.py --list` 會列出全部任務。
 
@@ -40,7 +44,7 @@ python run.py serve            # → http://127.0.0.1:8000
 
 ```bash
 python run.py setup
-python run.py test        # 379 passed（POSIX 上 378 passed + 1 skipped）
+python run.py test        # 525 passed, 12 skipped（2026-09-12，Windows）
 python run.py serve
 ```
 

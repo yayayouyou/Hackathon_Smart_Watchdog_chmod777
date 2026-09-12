@@ -93,9 +93,9 @@ TASKS = [
          _s("setup_raw_data.py"), group="準備"),
     Task("check-credentials", "實測 .env 裡的每一把金鑰",
          _s("check_credentials.py"), group="準備"),
-    # 建表是冪等的，服務啟動時也會做一次；這個任務多做的是**建帳號**
-    # （取 .env 的 SEED_INSPECTOR_EMAIL／PASSWORD）。沒有帳號就登不進助理頁。
-    Task("seed-users", "建立資料表與稽查員帳號（冪等；助理與登入需要）",
+    # 建表是冪等的，服務啟動時也會做一次；這個任務多做的是建立兩個固定身分帳號
+    # （取 .env 的 SEED_INSPECTOR_* 與 SEED_ADMIN_*）。兩者目前同介面、同權限。
+    Task("seed-users", "建立稽查人員與管理員帳號（冪等；登入需要）",
          _s("seed_users.py"), group="準備"),
     Task("bedrock-check", "實測 Bedrock：憑證、可用模型、三個 AI 落點",
          _s("check_bedrock.py"), group="準備", needs_network=True),
