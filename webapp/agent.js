@@ -142,6 +142,26 @@
     log().scrollTop = log().scrollHeight;
   }
 
+  /* 「思考中」。一則真的 tool 呼叫來回要數秒到數十秒，沒有這個指示，
+     畫面與「壞掉了」完全分不出來。每收到一個事件就把它移到最後面，
+     所以它永遠停在最新一步的下方，代表「還有下一步」。 */
+  function thinking(on, label) {
+    let el = $("agentthinking");
+    if (!on) {
+      if (el) el.remove();
+      return;
+    }
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "agentthinking";
+      el.className = "thinking";
+      el.innerHTML = '<span class="dots"><i></i><i></i><i></i></span><span></span>';
+    }
+    el.lastElementChild.textContent = label || "思考中";
+    log().appendChild(el);              // 重新 append = 移到最後
+    log().scrollTop = log().scrollHeight;
+  }
+
   /* 講解句逐字顯示。後端是整句送出的（要先過禁用詞過濾才能送），
    * 所以打字動畫在這裡做，不是串流的副產品。 */
   function type(el, text, done) {
@@ -186,6 +206,7 @@
     busy = true;
     $("agentsend").disabled = true;
     bubble(esc(text), "me");
+    thinking(true, "連線中");
 
     let res;
     try {
@@ -195,11 +216,13 @@
         body: JSON.stringify({ text, session_id: sessionId, view: currentView() }),
       });
     } catch (e) {
+      thinking(false);
       bubble(`連線失敗：${esc(e.message)}`, "bot err");
       busy = false; $("agentsend").disabled = false;
       return;
     }
     if (res.status === 401) {
+      thinking(false);
       bubble("尚未登入，請重新登入後再試。", "bot err");
       window.AgentAuth.show();
       busy = false; $("agentsend").disabled = false;
@@ -208,25 +231,33 @@
     if (!res.ok) {
       let detail = `HTTP ${res.status}`;
       try { detail = (await res.json()).detail || detail; } catch (_) { /* 保留 HTTP 碼 */ }
+      thinking(false);
       bubble(`無法處理：${esc(detail)}`, "bot err");
       busy = false; $("agentsend").disabled = false;
       return;
     }
 
-    /* SSE 分幀：以空行分隔，每幀有 event: 與 data: 兩行。 */
+    /* SSE 分幀：以空行分隔，每幀有 event: 與 data: 兩行。
+     *
+     * ⚠️ sse-starlette 送的是 CRLF（`\r\n\r\n`），而 `\r\n\r\n` 裡**沒有**
+     * 相鄰的 `\n\n`——直接找 "\n\n" 會永遠找不到，事件一則都不會被處理，
+     * 畫面上看起來就是「送出去之後完全沒反應」。所以每次都先把整個緩衝區
+     * 正規化成 LF 再切；整段替換也順便處理掉 `\r` 與 `\n` 被拆在兩個 chunk
+     * 的情況。 */
     const reader = res.body.getReader();
     const dec = new TextDecoder();
     let buf = "";
     while (true) {
       const { value, done } = await reader.read();
       if (done) break;
-      buf += dec.decode(value, { stream: true });
+      buf = (buf + dec.decode(value, { stream: true })).replace(/\r\n/g, "\n");
       let cut;
       while ((cut = buf.indexOf("\n\n")) >= 0) {
         handleFrame(buf.slice(0, cut));
         buf = buf.slice(cut + 2);
       }
     }
+    thinking(false);
     busy = false;
     $("agentsend").disabled = false;
   }
@@ -245,15 +276,18 @@
     switch (name) {
       case "session":
         sessionId = d.session_id;
+        thinking(true, "思考中");
         break;
       case "text":
         say(d.text, d.softened);
         break;
       case "tool_call":
+        thinking(true, `執行 ${d.name}`);
         step(`<span class="tag">呼叫</span>${esc(d.name)}
               <code>${esc(JSON.stringify(d.arguments))}</code>`);
         break;
       case "tool_result":
+        thinking(true, "思考中");
         step(`<span class="tag ${d.ok ? "ok" : "no"}">${d.ok ? "結果" : "擋下"}</span>${
           esc(d.summary)}`);
         break;
@@ -262,9 +296,11 @@
         dispatch(d);
         break;
       case "error":
+        thinking(false);
         bubble(`出錯：${esc(d.message)}`, "bot err");
         break;
       case "done":
+        thinking(false);
         if (d.stop_reason === "max_steps") {
           step('<span class="tag no">停止</span>已達單輪步數上限');
         }

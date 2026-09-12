@@ -391,3 +391,18 @@ footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel)
 .ev .evc{margin-top:5px;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
 .ev img{margin-top:7px;width:100%;border:1px solid var(--rule);border-radius:4px;
   background:#fff}
+
+/* 「思考中」：一則 tool 呼叫來回要數秒到數十秒，沒有這個就與「壞掉了」
+   分不出來。三點依序淡入淡出。 */
+.thinking{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--ink-4);
+  font-family:var(--mono);padding:2px 0}
+.thinking .dots{display:inline-flex;gap:3px}
+.thinking .dots i{width:5px;height:5px;border-radius:50%;background:var(--seal);
+  opacity:.25;animation:wd-blink 1.05s infinite}
+.thinking .dots i:nth-child(2){animation-delay:.18s}
+.thinking .dots i:nth-child(3){animation-delay:.36s}
+@keyframes wd-blink{0%,70%,100%{opacity:.25}35%{opacity:1}}
+/* 使用者關掉動態效果時就只留靜態的點，不要閃。 */
+@media (prefers-reduced-motion:reduce){
+  .thinking .dots i{animation:none;opacity:.6}
+}

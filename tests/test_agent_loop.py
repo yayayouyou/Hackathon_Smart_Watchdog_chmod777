@@ -164,3 +164,20 @@ def test_max_steps_stops_the_loop(db, registry) -> None:
     events = _run(db, registry, forever)
     assert events[-1].data["stop_reason"] == "max_steps"
     assert events[-1].data["steps"] == 8
+
+
+def test_sse_frames_use_crlf_which_the_frontend_must_normalise() -> None:
+    """釘住前端依賴的線上格式。
+
+    sse-starlette 送的是 CRLF：`event: …\\r\\ndata: …\\r\\n\\r\\n`。
+    而 `\\r\\n\\r\\n` 裡**沒有**相鄰的 `\\n\\n`——`webapp/agent.js` 若直接找
+    `"\\n\\n"` 分幀就永遠切不出東西，畫面上的表徵是「送出後完全沒反應」，
+    而後端一切正常（curl 看得到完整事件）。這個 bug 真的發生過。
+
+    所以 agent.js 每次都先把緩衝區 `replace(/\\r\\n/g, "\\n")` 再切。
+    這條測試是在說：**哪天這個格式變了，前端那行正規化要跟著檢查。**
+    """
+    sse = pytest.importorskip("sse_starlette.sse")
+    raw = sse.ServerSentEvent(data='{"a":1}', event="text").encode()
+    assert raw.endswith(b"\r\n\r\n")
+    assert b"\n\n" not in raw, "若哪天變成 LF，agent.js 的正規化就不再是必要的"
