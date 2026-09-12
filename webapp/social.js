@@ -22,6 +22,18 @@
  * **不輪詢、不預抓。** /api/social/{id} 每次呼叫會打一次 Google Places 計費
  * 查詢。清單頁只呼叫 /api/social（免費），詳情只在使用者點開某一園時才要。
  */
+/* ⚠️ 整支包在 IIFE 裡。
+ *
+ * 傳統腳本共用同一個全域詞法作用域，而頂層的 `function` 宣告**會互相覆蓋，
+ * 而且是靜默的**——不像同名的 `const` 會讓後載入的那支整支 SyntaxError。
+ * 這一支與 timeline.js 都宣告了 `render()`，載入順序是 social 在前，
+ * 於是社群面板呼叫的 `render()` 其實是 timeline 的那一支：資料抓到了
+ * （count=8），畫面卻永遠停在 index.html 裡那句「載入中…」，而且沒有任何
+ * 錯誤訊息。實測到才找出來。
+ *
+ * scan.js 早就因為同一類問題（`const S` 撞名）包起來了，這一支補上。
+ */
+(function () {
 const S = window.SW;
 
 const social = {
@@ -281,4 +293,26 @@ async function open() {
   render();
 }
 
-window.SWSocial = { open };
+/* 讓助理指到某一所的社群串。
+ *
+ * `toggle()` 是「點一下開、再點一下收」，直接拿來用的話助理連講兩次同一所
+ * 會把它收起來——使用者看到的是「它說要看這一所，結果畫面把它關掉了」。
+ * 所以這裡只負責「打開」，已經開著就維持開著。
+ *
+ * `full_id` 是完整的 UUID，而助理手上的 `institution_id` 是 8 碼短碼
+ * （`/api/social` 兩個都回）。兩個都接受，找不到就安靜不動——那代表這一所
+ * 目前沒有社群訊號，面板上本來就沒有那一列。
+ */
+async function focus(id) {
+  await open();
+  if (!id) return;
+  const hit = ((social.list || {}).items || []).find(
+    (it) => it.full_id === id || it.institution_id === id);
+  if (!hit) return;
+  if (social.open !== hit.full_id) await toggle(hit.full_id);
+  const row = document.querySelector(`.soc-row[data-id="${hit.full_id}"]`);
+  if (row) row.scrollIntoView({ block: "nearest" });
+}
+
+window.SWSocial = { open, focus };
+})();

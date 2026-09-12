@@ -1067,6 +1067,134 @@ def _get_extraction_notes(_ctx: ToolContext, a: ExtractionNotesArgs) -> ToolOutc
 
 # ── 註冊 ─────────────────────────────────────────────────────────────
 
+# ── 25–28. 輿情蒐集 ──────────────────────────────────────────────────
+#
+# 這一室有兩塊，性質完全不同，講的時候不可以混：
+#   上半「社群聲音」讀的是**已經收進來的**東西——民眾在 Threads 上 @標註官方
+#   帳號的通報、新聞與 PTT 的提及。讀庫不花錢。
+#   下半「掃描主控台」是**去外面抓新的**，每一次執行都計費。
+#
+# 這四個 tool 全部屬於上半與帳本，都是唯讀、都不花錢。發動掃描與採用結果
+# 刻意不給，理由見 `scan_estimate` 與 test_agent_tools 的那兩支測試。
+
+
+def _soc():
+    from ..api import social
+
+    return social
+
+
+class SocialListArgs(BaseModel):
+    town: Optional[str] = Field(default=None, description="行政區全名，例如「板橋區」")
+    channel: Optional[str] = Field(
+        default=None,
+        description="管道：apify_threads、news_rss、ptt、vendor_feed。不給就是全部",
+    )
+    since: Optional[str] = Field(
+        default=None, description="只看這個日期之後的，格式 YYYY-MM-DD")
+    limit: int = Field(default=20, ge=1, le=MAX_LIMIT)
+
+
+def _list_social(_ctx: ToolContext, a: SocialListArgs) -> ToolOutcome:
+    """目前有公開社群訊號的機構。
+
+    ⚠️ 這不是聲量排行榜，排序依據是時間不是分數；社群聲量刻意不併入風險分數。
+
+    ⚠️ 這裡查無不代表沒事。`coverage` 會講清楚只列出「本系統已取得公開社群
+    內容」的機構——1,213 所裡目前只有個位數有訊號，其餘是**沒抓到**，不是
+    **沒問題**。回傳一定帶著 coverage 與 disclaimer，講的時候要一起講。
+    """
+    out = _soc().browse(limit=a.limit, town=a.town, channel=a.channel,
+                        since=a.since, db=_ctx.db)
+    return ToolOutcome(
+        payload={
+            "count": out.get("count"), "matched": out.get("matched"),
+            "items": out.get("items"), "coverage": out.get("coverage"),
+            "swept_at": out.get("snapshot_swept_at"),
+            "note": out.get("disclaimer"),
+        },
+        ui_action={"type": "open_voice"},
+    )
+
+
+def _get_social(_ctx: ToolContext, a: InstitutionArgs) -> ToolOutcome:
+    """一所機構的社群串：主貼文、底下的回覆、新聞與 PTT 提及、Google 評論。
+
+    回覆要與主貼文分開講。縮排會讓人把回覆讀成「也是在講這一園」，而指名別家
+    的那一則後端已經標了出去向——講的時候不可以把它算進這一所。
+
+    Google 評分**不是風險訊號**：裁罰 ≥5 件的園評分中位 4.20、無裁罰者 4.60
+    （p=0.061，不顯著），個案更完全不具鑑別力（16 件裁罰的園 4.7 星）。
+    它是稽查員到場前值得看一眼的家長觀感，不入庫、不進特徵、不影響排序。
+
+    ⚠️ 這一支會即時查一次 Google 評論，**那是計費的**（`realtime/ledger.py`
+    有額度閘門，超支會被擋下而不是靜默多花）。走的是與使用者自己點開那一列
+    完全相同的路徑——兩邊看到同一份資料，才不會出現「助理說的跟畫面不一樣」。
+    """
+    p = _point(a.institution_id)
+    if not p:
+        return _not_found(a.institution_id)
+    out = _soc().institution_social(a.institution_id, live=True, db=_ctx.db)
+    return ToolOutcome(
+        payload={
+            "institution": p["full"],
+            "has_signal": out.get("has_signal"),
+            "reason": out.get("reason"),
+            "counts": out.get("counts"),
+            "threads": out.get("threads"), "mentions": out.get("mentions"),
+            "reviews": out.get("reviews"),
+            "note": out.get("disclaimer"),
+        },
+        ui_action={"type": "open_voice", "institution_id": a.institution_id},
+    )
+
+
+class ScanJobsArgs(BaseModel):
+    job_id: Optional[str] = Field(
+        default=None, description="指定一次掃描的代號；不給就是列出最近幾次")
+    limit: int = Field(default=10, ge=1, le=30)
+
+
+def _list_scan_jobs(_ctx: ToolContext, a: ScanJobsArgs) -> ToolOutcome:
+    """過去掃描的紀錄與抽到了什麼。**唯讀，不會發動新的掃描。**
+
+    「上次掃到什麼」是這一室最常被問的問題，而在這之前助理只能算錢——
+    它講得出一次掃描要多少錢，卻講不出上一次花的錢換到了什麼。
+    """
+    from ..api import scan as scan_api
+
+    if a.job_id:
+        try:
+            job = scan_api.get_job(a.job_id)
+        except Exception as exc:  # noqa: BLE001 - 查無要變成可讀訊息，不是 500
+            return ToolOutcome(payload={"error": f"查無這次掃描：{exc}"})
+        return ToolOutcome(payload=job, ui_action={"type": "navigate", "tab": "scan"})
+    out = scan_api.list_jobs(limit=a.limit)
+    jobs = out.get("jobs", [])
+    return ToolOutcome(
+        payload={
+            "count": len(jobs), "items": jobs,
+            "note": "這是已經執行過的掃描紀錄。要知道再掃一次要多少錢用 "
+                    "scan_estimate；本 tool 與那一支都不會真的發動掃描。",
+        },
+        ui_action={"type": "navigate", "tab": "scan"},
+    )
+
+
+def _get_scan_budget(_ctx: ToolContext, _a: NoArgs) -> ToolOutcome:
+    """掃描的預算與已花費。唯讀。
+
+    被問「你們這樣要花多少錢」時要答得出實際數字，而不是只答單次估價。
+    """
+    from ..api import scan as scan_api
+
+    out = scan_api.budget()
+    return ToolOutcome(
+        payload={**out, "note": "金額以本機帳本為準，供應商自報結算可能有出入。"},
+        ui_action={"type": "navigate", "tab": "scan"},
+    )
+
+
 _SPECS = [
     ("list_institutions",
      "列出機構：可依行政區、類別、有無前科、財報法遵未通過、評鑑部分未通過、"
@@ -1120,6 +1248,18 @@ _SPECS = [
      CompareYearsArgs, _compare_table_across_years, False),
     ("get_extraction_notes", "取抽取過程自報的疑點（不是機構的稽查發現）",
      ExtractionNotesArgs, _get_extraction_notes, False),
+    ("list_social_mentions",
+     "列出目前有公開社群訊號的機構（民眾 Threads 通報、新聞、PTT）。"
+     "唯讀，不發動掃描；查無代表未取得公開內容，不代表無異常",
+     SocialListArgs, _list_social, False),
+    ("get_social_mentions",
+     "取一所機構的社群全貌：Threads 串與回覆、新聞／PTT 提及、Google 評論"
+     "（評分不是風險訊號，且會即時查詢一次、計費）",
+     InstitutionArgs, _get_social, False),
+    ("list_scan_jobs", "查過去執行過的輿情掃描與抽到了什麼（唯讀，不會發動掃描）",
+     ScanJobsArgs, _list_scan_jobs, False),
+    ("get_scan_budget", "查掃描的預算與已花費（唯讀）",
+     NoArgs, _get_scan_budget, False),
 ]
 
 

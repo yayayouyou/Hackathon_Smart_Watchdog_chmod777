@@ -165,6 +165,18 @@
         break;
       }
 
+      /* 輿情蒐集室。社群面板與掃描主控台同在這一室，`showPane("scan")` 會把
+         兩塊都叫醒，所以這裡只要再指到某一所就好。 */
+      case "open_voice": {
+        const then = () => {
+          if (window.SWSocial && window.SWSocial.focus) {
+            window.SWSocial.focus(a.institution_id);
+          }
+        };
+        switchTab("scan", then);
+        break;
+      }
+
       case "close_drawer": {
         const d = $("dossier");
         if (d) d.hidden = true;

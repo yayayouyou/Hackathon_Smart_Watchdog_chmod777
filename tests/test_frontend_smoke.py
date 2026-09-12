@@ -541,8 +541,13 @@ def test_social_panel_is_opened_when_the_room_is_entered() -> None:
     """
     app = (WEBAPP / "app.js").read_text(encoding="utf-8")
     assert "window.SWSocial" in app, "showPane 沒有喚醒社群聲音面板"
-    assert "window.SWSocial = { open }" in \
-        (WEBAPP / "social.js").read_text(encoding="utf-8")
+    # 問的是「有沒有匯出 open」，不是「只匯出 open」。原本比對字面
+    # `= { open }`，助理需要的 `focus` 一加上去就紅了——而那次改動並沒有
+    # 違反這條規則，紅的是斷言把「有這一支」寫成了「只有這一支」。
+    assert re.search(r"window\.SWSocial\s*=\s*\{[^}]*\bopen\b",
+                     (WEBAPP / "social.js").read_text(encoding="utf-8")), (
+        "social.js 沒有匯出 open，showPane 叫不動它"
+    )
 
 
 def test_the_voice_room_no_longer_advertises_threads_as_pending() -> None:
@@ -580,7 +585,13 @@ def test_no_two_scripts_declare_the_same_global() -> None:
     """
     import collections
 
-    top = re.compile(r"^(?:const|let|var)\s+([A-Za-z_$][\w$]*)", re.M)
+    # ⚠️ `function` 也要算。同名的 `const` 至少會讓後載入的那支整支
+    # SyntaxError，吵得看得見；同名的**函式宣告是靜默互相覆蓋**的——
+    # social.js 與 timeline.js 都宣告了 `render()`，於是社群面板呼叫的
+    # `render()` 其實是 timeline 的那一支：資料抓到了（count=8），畫面卻永遠
+    # 停在「載入中…」，沒有任何錯誤。原本這條只認 const/let/var，漏掉了它。
+    top = re.compile(
+        r"^(?:const|let|var|(?:async\s+)?function)\s+([A-Za-z_$][\w$]*)", re.M)
     owners: dict[str, list[str]] = collections.defaultdict(list)
     for js in sorted(WEBAPP.glob("*.js")):
         src = js.read_text(encoding="utf-8")

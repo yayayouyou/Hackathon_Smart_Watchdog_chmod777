@@ -84,7 +84,7 @@ def test_the_whitelist_is_exactly_these_tools(reg) -> None:
     """白名單逐一列出，不用數量代替。
 
     改成列舉是因為數量對不上時，「多了什麼」與「少了什麼」一樣重要：註冊表
-    是安全邊界，每加一個都是一次決定，而一個 `== 24` 看不出被換掉的是哪一個。
+    是安全邊界，每加一個都是一次決定，而一個 `== 28` 看不出被換掉的是哪一個。
 
     這份清單同時是「agent 能操作畫面上的每一件事」的檢查表。少一個 tool 的
     表徵不是報錯，是 agent 說「我做不到」——而使用者會以為是模型不夠聰明，
@@ -103,8 +103,9 @@ def test_the_whitelist_is_exactly_these_tools(reg) -> None:
         "set_time_machine", "get_model_card",
         # 地圖控制項
         "set_map_view",
-        # 掃描：只估算，不發動（見下一支測試）
-        "scan_estimate",
+        # 輿情蒐集：讀已經收進來的，以及帳本。掃描只估算不發動（見下一支測試）
+        "scan_estimate", "list_scan_jobs", "get_scan_budget",
+        "list_social_mentions", "get_social_mentions",
         # 證據
         "search_documents", "load_skill",
         # 資料室：只回答「這份文件上印的是什麼」，不做判讀
