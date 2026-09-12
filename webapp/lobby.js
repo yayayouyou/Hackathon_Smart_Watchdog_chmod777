@@ -159,7 +159,6 @@
     });
 
     ROOMS.forEach((r) => { roomArt(r.g, r); kennelArt(r.g, r); });
-    drawBoard(rest);
 
     /* 守護犬：獨立一層，不受縮放影響 */
     const dog = el("g", { id: "dog" }, svg);
@@ -172,12 +171,58 @@
     el("rect", { x: 0, y: 0, width: 196, height: 40, rx: 9,
       fill: cssv("--panel"), stroke: cssv("--rule"), "stroke-width": 1.2 }, tip);
     const l1 = el("text", { x: 14, y: 18, "font-size": 11.5,
-      fill: cssv("--ink-2") }, tip);
-    l1.textContent = "滑鼠帶我在中庭走，";
+      class: "tip-l1", fill: cssv("--ink-2") }, tip);
     const l2 = el("text", { x: 14, y: 32, "font-size": 11.5,
-      fill: cssv("--ink-2") }, tip);
-    l2.textContent = "點一間房我就進去。";
+      class: "tip-l2", fill: cssv("--ink-2") }, tip);
+    [l1.textContent, l2.textContent] = DOG_LINES[0];
     positionTip();
+    startTalking();
+  }
+
+
+  /* 守護犬的台詞。輪播而不是只說一句：中庭是一個會停留的畫面，
+     一句固定的操作說明看第三次就變成雜訊。
+
+     ⚠️ 台詞受同一條用詞界線約束：不可宣稱任何機構有問題，也不可把
+     「建議查核的優先序」講成「抓到了」。牠可以可愛，不可以下判斷。 */
+  const DOG_LINES = [
+    ["今天也在巡邏，", "有事叫我一聲。"],
+    ["五間室都開著，", "想先去哪一間？"],
+    ["每個數字我都記得", "是從哪一頁來的。"],
+    ["我們排的是查核順序，", "不是誰有罪。"],
+    ["慢慢看，", "我不會催你。"],
+    ["不管進哪一間，", "我都跟著你。"],
+    ["查不到的時候，", "我會說資料不足。"],
+    ["中庭風有點大，", "我先趴一下。"],
+  ];
+
+  let tipIx = 0;
+  let tipTimer = null;
+
+  function sayNext() {
+    const t = $("dogtip");
+    // 進房途中或已經在室內就不要換詞：那時候泡泡正在淡出，換了會閃一下。
+    if (!t || state.where !== "lobby" || state.busy) return;
+    t.style.opacity = "0";
+    setTimeout(() => {
+      if (state.where !== "lobby" || state.busy) return;
+      tipIx = (tipIx + 1) % DOG_LINES.length;
+      const [a, b] = DOG_LINES[tipIx];
+      const e1 = t.querySelector(".tip-l1");
+      const e2 = t.querySelector(".tip-l2");
+      if (e1) e1.textContent = a;
+      if (e2) e2.textContent = b;
+      t.style.opacity = "";
+    }, 220);
+  }
+
+  function startTalking() {
+    stopTalking();
+    tipTimer = setInterval(sayNext, 7000);
+  }
+
+  function stopTalking() {
+    if (tipTimer) { clearInterval(tipTimer); tipTimer = null; }
   }
 
   function positionTip() {
@@ -295,28 +340,6 @@
     }
   }
 
-  /* 中庭立牌：回答「今天要做什麼」 */
-  function drawBoard(parent) {
-    const g = el("g", {}, parent);
-    el("rect", { x: 580, y: 150, width: 280, height: 152, rx: 5,
-      class: "plan-card", fill: cssv("--panel"), stroke: cssv("--rule"),
-      "stroke-width": 1.4 }, g);
-    const put = (x, y, s, size, fill, weight) => {
-      const t = el("text", { x, y, "font-size": size, fill,
-        "font-weight": weight || 400 }, g);
-      t.textContent = s;
-      return t;
-    };
-    put(602, 178, "今天要做什麼", 10.5, cssv("--ink-4")).setAttribute("letter-spacing", 1.6);
-    put(602, 208, "名單已排好，20 家。", 15, cssv("--ink"), 600);
-    put(602, 232, "其中", 13, cssv("--ink-2"));
-    put(636, 232, "4 家", 13, cssv("--seal"), 600);
-    put(672, 232, "帶高嚴重度財務發現，", 13, cssv("--ink-2"));
-    put(602, 252, "建議優先排訪。", 13, cssv("--ink-2"));
-    el("line", { x1: 602, y1: 268, x2: 838, y2: 268, stroke: cssv("--rule"),
-      "stroke-width": 1 }, g);
-    put(602, 288, "前 100 名命中率 2.29× · AUC 0.658", 11, cssv("--ink-3"));
-  }
 
   /* 每一室左下角的狗窩。中庭看得到它，進房後守護犬就躺在對應的位置——
      牠是「跑進那一格」，不是「消失再出現」。 */
@@ -411,6 +434,7 @@
     const lobby = $("lobby");
     const tip = $("dogtip");
     if (tip) tip.style.opacity = "0";
+    stopTalking();
 
     /* 順序是：**先走進去躺好，房間才放大。**
        第一版是邊走邊放大，兩件事同時動，看起來像房間把牠吸進去。
@@ -498,6 +522,7 @@
       lobby.classList.remove("zooming");
       const tip2 = $("dogtip");
       if (tip2) tip2.style.opacity = "";
+      startTalking();
       const d = $("dog");
       if (d) d.style.opacity = "";
       moveDog(720, 560, false);      // 直接歸位，不要讓牠橫越整張圖
