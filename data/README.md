@@ -127,6 +127,20 @@ for f in sorted(pathlib.Path("data/extracted/nonprofit").glob("*.json")):
 見 [external/README.md](external/README.md)。重點：**刻意釘住時點**，
 因為官方裁罰紀錄有保存期限會下架，只在執行時抓會得到截斷且不會報錯的標籤。
 
+### 引用時必須帶著的標註
+
+機構主檔、裁罰與收費三份資料是 **CC-BY**，標註是授權條件而不是禮貌；
+簡報、報告與任何對外輸出引用到這些數字時都要帶著它：
+
+> 資料來源：全國教保資訊網 <https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx>；
+> 取得管道：台灣幼兒園地圖資料庫 <https://github.com/kiang/ap.ece.moe.edu.tw>
+> （江明宗維護，程式 MIT）；快照日期 **2026-08-10**。
+
+上游把**程式（MIT）**與**資料（CC-BY）**分開聲明，我們不能只寫其中一個。
+其他外部資料（官方評鑑、採購、教育局公告、新聞、行政區界線）各有不同的來源與
+授權狀態，逐項列在 [external/README.md](external/README.md) 的「來源與授權」；
+查不到明文條款的一律標「待確認」，不自行推定。
+
 Root 三份公開資料另有 `external/observations/` immutable observation chain：每次成功
 上游檢查保留 content-addressed bytes 與 record-level added／changed／removed diff。
 `removed_from_source` 只表示上游不再回傳，不代表事件解決、機構停業或低風險。

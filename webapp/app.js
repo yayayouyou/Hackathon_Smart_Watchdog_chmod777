@@ -25,8 +25,12 @@ const state = {
   payload: null, points: [], byId: {}, proposal: [], selected: null,
   cap: 20, cluster: true, flaggedOnly: false, types: new Set([0, 1, 2]),
   map: null, layer: null, districtLayer: null, base: null, googleKey: null,
+  // 標記著色依據："type"＝設立別（中性事實），"penalty"＝歷史裁罰件數（公開事實）。
+  // 兩者都不是我們算出來的分數——分數不上地圖，見 aws-architecture.md §6.5。
+  pinBy: "type", dnames: true, dnameLayer: null,
   // 新北以外反灰。ntpcRings 是從區界算出來的市界外框，算一次就快取。
   mask: true, maskLayer: null, outlineLayer: null, ntpcRings: null, land: [],
+  choro: true, choroLayer: null,
   // 時間軸模式（timeline.js 設定）。非 null 時地圖改畫「當時的排序」與
   // 「後來實際受罰」，而不是今天的派工提案。
   timeline: null,
@@ -101,11 +105,27 @@ function initMap() {
   state.map.createPane("swmask");
   Object.assign(state.map.getPane("swmask").style,
     { zIndex: 350, pointerEvents: "none" });
+  // 行政區底色在遮罩之下、圖磚之上。它只畫在新北境內，與遮罩不重疊，
+  // 但排在下面才不會蓋掉市界那條線。
+  state.map.createPane("swchoro");
+  state.map.getPane("swchoro").style.zIndex = 340;
+  // 行政區名稱排在標記（600）之下：名字是註記，不該蓋住可以點開卷宗的園。
+  state.map.createPane("swdname");
+  Object.assign(state.map.getPane("swdname").style,
+    { zIndex: 450, pointerEvents: "none" });
   setBase("osm");
   state.layer = L.layerGroup().addTo(state.map);
   fitNTPC();
   refitOnLayout();
   applyMask(state.mask);
+  drawChoro();
+  drawChoroLegend();
+  drawPenaltyLegend();
+  drawDistrictNames();
+  // 放大到街廓尺度時底色要退場，不然它只是蓋住地圖。
+  state.map.on("zoomend", fadeChoro);
+  // 行政區名字要跟著縮放換字級，否則全市尺度擠成一團、街廓尺度小到看不見。
+  state.map.on("zoomend", drawDistrictNames);
 
   document.querySelectorAll("#basemaps button").forEach((b) => {
     b.addEventListener("click", async () => {
@@ -311,6 +331,116 @@ function applyMask(on) {
   }).addTo(state.map);
 }
 
+/* ── 行政區優先度底色 ─────────────────────────────────
+ *
+ * 出題端真正要問的不是「哪一家有問題」，是**人力先派到哪一區**。這一層的
+ * 單位因此是：若依模型排序抽全市前 100 名，這一區會有幾家進榜。
+ *
+ * 為什麼固定用前 100 名、而不是跟著派工容量走：容量 20 家分散到 29 個區之後
+ * 每區 0～2 家，看不出輪廓；而前 100 名正是回測講命中率的那個 N（2.29 倍於
+ * 隨機抽查），底色與頁尾那句話才是同一個口徑。
+ *
+ * 為什麼放大要淡出：底色是用來決定「先去哪一區」的。到了街廓尺度，要回答的
+ * 問題已經變成「這條街上是哪一家」，那時色塊只會蓋住地圖。
+ *
+ * ⚠️ 用詞界線：這是**建議查核的密度**，不是危險程度。圖例與 tooltip 都不准
+ * 出現「高風險區」這種說法。
+ */
+const CHORO_TOP = 100;
+const CHORO_STEPS = [
+  { min: 9, hi: null, v: "--c4", label: "9 家以上" },
+  { min: 6, hi: 8, v: "--c3", label: "6–8 家" },
+  { min: 3, hi: 5, v: "--c2", label: "3–5 家" },
+  { min: 1, hi: 2, v: "--c1", label: "1–2 家" },
+];
+
+function choroCounts() {
+  const by = {};
+  state.points.forEach((p) => {
+    if (p.r <= CHORO_TOP) by[p.d] = (by[p.d] || 0) + 1;
+  });
+  return by;
+}
+
+/* z<=11 全滿、z>=14 完全消失，中間線性淡出。分界點挑在 11–14 之間：11 是
+   看得到整個新北的尺度（底色要講話），14 已經看得到單一街廓（底色只會擋路）。 */
+function choroOpacity() {
+  const z = state.map.getZoom();
+  return Math.max(0, Math.min(1, (14 - z) / 3)) * 0.66;
+}
+
+function drawChoro() {
+  if (state.choroLayer) {
+    state.map.removeLayer(state.choroLayer);
+    state.choroLayer = null;
+  }
+  if (!state.choro) return;
+  const counts = choroCounts();
+  const total = {};
+  state.points.forEach((p) => { total[p.d] = (total[p.d] || 0) + 1; });
+  const layers = [];
+  (state.payload.boundary || []).forEach((f) => {
+    const n = counts[f.d] || 0;
+    const step = CHORO_STEPS.find((x) => n >= x.min);
+    if (!step) return;                       // 沒有人進榜的區不上色
+    const all = total[f.d] || 0;
+    // 實心填色，透明度交給整個 pane。用 fillOpacity 的話，相鄰行政區簡化後
+    // 重疊的那一小條會疊出更深的顏色——畫面上會多出幾塊不存在的「更嚴重」。
+    const poly = L.polygon(
+      f.poly.map((r) => [r.map(([x, y]) => [y, x])]),
+      { pane: "swchoro", stroke: false, fillColor: cssv(step.v), fillOpacity: 1 },
+    );
+    poly.bindTooltip(
+      `${f.d}　前 ${CHORO_TOP} 名 ${n} 家 ／ 全區 ${all} 家`
+      + (all ? `（${((n / all) * 100).toFixed(1)}%）` : ""),
+      { sticky: true });
+    layers.push(poly);
+  });
+  state.choroLayer = L.layerGroup(layers).addTo(state.map);
+  fadeChoro();
+}
+
+function fadeChoro() {
+  if (!state.choroLayer) return;
+  const op = choroOpacity();
+  const on = state.map.hasLayer(state.choroLayer);
+  if (op === 0) {
+    // 淡出之後整層移除：留著全透明的色塊會繼續吃掉滑鼠事件，游標壓上去跳出來
+    // 的會是行政區提示，不是底下那一家園。
+    if (on) state.map.removeLayer(state.choroLayer);
+    return;
+  }
+  if (!on) state.choroLayer.addTo(state.map);
+  state.map.getPane("swchoro").style.opacity = String(op);
+}
+
+function drawChoroLegend() {
+  const counts = choroCounts();
+  const vals = Object.values(counts);
+  const rows = CHORO_STEPS.map((x) => {
+    const k = vals.filter((v) => v >= x.min && (x.hi == null || v <= x.hi)).length;
+    return `<div><i style="background:${cssv(x.v)}"></i>${x.label}<b>${k} 區</b></div>`;
+  });
+  const districts = (state.payload.boundary || []).length;
+  rows.push(`<div><i style="background:transparent;border:1px dashed var(--ink-4)"></i>`
+    + `未進榜<b>${Math.max(0, districts - vals.length)} 區</b></div>`);
+  $("choro-legend").innerHTML = rows.join("");
+}
+
+/* 裁罰色階的圖例。每一級後面掛實際家數——沒有家數的圖例只是色票，讀的人
+   無從判斷深色到底是 3 家還是 300 家。 */
+function drawPenaltyLegend() {
+  const box = $("pen-legend");
+  if (!box) return;
+  const pts = state.points || [];
+  const rows = PEN_STEPS.map((s, i) => {
+    const hi = i === 0 ? Infinity : PEN_STEPS[i - 1].min - 1;
+    const k = pts.filter((p) => (p.np || 0) >= s.min && (p.np || 0) <= hi).length;
+    return `<div><i style="background:${cssv(s.v)}"></i>${s.label}<b>${k} 家</b></div>`;
+  });
+  box.innerHTML = rows.join("");
+}
+
 /* 置中新北，並把可視範圍收在市界附近。這個系統只處理新北市，地圖漂到南投
    對使用者沒有意義，只會讓人以為資料掉了。 */
 function fitNTPC() {
@@ -357,14 +487,50 @@ function refitOnLayout() {
   }).observe(bar);
 }
 
+/* ── 標記依裁罰件數著色 ───────────────────────────────
+ *
+ * 這一層畫的是**主管機關已經開罰的紀錄**，不是我們的模型輸出。全國教保資訊網
+ * 依法公開這些紀錄，所以它可以上地圖，而個別機構的風險分數不行
+ * （aws-architecture.md §6.5）。圖例與 tooltip 因此一律寫「歷史裁罰紀錄」，
+ * 不寫「風險」——差別不是修辭，是這張圖能不能對外展示的界線。
+ *
+ * 分級不用等距。實際分布極度右偏：0 件 730 家、1 件 189、2–3 件 175、
+ * 4–6 件 73、7 件以上 46，最多 23 件。用 np/max 做線性色階的話，95% 的園會
+ * 擠在最淺的兩格裡，深色只剩個位數的離群值——地圖會變成「幾乎全白＋幾個黑點」，
+ * 什麼也看不出來。下面這組界線是照實際分位切的。
+ *
+ * ⚠️ 件數會隨**園齡與規模**自然累積：開了 30 年、收 200 人的老牌私立園，
+ * 件數天生比新設小園多。深色代表「累積紀錄多」，不代表「現在比較糟」。
+ * 這句話要出現在 tooltip 裡，不能只寫在文件。
+ */
+const PEN_STEPS = [
+  { min: 7, v: "--k4", label: "7 件以上" },
+  { min: 4, v: "--k3", label: "4–6 件" },
+  { min: 2, v: "--k2", label: "2–3 件" },
+  { min: 1, v: "--k1", label: "1 件" },
+  { min: 0, v: "--k0", label: "無紀錄" },
+];
+
+function penaltyVar(np) {
+  return (PEN_STEPS.find((s) => (np || 0) >= s.min) || PEN_STEPS[PEN_STEPS.length - 1]).v;
+}
+
 function pinIcon(p, flagged) {
-  const size = flagged ? 13 : 10;
+  // 10px 的點在 1,600px 寬的螢幕上只是雜訊，分不出三類顏色。放大到 12／17，
+  // 白色外圈負責跟底圖分離，紅圈負責跳出來。
+  const byPen = state.pinBy === "penalty";
+  // 裁罰模式下「無紀錄」縮一級。全市 730 家（60%）是 0 件，同樣大小的話
+  // 畫面會被基準線淹掉，有紀錄的那 483 家反而看不出來。縮小不是隱藏——
+  // 點還在、還能點開卷宗，只是不搶視覺。
+  const quiet = byPen && !flagged && !(p.np > 0);
+  const size = flagged ? 17 : (quiet ? 8 : 12);
+  const v = byPen ? penaltyVar(p.np) : TVAR[p.t];
   return L.divIcon({
     className: "",
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
     html: `<div class="pin${flagged ? " flag" : ""}" style="width:${size}px;
-      height:${size}px;background:${cssv(TVAR[p.t])}"></div>`,
+      height:${size}px;background:${cssv(v)}"></div>`,
   });
 }
 
@@ -412,7 +578,12 @@ function drawMarkers() {
       ? `${p.n}　當時排第 ${entry.rank} 名`
         + (entry.hit === 1 ? "　→ 後來受罰"
           : entry.hit === null ? "　→ 待觀察" : "　→ 後來未受罰")
-      : `${p.n}（${TYPE[p.t]}·${p.d}）`;
+      : `${p.n}（${TYPE[p.t]}·${p.d}）`
+        // 著色依據是什麼，tooltip 就要說什麼，否則深淺只能用猜的。
+        + (state.pinBy === "penalty"
+          ? `<br>歷來裁罰紀錄 ${p.np || 0} 件`
+            + (p.np ? "（件數隨園齡與規模累積，非現況評價）" : "")
+          : "");
     m.bindTooltip(tip, { direction: "top" });
     m.on("click", () => openDossier(p.i));
     group.addLayer(m);
@@ -434,6 +605,76 @@ function tlBadge(tl) {
     + (tl.point.label_complete ? "" : "　※前瞻窗未走完，為低估");
 }
 
+/* ── 行政區界線與名稱 ─────────────────────────────────
+ *
+ * 界線畫兩趟：先一條寬的紙色墊底，再一條細的深色壓上去。單畫一條深線在
+ * OSM 的路網上會跟主要道路混在一起（同色階、同粗細），在 Google 底圖上又
+ * 會被行政區既有的虛線疊成兩條。墊底那一趟把線從底圖裡「挖」出來，兩種底圖
+ * 都不必各調一次。
+ *
+ * 名字獨立成一層而不是綁在多邊形上，因為兩者的顯示條件不同：界線任何縮放
+ * 都該在，名字放到很大之後只是擋路（那時要回答的是「這條街上是哪一家」）。
+ */
+function ringArea(ring) {
+  let a = 0;
+  for (let i = 0, n = ring.length; i < n; i += 1) {
+    const [x1, y1] = ring[i], [x2, y2] = ring[(i + 1) % n];
+    a += x1 * y2 - x2 * y1;
+  }
+  return Math.abs(a) / 2;
+}
+
+/* 多邊形的面積加權重心。用外接矩形中心會讓淡水、石碇這類細長或凹形的區把
+   名字放到區外（甚至海上）；重心至少保證落在質量中心附近。只取面積最大的
+   那一環，離島與飛地不該把名字拉走。 */
+function ringCentroid(ring) {
+  let a = 0, cx = 0, cy = 0;
+  for (let i = 0, n = ring.length; i < n; i += 1) {
+    const [x1, y1] = ring[i], [x2, y2] = ring[(i + 1) % n];
+    const f = x1 * y2 - x2 * y1;
+    a += f; cx += (x1 + x2) * f; cy += (y1 + y2) * f;
+  }
+  if (!a) {                                   // 退化成一條線時用端點平均
+    const m = ring.reduce((s, [x, y]) => [s[0] + x, s[1] + y], [0, 0]);
+    return [m[0] / ring.length, m[1] / ring.length];
+  }
+  a *= 3;
+  return [cx / a, cy / a];
+}
+
+/* z11 全市尺度 11px（29 個名字要同時擺得下），z14 以上 20px 封頂。 */
+function districtLabelScale() {
+  const z = state.map.getZoom();
+  return Math.round(Math.max(11, Math.min(20, 11 + (z - 11) * 3)));
+}
+
+function drawDistrictNames() {
+  if (state.dnameLayer) {
+    state.map.removeLayer(state.dnameLayer);
+    state.dnameLayer = null;
+  }
+  if (!state.dnames) return;
+  const size = districtLabelScale();
+  const marks = (state.payload.boundary || []).map((f) => {
+    const biggest = f.poly.reduce((b, r) => (ringArea(r) > ringArea(b) ? r : b), f.poly[0]);
+    const [x, y] = ringCentroid(biggest);
+    return L.marker([y, x], {
+      pane: "swdname",
+      interactive: false,
+      keyboard: false,
+      icon: L.divIcon({
+        className: "",
+        // 寬度給足並置中，Leaflet 才不會把長名字（如「三芝區」以外的四字區）截掉。
+        iconSize: [120, size + 4],
+        iconAnchor: [60, (size + 4) / 2],
+        html: `<div class="dlabel" style="font-size:${size}px;text-align:center">`
+          + `${esc(f.d)}</div>`,
+      }),
+    });
+  });
+  state.dnameLayer = L.layerGroup(marks).addTo(state.map);
+}
+
 async function toggleDistricts(on) {
   if (!on) {
     if (state.districtLayer) state.map.removeLayer(state.districtLayer);
@@ -441,14 +682,14 @@ async function toggleDistricts(on) {
     return;
   }
   const boundary = state.payload.boundary || [];
-  state.districtLayer = L.layerGroup(
-    boundary.flatMap((f) =>
-      f.poly.map((ring) =>
-        L.polygon(ring.map(([x, y]) => [y, x]), {
-          color: cssv("--ink-3"), weight: 1, opacity: 0.5,
-          fill: false, interactive: false,
-        }))),
-  ).addTo(state.map);
+  // 用 polygon 而不是 polyline：資料裡的環未必首尾相接，polygon 會自動閉合，
+  // polyline 則會在每個區留下一道缺口。
+  const rings = boundary.flatMap((f) => f.poly.map((r) => r.map(([x, y]) => [y, x])));
+  const pass = (o) => rings.map((r) => L.polygon(r, { fill: false, interactive: false, ...o }));
+  state.districtLayer = L.layerGroup([
+    ...pass({ color: cssv("--paper"), weight: 3.4, opacity: 0.85 }),
+    ...pass({ color: cssv("--ink-2"), weight: 1.4, opacity: 0.9, dashArray: "5 3" }),
+  ]).addTo(state.map);
 }
 
 /* ── 提案 ─────────────────────────────────────────────── */
@@ -661,10 +902,18 @@ async function ask(question) {
 }
 
 /* ── 地圖控制與花費 ───────────────────────────────────── */
-const LAYER_BOXES = ["f-cluster", "f-districts", "f-mask", "f-flagged"];
+const LAYER_BOXES = ["f-cluster", "f-districts", "f-dnames", "f-mask",
+  "f-flagged", "f-choro"];
 
 function syncLayerCount() {
   $("layern").textContent = LAYER_BOXES.filter((id) => $(id).checked).length;
+}
+
+/* 時間軸抽屜。timeline.js 進入回測模式時也會叫它，不然拖桿在收起來的狀態下
+   被程式碰到，畫面不會有任何反應。 */
+function timelineDock(on) {
+  $("tlbar").hidden = !on;
+  $("tlpill").setAttribute("aria-expanded", String(on));
 }
 
 function showLayers(on) {
@@ -760,6 +1009,24 @@ $("f-flagged").addEventListener("change", (e) => {
   state.flaggedOnly = e.target.checked; drawMarkers();
 });
 $("f-districts").addEventListener("change", (e) => toggleDistricts(e.target.checked));
+$("f-dnames").addEventListener("change", (e) => {
+  state.dnames = e.target.checked; drawDistrictNames();
+});
+$("f-choro").addEventListener("change", (e) => {
+  state.choro = e.target.checked; drawChoro();
+});
+/* 切換標記著色依據。圖例跟著換：留著上一個模式的圖例比沒有圖例更糟——
+   看的人會拿機構類別的三色去讀裁罰深淺。 */
+document.querySelectorAll("#pinby button").forEach((b) =>
+  b.addEventListener("click", () => {
+    state.pinBy = b.dataset.p;
+    document.querySelectorAll("#pinby button")
+      .forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    $("pen-grp").hidden = state.pinBy !== "penalty";
+    drawPenaltyLegend();
+    drawMarkers();
+  }));
+$("tlpill").addEventListener("click", () => timelineDock($("tlbar").hidden));
 $("f-mask").addEventListener("change", (e) => {
   state.mask = e.target.checked; applyMask(state.mask);
 });
@@ -778,6 +1045,7 @@ document.querySelectorAll(".tabs button").forEach((b) =>
       pane.hidden = pane.id !== `pane-${b.dataset.t}`;
     });
     if (b.dataset.t === "scan" && window.SWScan) window.SWScan.open();
+    if (b.dataset.t === "timeline") timelineDock(true);
   }));
 $("chatform").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -792,11 +1060,11 @@ document.addEventListener("click", (e) => {
 });
 
 /* 掃描分頁（scan.js）需要這些；集中匯出一次，不要讓它去翻全域變數。 */
-window.SW = { api, post, $, esc, nf, state, openDossier, TYPE, drawMarkers, refresh };
+window.SW = { api, post, $, esc, nf, state, openDossier, TYPE, drawMarkers, refresh,
+  timelineDock };
 
 boot().catch((e) => {
   document.body.insertAdjacentHTML("afterbegin",
     `<div style="padding:1.5rem;color:#B23A2F">啟動失敗：${esc(e.message)}<br>
      請先執行 <code>PYTHONPATH=src .venv/bin/python scripts/build_frontend.py</code></div>`);
 });
-

@@ -80,8 +80,41 @@
             <h2>圖層</h2>
             <label class="opt"><input type="checkbox" id="f-cluster" checked>標記群集</label>
             <label class="opt"><input type="checkbox" id="f-districts">行政區界線</label>
+            <label class="opt"><input type="checkbox" id="f-dnames" checked>行政區名稱</label>
             <label class="opt"><input type="checkbox" id="f-mask" checked>新北以外反灰</label>
             <label class="opt"><input type="checkbox" id="f-flagged">只顯示複查名單</label>
+            <label class="opt"><input type="checkbox" id="f-choro" checked>行政區優先度底色</label>
+          </div>
+
+          <!-- 標記顏色要嘛講「這是哪一類機構」，要嘛講「它被罰過幾次」。
+               兩者都是既有的公開事實；我們算出來的風險分數不上地圖
+               （見 docs/architecture/aws-architecture.md §6.5）。 -->
+          <div class="grp">
+            <h2>標記著色</h2>
+            <div class="seg" id="pinby">
+              <button data-p="type" aria-pressed="true">機構類別</button>
+              <button data-p="penalty">歷史裁罰件數</button>
+            </div>
+          </div>
+
+          <!-- 這一層畫的是主管機關**已經開罰**的公開紀錄，不是我們算的分數。
+               所以它可以上地圖，但用詞不能滑向「風險」。 -->
+          <div class="grp" id="pen-grp" hidden>
+            <h2>歷史裁罰件數</h2>
+            <div class="legend" id="pen-legend"></div>
+            <p class="note">全國教保資訊網公告之<b>裁罰紀錄件數</b>，非風險評分。<br>
+              ⚠️ 件數隨<b>園齡與規模</b>自然累積：老牌大園天生偏多，深色不等於現在比較糟。<br>
+              無紀錄畫成灰色而非綠色——0 件是<b>沒有紀錄</b>，不是合規證明。</p>
+          </div>
+
+          <!-- 這一層回答的是出題端真正要問的問題：人力先派到哪一區。
+               單位是「若依模型排序抽前 100 名，這一區會有幾家進榜」——
+               不是危險程度，是建議查核的密度。 -->
+          <div class="grp">
+            <h2>行政區優先度</h2>
+            <div class="legend" id="choro-legend"></div>
+            <p class="note">底色＝該區進入<b>全市前 100 名</b>的家數。
+              放大到街廓尺度會自動淡出，讓底圖回到可讀狀態。</p>
           </div>
 
           <div class="grp">
@@ -95,14 +128,18 @@
             <p class="note">顏色代表<b>機構類別</b>，不是風險高低。<br>
               紅圈為本批建議查核。</p>
           </div>
+
+
         </div>
       </div>
 
       <div class="mapbadge" id="mapbadge">—</div>
 
-      <!-- 時間軸：把時鐘倒回去，看當時的排序後來對不對。
+      <!-- 時間軸預設收成左下角一顆小 bar：它是「證明這套排序有效」的證據，
+           不是每天要用的操作面板，沒理由常駐吃掉地圖下緣。
            右設限的格子以虛線標出，不與完整觀察的格子連成同一條趨勢線。 -->
-      <div class="tlbar" id="tlbar">
+      <div class="tldock" id="tldock">
+      <div class="tlbar" id="tlbar" hidden>
         <div class="tlhead">
           <b>時間軸回測</b>
           <span class="tlsub">每一格都重新訓練一次，只用當天看得到的資料</span>
@@ -125,6 +162,11 @@
           <i class="tlpin tl-live"></i>待觀察
           <i class="tlpin tl-out"></i>未排入
         </div>
+      </div>
+      <button class="tlpill" id="tlpill" aria-expanded="false">
+        <span class="tldot"></span>時間軸回測
+        <span class="tlpillsub" id="tlpillsub">2021–今天 · 逐年重訓</span>
+      </button>
       </div>
     </div>
 
@@ -172,6 +214,19 @@
     四個完整觀察年度，每年各自重新訓練）平均 AUC 0.658，前 100 名命中率為隨機
     抽查的 2.29 倍；詳見「時間軸」分頁。全市 94.8% 的園無公開財報，對這些園
     而言那是涵蓋範圍限制，不是合規證明。
+    <!-- CC-BY 的標註是授權條件不是禮貌：上游明訂「Data is compatible with CC-BY
+         license. When using this data, please attribute to ap.ece.moe.edu.tw」。
+         標註要出現在使用者看得到的地方，不能只寫在 repo 的 markdown 裡。 -->
+    <span class="src">
+      機構基本資料、裁罰紀錄與收費明細來源：<a
+        href="https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx"
+        target="_blank" rel="noopener">全國教保資訊網</a>（教育部），
+      經 <a href="https://github.com/kiang/ap.ece.moe.edu.tw" target="_blank"
+        rel="noopener">kiang/ap.ece.moe.edu.tw</a> 鏡像取得（江明宗維護，
+      程式碼 MIT、資料 CC-BY）。地圖圖磚 © <a
+        href="https://www.openstreetmap.org/copyright" target="_blank"
+        rel="noopener">OpenStreetMap</a> 貢獻者。
+    </span>
   </footer>
 </div>
 

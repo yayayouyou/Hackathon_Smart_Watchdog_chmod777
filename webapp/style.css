@@ -1,25 +1,52 @@
 :root{
   --ink:#14202A; --ink-2:#3D4E5C; --ink-3:#6B7C8A; --ink-4:#93A2AE;
   --paper:#EFF3F5; --panel:#FFFFFF; --sunk:#E6EDF0; --rule:#CFD9E0;
-  --pub:#12798F; --np:#6E4C9C; --prv:#96745A;
+  --pub:#2A78D6; --np:#EB6834; --prv:#1BAF7A;
+  /* 行政區優先度色階：單一色相由淺到深（稽查紅家族）。這是「建議查核密度」
+     不是「危險程度」，用詞與圖例都要守住這條界線。 */
+  --c1:#ECCECB; --c2:#DCA6A1; --c3:#C9756D; --c4:#B23A2F;
+  /* 標記依「歷史裁罰件數」著色時的色階。**刻意不用上面的稽查紅家族**：那一族
+     講的是我們算出來的「建議查核密度」，這一族講的是主管機關已經開罰的**公開
+     事實**。兩者在同一張圖上同時出現，色相必須分得開，否則會被讀成同一件事。
+     --k0 是「無紀錄」，用中性灰而不是綠色——0 件不等於安全，全市 60% 的園是 0，
+     把它畫成綠色等於發了 730 張合格證。 */
+  /* ⚠️ 亮度必須單調遞減。第一版 --k0 取 #9AA8B4（中灰）、--k1 取 #CDBBDD
+     （極淺紫），結果「被罰過 1 件」畫出來比「無紀錄」還淺——色階反了，
+     而且是在截圖上才看出來的。--k0 改成淺中性灰：它既要比任何一級紫都淺，
+     又要在色相上與紫族分開，因為「無紀錄」不是這個量尺上的最小值，
+     是「不在這個量尺上」。 */
+  --k0:#C8D0D7; --k1:#C4A9DA; --k2:#9E72C0; --k3:#7340A0; --k4:#4A1D78;
+  /* 行政區名稱：字本身用 ink，光暈用紙色，這樣在 OSM 與 Google 兩種底圖上都讀得到。 */
+  --dlabel:#24323C; --dlabel-halo:#FFFFFFE0;
   --seal:#B23A2F; --seal-soft:#B23A2F14;
   --warn:#B07A16; --warn-soft:#B07A1614; --good:#2C7A5B;
   --shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;
   /* 新北以外的**陸地**蓋這一層（海不蓋）。不是純灰——留一點藍才壓得住
      OSM 的黃綠底。--mask-line 是鄰縣市之間的界，--edge 是新北市界本身：
      市界要比縣市界重，它是這張圖唯一需要一眼認出的邊。 */
-  --mask:#A7B6C1; --mask-op:.84; --mask-line:#6E8090; --edge:#243542;
+  --mask:#B9C6CF; --mask-op:.62; --mask-line:#7D8E9C; --edge:#243542;
   --sans:"IBM Plex Sans","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
   --mono:"IBM Plex Mono","PingFang TC",ui-monospace,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --ink:#DEE6EC; --ink-2:#A8B6C1; --ink-3:#7A8894; --ink-4:#5D6A76;
   --paper:#0E141A; --panel:#161E26; --sunk:#0A0F14; --rule:#2A3641;
-  --pub:#3FA9C0; --np:#A487D4; --prv:#C39A78;
+  --pub:#2A78D6; --np:#EB6834; --prv:#1BAF7A;
+  --c1:#ECCECB; --c2:#DCA6A1; --c3:#C9756D; --c4:#B23A2F;
+  /* 暗色底圖上整族要往亮的方向移，否則深紫與底圖糊在一起。 */
+  /* 方向與亮色主題一致（深＝多）。標記本來就有 2px 白色外圈保證可見度，
+     不必為了暗底把色階反過來——反過來會讓切換主題時「深＝多」突然變成
+     「淺＝多」，同一個人看同一張圖得到相反的結論。整族只往上提亮度，
+     避免最深的兩級在暗底上糊成同一塊。 */
+  --k0:#7D8B97; --k1:#C9B0DE; --k2:#A87FCB; --k3:#8655B2; --k4:#653A91;
+  /* ⚠️ 行政區名稱**不跟著暗色主題翻**。暗色主題翻的是 UI 外殼，OSM／Google
+     的圖磚沒有暗色版，字底下永遠是亮的。第一版跟著翻成白字深外框，結果在
+     亮圖磚上只剩外框在撐——截圖才看出來。字色要跟著**圖磚**走，不是跟著
+     主題走，所以這裡刻意不覆寫 --dlabel／--dlabel-halo。 */
   --seal:#E4695A; --seal-soft:#E4695A1F;
   --warn:#D4A03C; --warn-soft:#D4A03C1F; --good:#5AAE86;
   --shadow:0 1px 2px #0007, 0 6px 16px #0005;
-  --mask:#070D12; --mask-op:.8; --mask-line:#2F3E4A; --edge:#9FB6C6;
+  --mask:#25333E; --mask-op:.55; --mask-line:#485A68; --edge:#BBD0DD;
 }}
 /* 作者樣式一律勝過瀏覽器預設樣式，與特異性無關。`.pane{display:flex}` 與
  * `.dossier{display:flex}` 因此蓋掉了 UA 的 `[hidden]{display:none}`：
@@ -98,6 +125,13 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 390px;min-height:0}
 .seg button[aria-pressed="true"]{background:var(--seal-soft);color:var(--ink);font-weight:500}
 .seg button[disabled]{opacity:.45;cursor:not-allowed}
 .note{font-size:11px;color:var(--ink-3);line-height:1.5;margin:0}
+.legend{display:flex;flex-direction:column;gap:3px}
+.legend div{display:flex;align-items:center;gap:7px;font-size:11.5px;
+  color:var(--ink-2)}
+.legend i{width:16px;height:10px;border-radius:2px;flex:none;
+  border:1px solid #00000018}
+.legend b{margin-left:auto;font-family:var(--mono);font-size:10.5px;
+  color:var(--ink-3);font-weight:400}
 
 /* 地圖上的圖層控制：收起來只有一顆鈕，展開才佔畫面。放右上角是因為
    Leaflet 的縮放鈕固定在左上角，兩個控制不該擠在同一角。 */
@@ -118,12 +152,37 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 390px;min-height:0}
 /* map */
 .mapwrap{position:relative;min-width:0;min-height:0}
 #map{width:100%;height:100%;background:var(--sunk)}
-.mapbadge{position:absolute;left:12px;bottom:22px;z-index:500;background:var(--panel);
+.mapbadge{position:absolute;right:12px;bottom:26px;z-index:500;background:var(--panel);
   border:1px solid var(--rule);border-radius:3px;padding:3px 9px;font-size:11px;
   color:var(--ink-3);box-shadow:var(--shadow);font-family:var(--mono)}
 .leaflet-container{font-family:var(--sans)}
-.pin{border-radius:50%;border:1.5px solid #fff;box-shadow:0 0 0 .5px #0003}
-.pin.flag{box-shadow:0 0 0 2.5px var(--seal)}
+/* 白色外圈是「疊在圖磚上」的必要條件：沒有它，標記會跟底圖的綠地、
+   水域糊在一起。紅圈＝本批建議查核，套在白圈外面。 */
+.pin{border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 .5px #00000040}
+.pin.flag{box-shadow:0 0 0 3px var(--seal), 0 0 0 4px #ffffffcc}
+
+/* 行政區名稱。
+ *
+ * 白色光暈（四向 text-shadow）不是裝飾：底下可能是 OSM 的黃綠、Google 的灰白、
+ * 或行政區優先度底色的深紅，任何單一字色都會在其中一種底下消失。光暈讓字與
+ * 底圖解耦，兩種底圖、明暗兩個主題都不必各調一次。
+ *
+ * `pointer-events:none` 讓名字不吃點擊——它是註記不是控制項，蓋住底下的機構
+ * 標記會讓人點不到園。字級由 JS 依縮放調整（見 app.js::districtLabelScale）。 */
+.dlabel{color:var(--dlabel);font-weight:700;letter-spacing:.12em;white-space:nowrap;
+  pointer-events:none;font-family:var(--sans);line-height:1;
+  text-shadow:0 1px 0 var(--dlabel-halo),0 -1px 0 var(--dlabel-halo),
+              1px 0 0 var(--dlabel-halo),-1px 0 0 var(--dlabel-halo),
+              0 0 6px var(--dlabel-halo)}
+
+/* 群集泡泡改成中性灰藍。預設的綠／黃／橘是另一套「多寡」色階，會跟機構
+   類別的三色、以及行政區底色搶同一個視覺通道——低縮放時畫面該由行政區
+   底色講話，群集只負責報數量。 */
+.marker-cluster-small,.marker-cluster-medium,.marker-cluster-large{
+  background:#FFFFFF66}
+.marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{
+  background:#FFFFFFF2;color:#14202A;box-shadow:0 0 0 1px #14202a33}
+.marker-cluster div{font-family:var(--mono);font-weight:600;font-size:11.5px}
 
 /* right */
 .side{position:relative;display:flex;flex-direction:column;min-height:0;
@@ -220,6 +279,11 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 390px;min-height:0}
   display:flex;gap:8px;flex-wrap:wrap}
 footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel);
   font-size:11px;color:var(--ink-3);line-height:1.55}
+/* 來源標註。CC-BY 要求標註要看得見，所以它降一級但不隱藏——分行獨立成一段，
+   讓它跟上面那段「這是建議查核不是違法認定」的界線宣告分開讀。 */
+footer .src{display:block;margin-top:5px;padding-top:5px;
+  border-top:1px dashed var(--rule);font-size:10.5px;color:var(--ink-4)}
+footer .src a{color:var(--ink-3)}
 
 /* ── 掃描主控台 ───────────────────────────────────────────
    金額是這一頁的主角：費用數字用最大的字級，其他一律讓位。
@@ -334,11 +398,22 @@ footer{padding:8px 20px;border-top:1px solid var(--rule);background:var(--panel)
  * 三種結果的顏色刻意不共用機構類別的色票（--pub/--np/--prv）：那三色代表
  * 「是哪一種園」，這三色代表「當時排進去了嗎、後來出事了嗎」。同一個畫面
  * 用同一組顏色講兩件事，就沒人看得懂命中率了。 */
-.tlbar{position:absolute;left:12px;right:12px;bottom:52px;z-index:600;
+/* 時間軸是「證明這套排序有效」的證據，不是每天要用的操作面板——預設收成
+   左下角一顆小 bar，點開才展開。 */
+.tldock{position:absolute;left:12px;bottom:22px;z-index:600;display:flex;
+  flex-direction:column;align-items:flex-start;gap:7px}
+.tlpill{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-2);
+  background:var(--panel);border:1px solid var(--rule);border-radius:16px;
+  padding:5px 13px 5px 10px;box-shadow:var(--shadow)}
+.tlpill:hover{color:var(--ink)}
+.tlpill[aria-expanded="true"]{color:var(--ink);border-color:var(--ink-4)}
+.tldot{width:7px;height:7px;border-radius:50%;background:var(--seal);flex:none;
+  box-shadow:0 0 0 3px var(--seal-soft)}
+.tlpillsub{color:var(--ink-4);font-size:11px}
+.tlbar{position:static;width:min(72vw,720px);max-width:calc(100vw - 460px);
   background:var(--panel);border:1px solid var(--rule);border-radius:8px;
-  box-shadow:var(--shadow);padding:10px 14px 12px;
-  opacity:.92;transition:opacity .15s}
-.tlbar:hover,.tlbar.active{opacity:1}
+  box-shadow:var(--shadow);padding:10px 14px 12px}
+@media(max-width:860px){.tlbar{max-width:calc(100vw - 40px)}}
 .tlhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .tlhead b{font-size:13px}
 .tlsub{color:var(--ink-3);font-size:12px;flex:1}
