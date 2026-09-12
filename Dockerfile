@@ -43,6 +43,14 @@ ENV PYTHONPATH=/app/src \
 # build 就失敗，不要等到服務起來才發現 /api/payload 是空的。
 RUN python scripts/build_frontend.py
 
+# 文件控管室（02）的切片。同樣在 build 時產生：
+#   - 輸出在 `data/interim/`，而那個目錄被 .dockerignore 排除，所以不能靠 COPY。
+#   - 少了它，`/api/dataroom/*` 全部回 503，那一室在畫面上是一行錯誤訊息，
+#     而其餘四室看起來都正常——最難聯想到是建映像時漏了一步。
+# 它會讀 data/raw 去找原始 PDF 檔名，但 data/raw 不進映像（1.8 GB，且主辦方
+# 資料不得轉散布）。實測過：找不到就跳過，切片照樣完整（6.7 MB）。
+RUN python scripts/build_dataroom_slice.py
+
 EXPOSE 8080
 
 # 資料庫預設仍是 SQLite（容器內，重啟即失去帳號與稽核軌跡）。

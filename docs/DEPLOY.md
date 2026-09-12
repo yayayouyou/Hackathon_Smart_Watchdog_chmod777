@@ -207,3 +207,34 @@ Bedrock 連不上時，誠實說明，然後把重心切到**不需要即時 LLM
   要在雲端展示截圖，得先在有原始 PDF 的機器上渲染好再放 S3。
 - **`data/runtime` 不進映像**，所以容器重啟會失去帳號與稽核軌跡。
   接 RDS 才會留下來。
+
+## 九、2026-09-13 實際部署紀錄（照這個做過一次，全部驗證通過）
+
+入口是 **ALB**，不是任務的公開 IP——任務一重啟 IP 就換，發出去的網址會死。
+
+| 資源 | 名稱 | 備註 |
+|---|---|---|
+| ALB | `watchdog-alb` | internet-facing，HTTP:80，網址見 `aws elbv2 describe-load-balancers` |
+| Target group | `watchdog-tg` | **target-type 必須是 `ip`**（Fargate 的 awsvpc 沒有 instance）；健康檢查 `/api/health` |
+| ALB 安全群組 | `watchdog-alb` | 80 ← 0.0.0.0/0（不限 IP） |
+| 容器安全群組 | 原本那個 | 8080 **只接受** ALB 安全群組，不再對 0.0.0.0/0 開 |
+| 服務 | `watchdog/watchdog` | health-check grace 120 秒，冷啟動時才不會被 ALB 判死 |
+| 映像標籤 | `latest` = `deploy-0913`；`rollback-0913` = 部署前的舊版 | 退回：任務定義映像改成 `:rollback-0913` 再強制部署 |
+
+踩到、而且會再踩的三件事：
+
+1. **文件控管室的切片要在建映像時產生。** 它輸出到 `data/interim/dataroom/`，
+   而 `.dockerignore` 排除整個 `data/interim/`，所以不能靠 COPY。Dockerfile
+   現在有 `RUN python scripts/build_dataroom_slice.py`。它會讀 `data/raw`
+   找原始 PDF 檔名，但找不到會跳過，切片照樣完整（6.7 MB）。
+   少了這一步，其他四室都正常、只有 02 整室是一行 503——最難聯想到是 build 漏了。
+2. **zsh 會吃掉 `$REPO:latest` 的 `:l`。** 它把 `:l` 當成「轉小寫」修飾符，
+   推出去的名字變成 `watchdogatest`，然後報「repository 不存在」。一律寫
+   `"${REPO}:latest"`。
+3. **任務定義裡的環境變數是部署當下的快照。** workshop 的 AWS 臨時金鑰會過期，
+   換金鑰要**註冊新的任務定義 revision** 再強制部署，改 `.env` 不會影響雲端。
+   快速登入需要三個變數同時在：`QUICK_LOGIN_ENABLED=true`、`SEED_ADMIN_EMAIL`、
+   `SEED_ADMIN_PASSWORD`（容器啟動時 `seed_users.py` 會依它們建帳號）。
+
+本機先驗再推：`docker run -p 8090:8080 --env-file .env -e DATABASE_URL= watchdog:new`，
+確認 `/api/dataroom/overview`、`/api/auth/options` 都是 200，才推 ECR。
