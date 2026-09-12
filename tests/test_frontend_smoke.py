@@ -249,3 +249,34 @@ def test_list_template_only_reads_fields_that_points_carry() -> None:
         f"drawList 讀了點位表沒有的欄位 {missing}；"
         "助理點名機構時清單會靜默停在上一次的內容"
     )
+
+
+def test_step_blocks_are_not_keyed_by_a_document_wide_id() -> None:
+    """步驟區塊不可以用 `step-<step_id>` 這種全域 DOM id 去認領。
+
+    後端的 `step_id` **每一輪都從 1 重新編號**（`loop.py` 的
+    `for step in range(1, MAX_STEPS + 1)`），只有 `turn` 會累加。用 step_id 當
+    全域 id 的話，第二輪的第一步會找到第一輪的第一步並就地覆寫：
+    送出第二句話之後，畫面上不會多出任何東西，而上面的內容被改掉；
+    同一個 `.say` 還會同時跑兩個打字動畫，把句子截成殘句。
+
+    這個 bug 只能靠「送出第二句話」才會出現，前五分鐘的手動測試全都測不到它。
+    """
+    src = (WEBAPP / "agent.js").read_text(encoding="utf-8")
+    assert not re.search(r"getElementById\(\s*`step-", src), (
+        "stepBlock 用全域 DOM id 認領步驟；第二輪起會覆寫第一輪的步驟"
+    )
+    assert not re.search(r"\bid\s*=\s*`step-", src), (
+        "步驟區塊仍帶著 `step-<step_id>` 這個會跨輪相撞的 id"
+    )
+
+
+def test_the_step_table_is_cleared_when_a_turn_starts() -> None:
+    """每輪要換一張新表，否則第二輪的 step 1 會拿到第一輪的元素——
+    跟用全域 id 是同一個 bug，只是換個容器。"""
+    src = (WEBAPP / "agent.js").read_text(encoding="utf-8")
+    body = src[src.index("async function send("):]
+    body = body[:body.index("\n  function ")] if "\n  function " in body else body
+    assert re.search(r"steps\s*=\s*new Map\(\)", body), (
+        "send() 沒有把上一輪的步驟表清掉"
+    )

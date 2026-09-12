@@ -224,16 +224,30 @@
     load_skill: "載入作業指引",
   };
 
+  /* 這一輪的步驟區塊，key 是 step_id。
+   *
+   * ⚠️ 原本是用 DOM id `step-<step_id>` 去找的，而後端的 `step_id` **每一輪都從
+   * 1 重新編號**（`loop.py` 的 `for step in range(1, MAX_STEPS + 1)`），只有
+   * `turn` 會累加。於是第二輪的第一步會找到第一輪的第一步那個元素，
+   * **就地覆寫**它——新的步驟不會出現在對話末端，而是回頭改寫上面的內容。
+   *
+   * 使用者看到的是「第二句話送出去之後畫面什麼都沒發生」；更糟的是同一個
+   * `.say` 上跑著兩個打字動畫，兩邊交錯寫入，句子會被截成殘句
+   * （實測到「排程已匯出，檔名是稽查排」）。
+   *
+   * 改成每輪一張表之後就沒有跨輪的命名空間可以撞。表在 `send()` 開頭清空。 */
+  let steps = new Map();
+
   /* 取得（或建立）某一步的區塊。`st` 決定圓點：
      run 進行中、ok 完成、no 被擋下、done 收尾（沒有 tool 的純敘述）。 */
   function stepBlock(id, st) {
-    let el = document.getElementById(`step-${id}`);
+    let el = steps.get(id);
     if (!el) {
       el = document.createElement("div");
-      el.id = `step-${id}`;
       el.className = "astep";
       el.innerHTML = '<i class="dot"></i><div class="say"></div><div class="act"></div>';
       log().appendChild(el);
+      steps.set(id, el);
     }
     if (st) el.dataset.st = st;
     log().scrollTop = log().scrollHeight;
@@ -306,6 +320,9 @@
   async function send(text) {
     if (busy || !text.trim()) return;
     busy = true;
+    // 上一輪的步驟區塊留在畫面上，但不要再被這一輪的 step_id 認領——
+    // 後端每輪都從 1 重新編號。
+    steps = new Map();
     $("agentsend").disabled = true;
     bubble(esc(text), "me");
     thinking(true, "連線中");
