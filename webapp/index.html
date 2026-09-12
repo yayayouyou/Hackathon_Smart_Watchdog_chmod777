@@ -150,6 +150,13 @@
       </div>
     </aside>
 
+    <!-- 樓層索引與室內容之間的分隔條。三條直的分隔條（這條、地圖與清單之間、
+         清單與助理之間）走同一支 SW.makeGrip，寬度都寫進 main 的自訂屬性，
+         grid 自己算位置——寫進元素的 inline style 會讓 grip 與被拖的欄各算
+         一次，拖到一半就錯開一格。 -->
+    <div class="vgrip" id="railgrip" role="separator" aria-orientation="vertical"
+         aria-label="調整樓層索引寬度" tabindex="0"></div>
+
     <div class="roomwrap">
       <!-- 室頭：五間房共用同一條。室號、室名、一句說明、右側來源膠囊——
            把「我在哪一間、這裡的數字哪來的」做成每一室都有的常駐元件。 -->
@@ -281,6 +288,11 @@
       </button>
       </div>
     </div>
+
+    <!-- 地圖與清單之間的分隔條。只有地圖室兩者同時存在，其他室 .no-map
+         會把它與地圖一起收掉。 -->
+    <div class="vgrip" id="sidegrip" role="separator" aria-orientation="vertical"
+         aria-label="調整清單寬度" tabindex="0"></div>
 
     <!-- 右欄：目前是清單與卷宗，之後這一欄會讓給 AI 側邊欄。 -->
     <div class="side">

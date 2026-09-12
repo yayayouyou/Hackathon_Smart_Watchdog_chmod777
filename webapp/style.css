@@ -31,6 +31,13 @@
      借過來會讓「支出明細」被讀成「公立機構」。 */
   --fam-core:#3E5C8A; --fam-income:#2E7D6B; --fam-expense:#A15C2B;
   --fam-budget:#6B4E9E; --fam-asset:#4A7A3C; --fam-other:#5C6B78;
+  /* 中庭五間室各自的顏色。**這是識別不是分級**——五個色的明度刻意相近，
+     中庭平面圖、樓層索引、室頭三處用同一個色，「我在哪一間」才是連續的。
+     刻意不重用 --seal／--pub／--np／--prv／--k*／--c*：那些在地圖與名單上
+     各有語意（法遵未通過、公立機構、裁罰件數…），借過來會讓「輿情室」
+     被讀成某種風險等級。五個色都避開紅色系，紅色在這個 app 只屬於 --seal。 */
+  --room-map:#2B5F8F; --room-data:#1E7F72; --room-voice:#B4682A;
+  --room-back:#7A5AA8; --room-letters:#4E7A38;
   --shadow:0 1px 2px #14202a12, 0 6px 16px #14202a0e;
   /* 新北以外的**陸地**蓋這一層（海不蓋）。不是純灰——留一點藍才壓得住
      OSM 的黃綠底。--mask-line 是鄰縣市之間的界，--edge 是新北市界本身：
@@ -128,19 +135,28 @@ input[type=range]{accent-color:var(--seal)}
  * 對話內容留在 DOM 裡，展開回來還在原處，串流中途收合也不會斷。 */
 /* main 只有兩欄：樓層索引 + 房間。房間內部（roombody）才分地圖／名單／助理，
    這樣「非地圖室不要有地圖」只要換 roombody 的欄定義，不必動 main。 */
-main{display:grid;grid-template-columns:214px minmax(0,1fr);min-height:0}
+main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
+  min-height:0}
 .roomwrap{display:flex;flex-direction:column;min-width:0;min-height:0}
 .roombody{flex:1;min-height:0;display:grid;
-  grid-template-columns:minmax(0,1fr) var(--sidew,390px) 6px var(--agentw,380px)}
+  grid-template-columns:minmax(0,1fr) 6px var(--sidew,390px) 6px var(--agentw,380px)}
 /* 除了地圖室，其他室不放地圖——地圖跟輿情、資料、建議書沒有關係，
    擺在那裡只是把畫面切碎。 */
-.roombody.no-map .mapwrap{display:none}
+/* 地圖收掉時，它左邊那條 grip 也要一起收——留著會多出一條拖不動的線，
+   而且會把後面每一欄推移一格。這裡用 display:none 是對的：我們要的就是
+   讓它退出格線。（助理欄收合時不能這樣做，那邊要保住格位，見 agent.js。）*/
+.roombody.no-map .mapwrap,
+.roombody.no-map #sidegrip{display:none}
 .roombody.no-map{grid-template-columns:minmax(0,1fr) 6px var(--agentw,380px)}
 
 /* 室頭：五間房共用。室號與樓層索引、中庭平面圖上的編號是同一組。 */
+/* 上緣那條 3px 的色帶是中庭門楣的延伸——放大進房之後它還在，
+   所以「我從那一格走進來」在視覺上沒有斷掉。 */
 .roomhead{display:flex;align-items:center;gap:10px;padding:9px 18px;
-  background:var(--panel);border-bottom:1px solid var(--rule);flex:none}
-.rh-no{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--seal)}
+  background:var(--panel);border-bottom:1px solid var(--rule);flex:none;
+  box-shadow:inset 0 3px 0 var(--rc, var(--rule))}
+.rh-no{font-family:var(--mono);font-size:12px;font-weight:600;
+  color:var(--rc, var(--ink-3))}
 .rh-name{font-size:17px;font-weight:600}
 .rh-desc{font-size:12.5px;color:var(--ink-3)}
 /* 來源膠囊永遠在同一個位置：可稽核性是常駐元件，不是註腳。 */
@@ -546,9 +562,13 @@ main{display:grid;grid-template-columns:214px minmax(0,1fr);min-height:0}
 
 /* 拖曳把手。6px 太細不好抓，所以用 ::before 往兩側各外擴 4px 當熱區，
    視覺上仍然只有中間那一條線。 */
-.agentgrip{position:relative;cursor:col-resize;background:var(--rule);
-  opacity:.55;transition:opacity .15s}
-.agentgrip::before{content:"";position:absolute;inset:0 -4px;cursor:col-resize}
+/* 三條直分隔條共用。6px 太細抓不到，所以用 ::before 往左右各外擴 4px
+   當作命中區——視覺仍是 6px，手感是 14px。 */
+.vgrip,.agentgrip{position:relative;cursor:col-resize;background:var(--rule);
+  opacity:.55;transition:opacity .15s,background .15s}
+.vgrip::before,.agentgrip::before{content:"";position:absolute;inset:0 -4px;
+  cursor:col-resize}
+.vgrip:hover,.vgrip:focus-visible,.vgrip.drag,
 .agentgrip:hover,.agentgrip:focus-visible,.agentgrip.drag{opacity:1;background:var(--seal)}
 /* 拖曳中整頁禁止選字，否則會一路把右欄的文字反白起來。 */
 body.resizing{user-select:none;cursor:col-resize}

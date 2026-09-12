@@ -36,23 +36,23 @@
      擺在那裡只是把畫面切碎——這是使用者明確要求的。
      `src` 是室頭右側的來源膠囊：每一室都要說得出自己的數字哪來的。 */
   const ROOMS = [
-    { id: "map", no: "01", name: "地圖室", pane: "list", accent: "--seal", map: true,
+    { id: "map", no: "01", name: "地圖室", pane: "list", accent: "--room-map", map: true,
       x: 40, y: 30, w: 505, h: 350, door: { x: 545, y: 210 }, side: "L",
       desc: "全市 1,213 園 · 點一園看判斷原因與紀錄",
       src: "registry · 快照 2026-08-10" },
-    { id: "data", no: "02", name: "資料室", pane: "data", accent: "--pub",
+    { id: "data", no: "02", name: "資料室", pane: "data", accent: "--room-data",
       x: 40, y: 380, w: 505, h: 350, door: { x: 545, y: 550 }, side: "L",
       desc: "原件、逐頁抽取、依表單分類的數字",
       src: "data/extracted · 頁級抽取" },
-    { id: "voice", no: "03", name: "輿情室", pane: "scan", accent: "--good",
+    { id: "voice", no: "03", name: "輿情室", pane: "scan", accent: "--room-voice",
       x: 895, y: 30, w: 505, h: 234, door: { x: 895, y: 150 }, side: "R",
       desc: "民眾 @標註通報、新聞、PTT；未查證線索",
       src: "threads · realtime · 讀庫即時" },
-    { id: "backtest", no: "04", name: "回測室", pane: "timeline", accent: "--warn",
+    { id: "backtest", no: "04", name: "回測室", pane: "timeline", accent: "--room-back",
       x: 895, y: 264, w: 505, h: 233, door: { x: 895, y: 380 }, side: "R",
       desc: "每年重訓一次，看當時的排序後來對不對",
       src: "timeline · 2021–2024" },
-    { id: "letters", no: "05", name: "文書室", pane: "memos", accent: "--ink-3",
+    { id: "letters", no: "05", name: "文書室", pane: "memos", accent: "--room-letters",
       x: 895, y: 497, w: 505, h: 233, door: { x: 895, y: 613 }, side: "R",
       desc: "稽核建議書草稿與派工單",
       src: "report · 143 份" },
@@ -109,28 +109,34 @@
         "aria-label": `${r.no} ${r.name}，${r.desc}` }, roomLayer);
       r.g = g;
       el("rect", { x: r.x, y: r.y, width: r.w, height: r.h, class: "room-fill",
-        fill: cssv(r.accent), opacity: .07 }, g);
+        fill: cssv(r.accent), opacity: .09 }, g);
+      /* 門楣：房間頂端一條實心色帶。五間室在平面圖上原本只差一層 7% 的淡底，
+         遠看幾乎一樣；一條實心帶是最省版面又最分得開的識別。
+         放大進房時它正好變成室頭那條線的延伸。 */
+      el("rect", { x: r.x, y: r.y, width: r.w, height: 8,
+        fill: cssv(r.accent) }, g);
       el("rect", { x: r.x, y: r.y, width: r.w, height: r.h, fill: "none",
-        stroke: cssv("--edge"), "stroke-width": 2.2,
+        stroke: cssv(r.accent), "stroke-width": 2.2, opacity: .55,
         // 放大時線寬不跟著長。沒有它，2.2px 在 2.8 倍下會變成 6px 的粗黑邊。
         "vector-effect": "non-scaling-stroke" }, g);
 
       const tx = r.x + 34;
-      const no = el("text", { x: tx, y: r.y + 44, "font-size": 11,
-        fill: cssv("--ink-4"), "letter-spacing": 2.4 }, g);
+      const no = el("text", { x: tx, y: r.y + 48, "font-size": 12,
+        "font-weight": 600, fill: cssv(r.accent), "letter-spacing": 2.4,
+        "font-family": cssv("--mono") }, g);
       no.textContent = r.no;
-      const nm = el("text", { x: tx, y: r.y + 76, "font-size": 24,
+      const nm = el("text", { x: tx, y: r.y + 80, "font-size": 24,
         "font-weight": 600, fill: cssv("--ink"), "letter-spacing": 2 }, g);
       nm.textContent = r.name;
-      const ds = el("text", { x: tx, y: r.y + 102, "font-size": 12.5,
+      const ds = el("text", { x: tx, y: r.y + 106, "font-size": 12.5,
         fill: cssv("--ink-3") }, g);
       ds.textContent = r.desc;
 
-      const big = el("text", { x: tx, y: r.y + 148, "font-size": 30,
+      const big = el("text", { x: tx, y: r.y + 152, "font-size": 30,
         "font-weight": 500, fill: cssv(r.accent), "font-family": cssv("--mono") }, g);
       big.textContent = counts[r.id] || "—";
       const unit = el("text", { x: tx + String(counts[r.id] || "—").length * 18 + 8,
-        y: r.y + 148, "font-size": 12, fill: cssv("--ink-3") }, g);
+        y: r.y + 152, "font-size": 12, fill: cssv("--ink-3") }, g);
       unit.textContent = r.unit || "";
 
       /* 門：牆上的開口 + 開門弧線。是真的洞，不是按鈕—— */
@@ -139,10 +145,10 @@
       el("rect", { x: dx - 2, y: dy - 26, width: 4, height: 52,
         fill: cssv("--paper") }, g);
       el("path", { d: `M${dx} ${dy - 26} a26 26 0 0 ${inward > 0 ? 1 : 0} ${26 * inward} 26`,
-        fill: "none", stroke: cssv("--ink-4"), "stroke-width": 1.4,
+        fill: "none", stroke: cssv(r.accent), "stroke-width": 1.6,
         "stroke-dasharray": "3 3", class: "room-door" }, g);
       const en = el("text", { x: dx + 34 * inward, y: dy + 4, "font-size": 11,
-        fill: cssv("--seal"), class: "room-enter",
+        fill: cssv(r.accent), "font-weight": 600, class: "room-enter",
         "text-anchor": inward > 0 ? "start" : "end" }, g);
       en.textContent = "進入 ›";
 
@@ -439,6 +445,10 @@
   /* 室頭 + 版面。五間房走同一條路，差別只在 `r.map` 與 `r.pane`——
      每一室各寫一次進場邏輯，第六間房出現時就會有一間忘了同步。 */
   function dressRoom(r) {
+    // 室頭掛上這一室的顏色。中庭的門楣、樓層索引的色條、室頭這條線用同一個色，
+    // 「我在哪一間」在三個畫面之間才是連續的。
+    const head = document.querySelector(".roomhead");
+    if (head) head.style.setProperty("--rc", cssv(r.accent));
     $("rh-no").textContent = r.no;
     $("rh-name").textContent = r.name;
     $("rh-desc").textContent = r.desc;
@@ -505,8 +515,11 @@
       b.type = "button";
       b.className = "rail-item";
       if (r.id === current.id) b.setAttribute("aria-current", "true");
-      b.innerHTML = `<span class="rail-no">${r.no}</span>${r.name}`
-        + `<span class="rail-n">${counts[r.id] || ""}</span>`;
+      // 每一列掛上該室的顏色，樓層索引與中庭平面圖用同一組色。
+      b.style.setProperty("--rc", cssv(r.accent));
+      // 統計數字拿掉了：五個不同單位的數字（園數、份數、則數、倍數）排在
+      // 同一欄互相沒有可比性，只是把索引變吵。真正的數字在各室的室頭。
+      b.innerHTML = `<span class="rail-no">${r.no}</span>${r.name}`;
       b.addEventListener("click", () => {
         if (r.id === current.id) return;
         state.room = r;
