@@ -19,9 +19,20 @@
 
   /* ── 畫面動作分派 ────────────────────────────────────── */
 
-  function switchTab(name) {
+  /* 換到某一室。`done` 在那一室真的就位之後才呼叫。
+   *
+   * 為什麼要有回呼：在中庭時進房是一段 880ms 的動畫，而助理常常是「切到地圖
+   * 室、然後飛到蘆洲區」連著做。不等就位就飛，飛行會被進房收尾的 fitNTPC()
+   * 拉回全市——畫面上看起來是「它說飛過去了，但沒有」。
+   *
+   * `Lobby.goto()` 接不下時（動畫進行中）才退回去點那顆隱藏的分頁鈕。那條路
+   * 只換 pane、不動室頭與樓層索引，是備援不是正解。 */
+  function switchTab(name, done) {
+    const run = done || (() => {});
+    if (window.Lobby && window.Lobby.goto && window.Lobby.goto(name, run)) return;
     const btn = document.querySelector(`.tabs button[data-t="${name}"]`);
     if (btn) btn.click();
+    run();
   }
 
   function applyTypeFilter(typeName) {
@@ -99,26 +110,33 @@
   /* 六種 ui_action。型別由後端的 UI_ACTION_TYPES 限定，這裡只負責接。 */
   function dispatch(a) {
     switch (a.type) {
-      case "navigate":
-        if (a.tab) switchTab(a.tab);
-        if (a.focus_town) flyToDistrict(a.focus_town);
-        if (a.institution_id) SW.openDossier(a.institution_id);
-        if (Array.isArray(a.ids) && a.ids.length) {
-          SW.state.agentIds = new Set(a.ids);
-          repaint();
-        }
+      /* ⚠️ 換室之後的動作一律放進回呼。從中庭進房要 880ms，而且收尾會重算
+         地圖視野——不等就位就飛，飛行會被拉回全市。 */
+      case "navigate": {
+        const then = () => {
+          if (a.focus_town) flyToDistrict(a.focus_town);
+          if (a.institution_id) SW.openDossier(a.institution_id);
+          if (Array.isArray(a.ids) && a.ids.length) {
+            SW.state.agentIds = new Set(a.ids);
+            repaint();
+          }
+        };
+        if (a.tab) switchTab(a.tab, then); else then();
         break;
+      }
 
       case "set_filters": {
-        if (a.tab) switchTab(a.tab);
-        const f = a.filters || {};
-        if (f.type) applyTypeFilter(f.type);
-        if (a.focus_town) flyToDistrict(a.focus_town);
-        if (a.map) applyMapView(a.map);
-        if (Array.isArray(a.ids)) {
-          SW.state.agentIds = a.ids.length ? new Set(a.ids) : null;
-        }
-        repaint();
+        const then = () => {
+          const f = a.filters || {};
+          if (f.type) applyTypeFilter(f.type);
+          if (a.focus_town) flyToDistrict(a.focus_town);
+          if (a.map) applyMapView(a.map);
+          if (Array.isArray(a.ids)) {
+            SW.state.agentIds = a.ids.length ? new Set(a.ids) : null;
+          }
+          repaint();
+        };
+        if (a.tab) switchTab(a.tab, then); else then();
         break;
       }
 

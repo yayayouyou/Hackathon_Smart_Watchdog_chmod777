@@ -458,3 +458,65 @@ def test_settling_only_touches_the_current_turn() -> None:
     body = body[:body.index("\n  }") + 4]
     assert "steps.values()" in body, "settle() 沒有用這一輪的步驟表"
     assert "querySelectorAll" not in body, "settle() 掃了整個對話區，會動到舊的輪次"
+
+
+def test_the_agent_switches_rooms_not_just_panes() -> None:
+    """換室要走房間系統，不能只點那顆隱藏的分頁鈕。
+
+    分頁鈕只換中間那塊 `.pane`；室頭、樓層索引、中庭全都不動。實測助理切到
+    回測室之後，室頭還寫著「01 地圖室　全市 1,213 園 · 點一園看判斷原因與
+    紀錄」——中間是回測室的內容，抬頭是地圖室的說明。
+
+    更嚴重的是使用者還在中庭的時候：中庭是整片覆蓋的，助理做的一切都在它
+    底下，完全看不到。走房間系統才會把人帶進去。
+    """
+    agent = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    lobby = (WEBAPP / "lobby.js").read_text(encoding="utf-8")
+    assert "Lobby.goto" in agent, "助理換室沒有走房間系統"
+    assert re.search(r"window\.Lobby\s*=\s*\{[^}]*\bgoto\b", lobby, re.S), (
+        "lobby.js 沒有對外開放換室的入口"
+    )
+
+
+def test_work_that_follows_a_room_change_waits_for_the_room() -> None:
+    """換室之後的動作一律要等那一室就位。
+
+    從中庭進房是 880ms 的動畫，而且收尾會重算地圖視野。不等就做的話，
+    助理的「飛到蘆洲區」會被重算拉回全市——實測：清單正確是蘆洲 20 筆，
+    地圖卻停在全市，而它還說「地圖已飛過去」。
+    """
+    agent = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    body = agent[agent.index("function dispatch("):]
+    for case in ("navigate", "set_filters"):
+        seg = body[body.index(f'case "{case}":'):]
+        seg = seg[:seg.index("\n      case ") if "\n      case " in seg else len(seg)]
+        assert "switchTab(a.tab, then)" in seg, f"{case} 沒有把後續動作交給回呼"
+        assert "const then = () =>" in seg, f"{case} 沒有把後續動作包成回呼"
+        # 直接呼叫等於不等就位。
+        assert not re.search(r"^\s{8}if \(a\.focus_town\) flyToDistrict", seg, re.M), (
+            f"{case} 仍在回呼外直接移動地圖"
+        )
+
+
+def test_switching_between_rooms_does_not_refit_the_map() -> None:
+    """室與室之間切換時不可以重算地圖視野。
+
+    重算是為了「中庭蓋著的期間版面可能變過」而存在的。室與室之間版面沒變，
+    而 `fitNTPC()` 會把視野拉回全市——助理先切室再飛過去就會被拉回來。
+
+    完成回呼也必須排在重算之後，否則一樣會被蓋掉。
+    """
+    lobby = (WEBAPP / "lobby.js").read_text(encoding="utf-8")
+    assert "function showRoom(r, refit, done)" in lobby, (
+        "showRoom 沒有把重算與完成回呼變成可控的"
+    )
+    assert "showRoom(r, false, done)" in lobby, "室與室之間切換仍會重算地圖"
+    assert "showRoom(r, true, done)" in lobby, "從中庭進房沒有重算地圖"
+
+    # 比對先後要看程式碼，不是註解——這一段的註解裡就寫著 fitNTPC()，
+    # 不剝掉的話它永遠排在最前面，這條斷言就恆為真。
+    fn = _code(lobby)[_code(lobby).index("function showRoom(r, refit, done)"):]
+    fn = fn[:fn.index("\n  function ")]
+    assert fn.index("fitNTPC") < fn.index("if (done) done();"), (
+        "完成回呼排在重算之前，助理接著做的地圖移動會被拉回全市"
+    )

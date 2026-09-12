@@ -389,14 +389,14 @@
     return `translate(${tx}px, ${ty}px) scale(${sc})`;
   }
 
-  function enter(id) {
+  function enter(id, done) {
     if (state.busy) return;
     const r = ROOMS.find((x) => x.id === id);
     if (!r) return;
     state.busy = true;
     state.room = r;
 
-    if (reduced) { showRoom(r); return; }
+    if (reduced) { showRoom(r, true, done); return; }
 
     const lobby = $("lobby");
     const tip = $("dogtip");
@@ -417,7 +417,7 @@
     setTimeout(() => moveDog(KENNEL.x, KENNEL.y, true), 620);
 
     // ④ 室內介面淡入
-    setTimeout(() => showRoom(r), 880);
+    setTimeout(() => showRoom(r, true, done), 880);
   }
 
   /* app 不用 hidden：Leaflet 在 display:none 裡量到的是 0×0，一旦這樣初始化
@@ -444,7 +444,7 @@
     box.style.animation = "";
   }
 
-  function showRoom(r) {
+  function showRoom(r, refit, done) {
     setRail(r);
     dressRoom(r);
     if (window.SW && window.SW.showPane) window.SW.showPane(r.pane);
@@ -453,13 +453,23 @@
     state.busy = false;
     /* 中庭蓋著的期間版面可能變過（收合助理欄、改視窗大小），重新量一次。
        光 invalidateSize() 不夠：它保留原本的中心與縮放，容器變寬就會多露出
-       一片海。要連 fitNTPC() 一起跑，畫面才會回到「剛好是新北」。 */
-    if (r.map && window.SW && window.SW.state && window.SW.state.map) {
+       一片海。要連 fitNTPC() 一起跑，畫面才會回到「剛好是新北」。
+
+       ⚠️ 室與室之間切換時**不可以**重算（`refit` 為假）。那時版面根本沒變，
+       而 fitNTPC() 會把視野拉回全市——助理如果先切室再飛到蘆洲區，飛行會在
+       40ms 後被這一行拉回去，畫面上看起來就是「它說飛過去了，但沒有」。 */
+    if (refit && r.map && window.SW && window.SW.state && window.SW.state.map) {
       setTimeout(() => {
         window.SW.state.map.invalidateSize();
         if (window.SW.fitNTPC) window.SW.fitNTPC();
+        // 完成回呼要排在重算**之後**。排在前面的話，助理接著做的飛行會在
+        // 40ms 後被 fitNTPC() 拉回全市——實測過：人在中庭時問「調查蘆洲區」，
+        // 清單正確、地圖卻停在全市，而它還說「地圖已飛過去」。
+        if (done) done();
       }, 40);
+      return;
     }
+    if (done) done();
   }
 
   function back() {
@@ -597,5 +607,29 @@
       + `<span class="v">${v}</span><span class="s">${note}</span></div>`).join("");
   }
 
-  window.Lobby = { start, enter, back, paintWho, get where() { return state.where; } };
+  /* 讓助理換房間。回傳「有沒有接下這件事」，接不下時呼叫端才知道要走備援。
+   *
+   * 為什麼不讓助理直接點那顆隱藏的分頁鈕：那只會換掉中間那塊 pane，室頭、
+   * 樓層索引、中庭全都不動。實測助理切到回測室之後，室頭還寫著「01 地圖室
+   * 全市 1,213 園」——中間是回測室的內容，抬頭是地圖室的說明。
+   *
+   * 兩條路刻意不同：
+   *   在中庭時走完整的進房動畫。使用者這時看不到室內，需要那個過場，而且
+   *   「牠帶我走進去」本來就是這個設計要講的事。
+   *   已經在某一室時直接換裝，不重播 880ms 的動畫——助理一輪裡可能換兩次室，
+   *   每次都等將近一秒，「邊做邊講」就變成「講完才看到」。
+   */
+  function goto_(pane, done) {
+    const r = ROOMS.find((x) => x.pane === pane);
+    if (!r) return false;
+    if (state.where === "lobby") { enter(r.id, done); return true; }
+    if (state.busy) return false;
+    if (state.room && state.room.id === r.id) { if (done) done(); return true; }
+    state.room = r;
+    showRoom(r, false, done);
+    return true;
+  }
+
+  window.Lobby = { start, enter, back, paintWho, goto: goto_,
+    get where() { return state.where; } };
 })();
