@@ -42,7 +42,9 @@ REQUIRED_DISCLAIMER = "非違法認定"
 # Phrases that legitimately contain a forbidden word because they *deny* it.
 # Without this the mandatory disclaimer trips the check it exists to satisfy --
 # the first version of this verifier rejected all 143 of its own letters.
-NEGATED = ("非違法認定", "不構成違法認定", "非屬違法認定")
+# 「不是違法認定」是 `agent/tools.py` 的 CAVEAT 用的說法，每個 tool 回傳都帶著，
+# 所以模型很常照講。它跟這裡的「非違法認定」是同一句話的兩種寫法。
+NEGATED = ("非違法認定", "不是違法認定", "不構成違法認定", "非屬違法認定")
 
 _NUM = re.compile(r"\d[\d,]*")
 _INSTITUTION = re.compile(r"[一-鿿]{2,12}(?:幼兒園|教保服務中心)")

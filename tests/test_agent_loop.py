@@ -149,6 +149,25 @@ def test_verdict_language_is_replaced_and_the_hit_is_recorded(db, registry) -> N
     assert said.data["softened"] == ["違法"], "替換要留紀錄，那是一個該被看見的指標"
 
 
+def test_the_disclaimer_survives_the_softener(db, registry) -> None:
+    """護欄不可以改壞它要保護的那句話。
+
+    每個 tool 回傳都帶著 `tools.CAVEAT`（「…不是違法認定；無公開財報者屬資料
+    不足，不是低風險。」），所以模型很常照講。無條件字串替換會把它改成
+    「不是訊號指向的情形認定」，畫面上還掛一條「已替換認定性用語：違法」——
+    看起來像模型講錯話，實際上它講的正是治理文件要求的那一句。
+
+    `report/verify.py` 早就踩過同一個坑（第一版把自己 143 封建議書全退了），
+    那裡的 `NEGATED` 就是為此存在。講解句改成沿用同一份表。
+    """
+    from smart_watchdog.agent.tools import CAVEAT
+
+    events = _run(db, registry, [[TextDelta(CAVEAT), TurnEnd("end_turn")]])
+    said = next(e for e in events if e.event == "text")
+    assert said.data["text"] == CAVEAT, "系統自己的界線句被護欄改壞了"
+    assert said.data["softened"] == [], "否定式的說法不該被記成命中"
+
+
 def test_unregistered_tool_is_denied_without_killing_the_turn(db, registry) -> None:
     events = _run(db, registry, [
         [ToolUse(ToolCall("c1", "delete_everything", {})), TurnEnd("tool_use")],
