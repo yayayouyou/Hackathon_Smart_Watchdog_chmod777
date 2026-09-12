@@ -370,3 +370,17 @@ def test_the_loop_and_the_backend_agree_on_the_timeout() -> None:
     from smart_watchdog.api.agent import _backend
 
     assert _backend().timeout_s == STEP_TIMEOUT_S
+
+
+def test_tool_summaries_do_not_leak_markdown_to_the_screen() -> None:
+    """tool 的 `note` 是寫給模型看的，帶 markdown；畫面那行是純文字。
+
+    `get_peer_comparison` 的 note 裡有「**不是分類器、不是違規機率**」，
+    沒處理的話畫面上就會出現一對星號。講解句早有 `strip_markup()`，
+    步驟摘要漏掉了同一道處理。
+    """
+    from smart_watchdog.agent.loop import _summarise
+
+    out = _summarise({"note": "只用比率不用金額。**不是分類器、不是違規機率**——面板"})
+    assert "*" not in out
+    assert "不是分類器、不是違規機率" in out, "拿掉標記不可以連內容一起吃掉"

@@ -110,7 +110,9 @@ class ListInstitutionsArgs(BaseModel):
     name: Optional[str] = Field(
         default=None,
         description="機構名稱的一部分，例如「安溪」。**使用者只給名字時用這個**"
-                    "把它換成 id，不要自己猜 id，也不要用行政區去撈。可與 town 併用。",
+                    "把它換成 id，不要自己猜 id。"
+                    "預設**不要**同時加 town：他問的那一所常常不在畫面現在這一區，"
+                    "加了就會撈到 0 筆。真的撈出兩所同名時才用 town 縮小。",
     )
     town: Optional[str] = Field(
         default=None, description="行政區全名，例如「板橋區」。不給就是全市。"

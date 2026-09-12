@@ -31,7 +31,7 @@ from collections.abc import Iterator
 
 from ..db.models import AgentMessage
 from .memory import load_history, user_block
-from .narration import soften
+from .narration import soften, strip_markup
 from .protocol import AgentBackend, TextDelta, ToolDone, ToolUse, TurnEnd
 from .registry import ToolContext, ToolDenied, ToolInvalid, ToolRegistry
 
@@ -115,6 +115,12 @@ class SSEEvent:
 
 
 def _summarise(payload: dict) -> str:
+    """這一步在畫面上那行小字。**只給畫面用**——模型讀的是完整 payload。
+
+    `note` 是寫給模型看的，帶著 markdown 強調（例如「**不是分類器、不是違規
+    機率**」）。畫面那行是 `textContent` 畫的，星號會原樣露出來。講解句早就有
+    `strip_markup()` 在處理同一件事，tool 摘要漏掉了。
+    """
     if "error" in payload:
         return payload["error"]
     if "count" in payload:
@@ -122,7 +128,7 @@ def _summarise(payload: dict) -> str:
     if "items" in payload:
         return f"取得 {len(payload['items'])} 筆"
     if "note" in payload:
-        return payload["note"]
+        return strip_markup(payload["note"])
     return "完成"
 
 
