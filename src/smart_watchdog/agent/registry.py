@@ -24,7 +24,11 @@ from pydantic import BaseModel, ValidationError
 from ..db.models import AgentMessage
 
 UI_ACTION_TYPES = frozenset(
-    {"navigate", "set_filters", "open_drawer", "close_drawer", "highlight", "download"}
+    # open_table：資料室用。未列在這裡的型別會讓 ToolOutcome.__post_init__ 直接
+    # ValueError，而 loop.py 只 catch ToolDenied/ToolInvalid——漏加的話第一次
+    # 呼叫就是整輪 error，不是降級。
+    {"navigate", "set_filters", "open_drawer", "close_drawer", "highlight",
+     "download", "open_table"}
 )
 
 
@@ -120,7 +124,32 @@ class ToolRegistry:
             ctx, "assistant", "tool_call",
             {"id": call_id, "name": name, "arguments": arguments},
         )
-        outcome = spec.handler(ctx, parsed)
+        try:
+            outcome = spec.handler(ctx, parsed)
+        except Exception as exc:
+            # handler 炸掉時仍要補一列 tool_result。理由有二：軌跡上「叫了但沒有
+            # 下文」是稽核缺口；而且 `memory.load_history()` 還原時會留下一個
+            # 沒有對應 tool_result 的 tool_use，那會讓這個 session 之後每一輪
+            # 都被拒收。⚠️ 這一列自己也可能寫不進去（壞掉的就是資料庫的時候），
+            # 所以 `load_history` 另有一道尾端修剪兜底。
+            if ctx.db is not None:
+                # handler 可能留下未提交的寫入，先清掉才寫得了這列稽核。
+                ctx.db.rollback()
+            self._audit(
+                ctx, "tool", "tool_result",
+                {
+                    "id": call_id,
+                    "name": name,
+                    # 截到 200 字，與 `api/agent.py` 送 error 事件時同一個長度：
+                    # 完整的 traceback 字串會塞爆之後每一輪重送的歷史。
+                    "content": json.dumps(
+                        {"error": f"{type(exc).__name__}: {exc}"[:200]},
+                        ensure_ascii=False,
+                    ),
+                    "ui_action": None,
+                },
+            )
+            raise
         self._audit(
             ctx, "tool", "tool_result",
             {

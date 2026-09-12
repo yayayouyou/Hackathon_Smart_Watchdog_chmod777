@@ -69,13 +69,62 @@ def _run(reg, name, args, ctx=None):
     return reg.execute(ctx or _ctx(), name, args)
 
 
+def _with_penalties(reg) -> str:
+    """挑一所有裁罰紀錄的機構。沒有就跳過——測試不該依賴特定某一所。"""
+    for r in _run(reg, "list_institutions", {"limit": 50}).payload["items"]:
+        if r["penalties"] > 2:
+            return r["id"]
+    pytest.skip("這批前 50 名沒有裁罰超過 2 件的機構")
+
+
 # ── 白名單與身分 ──────────────────────────────────────────────────────
 
 
-def test_all_twelve_tools_are_registered(reg) -> None:
-    assert len(reg.names()) == 12
-    assert "list_institutions" in reg.names()
-    assert "search_documents" in reg.names(), "本 repo 獨有的證據檢索 tool"
+def test_the_whitelist_is_exactly_these_tools(reg) -> None:
+    """白名單逐一列出，不用數量代替。
+
+    改成列舉是因為數量對不上時，「多了什麼」與「少了什麼」一樣重要：註冊表
+    是安全邊界，每加一個都是一次決定，而一個 `== 24` 看不出被換掉的是哪一個。
+
+    這份清單同時是「agent 能操作畫面上的每一件事」的檢查表。少一個 tool 的
+    表徵不是報錯，是 agent 說「我做不到」——而使用者會以為是模型不夠聰明，
+    不會想到是我們沒給它工具。
+    """
+    assert set(reg.names()) == {
+        # 派工提案
+        "list_institutions", "get_ranking", "export_schedule",
+        # 卷宗各段
+        "open_institution", "get_penalties", "get_findings",
+        "get_staffing", "get_rank_track", "get_realtime",
+        "get_peer_comparison",
+        # 建議書
+        "open_memo", "list_memos",
+        # 回測與模型
+        "set_time_machine", "get_model_card",
+        # 地圖控制項
+        "set_map_view",
+        # 掃描：只估算，不發動（見下一支測試）
+        "scan_estimate",
+        # 證據
+        "search_documents", "load_skill",
+        # 資料室：只回答「這份文件上印的是什麼」，不做判讀
+        "list_documents", "list_table_types", "get_table",
+        "compare_table_across_years", "get_extraction_notes",
+        # 唯一的寫入型
+        "record_feedback",
+    }
+
+
+def test_scanning_can_be_priced_but_not_launched(reg) -> None:
+    """讓對話能直接發動掃描，等於讓 agent 自己花錢。刻意只給估算。
+
+    列舉白名單擋不住這件事：新增一個 `scan_start` 只會讓上一支測試紅一次，
+    而「補上去讓它變綠」是最自然的反應。這一支把理由寫在斷言旁邊。
+    """
+    names = set(reg.names())
+    assert "scan_estimate" in names
+    for forbidden in ("scan_start", "scan", "run_scan", "scan_adopt"):
+        assert forbidden not in names, f"{forbidden} 會讓 agent 花錢"
 
 
 def test_unregistered_tool_is_denied(reg) -> None:
@@ -280,3 +329,250 @@ def test_mcp_lifespan_is_wired_into_the_app() -> None:
     # （載 payload、bind 掃描、重啟對帳）必須在同一支 lifespan 裡。
     assert server.app.router.lifespan_context is not None
     assert server.app.router.on_startup == [], "on_event 與自訂 lifespan 不能並存"
+
+
+# ── 新增的六個 tool ──────────────────────────────────────────────────
+
+
+def test_rank_track_is_per_institution_not_city_wide(reg) -> None:
+    """`set_time_machine` 回某一格的前 N 名，這個回某一所的逐格名次。兩者不同。"""
+    iid = _with_penalties(reg)
+    out = _run(reg, "get_rank_track", {"institution_id": iid})
+    assert out.payload["count"] >= 3
+    assert all("as_of" in p and "rank" in p for p in out.payload["points"])
+    assert "尚未結束" in out.payload["note"], "hit 為空的三態要講明"
+
+
+def test_staffing_says_it_is_a_cross_check_not_a_red_flag(reg) -> None:
+    """非營利園採成本分攤制，薪給結構一致——這一段講成異常就是誤導。"""
+    listed = _run(reg, "list_institutions",
+                  {"has_compliance_failure": True, "limit": 3}).payload["items"]
+    if not listed:
+        pytest.skip("沒有財報法遵未通過的登記")
+    out = _run(reg, "get_staffing", {"institution_id": listed[0]["id"]})
+    assert out.payload["count"] > 0
+    assert out.payload["peer_median_cost_per_head"], "沒有同儕基準就沒有對照意義"
+    assert "不是風險訊號" in out.payload["note"]
+
+
+def test_staffing_without_a_report_says_insufficient_data(reg) -> None:
+    listed = _run(reg, "list_institutions", {"limit": 50}).payload["items"]
+    target = next((r for r in listed if not r["has_financial_report"]), None)
+    if target is None:
+        pytest.skip("這批前 50 名都有財報")
+    out = _run(reg, "get_staffing", {"institution_id": target["id"]})
+    assert out.payload["count"] == 0
+    assert "資料不足" in out.payload["note"]
+
+
+def test_realtime_says_mentions_do_not_predict(reg) -> None:
+    """新聞消費的是已經發生的裁罰，提前量 0。講成預警就是誇大。"""
+    iid = _with_penalties(reg)
+    out = _run(reg, "get_realtime", {"institution_id": iid})
+    assert "不是預測" in out.payload["note"]
+    assert "不代表低風險" in out.payload["note"]
+    for m in out.payload["items"]:
+        assert "attribution_basis" in m, "每則都要能說為什麼歸給這所園"
+
+
+def test_list_memos_browses_and_filters(reg) -> None:
+    everything = _run(reg, "list_memos", {"limit": 50}).payload
+    assert everything["count"] > 100
+    narrowed = _run(reg, "list_memos", {"q": "三重", "limit": 50}).payload
+    assert 0 < narrowed["count"] < everything["count"]
+    assert all("三重" in x["title"] or "三重" in x["town"] for x in narrowed["items"])
+
+
+def test_map_view_only_changes_display(reg) -> None:
+    out = _run(reg, "set_map_view", {"colour_by": "penalty", "cluster": False})
+    assert out.ui_action["type"] == "set_filters"
+    assert out.ui_action["map"] == {"colour_by": "penalty", "cluster": False}
+    assert "不影響排序或分數" in out.payload["note"]
+
+
+def test_map_view_rejects_an_unknown_colour_basis(reg) -> None:
+    """只有 type 與 penalty 兩種，且兩者都是公開事實，不是我們算的分數。"""
+    out = _run(reg, "set_map_view", {"colour_by": "risk"})
+    assert "只能是 type 或 penalty" in out.payload["error"]
+
+
+def test_map_view_with_no_fields_says_so(reg) -> None:
+    assert "沒有指定" in _run(reg, "set_map_view", {}).payload["error"]
+
+
+def test_scan_estimate_prices_without_spending(reg) -> None:
+    out = _run(reg, "scan_estimate", {"channels": ["news_rss", "ptt"], "scope": "proposal"})
+    assert "usd_max" in out.payload
+    assert "不會發動掃描" in out.payload["note"]
+    assert out.ui_action["tab"] == "scan"
+
+
+def test_peer_comparison_never_reads_as_a_probability(reg) -> None:
+    """百分位不是違規機率。面板只有 10 個正樣本，撐不起監督式模型。"""
+    listed = _run(reg, "list_institutions",
+                  {"has_compliance_failure": True, "limit": 5}).payload["items"]
+    if not listed:
+        pytest.skip("沒有財報法遵未通過的登記")
+    out = None
+    for r in listed:
+        cand = _run(reg, "get_peer_comparison", {"institution_id": r["id"]}).payload
+        if cand.get("available"):
+            out = cand
+            break
+    if out is None:
+        pytest.skip("這幾所都沒有同儕比較資料")
+    assert "不是分類器" in out["note"]
+    assert "不是違規機率" in out["note"]
+    assert isinstance(out["percentile"], (int, float))
+    assert out["peer_count"] > 0
+
+
+def test_contributions_and_anomalies_are_kept_apart(reg) -> None:
+    """contributions 是分數的組成，anomalies 才是越過門檻的科目。
+
+    混講的後果是把「這一所的分數由這幾項拉高」說成「查出這幾項有問題」，
+    而 132 園年裡有 97 個一項都沒越過門檻。
+    """
+    listed = _run(reg, "list_institutions", {"limit": 30}).payload["items"]
+    for r in listed:
+        out = _run(reg, "get_peer_comparison", {"institution_id": r["id"]}).payload
+        if not out.get("available"):
+            continue
+        assert "contributions" in out and "anomalies" in out
+        assert "不是發現" in out["note"]
+        return
+    pytest.skip("這批前 30 名都沒有同儕比較資料")
+
+
+def test_peer_comparison_absent_says_coverage_not_compliance(reg) -> None:
+    out = _run(reg, "get_peer_comparison", {"institution_id": "deadbeef"})
+    assert "查無機構" in out.payload["error"]
+
+
+def test_peer_scoring_excludes_the_things_it_is_checked_against(reg) -> None:
+    """法遵與裁罰刻意不進這個計算——訓練過的檢查不算檢查。"""
+    listed = _run(reg, "list_institutions", {"limit": 30}).payload["items"]
+    for r in listed:
+        out = _run(reg, "get_peer_comparison", {"institution_id": r["id"]}).payload
+        if out.get("available"):
+            assert "訓練過的檢查不算檢查" in out["note"]
+            return
+    pytest.skip("這批前 30 名都沒有同儕比較資料")
+
+
+def test_agent_absorbed_everything_the_query_tab_could_do() -> None:
+    """查詢頁籤移除前，它有三個篩選與兩種排序是助理沒有的。
+
+    移除一個入口的前提是能力沒有跟著消失——這條測試就是那個前提，
+    哪天有人把這些參數拿掉，這裡會先擋下來。
+    """
+    from smart_watchdog.agent.tools import ListInstitutionsArgs
+
+    fields = set(ListInstitutionsArgs.model_fields)
+    for f in ("town", "type", "has_penalty", "has_compliance_failure",
+              "evaluation_partial", "has_mentions", "no_financial", "sort"):
+        assert f in fields, f"少了 {f}，查詢頁籤原本做得到"
+
+
+def test_no_financial_finds_the_uncovered_majority(reg) -> None:
+    """全市 94.8% 沒有公開財報。查得出來才能誠實說「這些是資料不足」。"""
+    out = _run(reg, "list_institutions", {"no_financial": True, "limit": 3})
+    assert out.payload["matched"] > 1000
+    assert all(not r["has_financial_report"] for r in out.payload["items"])
+
+
+def test_sort_by_penalties_and_by_recency_differ_from_rank(reg) -> None:
+    by_rank = _run(reg, "list_institutions", {"limit": 5}).payload["items"]
+    by_pen = _run(reg, "list_institutions",
+                  {"sort": "penalties", "limit": 5}).payload["items"]
+    pens = [r["penalties"] for r in by_pen]
+    assert pens == sorted(pens, reverse=True), "penalties 要由多到少"
+    by_recent = _run(reg, "list_institutions",
+                     {"sort": "recent", "limit": 5}).payload["items"]
+    dates = [r["last_event_date"] or "" for r in by_recent]
+    assert dates == sorted(dates, reverse=True), "recent 要由新到舊"
+    assert [r["id"] for r in by_rank] != [r["id"] for r in by_pen]
+
+
+# ── SOP 與回答格式 ───────────────────────────────────────────────────
+
+
+def test_every_skill_the_prompt_offers_actually_loads(reg) -> None:
+    """system prompt 列出的指引與 SKILL_NAMES 與檔案，三者必須一致。
+
+    對不上的表徵是 agent 說「我載入 xxx 指引」然後拿到錯誤——那一步會在
+    示範中途壞掉，而且看起來像模型出錯，不像是我們少放一個檔案。
+    """
+    from smart_watchdog.agent.loop import SYSTEM_PROMPT
+    from smart_watchdog.agent.tools import SKILL_NAMES
+
+    for name in SKILL_NAMES:
+        assert name in SYSTEM_PROMPT, f"{name} 沒有寫進 system prompt，模型不知道它存在"
+        out = _run(reg, "load_skill", {"name": name})
+        assert len(out.payload.get("content", "")) > 300, f"{name} 內容太短"
+
+
+def test_response_format_rules_live_in_the_prompt_not_in_each_skill() -> None:
+    """講話的通則只能有一份。
+
+    寫在每一份 SOP 裡的話，改的時候一定會漏掉幾份，然後 agent 的語氣會依
+    「這次載入了哪一份」而不同——那種不一致很難查。
+    """
+    import pathlib
+
+    from smart_watchdog.agent.loop import SYSTEM_PROMPT
+    from smart_watchdog.agent.tools import SKILL_NAMES, SKILLS_DIR
+
+    assert "不要用講的重複一遍" in SYSTEM_PROMPT, "「畫面上看得到的不要念」要在全域"
+    assert "不超過 30 個字" in SYSTEM_PROMPT
+    assert "markdown" in SYSTEM_PROMPT
+
+    # 個別 SOP 不該再各自定義長度規則。
+    for name in SKILL_NAMES:
+        body = (pathlib.Path(SKILLS_DIR) / f"{name}.md").read_text("utf-8")
+        assert "不超過 30 字" not in body, f"{name} 重複了全域的長度規則"
+
+
+def test_each_skill_says_when_to_use_it(reg) -> None:
+    """沒有「何時用」的指引，模型不知道該不該載入它。"""
+    from smart_watchdog.agent.tools import SKILL_NAMES
+
+    for name in SKILL_NAMES:
+        body = _run(reg, "load_skill", {"name": name}).payload["content"]
+        assert "## 何時用" in body, f"{name} 少了「何時用」"
+
+
+def test_an_institution_can_be_found_by_name_alone(reg) -> None:
+    """使用者講的是「安溪」，而 `open_institution` 要的是 8 碼 id。
+
+    沒有這條路的時候，助理拿到「安溪跟同儕比起來如何？」會去撈**畫面現在那一
+    區**的名單（實測：它沿用上一輪的蘆洲區），撈不到就回「這份索引查不到，
+    屬資料不足」——而安溪是三峽區一所真實存在、而且有公開財報的園。
+    `search_documents` 補不了這個洞：那支搜的是財報內文，不是機構主檔。
+
+    子字串要同時比全名與簡稱：主檔存的是
+    「新北市安溪非營利幼兒園(委託社團法人桃園市教保服務人員協會辦理)」。
+    """
+    hits = _run(reg, "list_institutions", {"name": "安溪"}).payload["items"]
+    assert hits, "用名字找不到安溪"
+    assert all("安溪" in h["title"] for h in hits)
+    assert {h["town"] for h in hits} == {"三峽區"}
+
+    # 名稱與行政區是 AND，不是 OR——不然「安溪」加上錯的區會撈出整區。
+    assert _run(
+        reg, "list_institutions", {"name": "安溪", "town": "蘆洲區"}
+    ).payload["items"] == []
+
+
+def test_the_compare_skill_tells_the_model_how_to_turn_a_name_into_an_id(reg) -> None:
+    """光是有這個參數沒有用——模型要被告知它存在。
+
+    比較情境是唯一一定會遇到「只有名字」的情境（使用者不會背 id），
+    所以這條指示寫在 `compare_institutions` 裡。
+    """
+    del reg
+    skill = (ROOT / "src/smart_watchdog/agent/skills/compare_institutions.md").read_text(
+        encoding="utf-8")
+    assert "list_institutions" in skill and "name" in skill, (
+        "比較情境沒有教模型怎麼把名字換成 id"
+    )

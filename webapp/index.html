@@ -26,11 +26,12 @@
          scan.js／timeline.js／memos.js 三處，決賽前不值得。 -->
     <nav class="tabs" id="tabs" hidden>
       <button data-t="list" aria-pressed="true">派工提案</button>
-      <button data-t="chat">查詢</button>
       <button data-t="scan">掃描</button>
       <button data-t="timeline">時間軸</button>
       <button data-t="memos">建議書</button>
     </nav>
+
+    <button type="button" id="agenttoggle" class="mini" aria-pressed="true">助理</button>
 
     <div class="capbox">
       <label for="cap">本月可稽查</label>
@@ -67,7 +68,7 @@
     </div>
 
     <div class="pop who" id="whopop" hidden>
-      <h4>稽查員</h4>
+      <h4>使用者身分</h4>
       <div class="whopop-body"></div>
       <button type="button" id="logout" class="mini" style="margin-top:10px;width:100%"
         hidden>登出</button>
@@ -111,8 +112,9 @@
       </button>
 
       <div>
-        <div class="rail-eyebrow">樓層索引</div>
+        <div class="rail-eyebrow">功能分區</div>
         <div class="rail-list" id="rail-list"></div>
+        <div class="rail-tools" id="rail-tools" hidden></div>
       </div>
 
       <!-- 狗窩：守護犬進房後坐的地方。牠從中庭跑進來，就停在這裡。 -->
@@ -146,16 +148,22 @@
             stroke-linecap="round"/>
           <circle cx="34" cy="52.2" r="1.4" fill="var(--seal)"/>
         </svg>
-        <span class="txt">守護犬在這一室<br>說一句話就行</span>
       </div>
     </aside>
+
+    <!-- 樓層索引與室內容之間的分隔條。三條直的分隔條（這條、地圖與清單之間、
+         清單與助理之間）走同一支 SW.makeGrip，寬度都寫進 main 的自訂屬性，
+         grid 自己算位置——寫進元素的 inline style 會讓 grip 與被拖的欄各算
+         一次，拖到一半就錯開一格。 -->
+    <div class="vgrip" id="railgrip" role="separator" aria-orientation="vertical"
+         aria-label="調整樓層索引寬度" tabindex="0"></div>
 
     <div class="roomwrap">
       <!-- 室頭：五間房共用同一條。室號、室名、一句說明、右側來源膠囊——
            把「我在哪一間、這裡的數字哪來的」做成每一室都有的常駐元件。 -->
       <div class="roomhead">
         <span class="rh-no" id="rh-no">01</span>
-        <b class="rh-name" id="rh-name">地圖室</b>
+        <b class="rh-name" id="rh-name">全市監看</b>
         <span class="rh-desc" id="rh-desc"></span>
         <span class="rh-src" id="rh-src"></span>
       </div>
@@ -282,40 +290,46 @@
       </div>
     </div>
 
+    <!-- 地圖與清單之間的分隔條。只有地圖室兩者同時存在，其他室 .no-map
+         會把它與地圖一起收掉。 -->
+    <div class="vgrip" id="sidegrip" role="separator" aria-orientation="vertical"
+         aria-label="調整清單寬度" tabindex="0"></div>
+
     <!-- 右欄：目前是清單與卷宗，之後這一欄會讓給 AI 側邊欄。 -->
     <div class="side">
       <div class="pane" id="pane-list">
+        <div class="listnote" id="listnote" hidden>
+          助理篩選中 · <button type="button" id="listclear">顯示全部</button>
+        </div>
         <div class="list" id="list"></div>
       </div>
 
-      <div class="pane" id="pane-chat" hidden>
-        <div class="chatlog" id="chatlog">
-          <div class="msg bot">
-            <p>可以這樣問：</p>
-            <div class="egs">
-              <button class="eg">三重區有哪些幼兒園財報法遵沒通過？</button>
-              <button class="eg">板橋區私立幼兒園有幾間有裁罰紀錄？</button>
-              <button class="eg">最近有新聞在講哪幾間？</button>
-              <button class="eg">哪些園沒有公開財報但排在前 20 名？</button>
-            </div>
+      <div class="pane" id="pane-data" hidden>
+        <div class="drbar">
+          <div class="drseg" id="dr-layer">
+            <button type="button" data-l="raw">原始資料<i id="dr-n-raw">—</i></button>
+            <button type="button" data-l="num" aria-pressed="true">數字<i id="dr-n-num">—</i></button>
+          </div>
+          <button type="button" class="costbtn" id="drmore" aria-expanded="false">判讀與外部佐證</button>
+          <span class="rh-src" id="dr-src">載入中…</span>
+        </div>
+        <div class="pop dr" id="drmorepop" hidden></div>
+
+        <div class="drlayer drraw" id="dr-raw" hidden>
+          <div class="drcol">
+            <div id="dr-upload"></div>
+            <div id="dr-upresult"></div>
+            <div class="list" id="dr-docs"></div>
+          </div>
+          <div class="drside">
+            <div id="dr-docpages" hidden></div>
+            <div class="ev" id="dr-evidence" hidden></div>
           </div>
         </div>
-        <form class="chatbar" id="chatform">
-          <input id="q" placeholder="用中文問，例如：新莊區近兩年評鑑沒過的有哪些？"
-                 autocomplete="off">
-          <button type="submit">送出</button>
-        </form>
-      </div>
 
-      <div class="pane" id="pane-data" hidden>
-        <div class="todo">
-          <div class="todo-head">
-            <b>資料提取存放區</b>
-            <span>外殼已就位，內容待設計</span>
-          </div>
-          <div class="todo-grid" id="data-grid"></div>
-          <p class="todo-note">每一筆抽取都帶著來源 PDF 的頁碼，所以這一室之後
-            可以直接從清單跳到證據頁。實際的瀏覽與分析介面由組員接手。</p>
+        <div class="drlayer" id="dr-num">
+          <div class="drchips" id="dr-kinds"></div>
+          <div class="drscroll" id="dr-tables"></div>
         </div>
       </div>
 
@@ -374,17 +388,18 @@
       <div class="agentbody">
         <div class="chatlog" id="agentlog">
           <div class="msg bot">
-            <p>我可以操作這個畫面。說一句話，我會邊做邊講。</p>
+            <p>我可以操作這個畫面——切分頁、移動地圖、開卷宗、匯出排程。說一句話，我會邊做邊講。</p>
             <div class="egs">
-              <button class="eg">幫我排這週的稽查，先看板橋區</button>
-              <button class="eg">三重區財報法遵沒通過的有哪些？</button>
+              <button class="eg">我要調查蘆洲區</button>
+              <button class="eg">幫我排這週的稽查</button>
+              <button class="eg">安溪跟同儕比起來如何？</button>
               <button class="eg">資遣費準備金的規定寫在財報哪一頁？</button>
               <button class="eg">你這個排序準不準？</button>
             </div>
           </div>
         </div>
         <form class="chatbar" id="agentform">
-          <input id="aq" placeholder="例如：把板橋區有前科的前十筆列出來"
+          <input id="aq" placeholder="用中文說一句話，例如：我要調查三重區"
                  autocomplete="off">
           <button type="submit" id="agentsend">送出</button>
         </form>
@@ -419,7 +434,7 @@
     <!-- 大廳自己的身分浮層。內容與 app 那一份相同，由 paintWho 一起填。 -->
     <div class="pop who" id="lbwhopop" hidden
       style="position:absolute;right:20px;top:52px;z-index:10">
-      <h4>稽查員</h4>
+      <h4>使用者身分</h4>
       <div class="whopop-body"></div>
     </div>
   </header>
@@ -433,11 +448,35 @@
 <div class="authwrap" id="authwrap" hidden>
   <form class="authbox" id="authform">
     <h2>稽查派工台</h2>
-    <p>本系統含 1,213 所真實機構的查核優先序，僅供內部稽查使用。</p>
+    <p>本系統含 1,213 所真實機構的查核優先序，僅供內部使用。</p>
+
+    <fieldset class="authroles">
+      <legend>登入身分</legend>
+      <div class="authrole-grid">
+        <label class="authrole selected">
+          <input type="radio" name="login-role" value="inspector" checked>
+          <span><b>稽查人員</b><small>查核、派工與分析</small></span>
+        </label>
+        <label class="authrole">
+          <input type="radio" name="login-role" value="admin">
+          <span><b>系統管理員</b><small>目前使用相同功能</small></span>
+        </label>
+      </div>
+    </fieldset>
+
     <label>帳號 <input id="email" type="email" autocomplete="username" required></label>
     <label>密碼 <input id="password" type="password" autocomplete="current-password" required></label>
-    <div class="autherr" id="autherr"></div>
-    <button type="submit">登入</button>
+    <div class="autherr" id="autherr" role="alert"></div>
+    <button type="submit" id="loginbtn">登入</button>
+
+    <section class="quicklogin" id="quicklogin" hidden>
+      <div class="authdivider"><span>展示環境快速登入</span></div>
+      <p>免輸入帳密；後端未啟用時不會顯示。</p>
+      <div class="quickrole-grid">
+        <button type="button" class="quickrole" data-quick-role="inspector">稽查人員</button>
+        <button type="button" class="quickrole" data-quick-role="admin">系統管理員</button>
+      </div>
+    </section>
   </form>
 </div>
 
@@ -449,6 +488,7 @@
 <script src="/static/timeline.js"></script>
 <script src="/static/auth.js"></script>
 <script src="/static/agent.js"></script>
+<script src="/static/dataroom.js"></script>
 <script src="/static/memos.js"></script>
 <script src="/static/lobby.js"></script>
 </body>

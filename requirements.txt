@@ -23,6 +23,9 @@ anthropic==1.5.0
 sqlalchemy==2.0.52       # 5 張表：user/user_session/agent_session/agent_message/audit_feedback
 bcrypt==5.0.0            # 密碼雜湊
 fastmcp==4.0.3           # 把 agent 的 tool 暴露給 MCP 客戶端
+# 資料室的 PDF 上傳走 multipart。venv 裡它是 fastapi 的傳遞相依所以「本來就有」，
+# 但沒宣告的話容器與乾淨環境會缺，而缺的症狀是上傳端點回 500 而不是啟動失敗。
+python-multipart==0.0.32
 
 # --- scraping the public registries (labels + institution master data) ---
 httpx==0.28.1

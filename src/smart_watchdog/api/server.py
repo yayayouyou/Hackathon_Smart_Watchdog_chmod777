@@ -34,7 +34,7 @@ from __future__ import annotations
 import contextlib
 import json
 import pathlib
-from typing import Any, Optional
+from typing import Any, Callable, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -139,6 +139,7 @@ _state: dict[str, Any] = {"payload": None, "index": {}, "land": None}
 # 掃描主控台與證據端點。在此掛載而非讓子模組匯入 server，避免循環匯入。
 from . import agent as _agent  # noqa: E402
 from . import auth as _auth  # noqa: E402
+from . import dataroom as _dataroom  # noqa: E402
 from . import dossier as _dossier  # noqa: E402
 from . import evidence as _evidence  # noqa: E402
 from . import explore as _explore  # noqa: E402
@@ -152,6 +153,32 @@ app.include_router(_agent.router)
 app.include_router(_evidence.router)
 app.include_router(_dossier.router)
 app.include_router(_social.router)
+app.include_router(_dataroom.router)
+
+
+# 優先序梯階。**這是唯一定義**：`/api/proposal` 靠它決定挑選順序，
+# `load_payload` 靠它替每一個點位標上 `tier`。
+#
+# 為什麼每個點位都要帶 `tier`，而不是只有提案列有：助理點名機構時
+# （例如「蘆洲區 20 筆」），前端的清單是拿 id 去**點位表**取列，不是提案表。
+# 少了這個欄位，清單樣板會在 `tier.startsWith` 炸掉，而整句
+# `innerHTML = rows.map(...)` 於是從未執行——畫面留著上一次的全市提案。
+# 表徵是「助理說蘆洲區，清單列的是別區」，而且沒有任何錯誤訊息會浮到使用者
+# 眼前。這個誤會實際發生過，也是把梯階從 `get_proposal` 裡搬出來的原因。
+TIER_LADDER: tuple[tuple[Callable[[dict], bool], str], ...] = (
+    (lambda p: p["ch"] > 0, "財報法遵未通過（高）"),
+    (lambda p: p["cf"] > 0, "財報法遵未通過"),
+    (lambda p: p.get("ep", 0) > 0, "近兩年評鑑部分指標未通過"),
+    (lambda p: p["e90"] > 0, "近 90 日官方事件"),
+)
+
+
+def tier_of(p: dict) -> str:
+    """點位落在哪一階。沒踩到任何一階就是「分數排序」——**不是**「低風險」。"""
+    for pred, label in TIER_LADDER:
+        if pred(p):
+            return label
+    return "分數排序"
 
 
 def load_payload(path: pathlib.Path = PAYLOAD_PATH) -> dict[str, Any]:
@@ -162,6 +189,8 @@ def load_payload(path: pathlib.Path = PAYLOAD_PATH) -> dict[str, Any]:
             "  PYTHONPATH=src .venv/bin/python scripts/build_frontend.py"
         )
     payload = json.loads(path.read_text(encoding="utf-8"))
+    for p in payload.get("points", []):
+        p["tier"] = tier_of(p)
     _state["payload"] = payload
     _state["index"] = {p["i"]: p for p in payload.get("points", [])}
     return payload
@@ -268,10 +297,8 @@ def get_proposal(n: int = 20, town: Optional[str] = None,
             seen.add(p["i"])
             out.append({**p, "tier": why})
 
-    take(lambda p: p["ch"] > 0, "財報法遵未通過（高）")
-    take(lambda p: p["cf"] > 0, "財報法遵未通過")
-    take(lambda p: p.get("ep", 0) > 0, "近兩年評鑑部分指標未通過")
-    take(lambda p: p["e90"] > 0, "近 90 日官方事件")
+    for pred, label in TIER_LADDER:
+        take(pred, label)
     for p in sorted((p for p in pts if p["i"] not in seen), key=lambda p: p["r"]):
         if len(out) >= n:
             break
@@ -346,6 +373,9 @@ def health() -> dict:
         "chat_planner": _chat_planner_kind(),
         # 缺的是授權不是資料——照實列出，並附上去哪裡申請。
         "credentials": config.status(),
+        # `credentials` 只回答「有沒有設」。臨時憑證過期之後變數還在，
+        # 所以另外真的驗一次——不然這支端點會在憑證死掉時回報一切正常。
+        "aws": config.aws_identity(),
     }
 
 

@@ -53,8 +53,13 @@ def _dos():
 
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 SKILLS_DIR = pathlib.Path(__file__).resolve().parent / "skills"
-SKILL_NAMES = ("schedule_inspection", "read_memo", "explain_risk",
-               "answer_challenge", "read_evidence")
+SKILL_NAMES = (
+    # 情境：使用者會怎麼開口 → 該照什麼步驟做。講話的通則在 system prompt，
+    # 不重複寫在每一份裡——寫兩份就會有兩套標準。
+    "survey_district", "schedule_inspection", "prepare_visit",
+    "compare_institutions", "track_changes", "follow_mentions",
+    "read_memo", "explain_risk", "answer_challenge", "read_evidence",
+)
 
 # payload 的 `t` 欄位：0 公立、1 非營利、2 私立。與 chat.py 的 TYPE_NAMES 同源。
 TYPE_CODES = {"公立": 0, "非營利": 1, "私立": 2}
@@ -93,7 +98,8 @@ def _dossier_for(institution_id: str) -> tuple[Optional[str], Optional[dict]]:
 def _not_found(institution_id: str) -> ToolOutcome:
     return ToolOutcome(payload={
         "error": f"查無機構 {institution_id}",
-        "note": "機構 id 是 8 碼十六進位，可先用 list_institutions 取得。",
+        "note": "機構 id 是 8 碼十六進位。只知道名字的話，"
+                "用 list_institutions 的 name 參數換 id。",
     })
 
 
@@ -101,6 +107,13 @@ def _not_found(institution_id: str) -> ToolOutcome:
 
 
 class ListInstitutionsArgs(BaseModel):
+    name: Optional[str] = Field(
+        default=None,
+        description="機構名稱的一部分，例如「安溪」。**使用者只給名字時用這個**"
+                    "把它換成 id，不要自己猜 id。"
+                    "預設**不要**同時加 town：他問的那一所常常不在畫面現在這一區，"
+                    "加了就會撈到 0 筆。真的撈出兩所同名時才用 town 縮小。",
+    )
     town: Optional[str] = Field(
         default=None, description="行政區全名，例如「板橋區」。不給就是全市。"
     )
@@ -111,6 +124,21 @@ class ListInstitutionsArgs(BaseModel):
     has_compliance_failure: Optional[bool] = Field(
         default=None, description="只要財報法遵檢核未通過的登記"
     )
+    evaluation_partial: Optional[bool] = Field(
+        default=None, description="只要近兩年評鑑部分指標未通過的登記"
+    )
+    has_mentions: Optional[bool] = Field(
+        default=None, description="只要近期有可歸屬公開報導的登記"
+    )
+    no_financial: Optional[bool] = Field(
+        default=None,
+        description="只要**沒有**公開財務報告的登記（全市 94.8% 屬此，是涵蓋範圍限制）",
+    )
+    sort: str = Field(
+        default="rank",
+        description="排序：rank 交付順序（預設）、penalties 裁罰件數多的在前、"
+                    "recent 最近有官方事件的在前",
+    )
     limit: int = Field(default=20, ge=1, le=MAX_LIMIT, description="取幾筆，上限 50")
 
 
@@ -119,6 +147,8 @@ def _list_institutions(_ctx: ToolContext, a: ListInstitutionsArgs) -> ToolOutcom
     mentions = payload.get("realtime", {}).get("by_institution", {})
 
     filters: dict = {}
+    if a.name:
+        filters["name"] = a.name
     if a.town:
         filters["town"] = a.town
     if a.type:
@@ -132,14 +162,29 @@ def _list_institutions(_ctx: ToolContext, a: ListInstitutionsArgs) -> ToolOutcom
         filters["has_penalty"] = True
     if a.has_compliance_failure:
         filters["has_compliance_failure"] = True
+    if a.evaluation_partial:
+        filters["evaluation_partial"] = True
+    if a.has_mentions:
+        filters["has_mentions"] = True
+    if a.no_financial:
+        filters["no_financial"] = True
 
     hits = [p for p in payload.get("points", []) if _ch()._matches(p, filters, mentions)]
-    hits.sort(key=lambda p: p["r"])
+    # 與查詢頁籤同一組排序鍵。rank 是交付順序（越小越前面），另外兩個是
+    # 「最多」「最近」，所以要反向。
+    if a.sort == "penalties":
+        hits.sort(key=lambda p: -p.get("np", 0))
+    elif a.sort == "recent":
+        hits.sort(key=lambda p: p.get("evd", ""), reverse=True)
+    else:
+        hits.sort(key=lambda p: p["r"])
     rows = [{
         "id": p["i"], "title": p["full"], "type": _ch().TYPE_NAMES.get(p["t"], "?"),
         "town": p["d"], "priority_rank": p["r"], "reason": p.get("why", ""),
         "penalties": p.get("np", 0), "compliance_failed": p.get("cf", 0),
         "has_financial_report": bool(p.get("fin")),
+        "last_event": p.get("ev", ""), "last_event_date": p.get("evd", ""),
+        "mentions": len(mentions.get(p["i"], [])),
     } for p in hits[:a.limit]]
 
     return ToolOutcome(
@@ -149,7 +194,12 @@ def _list_institutions(_ctx: ToolContext, a: ListInstitutionsArgs) -> ToolOutcom
             "filters": {k: v for k, v in {
                 "town": a.town, "type": a.type, "has_penalty": a.has_penalty,
                 "has_compliance_failure": a.has_compliance_failure,
+                "evaluation_partial": a.evaluation_partial,
+                "has_mentions": a.has_mentions, "no_financial": a.no_financial,
             }.items() if v is not None},
+            # 指定行政區時把地圖真的飛過去——「調閱蘆洲區」應該看起來像有人
+            # 把地圖放大到蘆洲，而不是只有標記變少。
+            "focus_town": a.town,
             "ids": [r["id"] for r in rows],
         },
     )
@@ -174,7 +224,8 @@ def _get_ranking(_ctx: ToolContext, a: GetRankingArgs) -> ToolOutcome:
     } for p in res.get("proposal", [])]
     return ToolOutcome(
         payload={"count": len(rows), "items": rows, "note": CAVEAT},
-        ui_action={"type": "navigate", "tab": "list", "ids": [r["id"] for r in rows]},
+        ui_action={"type": "navigate", "tab": "list", "focus_town": a.town,
+                   "ids": [r["id"] for r in rows]},
     )
 
 
@@ -544,11 +595,475 @@ def _record_feedback(ctx: ToolContext, a: RecordFeedbackArgs) -> ToolOutcome:
     })
 
 
+# ── 13. get_rank_track ───────────────────────────────────────────────
+
+
+def _get_rank_track(_ctx: ToolContext, a: InstitutionArgs) -> ToolOutcome:
+    """單一機構在各時點的名次軌跡。
+
+    `set_time_machine` 是全市視角（某一格的前 N 名），這個是單園視角
+    （這一所在每一格排第幾）。兩個都需要——被問「這家一直都排這麼前面嗎」
+    時要的是後者。
+    """
+    p = _point(a.institution_id)
+    if not p:
+        return _not_found(a.institution_id)
+    out = _dos().rank_track_of(a.institution_id)
+    return ToolOutcome(
+        payload={"institution": p["full"], **out},
+        ui_action={"type": "open_drawer", "institution_id": a.institution_id},
+    )
+
+
+# ── 14. get_staffing ─────────────────────────────────────────────────
+
+
+def _get_staffing(_ctx: ToolContext, a: InstitutionArgs) -> ToolOutcome:
+    """員工數、教保人數、每人人事費、師生比，並附全體同儕基準。
+
+    ⚠️ 非營利園採成本分攤制、薪給結構一致，所以這一段是**查證對照**不是風險
+    訊號——全體 94 份非開辦年報告無一落在四分位距外。講的時候不要說成異常。
+    """
+    p = _point(a.institution_id)
+    if not p:
+        return _not_found(a.institution_id)
+    _code, dossier = _dossier_for(a.institution_id)
+    if dossier is None or not dossier.get("staff"):
+        return ToolOutcome(payload={
+            "institution": p["full"], "count": 0, "items": [],
+            "note": "本園無公開財務報告，沒有員工與人事費資料。資料不足，不是低風險。",
+        })
+    bench = _srv().payload().get("bench", {})
+    items = []
+    for s in dossier["staff"]:
+        per_head = round(s["cost"] / s["st"]) if s.get("st") else None
+        ratio = round(s["en"] / s["ed"], 1) if s.get("ed") and s.get("en") else None
+        items.append({
+            "academic_year": s.get("y"), "staff": s.get("st"),
+            "educators": s.get("ed"), "approved": s.get("cap"),
+            "enrolled": s.get("en"), "personnel_cost": s.get("cost"),
+            "cost_per_head": per_head, "child_per_educator": ratio,
+        })
+    return ToolOutcome(
+        payload={
+            "institution": p["full"], "count": len(items), "items": items,
+            "peer_median_cost_per_head": bench.get("ph_med"),
+            "peer_iqr": [bench.get("ph_q1"), bench.get("ph_q3")],
+            "peer_median_child_per_educator": bench.get("ratio_med"),
+            "peer_reports": bench.get("n_norm"),
+            "note": ("非營利園採成本分攤制、薪給結構一致，這一段是查證對照不是"
+                     "風險訊號——全體無一落在四分位距外。不要講成異常。"),
+        },
+        ui_action={"type": "open_drawer", "institution_id": a.institution_id},
+    )
+
+
+# ── 15. get_realtime ─────────────────────────────────────────────────
+
+
+def _get_realtime(_ctx: ToolContext, a: InstitutionArgs) -> ToolOutcome:
+    """這一所的公開提及（新聞／PTT／Threads）與 Google 評論。
+
+    **這些不影響排序，也不是預測。** 新聞講的是已經發生的裁罰，提前量是 0；
+    定位是即時監看。Google 評分只即時顯示、不入庫、不進特徵（Places ToS）。
+    """
+    p = _point(a.institution_id)
+    if not p:
+        return _not_found(a.institution_id)
+    data = _srv().payload()
+    rt = data.get("realtime", {})
+    mentions = rt.get("by_institution", {}).get(a.institution_id, [])
+    return ToolOutcome(
+        payload={
+            "institution": p["full"],
+            "swept_at": rt.get("swept_at", ""),
+            "channels_live": rt.get("channels_live", 0),
+            "channels_total": rt.get("channels_total", 0),
+            "count": len(mentions),
+            "items": [{
+                "channel": m.get("channel"), "headline": m.get("headline"),
+                "publisher": m.get("publisher"), "published": m.get("published"),
+                "url": m.get("url"),
+                # 為什麼歸給這所園。名稱能對應 ≥2 所就會拒絕歸屬。
+                "attribution_basis": m.get("attribution_basis"),
+            } for m in mentions],
+            "note": ("提及不影響排序，也不是預測——新聞消費的是已經發生的官方"
+                     "裁罰紀錄，提前量為 0。查無提及不代表低風險。"),
+        },
+        ui_action={"type": "open_drawer", "institution_id": a.institution_id},
+    )
+
+
+# ── 16. list_memos ───────────────────────────────────────────────────
+
+
+class ListMemosArgs(BaseModel):
+    q: Optional[str] = Field(default=None, description="比對園名或行政區，例如「三重」")
+    limit: int = Field(default=20, ge=1, le=MAX_LIMIT, description="取幾筆")
+
+
+def _list_memos(_ctx: ToolContext, a: ListMemosArgs) -> ToolOutcome:
+    """本批建議書清單。`open_memo` 是開一份，這個是瀏覽整批。"""
+    out = _dos().list_memos(q=a.q, limit=a.limit)
+    return ToolOutcome(
+        payload=out,
+        ui_action={"type": "navigate", "tab": "memos"},
+    )
+
+
+# ── 17. set_map_view ─────────────────────────────────────────────────
+
+
+class SetMapViewArgs(BaseModel):
+    """地圖的顯示設定。每個欄位都可省略，只送要改的那幾個。"""
+
+    colour_by: Optional[str] = Field(
+        default=None, description="標記著色依據：type（設立別）或 penalty（裁罰件數）"
+    )
+    cluster: Optional[bool] = Field(default=None, description="標記群集")
+    districts: Optional[bool] = Field(default=None, description="行政區界線")
+    district_names: Optional[bool] = Field(default=None, description="行政區名稱")
+    mask: Optional[bool] = Field(default=None, description="新北以外反灰")
+    choropleth: Optional[bool] = Field(default=None, description="行政區底色")
+    flagged_only: Optional[bool] = Field(default=None, description="只顯示本批建議查核")
+    focus_town: Optional[str] = Field(
+        default=None, description="把地圖飛到這個行政區，例如「蘆洲區」"
+    )
+    capacity: Optional[int] = Field(
+        default=None, ge=1, le=200, description="本月可稽查家數，會改變本批提案的筆數"
+    )
+
+
+def _set_map_view(_ctx: ToolContext, a: SetMapViewArgs) -> ToolOutcome:
+    """改地圖顯示。**只改畫面，不改任何分數或名次。**
+
+    `colour_by` 兩個值都是中性事實（設立別、公開裁罰件數），**不是我們算出來的
+    分數**——分數不上地圖，見 aws-architecture.md §6.5。
+    """
+    if a.colour_by is not None and a.colour_by not in ("type", "penalty"):
+        return ToolOutcome(payload={
+            "error": f"colour_by 只能是 type 或 penalty，收到「{a.colour_by}」",
+        })
+    view = {k: v for k, v in a.model_dump().items() if v is not None}
+    if not view:
+        return ToolOutcome(payload={"error": "沒有指定任何要改的項目"})
+    return ToolOutcome(
+        payload={
+            "applied": view,
+            "note": "只改畫面顯示，不影響排序或分數。地圖顏色代表事實，不是風險高低。",
+        },
+        ui_action={"type": "set_filters", "map": view},
+    )
+
+
+# ── 18. scan_estimate ────────────────────────────────────────────────
+
+
+class ScanEstimateArgs(BaseModel):
+    channels: list[str] = Field(
+        min_length=1, max_length=6,
+        description="管道：news_rss、ptt、apify_threads、places_reviews",
+    )
+    scope: str = Field(
+        default="proposal",
+        description="範圍：city 全市、proposal 本批提案、compliance_fail 法遵未通過、"
+                    "evaluation 評鑑、top_risk 前段班、district 指定行政區",
+    )
+    town: Optional[str] = Field(default=None, description="scope=district 時的行政區")
+
+
+def _scan_estimate(_ctx: ToolContext, a: ScanEstimateArgs) -> ToolOutcome:
+    """**算錢，不花錢。** 回傳金額上界與會被哪一道上限擋住。
+
+    刻意只給估算、不給發動：讓對話能直接產生支出，風險太高。要真的掃描，
+    請人到「掃描」頁籤自己按——那裡會把畫面上的金額回押給伺服器重驗（TOCTOU）。
+
+    直接呼叫 `scan.estimate()` 端點函式，不自己組 plan——估算結果必須與畫面上
+    看到的那個數字完全一樣，否則 agent 講的金額會跟使用者要確認的金額不同。
+    """
+    from ..api.scan import ScanRequest, estimate
+
+    req = ScanRequest(scope=a.scope, district=a.town or "", channels=list(a.channels))
+    try:
+        out = estimate(req)
+    except Exception as exc:  # noqa: BLE001 - 估算失敗要變成可讀訊息，不是 500
+        return ToolOutcome(payload={
+            "error": f"估算失敗：{exc}",
+            "note": "管道或範圍可能不正確；掃描頁籤的選項清單是唯一的來源。",
+        })
+    return ToolOutcome(
+        payload={
+            "scope": out.get("label"), "usd_max": out.get("usd_max"),
+            "lines": out.get("lines"), "gate": out.get("gate"),
+            "expected_leads": out.get("expected_leads"),
+            "note": ("這是金額上界，不是實際花費；實際以供應商自報結算。"
+                     "本 tool 不會發動掃描——要執行請到掃描頁籤操作。"),
+        },
+        ui_action={"type": "navigate", "tab": "scan"},
+    )
+
+
+# ── 19. get_peer_comparison ──────────────────────────────────────────
+
+
+class PeerArgs(BaseModel):
+    institution_id: str = Field(description="機構 id，8 碼十六進位")
+    year: Optional[int] = Field(default=None, description="學年度，例如 113。不給就是最新")
+
+
+def _get_peer_comparison(_ctx: ToolContext, a: PeerArgs) -> ToolOutcome:
+    """同儕財務比較：這一所在同年度、同類型的非營利園裡看起來多不一樣，以及為什麼。
+
+    **這不是分類器，回傳的百分位不是「違規機率」。** 整個面板只有 10 個正樣本，
+    低於 CLAUDE.md 設的監督式門檻——在那個數量上擬合出來的分數是「沒有內容的
+    數字被包裝成發現」。
+
+    `contributions` 與 `anomalies` **不是同一件事**，講的時候不可以混：
+    - `contributions` 是「這一所的分數由哪幾項拉高」，**本身不是發現**。
+      132 園年裡有 97 個沒有任何一項越過門檻，那是正常狀態。
+    - `anomalies` 才是越過 robust z = 3.5（Iglewicz-Hoaglin）的項目，
+      而那也只是「值得看一下的科目」，不是認定。
+
+    比較基礎是**同學年度、同類型、只用比率**：CLAUDE.md 記了兩個特徵分層後
+    效果腰斬，以及一個全市系統性下滑會誤標整個世代。只跟自己那一年的非營利
+    同儕比，這兩個問題都不必建模就消掉。
+    """
+    p = _point(a.institution_id)
+    if not p:
+        return _not_found(a.institution_id)
+    _code, dossier = _dossier_for(a.institution_id)
+    peer = (dossier or {}).get("peer")
+    if not peer:
+        return ToolOutcome(payload={
+            "institution": p["full"], "available": False,
+            "note": ("這一所沒有同儕財務比較——只有申報公開財報的非營利園才有。"
+                     "那是涵蓋範圍限制，不是合規證明。"),
+        })
+    hist = peer.get("history", [])
+    if a.year is not None:
+        hit = next((h for h in hist if h.get("y") == a.year), None)
+        if hit is None:
+            return ToolOutcome(payload={
+                "institution": p["full"],
+                "error": f"沒有 {a.year} 學年度的比較",
+                "available_years": [h.get("y") for h in hist],
+            })
+        peer = {**peer, **hit}
+    return ToolOutcome(
+        payload={
+            "institution": p["full"],
+            "available": True,
+            "academic_year": peer.get("y"),
+            "percentile": peer.get("pct"),
+            "rank_among_peers": peer.get("rank"),
+            "peer_count": peer.get("peers"),
+            "features_compared": peer.get("nfeat"),
+            # 先給貢獻、再給越門檻的，名稱不同、意義不同。
+            "contributions": peer.get("contributions", []),
+            "anomalies": peer.get("anomalies", []),
+            "history": hist,
+            "note": ("這是同年度、同類型非營利園之間的相對位置，只用比率不用金額，"
+                     "所以大園不會因為規模就顯得異常。**不是分類器、不是違規機率**——"
+                     "面板只有 10 個正樣本，撐不起監督式模型。contributions 是分數的"
+                     "組成，不是發現；anomalies 才是越過門檻的科目，而那也只代表"
+                     "值得看一下。法遵檢核與裁罰紀錄刻意不放進這個計算——那兩者是"
+                     "事後用來檢驗這個排序的，訓練過的檢查不算檢查。"),
+        },
+        ui_action={"type": "open_drawer", "institution_id": a.institution_id},
+    )
+
+
+# ── 20–24. 資料室 ────────────────────────────────────────────────────
+#
+# 這五個 tool 一律走 `dataroom.store`，與 `/api/dataroom/*` **同一份查詢**。
+# 兩邊各寫一份的那天，就是助理講的數字與畫面上的數字開始不一致的那天。
+#
+# 它們只回答「這份文件上印的是什麼」。同儕比較、風險分數、法遵結論都不在
+# 這裡——那些是判讀，屬於卷宗與派工提案，混進來會讓「原件轉錄」這個定位失效。
+
+
+def _dr():
+    from ..dataroom import store
+
+    return store
+
+
+class DocListArgs(BaseModel):
+    institution: Optional[str] = Field(
+        default=None, description="園名簡稱或代號，例如「安溪」或 N01")
+    year: Optional[int] = Field(default=None, description="學年度，例如 113")
+    limit: int = Field(default=30, ge=1, le=100)
+
+
+def _list_documents(_ctx: ToolContext, a: DocListArgs) -> ToolOutcome:
+    """列出資料室裡有哪些文件。
+
+    既有的 `search_documents` 必須先有查詢字串，所以在它之前沒有任何 tool
+    能回答「我們手上有什麼」。
+    """
+    rows = _dr().loaded_reports(institution=a.institution, year=a.year)
+    items = [{
+        "report": r["id"], "code": r["code"], "institution": r["short_name"],
+        "academic_year": r["academic_year"], "year_kind": "學年度",
+        "extracted_pages": r["pages"], "tables": r["tables"],
+        "n_issues": r.get("n_issues"), "identity_ok": r.get("identity_ok"),
+        "models": r.get("models"), "dpi": r.get("dpi"),
+    } for r in rows[:a.limit]]
+    pend = _dr().pending()
+    return ToolOutcome(
+        payload={
+            "count": len(items), "items": items,
+            "pending": sorted(pend),
+            "note": "非營利園財報為純掃描影像，內容出自視覺抽取而非 PDF 文字層。"
+                    "公校決算書用年度制、一冊含多園，沒有頁級抽取，不在此清單。",
+        },
+        ui_action={"type": "navigate", "tab": "data"},
+    )
+
+
+class TableTypesArgs(BaseModel):
+    institution: Optional[str] = Field(default=None, description="園名簡稱或代號")
+    year: Optional[int] = Field(default=None, description="學年度")
+
+
+def _list_table_types(_ctx: ToolContext, a: TableTypesArgs) -> ToolOutcome:
+    """有哪幾種表單，各幾張。這是資料室選單本身。"""
+    store = _dr()
+    if not a.institution and a.year is None:
+        secs = store.overview()["sections"]
+        items = [{"section": s["key"], "section_zh": s["zh"],
+                  "tables": s["tables"], "reports": s["reports"]} for s in secs]
+    else:
+        rows = store.find_tables(institution=a.institution, year=a.year,
+                                 limit=400)
+        agg: dict[str, dict] = {}
+        for t in rows:
+            e = agg.setdefault(t["section"], {
+                "section": t["section"], "section_zh": t["section_zh"],
+                "tables": 0, "reports": set()})
+            e["tables"] += 1
+            e["reports"].add(t["report"])
+        items = sorted(({**v, "reports": len(v["reports"])} for v in agg.values()),
+                       key=lambda e: -e["tables"])
+    return ToolOutcome(
+        payload={
+            "count": len(items), "items": items,
+            "note": "「未分類明細」是標題無法歸類的表，刻意保留成一項而不藏起來。",
+        },
+        ui_action={"type": "open_table", "sections": [i["section"] for i in items[:8]]},
+    )
+
+
+class GetTableArgs(BaseModel):
+    uid: Optional[str] = Field(default=None, description="表的代號，例如 N01/113/p05/t1")
+    institution: Optional[str] = Field(default=None, description="園名簡稱或代號")
+    year: Optional[int] = Field(default=None, description="學年度")
+    section: Optional[str] = Field(
+        default=None, description="表單類型鍵，例如 personnel_detail")
+    nth: int = Field(default=1, ge=1, le=50, description="同類多張時取第幾張")
+
+
+def _get_table(_ctx: ToolContext, a: GetTableArgs) -> ToolOutcome:
+    """取一張表的全部內容，**含空白格**。
+
+    空白格是這個 tool 存在的理由之一：`nonprofit_pagewise_facts.csv` 對空白
+    是整列跳過，而「業務發展費預算欄空白」＝未編列預算，是一項稽查發現。
+    """
+    store = _dr()
+    uid = a.uid
+    if not uid:
+        rows = store.find_tables(section=a.section, institution=a.institution,
+                                 year=a.year, limit=a.nth)
+        if len(rows) < a.nth:
+            return ToolOutcome(payload={
+                "found": False,
+                "note": "找不到符合條件的表。這代表這份報告沒有抽到這一種表，"
+                        "不代表機構沒有編列——資料不足，不是低風險。",
+            })
+        uid = rows[a.nth - 1]["uid"]
+
+    t = store.get_table(uid)
+    if t is None:
+        return ToolOutcome(payload={"found": False, "uid": uid,
+                                    "note": "這張表不在已載入的資料裡。"})
+    rows_out = [{
+        "item_label": r.get("label"), "note_ref": r.get("note_ref"),
+        "values": r.get("values") or [],
+        # 前端與模型都要能分辨「空白」與「0」，所以另給一條布林陣列，
+        # 不要求讀者自己去判斷 null。
+        "blanks": [v is None for v in (r.get("values") or [])],
+        "percents": r.get("percents"),
+    } for r in t["rows"]]
+    return ToolOutcome(
+        payload={
+            "found": True, "uid": t["uid"], "report": t["report"],
+            "institution": t["institution"], "academic_year": t["academic_year"],
+            "section": t["section"], "section_zh": t["section_zh"],
+            "section_inherited": t["section_inherited"],
+            "title": t["title"], "context_heading": t["context_heading"],
+            "unit": t["unit"], "aligned": t["aligned"],
+            "citation": f'{t["report"]} p.{t["printed_page"]}',
+            "pdf_page": t["pdf_page"], "printed_page": t["printed_page"],
+            "period_labels": t["period_labels"], "rows": rows_out,
+            "page_issues": t["issues"],
+            "note": "數值為 null 代表原件那一格空白（未編列），不是 0。"
+                    "本表為原件轉錄，不含任何判讀。",
+        },
+        ui_action={"type": "open_table", "uid": t["uid"]},
+    )
+
+
+class CompareYearsArgs(BaseModel):
+    institution: str = Field(description="園名簡稱或代號，例如「安溪」")
+    section: str = Field(description="表單類型鍵，例如 personnel_detail")
+    max_rows: int = Field(default=30, ge=1, le=100)
+
+
+def _compare_table_across_years(_ctx: ToolContext, a: CompareYearsArgs) -> ToolOutcome:
+    """同一種表跨學年度對齊。
+
+    ⚠️ 這件事交給模型自己用多次 `get_table` 做一定會錯：學年度 N 的資產負債表
+    基準日是 (N+1)/7/31，而同一份報告裡兩張同名表期間不同是常態。所以這裡
+    **逐年回傳該年自己的 `period_labels` 原文**，不用 `academic_year` 代稱期間。
+    """
+    res = _dr().compare_years(a.institution, a.section, max_rows=a.max_rows)
+    return ToolOutcome(payload={
+        **res,
+        "note": res.get("note", "")
+        + " 期間請以各年度的 period_labels 原文為準，不要用學年度代稱。"
+          " unmatched_items 是只出現在部分年度的科目，不是消失。",
+    })
+
+
+class ExtractionNotesArgs(BaseModel):
+    institution: Optional[str] = Field(default=None, description="園名簡稱或代號")
+    year: Optional[int] = Field(default=None, description="學年度")
+    limit: int = Field(default=20, ge=1, le=50)
+
+
+def _get_extraction_notes(_ctx: ToolContext, a: ExtractionNotesArgs) -> ToolOutcome:
+    """抽取過程自報的疑點。
+
+    「完整抽取」這四個字唯一撐得住的方式，是系統講得出自己哪裡不完整。
+    """
+    rows = _dr().extraction_notes(institution=a.institution, year=a.year,
+                                  limit=a.limit)
+    return ToolOutcome(payload={
+        "count": len(rows), "items": rows,
+        "unresolved": sum(1 for r in rows if r["unresolved"]),
+        "note": "這些是抽取時「這一格看不清楚／自相矛盾」的自報疑點，"
+                "**不是機構的稽查發現**。標 unresolved 的是模型自己寫明"
+                "需要人工確認的，不可當成已確認的事實引用。",
+    })
+
+
 # ── 註冊 ─────────────────────────────────────────────────────────────
 
 _SPECS = [
     ("list_institutions",
-     "依行政區、類別、有無前科或財報法遵未通過列出機構，並把畫面帶到派工提案頁籤",
+     "列出機構：可依行政區、類別、有無前科、財報法遵未通過、評鑑部分未通過、"
+     "近期有無公開報導、有無公開財報篩選，並可依交付順序／裁罰件數／最近事件排序。"
+     "會把畫面帶到名單頁並移動地圖",
      ListInstitutionsArgs, _list_institutions, False),
     ("get_ranking", "取現行派工提案的前 N 名，含分層理由（tier）",
      GetRankingArgs, _get_ranking, False),
@@ -570,6 +1085,33 @@ _SPECS = [
     ("record_feedback", "記錄稽查員對建議書單項的認同與否（追加式）",
      RecordFeedbackArgs, _record_feedback, True),
     ("load_skill", "載入一份作業指引", LoadSkillArgs, _load_skill, False),
+    ("get_rank_track", "取單一機構在各時點的名次軌跡（set_time_machine 是全市視角）",
+     InstitutionArgs, _get_rank_track, False),
+    ("get_staffing", "取一所機構的員工數、每人人事費、師生比，附全體同儕基準",
+     InstitutionArgs, _get_staffing, False),
+    ("get_realtime", "取一所機構的公開提及（新聞／PTT／Threads）與歸屬依據",
+     InstitutionArgs, _get_realtime, False),
+    ("list_memos", "瀏覽或搜尋本批建議書清單（open_memo 是開其中一份）",
+     ListMemosArgs, _list_memos, False),
+    ("set_map_view", "改地圖顯示：著色依據、群集、區界、區名、反灰、底色、"
+                     "只看複查名單、派工容量。只改畫面，不改分數",
+     SetMapViewArgs, _set_map_view, False),
+    ("scan_estimate", "估算一次輿情掃描要花多少錢（算錢不花錢，不會發動掃描）",
+     ScanEstimateArgs, _scan_estimate, False),
+    ("get_peer_comparison",
+     "同儕財務比較：這一所在同年度同類型非營利園中的相對位置與逐項原因"
+     "（相對位置，不是違規機率）",
+     PeerArgs, _get_peer_comparison, False),
+    ("list_documents", "列出資料室裡有哪些已抽取的財務報告（不需先給查詢字串）",
+     DocListArgs, _list_documents, False),
+    ("list_table_types", "有哪幾種表單、各幾張，並把資料室的類型選單帶到對應位置",
+     TableTypesArgs, _list_table_types, False),
+    ("get_table", "取一張表的全部內容，含空白格（null＝未編列，不是 0）",
+     GetTableArgs, _get_table, False),
+    ("compare_table_across_years", "同一種表跨學年度對齊，期間逐年照抄不改寫",
+     CompareYearsArgs, _compare_table_across_years, False),
+    ("get_extraction_notes", "取抽取過程自報的疑點（不是機構的稽查發現）",
+     ExtractionNotesArgs, _get_extraction_notes, False),
 ]
 
 

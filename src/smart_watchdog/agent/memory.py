@@ -30,6 +30,16 @@ def load_history(db, session_id: str, limit: int = HISTORY_LIMIT) -> list[dict]:
     （`kind="text"` 且 `role="user"`）。那是唯一保證前面沒有懸空 tool_use／
     tool_result 的位置；往前找不到就回傳空清單，**寧可少還原幾則，也不要送出
     不合法的訊息串**。
+
+    **尾端也要修剪。** 呼叫端會在還原出來的訊息串後面接一則新的使用者訊息，
+    所以這串必須以 assistant 的講解句結束，否則下一輪必然不合法：
+    收在 `tool_call` 時，那一步的 `tool_result` 沒寫成（handler 例外、程序被砍），
+    還原出來就是一個沒有對應 `tool_result` 的 `tool_use`；收在 `tool_result` 或
+    使用者訊息時，兩者的 role 都是 `user`，接上新的使用者訊息就成了連續兩則
+    user。兩種都會被整串拒收，而且症狀是這個 session **之後每一輪都失敗**，
+    使用者只能重新整理。
+    後者不必出錯就會發生——撞到 `MAX_STEPS`、或最後一步沒吐講解句就結束，
+    收尾都落在 `tool_result` 上。被修掉的那幾列軌跡仍完整留在資料庫裡。
     """
     rows = (
         db.execute(
@@ -42,6 +52,9 @@ def load_history(db, session_id: str, limit: int = HISTORY_LIMIT) -> list[dict]:
         .all()
     )
     rows = list(reversed(rows))
+
+    while rows and not (rows[-1].kind == "text" and rows[-1].role == "assistant"):
+        rows.pop()
 
     start = next(
         (i for i, r in enumerate(rows) if r.kind == "text" and r.role == "user"), None

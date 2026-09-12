@@ -6,13 +6,25 @@
  * 前端不算錢。所有金額、公式、剩餘額度都由 /api/scan/estimate 回傳——
  * 價目表只能有一份，複製一份到瀏覽器就等於埋一個遲早會對不上的第二答案。
  */
-/* **整支包在 IIFE 裡。** 傳統 <script> 共用一個全域範圍，而頂層的 `function`
- * 宣告是**靜默覆蓋**——不像 `const` 會丟 SyntaxError，所以壞掉時完全沒有線索。
- * scan.js 與 timeline.js 都宣告了 `function render()`，timeline.js 載入在後，
- * 於是 scan.js 裡呼叫的 render 其實是 timeline 的：掃描主控台永遠停在
- * 「載入中…」，Console 一個字都不會印。`boot` 也在 app.js 與 timeline.js
- * 之間重名。包起來就沒有這回事。 */
+/* ⚠️ 整支包在 IIFE 裡，不是風格偏好。這支檔案被**兩種**全域衝突咬過。
+ *
+ * 一、`const` 重複宣告會整支拒絕執行。social.js 也宣告了頂層 `const S` 且比
+ * 這支先載入，於是 scan.js 直接 SyntaxError、window.SWScan 是 undefined、
+ * 掃描主控台整塊是死的，主控台只印一行「Identifier 'S' has already been
+ * declared」。app.js:1087 那條註解記的是同一個坑的前一次（`usd`）。
+ *
+ * 二、頂層 `function` 宣告是**靜默覆蓋**，連那一行錯誤都不會有。scan.js 與
+ * timeline.js 都宣告了 `function render()`，timeline.js 載入在後，於是這支
+ * 裡呼叫的 render 其實是 timeline 的——掃描主控台一樣永遠停在「載入中…」，
+ * 但 Console 一個字都不印，因為沒有任何錯誤發生：只是叫錯了函式。
+ * `boot` 也在 app.js 與 timeline.js 之間重名。
+ *
+ * 第二種比第一種難查一個量級，而兩種的症狀一模一樣。包起來之後這支的頂層
+ * 名稱一律私有，只有結尾的 window.SWScan 對外。
+ */
 (function () {
+"use strict";
+
 const S = window.SW;
 const scan = {
   opts: null, plan: null, job: null, poll: null,

@@ -57,15 +57,15 @@ $env:PYTHONPATH = "src"
 
 ```bash
 PYTHONPATH=src .venv/bin/python -m pytest tests/ -q
-# 424 passed   ← POSIX 上是 423 passed + 1 skipped，
-#                那一條 skip 是 flock 沒有逾時可測，正常
+# 525 passed, 12 skipped（2026-09-12，Windows）
 .venv/bin/ruff check .
 ```
 
 ## 憑證
 
-**一項都不填也完整可跑。** 分析管線、靜態版、動態版、新聞與 PTT 兩個即時
-管道都不需要金鑰。憑證只**開啟更多管道**。
+**外部 API 憑證一項都不填，核心分析仍可完整執行。** 新聞與 PTT 也不需要金鑰；
+憑證只會開啟更多即時管道。動態版登入另需設定兩組 seed 帳號，詳見
+[`docs/ENVIRONMENTS.md`](docs/ENVIRONMENTS.md)。
 
 `.env` 放在專案根目錄（已 gitignore，不會跟著 repo 過去，要自己重建）：
 

@@ -9,6 +9,8 @@
 2. 稽核列由 `registry.execute()` 寫，迴圈不重複寫
 3. 禁用詞被替換掉，且替換有被記錄
 4. 未註冊的 tool 被白名單擋下，且擋下來不會讓整輪崩掉
+5. 一輪不管怎麼收尾，還原出來的歷史都接得上下一輪（見 `_replayable`）
+6. tool 自己回的錯誤不會在畫面上顯示成成功
 """
 
 from __future__ import annotations
@@ -25,7 +27,8 @@ pytest.importorskip("pydantic")
 
 from pydantic import BaseModel
 
-from smart_watchdog.agent.loop import run_turn
+from smart_watchdog.agent.loop import MAX_STEPS, run_turn
+from smart_watchdog.agent.memory import load_history
 from smart_watchdog.agent.protocol import (
     AgentBackend,
     TextDelta,
@@ -146,6 +149,25 @@ def test_verdict_language_is_replaced_and_the_hit_is_recorded(db, registry) -> N
     assert said.data["softened"] == ["違法"], "替換要留紀錄，那是一個該被看見的指標"
 
 
+def test_the_disclaimer_survives_the_softener(db, registry) -> None:
+    """護欄不可以改壞它要保護的那句話。
+
+    每個 tool 回傳都帶著 `tools.CAVEAT`（「…不是違法認定；無公開財報者屬資料
+    不足，不是低風險。」），所以模型很常照講。無條件字串替換會把它改成
+    「不是訊號指向的情形認定」，畫面上還掛一條「已替換認定性用語：違法」——
+    看起來像模型講錯話，實際上它講的正是治理文件要求的那一句。
+
+    `report/verify.py` 早就踩過同一個坑（第一版把自己 143 封建議書全退了），
+    那裡的 `NEGATED` 就是為此存在。講解句改成沿用同一份表。
+    """
+    from smart_watchdog.agent.tools import CAVEAT
+
+    events = _run(db, registry, [[TextDelta(CAVEAT), TurnEnd("end_turn")]])
+    said = next(e for e in events if e.event == "text")
+    assert said.data["text"] == CAVEAT, "系統自己的界線句被護欄改壞了"
+    assert said.data["softened"] == [], "否定式的說法不該被記成命中"
+
+
 def test_unregistered_tool_is_denied_without_killing_the_turn(db, registry) -> None:
     events = _run(db, registry, [
         [ToolUse(ToolCall("c1", "delete_everything", {})), TurnEnd("tool_use")],
@@ -158,12 +180,16 @@ def test_unregistered_tool_is_denied_without_killing_the_turn(db, registry) -> N
 
 
 def test_max_steps_stops_the_loop(db, registry) -> None:
-    """模型每步都要求 tool 時，迴圈必須自己停，不能無限打下去。"""
+    """模型每步都要求 tool 時，迴圈必須自己停，不能無限打下去。
+
+    上限對 MAX_STEPS 本身斷言而不是寫死數字：這裡要守的是「會停」，
+    不是「停在第 8 步」。上限本來就會隨註冊的 tool 變多而調整。
+    """
     forever = [[ToolUse(ToolCall(f"c{i}", "do_thing", {})), TurnEnd("tool_use")]
-               for i in range(20)]
+               for i in range(MAX_STEPS * 2)]
     events = _run(db, registry, forever)
     assert events[-1].data["stop_reason"] == "max_steps"
-    assert events[-1].data["steps"] == 8
+    assert events[-1].data["steps"] == MAX_STEPS
 
 
 def test_sse_frames_use_crlf_which_the_frontend_must_normalise() -> None:
@@ -181,3 +207,184 @@ def test_sse_frames_use_crlf_which_the_frontend_must_normalise() -> None:
     raw = sse.ServerSentEvent(data='{"a":1}', event="text").encode()
     assert raw.endswith(b"\r\n\r\n")
     assert b"\n\n" not in raw, "若哪天變成 LF，agent.js 的正規化就不再是必要的"
+
+
+# ── 還原出來的歷史必須接得上下一輪 ──────────────────────────────────
+
+
+def _replayable(s) -> list[dict]:
+    """還原歷史，並檢查它接得上下一則使用者訊息。
+
+    `run_turn` 下一輪做的第一件事就是 `load_history()` 之後 append 一則 user
+    訊息，所以這串必須以 assistant 結尾，而且不能有懸空的 tool_use。任一條
+    不成立，Converse 就會整串拒收——症狀是這個 session **之後每一輪都失敗**，
+    使用者只能重新整理頁面。
+    """
+    messages = load_history(s, SESSION_ID)
+    for i, m in enumerate(messages):
+        if any(b["type"] == "tool_use" for b in m["content"]):
+            nxt = messages[i + 1] if i + 1 < len(messages) else None
+            assert nxt and any(b["type"] == "tool_result" for b in nxt["content"]), (
+                f"第 {i} 則帶著沒有對應 tool_result 的 tool_use"
+            )
+    roles = [m["role"] for m in messages] + ["user"]
+    assert all(a != b for a, b in zip(roles, roles[1:])), f"角色沒有交替：{roles}"
+    return messages
+
+
+def _boom(_ctx: ToolContext, _a: NoArgs) -> ToolOutcome:
+    raise RuntimeError("payload 讀不到／資料庫鎖住／handler 自己的 bug")
+
+
+def test_a_crashing_tool_does_not_poison_the_session(db) -> None:
+    """handler 丟例外之後，這個 session 還要能繼續用。
+
+    `execute()` 先寫 tool_call 稽核才跑 handler，所以 handler 炸掉時曾經只留下
+    tool_call 那一列，軌跡上是「叫了但沒有下文」，而下一輪還原出來是一個沒有
+    對應 tool_result 的 tool_use。
+    """
+    reg = ToolRegistry()
+    reg.register(ToolSpec(
+        name="do_thing", description="做一件事", params=NoArgs, handler=_boom,
+    ))
+    s, user = db
+    with pytest.raises(RuntimeError):
+        list(run_turn(
+            db=s, user=user, session_id=SESSION_ID, turn=1, text="做一下", view={},
+            backend=ScriptedBackend([[
+                TextDelta("我先查一下。"),
+                ToolUse(ToolCall("c1", "do_thing", {})),
+                TurnEnd("tool_use"),
+            ]]),
+            registry=reg,
+        ))
+    kinds = [r.kind for r in s.query(AgentMessage).order_by(AgentMessage.id).all()]
+    assert kinds == ["text", "text", "tool_call", "tool_result"], (
+        "失敗的 tool 也要留下 tool_result，否則稽核軌跡缺一半"
+    )
+    _replayable(s)
+
+
+@pytest.mark.parametrize(
+    "script",
+    [
+        # 不帶講解句：8 步 × 2 列 + 使用者那一句 = 17 列，還在 HISTORY_LIMIT
+        # 的視窗內。每步都配一句講解就是 25 列，使用者那一句會被切到視窗外，
+        # `load_history` 找不到安全起點而回傳空清單——那條路徑測不到這裡要測的事。
+        pytest.param(
+            [[ToolUse(ToolCall(f"c{i}", "do_thing", {})), TurnEnd("tool_use")]
+             for i in range(20)],
+            id="撞到-MAX_STEPS",
+        ),
+        pytest.param(
+            [[TextDelta("我先查一下。"), ToolUse(ToolCall("c1", "do_thing", {})),
+              TurnEnd("tool_use")],
+             [TurnEnd("end_turn")]],
+            id="最後一步沒吐講解句",
+        ),
+    ],
+)
+def test_history_always_ends_where_the_next_turn_can_continue(db, registry, script) -> None:
+    """這兩種收尾都**不是錯誤**，卻一樣會讓下一輪的訊息串不合法。
+
+    兩者的最後一列都是 tool_result，而 tool_result 的 role 是 user——下一輪在
+    後面接上使用者訊息就成了連續兩則 user，角色沒有交替。這條路徑不必出任何
+    差錯就會走到。
+    """
+    _run(db, registry, script)
+    _replayable(db[0])
+
+
+def test_a_dead_backend_on_the_first_step_does_not_poison_the_session(db, registry) -> None:
+    """Bedrock 在第一步就丟例外（限流、憑證過期）時，資料庫只留下使用者那一句。
+
+    留著它，下一輪接上新的使用者訊息就是連續兩則 user。寧可整串不還原。
+    """
+
+    class DeadBackend(AgentBackend):
+        name = "dead"
+
+        def stream(self, *, system, messages, tools, timeout_s=60):  # noqa: ARG002
+            raise RuntimeError("Bedrock throttled")
+            yield  # pragma: no cover - 讓它是 generator
+
+    s, user = db
+    with pytest.raises(RuntimeError):
+        list(run_turn(
+            db=s, user=user, session_id=SESSION_ID, turn=1, text="做一下", view={},
+            backend=DeadBackend(), registry=registry,
+        ))
+    assert _replayable(s) == [], "只剩一句使用者訊息時，寧可少還原也不要送出不合法的串"
+
+
+# ── tool 自己回的錯誤 ────────────────────────────────────────────────
+
+
+def _not_found(_ctx: ToolContext, _a: NoArgs) -> ToolOutcome:
+    return ToolOutcome(payload={
+        "error": "查無機構 deadbeef",
+        "note": "機構 id 是 8 碼十六進位，可先用 list_institutions 取得。",
+    })
+
+
+def test_a_tool_that_returns_an_error_is_not_shown_as_success(db) -> None:
+    """tool 自己回 error 時，步驟軌道不可以顯示成綠色打勾。
+
+    這類回傳（查無機構、類別名稱不合法、export_schedule 少給參數）不是例外，
+    所以曾經一律送 `ok: True`，軌道上顯示「✓ 完成」，而模型下一句講的是
+    「查無這筆」——畫面與說法互相矛盾。
+    """
+    reg = ToolRegistry()
+    reg.register(ToolSpec(
+        name="do_thing", description="做一件事", params=NoArgs, handler=_not_found,
+    ))
+    events = _run(db, reg, [
+        [ToolUse(ToolCall("c1", "do_thing", {})), TurnEnd("tool_use")],
+        [TextDelta("查無這筆。"), TurnEnd("end_turn")],
+    ])
+    result = next(e for e in events if e.event == "tool_result")
+    assert result.data["ok"] is False
+    assert result.data["summary"] == "查無機構 deadbeef", "摘要要講出錯在哪，不是「完成」"
+
+
+def test_bedrock_client_is_built_with_a_real_timeout() -> None:
+    """逾時必須真的生效，不是只在簽名裡出現。
+
+    botocore 的預設是 60 秒讀取逾時加上預設重試——實測一次沒回應的呼叫會卡
+    約三分鐘，而畫面上只停在「整理中」，使用者看到的是系統當掉。
+    先前 `stream()` 收下 timeout_s 卻標成 noqa 直接忽略，註解寫「由 botocore
+    設定控制」，但建 client 時根本沒設 Config。
+    """
+    pytest.importorskip("boto3")
+    from smart_watchdog.agent.backend import BedrockAgentBackend
+
+    b = BedrockAgentBackend(timeout_s=7, region="us-west-2")
+    cfg = b._get_client().meta.config
+    assert cfg.read_timeout == 7, "讀取逾時沒有套用"
+    assert cfg.connect_timeout <= 15
+    # 串流重試沒有意義：前面吐過的字已經送出去了，而多次重試正是卡住的來源。
+    # botocore 會把 max_attempts 正規化成 total_max_attempts（＝重試次數 + 1）。
+    assert cfg.retries.get("total_max_attempts", 99) <= 2
+
+
+def test_the_loop_and_the_backend_agree_on_the_timeout() -> None:
+    """兩邊各寫一份就會出現「迴圈以為會中止、實際上還在等」。"""
+    pytest.importorskip("boto3")
+    from smart_watchdog.agent.loop import STEP_TIMEOUT_S
+    from smart_watchdog.api.agent import _backend
+
+    assert _backend().timeout_s == STEP_TIMEOUT_S
+
+
+def test_tool_summaries_do_not_leak_markdown_to_the_screen() -> None:
+    """tool 的 `note` 是寫給模型看的，帶 markdown；畫面那行是純文字。
+
+    `get_peer_comparison` 的 note 裡有「**不是分類器、不是違規機率**」，
+    沒處理的話畫面上就會出現一對星號。講解句早有 `strip_markup()`，
+    步驟摘要漏掉了同一道處理。
+    """
+    from smart_watchdog.agent.loop import _summarise
+
+    out = _summarise({"note": "只用比率不用金額。**不是分類器、不是違規機率**——面板"})
+    assert "*" not in out
+    assert "不是分類器、不是違規機率" in out, "拿掉標記不可以連內容一起吃掉"
