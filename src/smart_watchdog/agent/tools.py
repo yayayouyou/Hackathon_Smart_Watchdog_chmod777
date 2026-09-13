@@ -731,8 +731,12 @@ class SetMapViewArgs(BaseModel):
     focus_town: Optional[str] = Field(
         default=None, description="把地圖飛到這個行政區，例如「蘆洲區」"
     )
+    # ⚠️ 範圍必須等於畫面上 #cap 的 min/max（app.js::setCap 會夾到 20–300）。
+    # 原本是 1–200：模型送 10，畫面夾成 20，工具卻回報「已套用 10」，助理講的
+    # 條件與實際套用的不一致。tests/test_agent_tools.py 釘住兩邊相等。
     capacity: Optional[int] = Field(
-        default=None, ge=1, le=200, description="本月可稽查家數，會改變本批提案的筆數"
+        default=None, ge=20, le=300,
+        description="本月可稽查家數（20–300），會改變本批提案的筆數與行政區密度",
     )
 
 

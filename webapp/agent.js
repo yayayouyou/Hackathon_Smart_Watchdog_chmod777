@@ -85,7 +85,11 @@
     const bounds = L.latLngBounds(ring.map(([x, y]) => [y, x]));
     /* maxBounds 是開場取景時以整個新北設的；飛進某一區一定在範圍內，
        但保險起見先放寬，回全市時 app.js 的 fitNTPC 會再設回來。 */
-    SW.state.map.flyToBounds(bounds, { padding: [40, 40], duration: 1.1 });
+    // 底部留白與 app.js 共用：時間軸面板打開時，南邊不可以被它蓋住。
+    const bottom = SW.mapBottomPad ? SW.mapBottomPad(40) : 40;
+    SW.state.map.flyToBounds(bounds, {
+      paddingTopLeft: [40, 40], paddingBottomRight: [40, bottom], duration: 1.1,
+    });
   }
 
   function applyMapView(v) {
@@ -102,8 +106,14 @@
       if (btn) btn.click();
     }
     if (typeof v.capacity === "number") {
-      const cap = $("cap");
-      if (cap) { cap.value = v.capacity; fire(cap, "input"); }
+      /* 走 SW.setCap，不模擬 input 事件。input 的處理是「打字途中不回寫輸入框」
+         （echo:false），所以助理送 10 會被夾成 20、數字框卻停在 10——畫面上的
+         條件與實際套用的不一致，違反上面那條契約。setCap 會把夾過的值寫回去。 */
+      if (SW.setCap) SW.setCap(v.capacity);
+      else {
+        const cap = $("cap");
+        if (cap) { cap.value = v.capacity; fire(cap, "change"); }
+      }
     }
   }
 

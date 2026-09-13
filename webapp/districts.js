@@ -20,15 +20,11 @@ const esc = (s) => String(s).replace(/[&<>"]/g,
 
 const st = { data: null, k: 100, open: null, busy: false };
 
-/* 帶別的顏色。刻意**不用紅綠燈**：綠色會被讀成「這一區合格」，而我們量的是
-   派工密度不是合規狀態——永和 67 家裡有 32 家有裁罰紀錄，它只是這一期建議
-   查核的件數低於同型態組成的預期。 */
-const BAND = {
-  高於全市: "band-hi",
-  與全市相當: "band-mid",
-  低於全市: "band-lo",
-  資料不足: "band-na",
-};
+/* 等級的顏色走 CSS 的 `.sev-N`（style.css 的 --sev0..4），**與地圖底色、地圖
+   清單同一組**；等級名稱只用後端回的 level_label，這裡不寫第二份。
+   刻意**不用紅綠燈**：最低一級是冷灰不是綠。綠色會被讀成「這一區合格」，而
+   我們量的是派工密度不是合規狀態——永和 67 家裡有 32 家有裁罰紀錄，它只是
+   這一期建議查核的件數低於同型態組成的預期。 */
 
 const TYPE = ["公立", "非營利", "私立"];
 
@@ -60,14 +56,14 @@ function mix(r) {
 
 function row(r) {
   const na = r.band === "資料不足";
-  return `<div class="dbrow ${BAND[r.band] || ""}" data-d="${esc(r.d)}"
+  return `<div class="dbrow sev-${r.level}" data-d="${esc(r.d)}"
       role="button" tabindex="0" aria-expanded="false">
     <span class="dbrank">${na ? "–" : r.rank}</span>
     <span class="dbname">${esc(r.d)}</span>
     <span class="dbobs">${r.obs}<em>／預期 ${r.exp}</em></span>
     ${bar(r)}
     <span class="dbval">${r.sir == null ? "—" : r.sir.toFixed(2) + "×"}</span>
-    <span class="dbband">${esc(r.band)}</span>
+    <span class="dbband">${esc(r.level_label)}</span>
     <span class="dbscale">${mix(r)}<em>${r.n} 家</em></span>
     <span class="dbflags">${r.hot ? `<i class="dbhot">報導 ${r.hot}</i>` : ""}</span>
   </div><div class="dbdrill" data-for="${esc(r.d)}" hidden></div>`;
@@ -140,7 +136,7 @@ function render() {
   // 收進「顯示更多」等於用介面把不確定性藏起來。
   box.innerHTML =
     '<div class="dbhead"><span>名次</span><span>行政區</span>'
-    + '<span>建議查核</span><span>密度（1.0＝全市平均）</span><span class="dbval">倍數</span><span>對照</span>'
+    + '<span>建議查核</span><span>密度（1.0＝全市平均）</span><span class="dbval">倍數</span><span>等級</span>'
     + '<span>全區組成</span><span>輿情</span></div>'
     + ranked.map(row).join("")
     + (na.length
@@ -219,14 +215,29 @@ async function load() {
    0.972、k=150 掉到 0.721），所以要讓人拖得動；但每動一格打一次 API 沒有
    必要，rAF 等停下來再算。 */
 let timer = null;
+/* ⚠️ 這個滑桿改的是**地圖的派工容量**（app.js::setCap），不是自己的一份 k。
+   兩室各自一個 k 的話，分析驗證排的與地圖清單列的就不是同一批園。
+   setCap 算完會回呼 setK，這裡才真的重算。 */
 function onK(v) {
-  st.k = +v;
-  $("db-kv").textContent = st.k;
+  const kv = $("db-kv");
+  if (kv) kv.textContent = v;
   clearTimeout(timer);
-  timer = setTimeout(load, 160);
+  timer = setTimeout(() => T.setCap(+v), 160);
+}
+
+function setK(v) {
+  const n = +v;
+  if (n === st.k && st.data) return;
+  st.k = n;
+  const k = $("db-k");
+  if (k) k.value = n;
+  const kv = $("db-kv");
+  if (kv) kv.textContent = n;
+  if (st.data) load();          // 還沒進過這一室就不必先算
 }
 
 function open() {
+  if (T.state.cap && T.state.cap !== st.k) setK(T.state.cap);
   if (!st.data) load();
 }
 
@@ -235,5 +246,5 @@ document.addEventListener("DOMContentLoaded", () => {
   if (k) k.addEventListener("input", (e) => onK(e.target.value));
 });
 
-window.SWDistricts = { open, load };
+window.SWDistricts = { open, load, setK };
 })();

@@ -10,10 +10,11 @@ from __future__ import annotations
 
 import json
 import pathlib
+from collections import Counter
 
 import pytest
 
-from smart_watchdog.api.payload import MIN_EXPECTED, _byar, district_board
+from smart_watchdog.api.payload import LEVELS, MIN_EXPECTED, _byar, district_board
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PAYLOAD = ROOT / "dist/data/payload.json"
@@ -152,3 +153,54 @@ def test_the_board_never_calls_a_district_risky() -> None:
     assert "不是違法認定" in b["caveat"]
     # 「回顧不是預測」這件事要主動講：前 100 名有 94% 帶既有裁罰紀錄。
     assert "預測" in b["caveat"]
+
+
+def test_levels_refine_the_band_and_never_contradict_it() -> None:
+    """五級只能把「與全市相當」拆成略高／略低，不可以改寫 band 本身。
+
+    「明顯」必須對應 95% 區間整段在 1 的同一側；「略」只看點估計。反過來的話
+    （例如點估 1.3 但區間跨過 1 卻標成明顯偏高），就是把一個還不能確定的差異
+    塗成最深的顏色。
+    """
+    d = json.loads(PAYLOAD.read_text(encoding="utf-8"))
+    b = district_board(d["points"], k=100)
+    expect = {"資料不足": {0}, "高於全市": {4}, "低於全市": {1}, "與全市相當": {2, 3}}
+    for r in b["rows"]:
+        assert r["level"] in expect[r["band"]], (r["d"], r["band"], r["level"])
+        assert r["level_label"] == LEVELS[r["level"]]
+        if r["level"] == 3:
+            assert r["sir"] >= 0.995, r["d"]
+        if r["level"] == 2:
+            assert r["sir"] <= 1.005, r["d"]
+    assert sum(x["n"] for x in b["levels"]) == len(b["rows"])
+
+
+def test_each_row_lists_exactly_its_flagged_institutions() -> None:
+    """每區的 ids 就是地圖清單那一組要列的園，不多不少、依名次排。
+
+    地圖清單直接拿這個分組、不在前端再 filter 一次。兩份 filter 的話，遲早
+    會出現「區頭寫 6 家、底下列了 5 家」。
+    """
+    d = json.loads(PAYLOAD.read_text(encoding="utf-8"))
+    b = district_board(d["points"], k=100)
+    by_id = {p["i"]: p for p in d["points"]}
+    every = [i for r in b["rows"] for i in r["ids"]]
+    assert len(every) == len(set(every)) == b["flagged"] == 100
+    for r in b["rows"]:
+        assert len(r["ids"]) == r["obs"], r["d"]
+        ranks = [by_id[i]["r"] for i in r["ids"]]
+        assert ranks == sorted(ranks), r["d"]
+        assert all(by_id[i]["d"] == r["d"] for i in r["ids"]), r["d"]
+
+
+def test_the_middle_band_is_split_so_the_map_is_not_one_colour() -> None:
+    """k=100 時 17 個有名次的區有 13 個是「與全市相當」。
+
+    只畫三帶的話，地圖底色與清單區頭幾乎是同一個顏色——使用者要的「顏色顯眼、
+    看得出嚴重程度」就做不到。拆成五級之後，最多的一級不可以超過六成。
+    """
+    d = json.loads(PAYLOAD.read_text(encoding="utf-8"))
+    b = district_board(d["points"], k=100)
+    ranked = [r for r in b["rows"] if r["level"]]
+    assert len({r["level"] for r in ranked}) >= 3
+    assert max(Counter(r["level"] for r in ranked).values()) <= len(ranked) * 0.6

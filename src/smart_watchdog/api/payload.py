@@ -151,9 +151,30 @@ def _hull(points: list[tuple[float, float]]) -> list[tuple[float, float]]:
 #: 是 0，名次不變。
 MIN_EXPECTED = 1.0
 
-#: 帶別的排序權重。**資料不足永遠排在最後，但不隱藏**——全市 41% 的行政區
-#: 落在這一帶，把它們收進「顯示更多」等於用介面把不確定性藏起來。
-BAND_ORDER = {"高於全市": 0, "與全市相當": 1, "低於全市": 2, "資料不足": 3}
+#: 五級。**地圖底色、地圖清單、04 分析驗證三處共用這一個定義。**
+#: 各自寫一份門檻的話，同一個區在兩個房間會是兩種顏色——改版前真的發生過：
+#: 地圖底色畫的是絕對家數，板橋（13 家）最深；分析驗證卻把它排第 10。
+#:
+#: 「明顯」＝95% 區間整段在 1 的同一側（就是 band 的高於／低於全市）。
+#: 「略」＝點估計偏向一側、但區間跨過 1。
+#: 把「與全市相當」拆成略高／略低，是因為 k=100 時 17 個有名次的區有 13 個落在
+#: 那一帶，只畫三帶的話整張圖是同一個顏色。拆的依據是點估計，**不是**顯著性，
+#: 所以用詞一律寫「略」，不寫成已確定的高低。
+#:
+#: 資料不足永遠排在最後，但不隱藏——全市 41% 的行政區落在這一帶，把它們收進
+#: 「顯示更多」等於用介面把不確定性藏起來。
+LEVELS = {4: "明顯高於全市", 3: "略高於全市", 2: "略低於全市",
+          1: "明顯低於全市", 0: "資料不足"}
+
+
+def _level(band: str, sir: float | None) -> int:
+    if band == "資料不足":
+        return 0
+    if band == "高於全市":
+        return 4
+    if band == "低於全市":
+        return 1
+    return 3 if (sir or 0) >= 1 else 2
 
 
 def _byar(obs: int, exp: float) -> tuple[float, float]:
@@ -222,6 +243,12 @@ def district_board(points: list[dict], *, k: int = 100,
             "lo": None if lo is None else round(lo, 2),
             "hi": None if hi is None else round(hi, 2),
             "band": band,
+            "level": _level(band, sir),
+            "level_label": LEVELS[_level(band, sir)],
+            # 本區進榜的機構，依全市名次排。地圖清單直接拿這個分組，不在前端
+            # 再 filter 一次——兩份 filter 遲早會不一致。
+            "ids": [p["i"] for p in sorted(rs, key=lambda p: p.get("r") or big)
+                    if (p.get("r") or big) <= k],
             "pub": sum(1 for p in rs if p["t"] == 0),
             "npo": sum(1 for p in rs if p["t"] == 1),
             "prv": sum(1 for p in rs if p["t"] == 2),
@@ -239,7 +266,8 @@ def district_board(points: list[dict], *, k: int = 100,
                 for t in sorted(n_by_t)],
         })
 
-    rows.sort(key=lambda r: (BAND_ORDER[r["band"]], -(r["lo"] or 0), -r["obs"]))
+    # 等級高的先；同級內依信賴下界（大而不確定的往下壓）；資料不足最後。
+    rows.sort(key=lambda r: (r["level"] == 0, -r["level"], -(r["lo"] or 0), -r["obs"]))
     rank = 0
     for r in rows:
         if r["band"] == "資料不足":
@@ -256,6 +284,9 @@ def district_board(points: list[dict], *, k: int = 100,
         "min_expected": MIN_EXPECTED,
         "ranked": rank,
         "insufficient": sum(1 for r in rows if r["band"] == "資料不足"),
+        "levels": [{"level": lv, "label": LEVELS[lv],
+                    "n": sum(1 for r in rows if r["level"] == lv)}
+                   for lv in (4, 3, 2, 1, 0)],
         "rows": rows,
         # 這句要印在表格下方，不是埋在 docs。
         "caveat": ("名次代表建議先看的順序，不是違法認定。密度已扣除公立／"

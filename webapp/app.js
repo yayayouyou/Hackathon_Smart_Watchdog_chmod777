@@ -23,7 +23,7 @@ const cssv = (n) => getComputedStyle(document.documentElement).getPropertyValue(
 
 const state = {
   payload: null, points: [], byId: {}, proposal: [], selected: null,
-  cap: 20, cluster: true, flaggedOnly: false, types: new Set([0, 1, 2]),
+  cap: 100, cluster: true, flaggedOnly: false, types: new Set([0, 1, 2]),
   map: null, layer: null, districtLayer: null, base: null, googleKey: null,
   // agent 這一輪點名的機構 id（Set）。非 null 時地圖只顯示這幾筆，
   // 讓「我把這幾筆標在地圖上了」這句話對得上畫面。清除就設回 null。
@@ -34,6 +34,12 @@ const state = {
   // 新北以外反灰。ntpcRings 是從區界算出來的市界外框，算一次就快取。
   mask: true, maskLayer: null, outlineLayer: null, ntpcRings: null, land: [],
   choro: true, choroLayer: null,
+  // /api/district-board 的回應。地圖底色、清單分組、04 分析驗證共用這一份。
+  // 預設「密度高的先」：跟 04 分析驗證的名次一致。件數多的先仍可切換。
+  board: null, boardSort: "density",
+  // 清單展開的區（依區名）。預設全收：一眼看的是「哪一區、幾家」，要看名單再點開。
+  // 用區名不用索引，換容量或換排序之後，開著的那幾區還是開著。
+  openDistricts: new Set(),
   // 時間軸模式（timeline.js 設定）。非 null 時地圖改畫「當時的排序」與
   // 「後來實際受罰」，而不是今天的派工提案。
   timeline: null,
@@ -134,15 +140,33 @@ function initMap() {
   state.map.createPane("swdname");
   Object.assign(state.map.getPane("swdname").style,
     { zIndex: 450, pointerEvents: "none" });
+  // 行政區界線自己一個 pane，而且不吃滑鼠事件。
+  // ⚠️ 地圖是 preferCanvas：沒指定 pane 的向量會落在 overlayPane 的預設 Canvas
+  // renderer——一張鋪滿視窗、z 400、會吃滑鼠的畫布，把底下 swchoro（340）的
+  // 滑鼠事件全擋掉，行政區底色的等級 tooltip 在開場就完全出不來（界線改成預設
+  // 打開之後現形，審查實際重現過）。取消勾選也救不回來：Leaflet 不會移除已建立
+  // 的 renderer。
+  state.map.createPane("swdist");
+  Object.assign(state.map.getPane("swdist").style,
+    { zIndex: 400, pointerEvents: "none" });
+  // 新北市界：實線，壓在行政區虛線（swdist，400）之上、區名（450）與
+  // 標記（600）之下。見 drawCityEdge。
+  state.map.createPane("swedge");
+  Object.assign(state.map.getPane("swedge").style,
+    { zIndex: 440, pointerEvents: "none" });
   setBase("osm");
   state.layer = L.layerGroup().addTo(state.map);
   fitNTPC();
   refitOnLayout();
   applyMask(state.mask);
+  drawCityEdge();
   drawChoro();
   drawChoroLegend();
   drawPenaltyLegend();
   drawDistrictNames();
+  // 行政區界線預設打開：清單改成依行政區分組之後，看的人第一件事就是找
+  // 「這一組在地圖上是哪一塊」，沒有界線只剩底色，相鄰同色的兩區會黏在一起。
+  if ($("f-districts").checked) toggleDistricts(true);
   // 放大到街廓尺度時底色要退場，不然它只是蓋住地圖。
   state.map.on("zoomend", fadeChoro);
   // 行政區名字要跟著縮放換字級，否則全市尺度擠成一團、街廓尺度小到看不見。
@@ -310,6 +334,32 @@ function adj0(key) {
    只在沒有陸地輪廓時當退路用。 */
 const WORLD = [[-85, -180], [-85, 180], [85, 180], [85, -180]];
 
+/* 新北市界：實線。
+ *
+ * ⚠️ 行政區界線是虛線，而每一區的外環都包含市界那一段——所以市界原本也被畫成
+ * 虛線，上面還疊著 4px 的白色光暈。遮罩那一層其實有一條實線，但它在 swmask
+ * （350），被行政區虛線（當時在向量預設 pane，400）整段蓋住，而且綁在「新北以外反灰」
+ * 開關上。結果是一眼看不出新北的輪廓在哪。
+ *
+ * 這裡另開 swedge（440）把市界壓在行政區線上面：先一道比行政區光暈（4px）更寬
+ * 的紙色把底下的虛線蓋掉，再一道深色實線。
+ *
+ * 不跟著「行政區界線」或「新北以外反灰」開關走——兩個都關掉時，市界仍是這張圖
+ * 唯一需要一眼認出的邊。
+ */
+function drawCityEdge() {
+  if (state.outlineLayer) state.map.removeLayer(state.outlineLayer);
+  state.outlineLayer = null;
+  const rings = ntpcRings();
+  if (!rings.length) return;
+  const line = (o) => L.polygon(rings,
+    { pane: "swedge", interactive: false, fill: false, ...o });
+  state.outlineLayer = L.layerGroup([
+    line({ color: cssv("--paper"), weight: 6, opacity: 0.9 }),
+    line({ color: cssv("--edge"), weight: 2.8, opacity: 1 }),
+  ]).addTo(state.map);
+}
+
 /* 反灰：只灰陸地，不灰海。
  *
  * 第一版是「整個世界當外框、新北當洞」的 even-odd 多邊形，一次蓋掉除了新北
@@ -321,11 +371,11 @@ const WORLD = [[-85, -180], [-85, 180], [85, 180], [85, -180]];
  * 一樣反灰——那反而讓新北的甜甜圈形狀更清楚。
  */
 function applyMask(on) {
-  [state.maskLayer, state.outlineLayer].forEach((l) => {
-    if (l) state.map.removeLayer(l);
-  });
+  // 市界不歸這裡管（見 drawCityEdge）：它要在遮罩關掉時照樣在。
+  // ⚠️ 不可以把 state.outlineLayer 放回下面的移除清單——那會讓「關掉反灰」
+  // 順手把市界也拿掉。
+  if (state.maskLayer) state.map.removeLayer(state.maskLayer);
   state.maskLayer = null;
-  state.outlineLayer = null;
   if (!on) return;
   const rings = ntpcRings();
   if (!rings.length) return;
@@ -344,50 +394,37 @@ function applyMask(on) {
     // 沒有陸地輪廓（檔案還沒建）就退回舊版：海會一起灰掉，但畫面仍然只凸顯
     // 新北，不會變成完全沒有遮罩。
     : L.polygon([WORLD, ...rings], { ...fill, stroke: false }).addTo(state.map);
-
-  // 市界要比縣市界重。這是整張圖唯一需要一眼認出的邊。
-  state.outlineLayer = L.polygon(rings, {
-    pane: "swmask", interactive: false, fill: false,
-    color: cssv("--edge"), weight: 1.8, opacity: 0.95,
-  }).addTo(state.map);
 }
 
-/* ── 行政區優先度底色 ─────────────────────────────────
+/* ── 行政區建議查核密度底色 ─────────────────────────────────
  *
  * 出題端真正要問的不是「哪一家有問題」，是**人力先派到哪一區**。這一層的
- * 單位因此是：若依模型排序抽全市前 100 名，這一區會有幾家進榜。
+ * 單位因此是行政區：型態校正後的建議查核密度，**與 04 分析驗證是同一份資料**
+ * （/api/district-board 的 level）。
  *
- * 為什麼固定用前 100 名、而不是跟著派工容量走：容量 20 家分散到 29 個區之後
- * 每區 0～2 家，看不出輪廓；而前 100 名正是回測講命中率的那個 N（2.29 倍於
- * 隨機抽查），底色與頁尾那句話才是同一個口徑。
+ * 底色跟著派工容量 K 走（與清單、分析驗證共用 app.js::setCap）。舊版刻意固定
+ * 用前 100 名，理由是容量 20 家分散到 29 個區之後每區 0～2 家、看不出輪廓。
+ * 這個顧慮現在由兩件事接住：K 預設就是 100（回測講命中率的那個 N），而 K 調小
+ * 時型態基準率跟著變小，exp<1 的區由曝險閘門標成「資料不足」、不上色——
+ * 輪廓變少是誠實的，不是雜訊。
  *
  * 為什麼放大要淡出：底色是用來決定「先去哪一區」的。到了街廓尺度，要回答的
  * 問題已經變成「這條街上是哪一家」，那時色塊只會蓋住地圖。
  *
+ * ⚠️ 改版前這裡畫的是「進入前 100 名的絕對家數」，於是板橋（13 家、SIR 0.87）
+ * 是地圖上最深的區，到了分析驗證卻排第 10——同一個系統在兩個房間講兩種話。
+ * 絕對家數會偏袒大區，而且不校正型態的話排的其實是「哪一區私立多」
+ * （corr 0.93，見 payload.py::district_board）。
+ *
  * ⚠️ 用詞界線：這是**建議查核的密度**，不是危險程度。圖例與 tooltip 都不准
- * 出現「高風險區」這種說法。
+ * 出現「高風險區」這種說法；等級名稱只從後端的 level_label 取，前端不寫第二份。
  */
-const CHORO_TOP = 100;
-const CHORO_STEPS = [
-  { min: 9, hi: null, v: "--c4", label: "9 家以上" },
-  { min: 6, hi: 8, v: "--c3", label: "6–8 家" },
-  { min: 3, hi: 5, v: "--c2", label: "3–5 家" },
-  { min: 1, hi: 2, v: "--c1", label: "1–2 家" },
-];
-
-function choroCounts() {
-  const by = {};
-  state.points.forEach((p) => {
-    if (p.r <= CHORO_TOP) by[p.d] = (by[p.d] || 0) + 1;
-  });
-  return by;
-}
 
 /* z<=11 全滿、z>=14 完全消失，中間線性淡出。分界點挑在 11–14 之間：11 是
    看得到整個新北的尺度（底色要講話），14 已經看得到單一街廓（底色只會擋路）。 */
 function choroOpacity() {
   const z = state.map.getZoom();
-  return Math.max(0, Math.min(1, (14 - z) / 3)) * 0.66;
+  return Math.max(0, Math.min(1, (14 - z) / 3)) * 0.74;
 }
 
 function drawChoro() {
@@ -395,25 +432,22 @@ function drawChoro() {
     state.map.removeLayer(state.choroLayer);
     state.choroLayer = null;
   }
-  if (!state.choro) return;
-  const counts = choroCounts();
-  const total = {};
-  state.points.forEach((p) => { total[p.d] = (total[p.d] || 0) + 1; });
+  if (!state.choro || !state.board) return;
+  const byD = {};
+  state.board.rows.forEach((r) => { byD[r.d] = r; });
   const layers = [];
   (state.payload.boundary || []).forEach((f) => {
-    const n = counts[f.d] || 0;
-    const step = CHORO_STEPS.find((x) => n >= x.min);
-    if (!step) return;                       // 沒有人進榜的區不上色
-    const all = total[f.d] || 0;
+    const r = byD[f.d];
+    if (!r || !r.level) return;              // 資料不足的區不上色（圖例用虛線框）
     // 實心填色，透明度交給整個 pane。用 fillOpacity 的話，相鄰行政區簡化後
     // 重疊的那一小條會疊出更深的顏色——畫面上會多出幾塊不存在的「更嚴重」。
     const poly = L.polygon(
-      f.poly.map((r) => [r.map(([x, y]) => [y, x])]),
-      { pane: "swchoro", stroke: false, fillColor: cssv(step.v), fillOpacity: 1 },
+      f.poly.map((ring) => [ring.map(([x, y]) => [y, x])]),
+      { pane: "swchoro", stroke: false, fillColor: cssv("--sev" + r.level), fillOpacity: 1 },
     );
     poly.bindTooltip(
-      `${f.d}　前 ${CHORO_TOP} 名 ${n} 家 ／ 全區 ${all} 家`
-      + (all ? `（${((n / all) * 100).toFixed(1)}%）` : ""),
+      `<b>${esc(f.d)}</b>　${esc(r.level_label)}<br>`
+      + `前 ${state.board.k} 名 ${r.obs} 家（依組成預期 ${r.exp}）　密度 ${r.sir.toFixed(2)}×`,
       { sticky: true });
     layers.push(poly);
   });
@@ -436,16 +470,15 @@ function fadeChoro() {
 }
 
 function drawChoroLegend() {
-  const counts = choroCounts();
-  const vals = Object.values(counts);
-  const rows = CHORO_STEPS.map((x) => {
-    const k = vals.filter((v) => v >= x.min && (x.hi == null || v <= x.hi)).length;
-    return `<div><i style="background:${cssv(x.v)}"></i>${x.label}<b>${k} 區</b></div>`;
-  });
-  const districts = (state.payload.boundary || []).length;
-  rows.push(`<div><i style="background:transparent;border:1px dashed var(--ink-4)"></i>`
-    + `未進榜<b>${Math.max(0, districts - vals.length)} 區</b></div>`);
-  $("choro-legend").innerHTML = rows.join("");
+  const box = $("choro-legend");
+  if (!box) return;
+  if (!state.board) { box.innerHTML = ""; return; }
+  box.innerHTML = (state.board.levels || []).map((x) => {
+    const sw = x.level
+      ? `<i style="background:${cssv("--sev" + x.level)}"></i>`
+      : '<i style="background:transparent;border:1px dashed var(--ink-4)"></i>';
+    return `<div>${sw}${esc(x.label)}<b>${x.n} 區</b></div>`;
+  }).join("");
 }
 
 /* 裁罰色階的圖例。每一級後面掛實際家數——沒有家數的圖例只是色票，讀的人
@@ -462,6 +495,19 @@ function drawPenaltyLegend() {
   box.innerHTML = rows.join("");
 }
 
+/* 地圖底部要讓出的留白。時間軸回測面板（#tlbar）浮在地圖下緣、不透明；
+   取景時不扣掉它，南邊就被蓋住。fitNTPC、清單的 flyToDistrict、助理的
+   flyToDistrict 三處共用這一份——各算各的話，只有其中一處記得面板在那裡
+   （審查重現過：面板打開時展開新店區，南側被蓋掉兩成多）。 */
+function mapBottomPad(min) {
+  const box = state.map.getContainer().getBoundingClientRect();
+  const bar = $("tlbar");
+  const barBox = bar && bar.offsetHeight ? bar.getBoundingClientRect() : null;
+  return barBox
+    ? Math.min(box.height * 0.4, Math.max(min, box.bottom - barBox.top + 10))
+    : min;
+}
+
 /* 置中新北，並把可視範圍收在市界附近。這個系統只處理新北市，地圖漂到南投
    對使用者沒有意義，只會讓人以為資料掉了。 */
 function fitNTPC() {
@@ -471,12 +517,7 @@ function fitNTPC() {
     : L.latLngBounds(NTPC, NTPC).pad(0.5);
   // 時間軸面板浮在地圖下緣。不把它的高度算進留白，烏來、坪林那一帶就會被它
   // 蓋住——畫面看起來不是置中，而是「南邊不見了」。
-  const box = state.map.getContainer().getBoundingClientRect();
-  const bar = $("tlbar");
-  const barBox = bar && bar.offsetHeight ? bar.getBoundingClientRect() : null;
-  const bottom = barBox
-    ? Math.min(box.height * 0.4, Math.max(14, box.bottom - barBox.top + 10))
-    : 14;
+  const bottom = mapBottomPad(14);
   // animate:false——開場取景不需要動畫，動畫還會讓「一開就看到整個新北」
   // 這件事延後到動畫跑完才成立。
   state.map.fitBounds(bounds, {
@@ -628,6 +669,38 @@ function timelinePin(p, entry, topN) {
  * 而且分頁切到背景時瀏覽器會自動暫停，不會累積一堆待畫。
  */
 let _drawPending = 0;
+/* 群集圓圈的顏色＝圈內**多數**機構所在區的建議查核密度等級，與行政區底色、
+ * 清單區頭同一組顏色（--sev1..4，等級來自 /api/district-board）。
+ *
+ * 用多數而不是最高：低縮放時一個圓圈常橫跨兩三個區，取最高的話，板橋一大圈
+ * 裡混進一家鶯歌的園，整圈就變深紅——那是在誇大。平手時取較高的等級。
+ * 資料不足或還沒有等級的區維持白色，不上色。
+ *
+ * 大小級距（small <10、medium <100、large）照 markercluster 的預設，
+ * 外掛原本的 CSS 仍然接得上。 */
+function clusterIcon(cluster, lvOf) {
+  const kids = cluster.getAllChildMarkers();
+  const count = {};
+  kids.forEach((m) => {
+    const d = m.options.district;
+    if (d) count[d] = (count[d] || 0) + 1;
+  });
+  let best = null;
+  Object.keys(count).forEach((d) => {
+    const c = count[d];
+    const lv = lvOf[d] || 0;
+    if (!best || c > best.c || (c === best.c && lv > best.lv)) best = { c, lv };
+  });
+  const lv = best ? best.lv : 0;
+  const n = kids.length;
+  const size = n < 10 ? "small" : n < 100 ? "medium" : "large";
+  return L.divIcon({
+    html: `<div><span>${n}</span></div>`,
+    className: `marker-cluster marker-cluster-${size}${lv ? " sev-" + lv : ""}`,
+    iconSize: L.point(40, 40),
+  });
+}
+
 function drawMarkers() {
   if (_drawPending) return;
   _drawPending = requestAnimationFrame(() => {
@@ -646,8 +719,18 @@ function drawMarkersNow() {
 
   // 時間軸模式不做群集：群集會把「命中／落空」的顏色對比吃掉，
   // 而那個對比正是這個畫面唯一要講的事。
+  // 群集圓圈依「圈內多數機構所在區」的建議查核密度等級上色（見 clusterIcon）。
+  const lvOf = {};
+  ((state.board || {}).rows || []).forEach((r) => { lvOf[r.d] = r.level; });
   const group = state.cluster && !tl
-    ? L.markerClusterGroup({ maxClusterRadius: 45, disableClusteringAtZoom: 15 })
+    ? L.markerClusterGroup({
+      maxClusterRadius: 45, disableClusteringAtZoom: 15,
+      // 滑過群集時外掛會畫一塊藍色涵蓋範圍多邊形。它落在 overlayPane、而且是
+      // interactive，會建出同一張吃滑鼠的 Canvas——滑過一次大群集之後，行政區
+      // 底色的 tooltip 就再也出不來。藍色本來也跟等級色系衝突，直接關掉。
+      showCoverageOnHover: false,
+      iconCreateFunction: (c) => clusterIcon(c, lvOf),
+    })
     : L.layerGroup();
 
   shown.forEach((p) => {
@@ -655,6 +738,8 @@ function drawMarkersNow() {
     const m = L.marker([p.y, p.x], {
       icon: tl ? timelinePin(p, entry, tl.topN) : pinIcon(p, flagged.has(p.i)),
       zIndexOffset: tl && entry && entry.rank <= tl.topN ? 1000 : 0,
+      // 群集上色要知道每一顆在哪一區（clusterIcon 讀這個）。
+      district: p.d,
     });
     const tip = tl && entry
       ? `${p.n}　當時排第 ${entry.rank} 名`
@@ -769,20 +854,37 @@ async function toggleDistricts(on) {
   // 用 polygon 而不是 polyline：資料裡的環未必首尾相接，polygon 會自動閉合，
   // polyline 則會在每個區留下一道缺口。
   const rings = boundary.flatMap((f) => f.poly.map((r) => r.map(([x, y]) => [y, x])));
-  const pass = (o) => rings.map((r) => L.polygon(r, { fill: false, interactive: false, ...o }));
+  const pass = (o) => rings.map((r) => L.polygon(r,
+    { pane: "swdist", fill: false, interactive: false, ...o }));
   state.districtLayer = L.layerGroup([
-    ...pass({ color: cssv("--paper"), weight: 3.4, opacity: 0.85 }),
-    ...pass({ color: cssv("--ink-2"), weight: 1.4, opacity: 0.9, dashArray: "5 3" }),
+    ...pass({ color: cssv("--paper"), weight: 4, opacity: 0.9 }),
+    ...pass({ color: cssv("--ink-2"), weight: 1.8, opacity: 0.95, dashArray: "6 3" }),
   ]).addTo(state.map);
 }
 
 /* ── 提案 ─────────────────────────────────────────────── */
+/* 派工提案＝模型名次前 K，**與 04 分析驗證是同一份**（/api/district-board）。
+   ⚠️ 改版前這裡走 /api/proposal，而它先吃 TIER_LADDER：「財報法遵未通過」兩階
+   就有 26 家，K=20 時整份清單全是財報、全是非營利園——只因為手上只有非營利園
+   的 PDF。分析驗證的前 100 名卻有 95 家是私立。兩個房間點名的是不同的園，
+   畫面上沒有任何地方說明為什麼。
+   （助理工具的 get_proposal 仍走 TIER_LADDER，那是另一條路徑。） */
+let refreshSeq = 0;
 async function refresh() {
-  const r = await api(`/api/proposal?n=${state.cap}`);
-  state.proposal = r.proposal || [];
+  const seq = ++refreshSeq;
+  const b = await api(`/api/district-board?k=${state.cap}`);
+  // 拖滑桿時較早送出的請求可能較晚回來，不可以蓋掉較新的結果。
+  if (seq !== refreshSeq) return;
+  state.board = b;
+  state.proposal = b.rows.flatMap((r) => r.ids)
+    .map((i) => state.byId[i]).filter(Boolean)
+    .sort((x, y) => x.r - y.r);
   $("s-sel").textContent = state.proposal.length;
+  drawChoro();
+  drawChoroLegend();
   drawList();
   drawMarkers();
+  if (window.SWDistricts && window.SWDistricts.setK) window.SWDistricts.setK(state.cap);
 }
 
 function tagClass(tier) {
@@ -793,50 +895,139 @@ function tagClass(tier) {
 
 function drawList() {
   /* 助理點名機構時，清單要跟著只顯示那幾筆——否則會出現「畫面切到派工提案、
-     但列出來的不是剛才講的那些」，那是最容易讓人以為系統壞掉的落差。
-     地圖早就有這個判斷（drawMarkers），清單漏掉了。 */
-  let rows = state.proposal;
-  if (state.agentIds) {
-    const byId = state.byId;
-    rows = [...state.agentIds].map((i) => byId[i]).filter(Boolean);
-    // 助理給的順序就是它講的順序，不要重排。
-  }
-  /* 即時層開著的時候，把有公開報導的幾家提到最上面。
-     地圖放大了三顆紅點，清單卻照優先序排——那三顆點不在前 20 名裡的話，
-     看的人沒有路徑從「那顆點在閃」走到「打開它的卷宗」。
-     ⚠️ 只改顯示順序，不改 p.r（優先序名次），名次照樣印在每一列右邊。 */
-  let nHot = 0;
-  if (!state.agentIds && state.pinBy === "realtime") {
-    const hot = Object.entries(SW_HEAT || {})
-      .filter(([, h]) => h.tier)
-      .sort((a, b) => b[1].score - a[1].score)
-      .map(([i]) => state.byId[i]).filter(Boolean);
-    const seen = new Set(hot.map((x) => x.i));
-    nHot = hot.length;
-    rows = [...hot, ...rows.filter((x) => !seen.has(x.i))];
-  }
-  $("listnote").hidden = !state.agentIds;
-  $("rtnote").hidden = !nHot;
-  if (nHot) $("rtnote-n").textContent = nHot;
-  $("list").innerHTML = rows.map((p, i) => {
-    const tags = [`<span class="tag ${tagClass(p.tier)}">${esc(p.tier)}</span>`];
-    // 近期報導的標籤在每一種著色模式都出現：兩套標準要並排看得到，
-    // 不是切到即時層才存在。
-    const h = (SW_HEAT || {})[p.i];
+     但列出來的不是剛才講的那些」，那是最容易讓人以為系統壞掉的落差。 */
+  const heat = SW_HEAT || {};
+  /* 每一列的理由。**全部取自與訊號圖同一組已計分的訊號**：前科件數（前科≥3 件
+     1.94×、有任何前科 1.57×）、評鑑部分指標未通過（1.34×）、近一年官方事件、
+     財報法遵、近期報導。改版前這裡印的是 TIER_LADDER 的階名，前 20 名全落在
+     「財報法遵未通過」那一階——每一列都一樣，而且只講到非營利園。 */
+  // withD：助理點名的扁平清單與即時組沒有區頭，要在列上印行政區。
+  const item = (p, sev, withD) => {
+    const tags = [];
+    if (p.np >= 3) tags.push(`<span class="tag s">前科 ${p.np} 件</span>`);
+    else if (p.np > 0) tags.push(`<span class="tag w">前科 ${p.np} 件</span>`);
+    if (p.ep > 0) tags.push('<span class="tag w">評鑑部分指標未通過</span>');
+    if (p.e365 > 0) tags.push(`<span class="tag w">近一年官方事件 ${p.e365}</span>`);
+    if (p.ch > 0) tags.push('<span class="tag s">財報法遵未通過（高）</span>');
+    else if (p.cf > 0) tags.push('<span class="tag w">財報法遵未通過</span>');
+    const h = heat[p.i];
     if (h && h.tier) {
       tags.push(`<span class="tag rt rt-t${h.tier}">近期報導 ${h.n} 則`
         + `${h.cat ? " · " + esc(h.cat) : ""}</span>`);
     }
-    if (p.np > 0) tags.push(`<span class="tag p">${p.np} 件裁罰史</span>`);
-    if (!p.fin) tags.push(`<span class="tag p">無公開財報</span>`);
-    return `<button class="item" data-i="${p.i}">
-      <span class="ord">${i + 1}</span>
+    // 沒有任何一條具名理由的，老實寫是模型排出來的，不要空白。
+    if (!tags.length) tags.push('<span class="tag p">無前科 · 模型排序</span>');
+    return `<button class="item ${sev}" data-i="${p.i}">
+      <span class="ord">#${p.r}</span>
       <span class="nm"><i class="tdot" style="background:${cssv(TVAR[p.t])}"></i>${esc(p.n)}</span>
-      <span class="rk">${esc(p.d.replace("區", ""))} · #${p.r}</span>
+      <span class="rk">${withD ? esc(p.d) + " · " : ""}${TYPE[p.t]}</span>
       <span class="why">${tags.join("")}</span></button>`;
-  }).join("");
-  $("list").querySelectorAll(".item").forEach((el) =>
+  };
+
+  // 即時組的展開鍵。行政區名一定以「區」結尾，不會撞到這個。
+  const HOT_KEY = "__hot__";
+  let html = "";
+  let nHot = 0;
+  if (state.agentIds) {
+    // 助理給的順序就是它講的順序，不要重排，也不分組。
+    html = [...state.agentIds].map((i) => state.byId[i]).filter(Boolean)
+      .map((p) => item(p, "", true)).join("");
+  } else {
+    /* 即時層開著的時候，有公開報導的幾家另列一組在最上面。
+       ⚠️ 只是另列，不改 p.r；它們在自己的行政區裡照常出現。 */
+    if (state.pinBy === "realtime") {
+      const hot = Object.entries(heat).filter(([, h]) => h.tier)
+        .sort((x, y) => y[1].score - x[1].score)
+        .map(([i]) => state.byId[i]).filter(Boolean);
+      nHot = hot.length;
+      if (nHot) {
+        const open = state.openDistricts.has(HOT_KEY);
+        html += `<div class="lgrp sev-hot${open ? " open" : ""}" data-key="${HOT_KEY}"
+            role="button" tabindex="0" aria-expanded="${open}">`
+          + '<i class="lchev" aria-hidden="true"></i><i class="lsw"></i><b>近期公開報導</b>'
+          + `<span class="lcnt">${nHot} 家</span></div>`
+          + (open ? hot.map((p) => item(p, "sev-hot", true)).join("") : "");
+      }
+    }
+    const groups = ((state.board || {}).rows || []).filter((g) => g.obs > 0);
+    // 件數多的先＝派工人力依據；密度高的先＝後端順序，與 04 分析驗證一致。
+    if (state.boardSort === "count") {
+      groups.sort((x, y) => y.obs - x.obs || y.level - x.level);
+    }
+    html += groups.map((g) => {
+      const open = state.openDistricts.has(g.d);
+      // 收起來的區**不渲染**名單。100 家的按鈕全塞進 DOM 再用 CSS 藏的話，
+      // Tab 鍵會走進一整排看不見的東西。
+      const members = open ? g.ids.map((i) => state.byId[i]).filter(Boolean) : [];
+      return `<div class="lgrp sev-${g.level}${open ? " open" : ""}" data-key="${esc(g.d)}"
+          data-d="${esc(g.d)}" role="button" tabindex="0" aria-expanded="${open}"
+          title="${open ? "收合" : "展開"}${esc(g.d)}的名單">
+        <i class="lchev" aria-hidden="true"></i><i class="lsw"></i><b>${esc(g.d)}</b>
+        <span class="lcnt">${g.obs} 家</span>
+        <span class="lsir">${g.sir == null ? "—" : g.sir.toFixed(2) + "×"}</span>
+        <span class="llv">${esc(g.level_label)}</span></div>`
+        + members.map((p) => item(p, "sev-" + g.level)).join("");
+    }).join("");
+  }
+
+  $("listnote").hidden = !state.agentIds;
+  $("lbar").hidden = !!state.agentIds;
+  $("rtnote").hidden = !nHot;
+  if (nHot) $("rtnote-n").textContent = nHot;
+  // 「無公開財報」前 100 名有 97 家——逐列印它，清單又會變成一整排一樣的標籤。
+  // 改成一行總結；查不到財報是資料不足，不是沒有問題。
+  const cov = $("listcov");
+  const noFin = state.proposal.filter((p) => !p.fin).length;
+  cov.hidden = !!state.agentIds || !state.proposal.length;
+  cov.innerHTML = `前 ${state.cap} 名中 <b>${noFin}</b> 家沒有公開財報，`
+    + "財務軸無法檢核——查不到不等於沒有問題。";
+
+  const box = $("list");
+  box.innerHTML = html || '<div class="insuff">這個容量下沒有機構進榜。</div>';
+  box.querySelectorAll(".item").forEach((el) =>
     el.addEventListener("click", () => openDossier(el.dataset.i)));
+  box.querySelectorAll(".lgrp[data-key]").forEach((el) => {
+    const go = () => {
+      const key = el.dataset.key;
+      const opening = !state.openDistricts.has(key);
+      if (opening) state.openDistricts.add(key);
+      else state.openDistricts.delete(key);
+      drawList();
+      // 展開時地圖跟著飛過去；收合時不動——不然看的人一收起來，地圖就跳走。
+      if (opening && el.dataset.d) flyToDistrict(el.dataset.d);
+      // innerHTML 重畫之後焦點會掉，還給同一個區頭，鍵盤操作才接得下去。
+      const list = $("list");
+      const again = [...list.querySelectorAll(".lgrp[data-key]")]
+        .find((x) => x.dataset.key === key);
+      if (again) {
+        /* ⚠️ 區頭是 sticky。捲過頭的區頭會全部疊在頂端；點其中一個收合之後，
+           內容變短但 scrollTop 沒變——畫面跳到下一區的名單，焦點落在被蓋住、
+           看不見的區頭上（兩區以上展開時必現，審查實際重現過）。
+           所以重畫後把這個區頭捲回頂端。位置不能用 offsetTop 量：黏著中的元素
+           量到的已經含位移。暫時設成 static 量它在正常排版裡的位置——sticky
+           不改變元素原本佔的位置，量到的就是正確值。 */
+        again.style.position = "static";
+        const natural = again.getBoundingClientRect().top
+          - list.getBoundingClientRect().top + list.scrollTop;
+        again.style.position = "";
+        if (list.scrollTop > natural) list.scrollTop = natural;
+        again.focus({ preventScroll: true });
+      }
+    };
+    el.addEventListener("click", go);
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+    });
+  });
+}
+
+function flyToDistrict(d) {
+  const f = (state.payload.boundary || []).find((x) => x.d === d);
+  if (!f) return;
+  const pts = f.poly.flat().map(([x, y]) => [y, x]);
+  state.map.flyToBounds(L.latLngBounds(pts), {
+    paddingTopLeft: [28, 28], paddingBottomRight: [28, mapBottomPad(28)], duration: 0.6,
+  });
 }
 
 /* ── 同儕財務差異 ──────────────────────────────────────
@@ -1254,14 +1445,28 @@ document.addEventListener("keydown", (e) => {
 LAYER_BOXES.forEach((id) =>
   $(id).addEventListener("change", syncLayerCount));
 
-$("cap").addEventListener("input", (e) => {
-  state.cap = Math.max(1, Math.min(200, +e.target.value || 20));
-  $("capr").value = Math.min(120, state.cap);
+/* 派工容量的唯一入口。地圖清單與 04 分析驗證的排行榜共用這一個數字——
+   各自一個滑桿的話，兩室點名的就不是同一批園（這正是改版前的落差）。
+   ⚠️ 下限 20：K 太小時型態基準率跟著變小，多數區 exp<1、整張榜變成資料不足
+   （實測 K=20 有 19 區不排名）。助理送來的 capacity 也走這裡，一樣被夾住。
+   打字途中不回寫輸入框（echo=false），不然輸入「150」打到「1」就被改成 20。 */
+function setCap(v, { echo = true } = {}) {
+  const n = Math.max(20, Math.min(300, Math.round(+v || 100)));
+  state.cap = n;
+  if (echo) $("cap").value = n;
+  $("capr").value = n;
   refresh();
-});
-$("capr").addEventListener("input", (e) => {
-  state.cap = +e.target.value; $("cap").value = state.cap; refresh();
-});
+}
+$("cap").addEventListener("input", (e) => setCap(e.target.value, { echo: false }));
+$("cap").addEventListener("change", (e) => setCap(e.target.value));
+$("capr").addEventListener("input", (e) => setCap(e.target.value));
+document.querySelectorAll("#lsort button").forEach((btn) =>
+  btn.addEventListener("click", () => {
+    state.boardSort = btn.dataset.s;
+    document.querySelectorAll("#lsort button").forEach((x) =>
+      x.setAttribute("aria-pressed", String(x === btn)));
+    drawList();
+  }));
 $("f-cluster").addEventListener("change", (e) => {
   state.cluster = e.target.checked; drawMarkers();
 });
@@ -1485,7 +1690,7 @@ makeGrip($("sidegrip"), {
 });
 
 window.SW = { api, post, $, esc, nf, state, openDossier, TYPE, drawMarkers, refresh,
-  timelineDock, showPane, fitNTPC, makeGrip,
+  timelineDock, showPane, fitNTPC, makeGrip, setCap, flyToDistrict, mapBottomPad,
   // 助理設了 state.agentIds 之後，地圖與清單都要重畫。少匯出這一支的後果是
   // 地圖篩了、清單沒動——畫面上列出來的不是助理剛才講的那幾筆。
   drawList };

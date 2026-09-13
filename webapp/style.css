@@ -10,6 +10,11 @@
   /* 行政區優先度色階：單一色相由淺到深（稽查紅家族）。這是「建議查核密度」
      不是「危險程度」，用詞與圖例都要守住這條界線。 */
   --c1:#ECCECB; --c2:#DCA6A1; --c3:#C9756D; --c4:#B23A2F;
+  /* 建議查核密度五級。**地圖底色、地圖清單、04 分析驗證共用這一組**，定義在
+     payload.py::LEVELS。比 --c* 飽和：這一組要在清單上一眼分出區，淡色階在
+     白底上四級看起來像兩級。仍然不用紅綠燈——最低一級是冷灰，「低於全市」
+     不等於合格。--sev0 只當「資料不足」的虛線框色。 */
+  --sev4:#C0261B; --sev3:#EB5B34; --sev2:#F4A07A; --sev1:#B7C3CC; --sev0:#8A97A2;
   /* 標記依「歷史裁罰件數」著色時的色階。**刻意不用上面的稽查紅家族**：那一族
      講的是我們算出來的「建議查核密度」，這一族講的是主管機關已經開罰的**公開
      事實**。兩者在同一張圖上同時出現，色相必須分得開，否則會被讀成同一件事。
@@ -57,6 +62,11 @@
   --paper:#0E141A; --panel:#161E26; --sunk:#0A0F14; --rule:#2A3641;
   --pub:#2A78D6; --np:#EB6834; --prv:#1BAF7A;
   --c1:#ECCECB; --c2:#DCA6A1; --c3:#C9756D; --c4:#B23A2F;
+  /* 建議查核密度五級。**地圖底色、地圖清單、04 分析驗證共用這一組**，定義在
+     payload.py::LEVELS。比 --c* 飽和：這一組要在清單上一眼分出區，淡色階在
+     白底上四級看起來像兩級。仍然不用紅綠燈——最低一級是冷灰，「低於全市」
+     不等於合格。--sev0 只當「資料不足」的虛線框色。 */
+  --sev4:#C0261B; --sev3:#EB5B34; --sev2:#F4A07A; --sev1:#B7C3CC; --sev0:#8A97A2;
   /* 暗色底圖上整族要往亮的方向移，否則深紫與底圖糊在一起。 */
   /* 方向與亮色主題一致（深＝多）。標記本來就有 2px 白色外圈保證可見度，
      不必為了暗底把色階反過來——反過來會讓切換主題時「深＝多」突然變成
@@ -102,7 +112,9 @@ h1 span{color:var(--ink-3);font-weight:400;margin-left:9px;font-size:16px}
    怎麼變」，數字框用來輸入真正的月容量。 */
 .capbox{display:flex;align-items:center;gap:6px;font-size:16px;color:var(--ink-3);
   white-space:nowrap}
-.capbox input[type=number]{width:52px;padding:3px 6px;text-align:right;
+/* 72px：預設派工容量改成 100 之後是三位數，52px 在 Chromium 會被數字欄的
+   上下箭頭吃掉一格，畫面上讀到的是「10(」。 */
+.capbox input[type=number]{width:72px;padding:3px 6px;text-align:right;
   border:1px solid var(--rule);border-radius:3px;background:var(--paper);
   color:var(--ink);font-family:var(--mono);font-size:16px}
 .capbox input[type=range]{width:96px}
@@ -285,14 +297,27 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
               1px 0 0 var(--dlabel-halo),-1px 0 0 var(--dlabel-halo),
               0 0 6px var(--dlabel-halo)}
 
-/* 群集泡泡改成中性灰藍。預設的綠／黃／橘是另一套「多寡」色階，會跟機構
-   類別的三色、以及行政區底色搶同一個視覺通道——低縮放時畫面該由行政區
-   底色講話，群集只負責報數量。 */
+/* 群集泡泡。
+ *
+ * 舊版刻意做成中性白：外掛預設的綠／黃／橘是另一套「多寡」色階，會跟機構類別
+ * 三色、行政區底色搶同一個視覺通道。現在群集改用**跟行政區底色同一組**的
+ * 建議查核密度等級（--sev*；app.js::clusterIcon 以圈內多數機構所在區決定），
+ * 兩者講的是同一件事，是互相加強而不是搶——正好是舊版顧慮的反面。
+ * 外掛那套多寡色仍然不用：圓圈大小已經在報數量，顏色只講等級。
+ *
+ * 資料不足或沒有等級的區維持白色（沒有 sev-N 類名，走下面的預設）。 */
 .marker-cluster-small,.marker-cluster-medium,.marker-cluster-large{
   background:#FFFFFF66}
 .marker-cluster-small div,.marker-cluster-medium div,.marker-cluster-large div{
   background:#FFFFFFF2;color:#14202A;box-shadow:0 0 0 1px #14202a33}
 .marker-cluster div{font-family:var(--mono);font-weight:600;font-size:16px}
+/* 有等級的群集。外圈用同色半透明；瀏覽器不支援 color-mix 時整條宣告失效，
+   自動退回上面的白色外圈，不會壞。字色只有最深一級用白字——其他三級上白字
+   對比不到 4.5:1。 */
+.marker-cluster[class*="sev-"]{background:color-mix(in srgb,var(--sev) 38%,transparent)}
+.marker-cluster[class*="sev-"] div{background:var(--sev);color:var(--ink);
+  box-shadow:0 0 0 1.5px #FFFFFFD9,0 1px 3px #14202A40}
+.marker-cluster.sev-4 div{color:#fff}
 
 /* right */
 .side{position:relative;display:flex;flex-direction:column;min-height:0;
@@ -306,6 +331,52 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
   background:var(--seal-soft);box-shadow:inset 0 0 0 1px var(--seal)}
 .pane{display:flex;flex-direction:column;min-height:0;flex:1}
 .list{overflow-y:auto;min-height:0;flex:1}
+.sev-4{--sev:var(--sev4)} .sev-3{--sev:var(--sev3)} .sev-2{--sev:var(--sev2)}
+.sev-1{--sev:var(--sev1)} .sev-0{--sev:var(--sev0)} .sev-hot{--sev:var(--seal)}
+
+/* ── 地圖待稽查清單：依行政區分組 ────────────────────────────────
+   區頭是 sticky：捲到第 60 家時還看得到它屬於哪一區。 */
+/* 側欄約 390px，「依行政區／點區名看名單／兩顆排序鈕」一行擺不下。
+   ⚠️ 不可以讓元素自己折字——那會變成「件數多的／先」兩行的按鈕。
+   整列允許換行、每個元素 nowrap，排序鈕放不下時整組掉到第二行靠右。 */
+.lbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:7px 12px;flex:none;
+  background:var(--sunk);border-bottom:1px solid var(--rule);font-size:15px;
+  color:var(--ink-2)}
+.lbar .lbar-t{font-weight:600;color:var(--ink)}
+.lbar .lbar-h{color:var(--ink-3)}
+.lbar>*,.lbar .drseg button{white-space:nowrap}
+.lbar .drseg{margin-left:auto}
+.lbar .drseg button{padding:4px 11px}
+.listcov{padding:6px 12px;font-size:15px;line-height:1.5;color:var(--ink-3);
+  background:var(--panel);border-bottom:1px solid var(--rule);flex:none}
+.listcov b{font-family:var(--mono);color:var(--ink)}
+.lgrp{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:9px;
+  padding:9px 14px 8px 18px;background:var(--panel);cursor:pointer;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  box-shadow:inset 7px 0 0 var(--sev)}
+.lgrp:hover{background:var(--sunk)}
+/* 展開提示的三角形。收合時朝右、展開時朝下；用邊框畫而不是字元，
+   才不會因為字型不同而大小不一。 */
+.lgrp .lchev{width:0;height:0;flex:none;border-style:solid;border-width:6px 0 6px 8px;
+  border-color:transparent transparent transparent var(--ink-3);
+  transition:transform .15s ease}
+.lgrp.open .lchev{transform:rotate(90deg);border-left-color:var(--ink)}
+.lgrp.open{background:var(--sunk)}
+@media (prefers-reduced-motion:reduce){.lgrp .lchev{transition:none}}
+.lgrp:focus-visible{outline:2px solid var(--seal);outline-offset:-2px}
+.lgrp .lsw{width:16px;height:16px;border-radius:3px;background:var(--sev);flex:none}
+.lgrp b{font-size:17px;color:var(--ink)}
+.lgrp .lcnt{font-family:var(--mono);font-size:16px;color:var(--ink-2)}
+.lgrp .lsir{margin-left:auto;font-family:var(--mono);font-size:16px;
+  font-weight:600;color:var(--ink)}
+.lgrp .llv{font-size:15px;font-weight:600;white-space:nowrap;border-radius:3px;
+  padding:1px 8px;background:var(--sev);color:var(--ink)}
+/* 白字只給最深的兩個色；橘與鮭魚色上白字對比不到 4.5:1。 */
+.lgrp.sev-4 .llv,.lgrp.sev-hot .llv{color:#fff}
+.lgrp.sev-0 .lsw{background:transparent;border:2px dashed var(--sev0)}
+.lgrp.sev-0 .llv{background:transparent;color:var(--ink-3);border:1px dashed var(--sev0)}
+#list .item{grid-template-columns:50px 1fr auto}
+#list .item[class*="sev-"]{box-shadow:inset 5px 0 0 var(--sev);padding-left:19px}
 .item{display:grid;grid-template-columns:26px 1fr auto;gap:3px 9px;width:100%;
   text-align:left;padding:9px 15px;border-bottom:1px solid var(--rule)}
 .item:hover,.item.sel{background:var(--sunk)}
@@ -1470,7 +1541,7 @@ body.resizing{user-select:none;cursor:col-resize}
    不然「11／預期 10.29」會折成兩行、整列跟著變高。 */
 .dbhead,.dbrow{display:grid;align-items:center;gap:9px;
   grid-template-columns:42px minmax(70px,1fr) 128px minmax(130px,1.4fr)
-    62px 84px minmax(96px,1fr) 70px}
+    62px 118px minmax(96px,1fr) 70px}
 .dbhead{position:sticky;top:0;z-index:1;padding:8px 10px;font-size:15px;
   color:var(--ink-3);background:var(--paper);border-bottom:1px solid var(--rule)}
 .dbrow{padding:9px 10px;border-bottom:1px solid var(--rule);cursor:pointer;
@@ -1493,10 +1564,13 @@ body.resizing{user-select:none;cursor:col-resize}
   padding:0 5px}
 
 /* 帶別。深淺而不是色相，見上方註解。 */
-.band-hi .dbname{color:var(--seal)}
-.band-hi .dbband{color:var(--seal);font-weight:600}
-.band-lo .dbband,.band-na .dbband{color:var(--ink-4)}
-.band-na .dbname,.band-na .dbrank{color:var(--ink-4)}
+.sev-4 .dbname{color:var(--sev4)}
+.dbrow[class*="sev-"]{box-shadow:inset 6px 0 0 var(--sev)}
+.dbrow[class*="sev-"] .dbband{justify-self:start;white-space:nowrap;font-weight:600;
+  border-radius:3px;padding:1px 8px;background:var(--sev);color:var(--ink)}
+.sev-4 .dbband{color:#fff}
+.dbrow.sev-0 .dbband{background:transparent;color:var(--ink-4);border:1px dashed var(--sev0)}
+.sev-0 .dbname,.sev-0 .dbrank{color:var(--ink-4)}
 
 /* 密度的誤差棒。
    ⚠️ 刻度上限固定 4.0，不跟著最大值跑——跟著跑的話，換一次 k 整排長度就變
@@ -1511,10 +1585,10 @@ body.resizing{user-select:none;cursor:col-resize}
 .dbbar-wrap .dbdot{position:absolute;top:5px;width:12px;height:12px;
   margin-left:-6px;border-radius:50%;background:var(--fam-core);
   border:2px solid var(--panel);box-shadow:0 0 0 .5px #00000040}
-.band-hi .dbbar-wrap .dbdot{background:var(--seal)}
+.dbrow[class*="sev-"] .dbbar-wrap .dbdot{background:var(--sev)}
 .dbval{font-family:var(--mono);font-size:16px;color:var(--ink-2);
   text-align:right;white-space:nowrap}
-.band-hi .dbval{color:var(--seal);font-weight:600}
+.sev-4 .dbval{color:var(--sev4);font-weight:600}
 .dbna{font-family:var(--mono);font-size:15px;color:var(--ink-4)}
 
 /* 全區組成的迷你堆疊條。它就是型態校正在校正的那個東西。 */
