@@ -81,6 +81,10 @@
     <div class="pop who" id="whopop" hidden>
       <h4>使用者身分</h4>
       <div class="whopop-body"></div>
+      <!-- 綁定 Telegram（webapp/botbind.js）。data 屬性而非 id：中庭與房間內各有一張卡。 -->
+      <button type="button" class="mini" data-tgbind
+        style="margin-top:10px;width:100%">綁定 Telegram</button>
+      <div class="tgbind-out" data-tgbind-out hidden></div>
       <button type="button" id="logout" class="mini" data-logout
         style="margin-top:10px;width:100%" hidden>登出</button>
     </div>
@@ -570,6 +574,10 @@
       style="position:absolute;right:20px;top:52px;z-index:10">
       <h4>使用者身分</h4>
       <div class="whopop-body"></div>
+      <!-- 綁定 Telegram（webapp/botbind.js）。data 屬性而非 id：中庭與房間內各有一張卡。 -->
+      <button type="button" class="mini" data-tgbind
+        style="margin-top:10px;width:100%">綁定 Telegram</button>
+      <div class="tgbind-out" data-tgbind-out hidden></div>
       <button type="button" class="mini" data-logout
         style="margin-top:10px;width:100%" hidden>登出</button>
     </div>
@@ -639,6 +647,7 @@
 <script src="/static/memos.js"></script>
 <script src="/static/desk.js"></script>
 <script src="/static/lobby.js"></script>
+<script src="/static/botbind.js"></script>
 <script>
 /* 註冊 PWA service worker。沒有 Vite HMR 要避開，所以開發與正式一律註冊；
    sw.js 是網路優先，線上時永遠拿新檔，不會把改到一半的 JS 卡在舊版。

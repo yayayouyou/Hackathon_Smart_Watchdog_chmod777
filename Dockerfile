@@ -38,8 +38,12 @@ COPY run.py ./
 # 分析產物（已進版控，clone 即可用）。data/raw 與 data/interim 由 .dockerignore 排除。
 COPY data/ ./data/
 
+# PYTHONUNBUFFERED：容器裡 stdout 不是終端機，print() 會被緩衝住不送出。
+# 結果是 [telegram]／[threads] 的紀錄在 CloudWatch 裡一行都沒有——連「bot 已啟動」都看不到，
+# 展示時出問題只能盲猜（2026-09-13 實際發生）。
 ENV PYTHONPATH=/app/src \
     PYTHONIOENCODING=utf-8 \
+    PYTHONUNBUFFERED=1 \
     PORT=8080
 
 # 前端 payload 在建映像時產生，不在啟動時——啟動要快，而且產不出來要在

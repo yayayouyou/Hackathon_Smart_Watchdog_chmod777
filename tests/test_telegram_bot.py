@@ -241,3 +241,40 @@ def test_without_a_passcode_configured_the_demo_path_does_not_exist(db, sent, mo
     telegram.handle_update(_msg("/start anything"), "T")
     assert linking.user_for(db, "telegram", str(CHAT)) is None
 
+
+def test_typing_bind_or_pasting_the_code_also_links(db, sent) -> None:
+    """深層連結在已經開過對話時可能帶不到碼（實際發生：雲端收到兩則空的「開始」）。
+
+    所以另外兩種說法也要能綁：照網頁上的字打「綁定 碼」，或只把碼貼上來。
+    """
+    user = _user(db)
+    telegram.handle_update(_msg(f"綁定 {linking.issue_code(db, user.id, 'telegram')}"), "T")
+    assert linking.user_for(db, "telegram", str(CHAT)) is not None
+
+    linking.unlink(db, "telegram", str(CHAT))
+    telegram.handle_update(_msg(linking.issue_code(db, user.id, "telegram")), "T")
+    assert linking.user_for(db, "telegram", str(CHAT)) is not None, "只貼碼沒有綁上"
+
+
+def test_a_pasted_wrong_code_still_gets_only_instructions(db, sent) -> None:
+    telegram.handle_update(_msg("not-a-real-code"), "T")
+    assert linking.user_for(db, "telegram", str(CHAT)) is None
+    assert "綁定" in _text(sent)
+
+
+def test_the_unlinked_message_points_to_a_button_that_exists() -> None:
+    """說明文字叫人去身分卡按「綁定 Telegram」，那顆鈕就必須真的在。
+
+    第一版寫了這句話卻沒做那顆鈕，使用者登入後點開身分卡找不到——說明文字
+    指向不存在的東西，比沒有說明更糟。
+    """
+    import re
+
+    webapp = pathlib.Path(__file__).resolve().parents[1] / "webapp"
+    html = (webapp / "index.html").read_text(encoding="utf-8")
+    assert "身分卡" in telegram.UNLINKED and "綁定 Telegram" in telegram.UNLINKED
+    buttons = re.findall(r"<button[^>]*\bdata-tgbind\b[^>]*>\s*綁定 Telegram", html)
+    assert len(buttons) == 2, f"中庭與房間內兩張身分卡都要有綁定鈕，找到 {len(buttons)} 顆"
+    assert '<script src="/static/botbind.js"></script>' in html
+    js = (webapp / "botbind.js").read_text(encoding="utf-8")
+    assert "/api/bot/telegram/bind-code" in js
