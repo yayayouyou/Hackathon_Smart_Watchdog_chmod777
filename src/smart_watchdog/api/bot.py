@@ -79,6 +79,7 @@ def signed_map(exp: str = "", sig: str = "") -> Response:
 
 
 @router.get("/line/status")
-def line_status(user: User = Depends(get_current_user)) -> dict:
+def line_status(_user: User = Depends(get_current_user)) -> dict:
+    # 參數只用來擋未登入：狀態裡有 webhook 設定，不對匿名者公開。
     return line.status()
 

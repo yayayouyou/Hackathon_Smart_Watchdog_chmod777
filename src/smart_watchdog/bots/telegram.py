@@ -50,7 +50,8 @@ UNLINKED = (
     "• 登入派工台 → 右上角身分卡 →「綁定 Telegram」→ 點開連結並按「開始」\n"
     "• 手上已經有綁定碼：直接把「/start 綁定碼」送給我"
 )
-PRIVATE_ONLY = "為了避免名單被群組裡沒有登入過派工台的人看到，資料只在私訊中提供。請直接私訊我。"
+PRIVATE_ONLY = ("為了避免名單被群組裡沒有登入過派工台的人看到，資料只在私訊中提供。"
+                "請直接私訊我。")
 HELP = (
     "可以這樣用：\n"
     "• 按「地圖＋待稽核清單」看本批建議查核的分布\n"
@@ -106,14 +107,16 @@ def call(method: str, tok: str, *, files: dict | None = None,
     try:
         if files:
             # multipart 時，巢狀參數（reply_markup）要自己序列化成 JSON 字串。
-            data = {k: json.dumps(v, ensure_ascii=False) if isinstance(v, (dict, list)) else str(v)
+            data = {k: json.dumps(v, ensure_ascii=False)
+                    if isinstance(v, (dict, list)) else str(v)
                     for k, v in params.items()}
             resp = httpx.post(url, data=data, files=files, timeout=http_timeout)
         else:
             resp = httpx.post(url, json=params, timeout=http_timeout)
         return resp.json()
     except Exception as exc:  # noqa: BLE001 - 網路的每一種失敗都只該讓這一次沒結果
-        return {"ok": False, "description": f"{type(exc).__name__}: {exc}".replace(tok, "<token>")}
+        msg = f"{type(exc).__name__}: {exc}".replace(tok, "<token>")
+        return {"ok": False, "description": msg}
 
 
 def menu() -> dict:
@@ -285,7 +288,8 @@ def _loop(stop: threading.Event, tok: str) -> None:
             desc = str(data.get("description") or "")
             if data.get("error_code") == 409 or "Conflict" in desc:
                 STATE.last_error = ("409：另一個行程也在用這個 token 輪詢。"
-                                    "同一時間只能一個；其他地方請設 TELEGRAM_BOT_POLLING=false")
+                                    "同一時間只能一個；"
+                                    "其他地方請設 TELEGRAM_BOT_POLLING=false")
                 stop.wait(30)
             else:
                 STATE.last_error = desc[:300]

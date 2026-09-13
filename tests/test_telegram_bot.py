@@ -62,6 +62,8 @@ def sent(monkeypatch):
     calls: list[dict] = []
 
     def fake(method, tok, *, files=None, http_timeout=20, **params):
+        # 簽名要與 telegram.call 一致：呼叫端會用關鍵字傳 http_timeout。
+        _ = (tok, http_timeout)
         calls.append({"method": method, "files": files, **params})
         return {"ok": True, "result": {}}
 
@@ -94,7 +96,8 @@ def _link(db, sent) -> None:
 
 
 @needs_payload
-def test_an_unlinked_chat_gets_no_data_at_all(db, sent) -> None:
+@pytest.mark.usefixtures("db")
+def test_an_unlinked_chat_gets_no_data_at_all(sent) -> None:
     from smart_watchdog.api import server
 
     for update in (_msg("/map"), _msg("/list"), _msg("三重區有哪些幼兒園？"), _button("map")):
@@ -107,7 +110,8 @@ def test_an_unlinked_chat_gets_no_data_at_all(db, sent) -> None:
     assert not leaked, f"未綁定的聊天室拿到了名單：{leaked}"
 
 
-def test_a_bind_code_works_once_and_expires(db, sent) -> None:
+@pytest.mark.usefixtures("sent")
+def test_a_bind_code_works_once_and_expires(db) -> None:
     user = _user(db)
     code = linking.issue_code(db, user.id, "telegram")
     telegram.handle_update(_msg(f"/start {code}"), "T")
@@ -137,7 +141,8 @@ def test_group_chats_are_refused_even_with_a_valid_code(db, sent) -> None:
 def test_a_linked_chat_gets_the_map_and_the_list(db, sent) -> None:
     _link(db, sent)
     telegram.handle_update(_button("map"), "T")
-    assert any(c["method"] == "answerCallbackQuery" for c in sent), "按鈕要回應，不然會一直轉圈"
+    assert any(c["method"] == "answerCallbackQuery" for c in sent), (
+        "按鈕要回應，不然會一直轉圈")
     photos = [c for c in sent if c["method"] == "sendPhoto"]
     assert photos, "按了地圖卻沒有圖"
     assert photos[0]["files"]["photo"][1][:8] == b"\x89PNG\r\n\x1a\n"
@@ -161,7 +166,7 @@ def test_unlinking_and_deactivation_cut_access_immediately(db, sent) -> None:
 def test_the_token_never_leaks_into_error_messages(monkeypatch) -> None:
     secret = "123456:SECRET-TOKEN"
 
-    def boom(*args, **kwargs):
+    def boom(*_args, **_kwargs):
         raise httpx.ConnectError(f"failed https://api.telegram.org/bot{secret}/getUpdates")
 
     monkeypatch.setattr(httpx, "post", boom)
@@ -177,12 +182,14 @@ def test_the_map_renders_as_a_portrait_png() -> None:
     from smart_watchdog.api import server
 
     data = json.loads(PAYLOAD.read_text(encoding="utf-8"))
-    png = mapimage.render(data["points"], data["boundary"], server.get_proposal(20)["proposal"])
+    png = mapimage.render(data["points"], data["boundary"],
+                          server.get_proposal(20)["proposal"])
     assert Image.open(io.BytesIO(png)).size == (mapimage.W, mapimage.H)
 
 
 @needs_payload
-def test_the_bind_code_endpoint_requires_login(db, monkeypatch) -> None:
+@pytest.mark.usefixtures("db")
+def test_the_bind_code_endpoint_requires_login(monkeypatch) -> None:
     from fastapi.testclient import TestClient
 
     from smart_watchdog.api.server import app
@@ -201,7 +208,8 @@ def test_the_bind_code_endpoint_requires_login(db, monkeypatch) -> None:
     assert body["expires_in"] == 600
 
 
-def test_the_demo_passcode_links_in_one_tap_and_nothing_else_does(db, sent, monkeypatch) -> None:
+@pytest.mark.usefixtures("sent")
+def test_the_demo_passcode_links_in_one_tap_and_nothing_else_does(db, monkeypatch) -> None:
     """示範暗號：點 t.me/<bot>?start=<暗號> 就綁好。錯的暗號、沒設暗號都不行。
 
     這條路是為了決賽展示方便而開的，所以要釘住它**只開到這裡**：猜錯拿不到、
@@ -231,7 +239,8 @@ def test_the_demo_passcode_links_in_one_tap_and_nothing_else_does(db, sent, monk
     assert user is not None and user.email == EMAIL
 
 
-def test_without_a_passcode_configured_the_demo_path_does_not_exist(db, sent, monkeypatch) -> None:
+@pytest.mark.usefixtures("sent")
+def test_without_a_passcode_configured_the_demo_path_does_not_exist(db, monkeypatch) -> None:
     from smart_watchdog import config
 
     real_get = config.get
@@ -242,7 +251,8 @@ def test_without_a_passcode_configured_the_demo_path_does_not_exist(db, sent, mo
     assert linking.user_for(db, "telegram", str(CHAT)) is None
 
 
-def test_typing_bind_or_pasting_the_code_also_links(db, sent) -> None:
+@pytest.mark.usefixtures("sent")
+def test_typing_bind_or_pasting_the_code_also_links(db) -> None:
     """深層連結在已經開過對話時可能帶不到碼（實際發生：雲端收到兩則空的「開始」）。
 
     所以另外兩種說法也要能綁：照網頁上的字打「綁定 碼」，或只把碼貼上來。

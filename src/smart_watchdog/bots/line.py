@@ -272,7 +272,8 @@ def handle_event(event: dict) -> None:
                 reply(token, [text(BAD_CODE)])
                 return
             print(f"[line] 綁定：{user.email} ↔ {user_id[:8]}…")
-            reply(token, [text(f"綁定完成：{user.name}。從現在起這個聊天可以查資料。", menu=True)])
+            reply(token, [text(f"綁定完成：{user.name}。從現在起這個聊天可以查資料。",
+                               menu=True)])
             return
 
         user = linking.user_for(db, "line", user_id)
@@ -286,7 +287,8 @@ def handle_event(event: dict) -> None:
             messages: list[dict] = []
             if public_base():
                 url = map_url()
-                messages.append({"type": "image", "originalContentUrl": url, "previewImageUrl": url})
+                messages.append({"type": "image", "originalContentUrl": url,
+                                 "previewImageUrl": url})
             else:
                 messages.append(text(NO_PUBLIC_URL))
             messages.append(text(content.proposal_text(n=20), menu=True))
@@ -305,12 +307,17 @@ def handle_event(event: dict) -> None:
         db.close()
 
 
+def _handle_safely(event: dict) -> None:
+    try:
+        handle_event(event)
+    except Exception as exc:  # noqa: BLE001 - 一個事件失敗不能拖垮其他事件
+        STATE.last_error = _scrub(f"處理事件失敗：{type(exc).__name__}: {exc}")[:300]
+
+
 def _run(events: list[dict]) -> None:
+    # 每個事件的例外在 _handle_safely 裡擋下：一個壞事件不能讓後面的都不處理。
     for event in events:
-        try:
-            handle_event(event)
-        except Exception as exc:  # noqa: BLE001 - 一個事件失敗不能拖垮其他事件
-            STATE.last_error = _scrub(f"處理事件失敗：{type(exc).__name__}: {exc}")[:300]
+        _handle_safely(event)
 
 
 def dispatch_async(events: list[dict]) -> None:

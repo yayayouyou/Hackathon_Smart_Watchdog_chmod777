@@ -632,8 +632,12 @@ def test_the_agent_files_only_attachments_its_own_user_added(
     monkeypatch.setattr(attachments, "DIR", tmp_path / "att")
     att = attachments.save(7, "園所財報.pdf", b"%PDF-1.4 x")
     submitted = []
-    monkeypatch.setattr(intake, "submit", lambda name, blob: submitted.append((name, blob)) or {
-        "ok": True, "status": "already_loaded", "report": "N01_安溪_113", "detail": "已在庫中"})
+    def fake_submit(name, blob):
+        submitted.append((name, blob))
+        return {"ok": True, "status": "already_loaded", "report": "N01_安溪_113",
+                "detail": "已在庫中"}
+
+    monkeypatch.setattr(intake, "submit", fake_submit)
 
     out = _run(reg, "add_to_dataroom", {"attachment_id": att["id"]},
                _ctx(user=SimpleNamespace(id=8)))

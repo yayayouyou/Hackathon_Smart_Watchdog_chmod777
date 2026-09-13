@@ -62,7 +62,8 @@ CREDENTIALS = (
         key="TELEGRAM_BOT_TOKEN",
         label="Telegram bot token",
         enables="在 Telegram 私訊查地圖、待稽核清單與一句話答詢（僅限已綁定派工台帳號者）",
-        how="Telegram 找 @BotFather → /newbot → 取得 token；本專案的 bot 是 t.me/Little_Guardian_bot",
+        how=("Telegram 找 @BotFather → /newbot → 取得 token；"
+             "本專案的 bot 是 t.me/Little_Guardian_bot"),
     ),
     Credential(
         key="AWS_REGION",

@@ -78,7 +78,8 @@ def demo_user(db: Session, email: str | None) -> User | None:
         if user is not None and user.is_active:
             return user
     return db.execute(select(User).where(
-        User.is_active.is_(True), User.role == "inspector").order_by(User.id)).scalars().first()
+        User.is_active.is_(True), User.role == "inspector",
+    ).order_by(User.id)).scalars().first()
 
 
 def user_for(db: Session, platform: str, chat_id: str) -> User | None:

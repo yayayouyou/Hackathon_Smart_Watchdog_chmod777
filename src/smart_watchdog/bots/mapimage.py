@@ -152,7 +152,8 @@ def render(points: list[dict], boundary: list[dict], proposal: list[dict], *,
         width = 40 * s + 12 * s + d.textlength(label, font=legend_font) + 34 * s
         if lx + width > (W - 40) * s:
             lx, ly = 56 * s, ly + 42 * s
-        d.rounded_rectangle([lx, ly, lx + 40 * s, ly + 26 * s], 5 * s, fill=colour, outline=RULE)
+        d.rounded_rectangle([lx, ly, lx + 40 * s, ly + 26 * s], 5 * s,
+                            fill=colour, outline=RULE)
         d.text((lx + 52 * s, ly + 13 * s), label, font=legend_font, fill=INK, anchor="lm")
         lx += width
 

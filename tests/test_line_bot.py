@@ -72,7 +72,8 @@ def db(tmp_path, monkeypatch):
     dbsession.init_db()
     s = dbsession.session()
     s.add(User(email=EMAIL, name="測試稽查員", role="inspector", unit="新北市政府教育局",
-               towns=["板橋區"], password_hash=hash_password("x-password-123"), is_active=True))
+               towns=["板橋區"], password_hash=hash_password("x-password-123"),
+               is_active=True))
     s.commit()
     yield s
     s.close()
@@ -83,7 +84,12 @@ def db(tmp_path, monkeypatch):
 @pytest.fixture
 def replies(monkeypatch):
     calls: list[dict] = []
-    monkeypatch.setattr(line, "call", lambda path, payload: calls.append(payload) or {})
+    def fake_call(path, payload):
+        _ = path                    # 簽名要與 line.call(path, payload) 一致
+        calls.append(payload)
+        return {}
+
+    monkeypatch.setattr(line, "call", fake_call)
     return calls
 
 
@@ -109,7 +115,8 @@ def _sig(body: bytes, key: str = SECRET) -> str:
     return base64.b64encode(hmac.new(key.encode(), body, hashlib.sha256).digest()).decode()
 
 
-def test_the_webhook_rejects_a_forged_signature(configured, monkeypatch) -> None:
+@pytest.mark.usefixtures("configured")
+def test_the_webhook_rejects_a_forged_signature(monkeypatch) -> None:
     from fastapi.testclient import TestClient
 
     from smart_watchdog.api.server import app
@@ -134,7 +141,8 @@ def test_an_unconfigured_webhook_quietly_accepts_and_does_nothing(monkeypatch) -
 
     from smart_watchdog.api.server import app
 
-    _env(monkeypatch, LINE_CHANNEL_SECRET=None, LINE_CHANNEL_ACCESS_TOKEN=None, LINE_CHANNEL_ID=None)
+    _env(monkeypatch, LINE_CHANNEL_SECRET=None, LINE_CHANNEL_ACCESS_TOKEN=None,
+         LINE_CHANNEL_ID=None)
     seen: list = []
     monkeypatch.setattr(line, "dispatch_async", lambda events: seen.append(events))
     r = TestClient(app).post(line.WEBHOOK_PATH, content=b'{"events":[{"type":"message"}]}')
@@ -142,10 +150,12 @@ def test_an_unconfigured_webhook_quietly_accepts_and_does_nothing(monkeypatch) -
 
 
 @needs_payload
-def test_an_unlinked_line_user_gets_no_data(configured, db, replies) -> None:
+@pytest.mark.usefixtures("configured", "db")
+def test_an_unlinked_line_user_gets_no_data(replies) -> None:
     from smart_watchdog.api import server
 
-    for ev in (_ev(text="地圖"), _ev(kind="postback", data="list"), _ev(text="三重區有哪些？")):
+    for ev in (_ev(text="地圖"), _ev(kind="postback", data="list"),
+               _ev(text="三重區有哪些？")):
         line.handle_event(ev)
     assert not any(m["type"] == "image" for m in _messages(replies))
     body = _texts(replies)
@@ -154,19 +164,22 @@ def test_an_unlinked_line_user_gets_no_data(configured, db, replies) -> None:
     assert not [n for n in names if n in body], "未綁定的 LINE 使用者拿到了名單"
 
 
-def test_groups_are_refused_even_with_the_passcode(configured, db, replies) -> None:
+@pytest.mark.usefixtures("configured")
+def test_groups_are_refused_even_with_the_passcode(db, replies) -> None:
     line.handle_event(_ev(text=f"綁定 {PASS}", src="group"))
     assert linking.user_for(db, "line", "U1") is None
     assert "一對一" in _texts(replies)
 
 
-def test_a_wrong_passcode_does_not_link(configured, db, replies) -> None:
+@pytest.mark.usefixtures("configured", "replies")
+def test_a_wrong_passcode_does_not_link(db) -> None:
     line.handle_event(_ev(text="綁定 guess-guess"))
     assert linking.user_for(db, "line", "U1") is None
 
 
 @needs_payload
-def test_the_map_goes_out_as_a_signed_short_lived_image(configured, db, replies) -> None:
+@pytest.mark.usefixtures("configured")
+def test_the_map_goes_out_as_a_signed_short_lived_image(db, replies) -> None:
     line.handle_event(_ev(text=f"綁定 {PASS}"))
     assert linking.user_for(db, "line", "U1") is not None
     replies.clear()
@@ -175,7 +188,8 @@ def test_the_map_goes_out_as_a_signed_short_lived_image(configured, db, replies)
     msgs = _messages(replies)
     image = next(m for m in msgs if m["type"] == "image")
     url = urlparse(image["originalContentUrl"])
-    assert url.scheme == "https" and url.netloc == "demo.example" and url.path == "/api/bot/map.png"
+    assert (url.scheme, url.netloc, url.path) == (
+        "https", "demo.example", "/api/bot/map.png")
     q = parse_qs(url.query)
     assert line.check_map_signature(q["exp"][0], q["sig"][0])
     body = _texts(replies)
@@ -183,7 +197,8 @@ def test_the_map_goes_out_as_a_signed_short_lived_image(configured, db, replies)
 
 
 @needs_payload
-def test_without_a_public_url_the_map_falls_back_to_text(monkeypatch, db, replies) -> None:
+@pytest.mark.usefixtures("db")
+def test_without_a_public_url_the_map_falls_back_to_text(monkeypatch, replies) -> None:
     _env(monkeypatch, LINE_CHANNEL_SECRET=SECRET, LINE_CHANNEL_ACCESS_TOKEN="t",
          LINE_DEMO_PASSCODE=PASS, SEED_INSPECTOR_EMAIL=EMAIL, PUBLIC_BASE_URL=None)
     line.handle_event(_ev(text=f"綁定 {PASS}"))
@@ -193,20 +208,24 @@ def test_without_a_public_url_the_map_falls_back_to_text(monkeypatch, db, replie
     assert "公開" in _texts(replies)
 
 
-def test_the_map_signature_expires_and_rejects_tampering(configured) -> None:
+@pytest.mark.usefixtures("configured")
+def test_the_map_signature_expires_and_rejects_tampering() -> None:
     exp = int(time.time()) + 60
     good = line._sign(exp)
     assert line.check_map_signature(str(exp), good)
-    assert not line.check_map_signature(str(exp), good[:-1] + ("A" if good[-1] != "A" else "B"))
+    tampered = good[:-1] + ("A" if good[-1] != "A" else "B")
+    assert not line.check_map_signature(str(exp), tampered)
     assert not line.check_map_signature(str(exp + 1), good), "換了到期時間簽章還能用"
     past = int(time.time()) - 1
     assert not line.check_map_signature(str(past), line._sign(past)), "過期的地圖網址還能用"
     far = int(time.time()) + 10 * 24 * 3600
-    assert not line.check_map_signature(str(far), line._sign(far)), "自己簽一個很久以後的到期時間"
+    assert not line.check_map_signature(str(far), line._sign(far)), (
+        "自己簽一個很久以後的到期時間")
 
 
 @needs_payload
-def test_the_signed_map_route_serves_png_only_with_a_valid_signature(configured) -> None:
+@pytest.mark.usefixtures("configured")
+def test_the_signed_map_route_serves_png_only_with_a_valid_signature() -> None:
     from fastapi.testclient import TestClient
 
     from smart_watchdog.api.server import app
@@ -219,10 +238,11 @@ def test_the_signed_map_route_serves_png_only_with_a_valid_signature(configured)
     assert r.status_code == 200 and r.content[:8] == b"\x89PNG\r\n\x1a\n"
 
 
-def test_credentials_never_leak_into_error_messages(configured, monkeypatch) -> None:
+@pytest.mark.usefixtures("configured")
+def test_credentials_never_leak_into_error_messages(monkeypatch) -> None:
     import httpx
 
-    def boom(*args, **kwargs):
+    def boom(*_args, **_kwargs):
         raise httpx.ConnectError(f"auth failed for {SECRET} / test-token")
 
     monkeypatch.setattr(httpx, "post", boom)

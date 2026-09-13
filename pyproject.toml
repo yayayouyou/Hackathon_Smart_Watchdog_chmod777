@@ -47,6 +47,7 @@ ignore = [
 "src/smart_watchdog/api/dossier.py" = ["UP045", "B008"]
 "src/smart_watchdog/api/social.py" = ["UP045", "B008"]
 "src/smart_watchdog/api/dataroom.py" = ["UP045", "B008"]
+"src/smart_watchdog/api/bot.py" = ["UP045", "B008"]
 # Scripts prepend src/ to sys.path before importing the package, so their
 # imports cannot sit at the top of the file.
 "scripts/*" = ["E402"]
