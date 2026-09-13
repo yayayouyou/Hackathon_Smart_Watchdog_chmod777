@@ -532,7 +532,14 @@ def test_switching_between_rooms_does_not_refit_the_map() -> None:
     assert "function showRoom(r, refit, done)" in lobby, (
         "showRoom 沒有把重算與完成回呼變成可控的"
     )
-    assert "showRoom(r, false, done)" in lobby, "室與室之間切換仍會重算地圖"
+    # 室與室之間的切換現在走 switchRoom（樓層索引與助理共用，帶換房動畫）。
+    # 助理那條必須傳 refit=false，而 switchRoom 只有 refit 為真才重算。
+    assert "switchRoom(r, done, false)" in lobby, "助理換房會重算地圖視野"
+    code = _code(lobby)
+    sw = code[code.index("function switchRoom(r, done, refit)"):]
+    sw = sw[:sw.index("\n  function ")]
+    assert "fitNTPC" in sw and sw.index("if (refit") < sw.index("fitNTPC"), (
+        "switchRoom 不看 refit 就重算地圖，助理換房後的飛行會被拉回全市")
     assert "showRoom(r, true, done)" in lobby, "從中庭進房沒有重算地圖"
 
     # 比對先後要看程式碼，不是註解——這一段的註解裡就寫著 fitNTPC()，
@@ -1725,4 +1732,204 @@ def test_the_chat_can_attach_a_file_for_the_agent_to_file() -> None:
 
     dr = _code((WEBAPP / "dataroom.js").read_text(encoding="utf-8"))
     assert "/api/dataroom/jobs/" in dr and "function watchJob" in dr, "資料室不會追抽取進度"
+
+
+# ── 過渡動畫與點擊回饋 ─────────────────────────────────────────────
+
+def _prm_blocks_for_transitions(css: str) -> list[str]:
+    """所有 prefers-reduced-motion 區塊的內容。數大括號，不用正則——這份樣式表
+    有規則以 `}}` 收在同一行，非貪婪正則會一路吞到很遠之外（見頭像那支測試）。"""
+    blocks = []
+    for m in re.finditer(r"@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{", css):
+        i, depth = m.end(), 1
+        while i < len(css) and depth:
+            depth += {"{": 1, "}": -1}.get(css[i], 0)
+            i += 1
+        blocks.append(css[m.end():i - 1])
+    return blocks
+
+
+def test_login_success_plays_the_iris_but_an_existing_session_does_not() -> None:
+    """登入成功才播光圈；開頁時已登入（check()）直接進去。
+
+    反過來的話，每次重新整理都要看一次開場。光圈畫布不可以吃滑鼠，而且要在
+    收合到全黑（k >= 1）之後才換畫面——早一格換，會看到登入層與中庭疊在一起。
+    """
+    auth = _js_without_comments("auth.js")
+    start = auth.index("async function authenticate(")
+    assert "irisSwap(" in auth[start:auth.index("\n  }\n", start)], "登入成功沒有走光圈"
+    start = auth.index("async function check(")
+    assert "irisSwap(" not in auth[start:auth.index("\n  }\n", start)], "開頁已登入不該播光圈"
+    start = auth.index("function irisSwap(")
+    iris = auth[start:auth.index("\n  }\n", start)]
+    assert "prefers-reduced-motion" in iris
+    assert 'pointerEvents: "none"' in auth, "光圈畫布不可以吃滑鼠"
+    out = iris[iris.index('if (phase === "out")'):]
+    assert out.index("k >= 1") < out.index("runSwap()"), "還沒收到全黑就換了畫面"
+    assert "setTimeout(finish" in iris, "rAF 暫停時沒有保險，黑幕可能收不掉"
+
+
+def test_switching_rooms_animates_and_the_rail_indicator_survives_rebuilds() -> None:
+    """樓層索引與助理換房走同一條 switchRoom；色塊在按鈕重建時不能被清掉。
+
+    清掉的話色塊每次都是新建的，從無到有，看不出從哪一間滑到哪一間。
+    """
+    lobby = _js_without_comments("lobby.js")
+    start = lobby.index("function setRail(")
+    rail = lobby[start:lobby.index("\n  }\n", start)]
+    assert "list.textContent" not in rail, "重建按鈕時把滑動色塊也清掉了"
+    assert "rail-ind" in rail and "switchRoom(r, null, true)" in rail
+    start = lobby.index("function goto_(")
+    assert "switchRoom(r, done, false)" in lobby[start:lobby.index("\n  }\n", start)], (
+        "助理換房沒有走同一條切換，或者會重算地圖視野（會把助理的飛行拉回全市）")
+    start = lobby.index("function switchRoom(")
+    assert "reduced" in lobby[start:lobby.index("\n  }\n", start)]
+    css = (WEBAPP / "lobby.css").read_text(encoding="utf-8")
+    blocks = _prm_blocks_for_transitions(css)
+    assert any(".rail-ind" in b for b in blocks), "色塊滑動沒有被減少動態關掉"
+    assert any(".rs-down" in b for b in blocks), "換房動畫沒有被減少動態關掉"
+    # 助理欄不跟著動：換房時對話沒有換。
+    anim = css[css.index("@keyframes rs-in-down"):]
+    anim = anim[:anim.index("@media")]
+    assert "agentcol" not in anim
+
+
+def test_the_paid_scan_column_starts_folded_and_is_resizable() -> None:
+    """主動掃描（付費管道）預設收合；展開後可以拖曳調整寬度，收合時不能拖。"""
+    html = (WEBAPP / "index.html").read_text(encoding="utf-8")
+    assert 'class="scancol fold" id="scancol"' in html
+    assert re.search(r'id="scanfold"[^>]*aria-expanded="false"', html)
+    assert re.search(r'id="scangrip"[^>]*role="separator"', html)
+    app = _js_without_comments("app.js")
+    start = app.index('makeGrip($("scangrip")')
+    grip = app[start:app.index("});", start)]
+    assert 'classList.contains("fold")' in grip, "收合時分隔條要停用"
+    assert "foldScan(true)" in app
+
+
+def test_press_feedback_uses_the_scale_property_and_honours_reduced_motion() -> None:
+    """按下微縮要用獨立的 scale 屬性，不可以用 transform。
+
+    很多按鈕靠 transform 置中或位移；:active 蓋掉 transform 會讓它一按就跳位。
+    """
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    rule = re.search(r"button:not\(:disabled\):active,[^{]*\{([^}]*)\}", css)
+    assert rule, "找不到按下回饋的規則"
+    assert "scale:" in rule.group(1) and "transform" not in rule.group(1)
+    blocks = _prm_blocks_for_transitions(css)
+    assert any(".rpl" in b for b in blocks), "漣漪沒有被減少動態關掉"
+    assert any(".item.fresh" in b for b in blocks), "名單淡入沒有被減少動態關掉"
+    assert any("scale:none" in b.replace(" ", "") for b in blocks), (
+        "按下微縮沒有被減少動態關掉")
+    app = _js_without_comments("app.js")
+    assert "prefers-reduced-motion" in app[app.index("const RIPPLE"):]
+
+
+def test_the_ripple_is_not_wiped_by_component_background_shorthands() -> None:
+    """漣漪的背景圖與動畫要 !important。
+
+    元件自己的 `background` 簡寫會把 background-image 重設成 none：`.drseg button`、
+    回中庭、`.rail-item:hover` 的權重都不低於 .rpl，而按下時滑鼠一定停在元素上。
+    實測沒有 !important 時，大多數按鈕上的漣漪根本不會出現，而且不會有任何錯誤。
+    """
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    rule = css[css.index(".rpl{background-image:"):]
+    rule = rule[:rule.index("}")]
+    assert rule.count("!important") >= 2, "漣漪會被元件的 background 簡寫蓋掉"
+    blocks = _prm_blocks_for_transitions(css)
+    assert any(".rpl{animation:none !important" in b for b in blocks), (
+        "減少動態的關閉規則沒有 !important，蓋不過漣漪本身的 !important")
+
+
+def test_the_rail_indicator_follows_size_changes_and_buttons_are_built_once() -> None:
+    """樓層索引的按鈕只建一次；索引尺寸一變，色塊就重新定位。
+
+    兩個都是審查實測過的迴歸：
+    - 每次換房重建按鈕，按下時的漣漪與 :active 會跟著舊節點一起被刪掉。
+    - 色塊只在換房時量一次位置：拖窄索引讓室名換行、每列變高之後，色塊停在
+      錯的那一列、指錯房間，一直錯到下一次換房。
+    """
+    lobby = _js_without_comments("lobby.js")
+    start = lobby.index("function setRail(")
+    rail = lobby[start:lobby.index("\n  }\n", start)]
+    assert ".remove()" not in rail, "setRail 又開始刪除重建按鈕"
+    assert 'if (!list.querySelector(".rail-item"))' in rail, "按鈕沒有只建一次"
+    assert "ResizeObserver" in rail and "placeRailInd(false)" in rail, (
+        "索引尺寸改變時沒有重新定位色塊")
+    start = lobby.index("function placeRailInd(")
+    place = lobby[start:lobby.index("\n  }\n", start)]
+    assert "reduced" in place and "offsetTop" in place and "offsetHeight" in place
+
+
+# ── 審查第二輪：光圈、掃描欄、點擊回饋 ──────────────────────────────
+
+def test_the_iris_canvas_follows_window_resizes() -> None:
+    """光圈的位元圖要每一幀比對視窗尺寸。
+
+    CSS 尺寸是 100vw／100vh；只在開始時量一次，轉場中途縮放視窗會把固定的位元圖
+    拉成橢圓（審查實測）。
+    """
+    auth = _js_without_comments("auth.js")
+    start = auth.index("function irisSwap(")
+    iris = auth[start:auth.index("\n  }\n", start)]
+    assert "const fit = () =>" in iris
+    frame = iris[iris.index("const frame = (now) =>"):]
+    assert frame.index("fit();") < frame.index('if (phase === "out")'), "每一幀沒有先對齊尺寸"
+
+
+def test_the_scan_column_is_clamped_in_css_and_only_animates_on_fold() -> None:
+    """掃描欄寬度要在 CSS 夾限；寬度過渡只在收合／展開那一下。
+
+    只在拖曳當下夾限的話，助理欄拉寬或視窗變窄之後左欄會被擠到 29px；過渡常駐的話，
+    鍵盤調寬讀到的是動畫中途的寬度，連按的步進被吃掉。兩條都是審查實測。
+    """
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    rule = re.search(r"\.scancol\{([^}]*)\}", css)
+    assert rule, "找不到 .scancol 的規則"
+    assert "min(var(--scanw" in rule.group(1) and "calc(100% - " in rule.group(1)
+    assert "transition" not in rule.group(1), "寬度過渡又常駐在 .scancol 上"
+    assert ".scancol.fx{transition:" in css
+    assert re.search(r"#pane-scan>\.socialwrap\{[^}]*min-width:\s*\d+px", css), (
+        "左欄沒有保底寬度")
+    app = _js_without_comments("app.js")
+    start = app.index("function foldScan(")
+    fold = app[start:app.index("\n}\n", start)]
+    assert 'classList.add("fx")' in fold
+
+
+def test_the_folded_budget_refreshes_when_a_scan_finishes() -> None:
+    """收合列上的「本月尚可」要在掃描工作結束時重抓。
+
+    欄位預設收合，那一行是唯一看得見的額度；只在開頁時抓一次，花完錢它不會變。
+    """
+    app = _js_without_comments("app.js")
+    assert re.search(r"window\.SW\s*=\s*\{[^}]*\brefreshBudget\b", app, re.S)
+    scan = _js_without_comments("scan.js")
+    start = scan.index("function watch(")
+    assert "refreshBudget" in scan[start:scan.index("\n}\n", start)]
+
+
+def test_pressing_a_fresh_row_does_not_replay_its_entrance() -> None:
+    """按下剛展開那一區的列時，淡入不可以重播。
+
+    漣漪的 animation 有 !important，會蓋掉 item-in；漣漪結束後 item-in 從頭重播，整列
+    閃一下（審查實測）。按下時就拿掉 .fresh，淡入播完也拿掉。
+    """
+    app = _js_without_comments("app.js")
+    down = app[app.index('document.addEventListener("pointerdown"'):]
+    down = down[:down.index("}, { capture: true")]
+    assert 'classList.remove("fresh")' in down
+    end = app[app.index('document.addEventListener("animationend"'):]
+    end = end[:end.index("}, true);")]
+    assert '"item-in"' in end and 'classList.remove("fresh")' in end
+
+
+def test_the_folded_scan_bar_keeps_the_budget_visible_and_fits_narrow_screens() -> None:
+    """收合列：額度排在標題前面（矮視窗被裁掉的是標題）；窄螢幕橫列時箭頭朝右、額度靠右。"""
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    assert ".scancol.fold #scanfold-budget{order:-1}" in css
+    media = css[css.index("#pane-scan{flex-direction:column}"):]
+    media = media[:media.index("\n}\n")]
+    assert ".scancol.fold .scanchev{transform:none" in media
+    assert re.search(r"\.scancol\.fold #scanfold-budget\{margin-left:auto", media)
 

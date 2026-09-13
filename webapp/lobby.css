@@ -168,7 +168,7 @@
   background:var(--panel);width:100%}
 .rail-back:hover{border-color:var(--seal);color:var(--ink)}
 .rail-eyebrow{font-size:15px;letter-spacing:.1em;color:var(--ink-4);padding:0 4px 4px}
-.rail-list{display:flex;flex-direction:column;gap:2px}
+.rail-list{display:flex;flex-direction:column;gap:2px;position:relative}
 .rail-item{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:5px;
   font-size:17px;color:var(--ink-2);width:100%;text-align:left}
 .rail-item:hover{background:var(--paper);color:var(--ink)}
@@ -178,8 +178,33 @@
 /* 右側是數量，是這一列真正要被讀到的東西——加粗、放大、等寬對齊 */
 .rail-n{margin-left:auto;font-family:var(--mono);font-size:15px;font-weight:600;
   color:var(--ink-2);font-variant-numeric:tabular-nums}
-.rail-item[aria-current="true"]{background:var(--seal-soft);color:var(--ink);
-  font-weight:500;box-shadow:inset 0 0 0 1px var(--seal)}
+/* 「目前所在」的底色與框線交給 .rail-ind（會滑動的那一塊），按鈕自己透明。
+   按鈕疊在色塊上面（z-index 1），滑過時也不可以蓋掉色塊。 */
+.rail-item[aria-current="true"],.rail-item[aria-current="true"]:hover{
+  background:transparent;color:var(--ink);font-weight:500;box-shadow:none}
+.rail-list .rail-item{position:relative;z-index:1}
+.rail-ind{position:absolute;left:0;right:0;top:0;height:44px;z-index:0;
+  border-radius:5px;pointer-events:none;
+  background:color-mix(in srgb, var(--rc, var(--seal)) 15%, var(--panel));
+  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--rc, var(--seal)) 60%, transparent),
+    inset 4px 0 0 var(--rc, var(--seal));
+  transition:transform .36s cubic-bezier(.2,.8,.2,1),height .36s cubic-bezier(.2,.8,.2,1),
+    background-color .36s,box-shadow .36s}
+
+/* 室與室之間切換（lobby.js::switchRoom）。只動室頭、地圖、清單；助理欄不動。
+   清單晚 40ms 進場，視線才會從室頭往下走。 */
+@keyframes rs-in-down{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes rs-in-up{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:none}}
+.roomwrap.rs-down .roomhead,.roomwrap.rs-down .mapwrap,.roomwrap.rs-down .side{
+  animation:rs-in-down .34s cubic-bezier(.2,.8,.2,1) both}
+.roomwrap.rs-up .roomhead,.roomwrap.rs-up .mapwrap,.roomwrap.rs-up .side{
+  animation:rs-in-up .34s cubic-bezier(.2,.8,.2,1) both}
+.roomwrap.rs-down .side,.roomwrap.rs-up .side{animation-delay:.04s}
+@media (prefers-reduced-motion:reduce){
+  .rail-ind{transition:none}
+  .roomwrap.rs-down .roomhead,.roomwrap.rs-down .mapwrap,.roomwrap.rs-down .side,
+  .roomwrap.rs-up .roomhead,.roomwrap.rs-up .mapwrap,.roomwrap.rs-up .side{animation:none}
+}
 .rail-item[aria-current="true"] .rail-no{color:var(--seal)}
 
 /* 室內工具：只屬於這一室的控制項。現在那個到處飄的圖層面板，去處就是這裡。 */

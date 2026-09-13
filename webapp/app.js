@@ -40,6 +40,8 @@ const state = {
   // 清單展開的區（依區名）。預設全收：一眼看的是「哪一區、幾家」，要看名單再點開。
   // 用區名不用索引，換容量或換排序之後，開著的那幾區還是開著。
   openDistricts: new Set(),
+  // 剛展開的那一區（只在點區頭那一次重畫期間有值），名單依序淡入只給它。
+  justOpened: null,
   // 時間軸模式（timeline.js 設定）。非 null 時地圖改畫「當時的排序」與
   // 「後來實際受罰」，而不是今天的派工提案。
   timeline: null,
@@ -88,13 +90,7 @@ async function boot() {
   const rt = state.payload.realtime || {};
   $("s-ch").textContent = `${rt.channels_live || 0}/${rt.channels_total || 0}`;
   // 花費常駐在表頭。只在掃描頁看得到餘額，等於要花錢的人不一定看得到自己花了多少。
-  api("/api/scan/budget").then((b) => {
-    $("s-budget").textContent =
-      `US$${b.month_spent_usd.toFixed(2)}/${b.caps.month.toFixed(2)}`;
-    // 摺疊列也印一次：收起來的時候，額度是唯一還看得見的成本訊號。
-    const fold = $("scanfold-budget");
-    if (fold) fold.textContent = `本月尚可 US$${b.month_remaining_usd.toFixed(2)}`;
-  }).catch(() => { $("s-budget").textContent = "—"; });
+  refreshBudget();
 
   initMap();
   syncLayerCount();
@@ -902,7 +898,8 @@ function drawList() {
      財報法遵、近期報導。改版前這裡印的是 TIER_LADDER 的階名，前 20 名全落在
      「財報法遵未通過」那一階——每一列都一樣，而且只講到非營利園。 */
   // withD：助理點名的扁平清單與即時組沒有區頭，要在列上印行政區。
-  const item = (p, sev, withD) => {
+  // fx：剛展開那一區的第幾列，給依序淡入用；其他情況是 null。
+  const item = (p, sev, withD, fx) => {
     const tags = [];
     if (p.np >= 3) tags.push(`<span class="tag s">前科 ${p.np} 件</span>`);
     else if (p.np > 0) tags.push(`<span class="tag w">前科 ${p.np} 件</span>`);
@@ -917,7 +914,7 @@ function drawList() {
     }
     // 沒有任何一條具名理由的，老實寫是模型排出來的，不要空白。
     if (!tags.length) tags.push('<span class="tag p">無前科 · 模型排序</span>');
-    return `<button class="item ${sev}" data-i="${p.i}">
+    return `<button class="item ${sev}" data-i="${p.i}"${fx == null ? "" : ` style="--i:${Math.min(fx, 12)}"`}>
       <span class="ord">#${p.r}</span>
       <span class="nm"><i class="tdot" style="background:${cssv(TVAR[p.t])}"></i>${esc(p.n)}</span>
       <span class="rk">${withD ? esc(p.d) + " · " : ""}${TYPE[p.t]}</span>
@@ -956,6 +953,7 @@ function drawList() {
     }
     html += groups.map((g) => {
       const open = state.openDistricts.has(g.d);
+      const fresh = state.justOpened === g.d;
       // 收起來的區**不渲染**名單。100 家的按鈕全塞進 DOM 再用 CSS 藏的話，
       // Tab 鍵會走進一整排看不見的東西。
       const members = open ? g.ids.map((i) => state.byId[i]).filter(Boolean) : [];
@@ -966,7 +964,8 @@ function drawList() {
         <span class="lcnt">${g.obs} 家</span>
         <span class="lsir">${g.sir == null ? "—" : g.sir.toFixed(2) + "×"}</span>
         <span class="llv">${esc(g.level_label)}</span></div>`
-        + members.map((p) => item(p, "sev-" + g.level)).join("");
+        + members.map((p, i) => item(p, "sev-" + g.level + (fresh ? " fresh" : ""),
+          false, fresh ? i : null)).join("");
     }).join("");
   }
 
@@ -992,7 +991,10 @@ function drawList() {
       const opening = !state.openDistricts.has(key);
       if (opening) state.openDistricts.add(key);
       else state.openDistricts.delete(key);
+      // 只有「剛展開的那一區」的名單依序淡入；換容量、換排序的重畫不重播。
+      state.justOpened = opening ? key : null;
       drawList();
+      state.justOpened = null;
       // 展開時地圖跟著飛過去；收合時不動——不然看的人一收起來，地圖就跳走。
       if (opening && el.dataset.d) flyToDistrict(el.dataset.d);
       // innerHTML 重畫之後焦點會掉，還給同一個區頭，鍵盤操作才接得下去。
@@ -1689,8 +1691,83 @@ makeGrip($("sidegrip"), {
     .classList.contains("no-map"),
 });
 
+/* 輿情室：主動掃描欄的寬度與收合。
+   寬度寫進 main 的 --scanw（與另外兩條分隔條同一個做法）；收合時分隔條停用並
+   藏起來。預設收合、不記住收合狀態——「預設最小化」是這間房的設計，不是上一次
+   操作留下來的狀態。寬度倒是記住：那是使用者調過的偏好。 */
+makeGrip($("scangrip"), {
+  cssVar: "--scanw", min: 300, storeKey: "sw.scanw", flip: -1,
+  max: () => Math.round(($("pane-scan").getBoundingClientRect().width
+    || window.innerWidth) * 0.7),
+  // 右欄的右緣就是整個 pane 的右緣，拖曳時不會動，用它當基準最穩。
+  measure: (ev) => $("pane-scan").getBoundingClientRect().right - ev.clientX,
+  current: () => $("scancol").getBoundingClientRect().width,
+  disabled: () => $("scancol").classList.contains("fold"),
+});
+
+/* 表頭與收合列上的剩餘額度。
+   ⚠️ 原本只在開頁時抓一次。主動掃描欄改成預設收合之後，收合列上那行「本月尚可」
+   是唯一看得見的額度，而掃描花完錢它不會變——看的人會以為還有錢（審查實測）。
+   所以掃描工作結束時（scan.js）與人手收合／展開時都重抓一次；這支 GET 不花錢。 */
+function refreshBudget() {
+  return api("/api/scan/budget").then((b) => {
+    $("s-budget").textContent =
+      `US$${b.month_spent_usd.toFixed(2)}/${b.caps.month.toFixed(2)}`;
+    // 摺疊列也印一次：收起來的時候，額度是唯一還看得見的成本訊號。
+    const fold = $("scanfold-budget");
+    if (fold) fold.textContent = `本月尚可 US$${b.month_remaining_usd.toFixed(2)}`;
+  }).catch(() => { $("s-budget").textContent = "—"; });
+}
+
+let scanFxTimer = null;
+function foldScan(on, byHand) {
+  const col = $("scancol");
+  // 寬度過渡只在人手收合／展開的那一下。常駐在 .scancol 上的話，拖曳與鍵盤調寬時
+  // 讀到的是動畫中途的寬度，連按左右鍵的步進會被吃掉（審查實測）。
+  if (byHand) {
+    col.classList.add("fx");
+    clearTimeout(scanFxTimer);
+    scanFxTimer = setTimeout(() => col.classList.remove("fx"), 360);
+  }
+  col.classList.toggle("fold", on);
+  $("pane-scan").classList.toggle("scan-folded", on);
+  $("scanfold").setAttribute("aria-expanded", String(!on));
+  if (byHand) refreshBudget();
+}
+$("scanfold").addEventListener("click", () =>
+  foldScan(!$("scancol").classList.contains("fold"), true));
+foldScan(true);
+
+/* 點擊回饋：從按下的位置擴散一圈漣漪（style.css 的 .rpl）。
+   畫在背景漸層上，不插入節點、也不改元素的定位——不少按鈕與列本身是 sticky 或
+   absolute，塞一個 position:relative 進去會改變它們子元素的定位脈絡。
+   SVG 裡的節點（中庭房間、訊號圖）與地圖不套：它們有自己的互動。
+   區頭（.lgrp）不套：點下去整份清單會重畫，漣漪的那個元素當場就被換掉了。 */
+const RIPPLE = "button:not(:disabled), .item, .dbrow, .dbitem, .rail-item";
+const MOTION_OK = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.addEventListener("pointerdown", (e) => {
+  if (!MOTION_OK || e.button !== 0) return;
+  const t = e.target.closest && e.target.closest(RIPPLE);
+  if (!t || t.closest("svg, .leaflet-container")) return;
+  const r = t.getBoundingClientRect();
+  t.style.setProperty("--rx", `${Math.round(e.clientX - r.left)}px`);
+  t.style.setProperty("--ry", `${Math.round(e.clientY - r.top)}px`);
+  // 剛展開那一區的列還掛著 .fresh：漣漪的 animation 有 !important，會蓋掉淡入，
+  // 漣漪結束後淡入從頭重播——整列閃一下（審查實測）。按下的那一刻就讓淡入收尾。
+  t.classList.remove("fresh");
+  t.classList.remove("rpl");
+  void t.offsetWidth;                 // 移掉再加回來，連點才會每次重播
+  t.classList.add("rpl");
+}, { capture: true, passive: true });
+document.addEventListener("animationend", (e) => {
+  if (e.animationName === "rpl") e.target.classList.remove("rpl");
+  // 淡入播完就拿掉 .fresh：之後的按壓、漣漪都不會再讓它重播。
+  if (e.animationName === "item-in") e.target.classList.remove("fresh");
+}, true);
+
 window.SW = { api, post, $, esc, nf, state, openDossier, TYPE, drawMarkers, refresh,
   timelineDock, showPane, fitNTPC, makeGrip, setCap, flyToDistrict, mapBottomPad,
+  refreshBudget,
   // 助理設了 state.agentIds 之後，地圖與清單都要重畫。少匯出這一支的後果是
   // 地圖篩了、清單沒動——畫面上列出來的不是助理剛才講的那幾筆。
   drawList };

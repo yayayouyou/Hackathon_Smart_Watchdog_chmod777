@@ -391,9 +391,18 @@
              並排而不是上下，因為兩邊都是這間房的主體——一邊看手上有什麼，
              一邊決定要不要花錢再找。右欄頂端常駐剩餘額度。 -->
         <div class="socialwrap" id="socialwrap">載入中…</div>
-        <div class="scancol">
-          <div class="scancol-head">主動掃描（付費管道）
-            <span id="scanfold-budget">—</span></div>
+        <!-- 兩欄之間的分隔條：拖曳調整右欄寬度（鍵盤左右鍵也可以）。
+             右欄收合時藏起來——一條 46px 的直條沒有寬度可以分配。 -->
+        <div class="vgrip scangrip" id="scangrip" role="separator" aria-orientation="vertical"
+             aria-label="調整主動掃描欄寬度" tabindex="0"></div>
+        <!-- 主動掃描預設收合：這間房的主體是左邊已經收到的聲音（免費）；
+             要花錢再找是少數時候的決定，展開才佔版面。收合時額度仍然看得到。 -->
+        <div class="scancol fold" id="scancol">
+          <button type="button" class="scancol-head" id="scanfold"
+                  aria-expanded="false" aria-controls="scanwrap">
+            <i class="scanchev" aria-hidden="true"></i>
+            <span class="scantitle">主動掃描（付費管道）</span>
+            <span id="scanfold-budget">—</span></button>
           <div class="scanwrap" id="scanwrap">載入中…</div>
         </div>
       </div>

@@ -38,6 +38,148 @@
     $("authwrap").hidden = true;
   }
 
+  /* ── 登入成功 → 主畫面：光圈轉場 ─────────────────────────────
+   *
+   * 照 MaiCoin frontend-pixel 的傳送光圈（src/game/render.ts::drawIris）：圓外全部
+   * 塗滿、圓的邊緣一圈 8px 點陣色環加一道細線。先「收合」到 0，全黑那一格才
+   * 真的換畫面，再「張開」——看不到瞬間切換的突兀，也不會有登入層與中庭同時
+   * 疊在一起的那一格。
+   *
+   * 時間照原作：收合 0.26 秒（不擋路），張開用原作開場的 0.55 秒——這是看到
+   * 主畫面的第一眼，跟換房不是同一件事。線性，跟原作一樣。
+   *
+   * ⚠️ 只在「按下登入且成功」時播。開頁時 /api/auth/me 已經登入的那條路
+   * （check()）直接 hide()——不然每次重新整理都要看一次開場。
+   * prefers-reduced-motion 時直接切換。 */
+  const IRIS_OUT = 260;
+  const IRIS_IN = 550;
+
+  function irisCanvas() {
+    const c = document.createElement("canvas");
+    c.id = "irisfx";
+    c.setAttribute("aria-hidden", "true");
+    // inline：這一層只活不到一秒，而且蓋在登入層（9000）之上。
+    Object.assign(c.style, {
+      position: "fixed", inset: "0", width: "100vw", height: "100vh",
+      zIndex: "9500", pointerEvents: "none",
+    });
+    document.body.appendChild(c);
+    return c;
+  }
+
+  /* 點陣色環的 2×2 棋盤圖樣。原作是像素風，逐像素畫在大半徑時每幀要跑幾十萬次，
+     pattern 是 O(1)。格子依 devicePixelRatio 放大，高解析螢幕上點才看得到。 */
+  function checker(ctx, color, cell) {
+    const tile = document.createElement("canvas");
+    tile.width = tile.height = cell * 2;
+    const g = tile.getContext("2d");
+    g.fillStyle = color;
+    g.fillRect(0, 0, cell, cell);
+    g.fillRect(cell, cell, cell, cell);
+    return ctx.createPattern(tile, "repeat");
+  }
+
+  function drawIris(ctx, w, h, r, dpr, ink, accent, pattern) {
+    const cx = w / 2;
+    const cy = h / 2;
+    ctx.clearRect(0, 0, w, h);
+    // 矩形＋反向圓弧：一條路徑就取到「圓的外部」，比先塗滿再挖洞快。
+    ctx.fillStyle = ink;
+    ctx.beginPath();
+    ctx.rect(0, 0, w, h);
+    ctx.arc(cx, cy, Math.max(0, r), 0, Math.PI * 2, true);
+    ctx.fill();
+    if (r <= 0) return;
+    ctx.globalAlpha = 0.85;
+    ctx.fillStyle = pattern;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r + 8 * dpr, 0, Math.PI * 2);
+    ctx.arc(cx, cy, r, 0, Math.PI * 2, true);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = accent;
+    ctx.lineWidth = dpr;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  function irisSwap(swap) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      swap();
+      return Promise.resolve();
+    }
+    return new Promise((resolve) => {
+      const c = irisCanvas();
+      const ctx = c.getContext("2d");
+      const root = getComputedStyle(document.documentElement);
+      const ink = root.getPropertyValue("--ink").trim() || "#14202A";
+      const accent = root.getPropertyValue("--seal").trim() || "#B23A2F";
+      let dpr = 0;
+      let w = 0;
+      let h = 0;
+      let maxR = 0;
+      let pattern = null;
+      /* 位元圖尺寸跟著視窗走。CSS 尺寸是 100vw／100vh，只在開始時量一次的話，
+         轉場中途縮放視窗會把固定的位元圖拉成橢圓（審查實測）。每一幀比一次，
+         變了才重設——重設會清空畫布狀態，點陣圖樣也要跟著重建。 */
+      const fit = () => {
+        const d = window.devicePixelRatio || 1;
+        const nw = Math.round(window.innerWidth * d);
+        const nh = Math.round(window.innerHeight * d);
+        if (d === dpr && nw === w && nh === h) return;
+        dpr = d;
+        w = c.width = nw;
+        h = c.height = nh;
+        pattern = checker(ctx, accent, Math.max(1, Math.round(dpr)));
+        // 光圈全開：蓋滿整個畫面的對角線一半（原作 irisMaxRadius）。
+        maxR = Math.hypot(w, h) / 2 + 10 * dpr;
+      };
+      fit();
+
+      let swapped = false;
+      let finished = false;
+      const runSwap = () => {
+        if (swapped) return;
+        swapped = true;
+        // 換畫面丟例外的話，光圈照樣要收掉——一片不會消失的黑幕比什麼都糟。
+        try { swap(); } catch (err) { console.error(err); }
+      };
+      const finish = () => {
+        if (finished) return;
+        finished = true;
+        clearTimeout(bail);
+        runSwap();
+        c.remove();
+        resolve();
+      };
+      // 背景分頁時 requestAnimationFrame 會暫停；保險起見 2.5 秒一定收掉。
+      const bail = setTimeout(finish, 2500);
+
+      let phase = "out";
+      let t0 = performance.now();
+      const frame = (now) => {
+        if (finished) return;
+        fit();
+        const k = Math.min(1, (now - t0) / (phase === "out" ? IRIS_OUT : IRIS_IN));
+        if (phase === "out") {
+          drawIris(ctx, w, h, maxR * (1 - k), dpr, ink, accent, pattern);
+          if (k >= 1) {
+            runSwap();             // 全黑的這一格才換畫面
+            phase = "in";
+            t0 = now;
+          }
+          requestAnimationFrame(frame);
+          return;
+        }
+        drawIris(ctx, w, h, maxR * k, dpr, ink, accent, pattern);
+        if (k < 1) { requestAnimationFrame(frame); return; }
+        finish();
+      };
+      requestAnimationFrame(frame);
+    });
+  }
+
   /* 連不上時要講出來，不能留一片空白。
      第一版在 check() 的 catch 裡什麼都不做，理由是「地圖與名單都是靜態 payload，
      仍然可看」——那是 dist/ 靜態版的年代。現在資料一律走 /api，而 sw.js 刻意不
@@ -115,8 +257,8 @@
         return;
       }
       me = await response.json();
-      hide();
-      paint();
+      // 光圈收到全黑那一格才換畫面。開頁時已登入（check()）不走這條。
+      await irisSwap(() => { hide(); paint(); });
     } catch (e) {
       err.textContent = `連線失敗：${e.message}`;
     } finally {

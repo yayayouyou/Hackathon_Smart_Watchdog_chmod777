@@ -330,6 +330,9 @@ function watch() {
     if (!["queued", "running"].includes(scan.job.state)) {
       clearInterval(scan.poll);
       estimate();                       // 花完錢要立刻反映在剩餘額度上
+      // estimate() 只更新展開後才看得到的預算條。收合列上的「本月尚可」與表頭的
+      // 花費是另一處（app.js::refreshBudget），而欄位預設收合時那是唯一看得見的額度。
+      if (S.refreshBudget) S.refreshBudget();
     }
   }, 1500);
 }

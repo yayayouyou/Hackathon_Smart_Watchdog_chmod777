@@ -854,7 +854,7 @@ button:not(:disabled):active,.dbitem:active,.rail-item:active{scale:.96}
   .item:active,.dbrow:active{scale:none}
   .rpl{animation:none !important;background-image:none !important}
   #list .item.fresh{animation:none}
-  .scancol,.scanchev{transition:none}
+  .scancol.fx,.scanchev{transition:none}
 }
 
 /* 收合：只留一條直排標題。用寬度而不是 display:none——對話留在 DOM 裡，
@@ -1383,10 +1383,17 @@ button:not(:disabled):active,.dbitem:active,.rail-item:active{scale:.96}
 #pane-scan>.socialwrap{flex:1 1 56%;min-width:0;min-height:0;overflow-y:auto;
   border-right:1px solid var(--rule);border-bottom:0}
 /* 右欄寬度由分隔條決定（--scanw，寫在 main 上）；左欄吃剩下的。 */
-#pane-scan>.socialwrap{flex:1 1 auto}
-.scancol{flex:0 0 var(--scanw,44%);min-width:0;min-height:0;display:flex;
-  flex-direction:column;transition:flex-basis .3s cubic-bezier(.2,.8,.2,1)}
-body.resizing .scancol{transition:none}
+/* ⚠️ 寬度在 CSS 夾限，不只在拖曳當下夾：助理欄拉寬或視窗變窄之後，px 寬度會原封
+   不動，把左邊的社群聲音擠到 29px 並溢出（審查實測）。min() 讓右欄最多吃到
+   「pane 寬減 326px」（左欄 320＋分隔條 6）。
+   ⚠️ 左欄的基準必須是 0 不是 auto：auto 會照內容撐寬，把右欄擠到 40px、pane 溢出，
+   鍵盤調寬時寬度還會不增反減（實測）。右欄不縮，寬度完全由上面那個 min() 決定。 */
+#pane-scan>.socialwrap{flex:1 1 0;min-width:260px}
+.scancol{flex:0 0 min(var(--scanw,44%), calc(100% - 326px));min-width:0;min-height:0;
+  display:flex;flex-direction:column}
+/* 寬度過渡只在收合／展開那一下（app.js::foldScan 加 .fx）。常駐的話，鍵盤調寬時
+   讀到的是動畫中途的寬度，連按左右鍵的步進會被吃掉。 */
+.scancol.fx{transition:flex-basis .3s cubic-bezier(.2,.8,.2,1)}
 .scangrip{flex:0 0 6px;align-self:stretch}
 .scancol-head{flex:0 0 auto;padding:9px 14px;font-size:16px;background:var(--sunk);
   border-bottom:1px solid var(--rule);display:flex;align-items:baseline;gap:8px}
@@ -1404,7 +1411,10 @@ button.scancol-head:hover{background:color-mix(in srgb, var(--fam-core) 9%, var(
 .scancol.fold>.scanwrap{display:none}
 .scancol.fold>.scancol-head{flex:1 1 auto;flex-direction:column;align-items:center;
   gap:12px;padding:12px 0;border-bottom:0}
-.scancol.fold .scanchev{transform:rotate(180deg)}
+.scancol.fold .scanchev{transform:rotate(180deg);order:-2}
+/* 額度排在標題前面：矮視窗放不下整條直排時，被裁掉的是標題，不是金額——收合時
+   額度是唯一看得見的成本訊號（審查實測：視窗低於約 540px 時金額被整段裁掉）。 */
+.scancol.fold #scanfold-budget{order:-1}
 .scancol.fold .scantitle,.scancol.fold #scanfold-budget{writing-mode:vertical-rl;
   letter-spacing:.2em;white-space:nowrap;margin-left:0}
 .scan-folded>.scangrip{display:none}
@@ -1423,6 +1433,9 @@ button.scancol-head:hover{background:color-mix(in srgb, var(--fam-core) 9%, var(
   .scancol.fold>.scancol-head{flex-direction:row;padding:10px 14px}
   .scancol.fold .scantitle,.scancol.fold #scanfold-budget{writing-mode:horizontal-tb;
     letter-spacing:0}
+  /* 橫列時箭頭朝右 ▶（可展開）、額度靠右，順序回到標題在前。 */
+  .scancol.fold .scanchev{transform:none;order:0}
+  .scancol.fold #scanfold-budget{margin-left:auto;order:0}
 }
 
 /* ── 輿情室：兩欄的視覺區分 ────────────────────────────────

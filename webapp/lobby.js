@@ -63,6 +63,8 @@
   ];
 
   const state = { where: "lobby", busy: false, dogX: 720, dogY: 560, room: null };
+  // 換房動畫的收尾計時器（switchRoom）。連點兩間時要清掉上一個。
+  let swapTimer = null;
   const cssv = (n) => getComputedStyle(document.documentElement)
     .getPropertyValue(n).trim();
 
@@ -648,36 +650,104 @@
     return goto_(r.pane);
   }
 
+  /* 室與室之間的切換（不經過中庭）。樓層索引與助理共用這一條——各寫一份的話，
+   * 其中一份遲早會忘了換室頭或樓層索引，或忘了播動畫。
+   *
+   * 方向跟著樓層索引走：往下一間，內容由下往上滑進來；往上一間則相反——跟索引
+   * 上那塊色塊滑動的方向一致，眼睛才讀得出「往下走了一格」。只動室頭、地圖與
+   * 清單那兩欄，**助理欄不動**：換房時助理的對話沒有換，它跟著動會讓人以為
+   * 對話被重置了。
+   *
+   * `refit`：樓層索引是人手動換房，照原本的做法重算地圖視野；助理換房**不可以**
+   * 重算——它常常接著飛到某一區，重算會在 40ms 後把飛行拉回全市（見 showRoom）。
+   * 完成回呼在換裝後立刻呼叫，不等動畫：動畫是給眼睛看的，助理接著做的事不必
+   * 等 0.3 秒。 */
+  function switchRoom(r, done, refit) {
+    const from = state.room;
+    const dir = from && ROOMS.indexOf(r) < ROOMS.indexOf(from) ? "up" : "down";
+    state.room = r;
+    setRail(r, true);
+    dressRoom(r);
+    if (window.SW && window.SW.showPane) window.SW.showPane(r.pane);
+    const wrap = document.querySelector(".roomwrap");
+    if (wrap && !reduced) {
+      wrap.classList.remove("rs-up", "rs-down");
+      void wrap.offsetWidth;            // 移掉再加回來，動畫才會重播
+      wrap.classList.add("rs-" + dir);
+      clearTimeout(swapTimer);
+      swapTimer = setTimeout(() => wrap.classList.remove("rs-up", "rs-down"), 480);
+    }
+    if (refit && r.map && window.SW && window.SW.state && window.SW.state.map) {
+      setTimeout(() => {
+        window.SW.state.map.invalidateSize();
+        if (window.SW.fitNTPC) window.SW.fitNTPC();
+      }, 40);
+    }
+    if (done) done();
+  }
+
   /* ── 左側樓層索引 ──────────────────────────────────── */
-  function setRail(current) {
+  /* 「目前所在」是一塊獨立的色塊（.rail-ind），不是按鈕自己的底色。按鈕每次都
+     重建；色塊留著不重建，換房時它才滑得過去——重建的話每次都從無到有，
+     看不出「從哪一間換到哪一間」。 */
+  function setRail(current, animate) {
     const list = $("rail-list");
     if (!list) return;
-    list.textContent = "";
-    ROOMS.forEach((r) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "rail-item";
-      if (r.id === current.id) b.setAttribute("aria-current", "true");
-      // 每一列掛上該室的顏色，樓層索引與中庭平面圖用同一組色。
-      b.style.setProperty("--rc", cssv(r.accent));
-      // 統計數字拿掉了：五個不同單位的數字（園數、份數、則數、倍數）排在
-      // 同一欄互相沒有可比性，只是把索引變吵。真正的數字在各室的室頭。
-      b.innerHTML = `<span class="rail-no">${r.no}</span>${r.name}`;
-      b.addEventListener("click", () => {
-        if (r.id === current.id) return;
-        state.room = r;
-        setRail(r);
-        dressRoom(r);
-        if (window.SW && window.SW.showPane) window.SW.showPane(r.pane);
-        if (r.map && window.SW && window.SW.state.map) {
-          setTimeout(() => {
-            window.SW.state.map.invalidateSize();
-            if (window.SW.fitNTPC) window.SW.fitNTPC();
-          }, 40);
-        }
+    /* 按鈕只建一次，換房時只切換 aria-current。
+       ⚠️ 原本每次換房都重建按鈕：按下時加上的漣漪與 :active 會跟著舊節點一起被
+       刪掉（審查實測：漣漪只跑兩成就消失），同一顆按鈕的回饋時有時無。 */
+    if (!list.querySelector(".rail-item")) {
+      const ind = document.createElement("span");
+      ind.className = "rail-ind";
+      ind.setAttribute("aria-hidden", "true");
+      list.appendChild(ind);
+      ROOMS.forEach((r) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "rail-item";
+        b.dataset.room = r.id;
+        // 每一列掛上該室的顏色，樓層索引與中庭平面圖用同一組色。
+        b.style.setProperty("--rc", cssv(r.accent));
+        // 統計數字拿掉了：五個不同單位的數字（園數、份數、則數、倍數）排在
+        // 同一欄互相沒有可比性，只是把索引變吵。真正的數字在各室的室頭。
+        b.innerHTML = `<span class="rail-no">${r.no}</span>${r.name}`;
+        b.addEventListener("click", () => {
+          if (state.room && state.room.id === r.id) return;
+          switchRoom(r, null, true);
+        });
+        list.appendChild(b);
       });
-      list.appendChild(b);
+      /* ⚠️ 索引寬度會變：拖 #railgrip、鍵盤調、視窗跨過 860px、字型晚載入。
+         室名換行時每一列變高，色塊只在換房時量一次的話會停在錯的那一列、
+         指錯房間（審查實測：拖到 132px 後色塊蓋在 03，目前所在是 04）。
+         尺寸一變就不滑動地重量。 */
+      if (window.ResizeObserver) {
+        new ResizeObserver(() => placeRailInd(false)).observe(list);
+      }
+    }
+    list.querySelectorAll(".rail-item").forEach((b) => {
+      if (b.dataset.room === current.id) b.setAttribute("aria-current", "true");
+      else b.removeAttribute("aria-current");
     });
+    // 從中庭進房的第一次定位不要滑（從 0 滑下來沒有意義），之後換房才滑。
+    placeRailInd(animate);
+  }
+
+  /* 把色塊移到目前所在那一列。`animate` 為假時不滑：第一次定位、尺寸改變。 */
+  function placeRailInd(animate) {
+    const list = $("rail-list");
+    const ind = list && list.querySelector(".rail-ind");
+    const cur = list && list.querySelector('.rail-item[aria-current="true"]');
+    if (!ind || !cur) return;
+    const still = !animate || reduced;
+    if (still) ind.style.transition = "none";
+    ind.style.setProperty("--rc", cur.style.getPropertyValue("--rc"));
+    ind.style.transform = `translateY(${cur.offsetTop}px)`;
+    ind.style.height = `${cur.offsetHeight}px`;
+    if (still) {
+      void ind.offsetWidth;
+      ind.style.transition = "";
+    }
   }
 
   /* ── 身分 ─────────────────────────────────────────── */
@@ -778,8 +848,7 @@
     if (state.where === "lobby") { enter(r.id, done); return true; }
     if (state.busy) return false;
     if (state.room && state.room.id === r.id) { if (done) done(); return true; }
-    state.room = r;
-    showRoom(r, false, done);
+    switchRoom(r, done, false);
     return true;
   }
 
