@@ -61,15 +61,37 @@
   const num = (v) => (v === null || v === undefined ? "—" : v.toFixed(2) + "×");
 
   // 訊號來自哪一個來源。id 對得上 build_signal_map.py 的 sources()。
+  // 交叉比對的三份來源順序就是左側色條由上到下的順序：頁級抽取（藍）刻意放中間。
+  // 收費（粉）與主檔（橙）緊貼時一般視覺 ΔE 只有 12.9，低於 15 的門檻；
+  // 隔一段藍，相鄰的兩對都過。
+  const CROSS = ["fees", "pagewise", "registry"];
   const FEEDS = {
     prior_penalty: ["penalties"], prior_penalty_3plus: ["penalties"],
     prior_severe: ["penalties"], eval_partial: ["evaluation"],
     has_mention: ["mentions"], comp_fail: ["pagewise"],
-    cross_fail: ["pagewise", "fees", "registry"],
+    cross_fail: CROSS,
     new_school: ["registry"], has_shuttle: ["vehicles"],
   };
-  const feedsOf = (id) => FEEDS[id] || (id.startsWith("x:")
-    ? ["pagewise", "fees", "registry"] : ["registry"]);
+  const feedsOf = (id) => FEEDS[id] || (id.startsWith("x:") ? CROSS : ["registry"]);
+
+  /* 來源的顏色。**只有真的餵進某個訊號的來源才有色**，依畫面由上到下的順序
+     取 style.css 的 --sm-s1 ~ --sm-s7（dataviz 類別色前七格，驗證器實跑過）。
+     沒有餵任何訊號的來源保持空心灰點並標「未接入訊號」：硬給 11 種顏色會混在
+     一起分不出來，而且灰色本身就是這張圖要講的話——這份資料有，但還沒拿去算。 */
+  const SRC_SLOTS = 7;
+  function sourceColors(sources, signals) {
+    const used = new Set();
+    signals.forEach((sig) => feedsOf(sig.id).forEach((sid) => used.add(sid)));
+    const map = {};
+    let slot = 0;
+    sources.forEach((src) => {
+      if (used.has(src.id) && slot < SRC_SLOTS) {
+        slot += 1;
+        map[src.id] = "var(--sm-s" + slot + ")";
+      }
+    });
+    return map;
+  }
 
   const clip = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
 
@@ -78,10 +100,10 @@
        訊號名  241px（交叉比對：家長月均實繳 ≤ 登記月費）
        訊號值   60px（無法量測）
        中心     156px（2 × CORE_R）
-     SRC_OUT(34+228+12) + 間隙 44 + PILL(12+241+16+60+12) + 間隙 72 + 156 + 14
+     SRC_OUT(34+228+12) + 間隙 44 + PILL(20+241+16+60+12) + 間隙 72 + 156 + 14
      窄於這個寬度時才會出現橫向捲動——而那是資訊被截斷的替代方案裡最誠實的
      一個：捲得到，總比把字裁掉好。 */
-  const MIN_W = 901;
+  const MIN_W = 909;
 
   function draw() {
     const host = $("sm-canvas");
@@ -107,7 +129,7 @@
     const SRC_X = 16;                                  // 來源圓點
     const SRC_TEXT = SRC_X + 16;
     const SRC_OUT = 274 + Math.round(grow * 0.30);      // 連線從這裡出發
-    const PILL_W = 341 + Math.round(grow * 0.42);
+    const PILL_W = 349 + Math.round(grow * 0.42);
     const PILL_X = SRC_OUT + 44;
     const CORE_R = Math.max(78, Math.min(96, Math.round(H / 7)));
     const CORE_X = W - CORE_R - 14;
@@ -125,6 +147,7 @@
     const sigs = lay(state.data.signals, PILL_H);
     const srcs = lay(state.data.sources, 0);
     const byId = Object.fromEntries(srcs.map((s) => [s.id, s]));
+    const color = sourceColors(state.data.sources, state.data.signals);
 
     // 來源 → 訊號。這一段一律畫：那些資料我們都有。
     sigs.forEach((s) => {
@@ -133,7 +156,9 @@
         if (!src) return;
         const mx = (SRC_OUT + PILL_X) / 2;
         el("path", { d: `M${SRC_OUT} ${src.y} C${mx} ${src.y} ${mx} ${s.y} `
-          + `${PILL_X} ${s.y}`, class: "sm-feed", fill: "none" }, links);
+          + `${PILL_X} ${s.y}`, class: "sm-feed", fill: "none",
+          style: color[sid] ? "stroke:" + color[sid] : null,
+          "data-src": sid, "data-sig": s.id }, links);
       });
     });
 
@@ -168,11 +193,14 @@
     srcs.forEach((s) => {
       const g = el("g", { class: "sm-node sm-src", "data-kind": "source",
         "data-id": s.id, tabindex: "0", role: "button" }, nodes);
-      el("circle", { cx: SRC_X, cy: s.y, r: 6, class: "sm-dot" }, g);
+      el("circle", { cx: SRC_X, cy: s.y, r: 7,
+        class: "sm-dot" + (color[s.id] ? "" : " sm-dot-idle"),
+        style: color[s.id] ? "fill:" + color[s.id] : null }, g);
       const a = el("text", { x: SRC_TEXT, y: s.y - 3, class: "sm-src-name" }, g);
       a.textContent = clip(s.name, 13);
       const b = el("text", { x: SRC_TEXT, y: s.y + 15, class: "sm-src-n" }, g);
-      b.textContent = (s.count || 0).toLocaleString("en-US") + " " + (s.unit || "");
+      b.textContent = (s.count || 0).toLocaleString("en-US") + " " + (s.unit || "")
+        + (color[s.id] ? "" : "・未接入訊號");
     });
 
     // 訊號
@@ -183,13 +211,46 @@
         "data-id": s.id, tabindex: "0", role: "button" }, nodes);
       el("rect", { x: PILL_X, y: s.y - PILL_H / 2, width: PILL_W, height: PILL_H,
         rx: 8, class: "sm-box" }, g);
-      const a = el("text", { x: PILL_X + 12, y: s.y + 6, class: "sm-sig-name" }, g);
+      // 左側色條：這個訊號吃哪幾份資料，一眼看得出來，不必沿著線找。
+      const feeds = feedsOf(s.id).filter((sid) => byId[sid]);
+      const segH = (PILL_H - 8) / Math.max(1, feeds.length);
+      feeds.forEach((sid, i) => {
+        el("rect", { x: PILL_X + 6, y: s.y - PILL_H / 2 + 4 + i * segH, width: 6,
+          height: Math.max(3, segH - 2), rx: 2, class: "sm-stripe",
+          style: "fill:" + (color[sid] || "var(--ink-4)") }, g);
+      });
+      const a = el("text", { x: PILL_X + 20, y: s.y + 6, class: "sm-sig-name" }, g);
       a.textContent = clip(s.label, 15);
       const b = el("text", { x: PILL_X + PILL_W - 12, y: s.y + 6,
         class: "sm-sig-n", "text-anchor": "end" }, g);
       b.textContent = st.lift ? num(st.lift) : v.zh;
     });
 
+    if (state.sel) focus(state.sel.kind, state.sel.id);
+  }
+
+  /* 聚焦：滑過或點選一個來源，只亮它餵的線與訊號；滑過一個訊號，只亮餵它的
+     線與來源。其餘退到背景（style.css 的 .sm-focus）。比對用 dataset 逐一比，
+     不組 CSS 選擇器——訊號 id 裡有空白、等號與「≤」。 */
+  function focus(kind, id) {
+    const svg = document.querySelector("#sm-canvas .smsvg");
+    if (!svg) return;
+    svg.querySelectorAll(".hl").forEach((n) => n.classList.remove("hl"));
+    if (!kind) { svg.classList.remove("sm-focus"); return; }
+    svg.classList.add("sm-focus");
+    const mine = kind === "source" ? "src" : "sig";
+    const other = kind === "source" ? "sig" : "src";
+    const otherKind = kind === "source" ? "signal" : "source";
+    const linked = new Set();
+    svg.querySelectorAll(".sm-feed").forEach((p) => {
+      if (p.dataset[mine] === id) { p.classList.add("hl"); linked.add(p.dataset[other]); }
+    });
+    svg.querySelectorAll(".sm-node").forEach((n) => {
+      if ((n.dataset.kind === kind && n.dataset.id === id)
+          || (n.dataset.kind === otherKind && linked.has(n.dataset.id))) {
+        n.classList.add("hl");
+      }
+    });
   }
 
   function onPick(e) {
@@ -199,6 +260,7 @@
     state.sel = { kind: n.dataset.kind, id: n.dataset.id };
     document.querySelectorAll(".sm-node").forEach((x) =>
       x.classList.toggle("on", x === n));
+    focus(state.sel.kind, state.sel.id);
     detail();
   }
 
@@ -383,6 +445,14 @@
     const host = $("sm-canvas");
     if (!host) return;
     host.addEventListener("click", onPick);
+    host.addEventListener("mouseover", (e) => {
+      const n = e.target.closest(".sm-node");
+      if (n) focus(n.dataset.kind, n.dataset.id);
+      else focus(state.sel ? state.sel.kind : null, state.sel ? state.sel.id : null);
+    });
+    host.addEventListener("mouseleave", () => {
+      focus(state.sel ? state.sel.kind : null, state.sel ? state.sel.id : null);
+    });
     host.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") onPick(e);
     });
