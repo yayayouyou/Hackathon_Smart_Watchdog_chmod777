@@ -751,7 +751,6 @@
     ROOMS[3].unit = ""; ROOMS[4].unit = "份";
     drawPlan(counts);
     paintWho();
-    bindLobbyWho();
     $("plan").addEventListener("pointermove", onPointerMove);
     const b = $("rail-back");
     if (b) b.addEventListener("click", back);
@@ -783,6 +782,18 @@
     showRoom(r, false, done);
     return true;
   }
+
+  /* 身分鈕的開關在模組載入時就綁，**不等 start()**。
+   *
+   * start() 要等 /api/payload、地圖初始化、清單刷新全部完成才會被 app.js 呼叫，
+   * 實測在 CloudFront 上是載入後約 2.8 秒。可是身分鈕是登入當下就由 auth.js →
+   * paintWho() 變成可見的（實測登入完成後 4ms）。原本綁定寫在 start() 裡，於是
+   * 中間有一段「按鈕看得到、按下去卻什麼都不會發生」的空窗——快速登入完馬上
+   * 點身分卡，就打不開、也登不出去，而且不會有任何錯誤訊息。網路越慢空窗越長。
+   *
+   * 這一支只用到 #lbwho 與 #lbwhopop，兩個都是 index.html 的靜態元素，而這支
+   * 腳本在 </body> 前最後載入，所以此時一定已經在 DOM 裡。 */
+  bindLobbyWho();
 
   window.Lobby = { start, enter, go, back, paintWho, goto: goto_,
     get where() { return state.where; } };

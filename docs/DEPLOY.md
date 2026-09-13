@@ -238,3 +238,35 @@ Bedrock 連不上時，誠實說明，然後把重心切到**不需要即時 LLM
 
 本機先驗再推：`docker run -p 8090:8080 --env-file .env -e DATABASE_URL= watchdog:new`，
 確認 `/api/dataroom/overview`、`/api/auth/options` 都是 200，才推 ECR。
+
+## 十、HTTPS：CloudFront 放在 ALB 前面（不需要網域）
+
+ACM 的憑證要綁自己的網域，workshop 帳號沒有。**CloudFront 自帶
+`*.cloudfront.net` 的憑證**，所以直接在 ALB 前面加一層就有 HTTPS，
+ALB、服務、HTTP 網址都不必動——建失敗也不影響原本的入口。
+
+| 設定 | 值 | 為什麼 |
+|---|---|---|
+| Origin | ALB 的 DNS，`http-only`，port 80 | ALB 只開 HTTP |
+| Viewer protocol | `redirect-to-https` | 打 http 會 301 到 https |
+| Allowed methods | 全部七種 | 登入、助理都是 POST |
+| Cache policy | `Managed-CachingDisabled` | **一定要關**。預設會快取，最糟是 A 的 `/api/auth/me` 被回給 B |
+| Origin request policy | `Managed-AllViewer` | cookie、header、查詢字串全部轉送，登入才會成立 |
+| Origin read timeout | 60 秒（不申請配額的上限） | 助理是 SSE 串流；每步上限 10 秒，留足餘裕 |
+| Compress | 關 | 避免任何可能緩衝串流的處理 |
+
+政策 ID 不要寫死，用名稱查：
+`aws cloudfront list-cache-policies --type managed` 找 `Managed-CachingDisabled`，
+`list-origin-request-policies` 找 `Managed-AllViewer`。
+
+兩個踩到的坑：
+
+1. **`CachedMethods` 要放在 `AllowedMethods` 底下**，不是跟它同一層；放錯會在
+   CLI 參數檢查就被擋，什麼都不會建。
+2. **狀態還是 `InProgress` 時通常就已經能連**，正式標成 `Deployed` 要再等幾分鐘。
+
+驗證方式：同一個網址連打兩次，`x-cache` 都要是 `Miss from cloudfront`
+（代表沒快取）；登入回應要看得到 `set-cookie`。
+
+`COOKIE_SECURE` 維持 `false`：HTTP 網址還開著，設成 true 的話從 HTTP 那邊會
+登不進去。等確定只用 HTTPS、並把 ALB 限縮成只收 CloudFront 之後再改。

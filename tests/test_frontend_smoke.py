@@ -1450,3 +1450,23 @@ def test_the_board_does_not_print_the_nan_string() -> None:
     """
     src = (WEBAPP / "districts.js").read_text(encoding="utf-8")
     assert '"nan"' in src, "沒有擋 nan 字串"
+
+
+def test_the_lobby_identity_button_does_not_wait_for_data_to_become_clickable() -> None:
+    """中庭身分鈕的點擊綁定不可以放在 `Lobby.start()` 裡。
+
+    `start()` 要等 /api/payload、地圖初始化、清單刷新全部完成才被呼叫（CloudFront
+    上實測約 2.8 秒），而身分鈕在登入當下就被 `auth.js → paintWho()` 變成可見
+    （實測登入完成後 4ms）。綁定寫在 `start()` 裡的時候，中間有一段「按鈕看得到、
+    按下去沒反應」的空窗：快速登入完馬上點身分卡，打不開、登不出去，也沒有錯誤。
+
+    它在本機與剛部署完的時候都測得過（網路快、空窗短），走 CDN 才穩定重現——
+    所以這條用靜態規則守，不靠時機。
+    """
+    src = _code((WEBAPP / "lobby.js").read_text(encoding="utf-8"))
+    start_at = src.index("function start(")
+    start_body = src[start_at:src.index("\n  }\n", start_at)]
+    assert "bindLobbyWho();" not in start_body, (
+        "身分鈕的綁定仍在 start() 裡，登入後到資料載完之間按不動"
+    )
+    assert re.search(r"\bbindLobbyWho\(\);", src), "身分鈕的開關完全沒有被綁定"
