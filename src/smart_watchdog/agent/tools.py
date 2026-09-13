@@ -949,7 +949,7 @@ def _prepare_upload(_ctx: ToolContext, _a: NoArgs) -> ToolOutcome:
             "pending": [{"report": r["id"], "institution": r["short_name"],
                          "academic_year": r["academic_year"], "year_kind": "學年度"}
                         for r in pend],
-            "how": ["對話框左邊的「+」附加 PDF，再說要放進文件控管室",
+            "how": ["輸入框上方的「+ 上傳檔案」附加 PDF，再說要放進文件控管室",
                     "或在文件控管室「原始資料」層按「選擇 PDF」"],
             "rules": ["只接受 PDF，檔名不限",
                       "庫裡已有的原件會認出來直接入庫；新的報告會自動抽取，一份約 2–3 分鐘"],
