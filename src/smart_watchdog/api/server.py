@@ -40,7 +40,7 @@ from typing import Any, Callable, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
+from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -117,6 +117,18 @@ async def _lifespan(app_: FastAPI):
     except Exception as exc:  # noqa: BLE001
         print(f"⚠️ Threads 輪詢啟動失敗（其餘功能不受影響）：{exc}")
 
+    # Telegram bot（long polling，不需要公開網址）。沒有 token、或設了
+    # TELEGRAM_BOT_POLLING=false 就不啟動並說出原因——同一個 token 只能有一個
+    # 行程在輪詢，跑測試 server 或另一台機器時要關掉。失敗不影響其他功能。
+    try:
+        from ..bots.telegram import start as _start_telegram
+
+        tg = _start_telegram()
+        if not tg.enabled and tg.reason:
+            print(f"ℹ️ Telegram bot 未啟動：{tg.reason}")
+    except Exception as exc:  # noqa: BLE001
+        print(f"⚠️ Telegram bot 啟動失敗（其餘功能不受影響）：{exc}")
+
     if _mcp_app is None:
         yield
     else:
@@ -142,6 +154,7 @@ _state: dict[str, Any] = {"payload": None, "index": {}, "land": None}
 from . import agent as _agent  # noqa: E402
 from . import auth as _auth  # noqa: E402
 from . import dataroom as _dataroom  # noqa: E402
+from . import bot as _bot  # noqa: E402
 from . import dossier as _dossier  # noqa: E402
 from . import evidence as _evidence  # noqa: E402
 from . import explore as _explore  # noqa: E402
@@ -156,6 +169,7 @@ app.include_router(_evidence.router)
 app.include_router(_dossier.router)
 app.include_router(_social.router)
 app.include_router(_dataroom.router)
+app.include_router(_bot.router)
 
 
 # 優先序梯階。**這是唯一定義**：`/api/proposal` 靠它決定挑選順序，
@@ -379,6 +393,8 @@ def health() -> dict:
         # 顯示成「最近沒有人通報」。
         "threads_poller": __import__(
             "smart_watchdog.realtime.mention_poller", fromlist=["status"]).status(),
+        "telegram_bot": __import__(
+            "smart_watchdog.bots.telegram", fromlist=["status"]).status(),
         "payload_loaded": data is not None,
         "payload_path": str(PAYLOAD_PATH),
         "institutions": len((data or {}).get("points", [])),
@@ -480,6 +496,24 @@ class NoCacheStatic(StaticFiles):
 
 if WEBAPP.exists():
     app.mount("/static", NoCacheStatic(directory=str(WEBAPP)), name="static")
+
+    # ── PWA：manifest 與 service worker 必須從根目錄送出 ────────────────
+    # Service worker 的管轄範圍是**它自己所在的路徑**。放在 /static/sw.js 的話
+    # 它只管得到 /static/ 底下——裝得起來、卻攔不到首頁，斷線時首頁照樣白畫面，
+    # 而且這個錯誤不會出現在任何 console 裡。所以兩支都另開根路徑的路由。
+    # `no-cache`：SW 自己被快取住的話，改了快取規則也推不到已經裝好的手機上。
+    @app.get("/sw.js", include_in_schema=False)
+    def service_worker() -> Response:
+        return FileResponse(
+            str(WEBAPP / "sw.js"), media_type="application/javascript",
+            headers={"Cache-Control": "no-cache", "Service-Worker-Allowed": "/"})
+
+    @app.get("/manifest.webmanifest", include_in_schema=False)
+    def web_manifest() -> Response:
+        return FileResponse(
+            str(WEBAPP / "manifest.webmanifest"),
+            media_type="application/manifest+json",
+            headers={"Cache-Control": "no-cache"})
 
     @app.get("/")
     def index() -> Response:

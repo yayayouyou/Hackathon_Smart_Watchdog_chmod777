@@ -1,4 +1,4 @@
-"""六張表：帳號兩張、agent 三張、外部通報一張。
+"""八張表：帳號兩張、agent 三張、外部通報一張、通訊軟體綁定兩張。
 
 搬自 `Eason20050201/hackathon@a0bdada` 的 `backend/app/db/models.py`，但**只取五張**，
 並改了三處讓它能在 SQLite 上跑：
@@ -249,3 +249,51 @@ class ThreadsMention(Base):
     observed_at: Mapped[dt.datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
+
+
+# ── 通訊軟體 bot ─────────────────────────────────────────────────────
+
+
+class ChatLink(Base):
+    """一個聊天室綁到一位使用者。**沒有這一列的聊天室，bot 什麼資料都不給。**
+
+    Telegram／LINE 的 bot 是公開的：任何人搜得到、加得了。派工台有登入，bot 沒有
+    ——所以「誰可以看名單」必須在這裡重新建立一次，而且要跟派工台是同一批帳號。
+    綁定只能由已登入的使用者產生一次性碼（`BindCode`）完成，不接受 bot 端自稱。
+
+    查詢時一律回頭檢查 `User.is_active`：帳號在派工台被停用，聊天室的存取同步失效，
+    不必另外記得去解綁。
+    """
+
+    __tablename__ = "chat_link"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    platform: Mapped[str] = mapped_column(String(16), nullable=False)   # telegram|line
+    chat_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False, index=True)
+    created_at: Mapped[dt.datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+
+    user: Mapped[User] = relationship()
+
+    __table_args__ = (
+        Index("ix_chat_link_platform_chat", "platform", "chat_id", unique=True),
+    )
+
+
+class BindCode(Base):
+    """一次性綁定碼：10 分鐘內有效、只能用一次。
+
+    碼本身就是 Telegram 深層連結的 `start` 參數（`t.me/<bot>?start=<碼>`），所以只能
+    是英數、底線、減號，長度 64 以內——`secrets.token_urlsafe(16)` 剛好符合。
+    """
+
+    __tablename__ = "bind_code"
+
+    code: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False, index=True)
+    platform: Mapped[str] = mapped_column(String(16), nullable=False)
+    expires_at: Mapped[dt.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    used_at: Mapped[Optional[dt.datetime]] = mapped_column(DateTime(timezone=True))
+

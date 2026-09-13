@@ -13,6 +13,18 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/static/style.css">
 <link rel="stylesheet" href="/static/lobby.css">
+<!-- PWA：手機「加入主畫面／安裝」成全螢幕 app。manifest 與 sw.js 由根路徑送出
+     （見 server.py 的說明——放在 /static 底下 SW 會管不到首頁）。
+     iOS Safari 不讀 manifest 的圖示與顯示模式，要各自再宣告一次。
+     不加 viewport-fit=cover：那會讓內容延伸到瀏海底下，得先把安全區留白做完。 -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/static/icons/icon-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="小小守護員">
 </head>
 <body>
 <div class="app" id="app">
@@ -627,5 +639,16 @@
 <script src="/static/memos.js"></script>
 <script src="/static/desk.js"></script>
 <script src="/static/lobby.js"></script>
+<script>
+/* 註冊 PWA service worker。沒有 Vite HMR 要避開，所以開發與正式一律註冊；
+   sw.js 是網路優先，線上時永遠拿新檔，不會把改到一半的 JS 卡在舊版。
+   失敗只記在 console：裝不成 app 不該影響網頁本身。 */
+if ("serviceWorker" in navigator) {
+  addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js", { scope: "/" })
+      .catch((e) => console.warn("[pwa] service worker 註冊失敗", e));
+  });
+}
+</script>
 </body>
 </html>

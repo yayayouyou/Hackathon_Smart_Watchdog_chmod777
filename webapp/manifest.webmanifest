@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "小小守護員 · 稽查派工台",
+  "short_name": "小小守護員",
+  "description": "新北市教保機構建議查核優先序（內部使用，非違法認定）",
+  "lang": "zh-Hant",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#EFF3F5",
+  "theme_color": "#FFFFFF",
+  "categories": ["government", "productivity"],
+  "icons": [
+    { "src": "/static/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/static/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/static/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

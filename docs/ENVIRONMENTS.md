@@ -228,5 +228,110 @@ python run.py check-credentials     # 實際打一次 API，不是只檢查有�
 | `Unable to locate credentials` | `.env` 沒填或沒被讀到 | 確認在專案根目錄，且 key 沒有多餘空白 |
 | `snapshot integrity mismatch` | git 把 CRLF 寫進內容定址快照 | `.gitattributes` 已修；若仍發生，`git rm --cached -r data && git checkout -- data` |
 | `ModuleNotFoundError: fcntl` | 用到舊版程式碼 | 已修（`src/smart_watchdog/filelock.py`），確認是最新版 |
+| Telegram bot 沒反應，`/api/health` 的 `telegram_bot.last_error` 寫 409 | 另一個行程也在用同一個 token 輪詢 | 只留一個；其他地方設 `TELEGRAM_BOT_POLLING=false` |
+| LINE 後台按「驗證」失敗，或傳訊息沒回應 | webhook 不是公開 HTTPS、或 secret 不對（簽章 400） | 走 §6 的通道；確認 `LINE_CHANNEL_SECRET` |
+| `ServiceWorker script evaluation failed` | `sw.js` 執行時丟例外（語法檢查照樣會過） | 看 `tests/test_pwa.py` 的實際執行測試；檔頭說明一律用 `//`，見 §6 |
+| 手機上沒有「安裝／加入主畫面」 | 不是 HTTPS（區網 IP 也不算） | 走 §6 的 cloudflared 通道 |
 
 程式裡的 `bedrock.explain_error()` 會把上面前五種翻成中文並附下一步。
+
+---
+
+## 6. 手機（PWA）
+
+派工台可以裝成手機 app：Android Chrome 會跳「安裝」，iOS Safari 用分享選單的
+「加入主畫面」。安裝後全螢幕開啟、主畫面上是守護犬圖示。
+
+### 6.1 手機要連得到，而且**必須是 HTTPS**
+
+Service worker 只在安全來源執行。`http://127.0.0.1` 在**本機**算安全，但手機連
+`http://192.168.x.x:8000` **不算**——網頁照樣打得開，只是不會出現安裝、也沒有離線殼，
+而且不會有任何錯誤訊息。本機目前沒有通道工具，用 winget 裝 cloudflared：
+
+```powershell
+winget install Cloudflare.cloudflared      # 一次就好
+python run.py serve                        # 照常啟動（127.0.0.1:8000）
+cloudflared tunnel --url http://localhost:8000
+```
+
+cloudflared 會印出一個 `https://<隨機字>.trycloudflare.com`，手機開那個網址即可。
+**LINE webhook 也要 HTTPS，同一條通道可以一起用**（`/api/webhook/line`）。
+注意：快速通道每次重開網址都會變，LINE 後台的 webhook URL 要跟著改；
+要固定網址得登入 Cloudflare 建具名通道。
+
+⚠️ 這個網址是公開的。派工台有登入保護，但**展示結束就關掉 cloudflared**，
+不要讓一份含真實機構的稽查名單長時間掛在公開網址上。
+
+### 6.2 快取了什麼、沒快取什麼
+
+- **快取**：HTML、CSS、JS、Leaflet、圖示——也就是「殼」。斷線時打得開，並顯示離線提示。
+- **絕不快取**：`/api/*` 與 `/mcp`。稽查名單、通報、卷宗一律走網路；手機遺失時裝置上
+  **沒有**任何機構資料。這條由 `tests/test_pwa.py` 釘住。
+- 線上時一律拿新檔（網路優先），改了前端不必叫大家清快取。
+
+### 6.3 兩個踩過的坑
+
+1. **`sw.js` 的說明不能寫在區塊註解裡。** 說明文字裡只要出現「星號＋斜線」（例如把
+   /api/ 加星號寫成粗體），註解就會提早結束，後面的字被當成程式。語法合法、
+   `node --check` 照過，一執行就 ReferenceError，瀏覽器只說「script evaluation failed」，
+   PWA 安靜地註冊不上。MaiCoin 專案的 `frontend-pixel/public/sw.js` 就是這個狀態。
+2. **在 Windows 用無頭 Chrome 驗 PWA，設定檔目錄要放在短路徑。** 快取目錄會再往下疊
+   好幾層雜湊資料夾，超過 260 字元時 Cache Storage 寫入失敗，錯誤訊息卻是
+   「Entry already exists」而快取是空的——看起來像 SW 寫壞了，其實是測試環境的問題。
+   另外無頭 Chrome 的 `--window-size=390` 實際排版寬度是 526px，驗手機版面要用
+   DevTools Protocol 的行動裝置模擬，不能只縮視窗。
+
+---
+
+## 7. Telegram bot（小彩蛋）
+
+`t.me/Little_Guardian_bot`：在手機私訊裡按一下，看**建議查核分布地圖＋待稽核清單**，
+或直接打一句話答詢（與派工台的查詢同一條路，只查不做）。
+
+```
+TELEGRAM_BOT_TOKEN=<BotFather 給的 token>     # 能控制整個 bot，勿外流
+TELEGRAM_BOT_USERNAME=Little_Guardian_bot
+TELEGRAM_DEMO_PASSCODE=<一組暗號>              # 展示用，結束後移除
+```
+
+**展示時只要一步**：手機打開 `https://t.me/Little_Guardian_bot?start=<暗號>`，按「開始」
+就綁到示範稽查員帳號，接著按「🗺 地圖＋待稽核清單」。
+
+三件事要知道：
+
+- **沒綁定的聊天室拿不到任何資料**，群組一律拒絕。bot 是公開搜得到的，而清單是真實
+  機構——登入頁寫著「僅供內部使用」，這道門不能因為換到聊天室就消失。正式的綁定走
+  派工台登入後 `POST /api/bot/telegram/bind-code` 產生的一次性碼（10 分鐘、一次）。
+- **暗號可以重複使用**，所以展示結束請從 `.env` 拿掉或換掉；沒設時這條路不存在。
+- **同一個 token 同時只能有一個行程在輪詢**（long polling，不需要公開網址）。
+  本機跑著 `run.py serve` 時，另開的測試 server 請設 `TELEGRAM_BOT_POLLING=false`，
+  否則兩邊都會拿到 409。狀態看 `/api/health` 的 `telegram_bot`。
+
+地圖是伺服器端用 Pillow 畫的 PNG，需要中文字型：Windows 用微軟正黑體，
+Linux 容器請裝 `fonts-noto-cjk`，否則字會變成方框（圖照樣產得出來）。
+
+---
+
+## 8. LINE bot
+
+官方帳號 **Guardian_BOT（@727ndzcn）**。功能與 Telegram 相同（地圖＋待稽核清單、一句話答詢），
+內容與閘門共用 `bots/content.py`、`bots/linking.py`，只換傳輸層。
+
+```
+LINE_CHANNEL_ID=<Channel ID>
+LINE_CHANNEL_SECRET=<Channel secret>          # 驗簽用，勿外流
+LINE_CHANNEL_ACCESS_TOKEN=<access token>      # 可用 ID+secret 換 30 天短期 token；401 時程式會自動重換
+PUBLIC_BASE_URL=https://<通道網址>            # 地圖圖片要用；沒設時只傳文字清單
+LINE_DEMO_PASSCODE=<暗號>                     # 沒設就沿用 TELEGRAM_DEMO_PASSCODE
+```
+
+**LINE 一定要公開的 HTTPS 網址，兩個地方都要：**
+
+1. **Webhook**：LINE 只會把訊息推過來，不能像 Telegram 那樣自己去拉。
+   LINE Developers → Messaging API → Webhook URL 填 `https://<通道網址>/api/bot/line/webhook`，
+   打開 **Use webhook**，並關掉「自動回應訊息」（否則官方帳號會自己搶先回罐頭訊息）。
+2. **地圖圖片**：LINE 的圖片訊息不能上傳檔案，只收網址。地圖由 `/api/bot/map.png` 以
+   **簽章網址**提供，10 分鐘過期、改一個字就 403——名單上的紅點不能變成誰都下載得到的圖。
+
+**展示時**：手機加好友 → 傳「綁定 ＋ 暗號」→ 按下方「地圖＋清單」。
+群組與多人聊天室一律拒絕；webhook 簽章驗不過一律 400。狀態看 `GET /api/bot/line/status`（需登入）。

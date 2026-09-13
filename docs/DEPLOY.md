@@ -270,3 +270,60 @@ ALB、服務、HTTP 網址都不必動——建失敗也不影響原本的入口
 
 `COOKIE_SECURE` 維持 `false`：HTTP 網址還開著，設成 true 的話從 HTTP 那邊會
 登不進去。等確定只用 HTTPS、並把 ALB 限縮成只收 CloudFront 之後再改。
+
+## 十一、PWA 與通訊軟體 bot 上雲
+
+2026-09-13 探過 `https://d1unpo09166qaz.cloudfront.net`：**雲端還是舊版**——`/sw.js`、
+`/manifest.webmanifest`、`/api/bot/line/webhook` 都是 404，`/api/health` 沒有 `telegram_bot`。
+CloudFront 本身的設定（§十）剛好都符合，不用改：
+
+| 需要 | §十 的設定 | 結果 |
+|---|---|---|
+| LINE webhook 是 POST | Allowed methods 全部七種 | ✓ |
+| LINE 驗簽要 `X-Line-Signature` 標頭 | `Managed-AllViewer` 轉送全部標頭 | ✓ |
+| 簽章地圖要 `?exp=&sig=` | `Managed-AllViewer` 轉送查詢字串 | ✓ |
+| SW 與簽章地圖不能被快取 | `Managed-CachingDisabled` | ✓ |
+| PWA 要 HTTPS | `*.cloudfront.net` 憑證 | ✓ |
+
+要做的只有三件：
+
+**1. 重建映像。** Dockerfile 已加 `fonts-noto-cjk`。少了它，bot 送出的地圖每個字都是
+方框，而且不會有任何錯誤。
+
+**2. 任務定義註冊新 revision，加上這些環境變數**（`.env` 不進映像；任務定義是快照）：
+
+| 變數 | 值 | 沒設會怎樣 |
+|---|---|---|
+| `TELEGRAM_BOT_TOKEN` | BotFather 給的 | Telegram bot 不啟動，`/api/health` 寫原因 |
+| `TELEGRAM_BOT_USERNAME` | `Little_Guardian_bot` | 綁定連結少了帳號名稱 |
+| `TELEGRAM_DEMO_PASSCODE` | 展示暗號 | 只能用派工台產生的一次性碼綁定 |
+| `LINE_CHANNEL_ID` / `LINE_CHANNEL_SECRET` | LINE Developers 上的值 | LINE webhook 靜默回 200、不處理 |
+| `LINE_CHANNEL_ACCESS_TOKEN` | 可省略 | 省略時程式用 ID＋secret 自己換 30 天 token |
+| `PUBLIC_BASE_URL` | `https://d1unpo09166qaz.cloudfront.net` | LINE 只送文字清單、不附地圖 |
+| `SEED_INSPECTOR_EMAIL` | 已有 | 暗號會綁到第一個稽查人員帳號 |
+
+**3. Telegram 同一個 token 只能一個地方輪詢。** 雲端開著時，本機 `.env` 要設
+`TELEGRAM_BOT_POLLING=false`，否則兩邊都 409、bot 看起來像壞了。反過來用本機展示時，
+雲端任務定義設 `false`。
+
+**LINE 後台**（LINE Developers → Messaging API）：Webhook URL 填
+`https://d1unpo09166qaz.cloudfront.net/api/bot/line/webhook`、打開 Use webhook，
+並在 LINE Official Account Manager 關掉「自動回應訊息」（否則官方帳號會搶先回罐頭訊息）。
+**部署完成之後再設**——現在雲端還是 404，設了也只是讓 LINE 那邊一直失敗。
+
+部署後的驗證：
+
+```bash
+B=https://d1unpo09166qaz.cloudfront.net
+curl -sI $B/sw.js | grep -i "200\|service-worker-allowed"       # 200、Service-Worker-Allowed: /
+curl -s  $B/api/health | grep -o '"telegram_bot":{[^}]*}'         # enabled true、cycles 會增加
+curl -s -o /dev/null -w "%{http_code}
+" -X POST -d '{"events":[]}' $B/api/bot/line/webhook   # 400（沒簽章）
+```
+
+最後一行回 **400** 才是對的：代表 LINE 憑證有進容器、而且驗簽在擋。回 200 代表憑證沒設
+（靜默模式），回 404 代表還是舊映像。
+
+⚠️ 綁定關係存在容器內的 SQLite（`data/runtime` 不進映像）。容器重啟之後要重新點一次
+暗號連結——這是展示環境可以接受的代價，要保留就接 RDS（§四）。
+
