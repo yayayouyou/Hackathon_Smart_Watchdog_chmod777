@@ -162,6 +162,8 @@
             // sections 是一份清單（list_table_types），開第一種就好——
             // 把八種表一次全攤開，等於什麼都沒指出來。
             section: a.section || (Array.isArray(a.sections) ? a.sections[0] : null),
+            // prepare_upload：帶到「原始資料」層，把「選擇 PDF」標出來。
+            layer: a.layer, upload: !!a.upload,
           });
         };
         switchTab("data", then);

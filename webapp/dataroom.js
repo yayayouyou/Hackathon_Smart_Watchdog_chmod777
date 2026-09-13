@@ -620,9 +620,31 @@
    * 但列出來的只有安溪——使用者看到的條件與實際套用的不一致，而且他一動
    * 別的條件就會把助理設的悄悄洗掉。
    */
+  /* 助理帶使用者來上傳時，把「選擇 PDF」標出來。
+   *
+   * 助理**不能**替使用者按這顆鈕：瀏覽器只允許使用者親手觸發的點擊打開檔案
+   * 選擇視窗，而助理的指令是從串流送來的，不是使用者的點擊（一輪通常要十幾秒，
+   * 早就過了瀏覽器給的暫時授權）。所以做法是帶到、標出來，讓人自己按。 */
+  function cueUpload() {
+    const box = $("dr-upload");
+    if (box) box.scrollIntoView({ block: "nearest" });
+    const btn = document.querySelector("#dr-upload .drup-btn");
+    if (!btn) return;
+    btn.classList.remove("drup-cue");
+    void btn.offsetWidth;            // 強制重排，連續兩次叫也會重播
+    btn.classList.add("drup-cue");
+    setTimeout(() => btn.classList.remove("drup-cue"), 4000);
+  }
+
   async function focus(opts) {
     await open();
     const o = opts || {};
+    if (o.upload) {
+      // 上傳區只在「原始資料」層；切過去、標出來就好，不去動表單類型與篩選。
+      showLayer("raw");
+      cueUpload();
+      return;
+    }
     if (o.institution !== undefined) state.report = o.institution || "";
     if (o.year !== undefined) state.year = o.year == null ? "" : String(o.year);
     const inst = $("dr-inst"), year = $("dr-year");

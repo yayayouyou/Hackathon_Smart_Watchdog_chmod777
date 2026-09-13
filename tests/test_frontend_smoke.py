@@ -1470,3 +1470,28 @@ def test_the_lobby_identity_button_does_not_wait_for_data_to_become_clickable() 
         "身分鈕的綁定仍在 start() 裡，登入後到資料載完之間按不動"
     )
     assert re.search(r"\bbindLobbyWho\(\);", src), "身分鈕的開關完全沒有被綁定"
+
+
+def test_the_agent_can_bring_the_user_to_the_upload_button() -> None:
+    """助理被要求上傳檔案時，要能把人帶到文件控管室的「選擇 PDF」。
+
+    原本助理的工具裡完全沒有上傳相關的東西，於是使用者說「我想要上傳檔案」，
+    它回答「這個系統目前沒有提供檔案上傳的功能」——而文件控管室明明有。
+
+    助理不能替人按那顆鈕（瀏覽器只允許使用者親手打開檔案選擇視窗），所以
+    這條鏈的每一段都要在：分派器把 `upload` 轉給資料室、資料室切到原始資料層
+    並標出按鈕、樣式表畫得出那個標示。
+    """
+    agent = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    case = agent[agent.index('case "open_table":'):]
+    case = case[:case.index("break;")]
+    assert "upload" in case, "open_table 沒有把 upload 轉給資料室"
+
+    dr = _code((WEBAPP / "dataroom.js").read_text(encoding="utf-8"))
+    fn = dr[dr.index("async function focus(opts)"):]
+    fn = fn[:fn.index("\n  }\n")]
+    assert "o.upload" in fn, "資料室的 focus() 不認得 upload"
+    assert "cueUpload" in fn and "function cueUpload" in dr, "沒有把「選擇 PDF」標出來"
+
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    assert ".drup-btn.drup-cue" in css, "樣式表畫不出上傳按鈕的標示"

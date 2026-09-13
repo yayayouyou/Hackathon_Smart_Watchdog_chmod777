@@ -923,6 +923,39 @@ def _list_documents(_ctx: ToolContext, a: DocListArgs) -> ToolOutcome:
     )
 
 
+def _prepare_upload(_ctx: ToolContext, _a: NoArgs) -> ToolOutcome:
+    """帶使用者到文件控管室上傳原件。
+
+    少了它，助理手上沒有任何與上傳有關的東西，被問到就回答「系統沒有上傳功能」
+    ——而文件控管室明明有。
+
+    助理**不能替人選檔**：瀏覽器只讓使用者親手打開檔案選擇視窗。所以這裡做的是
+    把人帶到按鈕前，並說清楚哪一份還沒入庫、檔名要長什麼樣子（入庫靠檔名對到
+    是哪一份，見 `store.match_filename`）。
+    """
+    pend = [r for r in _dr().overview()["reports"] if r["state"] == "pending"]
+    items = [{
+        "report": r["id"], "code": r["code"], "institution": r["short_name"],
+        "academic_year": r["academic_year"], "year_kind": "學年度",
+        "tables": r["tables"],
+        "expected_filename":
+            f"{r['code']}{r['short_name']}_{r['academic_year']}學年度財務報告.pdf",
+    } for r in pend]
+    return ToolOutcome(
+        payload={
+            "count": len(items), "pending": items,
+            "how": "文件控管室「原始資料」層的「選擇 PDF」，由使用者自己按、自己選檔。",
+            "rules": ["只接受 PDF", "保留原始檔名，系統靠檔名判斷是哪一份報告"],
+            # 曾寫成「上傳後可用 list_documents 確認」，模型就原句轉述給使用者，
+            # 把 tool 名稱講了出來。提示要寫成使用者聽得懂的話。
+            "note": ("助理無法替使用者選檔或按下按鈕（瀏覽器限制）。"
+                     "上傳完後使用者可以再問一次有沒有入庫成功。")
+                    if items else "目前沒有待入庫的報告。",
+        },
+        ui_action={"type": "open_table", "layer": "raw", "upload": True},
+    )
+
+
 class TableTypesArgs(BaseModel):
     institution: Optional[str] = Field(default=None, description="園名簡稱或代號")
     year: Optional[int] = Field(default=None, description="學年度")
@@ -1332,6 +1365,10 @@ _SPECS = [
      PeerArgs, _get_peer_comparison, False),
     ("list_documents", "列出資料室裡有哪些已抽取的財務報告（不需先給查詢字串）",
      DocListArgs, _list_documents, False),
+    ("prepare_upload",
+     "使用者要上傳檔案（財報 PDF）時用：帶到文件控管室的上傳按鈕，列出尚未入庫的"
+     "報告與檔名格式。檔案要使用者自己按鈕選，助理無法代選",
+     NoArgs, _prepare_upload, False),
     ("list_table_types", "有哪幾種表單、各幾張，並把資料室的類型選單帶到對應位置",
      TableTypesArgs, _list_table_types, False),
     ("get_table", "取一張表的全部內容，含空白格（null＝未編列，不是 0）",

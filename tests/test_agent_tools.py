@@ -111,6 +111,8 @@ def test_the_whitelist_is_exactly_these_tools(reg) -> None:
         # 資料室：只回答「這份文件上印的是什麼」，不做判讀
         "list_documents", "list_table_types", "get_table",
         "compare_table_across_years", "get_extraction_notes",
+        # 上傳：只帶到按鈕前，檔案一定由使用者自己選
+        "prepare_upload",
         # 唯一的寫入型
         "record_feedback",
     }
@@ -603,3 +605,29 @@ def test_the_compare_skill_tells_the_model_how_to_turn_a_name_into_an_id(reg) ->
     assert "list_institutions" in skill and "name" in skill, (
         "比較情境沒有教模型怎麼把名字換成 id"
     )
+
+
+def test_the_agent_can_take_the_user_to_upload_with_a_filename_that_ingests(
+        reg, tmp_path, monkeypatch) -> None:
+    """使用者說「我想要上傳檔案」，助理原本回答「系統沒有上傳功能」。
+
+    它沒說謊——它手上真的沒有任何與上傳有關的 tool。這裡測兩件事：
+    帶得到按鈕前（`upload` 讓資料室標出「選擇 PDF」），以及告訴使用者的
+    檔名**真的會被入庫認得**。講一個對不到的檔名，比說做不到還糟。
+    """
+    from smart_watchdog.dataroom import store
+
+    if not store.available():
+        pytest.skip("需要資料室切片，先跑 scripts/build_dataroom_slice.py")
+    # 不讀 data/runtime 的真實載入狀態：本機若已上傳過，待入庫清單會是空的。
+    monkeypatch.setattr(store, "STATE", tmp_path / "dataroom.json")
+    monkeypatch.setattr(store, "UPLOADS", tmp_path / "uploads")
+    monkeypatch.setitem(store._cache, "index", None)
+    monkeypatch.setitem(store._cache, "reports", {})
+
+    out = _run(reg, "prepare_upload", {})
+    assert out.ui_action == {"type": "open_table", "layer": "raw", "upload": True}
+    assert out.payload["pending"], "示範需要至少一份待入庫的報告"
+    for p in out.payload["pending"]:
+        assert store.match_filename(p["expected_filename"]) == p["report"], (
+            f"告訴使用者的檔名 {p['expected_filename']} 對不到 {p['report']}")
