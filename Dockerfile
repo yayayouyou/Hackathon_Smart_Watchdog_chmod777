@@ -13,8 +13,11 @@
 FROM python:3.11-slim
 
 # pymupdf 要 libgl 才能 render；psycopg 要 libpq。兩者都只裝執行期的。
+# fonts-noto-cjk：Telegram／LINE 的地圖是伺服器端用 Pillow 畫的 PNG，slim 映像裡
+# 沒有任何中文字型，少了它圖上每個字都是方框——圖照樣送得出去，所以不會報錯，
+# 只會在長官手機上看到一張全是方框的地圖。bots/mapimage.py 會挑其中的繁中字族。
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        libgl1 libglib2.0-0 libpq5 \
+        libgl1 libglib2.0-0 libpq5 fonts-noto-cjk \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

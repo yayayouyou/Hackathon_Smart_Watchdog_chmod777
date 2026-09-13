@@ -38,6 +38,46 @@
     $("authwrap").hidden = true;
   }
 
+  /* 連不上時要講出來，不能留一片空白。
+     第一版在 check() 的 catch 裡什麼都不做，理由是「地圖與名單都是靜態 payload，
+     仍然可看」——那是 dist/ 靜態版的年代。現在資料一律走 /api，而 sw.js 刻意不
+     快取 /api，於是斷線打開 app 的畫面是：標題列在、下面一片空白、沒有任何說明
+     （iPhone 模擬實測）。離線殼存在的意義，就是把「現在看不到、為什麼」講出來。
+     順便把資料不在手機上這件事說清楚——那是刻意的，不是壞掉。 */
+  let offlineBound = false;
+  function showOffline() {
+    const wrap = $("authwrap");
+    if (!wrap) return;
+    let box = $("offlinebox");
+    if (!box) {
+      box = document.createElement("div");
+      box.id = "offlinebox";
+      box.className = "authbox";
+      wrap.appendChild(box);
+    }
+    const offline = navigator.onLine === false;
+    box.innerHTML = `<h2>${offline ? "目前離線" : "連不上伺服器"}</h2>
+      <p>稽查名單、通報與卷宗<b>不會存放在這支手機上</b>，所以連線中斷時看不到內容。</p>
+      <p>${offline ? "連上網路後會自動重新載入。" : "可能是伺服器未啟動或網路不穩。"}</p>
+      <button type="button" id="offlineretry">重新連線</button>`;
+    $("offlineretry").addEventListener("click", () => location.reload());
+    const form = $("authform");
+    if (form) form.hidden = true;
+    box.hidden = false;
+    wrap.hidden = false;
+    if (!offlineBound) {
+      offlineBound = true;
+      window.addEventListener("online", () => location.reload());
+    }
+  }
+
+  function clearOffline() {
+    const box = $("offlinebox");
+    if (box) box.hidden = true;
+    const form = $("authform");
+    if (form) form.hidden = false;
+  }
+
   function paint() {
     const box = $("whoami");
     if (box) box.textContent = me ? `${me.name}（${roleLabel(me.role)}）` : "未登入";
@@ -115,14 +155,18 @@
       const response = await fetch("/api/auth/me");
       if (response.ok) {
         me = await response.json();
+        clearOffline();
         hide();
       } else {
         me = null;
+        clearOffline();
         show();
       }
     } catch (_) {
-      // 後端還沒起來：不要卡死畫面，地圖與名單都是靜態 payload，仍然可看。
+      // 連不上：離線或伺服器沒起來。資料一律走 /api 且不快取，所以要講出來，
+      // 不能像靜態版那樣假設「名單仍然可看」。
       me = null;
+      showOffline();
     }
     paint();
   }
