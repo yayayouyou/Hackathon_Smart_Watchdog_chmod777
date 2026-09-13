@@ -34,8 +34,8 @@
 
     <div class="capbox">
       <label for="cap">本月可稽查</label>
-      <input id="cap" type="number" min="1" max="200" value="20"><span>家</span>
-      <input id="capr" type="range" min="5" max="120" value="20" aria-label="派工容量">
+      <input id="cap" type="number" min="20" max="300" value="100"><span>家</span>
+      <input id="capr" type="range" min="20" max="300" step="10" value="100" aria-label="派工容量">
     </div>
 
     <div class="hstat">
@@ -198,7 +198,7 @@
           <div class="grp">
             <h2>圖層</h2>
             <label class="opt"><input type="checkbox" id="f-cluster" checked>標記群集</label>
-            <label class="opt"><input type="checkbox" id="f-districts">行政區界線</label>
+            <label class="opt"><input type="checkbox" id="f-districts" checked>行政區界線</label>
             <label class="opt"><input type="checkbox" id="f-dnames" checked>行政區名稱</label>
             <label class="opt"><input type="checkbox" id="f-mask" checked>新北以外反灰</label>
             <label class="opt"><input type="checkbox" id="f-flagged">只顯示複查名單</label>
@@ -245,10 +245,13 @@
                單位是「若依模型排序抽前 100 名，這一區會有幾家進榜」——
                不是危險程度，是建議查核的密度。 -->
           <div class="grp">
-            <h2>行政區優先度</h2>
+            <h2>行政區建議查核密度</h2>
             <div class="legend" id="choro-legend"></div>
-            <p class="note">底色＝該區進入<b>全市前 100 名</b>的家數。
-              放大到街廓尺度會自動淡出，讓底圖回到可讀狀態。</p>
+            <p class="note">與 <b>04 分析驗證</b>的排行榜同一份：該區進榜家數，
+              除以依公立／非營利／私立組成預期的家數。<b>明顯</b>＝95% 區間整段在
+              全市平均的同一側；<b>略</b>＝點估計偏向一側、但區間跨過 1。
+              地圖上的<b>群集圓圈</b>用同一組顏色：圈內多數機構所在區的等級。
+              放大到街廓尺度會自動淡出。</p>
           </div>
 
           <div class="grp">
@@ -321,9 +324,20 @@
              上面這幾家是這幾天被公開報導點名的。後者不改前者的分數，
              只是把它們提到看得到的地方——否則地圖上放大的紅點在清單裡找不到。 -->
         <div class="listnote rt" id="rtnote" hidden>
-          <b id="rtnote-n">0</b> 家近期有公開報導，已提到最上面 ·
-          <span>不影響下方名次</span>
+          <b id="rtnote-n">0</b> 家近期有公開報導，另列在最上面 ·
+          <span>下方各區照常列出</span>
         </div>
+        <!-- 待稽查清單依行政區分組，與 04 分析驗證是同一份資料。
+             件數多的先＝派工人力的依據；密度高的先＝跟分析驗證的名次一致。 -->
+        <div class="lbar" id="lbar">
+          <span class="lbar-t">依行政區</span>
+          <span class="lbar-h">點區名看名單</span>
+          <div class="drseg" id="lsort">
+            <button type="button" data-s="density" aria-pressed="true">密度高的先</button>
+            <button type="button" data-s="count">件數多的先</button>
+          </div>
+        </div>
+        <div class="listcov" id="listcov" hidden></div>
         <div class="list" id="list"></div>
       </div>
 

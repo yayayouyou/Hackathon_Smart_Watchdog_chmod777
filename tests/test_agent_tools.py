@@ -643,3 +643,29 @@ def test_the_agent_files_only_attachments_its_own_user_added(
                _ctx(user=SimpleNamespace(id=7)))
     assert submitted == [("園所財報.pdf", b"%PDF-1.4 x")]
     assert out.payload["status"] == "庫中已有，未重複入庫", "狀態要是使用者聽得懂的話"
+
+
+def test_capacity_range_matches_the_screen() -> None:
+    """助理能設的派工容量範圍，必須等於畫面上輸入框與 setCap 夾住的範圍。
+
+    範圍不一致時沒有任何錯誤：模型送 10，畫面靜靜夾成 20，工具卻回報「已套用
+    10」——助理嘴上講的條件與畫面上實際套用的是兩回事（審查實際重現過）。
+    """
+    import pathlib
+    import re
+
+    from smart_watchdog.agent.tools import SetMapViewArgs
+
+    root = pathlib.Path(__file__).resolve().parents[1]
+    html = (root / "webapp/index.html").read_text(encoding="utf-8")
+    m = re.search(r'<input id="cap" type="number" min="(\d+)" max="(\d+)"', html)
+    assert m, "找不到 #cap 輸入框"
+    lo, hi = int(m.group(1)), int(m.group(2))
+    app = (root / "webapp/app.js").read_text(encoding="utf-8")
+    assert f"Math.max({lo}, Math.min({hi}," in app, "setCap 的夾值範圍與輸入框不一致"
+
+    field = SetMapViewArgs.model_fields["capacity"]
+    ge = next(x.ge for x in field.metadata if getattr(x, "ge", None) is not None)
+    le = next(x.le for x in field.metadata if getattr(x, "le", None) is not None)
+    assert (ge, le) == (lo, hi), f"助理工具 {ge}–{le}，畫面 {lo}–{hi}"
+

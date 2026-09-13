@@ -1452,6 +1452,213 @@ def test_the_board_does_not_print_the_nan_string() -> None:
     assert '"nan"' in src, "沒有擋 nan 字串"
 
 
+# ── 地圖待稽查清單：與 04 分析驗證同一份 ─────────────────────────────
+
+def test_district_boundaries_are_on_by_default() -> None:
+    """清單依行政區分組之後，看的人第一件事是找「這一組在地圖上是哪一塊」。
+
+    只有勾選框預設 checked 不夠：地圖是在 boot 時畫的，沒有人觸發 change 事件，
+    界線不會自己出現——勾選框打勾、地圖上卻沒有線。
+    """
+    html = (WEBAPP / "index.html").read_text(encoding="utf-8")
+    assert '<input type="checkbox" id="f-districts" checked>' in html
+    app = _js_without_comments("app.js")
+    assert 'if ($("f-districts").checked) toggleDistricts(true)' in app
+
+
+def test_the_map_list_and_the_analysis_board_read_the_same_data() -> None:
+    """地圖清單與 04 分析驗證用同一個端點、同一個 K。
+
+    改版前地圖清單走 `/api/proposal`（TIER_LADDER：財報法遵未通過優先），K=20
+    時整份清單全是財報、全是非營利園；分析驗證的前 100 名卻有 95 家是私立。
+    兩室點名的是不同的園，畫面上沒有任何地方說明為什麼。
+    """
+    app = _js_without_comments("app.js")
+    start = app.index("async function refresh(")
+    body = app[start:app.index("\n}\n", start)]
+    assert "/api/district-board" in body
+    assert "/api/proposal" not in body
+    assert re.search(r"window\.SW\s*=\s*\{[^}]*\bsetCap\b", app, re.S)
+    dj = _js_without_comments("districts.js")
+    assert "/api/district-board" in dj
+    assert "T.setCap(" in dj, "分析驗證的滑桿要改地圖的派工容量，不是自己的一份 k"
+
+
+def test_both_rooms_colour_districts_with_the_same_level_tokens() -> None:
+    """地圖底色、清單區頭、分析驗證的列，用同一組色票與同一份等級名稱。
+
+    等級名稱只能來自後端的 level_label／levels。前端寫第二份的話，改一邊的門檻
+    或用詞，另一邊就會靜靜地變成另一種說法。
+    """
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    for n in range(5):
+        assert f"--sev{n}:" in css, f"缺 --sev{n}"
+    app = _js_without_comments("app.js")
+    dj = _js_without_comments("districts.js")
+    assert '"--sev" + ' in app and "sev-${g.level}" in app
+    assert "sev-${r.level}" in dj
+    for label in ("明顯高於全市", "略高於全市", "略低於全市", "明顯低於全市"):
+        assert label not in app and label not in dj, f"前端寫死了等級名稱「{label}」"
+
+
+def test_the_map_list_is_grouped_by_district_and_shows_real_reasons() -> None:
+    """清單依行政區分組，每一列印的是訊號，不是 TIER_LADDER 的階名。
+
+    階名就是「右側幾乎都顯示財報不符合」的來源：前 20 名全落在同一階。
+    """
+    app = _js_without_comments("app.js")
+    start = app.index("function drawList(")
+    body = app[start:app.index("\nfunction ", start + 1)]
+    assert "lgrp" in body and "g.ids" in body
+    assert "p.tier" not in body, "清單又開始逐列印 TIER_LADDER 的階名"
+    assert "p.np" in body, "前科件數是訊號圖上最強的已計分訊號，清單要印出來"
+    html = (WEBAPP / "index.html").read_text(encoding="utf-8")
+    assert 'data-s="count"' in html and 'data-s="density"' in html
+
+
+def test_the_map_list_starts_collapsed_and_remembers_what_is_open() -> None:
+    """清單預設只列「哪一區、幾家」，點區名才展開名單。
+
+    ⚠️ 這支是靜態檢查，所以每一條斷言都釘一個**實際試過會漏網**的改壞法——
+    審查在暫存副本上逐一突變過，舊版只做子字串比對，下面四種都照樣綠燈：
+      M1 預設全部展開：`const open = !state.openDistricts.has(g.d)`
+      M4 區頭用索引當鍵：寫進去的是索引、查的是區名，點了永遠展不開
+      M5 收合時地圖也飛走
+      M8 refresh() 清空展開狀態：換容量之後開著的全關
+    """
+    app = _js_without_comments("app.js")
+    start = app.index("function drawList(")
+    body = app[start:app.index("\nfunction ", start + 1)]
+    # M1
+    assert re.search(r"const open = state\.openDistricts\.has\(g\.d\);", body)
+    # 只抓「區頭初始狀態」那一句被反轉；點擊處理裡的
+    # `opening = !state.openDistricts.has(key)` 是正當的。
+    assert "!state.openDistricts.has(g.d)" not in body, "語意反了：預設會全部展開"
+    assert "open ? g.ids" in body, "收起來的區不可以渲染名單"
+    # M4：寫進 Set 的鍵與查詢用的鍵必須是同一個東西（區名）
+    assert 'data-key="${esc(g.d)}"' in body
+    assert "const key = el.dataset.key;" in body
+    assert "state.openDistricts.add(key)" in body
+    # M5
+    assert "if (opening && el.dataset.d) flyToDistrict(el.dataset.d);" in body
+    # M8：展開狀態只在 state 初始化時建立一次，沒有任何地方把它清空
+    assert len(re.findall(r"openDistricts\s*[:=]", app)) == 1, "有地方重設了 openDistricts"
+    start = app.index("async function refresh(")
+    assert "openDistricts" not in app[start:app.index("\n}\n", start)]
+
+def test_the_city_edge_is_solid_and_stacked_above_district_lines() -> None:
+    """新北市界是實線，壓在行政區虛線上面，而且不綁任何開關。
+
+    ⚠️ 舊版這支只看字串：swedge 的 zIndex 被改到 400 以下（bug 原樣復發，
+    行政區虛線又蓋回市界上）時照樣綠燈。所以這裡把 pane 的疊放順序與滑鼠
+    設定直接從程式碼讀出來比。
+    """
+    app = _js_without_comments("app.js")
+    panes = {m.group(1): (int(m.group(2)), m.group(3)) for m in re.finditer(
+        r'createPane\("(\w+)"\);\s*Object\.assign\(state\.map\.getPane\("\1"\)\.style,'
+        r'\s*\{\s*zIndex:\s*(\d+),\s*pointerEvents:\s*"(\w+)"', app)}
+    for name in ("swdist", "swedge", "swdname"):
+        assert name in panes, f"找不到 {name} pane 的設定：{sorted(panes)}"
+    assert panes["swdist"][0] < panes["swedge"][0] < 600, panes
+    assert panes["swedge"][0] > 400, "市界要高於 Leaflet 向量預設的 overlayPane（400）"
+    assert panes["swdist"][1] == "none" and panes["swedge"][1] == "none", (
+        "preferCanvas 下這兩層是鋪滿視窗的畫布，吃滑鼠就會擋掉底色 tooltip")
+    start = app.index("function drawCityEdge(")
+    body = app[start:app.index("\n}\n", start)]
+    assert 'pane: "swedge"' in body
+    assert "dashArray" not in body, "市界要是實線"
+    start = app.index("function toggleDistricts(")
+    assert 'pane: "swdist"' in app[start:app.index("\n}\n", start)], (
+        "行政區線沒指定 pane，會落回 overlayPane 的 Canvas、擋掉底色 tooltip")
+    start = app.index("function applyMask(")
+    assert "outlineLayer" not in app[start:app.index("\n}\n", start)], (
+        "反灰開關不可以順手把市界拿掉")
+    assert "drawCityEdge();" in app
+
+
+def test_nothing_in_the_default_vector_pane_swallows_the_choropleth_tooltip() -> None:
+    """地圖是 preferCanvas：任何落在 overlayPane 的 interactive 向量，都會建出一張
+    鋪滿視窗、會吃滑鼠的畫布，蓋住行政區底色（swchoro 340）的 tooltip。
+
+    markercluster 滑過群集時預設會畫藍色涵蓋範圍多邊形，就是這種向量——滑過
+    一次大群集之後，底色 tooltip 就再也出不來（審查實際重現過）。
+    """
+    app = _js_without_comments("app.js")
+    assert "preferCanvas" in app
+    start = app.index("L.markerClusterGroup({")
+    assert "showCoverageOnHover: false" in app[start:app.index("})", start)]
+
+
+def test_rows_without_a_district_header_print_the_district() -> None:
+    """助理點名的扁平清單與即時組沒有區頭，列上要印行政區。
+
+    清單改成分組時，列上的行政區搬到了區頭；沒有區頭的那兩種清單就只剩
+    「私立」兩個字，看不出是哪一區的園。
+    """
+    app = _js_without_comments("app.js")
+    start = app.index("function drawList(")
+    body = app[start:app.index("\nfunction ", start + 1)]
+    assert "withD ? esc(p.d)" in body
+    assert 'item(p, "", true)' in body and 'item(p, "sev-hot", true)' in body
+
+
+def test_every_fly_to_district_leaves_room_for_the_timeline_panel() -> None:
+    """取景扣掉時間軸面板的高度，三處共用同一個函式。
+
+    fitNTPC 早就會扣，清單與助理的 flyToDistrict 各自寫死留白、沒有扣——面板
+    打開時展開新店區，南側被蓋掉兩成多。
+    """
+    app = _js_without_comments("app.js")
+    for fn in ("function flyToDistrict(", "function fitNTPC("):
+        start = app.index(fn)
+        assert "mapBottomPad(" in app[start:app.index("\n}\n", start)], fn
+    assert re.search(r"window\.SW\s*=\s*\{[^}]*\bmapBottomPad\b", app, re.S)
+    assert "SW.mapBottomPad" in _js_without_comments("agent.js")
+
+
+def test_collapsing_a_stuck_header_scrolls_it_back_to_the_top() -> None:
+    """收合黏在頂端的區頭之後，要把它捲回頂端。
+
+    否則內容變短、scrollTop 不變，畫面跳到下一區的名單，焦點落在被蓋住的區頭上。
+    位置不可以用 offsetTop 量：黏著中的元素量到的已經含位移。
+    """
+    app = _js_without_comments("app.js")
+    start = app.index("function drawList(")
+    body = app[start:app.index("\nfunction ", start + 1)]
+    assert 'again.style.position = "static"' in body
+    assert "list.scrollTop = natural" in body
+    assert "offsetTop" not in body
+
+def test_the_map_list_defaults_to_density_order_on_the_left() -> None:
+    """清單預設「密度高的先」，而且這顆鈕排在左邊、預設按下。
+
+    預設順序要跟 04 分析驗證的名次一致；件數多的先仍然可以切。
+    """
+    app = _js_without_comments("app.js")
+    assert 'boardSort: "density"' in app
+    html = (WEBAPP / "index.html").read_text(encoding="utf-8")
+    seg = html[html.index('id="lsort"'):]
+    seg = seg[:seg.index("</div>")]
+    assert seg.index('data-s="density"') < seg.index('data-s="count"'), "密度鈕要在左邊"
+    pressed = re.search(r'<button[^>]*data-s="density"[^>]*>', seg)
+    assert pressed and 'aria-pressed="true"' in pressed.group(0)
+
+
+def test_cluster_circles_take_the_colour_of_their_majority_district() -> None:
+    """地圖上的群集圓圈依區域等級上色，而且用多數決、不是取最高。
+
+    取最高的話，板橋一大圈裡混進一家鶯歌的園，整圈就變深紅。
+    """
+    app = _js_without_comments("app.js")
+    assert "iconCreateFunction" in app
+    assert "district: p.d" in app, "標記沒帶所屬行政區，群集無從判斷"
+    start = app.index("function clusterIcon(")
+    body = app[start:app.index("\n}\n", start)]
+    assert "getAllChildMarkers" in body
+    assert "c > best.c" in body, "要用多數決，不是取最高等級"
+    css = (WEBAPP / "style.css").read_text(encoding="utf-8")
+    assert '.marker-cluster[class*="sev-"] div' in css
+
 def test_the_lobby_identity_button_does_not_wait_for_data_to_become_clickable() -> None:
     """中庭身分鈕的點擊綁定不可以放在 `Lobby.start()` 裡。
 
