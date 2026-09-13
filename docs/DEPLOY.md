@@ -207,3 +207,66 @@ Bedrock 連不上時，誠實說明，然後把重心切到**不需要即時 LLM
   要在雲端展示截圖，得先在有原始 PDF 的機器上渲染好再放 S3。
 - **`data/runtime` 不進映像**，所以容器重啟會失去帳號與稽核軌跡。
   接 RDS 才會留下來。
+
+## 九、2026-09-13 實際部署紀錄（照這個做過一次，全部驗證通過）
+
+入口是 **ALB**，不是任務的公開 IP——任務一重啟 IP 就換，發出去的網址會死。
+
+| 資源 | 名稱 | 備註 |
+|---|---|---|
+| ALB | `watchdog-alb` | internet-facing，HTTP:80，網址見 `aws elbv2 describe-load-balancers` |
+| Target group | `watchdog-tg` | **target-type 必須是 `ip`**（Fargate 的 awsvpc 沒有 instance）；健康檢查 `/api/health` |
+| ALB 安全群組 | `watchdog-alb` | 80 ← 0.0.0.0/0（不限 IP） |
+| 容器安全群組 | 原本那個 | 8080 **只接受** ALB 安全群組，不再對 0.0.0.0/0 開 |
+| 服務 | `watchdog/watchdog` | health-check grace 120 秒，冷啟動時才不會被 ALB 判死 |
+| 映像標籤 | `latest` = `deploy-0913`；`rollback-0913` = 部署前的舊版 | 退回：任務定義映像改成 `:rollback-0913` 再強制部署 |
+
+踩到、而且會再踩的三件事：
+
+1. **文件控管室的切片要在建映像時產生。** 它輸出到 `data/interim/dataroom/`，
+   而 `.dockerignore` 排除整個 `data/interim/`，所以不能靠 COPY。Dockerfile
+   現在有 `RUN python scripts/build_dataroom_slice.py`。它會讀 `data/raw`
+   找原始 PDF 檔名，但找不到會跳過，切片照樣完整（6.7 MB）。
+   少了這一步，其他四室都正常、只有 02 整室是一行 503——最難聯想到是 build 漏了。
+2. **zsh 會吃掉 `$REPO:latest` 的 `:l`。** 它把 `:l` 當成「轉小寫」修飾符，
+   推出去的名字變成 `watchdogatest`，然後報「repository 不存在」。一律寫
+   `"${REPO}:latest"`。
+3. **任務定義裡的環境變數是部署當下的快照。** workshop 的 AWS 臨時金鑰會過期，
+   換金鑰要**註冊新的任務定義 revision** 再強制部署，改 `.env` 不會影響雲端。
+   快速登入需要三個變數同時在：`QUICK_LOGIN_ENABLED=true`、`SEED_ADMIN_EMAIL`、
+   `SEED_ADMIN_PASSWORD`（容器啟動時 `seed_users.py` 會依它們建帳號）。
+
+本機先驗再推：`docker run -p 8090:8080 --env-file .env -e DATABASE_URL= watchdog:new`，
+確認 `/api/dataroom/overview`、`/api/auth/options` 都是 200，才推 ECR。
+
+## 十、HTTPS：CloudFront 放在 ALB 前面（不需要網域）
+
+ACM 的憑證要綁自己的網域，workshop 帳號沒有。**CloudFront 自帶
+`*.cloudfront.net` 的憑證**，所以直接在 ALB 前面加一層就有 HTTPS，
+ALB、服務、HTTP 網址都不必動——建失敗也不影響原本的入口。
+
+| 設定 | 值 | 為什麼 |
+|---|---|---|
+| Origin | ALB 的 DNS，`http-only`，port 80 | ALB 只開 HTTP |
+| Viewer protocol | `redirect-to-https` | 打 http 會 301 到 https |
+| Allowed methods | 全部七種 | 登入、助理都是 POST |
+| Cache policy | `Managed-CachingDisabled` | **一定要關**。預設會快取，最糟是 A 的 `/api/auth/me` 被回給 B |
+| Origin request policy | `Managed-AllViewer` | cookie、header、查詢字串全部轉送，登入才會成立 |
+| Origin read timeout | 60 秒（不申請配額的上限） | 助理是 SSE 串流；每步上限 10 秒，留足餘裕 |
+| Compress | 關 | 避免任何可能緩衝串流的處理 |
+
+政策 ID 不要寫死，用名稱查：
+`aws cloudfront list-cache-policies --type managed` 找 `Managed-CachingDisabled`，
+`list-origin-request-policies` 找 `Managed-AllViewer`。
+
+兩個踩到的坑：
+
+1. **`CachedMethods` 要放在 `AllowedMethods` 底下**，不是跟它同一層；放錯會在
+   CLI 參數檢查就被擋，什麼都不會建。
+2. **狀態還是 `InProgress` 時通常就已經能連**，正式標成 `Deployed` 要再等幾分鐘。
+
+驗證方式：同一個網址連打兩次，`x-cache` 都要是 `Miss from cloudfront`
+（代表沒快取）；登入回應要看得到 `set-cookie`。
+
+`COOKIE_SECURE` 維持 `false`：HTTP 網址還開著，設成 true 的話從 HTTP 那邊會
+登不進去。等確定只用 HTTPS、並把 ALB 限縮成只收 CloudFront 之後再改。
