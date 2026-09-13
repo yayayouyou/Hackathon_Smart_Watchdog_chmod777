@@ -5,10 +5,11 @@
 #     docker build --platform linux/amd64 -t watchdog .
 # 不加會啟動失敗，而且錯誤訊息不明顯。
 #
-# **data/raw 不進映像**：1.8 GB，且主辦方資料集不得轉散布。後果是雲端上的
-# 證據頁（/api/evidence/page）會回 404 並說「data/raw 是否已還原」。文字證據
-# （檔名與頁碼）不受影響，因為 document_index.sqlite 已進版控。這是刻意的
-# 取捨，不是疏漏——要在雲端展示截圖，得另外把渲染好的 PNG 放 S3。
+# **data/raw 只放 132 份非營利財報原件（1.2 GB）**，其餘 0.6 GB 不進映像。
+# 證據頁（/api/evidence/page）與文件控管室的原件頁都從原件現場渲染；原件不在
+# 映像裡時，雲端只給得出文字與頁碼，截圖一律 404（部署後實測過）。
+# 2026-09-13 使用者決定放進來。主辦方資料集不得轉散布，而雲端網址是公開的、
+# 快速登入也開著——這是知情下的取捨，不是疏漏。
 
 FROM python:3.11-slim
 
@@ -35,7 +36,8 @@ COPY webapp/ ./webapp/
 COPY frontend/ ./frontend/
 COPY scripts/ ./scripts/
 COPY run.py ./
-# 分析產物（已進版控，clone 即可用）。data/raw 與 data/interim 由 .dockerignore 排除。
+# 分析產物（已進版控，clone 即可用）與非營利財報原件。data/interim 與 data/raw 的
+# 其餘部分由 .dockerignore 排除。
 COPY data/ ./data/
 
 # PYTHONUNBUFFERED：容器裡 stdout 不是終端機，print() 會被緩衝住不送出。
@@ -54,8 +56,7 @@ RUN python scripts/build_frontend.py
 #   - 輸出在 `data/interim/`，而那個目錄被 .dockerignore 排除，所以不能靠 COPY。
 #   - 少了它，`/api/dataroom/*` 全部回 503，那一室在畫面上是一行錯誤訊息，
 #     而其餘四室看起來都正常——最難聯想到是建映像時漏了一步。
-# 它會讀 data/raw 去找原始 PDF 檔名，但 data/raw 不進映像（1.8 GB，且主辦方
-# 資料不得轉散布）。實測過：找不到就跳過，切片照樣完整（6.7 MB）。
+# 它會讀 data/raw 找原始 PDF 的路徑，填進索引的 pdf 欄；原件頁沒有上傳檔時就用它。
 RUN python scripts/build_dataroom_slice.py
 
 EXPOSE 8080
