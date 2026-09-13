@@ -1,0 +1,20 @@
+{
+ "report": "N21_文創_111",
+ "code": "N21",
+ "short_name": "文創",
+ "academic_year": 111,
+ "pdf_page": 4,
+ "dpi": 170,
+ "model": "us.anthropic.claude-sonnet-4-6",
+ "backend": "bedrock",
+ "identity_ok": null,
+ "schema_problems": [],
+ "footer_code": null,
+ "printed_page": null,
+ "page_kind": "blank",
+ "tables": [],
+ "text_sections": [],
+ "issues": [
+  "頁面完全空白，無任何可辨識內容"
+ ]
+}

@@ -138,6 +138,10 @@ TASKS = [
          _s("run_crosscheck.py"), in_pipeline=True),
     Task("reserve", "準備金專戶缺口的跨年度走勢（區分時間差與缺口累積）",
          _s("check_reserve_timeseries.py"), in_pipeline=True),
+    # 資料來源是逐頁抽取的 auditor_report 頁（data/extracted/nonprofit_pages/），
+    # 132 份財報已全數涵蓋（見 scripts/plan_from_toc.py 的 WANTED 清單）。
+    Task("accountant-change", "簽證會計師事務所／會計師跨年度變更（含 OCR 誤讀判斷）",
+         _s("check_accountant_change.py"), in_pipeline=True),
     Task("personnel", "人事費短支與業務發展準備轉列的併存情形",
          _s("analyse_personnel_to_reserve.py"), in_pipeline=True),
     Task("identity", "驗證每份抽取確實屬於檔名所指的那所園",

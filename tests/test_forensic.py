@@ -240,6 +240,91 @@ def test_round_sum_against_odd_liability_is_not_a_new_shortfall():
     assert verdict == "疑似撥付落後一年"
 
 
+# --- classify_accountant_change ----------------------------------------------
+#
+# docs/research/02-forensic-signals.md §7: 簽證會計師更換：連續年度換所，特別是
+# 換所後數字大幅變動 → 典型紅旗. Switching firms alone is legal and unremarkable,
+# so this must not fire on the change alone -- only on the change plus a
+# corroborating signal (a non-unmodified opinion, or a large 本期餘絀 swing).
+
+from smart_watchdog.features.compliance import classify_accountant_change
+
+
+def test_same_firm_says_nothing():
+    """No change is not a finding; it must not appear in the report."""
+    assert classify_accountant_change("誠明聯合會計師事務所",
+                                       "誠明聯合會計師事務所") is None
+
+
+def test_missing_firm_name_is_not_treated_as_no_change():
+    """A blank firm name is unread data, not evidence the firm stayed the same."""
+    assert classify_accountant_change(None, "誠明聯合會計師事務所") is None
+    assert classify_accountant_change("誠明聯合會計師事務所", "") is None
+    assert classify_accountant_change(None, None) is None
+
+
+def test_plain_change_with_no_corroborating_signal_is_logged_but_not_escalated():
+    """A firm change alone -- unmodified opinion, no surplus data -- is 換所."""
+    verdict, reason = classify_accountant_change(
+        "誠明聯合會計師事務所", "安永聯合會計師事務所", opinion="unmodified")
+    assert verdict == "換所"
+    assert reason is None
+
+
+def test_change_with_non_unmodified_opinion_is_escalated():
+    verdict, reason = classify_accountant_change(
+        "誠明聯合會計師事務所", "安永聯合會計師事務所", opinion="qualified")
+    assert verdict == "換所且有異常訊號"
+    assert "qualified" in reason
+
+
+def test_change_with_large_surplus_swing_is_escalated():
+    verdict, reason = classify_accountant_change(
+        "誠明聯合會計師事務所", "安永聯合會計師事務所",
+        prev_surplus=200_000, surplus=900_000, opinion="unmodified")
+    assert verdict == "換所且有異常訊號"
+    assert "200,000" in reason and "900,000" in reason
+
+
+def test_change_with_small_surplus_swing_is_not_escalated():
+    """A modest swing is ordinary year-to-year variance, not a red flag."""
+    verdict, reason = classify_accountant_change(
+        "誠明聯合會計師事務所", "安永聯合會計師事務所",
+        prev_surplus=200_000, surplus=250_000, opinion="unmodified")
+    assert verdict == "換所"
+    assert reason is None
+
+
+def test_missing_surplus_on_either_side_is_skipped_not_treated_as_zero():
+    """A missing operand must not manufacture a swing out of nothing."""
+    verdict, reason = classify_accountant_change(
+        "誠明聯合會計師事務所", "安永聯合會計師事務所",
+        prev_surplus=None, surplus=900_000, opinion="unmodified")
+    assert verdict == "換所"
+    assert reason is None
+
+
+# --- corroborating_signals ----------------------------------------------------
+#
+# Extracted so scripts/check_accountant_change.py can apply the same "is this
+# change actually worth escalating" test to a change of *accountant* (not just
+# firm), without classify_accountant_change's firm-specific preconditions.
+
+from smart_watchdog.features.compliance import corroborating_signals
+
+
+def test_corroborating_signals_empty_when_nothing_stands_out():
+    assert corroborating_signals(
+        prev_surplus=200_000, surplus=250_000, opinion="unmodified") == []
+
+
+def test_corroborating_signals_names_the_opinion_and_the_swing_independently():
+    signals = corroborating_signals(
+        prev_surplus=200_000, surplus=900_000, opinion="qualified")
+    assert any("qualified" in s for s in signals)
+    assert any("200,000" in s and "900,000" in s for s in signals)
+
+
 # --- clause_5_income_base ----------------------------------------------------
 #
 # 附註二 turned out to be a template revised clause-by-clause, not versioned as
