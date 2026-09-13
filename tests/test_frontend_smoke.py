@@ -1531,7 +1531,8 @@ def test_the_map_list_starts_collapsed_and_remembers_what_is_open() -> None:
     body = app[start:app.index("\nfunction ", start + 1)]
     # M1
     assert re.search(r"const open = state\.openDistricts\.has\(g\.d\);", body)
-    # 只抓「區頭初始狀態」那一句被反轉；點擊處理裡的 `opening = !state.openDistricts.has(key)` 是正當的。
+    # 只抓「區頭初始狀態」那一句被反轉；點擊處理裡的
+    # `opening = !state.openDistricts.has(key)` 是正當的。
     assert "!state.openDistricts.has(g.d)" not in body, "語意反了：預設會全部展開"
     assert "open ? g.ids" in body, "收起來的區不可以渲染名單"
     # M4：寫進 Set 的鍵與查詢用的鍵必須是同一個東西（區名）
