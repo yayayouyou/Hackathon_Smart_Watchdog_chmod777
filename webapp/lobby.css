@@ -113,6 +113,18 @@
 
 /* 身分浮層：沿用 .pop 的殼，只加內容排版 */
 .pop.who{width:268px}
+/* 綁定 Telegram：連結用 Telegram 的品牌藍，一眼看得出是「去 Telegram」；
+   退路那一行用等寬字加虛線框，一看就知道是要整行複製的東西。 */
+.tgbind-out{margin-top:8px;padding:9px 10px;border:1px solid var(--rule);border-radius:6px;
+  background:var(--sunk);display:flex;flex-direction:column;gap:6px;font-size:15px;
+  color:var(--ink-2)}
+.tgbind-link{display:block;text-align:center;padding:8px;border-radius:6px;
+  background:#229ED9;color:#fff;font-weight:600;text-decoration:none;font-size:15px}
+.tgbind-link:hover{filter:brightness(1.08)}
+.tgbind-cmd{font-family:var(--mono);font-size:15px;background:var(--panel);
+  border:1px dashed var(--ink-4);border-radius:4px;padding:5px 7px;word-break:break-all;
+  user-select:all}
+.tgbind-alt,.tgbind-note{font-size:15px;color:var(--ink-3);line-height:1.5}
 .pop.who .row{display:flex;justify-content:space-between;gap:12px;padding:5px 0;
   font-size:15px;border-bottom:1px dashed var(--rule)}
 .pop.who .row:last-of-type{border-bottom:0}

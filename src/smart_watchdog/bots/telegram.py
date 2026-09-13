@@ -46,7 +46,9 @@ _LOCK = threading.Lock()
 UNLINKED = (
     "我是小小守護員 🐕 新北市教保機構的稽查助理。\n\n"
     "這個 bot 只回應已綁定派工台帳號的稽查人員，所以現在還不能提供任何資料。\n\n"
-    "綁定方式：登入派工台 → 右上角身分卡 →「綁定 Telegram」→ 點開那個連結並按「開始」。"
+    "綁定方式（擇一）：\n"
+    "• 登入派工台 → 右上角身分卡 →「綁定 Telegram」→ 點開連結並按「開始」\n"
+    "• 手上已經有綁定碼：直接把「/start 綁定碼」送給我"
 )
 PRIVATE_ONLY = "為了避免名單被群組裡沒有登入過派工台的人看到，資料只在私訊中提供。請直接私訊我。"
 HELP = (
@@ -149,6 +151,9 @@ def send_map(chat_id: str, tok: str) -> None:
 def _parse(text: str, from_button: bool) -> tuple[str, str]:
     if from_button:
         return text, ""
+    if text.startswith("綁定"):
+        # 與 LINE 同一個說法。有人會照著網頁上的字打「綁定 xxx」而不是 /start。
+        return "bind", text[2:].strip()
     if text.startswith("/"):
         head, _, arg = text.partition(" ")
         return head[1:].split("@", 1)[0].lower(), arg.strip()
@@ -164,6 +169,12 @@ def _demo_link(db, arg: str, chat_id: str):
         return None
     user = linking.demo_user(db, config.get("SEED_INSPECTOR_EMAIL"))
     return linking.link(db, user, "telegram", chat_id) if user is not None else None
+
+
+def _linked(chat_id: str, user, tok: str) -> None:
+    print(f"[telegram] 綁定：{user.email} ↔ chat {chat_id}")
+    send(chat_id, f"綁定完成：{user.name}（{user.email}）。\n從現在起這個對話可以查資料。",
+         tok, reply_markup=menu())
 
 
 def _dispatch(chat: dict, text: str, tok: str, *, from_button: bool) -> None:
@@ -185,13 +196,19 @@ def _dispatch(chat: dict, text: str, tok: str, *, from_button: bool) -> None:
             if user is None:
                 send(chat_id, BAD_CODE, tok)
                 return
-            print(f"[telegram] 綁定：{user.email} ↔ chat {chat_id}")
-            send(chat_id, f"綁定完成：{user.name}（{user.email}）。\n從現在起這個對話可以查資料。",
-                 tok, reply_markup=menu())
+            _linked(chat_id, user, tok)
             return
 
         user = linking.user_for(db, "telegram", chat_id)
         if user is None:
+            # 沒綁定的人直接貼上碼（少打了 /start）也要能綁。對不上就照常只回說明——
+            # 比對是 compare_digest，猜不出任何東西。
+            if cmd == "ask" and arg and " " not in arg and len(arg) <= 64:
+                user = (linking.redeem(db, arg, "telegram", chat_id)
+                        or _demo_link(db, arg, chat_id))
+                if user is not None:
+                    _linked(chat_id, user, tok)
+                    return
             STATE.refused_unlinked += 1
             send(chat_id, UNLINKED, tok)
             return
