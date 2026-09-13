@@ -1002,7 +1002,9 @@ def _add_to_dataroom(ctx: ToolContext, a: AttachmentArgs) -> ToolOutcome:
         if res["status"] == "loaded":
             payload.update(tables=res["added"]["tables"],
                            note="依檔案內容認出這份原件，直接用既有的抽取結果入庫，沒有重新抽取。")
-        ui = {"type": "open_table", "layer": "raw", "refresh": True, "report": res["report"]}
+        ui = {"type": "open_table", "layer": "raw", "refresh": True, "report": res["report"],
+              "pages": (res["upload"]["pdf_pages"] or res["added"]["extracted_pages"])
+              if res["status"] == "loaded" else None}
     return ToolOutcome(payload=payload, ui_action=ui)
 
 

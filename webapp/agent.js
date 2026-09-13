@@ -176,7 +176,7 @@
             // prepare_upload：帶到「原始資料」層，把「選擇 PDF」標出來。
             layer: a.layer, upload: !!a.upload,
             // add_to_dataroom：新報告在背景抽取（job）或已直接入庫（refresh）。
-            job: a.job, refresh: !!a.refresh, report: a.report,
+            job: a.job, refresh: !!a.refresh, report: a.report, pages: a.pages,
           });
         };
         switchTab("data", then);

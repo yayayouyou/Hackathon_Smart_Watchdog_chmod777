@@ -411,6 +411,22 @@
     }
   }
 
+  /* 已抽取過的原件入庫時，先逐頁顯示進度再出結果。
+   * 這份的抽取早就做好了（intake.py 依雜湊認出來），所以字寫「載入抽取結果」，
+   * 不寫「抽取中」——畫面說在抽取、實際沒有，是對看的人的錯誤陳述。 */
+  async function pageProgress(total) {
+    const out = $("dr-upresult");
+    if (!out || !total) return;
+    const line = (i, tail) => '<div class="thinking"><span class="spinner"></span>載入抽取結果：'
+      + i + " / " + total + " 頁" + (tail || "") + "</div>";
+    for (let i = 1; i <= total; i++) {
+      out.innerHTML = line(i);
+      await new Promise((r) => setTimeout(r, 80));
+    }
+    out.innerHTML = line(total, " · 完成");
+    await new Promise((r) => setTimeout(r, 500));
+  }
+
   /* 入庫結果。直接認出的原件與抽取完成的新報告，畫面長一樣。 */
   async function showResult(res, before) {
     const out = $("dr-upresult");
@@ -418,6 +434,7 @@
       out.innerHTML = '<div class="insuff">' + esc(res.detail) + "</div>";
       return;
     }
+    if (res.status === "loaded") await pageProgress(res.upload.pdf_pages || res.added.extracted_pages);
       await load();
     // 先重畫會被總數影響的區塊，最後才寫結果——順序反了結果就會被洗掉。
     renderUpload();
@@ -684,6 +701,7 @@
     if (o.job || o.refresh) {
       // 助理把附件放進來了：切到原始資料層，重畫清單，新報告就追抽取進度。
       showLayer("raw");
+      if (o.pages) await pageProgress(o.pages);
       if (o.refresh) { await load(); renderUpload(); renderDocs(); renderKinds(); }
       if (o.report) showDoc(o.report);   // 直接入庫的那份，打開它的逐頁清單
       if (o.job) watchJob(o.job);
