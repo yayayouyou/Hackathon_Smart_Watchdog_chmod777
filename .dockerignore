@@ -1,5 +1,7 @@
-# 主辦方資料集：1.8 GB 且不得轉散布。後果見 Dockerfile 的說明。
+# 主辦方資料集：只放證據頁要用的 132 份非營利財報原件（1.2 GB），其餘不進映像。
+# 取捨見 Dockerfile 開頭的說明。
 data/raw/
+!data/raw/資料集/非營利園財報
 data/interim/
 # 機器各自獨立的執行期狀態（含密碼雜湊與對話稽核軌跡）。
 data/runtime/
