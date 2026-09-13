@@ -23,7 +23,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from fastapi.responses import FileResponse
 
-from ..dataroom import store
+from ..dataroom import intake, store
 from ..db.models import User
 from .auth import get_current_user
 
@@ -114,31 +114,41 @@ def compare(institution: str, section: str,
 
 
 # ── 入庫 ──────────────────────────────────────────────────────────────
-@router.post("/upload")
-async def upload(file: UploadFile = File(...),
-                 user: User = Depends(get_current_user)) -> dict:
-    """收一份原件，把它的抽取結果登錄進來。
-
-    回傳的每一項都是這個檔案的實際屬性與登錄後真正多出來的東西，
-    不含任何估計值。
-    """
-    del user
-    _need_slice()
+async def read_pdf(file: UploadFile) -> tuple[str, bytes]:
+    """收檔的共同檢查。文件控管室與助理的「+」共用，兩邊擋的東西才一樣。"""
     name = file.filename or ""
     if not name.lower().endswith(".pdf"):
         raise HTTPException(400, "只接受 PDF")
-
     blob = await file.read()
     if len(blob) > MAX_BYTES:
         raise HTTPException(413, f"檔案超過 {MAX_BYTES // 1024 // 1024} MB")
     # 副檔名可以隨便改，檔頭不行。
     if not blob.startswith(b"%PDF-"):
         raise HTTPException(400, "檔頭不是 %PDF-，不是有效的 PDF")
+    return name, blob
 
-    result = store.ingest(name, blob)
+
+@router.post("/upload")
+async def upload(file: UploadFile = File(...),
+                 user: User = Depends(get_current_user)) -> dict:
+    """收一份原件。認得就直接入庫；認不得就開始抽取，回傳工作（見 intake.py）。"""
+    del user
+    _need_slice()
+    name, blob = await read_pdf(file)
+    result = intake.submit(name, blob)
     if not result.get("ok"):
         raise HTTPException(422, result.get("detail", "無法登錄這份文件"))
     return result
+
+
+@router.get("/jobs/{job_id}")
+def job(job_id: str, user: User = Depends(get_current_user)) -> dict:
+    """一份上傳後抽取的進度與結果。"""
+    del user
+    j = intake.job(job_id)
+    if j is None:
+        raise HTTPException(404, "查無此抽取工作")
+    return j
 
 
 @router.post("/reset")

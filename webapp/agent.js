@@ -16,6 +16,7 @@
 
   let sessionId = null;
   let busy = false;
+  let attached = [];   // 「+」附加的檔案：{filename, id?, pages?, pending?, error?}
 
   /* ── 畫面動作分派 ────────────────────────────────────── */
 
@@ -164,6 +165,8 @@
             section: a.section || (Array.isArray(a.sections) ? a.sections[0] : null),
             // prepare_upload：帶到「原始資料」層，把「選擇 PDF」標出來。
             layer: a.layer, upload: !!a.upload,
+            // add_to_dataroom：新報告在背景抽取（job）或已直接入庫（refresh）。
+            job: a.job, refresh: !!a.refresh, report: a.report,
           });
         };
         switchTab("data", then);
@@ -503,13 +506,16 @@
   }
 
   async function send(text) {
-    if (busy || !text.trim()) return;
+    const files = attached.filter((a) => a.id);
+    if (busy || (!text.trim() && !files.length) || attached.some((a) => a.pending)) return;
     busy = true;
     // 上一輪的步驟區塊留在畫面上，但不要再被這一輪的 step_id 認領——
     // 後端每輪都從 1 重新編號。
     steps = new Map();
     $("agentsend").disabled = true;
-    bubble(esc(text), "me");
+    bubble(esc(text) + files.map((f) => ` <span class="chip">PDF ${esc(f.filename)}</span>`).join(""), "me");
+    attached = [];
+    paintChips();
     /* ⚠️ 順序：先長出這一輪的抬頭，再設表情。
        反過來的話 `mood("think")` 設到的是**上一輪**那隻狗，而 `turnHead()`
        下一行就把牠凍回 idle，新的那隻則停在預設的 idle——於是送出後到第一個
@@ -523,7 +529,8 @@
       res = await fetch("/api/agent/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, session_id: sessionId, view: currentView() }),
+        body: JSON.stringify({ text, session_id: sessionId, view: currentView(),
+          attachments: files.map((f) => f.id) }),
       });
     } catch (e) {
       thinking(false);
@@ -651,6 +658,56 @@
   }
   document.querySelectorAll("#agentcol .eg").forEach((b) =>
     b.addEventListener("click", () => send(b.textContent)));
+
+  /* ── 附加檔案 ──────────────────────────────────────────
+   * 「+」是使用者親手按的，瀏覽器才肯打開檔案選擇視窗（助理自己開不了，見
+   * dataroom.js 的 cueUpload）。選好就先傳到伺服器暫存，送出時只帶代號——
+   * 由助理的 tool 放進文件控管室，結果是伺服器做完回報的。 */
+  function paintChips() {
+    const box = $("agentchips");
+    if (!box) return;
+    box.hidden = !attached.length;
+    box.innerHTML = attached.map((a, i) => `<span class="chip${a.error ? " err" : ""}">PDF ${esc(a.filename)}`
+      + (a.pending ? " · 上傳中…" : a.error ? ` · ${esc(a.error)}` : a.pages ? ` · ${a.pages} 頁` : "")
+      + (a.pending ? "" : `<button type="button" class="chipx" data-i="${i}" aria-label="移除">×</button>`)
+      + "</span>").join("");
+    $("agentsend").disabled = busy || attached.some((a) => a.pending);
+  }
+
+  async function attach(file) {
+    const slot = { filename: file.name, pending: true };
+    attached.push(slot);
+    paintChips();
+    const fd = new FormData();
+    fd.append("file", file);
+    try {
+      const r = await fetch("/api/agent/attachments", { method: "POST", body: fd });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.detail || `HTTP ${r.status}`);
+      Object.assign(slot, d, { pending: false });
+    } catch (e) {
+      Object.assign(slot, { pending: false, error: e.message });
+    }
+    paintChips();
+  }
+
+  const attachBtn = $("agentattach"), fileInput = $("agentfile");
+  if (attachBtn && fileInput) {
+    attachBtn.addEventListener("click", () => fileInput.click());
+    fileInput.addEventListener("change", () => {
+      [...fileInput.files].forEach(attach);
+      fileInput.value = "";          // 同一個檔案移除後再選一次也要觸發
+    });
+  }
+  const chipBox = $("agentchips");
+  if (chipBox) {
+    chipBox.addEventListener("click", (e) => {
+      const x = e.target.closest(".chipx");
+      if (!x) return;
+      attached.splice(Number(x.dataset.i), 1);
+      paintChips();
+    });
+  }
 
   const clear = $("agentclear");
   if (clear) {

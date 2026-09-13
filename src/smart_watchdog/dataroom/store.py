@@ -8,8 +8,8 @@
 ## 「已載入 / 待載入」是什麼
 
 ``DEFAULT_PENDING`` 裡的報告預設不計入總數、查不到、agent 也讀不到。
-上傳它的 PDF 之後才進來。這不是開關，是**同一條入庫路徑的兩端**：
-``ingest()`` 做的事就是把一份原件對上它的抽取結果並登錄進來。
+上傳它的 PDF 之後才進來。這不是開關，是**同一條入庫路徑的兩端**。
+怎麼認出上傳的是哪一份、認不得時怎麼抽取，在 ``intake.py``；這裡只管登錄。
 
 狀態寫在 ``data/runtime/dataroom.json``（``data/runtime/`` 已 gitignore），
 所以重設示範只要刪掉那個檔。
@@ -21,21 +21,24 @@ import hashlib
 import json
 import pathlib
 import re
+import shutil
+import threading
 from typing import Any
 
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 SLICE = ROOT / "data/interim/dataroom"
 STATE = ROOT / "data/runtime/dataroom.json"
 UPLOADS = ROOT / "data/runtime/dataroom_uploads"
+#: 上傳後才抽取出來的報告（intake.py）。不在切片裡，切片重建也不會洗掉它們。
+EXTRACTED = ROOT / "data/runtime/dataroom_extracted"
 
 #: 預設保留、等待上傳的報告。挑 N04 海工 113 是因為它的表最有變化
 #: （37 頁、59 張表、28 個類別），一份進來就能看出總數與選單的差別。
 DEFAULT_PENDING: tuple[str, ...] = ("N04_海工_113",)
 
-#: 原件檔名 → 報告代號。`N04海工_113學年度財務報告.pdf`
-_FILENAME = re.compile(r"^(N\d\d)(.+?)_(\d{3})學年度")
-
 _cache: dict[str, Any] = {"index": None, "reports": {}}
+#: 上傳請求與背景抽取會同時改同一個狀態檔。
+_lock = threading.RLock()
 
 
 # ── 底層讀取 ──────────────────────────────────────────────────────────
@@ -50,8 +53,10 @@ def index() -> dict:
             _cache["index"] = {"totals": {}, "sections": [], "reports": [],
                                "public": [], "missing": True}
         else:
-            _cache["index"] = json.loads(
-                (SLICE / "index.json").read_text(encoding="utf-8"))
+            idx = json.loads((SLICE / "index.json").read_text(encoding="utf-8"))
+            idx["reports"] = (idx["reports"]
+                              + list((state().get("extracted") or {}).values()))
+            _cache["index"] = idx
     return _cache["index"]
 
 
@@ -60,6 +65,8 @@ def _report_raw(rid: str) -> dict | None:
     if rid in _cache["reports"]:
         return _cache["reports"][rid]
     f = SLICE / "r" / f"{rid}.json"
+    if not f.exists():
+        f = EXTRACTED / "r" / f"{rid}.json"
     if not f.exists():
         return None
     data = json.loads(f.read_text(encoding="utf-8"))
@@ -84,6 +91,17 @@ def _save(s: dict) -> None:
     tmp.replace(STATE)
 
 
+def mutate(fn, *, refresh: bool = False) -> dict:
+    """讀、改、寫一次做完。``refresh`` 表示報告清單變了，總目要重算。"""
+    with _lock:
+        s = state()
+        fn(s)
+        _save(s)
+        if refresh:
+            _cache["index"] = None
+        return s
+
+
 def pending() -> set[str]:
     return set(state().get("pending") or ())
 
@@ -93,10 +111,14 @@ def is_loaded(rid: str) -> bool:
 
 
 def reset() -> dict:
-    """回到上傳前。刪掉已上傳的檔，狀態回預設。"""
-    for f in UPLOADS.glob("*.pdf"):
-        f.unlink()
-    _save({"pending": list(DEFAULT_PENDING), "uploads": {}})
+    """回到上傳前。刪掉已上傳的檔與上傳後才抽取的報告，狀態回預設。"""
+    with _lock:
+        for f in UPLOADS.glob("*.pdf"):
+            f.unlink()
+        shutil.rmtree(EXTRACTED, ignore_errors=True)
+        _save({"pending": list(DEFAULT_PENDING), "uploads": {}})
+        _cache["index"] = None
+        _cache["reports"] = {}
     return overview()
 
 
@@ -347,53 +369,58 @@ def compare_years(institution: str, section: str, years: list[int] | None = None
 
 
 # ── 入庫 ──────────────────────────────────────────────────────────────
-def match_filename(filename: str) -> str | None:
-    """原件檔名 → 報告代號。對不上就 None。"""
-    m = _FILENAME.match(pathlib.Path(filename or "").name)
-    if not m:
+def page_count(blob: bytes) -> int | None:
+    """頁數。缺套件或壞檔都只是拿不到，回 None。"""
+    try:
+        import pymupdf
+        with pymupdf.open(stream=blob, filetype="pdf") as doc:
+            return doc.page_count
+    except Exception:  # noqa: BLE001 - 缺套件或壞檔都只是拿不到頁數
         return None
-    code, short, year = m.group(1), m.group(2), int(m.group(3))
-    rid = f"{code}_{short}_{year}"
-    return rid if (SLICE / "r" / f"{rid}.json").exists() else None
 
 
-def ingest(filename: str, blob: bytes) -> dict:
-    """收一份原件，把它的抽取結果登錄進來。
+def save_upload(sha: str, blob: bytes) -> str:
+    UPLOADS.mkdir(parents=True, exist_ok=True)
+    (UPLOADS / f"{sha[:16]}.pdf").write_bytes(blob)
+    return f"data/runtime/dataroom_uploads/{sha[:16]}.pdf"
+
+
+def register(rid: str, filename: str, blob: bytes) -> dict:
+    """把一份已認出的原件登錄進來，用它既有的抽取結果。"""
+    sha = hashlib.sha256(blob).hexdigest()
+    up = {"filename": pathlib.Path(filename).name, "sha256": sha,
+          "bytes": len(blob), "pdf_pages": page_count(blob),
+          "stored": save_upload(sha, blob)}
+
+    def f(s: dict) -> None:
+        s["pending"] = [p for p in (s.get("pending") or []) if p != rid]
+        s.setdefault("uploads", {})[rid] = up
+
+    mutate(f, refresh=True)
+    return {**summary(rid), "status": "loaded"}
+
+
+def add_extracted(rep: dict, entry: dict, upload: dict) -> None:
+    """登錄一份上傳後才抽取出來的報告（見 intake.py）。"""
+    folder = EXTRACTED / "r"
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / f"{rep['id']}.json").write_text(
+        json.dumps(rep, ensure_ascii=False), encoding="utf-8")
+
+    def f(s: dict) -> None:
+        s.setdefault("extracted", {})[rep["id"]] = entry
+        s.setdefault("uploads", {})[rep["id"]] = upload
+
+    mutate(f, refresh=True)
+
+
+def summary(rid: str) -> dict:
+    """登錄後真正多出來的東西。
 
     回傳的每一項都是這個檔案的實際屬性（大小、SHA-256、頁數），以及登錄後
     真正多出來的東西（表數、類別、數字），不做任何估計。
     """
-    rid = match_filename(filename)
-    if not rid:
-        return {"ok": False, "reason": "unknown_document",
-                "detail": "檔名對不上任何一份已抽取的報告"}
-
     rep = _report_raw(rid)
-    if rep is None:
-        return {"ok": False, "reason": "no_extraction",
-                "detail": f"{rid} 沒有頁級抽取結果"}
-
-    sha = hashlib.sha256(blob).hexdigest()
-    pages = None
-    try:
-        import pymupdf
-        with pymupdf.open(stream=blob, filetype="pdf") as doc:
-            pages = doc.page_count
-    except Exception:  # noqa: BLE001 - 缺套件或壞檔都只是拿不到頁數
-        pages = None
-
-    UPLOADS.mkdir(parents=True, exist_ok=True)
-    (UPLOADS / f"{sha[:16]}.pdf").write_bytes(blob)
-
-    s = state()
-    s["pending"] = [p for p in (s.get("pending") or []) if p != rid]
-    uploads = s.setdefault("uploads", {})
-    uploads[rid] = {"filename": pathlib.Path(filename).name,
-                    "sha256": sha, "bytes": len(blob), "pdf_pages": pages,
-                    "stored": f"data/runtime/dataroom_uploads/{sha[:16]}.pdf"}
-    _save(s)
-    _cache["index"] = None  # 總數要重算
-
     from . import tabletypes as tt
     secs = sorted({t["section"] for t in rep["tables"]})
     cells = sum(len(r.get("values") or [])
@@ -404,7 +431,7 @@ def ingest(filename: str, blob: bytes) -> dict:
     return {
         "ok": True, "report": rid, "institution": rep["short_name"],
         "academic_year": rep["academic_year"],
-        "upload": uploads[rid],
+        "upload": (state().get("uploads") or {}).get(rid),
         "added": {
             "extracted_pages": len(rep["pages"]),
             "tables": len(rep["tables"]),

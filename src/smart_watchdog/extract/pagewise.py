@@ -449,3 +449,36 @@ def has_content(payload: dict) -> bool:
     if any((t.get("items") or []) for t in (payload.get("tables") or [])):
         return True
     return any((s.get("text") or "").strip() for s in (payload.get("text_sections") or []))
+
+
+def extract_page(client, model: str, image: bytes,
+                 max_tokens: int) -> tuple[dict, int, int, str]:
+    """One Bedrock call. Returns (payload, in_tokens, out_tokens, raw_text).
+
+    Moved here from ``scripts/extract_pages_bedrock.py`` because the upload intake
+    (``dataroom/intake.py``) makes the same call, and two copies of the request
+    would drift apart.
+    """
+    import base64
+    import json
+
+    b64 = base64.standard_b64encode(image).decode()
+    resp = client.messages.create(
+        model=model,
+        max_tokens=max_tokens,
+        # Structured Outputs is enforced on Bedrock, so there is no parse-retry loop.
+        output_config={"format": {"type": "json_schema", "schema": PAGE_SCHEMA}},
+        messages=[{
+            "role": "user",
+            "content": [
+                {"type": "image",
+                 "source": {"type": "base64", "media_type": "image/png", "data": b64}},
+                {"type": "text", "text": PAGE_PROMPT},
+            ],
+        }],
+    )
+    text = next((b.text for b in resp.content if b.type == "text"), "")
+    usage = getattr(resp, "usage", None)
+    tin = getattr(usage, "input_tokens", 0) or 0
+    tout = getattr(usage, "output_tokens", 0) or 0
+    return json.loads(text), tin, tout, text

@@ -1495,3 +1495,27 @@ def test_the_agent_can_bring_the_user_to_the_upload_button() -> None:
 
     css = (WEBAPP / "style.css").read_text(encoding="utf-8")
     assert ".drup-btn.drup-cue" in css, "樣式表畫不出上傳按鈕的標示"
+
+
+def test_the_chat_can_attach_a_file_for_the_agent_to_file() -> None:
+    """助理對話框的「+」：使用者親手選檔，助理把它放進文件控管室。
+
+    每一段都要在：有按鈕與檔案輸入、選好先傳到伺服器暫存、送出時帶附件代號、
+    分派器把抽取工作轉給資料室、資料室會追進度。少任何一段，畫面上都只會是
+    「選了檔案之後什麼都沒發生」。
+    """
+    html = (WEBAPP / "index.html").read_text(encoding="utf-8")
+    assert 'id="agentattach"' in html and 'id="agentfile"' in html, "對話框沒有「+」"
+
+    agent = _code((WEBAPP / "agent.js").read_text(encoding="utf-8"))
+    assert '"/api/agent/attachments"' in agent, "選好的檔案沒有先傳到伺服器暫存"
+    send = agent[agent.index("async function send("):]
+    send = send[:send.index("\n  }\n")]
+    assert "attachments:" in send, "送出訊息時沒有帶附件代號"
+    case = agent[agent.index('case "open_table":'):]
+    case = case[:case.index("break;")]
+    assert "a.job" in case, "分派器沒有把抽取工作轉給資料室"
+
+    dr = _code((WEBAPP / "dataroom.js").read_text(encoding="utf-8"))
+    assert "/api/dataroom/jobs/" in dr and "function watchJob" in dr, "資料室不會追抽取進度"
+

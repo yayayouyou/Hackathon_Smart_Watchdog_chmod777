@@ -381,16 +381,18 @@
     const t = state.ov.totals || {};
     return '<div class="drup">'
       + '<div class="drup-h"><b>上傳財務報告</b>'
-      + '<span>PDF。抽取結果會登錄進下方清單與「數字」層。</span></div>'
+      + '<span>PDF，檔名不限。庫裡已有的原件直接入庫；新的報告會自動抽取，約 2–3 分鐘。</span></div>'
       + '<div class="drup-now">目前：<b>' + (t.reports || 0) + "</b> 份報告 · <b>"
       + (t.tables || 0) + "</b> 張表 · <b>" + (t.cells || 0).toLocaleString("en-US")
       + "</b> 格數字</div>"
       + '<label class="drup-btn">選擇 PDF'
       + '<input type="file" id="dr-file" accept="application/pdf" hidden></label>'
+      // 重設緊跟在按鈕後面（.drup-reset 的 margin-left 就是為此）。放在提示之後的話
+      // 它會落到提示底下自成一行，縮排 10px 對不到任何東西。
+      + '<button type="button" class="drup-reset" id="dr-reset">重設</button>'
       + (pend.length ? '<div class="drup-hint">尚未入庫：'
         + pend.map((p) => esc(p.short_name) + " " + p.academic_year + " 學年度").join("、")
         + "</div>" : "")
-      + '<button type="button" class="drup-reset" id="dr-reset">重設</button>'
       + "</div>";
   }
 
@@ -402,39 +404,79 @@
     fd.append("file", file);
     try {
       const res = await api("/api/dataroom/upload", { method: "POST", body: fd });
-      await load();
-      // 先重畫會被總數影響的區塊，最後才寫結果——順序反了結果就會被洗掉。
-      renderUpload();
-      renderDocs();
-      renderKinds();
-      const after = state.ov.totals;
-      // 標籤與數字包在同一個 nowrap 裡：分開的話「空白」會留在上一行、
-      // 數字掉到下一行，而這四組數字正是上傳前後最該一眼看完的東西。
-      const diff = (label, k) => '<span class="drd">' + label + " <i>"
-        + (before[k] || 0).toLocaleString("en-US") + "</i> → <b>"
-        + (after[k] || 0).toLocaleString("en-US") + "</b></span>";
-      out.innerHTML = '<div class="drup-ok">'
-        + "<b>" + esc(res.institution) + " " + esc(res.academic_year)
-        + " 學年度</b> 已入庫"
-        + '<div class="kv">'
-        + "<span>檔案</span><span>" + esc(res.upload.filename) + " · "
-        + (res.upload.bytes / 1048576).toFixed(1) + " MB · "
-        + esc(res.upload.pdf_pages) + " 頁</span>"
-        + "<span>SHA-256</span><span class=\"drsha\">" + esc(res.upload.sha256) + "</span>"
-        + "<span>抽取模型</span><span>" + esc((res.provenance.models || []).join("、"))
-        + " · " + esc((res.provenance.dpi || []).join("、")) + " dpi</span>"
-        + "<span>機構核對</span><span>" + (res.added.identity_ok
-          ? "全部頁面的頁尾代號與期望代號相符" : "有頁面未通過，已隔離") + "</span>"
-        + "</div>"
-        + '<div class="drdiff">' + diff("報告", "reports") + diff("表", "tables")
-        + diff("數字", "cells") + diff("空白", "blank") + "</div>"
-        + '<div class="drup-sec">新增 ' + res.added.tables + " 張表，分屬 "
-        + res.added.sections.length + " 種類型："
-        + res.added.sections.map((s) => '<button type="button" class="preset drchip" '
-          + 'data-sec="' + esc(s.key) + '">' + esc(s.zh) + "</button>").join("")
-        + "</div></div>";
+      if (res.status === "extracting") return watchJob(res.job.id, before);
+      await showResult(res, before);
     } catch (e) {
       out.innerHTML = '<div class="insuff">' + esc(e.message) + "</div>";
+    }
+  }
+
+  /* 入庫結果。直接認出的原件與抽取完成的新報告，畫面長一樣。 */
+  async function showResult(res, before) {
+    const out = $("dr-upresult");
+    if (res.status === "already_loaded") {
+      out.innerHTML = '<div class="insuff">' + esc(res.detail) + "</div>";
+      return;
+    }
+      await load();
+    // 先重畫會被總數影響的區塊，最後才寫結果——順序反了結果就會被洗掉。
+    renderUpload();
+    renderDocs();
+    renderKinds();
+    const after = state.ov.totals;
+    // 標籤與數字包在同一個 nowrap 裡：分開的話「空白」會留在上一行、
+    // 數字掉到下一行，而這四組數字正是上傳前後最該一眼看完的東西。
+    const diff = (label, k) => '<span class="drd">' + label + " <i>"
+      + (before[k] || 0).toLocaleString("en-US") + "</i> → <b>"
+      + (after[k] || 0).toLocaleString("en-US") + "</b></span>";
+    out.innerHTML = '<div class="drup-ok">'
+      + "<b>" + esc(res.institution) + " " + esc(res.academic_year)
+      + " 學年度</b> 已入庫"
+      + '<div class="kv">'
+      + "<span>檔案</span><span>" + esc(res.upload.filename) + " · "
+      + (res.upload.bytes / 1048576).toFixed(1) + " MB · "
+      + esc(res.upload.pdf_pages) + " 頁</span>"
+      + "<span>SHA-256</span><span class=\"drsha\">" + esc(res.upload.sha256) + "</span>"
+      + "<span>抽取模型</span><span>" + esc((res.provenance.models || []).join("、"))
+      + " · " + esc((res.provenance.dpi || []).join("、")) + " dpi</span>"
+      + "<span>機構核對</span><span>" + (res.added.identity_ok
+        ? "全部頁面的頁尾代號與期望代號相符" : "有頁面未通過，已隔離") + "</span>"
+      + "</div>"
+      + '<div class="drdiff">' + diff("報告", "reports") + diff("表", "tables")
+      + diff("數字", "cells") + diff("空白", "blank") + "</div>"
+      + '<div class="drup-sec">新增 ' + res.added.tables + " 張表，分屬 "
+      + res.added.sections.length + " 種類型："
+      + res.added.sections.map((s) => '<button type="button" class="preset drchip" '
+        + 'data-sec="' + esc(s.key) + '">' + esc(s.zh) + "</button>").join("")
+      + "</div></div>";
+  }
+
+  /* 新報告在伺服器背景抽取（intake.py），這裡每兩秒問一次進度。
+   * 同一份工作只追一次：上傳按鈕與助理可能先後叫到同一個 job。 */
+  const watching = new Set();
+  async function watchJob(id, before) {
+    if (watching.has(id)) return;
+    watching.add(id);
+    before = before || Object.assign({}, state.ov.totals);
+    const out = $("dr-upresult");
+    try {
+      for (;;) {
+        const j = await api("/api/dataroom/jobs/" + encodeURIComponent(id));
+        if (j.status === "extracting") {
+          out.innerHTML = '<div class="thinking"><span class="spinner"></span>'
+            + esc(j.filename) + " 抽取中：" + j.pages_done + " / " + j.pages_total + " 頁</div>";
+          await new Promise((r) => setTimeout(r, 2000));
+          continue;
+        }
+        if (j.status === "done") await showResult(j.result, before);
+        else out.innerHTML = '<div class="insuff">' + esc(j.filename) + "："
+          + esc(j.detail || j.status) + "</div>";
+        return;
+      }
+    } catch (e) {
+      out.innerHTML = '<div class="insuff">' + esc(e.message) + "</div>";
+    } finally {
+      watching.delete(id);
     }
   }
 
@@ -639,6 +681,14 @@
   async function focus(opts) {
     await open();
     const o = opts || {};
+    if (o.job || o.refresh) {
+      // 助理把附件放進來了：切到原始資料層，重畫清單，新報告就追抽取進度。
+      showLayer("raw");
+      if (o.refresh) { await load(); renderUpload(); renderDocs(); renderKinds(); }
+      if (o.report) showDoc(o.report);   // 直接入庫的那份，打開它的逐頁清單
+      if (o.job) watchJob(o.job);
+      return;
+    }
     if (o.upload) {
       // 上傳區只在「原始資料」層；切過去、標出來就好，不去動表單類型與篩選。
       showLayer("raw");

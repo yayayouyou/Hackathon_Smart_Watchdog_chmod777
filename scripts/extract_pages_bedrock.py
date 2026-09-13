@@ -45,7 +45,6 @@ Usage
 from __future__ import annotations
 
 import argparse
-import base64
 import json
 import os
 import pathlib
@@ -63,8 +62,7 @@ import fitz
 from smart_watchdog import bedrock as _bedrock
 from smart_watchdog.console import use_utf8
 from smart_watchdog.extract.pagewise import (
-    PAGE_PROMPT,
-    PAGE_SCHEMA,
+    extract_page,
     identity_ok,
     validate_page,
 )
@@ -146,31 +144,6 @@ def append_ledger(row: dict) -> None:
         LEDGER.parent.mkdir(parents=True, exist_ok=True)
         with LEDGER.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(row, ensure_ascii=False) + "\n")
-
-
-def extract_page(client, model: str, image: bytes,
-                 max_tokens: int) -> tuple[dict, int, int, str]:
-    """One Bedrock call. Returns (payload, in_tokens, out_tokens, raw_text)."""
-    b64 = base64.standard_b64encode(image).decode()
-    resp = client.messages.create(
-        model=model,
-        max_tokens=max_tokens,
-        # Structured Outputs is enforced on Bedrock, so there is no parse-retry loop.
-        output_config={"format": {"type": "json_schema", "schema": PAGE_SCHEMA}},
-        messages=[{
-            "role": "user",
-            "content": [
-                {"type": "image",
-                 "source": {"type": "base64", "media_type": "image/png", "data": b64}},
-                {"type": "text", "text": PAGE_PROMPT},
-            ],
-        }],
-    )
-    text = next((b.text for b in resp.content if b.type == "text"), "")
-    usage = getattr(resp, "usage", None)
-    tin = getattr(usage, "input_tokens", 0) or 0
-    tout = getattr(usage, "output_tokens", 0) or 0
-    return json.loads(text), tin, tout, text
 
 
 def do_one(task: dict, client, model: str, dpi: int, max_tokens: int,

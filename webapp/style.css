@@ -361,6 +361,18 @@ main{display:grid;grid-template-columns:var(--railw,214px) 6px minmax(0,1fr);
 .chatbar button{border:1px solid var(--seal);color:var(--seal);border-radius:18px;
   padding:0 15px;font-size:17px}
 .chatbar button:hover{background:var(--seal-soft)}
+/* 助理的「+」附加檔案與已附加的檔案標籤 */
+.attachbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 12px 0;
+  border-top:1px solid var(--rule)}
+.attachbar + .chatbar{border-top:0}
+.attachbar .attach{border:1px dashed var(--seal);color:var(--seal);background:none;
+  border-radius:14px;padding:3px 12px;font-size:15px;cursor:pointer}
+.attachbar .attach:hover{background:var(--seal-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--rule);
+  border-radius:12px;padding:2px 8px;font-size:15px;color:var(--ink-4);background:var(--paper)}
+.chip.err{border-color:var(--seal);color:var(--seal)}
+.chipx{border:0;background:none;color:inherit;font-size:15px;padding:0 2px;cursor:pointer}
 
 /* dossier */
 .dossier{position:absolute;inset:0;background:var(--panel);display:flex;
@@ -988,15 +1000,20 @@ body.resizing{user-select:none;cursor:col-resize}
   border-bottom:1px solid var(--rule)}
 #pane-scan .scanwrap{flex:1 1 45%;min-height:0;height:auto}
 
-.soc-bar{display:flex;align-items:baseline;gap:10px;margin-bottom:9px}
-.soc-title{font-weight:600;font-size:17px}
+/* 左欄在 1280 視窗只有 ~320px。不換行的話三塊硬擠一列：「社群聲音」被擠成
+   直排四個字、「排序」也直排。換行後標題、說明、排序各自佔得到完整的寬。 */
+.soc-bar{display:flex;align-items:baseline;gap:4px 10px;margin-bottom:9px;
+  flex-wrap:wrap}
+.soc-title{font-weight:600;font-size:17px;white-space:nowrap}
 .soc-sub{color:var(--ink-3);font-size:15px}
 
 .soc-row{padding:7px 9px;border:1px solid var(--rule);border-radius:3px;
   margin-bottom:5px;cursor:pointer;background:var(--panel)}
 .soc-row:hover{border-color:var(--ink-4)}
 .soc-row.on{border-color:var(--ink-2)}
-.soc-head{display:flex;align-items:baseline;gap:8px}
+/* 放不下時讓行政區、則數、日期換到第二行，而不是把園名裁成「新…」——
+   園名是這一列唯一非讀不可的字，其他幾塊都是 nowrap、不會讓位。 */
+.soc-head{display:flex;align-items:baseline;gap:2px 8px;flex-wrap:wrap}
 .soc-nm{font-weight:500;flex:1 1 auto;min-width:0;overflow:hidden;
   text-overflow:ellipsis;white-space:nowrap}
 .soc-town{color:var(--ink-3);font-size:15px;white-space:nowrap}
@@ -1037,11 +1054,16 @@ body.resizing{user-select:none;cursor:col-resize}
 /* ── 資料室 ──────────────────────────────────────────────────────────
    兩層（原始資料／數字）＋ 右上角一顆收判讀與外部佐證的鈕。
    字級比其他室大一階：這一室的主體是表格，而表格是拿來讀數字的。 */
+/* 放不下就換行，不要擠。來源膠囊是 nowrap、不會讓位，1280 寬的視窗（助理欄
+   380）這一列只剩約 640px，於是讓位的是分頁鈕——被擠成「原／始／資／料」一字
+   一行。現在膠囊掉到第二行，分頁鈕與「判讀與外部佐證」自己不准折。
+   .smbar（04、05 室）是同一個結構，一起處理。 */
 .drbar{display:flex;align-items:center;gap:12px;padding:9px 16px;flex:none;
-  background:var(--panel);border-bottom:1px solid var(--rule)}
-.drseg{display:flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+  flex-wrap:wrap;background:var(--panel);border-bottom:1px solid var(--rule)}
+.drseg{display:flex;flex:none;border:1px solid var(--rule);border-radius:6px;
+  overflow:hidden}
 .drseg button{padding:6px 16px;font-size:15px;font-family:var(--sans);
-  color:var(--ink-2);background:var(--panel);border:0;
+  white-space:nowrap;color:var(--ink-2);background:var(--panel);border:0;
   border-right:1px solid var(--rule);cursor:pointer;display:flex;
   align-items:baseline;gap:7px;transition:background .12s,color .12s}
 .drseg button:last-child{border-right:0}
@@ -1051,7 +1073,7 @@ body.resizing{user-select:none;cursor:col-resize}
 .drseg i{font-style:normal;font-family:var(--mono);font-size:15px;
   color:var(--ink-4);font-variant-numeric:tabular-nums}
 .drbar .rh-src{margin-left:auto;font-size:15px}
-.drbar .costbtn{font-size:15px;color:var(--fam-core)}
+.drbar .costbtn{font-size:15px;color:var(--fam-core);white-space:nowrap}
 .drbar .costbtn:hover{color:var(--ink)}
 .pop.dr{right:16px;top:46px;width:390px;max-height:70vh;overflow-y:auto}
 
@@ -1121,8 +1143,12 @@ body.resizing{user-select:none;cursor:col-resize}
 .mx{width:100%;border-collapse:collapse;font-size:15px}
 .mx th,.mx td{border-bottom:1px solid var(--rule);padding:3px 9px}
 .mx thead th{position:sticky;top:0;z-index:1;background:var(--sunk);
-  font-size:15px;color:var(--ink-2);font-weight:600;text-align:center}
-.mx .mx-n{text-align:left;font-weight:500;color:var(--ink);white-space:nowrap}
+  font-size:15px;color:var(--ink-2);font-weight:600;text-align:center;
+  white-space:nowrap}
+/* 園名欄允許折行。原本 nowrap 把這欄撐在最長的「N32板橋員工子女」142px，
+   左半欄只有 ~320px 時五個學年度放不下，114 與合計整欄被推到橫向捲動後面
+   ——而缺口的形狀正是這張矩陣要一眼回答的事。少數長園名折兩行，代價小得多。 */
+.mx .mx-n{text-align:left;font-weight:500;color:var(--ink)}
 .mx-code{font-family:var(--mono);font-size:15px;color:var(--ink-4);margin-right:7px}
 .mx-c{text-align:center;font-family:var(--mono);
   font-variant-numeric:tabular-nums;padding:0}
@@ -1253,7 +1279,7 @@ body.resizing{user-select:none;cursor:col-resize}
   border-bottom:1px solid var(--rule);display:flex;align-items:baseline;gap:8px}
 /* 額度常駐在右欄頂端：要花錢的人不該需要捲動才看得到自己還剩多少。 */
 #scanfold-budget{margin-left:auto;color:var(--ink-3);font-size:15px;
-  font-variant-numeric:tabular-nums}
+  font-variant-numeric:tabular-nums;white-space:nowrap}
 .scancol>.scanwrap{flex:1 1 auto;min-height:0;overflow-y:auto;height:auto}
 @media (max-width:860px){
   #pane-scan{flex-direction:column}
@@ -1274,7 +1300,7 @@ body.resizing{user-select:none;cursor:col-resize}
 
    唯一的色彩訊號是「待人工認園」用 --warn，而那講的是**我方的工作量**，
    不是機構的狀態——那一格說的是「有幾則我們還認不出是哪一園」。 */
-.soc-head-bar,.scancol-head{flex:0 0 auto;padding:10px 14px;
+.soc-head-bar,.scancol-head{flex:0 0 auto;flex-wrap:wrap;padding:10px 14px;
   background:var(--sunk);border-bottom:1px solid var(--rule);
   display:flex;align-items:baseline;gap:9px;font-size:17px;font-weight:600}
 .soc-head-bar .soc-sub,.scancol-head #scanfold-budget{margin-left:auto;
@@ -1402,7 +1428,7 @@ body.resizing{user-select:none;cursor:col-resize}
    預設是「最新活動」，不是「關注程度」：抱怨的人會把園名寫完整（要讓機關
    找得到），稱讚的人寫得隨意，所以歸屬成功率本身就與語氣相關。把負面優先
    設成永久預設，等於讓一個部分由歸屬規則造成的排序每次開啟都排在最前面。 */
-.soc-sortl{margin-left:auto;font-size:15px;color:var(--ink-3);
+.soc-sortl{margin-left:auto;font-size:15px;color:var(--ink-3);white-space:nowrap;
   display:inline-flex;align-items:baseline;gap:5px}
 .soc-sort{font-size:15px;font-family:inherit;color:var(--ink);
   background:var(--panel);border:1px solid var(--rule);border-radius:3px;
@@ -1455,7 +1481,8 @@ body.resizing{user-select:none;cursor:col-resize}
    ⚠️ 帶別刻意**不用紅綠燈**。綠色會被讀成「這一區合格」，而這裡量的是派工
    密度不是合規狀態——永和 67 家裡有 32 家有裁罰紀錄，它只是這一期建議查核的
    件數低於同型態組成的預期。所以三個帶用的是同一個色相的深淺，不是紅黃綠。 */
-.dbwrap{flex:1;min-height:0;display:flex;flex-direction:column}
+.dbwrap{flex:1;min-height:0;display:flex;flex-direction:column;
+  container:dbw / inline-size}
 .dbbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;flex:none;
   padding:9px 16px;background:var(--sunk);border-bottom:1px solid var(--rule);
   font-size:15px;color:var(--ink-2)}
@@ -1475,6 +1502,17 @@ body.resizing{user-select:none;cursor:col-resize}
 .dbhead,.dbrow{display:grid;align-items:center;gap:9px;
   grid-template-columns:42px minmax(70px,1fr) 128px minmax(130px,1.4fr)
     62px 84px minmax(96px,1fr) 70px}
+/* 八欄的下限加總約 784px。1280 視窗（助理欄 380）這一室只有 673px，
+   整張榜變成橫向捲動，「25 家」被折成兩行、右半被裁掉。窄於那個寬度時，
+   「全區組成」與「輿情」退到行政區名底下的第二行——依**這一室的實際寬度**
+   判斷（容器查詢），不依視窗，因為助理欄可以被拖寬拖窄。 */
+@container dbw (max-width:800px){
+  .dbhead,.dbrow{grid-template-columns:42px minmax(70px,1fr) 128px
+    minmax(130px,1.4fr) 62px 84px}
+  .dbhead span:nth-child(n+7){display:none}
+  .dbscale{grid-column:2 / 5}
+  .dbflags{grid-column:5 / -1}
+}
 .dbhead{position:sticky;top:0;z-index:1;padding:8px 10px;font-size:15px;
   color:var(--ink-3);background:var(--paper);border-bottom:1px solid var(--rule)}
 .dbrow{padding:9px 10px;border-bottom:1px solid var(--rule);cursor:pointer;
@@ -1561,7 +1599,7 @@ body.resizing{user-select:none;cursor:col-resize}
 .dbwhy:empty{display:none}
 
 .smbar{display:flex;align-items:center;gap:12px;padding:9px 16px;flex:none;
-  background:var(--panel);border-bottom:1px solid var(--rule)}
+  flex-wrap:wrap;background:var(--panel);border-bottom:1px solid var(--rule)}
 .smbar .rh-src{margin-left:auto;font-size:15px}
 /* ⚠️ 這裡曾經是 `grid-template-columns:minmax(0,1fr) 404px`，右邊那一欄是
    常駐的說明面板。那一刀正是「心智圖根本看不清楚」的原因：這一室沒有地圖

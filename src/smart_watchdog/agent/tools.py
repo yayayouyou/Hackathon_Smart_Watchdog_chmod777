@@ -890,6 +890,12 @@ def _dr():
     return store
 
 
+def _intake():
+    from ..dataroom import intake
+
+    return intake
+
+
 class DocListArgs(BaseModel):
     institution: Optional[str] = Field(
         default=None, description="園名簡稱或代號，例如「安溪」或 N01")
@@ -916,6 +922,8 @@ def _list_documents(_ctx: ToolContext, a: DocListArgs) -> ToolOutcome:
         payload={
             "count": len(items), "items": items,
             "pending": sorted(pend),
+            # 上傳後自動抽取的進度。使用者之後問「好了沒」要查得到。
+            "jobs": _intake().recent_jobs(),
             "note": "非營利園財報為純掃描影像，內容出自視覺抽取而非 PDF 文字層。"
                     "公校決算書用年度制、一冊含多園，沒有頁級抽取，不在此清單。",
         },
@@ -924,36 +932,74 @@ def _list_documents(_ctx: ToolContext, a: DocListArgs) -> ToolOutcome:
 
 
 def _prepare_upload(_ctx: ToolContext, _a: NoArgs) -> ToolOutcome:
-    """帶使用者到文件控管室上傳原件。
+    """使用者說要上傳、但還沒附檔時：說明怎麼附加，並帶到上傳按鈕前。
 
-    少了它，助理手上沒有任何與上傳有關的東西，被問到就回答「系統沒有上傳功能」
-    ——而文件控管室明明有。
-
-    助理**不能替人選檔**：瀏覽器只讓使用者親手打開檔案選擇視窗。所以這裡做的是
-    把人帶到按鈕前，並說清楚哪一份還沒入庫、檔名要長什麼樣子（入庫靠檔名對到
-    是哪一份，見 `store.match_filename`）。
+    少了它，助理手上沒有任何與上傳有關的東西，被問到就回答「系統沒有上傳功能」。
+    助理不能替人選檔（瀏覽器只讓使用者親手打開檔案選擇視窗），所以檔案一定是
+    使用者用「+」或「選擇 PDF」自己選的。
     """
     pend = [r for r in _dr().overview()["reports"] if r["state"] == "pending"]
-    items = [{
-        "report": r["id"], "code": r["code"], "institution": r["short_name"],
-        "academic_year": r["academic_year"], "year_kind": "學年度",
-        "tables": r["tables"],
-        "expected_filename":
-            f"{r['code']}{r['short_name']}_{r['academic_year']}學年度財務報告.pdf",
-    } for r in pend]
     return ToolOutcome(
         payload={
-            "count": len(items), "pending": items,
-            "how": "文件控管室「原始資料」層的「選擇 PDF」，由使用者自己按、自己選檔。",
-            "rules": ["只接受 PDF", "保留原始檔名，系統靠檔名判斷是哪一份報告"],
-            # 曾寫成「上傳後可用 list_documents 確認」，模型就原句轉述給使用者，
-            # 把 tool 名稱講了出來。提示要寫成使用者聽得懂的話。
-            "note": ("助理無法替使用者選檔或按下按鈕（瀏覽器限制）。"
-                     "上傳完後使用者可以再問一次有沒有入庫成功。")
-                    if items else "目前沒有待入庫的報告。",
+            "count": len(pend),
+            "pending": [{"report": r["id"], "institution": r["short_name"],
+                         "academic_year": r["academic_year"], "year_kind": "學年度"}
+                        for r in pend],
+            "how": ["對話框左邊的「+」附加 PDF，再說要放進文件控管室",
+                    "或在文件控管室「原始資料」層按「選擇 PDF」"],
+            "rules": ["只接受 PDF，檔名不限",
+                      "庫裡已有的原件會認出來直接入庫；新的報告會自動抽取，一份約 2–3 分鐘"],
+            "note": "助理無法替使用者選檔或按下按鈕（瀏覽器限制）。",
         },
         ui_action={"type": "open_table", "layer": "raw", "upload": True},
     )
+
+
+class AttachmentArgs(BaseModel):
+    attachment_id: str = Field(description="使用者訊息裡「附件代號」後面那串")
+
+
+def _add_to_dataroom(ctx: ToolContext, a: AttachmentArgs) -> ToolOutcome:
+    """把使用者用「+」附加的檔案放進文件控管室。
+
+    入庫一律走 `intake.submit`，與文件控管室自己的「選擇 PDF」同一條路——
+    兩邊各寫一份，就會出現「畫面上傳得進去、叫助理放卻不行」。
+    """
+    from . import attachments
+
+    got = attachments.load(a.attachment_id, getattr(ctx.user, "id", None))
+    if got is None:
+        return ToolOutcome(payload={"error": "查無此附件（代號不對，或不是這位使用者附加的）"})
+    meta, blob = got
+    res = _intake().submit(meta["filename"], blob)
+    if not res.get("ok"):
+        return ToolOutcome(payload={"error": res.get("detail", "無法入庫")})
+
+    # 狀態給中文：模型曾把 "loaded" 原樣講給使用者聽。
+    status_zh = {"loaded": "已入庫", "already_loaded": "庫中已有，未重複入庫",
+                 "extracting": "背景抽取中"}
+    payload = {k: res[k] for k in ("report", "institution", "academic_year", "detail")
+               if k in res}
+    payload["status"] = status_zh[res["status"]]
+    if res["status"] == "extracting":
+        job = res["job"]
+        payload.update(
+            job=job["id"], pages=job["pages_total"],
+            # note 會出現在畫面的步驟小字上（loop._summarise），只放給人看的短句；
+            # 給模型的說明放 guide——曾把「回覆時不要提工具名稱」直接秀給使用者。
+            note=f"背景抽取中，共 {job['pages_total']} 頁",
+            # 認不得的是「這個檔案」，不代表是新的報告——抽完也可能是庫裡已有的那份。
+            guide=("這個檔案與庫裡的原件都不相同，已在背景自動抽取（一份約 2–3 分鐘，"
+                  "會產生 Bedrock 費用）。抽完才知道是哪一所園、哪一學年度，也可能是"
+                  "庫裡已有的報告；認不出來會標「無法辨識」，不會猜。進度顯示在文件控管室，使用者之後問起再查一次"
+                  "文件清單即可；回覆時不要提工具名稱。"))
+        ui = {"type": "open_table", "layer": "raw", "job": job["id"]}
+    else:
+        if res["status"] == "loaded":
+            payload.update(tables=res["added"]["tables"],
+                           note="依檔案內容認出這份原件，直接用既有的抽取結果入庫，沒有重新抽取。")
+        ui = {"type": "open_table", "layer": "raw", "refresh": True, "report": res["report"]}
+    return ToolOutcome(payload=payload, ui_action=ui)
 
 
 class TableTypesArgs(BaseModel):
@@ -1366,9 +1412,14 @@ _SPECS = [
     ("list_documents", "列出資料室裡有哪些已抽取的財務報告（不需先給查詢字串）",
      DocListArgs, _list_documents, False),
     ("prepare_upload",
-     "使用者要上傳檔案（財報 PDF）時用：帶到文件控管室的上傳按鈕，列出尚未入庫的"
-     "報告與檔名格式。檔案要使用者自己按鈕選，助理無法代選",
+     "使用者說要上傳檔案、但訊息裡還沒有附件時用：說明怎麼附加，並帶到文件控管室的"
+     "上傳按鈕。助理無法替人選檔",
      NoArgs, _prepare_upload, False),
+    ("add_to_dataroom",
+     "把使用者用「+」附加的 PDF 放進文件控管室入庫（訊息裡有「附件代號」時用）。"
+     "庫裡已有的原件直接入庫；新的報告會自動在背景抽取、會花費用。"
+     "使用者沒說要放哪裡就先問",
+     AttachmentArgs, _add_to_dataroom, True),
     ("list_table_types", "有哪幾種表單、各幾張，並把資料室的類型選單帶到對應位置",
      TableTypesArgs, _list_table_types, False),
     ("get_table", "取一張表的全部內容，含空白格（null＝未編列，不是 0）",

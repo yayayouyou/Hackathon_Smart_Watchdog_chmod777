@@ -17,12 +17,13 @@ import time
 import uuid
 from typing import Any, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from pydantic import BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from .. import config
+from ..agent import attachments
 from ..agent.backend import BedrockAgentBackend
 from ..agent.loop import run_turn
 from ..agent.memory import remember
@@ -55,6 +56,8 @@ class MessageIn(BaseModel):
     session_id: Optional[str] = None
     # 前端目前在看什麼。進 system prompt，讓 agent 知道「這一頁」是哪一頁。
     view: dict = {}
+    # 「+」附加的檔案代號（POST /attachments 回的 id）。
+    attachments: list[str] = []
 
 
 def _backend() -> Any:
@@ -114,6 +117,14 @@ def post_message(
         if sess is None or sess.user_id != user.id:
             raise HTTPException(404, "查無此對話")
 
+    # 附件同樣要檢查「屬於這個使用者」，理由與上面的 session 相同。
+    text = body.text
+    for att_id in body.attachments:
+        meta = attachments.meta(att_id, user.id)
+        if meta is None:
+            raise HTTPException(404, "查無此附件")
+        text += "\n" + attachments.note(meta)
+
     turn = _next_turn(db, session_id)
     backend = _backend()
 
@@ -121,7 +132,7 @@ def post_message(
         try:
             for ev in run_turn(
                 db=db, user=user, session_id=session_id, turn=turn,
-                text=body.text, view=body.view,
+                text=text, view=body.view,
                 backend=backend, registry=_registry(),
             ):
                 yield {"event": ev.event, "data": json.dumps(ev.data, ensure_ascii=False)}
@@ -133,6 +144,16 @@ def post_message(
         remember(db, user, "last_turn_at", dt.datetime.now(dt.UTC).isoformat())
 
     return EventSourceResponse(gen())
+
+
+@router.post("/attachments")
+async def add_attachment(file: UploadFile = File(...),
+                         user: User = Depends(get_current_user)) -> dict:
+    """「+」選好的檔案先暫存，回代號。放進哪裡由助理的 tool 決定。"""
+    from .dataroom import read_pdf
+
+    name, blob = await read_pdf(file)
+    return attachments.save(user.id, name, blob)
 
 
 @router.get("/tools")

@@ -31,12 +31,14 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 
 from smart_watchdog.dataroom import tabletypes as tt
+from smart_watchdog.dataroom.build import build_report, index_entry
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PAGES = ROOT / "data/extracted/nonprofit_pages"
 SURVEY = ROOT / "data/extracted/pdf_survey.csv"
 RAW = ROOT / "data/raw/資料集/非營利園財報"
 OUT = ROOT / "data/interim/dataroom"
+HASHES = ROOT / "data/extracted/nonprofit_pdf_sha256.csv"
 
 
 def load_report(d: pathlib.Path) -> dict:
@@ -51,85 +53,6 @@ def pdf_path(code: str, short_name: str, year: int) -> str | None:
     """原件在哪。找不到就 None——給一個開不起來的連結比不給更糟。"""
     hits = list(RAW.glob(f"{year}學年度/{code}{short_name}*.pdf"))
     return str(hits[0].relative_to(ROOT)).replace("\\", "/") if hits else None
-
-
-def build_report(rep: dict) -> dict:
-    """一份報告 → 可直接渲染的形狀。表的順序即原件順序。"""
-    pages = rep["pages"]
-    first = pages[0]
-
-    flat: list[dict] = []
-    for pg in pages:
-        for i, t in enumerate(pg.get("tables") or [], start=1):
-            flat.append({
-                # table_index 從 1 起算，與 nonprofit_pagewise_sections.csv
-                # 同慣例，兩邊的 uid 才對得起來。
-                "table_index": i,
-                "pdf_page": pg["pdf_page"],
-                "printed_page": pg.get("printed_page"),
-                "page_kind": pg.get("page_kind"),
-                "title": t.get("title"),
-                "context_heading": t.get("context_heading"),
-                "unit": t.get("unit"),
-                "aligned": bool(t.get("aligned", True)),
-                "period_labels": t.get("period_labels") or [],
-                "rows": t.get("items") or [],
-                "issues": pg.get("issues") or [],
-            })
-    flat.sort(key=lambda t: (t["pdf_page"], t["table_index"]))
-
-    for t, r in zip(flat, tt.route_tables(flat)):
-        t["section"] = r["section"]
-        t["section_zh"] = tt.zh(r["section"])
-        # 分類是推論而非原件所寫時要標出來，UI 與 agent 都得看得到。
-        t["section_inherited"] = r["section_inherited"]
-        t["uid"] = "{}/{}/p{}/t{}".format(
-            first["code"], first["academic_year"],
-            t["pdf_page"], t["table_index"])
-
-    return {
-        "id": rep["id"],
-        "code": first["code"],
-        "short_name": first["short_name"],
-        "academic_year": first["academic_year"],
-        # provenance 逐頁都記著，這裡取整份的實際值域——混過模型的那次
-        # （6 頁 sonnet-4-5）會在這裡顯示成兩個值，那是事實不是瑕疵。
-        "models": sorted({p.get("model") for p in pages if p.get("model")}),
-        "dpi": sorted({p.get("dpi") for p in pages if p.get("dpi")}),
-        "pdf": pdf_path(first["code"], first["short_name"],
-                        first["academic_year"]),
-        "pages": [{
-            "pdf_page": p["pdf_page"],
-            "printed_page": p.get("printed_page"),
-            "page_kind": p.get("page_kind"),
-            "identity_ok": p.get("identity_ok"),
-            "footer_code": p.get("footer_code"),
-            "n_tables": len(p.get("tables") or []),
-            "n_text": len(p.get("text_sections") or []),
-            "issues": p.get("issues") or [],
-        } for p in pages],
-        "tables": flat,
-    }
-
-
-def report_stats(r: dict) -> dict:
-    """一份報告自己的統計。總目要能只加總「已載入」的報告，所以逐份存。"""
-    sec: collections.Counter = collections.Counter()
-    cells = valued = blank = refused = 0
-    for t in r["tables"]:
-        sec[t["section"]] += 1
-        if not t["aligned"]:
-            refused += 1
-            continue
-        for row in t["rows"]:
-            for v in (row.get("values") or []):
-                cells += 1
-                if v is None:
-                    blank += 1
-                else:
-                    valued += 1
-    return {"sec_tables": dict(sec), "tables": len(r["tables"]),
-            "refused": refused, "cells": cells, "valued": valued, "blank": blank}
 
 
 def tally(built: list[dict]) -> tuple[dict, list[dict]]:
@@ -206,8 +129,15 @@ def main() -> None:
 
     dirs = [d for d in sorted(PAGES.iterdir())
             if d.is_dir() and not d.name.startswith("_")]
-    built = [build_report(load_report(d)) for d in dirs]
+    built = []
+    for d in dirs:
+        rep = load_report(d)
+        p0 = rep["pages"][0]
+        built.append(build_report(
+            rep, pdf_path(p0["code"], p0["short_name"], p0["academic_year"])))
     totals, sections = tally(built)
+    with HASHES.open(encoding="utf-8") as fh:
+        hashes = {row["report"]: row["sha256"] for row in csv.DictReader(fh)}
 
     (out / "r").mkdir(parents=True, exist_ok=True)
     for r in built:
@@ -219,15 +149,9 @@ def main() -> None:
         "source": "data/extracted/nonprofit_pages",
         "totals": totals,
         "sections": sections,
-        "reports": [{
-            "id": r["id"], "code": r["code"], "short_name": r["short_name"],
-            "academic_year": r["academic_year"],
-            "pages": len(r["pages"]),
-            "models": r["models"], "dpi": r["dpi"], "pdf": r["pdf"],
-            "n_issues": sum(len(p["issues"]) for p in r["pages"]),
-            "identity_ok": all(p["identity_ok"] for p in r["pages"]),
-            **report_stats(r),
-        } for r in built],
+        # 原件雜湊讓上傳「看內容認檔」（見 scripts/hash_nonprofit_pdfs.py）。
+        "reports": [{**index_entry(r), "sha256": hashes.get(r["id"])}
+                    for r in built],
         "public": public_documents(),
     }
     (out / "index.json").write_text(

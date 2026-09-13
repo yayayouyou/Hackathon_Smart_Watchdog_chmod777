@@ -499,6 +499,13 @@
             </div>
           </div>
         </div>
+        <!-- 上傳鈕放在輸入框上方、帶字：只有一個「+」的話，使用者看不出能上傳。 -->
+        <div class="attachbar">
+          <button type="button" id="agentattach" class="attach"
+                  title="附加 PDF，請助理放進文件控管室">+ 上傳檔案</button>
+          <input type="file" id="agentfile" accept="application/pdf" multiple hidden>
+          <div class="chips" id="agentchips" hidden></div>
+        </div>
         <form class="chatbar" id="agentform">
           <input id="aq" placeholder="用中文說一句話，例如：我要調查三重區"
                  autocomplete="off">

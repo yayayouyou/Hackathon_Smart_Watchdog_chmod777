@@ -111,8 +111,8 @@ def test_the_whitelist_is_exactly_these_tools(reg) -> None:
         # 資料室：只回答「這份文件上印的是什麼」，不做判讀
         "list_documents", "list_table_types", "get_table",
         "compare_table_across_years", "get_extraction_notes",
-        # 上傳：只帶到按鈕前，檔案一定由使用者自己選
-        "prepare_upload",
+        # 上傳：檔案一定由使用者自己選（「+」或「選擇 PDF」），助理只負責放進去
+        "prepare_upload", "add_to_dataroom",
         # 唯一的寫入型
         "record_feedback",
     }
@@ -607,27 +607,39 @@ def test_the_compare_skill_tells_the_model_how_to_turn_a_name_into_an_id(reg) ->
     )
 
 
-def test_the_agent_can_take_the_user_to_upload_with_a_filename_that_ingests(
-        reg, tmp_path, monkeypatch) -> None:
-    """使用者說「我想要上傳檔案」，助理原本回答「系統沒有上傳功能」。
+def test_prepare_upload_explains_both_ways_and_points_at_the_button(reg) -> None:
+    """使用者說「我想要上傳檔案」卻還沒附檔：說清楚「+」與「選擇 PDF」兩條路。
 
-    它沒說謊——它手上真的沒有任何與上傳有關的 tool。這裡測兩件事：
-    帶得到按鈕前（`upload` 讓資料室標出「選擇 PDF」），以及告訴使用者的
-    檔名**真的會被入庫認得**。講一個對不到的檔名，比說做不到還糟。
+    原本助理手上沒有任何與上傳有關的 tool，回答「系統沒有上傳功能」。
     """
     from smart_watchdog.dataroom import store
 
     if not store.available():
         pytest.skip("需要資料室切片，先跑 scripts/build_dataroom_slice.py")
-    # 不讀 data/runtime 的真實載入狀態：本機若已上傳過，待入庫清單會是空的。
-    monkeypatch.setattr(store, "STATE", tmp_path / "dataroom.json")
-    monkeypatch.setattr(store, "UPLOADS", tmp_path / "uploads")
-    monkeypatch.setitem(store._cache, "index", None)
-    monkeypatch.setitem(store._cache, "reports", {})
-
     out = _run(reg, "prepare_upload", {})
     assert out.ui_action == {"type": "open_table", "layer": "raw", "upload": True}
-    assert out.payload["pending"], "示範需要至少一份待入庫的報告"
-    for p in out.payload["pending"]:
-        assert store.match_filename(p["expected_filename"]) == p["report"], (
-            f"告訴使用者的檔名 {p['expected_filename']} 對不到 {p['report']}")
+    assert any("+" in h for h in out.payload["how"])
+
+
+def test_the_agent_files_only_attachments_its_own_user_added(
+        reg, tmp_path, monkeypatch) -> None:
+    """附件代號綁使用者。拿到別人的代號，也不能叫助理把那份檔案放進庫裡。"""
+    from types import SimpleNamespace
+
+    from smart_watchdog.agent import attachments
+    from smart_watchdog.dataroom import intake
+
+    monkeypatch.setattr(attachments, "DIR", tmp_path / "att")
+    att = attachments.save(7, "園所財報.pdf", b"%PDF-1.4 x")
+    submitted = []
+    monkeypatch.setattr(intake, "submit", lambda name, blob: submitted.append((name, blob)) or {
+        "ok": True, "status": "already_loaded", "report": "N01_安溪_113", "detail": "已在庫中"})
+
+    out = _run(reg, "add_to_dataroom", {"attachment_id": att["id"]},
+               _ctx(user=SimpleNamespace(id=8)))
+    assert "error" in out.payload and submitted == [], "別人的附件被放進庫裡了"
+
+    out = _run(reg, "add_to_dataroom", {"attachment_id": att["id"]},
+               _ctx(user=SimpleNamespace(id=7)))
+    assert submitted == [("園所財報.pdf", b"%PDF-1.4 x")]
+    assert out.payload["status"] == "庫中已有，未重複入庫", "狀態要是使用者聽得懂的話"
