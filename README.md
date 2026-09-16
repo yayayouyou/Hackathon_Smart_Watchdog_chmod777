@@ -146,7 +146,7 @@ docs/           架構決策與研究紀錄
 
 ## 資料來源與授權
 
-本 repository 內的程式碼採用 **MIT License**，詳見 [`LICENSE`](LICENSE)。
+本 repository 內的程式碼採用 **GNU GPL-3.0**，詳見 [`LICENSE`](LICENSE)。
 
 機構基本資料、裁罰紀錄與收費明細的**原始來源**是
 [全國教保資訊網](https://ap.ece.moe.edu.tw/webecems/pubSearch.aspx)（教育部），
