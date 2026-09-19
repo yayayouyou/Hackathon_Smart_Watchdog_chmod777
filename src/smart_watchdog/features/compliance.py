@@ -613,3 +613,97 @@ def classify_reserve_gap(
         # Indistinguishable from a standing shortfall on the face of the statement.
         return "缺口穩定", False
     return "缺口擴大", False
+
+
+# --- 跨年度：簽證會計師事務所變更 ---------------------------------------------
+#
+# docs/research/02-forensic-signals.md §7「會計師層面訊號」:
+#   簽證會計師更換：連續年度換所，特別是換所後數字大幅變動 → 典型紅旗。
+#
+# This is a screening signal, not a compliance rule -- switching accounting firms
+# is legal and unremarkable on its own (a firm may retire, raise fees, or merge).
+# What makes it worth a question is the *combination*: a change of firm landing on
+# the same 學年度 boundary as either (a) a qualified/adverse/disclaimer opinion, or
+# (b) a large swing in 本期餘絀 (the headline number most likely to move if the
+# reason for the switch was disagreement over how something was booked). Flagging
+# every firm change regardless of what else happened would manufacture a red flag
+# out of routine vendor turnover -- a firm may simply retire, raise fees, or merge.
+#
+# Data for this lives in the OCR'd 補充 JSON (``audit_report.firm`` /
+# ``audit_report.opinion_type``, see src/smart_watchdog/extract/supplement.py),
+# which as of this writing only exists for 3 pilot 園-年度 -- and no two of those
+# three share the same 園, so there is currently no pair to classify. This is
+# wired up so it activates automatically as more 學年度 are OCR'd
+# (data/extracted/nonprofit_supplement/), without a code change.
+
+#: 本期餘絀變動視為「大幅變動」的門檻：換所後金額變動達前一年絕對值的這個倍數。
+#: 用相對值而非絕對值，因為各園規模差異大（見 crosscheck.py 對同儕比較的用法）。
+SURPLUS_SWING_TOL = 0.5
+
+
+def corroborating_signals(
+    *,
+    prev_surplus: object = None,
+    surplus: object = None,
+    opinion: object = None,
+) -> list[str]:
+    """List the red flags (if any) that coincide with a firm/accountant change.
+
+    A change of signing accountant or firm is legal and unremarkable on its own,
+    so this is what turns "換所" into "換所且有異常訊號" for both
+    :func:`classify_accountant_change` (firm) and the accountant-name path in
+    ``scripts/check_accountant_change.py``. Shared so the same corroboration test
+    applies regardless of which one changed.
+
+    ``opinion`` is the *current* year's ``audit_report.opinion_type``
+    (``"unmodified"``/``"qualified"``/``"adverse"``/``"disclaimer"``). ``prev_
+    surplus``/``surplus`` are the two years' 本期餘絀
+    (``balance_sheet.current_surplus``); a missing value on either side is
+    silently skipped rather than treated as zero.
+    """
+    reasons: list[str] = []
+    o = str(opinion or "").strip()
+    if o and o != "unmodified":
+        reasons.append(f"查核意見為「{o}」而非無保留")
+
+    ps, s = _f(prev_surplus), _f(surplus)
+    if ps is not None and s is not None and abs(ps) > TOL:
+        swing = abs(s - ps) / abs(ps)
+        if swing >= SURPLUS_SWING_TOL:
+            reasons.append(f"本期餘絀自 {ps:,.0f} 變動至 {s:,.0f}（變動 {swing:.0%}）")
+    return reasons
+
+
+def classify_accountant_change(
+    prev_firm: object,
+    firm: object,
+    *,
+    prev_surplus: object = None,
+    surplus: object = None,
+    opinion: object = None,
+) -> tuple[str, str | None] | None:
+    """Classify a change of signing audit firm across two consecutive 學年度.
+
+    Returns ``(verdict, reason)``, or ``None`` when there is nothing to explain --
+    either year's firm name is missing (unread data, not "no change"), or the firm
+    is unchanged.
+
+    ``verdict`` is one of:
+
+    * ``"換所"`` -- a change with no corroborating signal in this data. Worth
+      logging, not worth leading with.
+    * ``"換所且有異常訊號"`` -- the change coincides with a non-unmodified opinion
+      and/or a large 本期餘絀 swing. ``reason`` names which.
+
+    See :func:`corroborating_signals` for what counts as corroboration.
+    """
+    pf = str(prev_firm or "").strip()
+    f = str(firm or "").strip()
+    if not pf or not f or pf == f:
+        return None
+
+    reasons = corroborating_signals(
+        prev_surplus=prev_surplus, surplus=surplus, opinion=opinion)
+    if reasons:
+        return "換所且有異常訊號", "；".join(reasons)
+    return "換所", None
